@@ -1,3 +1,7 @@
 # Registro modifiche O Girrr
 
 Sito statico che legge i commit pubblici di giandjcosta/o-fant-a-girrr e li mostra giorno per giorno. Si aggiorna da solo.
+
+## Laboratorio
+
+La cartella `lab/` contiene i prototipi delle idee nuove, da provare prima di metterle nell'app. Si apre da `/lab/`.

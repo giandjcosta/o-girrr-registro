@@ -29,3 +29,5 @@ body::after{content:'';position:fixed;z-index:-1;width:46vmax;height:46vmax;righ
 input[type=search]{width:100%;padding:13px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.1);color:var(--chiaro);font:600 15px Inter,sans-serif;outline:0;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
 input::placeholder{color:var(--sub)}
 @media(max-width:520px){.top img{height:44px}.top a.back{padding:8px 11px}}
+
+@media(max-width:460px){.tabs{gap:6px}.tabs a{padding:12px 6px;font-size:13px}}
