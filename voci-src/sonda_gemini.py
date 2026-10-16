@@ -1,13 +1,15 @@
-import os, time
-from google import genai
-from google.genai import types
-cl = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
-for mod in ["gemini-3.8-flash-tts"]:
-    for n in range(14):
-        t = time.time()
-        try:
-            r = cl.models.generate_content(model=mod, contents="Dì in italiano: buonasera a tutti.", config=types.GenerateContentConfig(response_modalities=["AUDIO"], speech_config=types.SpeechConfig(voice_config=types.VoiceConfig(prebuilt_voice_config=types.PrebuiltVoiceConfig(voice_name="Charon")))))
-            print(mod, n, "ok", round(time.time() - t, 1), "s", flush=True)
-        except Exception as e:
-            if "429" in str(e): print(mod, n, "ERRORE", str(e)[:260].replace("\n"," "), flush=True); break
-            print(mod, n, "ERRORE", round(time.time() - t, 1), "s", str(e)[:260], flush=True)
+import os, json, time, base64, urllib.request
+import google.auth.transport.requests
+from google.oauth2 import service_account
+cred = service_account.Credentials.from_service_account_info(json.loads(os.environ["GOOGLE_TTS_JSON"]), scopes=["https://www.googleapis.com/auth/cloud-platform"])
+cred.refresh(google.auth.transport.requests.Request())
+for mod in ["gemini-3.8-flash-tts", "gemini-3.8-flash-lite-tts", "gemini-2.5-flash-tts"]:
+    body = json.dumps({"input": {"prompt": "Leggi in italiano, come un telecronista radiofonico al massimo dell'entusiasmo.", "text": "Che mazzata! Apo Team vola a ottanta punti! Ahia!"},
+        "voice": {"languageCode": "it-IT", "name": "Charon", "modelName": mod}, "audioConfig": {"audioEncoding": "MP3"}}).encode()
+    t = time.time()
+    try:
+        rq = urllib.request.Request("https://texttospeech.googleapis.com/v1/text:synthesize", body, {"Content-Type": "application/json", "Authorization": "Bearer " + cred.token})
+        d = json.load(urllib.request.urlopen(rq, timeout=90))
+        print(mod, "OK", round(time.time() - t, 1), "s", len(d["audioContent"]), flush=True)
+    except Exception as e:
+        print(mod, "ERRORE", round(time.time() - t, 1), "s", e, (e.read().decode()[:500] if hasattr(e, "read") else ""), flush=True)
