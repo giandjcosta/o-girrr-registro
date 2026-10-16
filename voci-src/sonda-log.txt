@@ -17,8 +17,4 @@ gemini-3.8-flash-lite-tts ERRORE 0.1 s HTTP Error 400: Bad Request {
 gemini-2.5-flash-tts ERRORE 0.1 s HTTP Error 403: Forbidden {
   "error": {
     "code": 403,
-    "message": "Agent Platform API has not been used in project 236622923098 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/aiplatform.googleapis.com/overview?project=236622923098 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.",
-    "status": "PERMISSION_DENIED",
-    "details": [
-      {
-        "@type": "type.googleapis.com/google.rpc.ErrorInfo"
+    "message": "Permission 'aiplatform.endpoints.predict' denied on resource '//aiplatform.googleapis.com/projects/236622923098/locations/global/publishers/google/models/gemini-2.5-flash-tts' (or it may not exist). Remediate access with this Troubleshooter URL or share it with your administrator - https://console.cloud.google.com/iam-admin/troubleshooter/summary;errorId=CiQwMWExNDZjNi1lNTI5LTdmZDgtYjljMi1lYmU5MTc5MThmMzISVHByb2plY3RzLzIzNjYyMjkyMzA5OC9sb2NhdGlvbnM
