@@ -362,8 +362,15 @@ function radioLines(){
   L.push(['C','Chiusura','Absolutely, Steve. This league keeps getting better. That\'s all from Radio Girrr, see you next Wednesday!','Assolutamente, Steve. Questa lega migliora sempre. Per Radio Girrr è tutto, ci sentiamo mercoledì!']);
   return L}
 var RA={i:-1,playing:false,timer:null};
+var VE=null;
 function voci(){var ok=/github\.io$/.test(location.hostname);if(!ok)return '';
-  return '<div class="card"><h3>Prova le voci vere</h3><p class="sm mut" style="margin-bottom:10px">Due audio creati con le voci neurali di Edge, gratis. Stesso copione, due lingue. Ascoltali e dimmi quale preferisci.</p><b class="sm">In inglese · Steve (Ryan) e Charles (Thomas)</b><audio controls preload="none" src="voci/radio-en.mp3" style="width:100%;margin:6px 0 14px"></audio><b class="sm">In italiano · Diego e Giuseppe (nomi da scegliere)</b><audio controls preload="none" src="voci/radio-it.mp3" style="width:100%;margin-top:6px"></audio></div>'}
+  if(VE===null){VE=[];try{fetch('voci/elenco.json').then(function(r){return r.json()}).then(function(j){VE=j;if(cur==='radio'&&RA.i<0&&!RA.playing)render()}).catch(function(){})}catch(e){}}
+  var h='<div class="card"><h3>Prova le voci vere</h3><p class="sm mut" style="margin-bottom:10px">Audio creati con le voci neurali di Edge, gratis. Stesso copione, voci diverse. Ascoltali e dimmi quali ti piacciono.</p><b class="sm">Dialogo completo in inglese · Steve (Ryan) e Charles (Thomas)</b><audio controls preload="none" src="voci/radio-en.mp3" style="width:100%;margin:6px 0 14px"></audio><b class="sm">Dialogo completo in italiano · Diego e Giuseppe</b><audio controls preload="none" src="voci/radio-it.mp3" style="width:100%;margin:6px 0 14px"></audio>';
+  var d=VE.filter(function(x){return x.dialogo});
+  d.forEach(function(x){h+='<b class="sm">Dialogo completo in italiano · '+esc(x.label)+'</b><audio controls preload="none" src="voci/'+x.file+'" style="width:100%;margin:6px 0 14px"></audio>'});
+  [['it','Voci per l\'italiano, una alla volta'],['en','Voci per l\'inglese, una alla volta']].forEach(function(g){var s=VE.filter(function(x){return x.lingua===g[0]});if(!s.length)return;
+    h+='<details style="margin-top:6px"><summary style="cursor:pointer;font-weight:800;padding:6px 0">'+g[1]+' ('+s.length+')</summary>'+s.map(function(x){return '<div style="margin:8px 0"><span class="sm">'+esc(x.voce.replace('Multilingual',' (multilingua)'))+'</span><audio controls preload="none" src="voci/'+x.file+'" style="width:100%;margin-top:4px"></audio></div>'}).join('')+'</details>'});
+  return h+'</div>'}
 function vRadio(){
   var L=radioLines(),tot=L.reduce(function(s,x){return s+x[2].length},0),sec=Math.round(tot/15),bars=[];
   var q=rnd(42);for(var i=0;i<48;i++)bars.push(14+Math.round(q()*46));
