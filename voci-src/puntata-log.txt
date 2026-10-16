@@ -1,2 +1,4 @@
+riga 21 Gemini tentativo 0 fallito: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on
+riga 21 uso edge-tts
 ok 31
-montata 572.5 s
+montata 205.6 s
