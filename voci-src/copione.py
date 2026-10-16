@@ -4,6 +4,7 @@ R = pathlib.Path(__file__).parent
 def f(x):
     x = float(x); return str(int(x)) if x == int(x) else str(x).replace(".", ",")
 NUM = ["zero","uno","due","tre","quattro","cinque","sei","sette","otto","nove","dieci"]
+ORDM = {1:"primo",2:"secondo",3:"terzo",4:"quarto",5:"quinto",6:"sesto",7:"settimo",8:"ottavo",9:"nono",10:"decimo"}
 ORD = {1:"prima",2:"seconda",3:"terza",4:"quarta",5:"quinta",6:"sesta",7:"settima",8:"ottava",9:"nona",10:"decima"}
 # chi c'è dietro ogni squadra (da confermare) e come stava l'anno scorso (Gioberti Cup 2025/26)
 CHI = {"Apo team":"Apo","WOA":"Ser","Grodah":"RikyArma","Real Madrink":"AndrewTT","stif dc":"Stifson","Mariana Coneja":"Mark Lenders",
@@ -93,7 +94,7 @@ def build(D, rng, mercato, nomi=None):
     # --- inviata
     add("B", "Ora ci colleghiamo con la nostra inviata sul campo! Giulia, a te!", "urlo")
     sup = max(((r["t"], EXP.get(r["t"], 5), r["pos"]) for r in T), key=lambda x: x[1] - x[2])
-    add("S", f"Grazie {b0}! Qui è un bel caos! Prima notizia: {sup[0]} sta superando le aspettative! Il presidente la voleva intorno al {sup[1]}° posto, e invece oggi è {ORD.get(sup[2], str(sup[2])+'ª')}!", "urlo")
+    add("S", f"Grazie {b0}! Qui è un bel caos! Prima notizia: {sup[0]} sta superando le aspettative! Il presidente la voleva intorno al {ORDM.get(sup[1], str(sup[1]))} posto, e invece oggi è {ORD.get(sup[2], str(sup[2])+'ª')}!", "urlo")
     g = D["cal"][0]["m"]; conf = next(((m[0], m[1]) for m in g if "Oranje VC" in m), (g[0][0], g[0][1]))
     add("S", f"Dalla sala stampa, alla vigilia di {conf[0]} contro {conf[1]}, l'allenatore dice: «{pick(CONF)}» Per ora è tutto, restituisco la linea in studio!")
     add("G", pick(["Grazie Giulia! Un allenatore, una frase e mezza lega è già in fermento.", "Grazie Giulia! Questo è calcio!", "Grazie Giulia, collegamento da Oscar!"]))
