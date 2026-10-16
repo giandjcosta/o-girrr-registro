@@ -16,12 +16,14 @@ jobs:
         run: |
           mkdir -p lab/voci
           python voci-src/genera.py 2>&1 | tee lab/voci/log.txt
+          python voci-src/confronta.py 2>&1 | tee lab/voci/log2.txt
         continue-on-error: true
       - name: Pubblica gli audio
         run: |
           git config user.name "github-actions"
           git config user.email "actions@users.noreply.github.com"
           git add lab/voci
+          git rm -q --cached lab/voci/log.txt lab/voci/log2.txt 2>/dev/null || true
           git commit -m "Audio di prova della Radio" || echo "nessuna modifica"
           git pull --rebase -q
           git push
