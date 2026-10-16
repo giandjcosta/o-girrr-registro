@@ -1,6 +1,5 @@
-gemini-3.8-flash-lite-tts 0 ok 1.9 s
-gemini-3.8-flash-lite-tts 1 ok 2.4 s
-gemini-3.8-flash-lite-tts 2 ok 1.9 s
-gemini-3.8-flash-lite-tts 3 ERRORE 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usa
-gemini-3.1-flash-tts-preview 0 ok 1.8 s
-gemini-3.1-flash-tts-preview 1 ERRORE 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usa
+gemini-3.8-flash-tts 0 ERRORE 0.4 s 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 's
+gemini-3.8-flash-tts 1 ERRORE 0.2 s 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 's
+gemini-3.8-flash-tts 2 ERRORE 0.2 s 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 's
+gemini-3.8-flash-tts 3 ERRORE 0.2 s 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 's
+gemini-3.8-flash-tts 4 ERRORE 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usa
