@@ -5,7 +5,7 @@ R = pathlib.Path(__file__).parent
 OUT = R.parent / "lab" / "voci"; OUT.mkdir(parents=True, exist_ok=True)
 D = json.load(open(R / "dati.json", encoding="utf-8"))
 NOMI = json.load(open(R / "nomi.json", encoding="utf-8"))
-VOCI = {"B": "it-IT-GiuseppeMultilingualNeural", "G": "en-US-BrianMultilingualNeural", "S": "de-DE-SeraphinaMultilingualNeural", "C": "fr-FR-RemyMultilingualNeural"}
+VOCI = {"B": "en-US-BrianMultilingualNeural", "G": "fr-FR-RemyMultilingualNeural", "S": "de-DE-SeraphinaMultilingualNeural", "C": "it-IT-GiuseppeMultilingualNeural"}
 RUOLO = {"B": "Conduttore", "G": "Commentatore", "S": "Inviata speciale", "C": "Mercato"}
 f = lambda x: str(x).replace(".", ",")
 a = D["aw"][-1]; T = D["tab"]
@@ -13,6 +13,9 @@ DER = [("Grodah","WOA"),("stif dc","Real Madrink"),("Oranje VC","AFA SELECCION")
 def derby(m): return any({x.lower(), y.lower()} == {m[0].lower(), m[1].lower()} for x, y in DER)
 g = D["cal"][0]["m"]; der = next((m for m in g if derby(m)), g[0])
 b, gg, s, c = NOMI["B"], NOMI["G"], NOMI["S"], NOMI["C"]
+EXP = {"Oranje VC":4,"Apo team":5,"Grodah":3,"WOA":2,"Real Madrink":3,"stif dc":6,"Mariana Coneja":6,"AFA SELECCION":4,"The Blue brothers":7,"Atletico ma non troppo":8}
+sup = max(((r["t"], EXP.get(r["t"], 5), r["pos"]) for r in T), key=lambda x: x[1]-x[2])
+conf = next(((m[0], m[1]) for m in g if "Oranje VC" in m), (g[0][0], g[0][1]))
 L = [
  ("B", f"Buongiorno a tutti e ben arrivati a Radio Girrr! Io sono {b}, qui con {gg}, e queste sono le notizie della settimana dopo la giornata {a['n']} di campionato."),
  ("G", f"Grazie {b}. Ragazzi, che giornata."),
@@ -21,8 +24,9 @@ L = [
  ("B", f"E la sconfitta più pesante è quella di {a['maz'][0]}, battuta da {a['maz'][3]} di {f(a['maz'][2])} punti."),
  ("G", f"In classifica comanda {T[0]['t']} con {T[0]['pts']} punti, seguita da {T[1]['t']} e {T[2]['t']}."),
  ("B", f"Ora ci colleghiamo con la nostra inviata dal campo. {s}, a te."),
- ("S", f"Grazie {b}, eccomi. Notizie dall'infermeria: Raspadori dell'Atalanta ha un fastidio alla gamba e verrà valutato per il prossimo turno. Per Gudmundsson della Lazio, un problema alla spalla dopo una caduta, ed è in dubbio."),
- ("S", "Come sempre, controllate la formazione prima del calcio d'inizio. Per ora è tutto, restituisco la linea in studio."),
+ ("S", f"Grazie {b}, eccomi sul campo. Prima notizia: {sup[0]} sta superando le aspettative. Il presidente la voleva intorno al {sup[1]}° posto, e invece oggi è {sup[2]}ª."),
+ ("S", f"Nuovo badge in bacheca: {a['mvp'][0]} sblocca il traguardo Re della giornata, con {f(a['mvp'][1])} punti."),
+ ("S", f"Dalla sala stampa, alla vigilia di {conf[0]} contro {conf[1]}, l'allenatore non ha dubbi: «Chi non crede in noi può restare a casa.» Parole forti. Per ora è tutto, restituisco la linea in studio."),
 ]
 cup = D["cup"][-1] if D.get("cup") else None
 if cup:
