@@ -166,6 +166,23 @@ svg text{fill:var(--mute);font-family:var(--fb)}
 .sum{white-space:pre-wrap;font-size:13px;line-height:1.5;padding:12px;border-radius:14px;background:rgba(10,18,48,.55);border:1px solid var(--line);margin:10px 0}
 .fbl{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Girrr Sport */
+.hm{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hm .fr{border:1px solid var(--line);border-radius:18px;padding:8px;background:var(--glass2)}
+.hm .fr>b{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:2px 4px 6px}
+.hm .fr.dopo{border-color:var(--gold)}
+.hm .fr.dopo>b{color:var(--gold)}
+.gt{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.gt i{font-style:normal;display:grid;place-items:center;min-height:40px;padding:4px;border-radius:10px;background:var(--glass);border:1px solid var(--line);font-weight:800;font-size:10.5px;text-align:center}
+.gt i.g1{grid-column:1/3;min-height:58px;background:#0c0c12;border-color:#ffd166}
+.gt i.g0{grid-column:1/3;min-height:58px}
+.gs-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.gs-head img{height:42px;width:auto;border-radius:6px;background:#0c0c12;padding:3px 8px}
+.cov{border-radius:16px;padding:16px;background:linear-gradient(160deg,#17214a,#2a1c52);border:1px solid var(--line);margin-bottom:10px}
+.cov small{letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--gold);font-size:10px}
+.cov h3{font-family:var(--fd);font-size:24px;line-height:1.1;margin:6px 0}
+.arch{display:flex;justify-content:space-between;align-items:center;padding:9px 2px;border-top:1px solid var(--line);font-size:13px}
 </style>
 
 <div class="col">
@@ -197,7 +214,7 @@ function rnd(seed){var x=seed>>>0;return function(){x=(x*1664525+1013904223)>>>0
 var ME='Oranje VC';
 $('#lg').src=D.img.lega;
 
-var TABS=[['prob','Probabilità'],['sfide','Sfide'],['albo','Albo'],['derby','Derby'],['borsino','Borsino'],['carriera','Carriera'],['conf','Conferenza'],['radio','Radio'],['parere','Il tuo parere']];
+var TABS=[['prob','Probabilità'],['sfide','Sfide'],['albo','Albo'],['derby','Derby'],['borsino','Borsino'],['carriera','Carriera'],['sport','Girrr Sport'],['parere','Il tuo parere']];
 var cur='prob',S={prob:'s',round:1,derbyRound:0,bors:0,carta:0,cteam:ME,conf:{},confDone:false,fb:{},fname:'',badgeTeam:ME,sfide:null,stake:50,opp:'Grodah'};
 
 function where(a,b,c){return '<div class="where"><b>Dove</b><span>'+a+'</span><span class="sep">›</span><span>'+b+'</span>'+(c?'<span class="sep">›</span><span>'+c+'</span>':'')+'</div>'}
@@ -364,9 +381,9 @@ function radioLines(){
 var RA={i:-1,playing:false,timer:null};
 var VE=null,VE2=[],VP=null;
 function voci(){var ok=/github\.io$/.test(location.hostname);if(!ok)return '';
-  if(VE===null){VE=[];try{fetch('voci/elenco.json').then(function(r){return r.json()}).then(function(j){VE=j;if(cur==='radio'&&RA.i<0&&!RA.playing)render()}).catch(function(){});fetch('voci/puntata.json?v=20261016l').then(function(r){return r.json()}).then(function(j){VP=j;if(cur==='radio'&&RA.i<0&&!RA.playing)render()}).catch(function(){});fetch('voci/elenco2.json').then(function(r){return r.json()}).then(function(j){VE2=j;if(cur==='radio'&&RA.i<0&&!RA.playing)render()}).catch(function(){})}catch(e){}}
+  if(VE===null){VE=[];try{fetch('voci/elenco.json').then(function(r){return r.json()}).then(function(j){VE=j;if((cur==='radio'||cur==='sport')&&RA.i<0&&!RA.playing)render()}).catch(function(){});fetch('voci/puntata.json?v=20261016m').then(function(r){return r.json()}).then(function(j){VP=j;if((cur==='radio'||cur==='sport')&&RA.i<0&&!RA.playing)render()}).catch(function(){});fetch('voci/elenco2.json').then(function(r){return r.json()}).then(function(j){VE2=j;if((cur==='radio'||cur==='sport')&&RA.i<0&&!RA.playing)render()}).catch(function(){})}catch(e){}}
   var h='';
-  if(VP&&VP.length){var seen={};h+='<div class="card"><h3>La puntata con le quattro voci</h3><p class="sm mut" style="margin-bottom:10px">'+VP.filter(function(x){if(seen[x.chi])return false;seen[x.chi]=1;return true}).map(function(x){return '<b>'+esc(x.chi)+'</b> ('+esc(x.ruolo.toLowerCase())+')'}).join(', ')+'. Ciro entra solo ogni tanto, quando c\'è qualcosa sul mercato.</p><audio controls preload="none" src="voci/puntata.mp3?v=20261016l" style="width:100%;margin-bottom:10px"></audio><details><summary style="cursor:pointer;font-weight:800;padding:4px 0">Leggi il testo</summary><div class="tr" style="margin-top:6px">'+VP.map(function(x){return '<p><small>'+esc(x.chi)+'</small>'+esc(x.testo)+'</p>'}).join('')+'</div></details></div>'}
+  if(VP&&VP.length){var seen={};h+='<div class="card"><h3>La puntata con le quattro voci</h3><p class="sm mut" style="margin-bottom:10px">'+VP.filter(function(x){if(seen[x.chi])return false;seen[x.chi]=1;return true}).map(function(x){return '<b>'+esc(x.chi)+'</b> ('+esc(x.ruolo.toLowerCase())+')'}).join(', ')+'. Ciro entra solo ogni tanto, quando c\'è qualcosa sul mercato.</p><audio controls preload="none" src="voci/puntata.mp3?v=20261016m" style="width:100%;margin-bottom:10px"></audio><details><summary style="cursor:pointer;font-weight:800;padding:4px 0">Leggi il testo</summary><div class="tr" style="margin-top:6px">'+VP.map(function(x){return '<p><small>'+esc(x.chi)+'</small>'+esc(x.testo)+'</p>'}).join('')+'</div></details></div>'}
   h+='<div class="card"><h3>Prova le voci vere</h3><p class="sm mut" style="margin-bottom:10px">Audio creati con le voci neurali di Edge, gratis. Stesso copione, voci diverse. Ascoltali e dimmi quali ti piacciono.</p><b class="sm">Dialogo completo in inglese · Steve (Ryan) e Charles (Thomas)</b><audio controls preload="none" src="voci/radio-en.mp3" style="width:100%;margin:6px 0 14px"></audio><b class="sm">Dialogo completo in italiano · Diego e Giuseppe</b><audio controls preload="none" src="voci/radio-it.mp3" style="width:100%;margin:6px 0 14px"></audio>';
   var d=VE.filter(function(x){return x.dialogo});
   d.forEach(function(x){h+='<b class="sm">Dialogo completo in italiano · '+esc(x.label)+'</b><audio controls preload="none" src="voci/'+x.file+'" style="width:100%;margin:6px 0 14px"></audio>'});
@@ -415,16 +432,48 @@ function summary(){var n=S.fname||'Un amico';var out='Parere di '+n+' sul Labora
 function vParere(){
   var h='<h2>Il tuo parere</h2><p class="lead">Questo è il riassunto dei tuoi voti. Scrivi il tuo nome, copia il testo e incollalo a Gianluca su WhatsApp.</p><input class="fbn" id="fbname" placeholder="Il tuo nome" aria-label="Il tuo nome" value="'+esc(S.fname)+'"><div class="card"><div class="sum" id="sum">'+esc(summary())+'</div><button class="btn" id="copia" style="width:100%">Copia il riassunto</button><p class="note" id="cmsg"></p></div>';
   var d=Object.keys(S.fb).filter(function(k){return S.fb[k].v}).length;return h+'<p class="note">Hai votato '+d+' idee su '+(TABS.length-1)+'.</p>'}
-var V={prob:vProb,sfide:vSfide,albo:vAlbo,derby:vDerby,borsino:vBors,carriera:vCar,conf:vConf,radio:vRadio,parere:vParere};
+
+
+/* ---------- GIRRR SPORT ---------- */
+S.sp='giornale';
+function gsHead(sub){return '<div class="gs-head"><img src="'+D.img.gs+'" alt="Girrr Sport"><div><b style="font-size:15px">'+sub+'</b><div class="sm mut">La TV, il giornale e la radio della lega</div></div></div>'}
+function homeMock(){
+  var base=['Tabellone','Totogirrr','Curva','Squadre','Albo','Statistiche'];
+  function grid(first){return '<div class="gt">'+first+base.map(function(x){return '<i>'+x+'</i>'}).join('')+'</div>'}
+  return '<div class="hm"><div class="fr"><b>Prima</b>'+grid('<i class="g0">Giornale</i>')+'</div><div class="fr dopo"><b>Dopo</b>'+grid('<i class="g1"><img src="'+D.img.gs+'" alt="Girrr Sport" style="width:84%;height:auto"></i>')+'</div></div>'}
+function spGiornale(){
+  var a=D.aw[D.aw.length-1];
+  var h='<div class="cov"><small>Il Giornale · Giornata '+a.n+'</small><h3>'+esc(a.mvp[0])+' è il re della giornata</h3><p class="sm" style="opacity:.85">'+a.mvp[1]+' punti. Flop: '+esc(a.flop[0])+' a '+a.flop[1]+'. Mazzata: '+esc(a.maz[0])+', battuta da '+esc(a.maz[3])+'.</p><div style="display:flex;gap:8px;margin-top:10px"><span class="btn" style="padding:8px 14px">Leggi il PDF</span><span class="btn o" style="padding:8px 14px">Scarica</span></div></div>';
+  h+='<div class="card"><h3>Le giornate precedenti</h3>'+D.aw.slice(0,-1).reverse().map(function(x){return '<div class="arch"><span>Giornata '+x.n+' · re: '+esc(x.mvp[0])+'</span><span class="mut">PDF</span></div>'}).join('')+'</div>';
+  return h}
+function spRadio(){
+  try{voci()}catch(e){}
+  var h='<div class="card"><h3>Radio Girrr</h3><p class="sm mut" style="margin-bottom:10px">La radio ufficiale della Lega. Ogni settimana una puntata di circa tre minuti: campionato, Coppa, derby e, quando ci sono notizie, il mercato con Ciro Trattativa.</p>';
+  if(VP&&VP.length){h+='<audio controls preload="none" src="voci/puntata.mp3?v=20261016m" style="width:100%;margin-bottom:10px"></audio><details><summary style="cursor:pointer;font-weight:800;padding:4px 0">Leggi il testo</summary><div class="tr" style="margin-top:6px">'+VP.map(function(x){return '<p><small>'+esc(x.chi)+'</small>'+esc(x.testo)+'</p>'}).join('')+'</div></details>'}
+  else h+='<p class="note">L\'audio si ascolta aprendo il Laboratorio dall\'indirizzo del Registro (giandjcosta.github.io/o-girrr-registro/lab).</p>';
+  var seen={},cast=(VP||[]).filter(function(x){if(seen[x.chi])return false;seen[x.chi]=1;return true});
+  if(cast.length)h+='<p class="sm mut" style="margin-top:8px">Voci: '+cast.map(function(x){return '<b>'+esc(x.chi)+'</b> ('+esc(x.ruolo.toLowerCase())+')'}).join(', ')+'.</p>';
+  return h+'</div>'}
+function spConf(){var x=vConf();return x.replace(/^<div class="where">.*?<\/div>/,'')}
+function vSport(){
+  var sp=S.sp,tabs=[['giornale','Giornale'],['conf','Conferenze stampa'],['radio','Radio'],['moviola','Moviola · presto']];
+  var h=where('Home','Girrr Sport')+gsHead('Girrr Sport')+'<div class="card"><h3>Cosa cambia in Home</h3><p class="sm mut" style="margin-bottom:10px">Il tasto Giornale diventa Girrr Sport, con il suo logo. Da lì si arriva a tutto il resto.</p>'+homeMock()+'</div>';
+  h+='<div class="seg" role="group" aria-label="Sezioni di Girrr Sport">'+tabs.map(function(t){return '<button data-sp="'+t[0]+'" aria-pressed="'+(sp===t[0])+'"'+(t[0]==='moviola'?' disabled style="opacity:.5"':'')+'>'+t[1]+'</button>'}).join('')+'</div>';
+  h+=sp==='giornale'?spGiornale():sp==='conf'?spConf():sp==='radio'?spRadio():'';
+  return h}
+
+
+var V={sport:vSport,prob:vProb,sfide:vSfide,albo:vAlbo,derby:vDerby,borsino:vBors,carriera:vCar,conf:vConf,radio:vRadio,parere:vParere};
 function render(){
   $('#view').innerHTML=V[cur]()+(cur==='parere'?'':fbBox());
   $('#tabs').innerHTML=TABS.map(function(t){return '<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'">'+t[1]+'</button>'}).join('');
   try{var s=$('#tabs [aria-selected=true]');if(s&&s.scrollIntoView)s.scrollIntoView({inline:'center',block:'nearest'})}catch(e){}
 }
-function go(t){if(cur==='radio'&&t!=='radio'){radioStop();RA.i=-1}cur=t;try{history.replaceState(null,'','#'+t)}catch(e){}render();window.scrollTo(0,0)}
+function go(t){if(t==='conf'||t==='radio'||t==='giornale'){S.sp=t;t='sport'}if(cur==='radio'&&t!=='radio'){radioStop();RA.i=-1}cur=t;try{history.replaceState(null,'','#'+t)}catch(e){}render();window.scrollTo(0,0)}
 document.addEventListener('click',function(e){
   var b=e.target.closest('button,[data-card]');if(!b)return;var d=b.dataset;
   if(d.tab)return go(d.tab);
+  if(d.sp){S.sp=d.sp;return render()}
   if(d.fb){S.fb[cur]=S.fb[cur]||{};S.fb[cur].v=d.fb;return render()}
   if(b.id==='copia'){var tx=summary(),m=$('#cmsg');function fall(){var r=document.createRange();r.selectNodeContents($('#sum'));var s=getSelection();s.removeAllRanges();s.addRange(r);m.textContent='Testo selezionato: copialo con il tasto copia del telefono.'}
     try{navigator.clipboard.writeText(tx).then(function(){m.textContent='Copiato. Ora incollalo nella chat.'},fall)}catch(x){fall()}return}
@@ -446,7 +495,7 @@ document.addEventListener('change',function(e){var i=e.target.id;
   if(i==='cteam'){S.cteam=e.target.value;render()}
   if(i==='bteam'){S.badgeTeam=e.target.value;render()}});
 document.addEventListener('input',function(e){if(e.target.id==='fbn'){S.fb[cur]=S.fb[cur]||{};S.fb[cur].n=e.target.value}if(e.target.id==='fbname'){S.fname=e.target.value;var s=$('#sum');if(s)s.textContent=summary()}if(e.target.id==='stake'){S.stake=+e.target.value;var x=$('#stk');if(x)x.textContent=S.stake+' fantacrediti'}});
-var hh=(location.hash||'').slice(1);if(V[hh])cur=hh;
+var hh=(location.hash||'').slice(1);if(hh==='conf'||hh==='radio'){S.sp=hh;hh='sport'}if(V[hh])cur=hh;
 window.addEventListener('hashchange',function(){var x=(location.hash||'').slice(1);if(V[x]&&x!==cur)go(x)});
 render();
 })();
