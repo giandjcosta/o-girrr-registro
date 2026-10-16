@@ -46,11 +46,23 @@ L += [
  ("G", "Sarà una bella giornata, questa lega migliora sempre."),
  ("B", "Per Radio Girrr è tutto. Ci sentiamo mercoledì prossimo!"),
 ]
+async def parla(k, testo, fn, i):
+    pulito = testo.replace("«", "").replace("»", "").replace("ª", "a").replace("°", "")
+    tentativi = [(testo, "+4%"), (testo, None), (pulito, None), (pulito, "+0%")]
+    for n, (tx, rate) in enumerate(tentativi):
+        try:
+            c = edge_tts.Communicate(tx, VOCI[k], rate=rate) if rate else edge_tts.Communicate(tx, VOCI[k])
+            await c.save(str(fn)); return
+        except Exception as e:
+            print("riga", i, VOCI[k], "tentativo", n, "fallito:", type(e).__name__)
+            await asyncio.sleep(1.5)
+    raise RuntimeError(f"riga {i} non riuscita")
+
 async def main():
     parti = []
     for i, (k, t) in enumerate(L):
         fn = OUT / f"_p{i}.tmp"
-        await edge_tts.Communicate(t, VOCI[k], rate="+4%").save(str(fn)); parti.append(fn)
+        await parla(k, t, fn, i); parti.append(fn)
     with open(OUT / "puntata.mp3", "wb") as o:
         for p in parti: o.write(p.read_bytes()); p.unlink()
     json.dump([{"chi": NOMI[k], "ruolo": RUOLO[k], "testo": t} for k, t in L], open(OUT / "puntata.json", "w"), ensure_ascii=False)
