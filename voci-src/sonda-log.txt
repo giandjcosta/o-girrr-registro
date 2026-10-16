@@ -14,7 +14,4 @@ gemini-3.8-flash-lite-tts ERRORE 0.1 s HTTP Error 400: Bad Request {
   }
 }
 
-gemini-2.5-flash-tts ERRORE 0.2 s HTTP Error 403: Forbidden {
-  "error": {
-    "code": 403,
-    "message": "Permission 'aiplatform.endpoints.predict' denied on resource '//aiplatform.googleapis.com/projects/236622923098/locations/global/publishers/google/models/gemini-2.5-flash-tts' (or it may not exist). Remediate access with this Troubleshooter URL or share it with your administrator - https://console.cloud.google.com/iam-admin/troubleshooter/summary;errorId=CiQwMWExNDZjYS03YTM5LTc2OWItOTg3Yi02YTNlOTBmMTYzMTYSVHByb2plY3RzLzIzNjYyMjkyMzA5OC9sb2NhdGlvbnM
+gemini-2.5-flash-tts OK 3.6 s 29568
