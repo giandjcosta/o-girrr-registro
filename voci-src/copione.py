@@ -96,7 +96,7 @@ def build(D, rng, mercato, nomi=None):
     sup = max(((r["t"], EXP.get(r["t"], 5), r["pos"]) for r in T), key=lambda x: x[1] - x[2])
     add("S", f"Grazie {b0}! Qui è un bel caos! Prima notizia: {sup[0]} sta superando le aspettative! Il presidente la voleva intorno al {ORDM.get(sup[1], str(sup[1]))} posto, e invece oggi è {ORD.get(sup[2], str(sup[2])+'ª')}!", "urlo")
     g = D["cal"][0]["m"]; conf = next(((m[0], m[1]) for m in g if "Oranje VC" in m), (g[0][0], g[0][1]))
-    add("S", f"Dalla sala stampa, alla vigilia di {conf[0]} contro {conf[1]}, l'allenatore dice: «{pick(CONF)}» Per ora è tutto, restituisco la linea in studio!")
+    add("S", f"Dalla sala stampa, alla vigilia di {conf[0]} contro {conf[1]}, l'allenatore dice: {pick(CONF)} Per ora è tutto, restituisco la linea in studio!")
     add("G", pick(["Grazie Giulia! Un allenatore, una frase e mezza lega è già in fermento.", "Grazie Giulia! Questo è calcio!", "Grazie Giulia, collegamento da Oscar!"]))
     # --- coppa: storie vere, nessun giro di parole
     cup = D["cup"][-1] if D.get("cup") else None

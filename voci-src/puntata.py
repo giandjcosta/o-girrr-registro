@@ -41,6 +41,7 @@ async def uno(voce, tx, fn, stile):
 
 async def parla(k, testo, fn, i, stile=None):
     """Prova la riga intera; se la voce non risponde la legge a frasi; come ultima scelta usa Isabella."""
+    testo = testo.replace("«", "").replace("»", "")
     for a_, b_ in PRON.items(): testo = testo.replace(a_, b_)
     pulito = testo.replace("«", "").replace("»", "").replace("ª", "a").replace("°", "")
     for n, (tx, st_, lg) in enumerate([(testo, stile, False)] * 5 + [(pulito, "base", False)] * 3):
