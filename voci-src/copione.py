@@ -25,7 +25,7 @@ CURVA = ["Chissà cosa staranno scrivendo in Curva i tifosi {t}!", "In Curva, st
 CONF = ["Chi non crede in noi può restare a casa.", "Siamo pronti, ci vediamo in campo.", "Non siamo qui per fare i turisti.", "Quest'anno non ci ferma nessuno.", "Un punto alla volta, ma tutti insieme."]
 def build(D, rng, mercato, nomi=None):
     nomi = nomi or {}
-    b1 = nomi.get('B', 'Beppe Rovesciata'); g1 = nomi.get('G', 'Steve Fuorigioco'); g0 = g1.split()[0]; b0 = b1.split()[0]
+    b1 = nomi.get('B', 'Beppe Rovesciata'); g1 = nomi.get('G', 'Steve Offside'); g0 = g1.split()[0]; b0 = b1.split()[0]
     a = D["aw"][-1]; T = D["tab"]; P = D["prob"]; n = a["n"]
     row = {r["t"]: r for r in T}
     def pick(x): return rng.choice(x)
@@ -37,7 +37,7 @@ def build(D, rng, mercato, nomi=None):
     add("B", f"Buongiorno, buonasera e buonanotte a tutti, siete su Radio Girrr! Oggi siamo qui con {b1}", "urlo")
     add("G", f"e {g1}! Si parte!", "urlo")
     add("B", f"Giornata numero {n}! {g0}, hai già guardato i punteggi?")
-    add("G", pick(["Guardati, riguardati e ho pure fatto una scommessa con me stesso. Ho perso.", "Sì, e mi sono rovinato la colazione.", "Altro che guardati: li ho imparati a memoria!"]))
+    add("G", pick(["Guardati, riguardati e ho pure fatto una scommessa con me stesso. Ho perso.", "Sì, con una tazza di tè in mano, come ogni buon britannico. E mi sono rovinato la colazione.", "Altro che guardati: li ho imparati a memoria!"]))
     # --- punteggi estremi: a volte si esalta, a volte si prende in giro
     tono = pick(["esalta", "sfotte"])
     mv, fl, mz = a["mvp"], a["flop"], a["maz"]
