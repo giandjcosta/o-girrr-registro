@@ -46,17 +46,31 @@ L += [
  ("G", "Sarà una bella giornata, questa lega migliora sempre."),
  ("B", "Per Radio Girrr è tutto. Ci sentiamo mercoledì prossimo!"),
 ]
+import re
+async def uno(voce, tx, fn, rate):
+    c = edge_tts.Communicate(tx, voce, rate=rate) if rate else edge_tts.Communicate(tx, voce)
+    await c.save(str(fn))
+
 async def parla(k, testo, fn, i):
+    """Prova la riga intera; se la voce non risponde la legge a frasi; come ultima scelta usa Isabella."""
     pulito = testo.replace("«", "").replace("»", "").replace("ª", "a").replace("°", "")
-    tentativi = [(testo, "+4%"), (testo, None), (pulito, None), (pulito, "+0%")]
-    for n, (tx, rate) in enumerate(tentativi):
+    for n, (tx, rate) in enumerate([(testo, "+4%"), (pulito, None)]):
         try:
-            c = edge_tts.Communicate(tx, VOCI[k], rate=rate) if rate else edge_tts.Communicate(tx, VOCI[k])
-            await c.save(str(fn)); return
+            await uno(VOCI[k], tx, fn, rate); return
         except Exception as e:
-            print("riga", i, VOCI[k], "tentativo", n, "fallito:", type(e).__name__)
-            await asyncio.sleep(1.5)
-    raise RuntimeError(f"riga {i} non riuscita")
+            print("riga", i, VOCI[k], "intera, tentativo", n, "fallito:", type(e).__name__); await asyncio.sleep(1)
+    frasi = [x for x in re.split(r"(?<=[.:!?])\s+", pulito) if x.strip()]
+    pezzi = []
+    for j, fr in enumerate(frasi):
+        tmp = fn.with_suffix(f".{j}.part")
+        try:
+            await uno(VOCI[k], fr, tmp, None)
+        except Exception as e:
+            print("riga", i, "frase", j, VOCI[k], "fallita, uso Isabella:", fr[:50])
+            await uno("it-IT-IsabellaNeural", fr, tmp, None)
+        pezzi.append(tmp)
+    with open(fn, "wb") as o:
+        for q in pezzi: o.write(q.read_bytes()); q.unlink()
 
 async def main():
     parti = []
