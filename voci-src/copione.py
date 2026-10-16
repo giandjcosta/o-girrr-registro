@@ -21,6 +21,10 @@ STORIE = {
  "Oranje VC": ["Dj Costa è tornato dopo quattro stagioni di assenza!"],
  "Mariana Coneja": ["Mark Lenders l'anno scorso ha chiuso quinto. Quest'anno vuole di più!"],
 }
+RIDE = ["Ah ah ah, scusate, non ce la faccio!", "Ah ah ah, questa me la segno!", "Ah ah, ma dai!"]
+SOSP = ["Eh... che dolore.", "Mamma mia... poveretto.", "Eh... purtroppo il calcio è anche questo."]
+STUP = ["Ma davvero?!", "Non ci credo!", "Cosa?! Ma com'è possibile?!"]
+COMM = ["Ragazzi, mi emoziono ancora.", "Il calcio è anche questo: i ritorni.", "Non è solo una classifica, è la nostra storia."]
 CURVA = ["Chissà cosa staranno scrivendo in Curva i tifosi {t}!", "In Curva, stasera, i tifosi {t} non dormono!", "Diamo un'occhiata alla Curva: i tifosi {t} sono già al lavoro!", "Chissà in Curva cosa ne pensano i tifosi {t}!"]
 CONF = ["Chi non crede in noi può restare a casa.", "Siamo pronti, ci vediamo in campo.", "Non siamo qui per fare i turisti.", "Quest'anno non ci ferma nessuno.", "Un punto alla volta, ma tutti insieme."]
 def build(D, rng, mercato, nomi=None):
@@ -46,19 +50,23 @@ def build(D, rng, mercato, nomi=None):
         add("G", f"{f(mv[1])} punti! {curva(mv[0])}")
     else:
         add("B", f"Il re della giornata è {mv[0]}, con {f(mv[1])} punti.")
-        add("G", f"Bravi, eh. Però il vero esame è la prossima settimana. {curva(mv[0])}")
+        add("G", f"Bravi, eh. Però il vero esame è la prossima settimana. {curva(mv[0])}", "sarcasmo")
     if rng.random() < 0.6:
         add("B", f"Dall'altra parte, il flop: {fl[0]} si ferma a {f(fl[1])} punti.")
         add("G", pick([f"Coraggio, {fl[0]}! Si cade, ci si rialza!", f"{f(fl[1])}. Non infierisco. {curva(fl[0])}", "Qui ci vuole un abbraccio. Sottovoce, eh."]), "sus" if rng.random() < 0.4 else None)
+        r_ = rng.random()
+        if r_ < 0.4: add("B", pick(RIDE), "ride")
+        elif r_ < 0.7: add("G", pick(SOSP), "sospiro")
     if mz[2] >= 8:
         add("B", f"E la sconfitta più pesante è quella di {mz[0]}, battuta da {mz[3]} con {f(mz[2])} punti di scarto! Una mazzata!")
         if rng.random() < 0.6: add("G", pick(["Ahia!", "Questa ha fatto male anche a noi!", "Altro che mazzata: una cassa di birra in testa!"]), "urlo")
+        if rng.random() < 0.5: add("B", pick(STUP), "stupore")
     # --- classifica: primi tre, e ogni tanto l'ultimo
     t1, t2, t3 = T[0], T[1], T[2]
     add("B", f"In classifica comanda {t1['t']} con {t1['pts']} punti! Seguono {t2['t']} e {t3['t']}.")
     ns = ANNO_SCORSO.get(t1["t"])
     if ns and ns >= 8: add("G", f"E pensare che l'anno scorso {t1['t']} era {ORD[ns]}. Qui c'è una rinascita!", "urlo")
-    elif t1["t"] in STORIE: add("G", pick(STORIE[t1["t"]]))
+    elif t1["t"] in STORIE: add("G", pick(STORIE[t1["t"]]), "commosso" if t1["t"] in ("Oranje VC", "Atletico ma non troppo", "Grodah") else None)
     last = T[-1]
     if rng.random() < 0.5 or (last["v"] == 0 and last["g"] >= 3):
         add("B", f"In fondo c'è {last['t']}. Può risalire e sperare di uscire dall'ultima posizione?")
@@ -82,7 +90,7 @@ def build(D, rng, mercato, nomi=None):
     basso = min(row, key=fid); alto = max(row, key=fid)
     if fid(basso) <= 30 and rng.random() < 0.7:
         add("B", f"Il presidente di {basso} non è molto contento ultimamente!")
-        add("G", "Se continua così si parla di esonero. Sottovoce, eh." if fid(basso) <= 15 else "Servono risultati, e anche in fretta.", "sus")
+        add("G", "Se continua così si parla di esonero. Sottovoce, eh." if fid(basso) <= 15 else "Servono risultati, e anche in fretta.", "sospiro" if fid(basso) > 15 else "sus")
     elif fid(alto) >= 85 and rng.random() < 0.5:
         add("B", f"Il presidente di {alto} è al settimo cielo!")
         add("G", "Con questi punti ci credo. Contratto a vita!")
@@ -90,13 +98,13 @@ def build(D, rng, mercato, nomi=None):
     teams_in = [mv[0], fl[0]]
     pool = [t for t in teams_in if t in STORIE and (t != t1["t"])]
     if pool and rng.random() < 0.8:
-        t = pick(pool); add("G", pick(STORIE[t]))
+        t = pick(pool); add("G", pick(STORIE[t]), "commosso" if t in ("Oranje VC", "Atletico ma non troppo", "Grodah") else None)
     # --- inviata
     add("B", "Ora ci colleghiamo con la nostra inviata sul campo! Giulia, a te!", "urlo")
     sup = max(((r["t"], EXP.get(r["t"], 5), r["pos"]) for r in T), key=lambda x: x[1] - x[2])
-    add("S", f"Grazie {b0}! Qui è un bel caos! Prima notizia: {sup[0]} sta superando le aspettative! Il presidente la voleva intorno al {ORDM.get(sup[1], str(sup[1]))} posto, e invece oggi è {ORD.get(sup[2], str(sup[2])+'ª')}!", "urlo")
+    add("S", f"Grazie {b0}! Qui è un bel caos! Prima notizia: {sup[0]} sta superando le aspettative! Il presidente la voleva intorno al {ORDM.get(sup[1], str(sup[1]))} posto, e invece oggi è {ORD.get(sup[2], str(sup[2])+'ª')}!", "entusiasmo")
     g = D["cal"][0]["m"]; conf = next(((m[0], m[1]) for m in g if "Oranje VC" in m), (g[0][0], g[0][1]))
-    add("S", f"Dalla sala stampa, alla vigilia di {conf[0]} contro {conf[1]}, l'allenatore dice: {pick(CONF)} Per ora è tutto, restituisco la linea in studio!")
+    add("S", f"Dalla sala stampa, alla vigilia di {conf[0]} contro {conf[1]}, l'allenatore dice: {pick(CONF)} Per ora è tutto, restituisco la linea in studio!", "entusiasmo")
     add("G", pick(["Grazie Giulia! Un allenatore, una frase e mezza lega è già in fermento.", "Grazie Giulia! Questo è calcio!", "Grazie Giulia, collegamento da Oscar!"]))
     # --- coppa: storie vere, nessun giro di parole
     cup = D["cup"][-1] if D.get("cup") else None
