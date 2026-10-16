@@ -1,9 +1,5 @@
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-urlo ERRORE open() got an unexpected keyword argument 'metadata_errors'
-ride ERRORE open() got an unexpected keyword argument 'metadata_errors'
-sospiro ERRORE open() got an unexpected keyword argument 'metadata_errors'
-stupore ERRORE open() got an unexpected keyword argument 'metadata_errors'
-sarcasmo ERRORE open() got an unexpected keyword argument 'metadata_errors'
-commosso ERRORE open() got an unexpected keyword argument 'metadata_errors'
-sussurro ERRORE open() got an unexpected keyword argument 'metadata_errors'
-entusiasmo ERRORE open() got an unexpected keyword argument 'metadata_errors'
+si_urlo ERRORE 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Developer instruction is not enabled for this model', 'status': 'INVALID_ARGUMENT'}}
+tag_ride ERRORE open() got an unexpected keyword argument 'metadata_errors'
+tag_sussurro ERRORE open() got an unexpected keyword argument 'metadata_errors'
+tag_urlo ERRORE open() got an unexpected keyword argument 'metadata_errors'
