@@ -1,0 +1,8 @@
+{
+  "_come_si_usa": "Ciro va in onda solo se qui sotto c'è almeno una notizia. Ogni notizia ha un tipo (ufficiale o semiufficiale) e un testo da leggere. Se la lista è vuota, Ciro non c'è.",
+  "demo": true,
+  "notizie": [
+    {"tipo": "ufficiale", "testo": "doppio scambio chiuso in lega: due squadre si sono scambiate due giocatori nello stesso giorno"},
+    {"tipo": "semiufficiale", "testo": "Raspadori si è infortunato, i tempi di recupero sono ancora da capire"}
+  ]
+}
