@@ -1,0 +1,4 @@
+riga 8 de-DE-SeraphinaMultilingualNeural intera, tentativo 0 fallito: NoAudioReceived
+riga 9 de-DE-SeraphinaMultilingualNeural intera, tentativo 0 fallito: NoAudioReceived
+riga 9 de-DE-SeraphinaMultilingualNeural intera, tentativo 1 fallito: NoAudioReceived
+ok 19
