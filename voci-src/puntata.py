@@ -41,6 +41,25 @@ GRUOLO = {"B": "un conduttore radiofonico italiano, voce calda e professionale",
 GTAG = {"urlo": "[shouting, excited] ", "sus": "[whispering] ", "ride": "[laughing] ", "sospiro": "[sighing] ", "stupore": "[surprised] ", "sarcasmo": "[sarcastic] ", "commosso": "[emotional, warm] ", "entusiasmo": "[enthusiastic] "}
 _gcl = None
 GSTOP = [False]
+def emozione(st, t):
+    """Le emozioni passano dal modo in cui è scritto il testo (le etichette tra parentesi venivano lette)."""
+    import re as _re
+    if st == "urlo":
+        fr = _re.split(r"(?<=[.!?])\s+", t.strip())
+        for i in range(min(2, len(fr))):
+            fr[i] = _re.sub(r"[.!?]+$", "", fr[i]).upper() + "!!!"
+        return " ".join(fr)
+    if st == "ride":
+        m = _re.match(r"^(Ah ah ah|Ah ah),?\s*(.*)$", t)
+        if m:
+            resto = m.group(2)
+            resto = resto[:1].upper() + resto[1:]
+            return "Ahahahahah! " + resto.replace(", ", "... ahahah... ", 1)
+        return t
+    if st == "stupore":
+        mp = {"Ma davvero?!": "Ma... davvero?! No!", "Non ci credo!": "No! Non ci posso credere!", "Cosa?! Ma com'è possibile?!": "Cosa?! Ma... com'è possibile?! No!"}
+        return mp.get(t.strip(), t)
+    return t
 def gemini_uno(k, tx, fn, stile):
     global _gcl
     from google import genai
@@ -48,6 +67,7 @@ def gemini_uno(k, tx, fn, stile):
     if _gcl is None: _gcl = genai.Client(api_key=GKEY)
     st = stile if isinstance(stile, str) or stile is None else None
     istr = ""
+    tx = emozione(st, tx)
     r = _gcl.models.generate_content(model=GMOD, contents=istr + tx, config=types.GenerateContentConfig(response_modalities=["AUDIO"],
         speech_config=types.SpeechConfig(voice_config=types.VoiceConfig(prebuilt_voice_config=types.PrebuiltVoiceConfig(voice_name=GVOCI[k])))))
     pcm = r.candidates[0].content.parts[0].inline_data.data
@@ -68,14 +88,17 @@ async def parla(k, testo, fn, i, stile=None):
     testo = testo.replace("«", "").replace("»", "")
     for a_, b_ in PRON.items(): testo = testo.replace(a_, b_)
     if GKEY and not GSTOP[0]:
-        for n in range(4):
+        for n in range(5):
             try:
                 await asyncio.get_event_loop().run_in_executor(None, gemini_uno, k, testo, fn, stile)
                 await asyncio.sleep(3); return
             except Exception as e:
                 print("riga", i, "Gemini tentativo", n, "fallito:", str(e)[:160], flush=True)
-                if "429" in str(e) and "retry in" in str(e) and "m" in str(e).split("retry in")[1][:12]: GSTOP[0] = True; break
-                await asyncio.sleep(8 * (n + 1))
+                import re as _r
+                mm = _r.search(r"retry in ([\d.]+)(h|m|s)", str(e))
+                if "429" in str(e) and mm and (mm.group(2) == "h" or (mm.group(2) == "m" and float(mm.group(1)) > 3)):
+                    GSTOP[0] = True; break
+                await asyncio.sleep((float(mm.group(1)) + 2 if (mm and mm.group(2) == "s") else 8 * (n + 1)))
         print("riga", i, "uso edge-tts")
     pulito = testo.replace("«", "").replace("»", "").replace("ª", "a").replace("°", "")
     for n, (tx, st_, lg) in enumerate([(testo, stile, False)] * 5 + [(pulito, "base", False)] * 3):
