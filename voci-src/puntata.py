@@ -1,3 +1,4 @@
+import sys
 """Puntata di prova della Radio con quattro voci: conduttore, commentatore, inviata e Ciro (mercato)."""
 import asyncio, json, pathlib
 import edge_tts
@@ -5,7 +6,8 @@ R = pathlib.Path(__file__).parent
 OUT = R.parent / "lab" / "voci"; OUT.mkdir(parents=True, exist_ok=True)
 D = json.load(open(R / "dati.json", encoding="utf-8"))
 NOMI = json.load(open(R / "nomi.json", encoding="utf-8"))
-VOCI = {"B": "it-IT-DiegoNeural", "G": "fr-FR-RemyMultilingualNeural", "S": "de-DE-SeraphinaMultilingualNeural", "C": "it-IT-GiuseppeMultilingualNeural"}
+SUF = sys.argv[2] if len(sys.argv)>2 else ""
+VOCI = {"B": "it-IT-DiegoNeural", "G": (sys.argv[1] if len(sys.argv)>1 else "en-US-AndrewMultilingualNeural"), "S": "de-DE-SeraphinaMultilingualNeural", "C": "it-IT-GiuseppeMultilingualNeural"}
 RUOLO = {"B": "Conduttore", "G": "Commentatore", "S": "Inviata speciale", "C": "Mercato"}
 def f(x):
     x = float(x)
@@ -77,8 +79,8 @@ async def main():
     for i, (k, t) in enumerate(L):
         fn = OUT / f"_p{i}.tmp"
         await parla(k, t, fn, i); parti.append(fn)
-    with open(OUT / "puntata.mp3", "wb") as o:
+    with open(OUT / f"puntata{SUF}.mp3", "wb") as o:
         for p in parti: o.write(p.read_bytes()); p.unlink()
-    json.dump([{"chi": NOMI[k], "ruolo": RUOLO[k], "testo": t} for k, t in L], open(OUT / "puntata.json", "w"), ensure_ascii=False)
+    json.dump([{"chi": NOMI[k], "ruolo": RUOLO[k], "testo": t} for k, t in L], open(OUT / f"puntata{SUF}.json", "w"), ensure_ascii=False)
     print("ok", len(L))
 asyncio.run(main())
