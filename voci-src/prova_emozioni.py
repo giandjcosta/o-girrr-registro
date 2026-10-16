@@ -14,7 +14,7 @@ CASI = [
  ("Sussurro", [("A normale", "Lo dirò sottovoce: semi ufficiale, prendetelo con le pinze!"), ("B puntini", "Lo dirò... sottovoce... semi ufficiale... prendetelo con le pinze...")]),
 ]
 def clip(testo, nome):
-    for t in range(4):
+    for t in range(2):
         try:
             r = cl.models.generate_content(model="gemini-3.8-flash-tts", contents=testo, config=types.GenerateContentConfig(response_modalities=["AUDIO"], speech_config=types.SpeechConfig(voice_config=types.VoiceConfig(prebuilt_voice_config=types.PrebuiltVoiceConfig(voice_name="Charon")))))
             pcm = taglia_coda(r.candidates[0].content.parts[0].inline_data.data)
@@ -22,7 +22,7 @@ def clip(testo, nome):
             with wave.open(str(w), "wb") as o: o.setnchannels(1); o.setsampwidth(2); o.setframerate(24000); o.writeframes(pcm)
             subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(w), "-b:a", "64k", str(OUT / (nome + ".mp3"))], check=True); w.unlink(); return True
         except Exception as e:
-            print("errore", nome, str(e)[:150], flush=True); time.sleep(10 * (t + 1))
+            import traceback; print("errore", nome, type(e).__name__, str(e)[:200], flush=True); traceback.print_exc(limit=3); time.sleep(5)
     return False
 h = ["<!doctype html><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=robots content=noindex><title>Prova emozioni</title><body style='font-family:system-ui;max-width:640px;margin:0 auto;padding:16px'><h2>Emozioni: come si scrive il testo</h2><p>Stessa voce (Charon), testi diversi. Fine clip tagliata senza rumore.</p>"]
 for i, (nome, vs) in enumerate(CASI):
