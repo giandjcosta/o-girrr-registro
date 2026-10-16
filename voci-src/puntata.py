@@ -13,7 +13,7 @@ def f(x):
     x = float(x)
     return str(int(x)) if x == int(x) else str(x).replace(".", ",")
 NUM = ["zero","uno","due","tre","quattro","cinque","sei","sette","otto","nove","dieci"]
-PRON = {"Champions Cup": "Cèmpions Càp", "AFA SELECCION": "Afa Seleccion"}
+PRON = {"Girrr": "Giirrr", "Champions Cup": "Cèmpions Càp", "AFA SELECCION": "Afa Seleccion"}
 ORD = {1:"prima",2:"seconda",3:"terza",4:"quarta",5:"quinta",6:"sesta",7:"settima",8:"ottava",9:"nona",10:"decima"}
 a = D["aw"][-1]; T = D["tab"]
 DER = [("Grodah","WOA"),("stif dc","Real Madrink"),("Oranje VC","AFA SELECCION"),("Apo team","The Blue brothers"),("Mariana Coneja","Atletico ma non troppo")]
@@ -85,10 +85,8 @@ async def main():
     for i, (k, t) in enumerate(L):
         fn = OUT / f"_p{i}.tmp"
         await parla(k, t, fn, i); parti.append(fn)
-    with open(OUT / f"puntata{SUF}.mp3", "wb") as o:
-        if (R / "apertura.mp3").exists(): o.write((R / "apertura.mp3").read_bytes())
+    with open(R / "_voci.mp3", "wb") as o:
         for p in parti: o.write(p.read_bytes()); p.unlink()
-        if (R / "chiusura.mp3").exists(): o.write((R / "chiusura.mp3").read_bytes())
     json.dump([{"chi": NOMI[k], "ruolo": RUOLO[k], "testo": t} for k, t in L], open(OUT / f"puntata{SUF}.json", "w"), ensure_ascii=False)
     print("ok", len(L))
 asyncio.run(main())
