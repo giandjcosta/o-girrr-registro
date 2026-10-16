@@ -38,7 +38,7 @@ GMOD = os.environ.get("MODELLO", "") or "gemini-3.8-flash-tts"
 GVOCI = {"B": "Charon", "G": "Orus", "S": "Aoede", "C": "Fenrir"}
 GRUOLO = {"B": "un conduttore radiofonico italiano, voce calda e professionale", "G": "un commentatore sportivo italiano, secondo telecronista, ironico e pungente",
           "S": "un'inviata giornalista italiana, voce chiara e vivace", "C": "un esperto di calciomercato italiano, tono da cronista di mercato"}
-GSTILE = {"ride": "ridendo di gusto, con una vera risata nella voce", "sospiro": "con un sospiro di delusione, voce bassa e rassegnata", "stupore": "con grande stupore, voce che sale, incredulo", "sarcasmo": "con tono sarcastico e ironico, un po' sornione", "commosso": "con voce commossa e calda, quasi emozionato", "entusiasmo": "con grande entusiasmo, voce brillante e piena di energia, come un'inviata a bordo campo", "urlo": "al massimo dell'entusiasmo, voce potente e squillante, ritmo veloce, come in una telecronaca", "sus": "sussurrando, in tono complice e confidenziale, come se rivelasse un segreto", None: "con ritmo vivace ma chiaro"}
+GTAG = {"urlo": "[shouting, excited] ", "sus": "[whispering] ", "ride": "[laughing] ", "sospiro": "[sighing] ", "stupore": "[surprised] ", "sarcasmo": "[sarcastic] ", "commosso": "[emotional, warm] ", "entusiasmo": "[enthusiastic] "}
 _gcl = None
 GSTOP = [False]
 def gemini_uno(k, tx, fn, stile):
@@ -47,7 +47,7 @@ def gemini_uno(k, tx, fn, stile):
     from google.genai import types
     if _gcl is None: _gcl = genai.Client(api_key=GKEY)
     st = stile if isinstance(stile, str) or stile is None else None
-    istr = f"Sei {GRUOLO[k]}. Leggi il testo seguente {GSTILE.get(st, GSTILE[None])}, in italiano perfetto, senza leggere queste istruzioni: "
+    istr = GTAG.get(st, "")
     r = _gcl.models.generate_content(model=GMOD, contents=istr + tx, config=types.GenerateContentConfig(response_modalities=["AUDIO"],
         speech_config=types.SpeechConfig(voice_config=types.VoiceConfig(prebuilt_voice_config=types.PrebuiltVoiceConfig(voice_name=GVOCI[k])))))
     pcm = r.candidates[0].content.parts[0].inline_data.data
