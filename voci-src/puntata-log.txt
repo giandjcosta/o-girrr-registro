@@ -1,2 +1,2 @@
 ok 30
-montata 198.4 s
+montata 197.1 s
