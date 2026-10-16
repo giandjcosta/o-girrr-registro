@@ -7,7 +7,10 @@ D = json.load(open(R / "dati.json", encoding="utf-8"))
 NOMI = json.load(open(R / "nomi.json", encoding="utf-8"))
 VOCI = {"B": "en-US-BrianMultilingualNeural", "G": "fr-FR-RemyMultilingualNeural", "S": "de-DE-SeraphinaMultilingualNeural", "C": "it-IT-GiuseppeMultilingualNeural"}
 RUOLO = {"B": "Conduttore", "G": "Commentatore", "S": "Inviata speciale", "C": "Mercato"}
-f = lambda x: str(x).replace(".", ",")
+def f(x):
+    x = float(x)
+    return str(int(x)) if x == int(x) else str(x).replace(".", ",")
+ORD = {1:"prima",2:"seconda",3:"terza",4:"quarta",5:"quinta",6:"sesta",7:"settima",8:"ottava",9:"nona",10:"decima"}
 a = D["aw"][-1]; T = D["tab"]
 DER = [("Grodah","WOA"),("stif dc","Real Madrink"),("Oranje VC","AFA SELECCION"),("Apo team","The Blue brothers"),("Mariana Coneja","Atletico ma non troppo")]
 def derby(m): return any({x.lower(), y.lower()} == {m[0].lower(), m[1].lower()} for x, y in DER)
@@ -24,7 +27,7 @@ L = [
  ("B", f"E la sconfitta più pesante è quella di {a['maz'][0]}, battuta da {a['maz'][3]} di {f(a['maz'][2])} punti."),
  ("G", f"In classifica comanda {T[0]['t']} con {T[0]['pts']} punti, seguita da {T[1]['t']} e {T[2]['t']}."),
  ("B", f"Ora ci colleghiamo con la nostra inviata dal campo. {s}, a te."),
- ("S", f"Grazie {b}, eccomi sul campo. Prima notizia: {sup[0]} sta superando le aspettative. Il presidente la voleva intorno al {sup[1]}° posto, e invece oggi è {sup[2]}ª."),
+ ("S", f"Grazie {b}, eccomi sul campo. Prima notizia: {sup[0]} sta superando le aspettative. Il presidente la voleva intorno al {sup[1]}° posto, e invece oggi è {ORD.get(sup[2], str(sup[2])+'ª')}."),
  ("S", f"Nuovo badge in bacheca: {a['mvp'][0]} sblocca il traguardo Re della giornata, con {f(a['mvp'][1])} punti."),
  ("S", f"Dalla sala stampa, alla vigilia di {conf[0]} contro {conf[1]}, l'allenatore non ha dubbi: «Chi non crede in noi può restare a casa.» Parole forti. Per ora è tutto, restituisco la linea in studio."),
 ]
