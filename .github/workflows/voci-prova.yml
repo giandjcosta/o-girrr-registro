@@ -1,0 +1,23 @@
+name: Voci di prova della Radio
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  voci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install edge-tts
+      - run: python voci-src/genera.py
+      - name: Pubblica gli audio
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@users.noreply.github.com"
+          git add lab/voci
+          git commit -m "Audio di prova della Radio" || echo "nessuna modifica"
+          git pull --rebase -q
+          git push
