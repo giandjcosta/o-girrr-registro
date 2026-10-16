@@ -95,7 +95,8 @@ svg text{fill:var(--mute);font-family:var(--fb)}
 /* Carte */
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px}
 .cd{perspective:800px;aspect-ratio:3/4.1;position:relative;width:100%}
-.cd .in{position:absolute;inset:0;transition:transform .6s;transform-style:preserve-3d}
+.cd .in{position:absolute;inset:0;transition:transform .6s;-webkit-transform-style:preserve-3d;transform-style:preserve-3d}
+.cd.big{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .cd.fl .in{transform:rotateY(180deg)}
 .cd .fa,.cd .fb{position:absolute;inset:0;border-radius:16px;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:9px;display:flex;flex-direction:column;border:2px solid var(--c1);color:var(--ci);overflow:hidden}
 .cd .fa{background:linear-gradient(160deg,var(--c1),var(--c2))}
@@ -414,7 +415,6 @@ document.addEventListener('click',function(e){
   if(b.id==='help'){S.help=!S.help;return render()}
   if(b.id==='lancia'&&!b.disabled){S.sfide.unshift({a:ME,b:S.opp,st:S.stake,s:'attesa',g:'G3'});return render()}
   if(b.id==='play'){if(RA.playing){radioStop();return render()}RA.playing=true;try{speechSynthesis.cancel()}catch(x){}RA.i=RA.i<0?-1:RA.i-1;return radioNext()}
-  if(d.card!==undefined&&b.classList.contains('big')){b.classList.toggle('fl')}
 });
 document.addEventListener('click',function(e){var c=e.target.closest('.cd.big');if(c&&!e.target.closest('button'))c.classList.toggle('fl')});
 document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('big')){e.preventDefault();e.target.classList.toggle('fl')}});
