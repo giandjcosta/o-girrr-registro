@@ -1,3 +1,2 @@
-riga 9 de-DE-SeraphinaMultilingualNeural intera, tentativo 0 fallito: NoAudioReceived
 ok 19
-montata 158.8 s
+montata 157.8 s
