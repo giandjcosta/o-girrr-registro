@@ -86,7 +86,9 @@ async def main():
         fn = OUT / f"_p{i}.tmp"
         await parla(k, t, fn, i); parti.append(fn)
     with open(OUT / f"puntata{SUF}.mp3", "wb") as o:
+        if (R / "apertura.mp3").exists(): o.write((R / "apertura.mp3").read_bytes())
         for p in parti: o.write(p.read_bytes()); p.unlink()
+        if (R / "chiusura.mp3").exists(): o.write((R / "chiusura.mp3").read_bytes())
     json.dump([{"chi": NOMI[k], "ruolo": RUOLO[k], "testo": t} for k, t in L], open(OUT / f"puntata{SUF}.json", "w"), ensure_ascii=False)
     print("ok", len(L))
 asyncio.run(main())
