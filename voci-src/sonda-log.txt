@@ -1,10 +1,9 @@
-senza_stile 0 durata audio 7.0 s (testo 89 caratteri)
-senza_stile 1 durata audio 6.3 s (testo 89 caratteri)
-dì_con 0 durata audio 9.7 s (testo 89 caratteri)
-dì_con 1 durata audio 10.1 s (testo 89 caratteri)
-lungo_attuale 0 durata audio 18.5 s (testo 89 caratteri)
-lungo_attuale 1 durata audio 19.5 s (testo 89 caratteri)
-tag 0 durata audio 8.7 s (testo 89 caratteri)
-tag 1 durata audio 7.4 s (testo 89 caratteri)
-tag_it 0 durata audio 9.2 s (testo 89 caratteri)
-tag_it 1 durata audio 8.6 s (testo 89 caratteri)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+urlo ERRORE open() got an unexpected keyword argument 'metadata_errors'
+ride ERRORE open() got an unexpected keyword argument 'metadata_errors'
+sospiro ERRORE open() got an unexpected keyword argument 'metadata_errors'
+stupore ERRORE open() got an unexpected keyword argument 'metadata_errors'
+sarcasmo ERRORE open() got an unexpected keyword argument 'metadata_errors'
+commosso ERRORE open() got an unexpected keyword argument 'metadata_errors'
+sussurro ERRORE open() got an unexpected keyword argument 'metadata_errors'
+entusiasmo ERRORE open() got an unexpected keyword argument 'metadata_errors'
