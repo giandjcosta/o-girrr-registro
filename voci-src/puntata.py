@@ -12,6 +12,8 @@ RUOLO = {"B": "Conduttore", "G": "Commentatore", "S": "Inviata speciale", "C": "
 def f(x):
     x = float(x)
     return str(int(x)) if x == int(x) else str(x).replace(".", ",")
+NUM = ["zero","uno","due","tre","quattro","cinque","sei","sette","otto","nove","dieci"]
+PRON = {"Champions Cup": "Cèmpions Càp", "AFA SELECCION": "Afa Seleccion"}
 ORD = {1:"prima",2:"seconda",3:"terza",4:"quarta",5:"quinta",6:"sesta",7:"settima",8:"ottava",9:"nona",10:"decima"}
 a = D["aw"][-1]; T = D["tab"]
 DER = [("Grodah","WOA"),("stif dc","Real Madrink"),("Oranje VC","AFA SELECCION"),("Apo team","The Blue brothers"),("Mariana Coneja","Atletico ma non troppo")]
@@ -35,10 +37,12 @@ L = [
 ]
 cup = D["cup"][-1] if D.get("cup") else None
 if cup:
-    L.append(("B", f"Grazie {s}. E adesso le notizie della Coppa! Si è chiusa la giornata {cup['n']} della Champions Cup."))
+    L.append(("B", f"Grazie {s}. E adesso le notizie della Coppa! Si è chiusa la giornata {cup['n']} della Champions Cup, la coppa della nostra lega."))
     for i, m in enumerate(sorted(cup["m"], key=lambda m: -abs(m[2]-m[3]))[:2]):
-        x, y = m[1], m[4]; ga, gb = m[5].split("-")
-        frase = f"{x} e {y} si dividono la posta, {m[5]}." if ga == gb else (f"{x} batte {y} per {m[5]}." if int(ga) > int(gb) else f"{y} batte {x} per {gb}-{ga}.")
+        x, y = m[1], m[4]; ga, gb = m[5].split("-"); ga, gb = int(ga), int(gb)
+        if ga == gb: frase = f"In Coppa, {x} e {y} si dividono la posta: la partita finisce {NUM[ga]} a {NUM[gb]}."
+        elif ga > gb: frase = f"In Coppa, vittoria di {x} contro {y}: il risultato finale è {NUM[ga]} a {NUM[gb]}."
+        else: frase = f"In Coppa, vittoria di {y} contro {x}: il risultato finale è {NUM[gb]} a {NUM[ga]}."
         L.append(("G" if i == 0 else "B", frase))
 L += [
  ("B", f"E adesso uno spazio speciale: con noi c'è anche {c}, con le sue voci di mercato. {c}, a te."),
@@ -55,6 +59,7 @@ async def uno(voce, tx, fn, rate):
 
 async def parla(k, testo, fn, i):
     """Prova la riga intera; se la voce non risponde la legge a frasi; come ultima scelta usa Isabella."""
+    for a_, b_ in PRON.items(): testo = testo.replace(a_, b_)
     pulito = testo.replace("«", "").replace("»", "").replace("ª", "a").replace("°", "")
     for n, (tx, rate) in enumerate([(testo, "+4%"), (pulito, None)]):
         try:

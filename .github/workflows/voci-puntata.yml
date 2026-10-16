@@ -15,7 +15,6 @@ jobs:
       - name: Genera la puntata
         run: |
           python voci-src/puntata.py en-US-AndrewMultilingualNeural "" 2>&1 | tee voci-src/puntata-log.txt
-          python voci-src/puntata.py de-DE-FlorianMultilingualNeural -florian 2>&1 | tee -a voci-src/puntata-log.txt
         continue-on-error: true
       - name: Pubblica la puntata
         run: |
