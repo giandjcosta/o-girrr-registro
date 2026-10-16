@@ -17,7 +17,7 @@ OUT = R.parent / "lab" / "voci"; OUT.mkdir(parents=True, exist_ok=True)
 D = json.load(open(R / "dati.json", encoding="utf-8"))
 NOMI = json.load(open(R / "nomi.json", encoding="utf-8"))
 SUF = sys.argv[2] if len(sys.argv)>2 else ""
-VOCI = {"B": "it-IT-DiegoNeural", "G": (sys.argv[1] if len(sys.argv)>1 else "en-US-AndrewMultilingualNeural"), "S": "de-DE-SeraphinaMultilingualNeural", "C": "it-IT-GiuseppeMultilingualNeural"}
+VOCI = {"B": "it-IT-DiegoNeural", "G": (sys.argv[1] if len(sys.argv)>1 else "en-US-AndrewMultilingualNeural"), "S": "it-IT-ElsaNeural", "C": "it-IT-GiuseppeMultilingualNeural"}
 RUOLO = {"B": "Conduttore", "G": "Commentatore", "S": "Inviata speciale", "C": "Mercato"}
 def f(x):
     x = float(x)
