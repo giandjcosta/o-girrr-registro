@@ -118,9 +118,9 @@ def build(D, rng, mercato, nomi=None):
     notizie = (mercato or {}).get("notizie") or []
     if notizie:
         add("B", "E adesso il mercato! Abbiamo notizie, e per commentarle chiamiamo Ciro Trattativa!", "urlo")
-        add("C", "Pssst. Buongiorno a tutti, qui Ciro Trattativa. Notizie fresche dal mercato.", "sus")
+        add("C", "Buongiorno a tutti, qui Ciro Trattativa. Lo dirò sottovoce: notizie fresche dal mercato!", "sus")
         for z in notizie[:3]:
-            pref = "Ufficiale!" if z["tipo"] == "ufficiale" else "Voci insistenti, semi ufficiale!"
+            pref = "Ufficiale!" if z["tipo"] == "ufficiale" else "Semi ufficiale: prendetelo con le pinze!"
             add("C", f"{pref} {z['testo'][0].upper() + z['testo'][1:]}.")
         add("G", "Ciro, come sempre, sicurissimo! Al cento per cento.")
     # --- chiusura
