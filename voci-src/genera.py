@@ -21,9 +21,8 @@ async def fai(nome, campo, voci, rate):
         f = TMP / f"{nome}_{i:02d}.mp3"
         await edge_tts.Communicate(r[campo], v, rate=rate).save(str(f))
         files.append(f)
-    lst = TMP / f"{nome}.txt"
-    lst.write_text("".join(f"file '{f.resolve()}'\n" for f in files))
-    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", str(lst), "-c:a", "libmp3lame", "-b:a", "96k", str(OUT / f"{nome}.mp3")], check=True)
+    with open(OUT / f"{nome}.mp3", "wb") as out:
+        for f in files: out.write(f.read_bytes())
     print("creato", nome, voci)
 
 async def main():
