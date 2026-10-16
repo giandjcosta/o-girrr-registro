@@ -19,9 +19,13 @@ def duck(x, t0, t1, l): x = x.copy(); x[int(t0*SR):int(t1*SR)] *= l; return x
 J = load(SU / "jingle-sport.mp3"); C = load(SU / "folla-stadio.mp3"); W = load(SU / "fischio-arbitro.mp3", ("-t", "0.9"))
 W = W / np.abs(W).max() * 0.95; W[-int(0.15*SR):] *= np.linspace(1, 0, int(0.15*SR))
 V = load(voci_mp3)
-JA = seg(J, 49.5, 11.5, 0.19, 0.15, 4.5); bed = seg(C, 8.0, 6.0, 0.12, 0.3, 2.5)
-t_j = 1.35; t_voce = t_j + 7.6
-ap = mix([(0.0, duck(bed, 1.3, 6.0, 0.5)), (0.3, W*0.9), (t_j, JA)], t_voce + 11.5)
+t_j = 1.35; t_voce = t_j + 7.0
+JA = seg(J, 49.5, 12.2, 0.19, 0.15, 0.05); bed = seg(C, 8.0, 6.0, 0.12, 0.3, 2.5)
+# la musica scende già quando parte il primo presentatore e poi si dissolve piano piano
+tt = np.arange(len(JA)) / SR; tv = t_voce - t_j
+env = np.interp(tt, [0, tv - 0.5, tv + 0.4, tt[-1]], [1.0, 1.0, 0.38, 0.0])
+JA = JA * env
+ap = mix([(0.0, duck(bed, 1.3, 6.0, 0.5)), (0.3, W*0.9), (t_j, JA)], t_voce + 11.0)
 jc = seg(J, 126.4, 9.8, 0.19, 0.4, 0.2); bed2 = seg(C, 7.5, 6.5, 0.13, 0.8, 2.2)
 ch = mix([(0.0, duck(bed2, 2.2, 6.5, 0.5)), (0.2, W*0.85), (1.0, W*0.85), (1.8, W), (2.5, jc)], 12.4)
 tot = np.zeros(int(SR*(t_voce + len(V)/SR + 0.6 + len(ch)/SR))); tot[:len(ap)] += ap
