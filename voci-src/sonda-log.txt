@@ -1,5 +1,4 @@
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-si_urlo ERRORE 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Developer instruction is not enabled for this model', 'status': 'INVALID_ARGUMENT'}}
-tag_ride ERRORE open() got an unexpected keyword argument 'metadata_errors'
-tag_sussurro ERRORE open() got an unexpected keyword argument 'metadata_errors'
-tag_urlo ERRORE open() got an unexpected keyword argument 'metadata_errors'
+tag_ride 4.6 s | testo: [laughing] Ah ah ah, scusate, non ce la faccio! || TRASCRITTO: scusate non ce la faccio
+tag_sussurro 5.9 s | testo: [whispering] Lo dirò sottovoce: semi ufficiale, prendetelo con le pinze! || TRASCRITTO: Lo tirò sottovoce semi-office, prendetelo con le pinze
+tag_urlo 4.1 s | testo: [shouting] Che mazzata! Apo Team vola a ottanta punti! || TRASCRITTO: Che mazzata! A potim vola 80 punti!
