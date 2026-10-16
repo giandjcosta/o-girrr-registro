@@ -1,6 +1,0 @@
-en-GB ['en-GB-LibbyNeural', 'en-GB-MaisieNeural', 'en-GB-RyanNeural', 'en-GB-SoniaNeural', 'en-GB-ThomasNeural']
-en-GB ['en-GB-LibbyNeural', 'en-GB-MaisieNeural', 'en-GB-RyanNeural', 'en-GB-SoniaNeural', 'en-GB-ThomasNeural']
-it-IT ['it-IT-DiegoNeural', 'it-IT-ElsaNeural', 'it-IT-GiuseppeMultilingualNeural', 'it-IT-IsabellaNeural']
-it-IT ['it-IT-DiegoNeural', 'it-IT-ElsaNeural', 'it-IT-GiuseppeMultilingualNeural', 'it-IT-IsabellaNeural']
-creato radio-en ['en-GB-RyanNeural', 'en-GB-ThomasNeural']
-creato radio-it ['it-IT-DiegoNeural', 'it-IT-GiuseppeMultilingualNeural']
