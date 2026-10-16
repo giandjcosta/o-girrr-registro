@@ -34,13 +34,14 @@ MERC = json.load(open(R / "mercato.json", encoding="utf-8")) if (R / "mercato.js
 L = copione.build(D, random.Random(D["aw"][-1]["n"] * 7919), MERC, NOMI)
 import re, os, wave, subprocess
 GKEY = os.environ.get("GEMINI_API_KEY", "")
-GMOD = os.environ.get("MODELLO", "") or "gemini-3.8-flash-tts"
+GMOD = os.environ.get("MODELLO", "") or "gemini-3.8-flash-lite-tts"
 GVOCI = {"B": "Charon", "G": "Orus", "S": "Aoede", "C": "Fenrir"}
 GRUOLO = {"B": "un conduttore radiofonico italiano, voce calda e professionale", "G": "un commentatore sportivo italiano, secondo telecronista, ironico e pungente",
           "S": "un'inviata giornalista italiana, voce chiara e vivace", "C": "un esperto di calciomercato italiano, tono da cronista di mercato"}
 GTAG = {"urlo": "[shouting, excited] ", "sus": "[whispering] ", "ride": "[laughing] ", "sospiro": "[sighing] ", "stupore": "[surprised] ", "sarcasmo": "[sarcastic] ", "commosso": "[emotional, warm] ", "entusiasmo": "[enthusiastic] "}
 _gcl = None
-GSTOP = [False]
+GSTOP = [False, False]
+MOTORE = {}
 def emozione(st, t):
     """Le emozioni passano dal modo in cui è scritto il testo (le etichette tra parentesi venivano lette)."""
     import re as _re
@@ -77,6 +78,24 @@ def gemini_uno(k, tx, fn, stile):
     with wave.open(str(w), "wb") as o: o.setnchannels(1); o.setsampwidth(2); o.setframerate(24000); o.writeframes(pcm)
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(w), "-ar", "24000", "-ac", "1", "-b:a", "48k", "-f", "mp3", "-write_xing", "0", "-id3v2_version", "0", str(fn)], check=True)
     w.unlink()
+CHIRP = {"B": "Charon", "G": "Orus", "S": "Aoede", "C": "Fenrir"}
+_ccred = [None]
+def chirp_uno(k, tx, fn, stile):
+    import json, base64, urllib.request
+    if _ccred[0] is None:
+        import google.auth.transport.requests
+        from google.oauth2 import service_account
+        sa = os.environ.get("GOOGLE_TTS_JSON", "")
+        if not sa: raise RuntimeError("manca GOOGLE_TTS_JSON")
+        c = service_account.Credentials.from_service_account_info(json.loads(sa), scopes=["https://www.googleapis.com/auth/cloud-platform"])
+        _ccred[0] = (c, google.auth.transport.requests.Request())
+    c, rq_ = _ccred[0]
+    if not c.valid: c.refresh(rq_)
+    st = stile if isinstance(stile, str) or stile is None else None
+    tx = emozione(st, tx)
+    body = json.dumps({"input": {"text": tx}, "voice": {"languageCode": "it-IT", "name": "it-IT-Chirp3-HD-" + CHIRP[k]}, "audioConfig": {"audioEncoding": "MP3", "sampleRateHertz": 24000, "speakingRate": 1.05}}).encode()
+    rq = urllib.request.Request("https://texttospeech.googleapis.com/v1/text:synthesize", body, {"Content-Type": "application/json", "Authorization": "Bearer " + c.token})
+    fn.write_bytes(base64.b64decode(json.load(urllib.request.urlopen(rq, timeout=60))["audioContent"]))
 STILI = {"urlo": dict(rate="+12%", pitch="+3Hz", volume="+6%"), "sus": dict(rate="-4%", pitch="-3Hz", volume="-10%"), None: dict(rate="+6%")}
 async def uno(voce, tx, fn, stile):
     kw = STILI.get(stile, {}) if isinstance(stile, (str, type(None))) else {"rate": stile}
@@ -87,19 +106,26 @@ async def parla(k, testo, fn, i, stile=None):
     """Prova la riga intera; se la voce non risponde la legge a frasi; come ultima scelta usa Isabella."""
     testo = testo.replace("«", "").replace("»", "")
     for a_, b_ in PRON.items(): testo = testo.replace(a_, b_)
-    if GKEY and not GSTOP[0]:
-        for n in range(5):
+    for nome, fun, ok_ in (("gemini", gemini_uno, bool(GKEY) and not GSTOP[0]), ("chirp", chirp_uno, bool(os.environ.get("GOOGLE_TTS_JSON")) and not GSTOP[1])):
+        if not ok_: continue
+        for n in range(4 if nome == "gemini" else 2):
             try:
-                await asyncio.get_event_loop().run_in_executor(None, gemini_uno, k, testo, fn, stile)
-                await asyncio.sleep(3); return
+                await asyncio.get_event_loop().run_in_executor(None, fun, k, testo, fn, stile)
+                MOTORE[nome] = MOTORE.get(nome, 0) + 1
+                await asyncio.sleep(3 if nome == "gemini" else 0.3); return
             except Exception as e:
-                print("riga", i, "Gemini tentativo", n, "fallito:", str(e)[:160], flush=True)
+                print("riga", i, nome, "tentativo", n, "fallito:", str(e).replace("\n", " ")[:300], flush=True)
                 import re as _r
                 mm = _r.search(r"retry in ([\d.]+)(h|m|s)", str(e))
-                if "429" in str(e) and mm and (mm.group(2) == "h" or (mm.group(2) == "m" and float(mm.group(1)) > 3)):
+                if nome == "gemini" and "429" in str(e) and (not mm or mm.group(2) == "h" or (mm.group(2) == "m" and float(mm.group(1)) > 3)):
                     GSTOP[0] = True; break
-                await asyncio.sleep((float(mm.group(1)) + 2 if (mm and mm.group(2) == "s") else 8 * (n + 1)))
-        print("riga", i, "uso edge-tts")
+                if nome == "gemini" and "402" in str(e): GSTOP[0] = True; break
+                await asyncio.sleep((float(mm.group(1)) + 2 if (mm and mm.group(2) == "s") else 5 * (n + 1)))
+        else:
+            if nome == "chirp": GSTOP[1] = True
+        print("riga", i, nome, "non disponibile, passo al successivo", flush=True)
+    MOTORE["edge"] = MOTORE.get("edge", 0) + 1
+    print("riga", i, "uso edge-tts", flush=True)
     pulito = testo.replace("«", "").replace("»", "").replace("ª", "a").replace("°", "")
     for n, (tx, st_, lg) in enumerate([(testo, stile, False)] * 5 + [(pulito, "base", False)] * 3):
         LANG_IT[0] = lg
@@ -133,5 +159,5 @@ async def main():
     with open(R / "_voci.mp3", "wb") as o:
         for p in parti: o.write(p.read_bytes()); p.unlink()
     json.dump([{"chi": NOMI[k], "ruolo": RUOLO[k], "testo": t} for k, t, *_ in L], open(OUT / f"puntata{SUF}.json", "w"), ensure_ascii=False)
-    print("ok", len(L))
+    print("ok", len(L), "| motori usati:", MOTORE)
 asyncio.run(main())
