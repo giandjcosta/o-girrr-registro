@@ -1,6 +1,0 @@
-riga 8 de-DE-SeraphinaMultilingualNeural intera, tentativo 0 fallito: NoAudioReceived
-riga 9 de-DE-SeraphinaMultilingualNeural intera, tentativo 0 fallito: NoAudioReceived
-riga 9 de-DE-SeraphinaMultilingualNeural intera, tentativo 1 fallito: NoAudioReceived
-riga 9 frase 1 de-DE-SeraphinaMultilingualNeural fallita, uso Isabella: Chi non crede in noi può restare a casa.
-riga 9 frase 2 de-DE-SeraphinaMultilingualNeural fallita, uso Isabella: Parole forti.
-ok 19
