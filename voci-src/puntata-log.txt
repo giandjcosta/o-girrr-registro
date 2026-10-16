@@ -1,2 +1,2 @@
-ok 30
-montata 196.7 s
+ok 31
+montata 572.5 s
