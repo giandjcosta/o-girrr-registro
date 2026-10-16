@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex"><title>Aggiornamenti · O Girrr</title>
+<meta name="theme-color" content="#1d2a52">
+<link rel="icon" type="image/png" href="favicon-64.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&family=Inter:wght@500;600;700;800;900&display=swap">
+<link rel="stylesheet" href="stile.css">
+<style>
+.kp{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:6px}
+@media(max-width:640px){.kp{grid-template-columns:repeat(2,1fr)}}
+.kp .g{padding:13px 14px;border-radius:18px}
+.kp small{display:block;font-weight:800;font-size:10px;letter-spacing:.2em;color:var(--oro);text-transform:uppercase;margin-bottom:5px}
+.kp b{display:block;font-weight:900;font-size:24px;line-height:1.1}
+.kp span{display:block;color:var(--sub);font-weight:600;font-size:12px;margin-top:3px}
+.card{padding:16px 18px}
+.slots{display:flex;flex-wrap:wrap;gap:8px}
+.slot{min-width:92px;padding:9px 10px 8px;border-radius:14px;text-align:center;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22)}
+.slot b{display:block;font-weight:900;font-size:14px}
+.slot small{display:block;font-weight:700;font-size:10px;letter-spacing:.06em;margin-top:2px;opacity:.9}
+.slot.ok{background:rgba(123,228,149,.2);border-color:rgba(123,228,149,.55)}
+.slot.bad{background:rgba(255,107,122,.24);border-color:rgba(255,107,122,.65)}
+.slot.skip{background:rgba(255,209,102,.14);border-color:rgba(255,209,102,.55);border-style:dashed}
+.slot.run{background:rgba(61,147,214,.3);border-color:rgba(61,147,214,.8);animation:pl 1.6s ease-in-out infinite}
+.slot.next{border-style:dashed;opacity:.8}
+@keyframes pl{50%{opacity:.6}}
+.day{font-weight:800;font-size:11px;letter-spacing:.18em;color:var(--sub);text-transform:uppercase;margin:14px 2px 7px}
+.day:first-child{margin-top:0}
+.row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.1);flex-wrap:wrap}
+.row:last-child{border-bottom:0}
+.row .n{flex:1;min-width:150px;font-weight:700;font-size:14px;line-height:1.35}
+.row .n em{display:block;font-style:normal;font-weight:600;font-size:12px;color:var(--sub)}
+.row .w{color:var(--sub);font-weight:600;font-size:12px;text-align:right;min-width:110px}
+.tk{display:grid;gap:10px}
+.tk .g{padding:14px 16px;border-radius:20px}
+.tk h3{font-weight:800;font-size:15px;line-height:1.3;padding-right:4px}
+.tk .m{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:9px;color:var(--sub);font-weight:600;font-size:12.5px}
+.tk .m b{color:var(--chiaro);font-weight:700}
+.tk .hd{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+details>summary{cursor:pointer;font-weight:800;font-size:13px;color:var(--sub);padding:10px 4px;list-style:none}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:'› ';color:var(--oro)}
+details[open]>summary::before{content:'⌄ '}
+.err{color:var(--warn);font-weight:700;font-size:13px;padding:6px 2px}
+</style></head><body><div class="w">
+<div class="g top"><img src="logo-lega.png" alt="O Fant A Girrr"><div><div class="k">O Fant A Girrr</div><h1>Registro</h1></div><a class="back" href="https://giandjcosta.github.io/o-fant-a-girrr/girrr/">O Girrr ›</a></div>
+<div class="tabs"><a href="./">Changelog</a><a class="on" href="aggiornamenti.html">Aggiornamenti</a></div>
+<div class="kp" id="kp"></div>
+
+<h2 class="sec">Dati della lega · GitHub</h2>
+<p class="cap">Il giro automatico “Aggiorna statistiche e voti” parte 7 volte al giorno e scrive statistiche, calendario, infortuni, riepilogo e quote. Ogni casella è un giro previsto: verde riuscito (con il ritardo, se GitHub lo ha fatto partire dopo), rosso fallito, tratteggiato giallo saltato da GitHub, azzurro in corso. GitHub può ritardare i giri anche di un paio d’ore.</p>
+<div class="g card" id="slots"><div class="err">Carico i giri…</div></div>
+
+<h2 class="sec">Ultime esecuzioni</h2>
+<div class="g card" id="runs"></div>
+
+<h2 class="sec">Attività programmate di Claude</h2>
+<p class="cap" id="tcap">Controlli, giornale, promemoria e aggiornamenti che partono da soli. “Riuscito” vuol dire che l’attività è partita e si è chiusa senza errori: se ha trovato un problema te lo scrive nel messaggio o con una notifica.</p>
+<div class="tk" id="tk"></div>
+<details id="old" hidden><summary>Concluse</summary><div class="tk" id="tko"></div></details>
+<p class="foot" id="ft"></p>
+</div>
+<script>
+var REPO='giandjcosta/o-fant-a-girrr',WF_DATI=379024000,SLOTS=[[4,30],[7,20],[10,20],[13,20],[16,20],[19,20],[22,20]],TOL=240*60000;
+var WFS={'Aggiorna statistiche e voti':'Statistiche, voti e infortuni','Riepilogo della giornata':'Riepilogo della giornata','Quote Totogirrr':'Quote Totogirrr'};
+var EV={schedule:'Programmato',workflow_dispatch:'Manuale',push:'Dopo una modifica',repository_dispatch:'Su richiesta'};
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+function fmt(t,o){return cap(new Intl.DateTimeFormat('it-IT',o||{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',timeZone:'Europe/Rome'}).format(new Date(t))).replace(',',' ·')}
+function hm(t){return new Intl.DateTimeFormat('it-IT',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Rome'}).format(new Date(t))}
+function dayK(t){return new Intl.DateTimeFormat('it-IT',{weekday:'long',day:'numeric',month:'long',timeZone:'Europe/Rome'}).format(new Date(t))}
+function rel(t){var m=Math.round((new Date(t)-Date.now())/60000),a=Math.abs(m),u=a<60?a+' min':a<1440?Math.round(a/60)+' h':Math.round(a/1440)+' g';return m>=0?'tra '+u:u+' fa'}
+function get(u,k){var c=null;try{c=JSON.parse(sessionStorage.getItem(k)||'null')}catch(e){}if(c&&Date.now()-c.t<180000)return Promise.resolve(c.v);return fetch(u).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(v){try{sessionStorage.setItem(k,JSON.stringify({t:Date.now(),v:v}))}catch(e){}return v})}
+function esito(r){if(r.status!=='completed')return['In corso','az'];return r.conclusion==='success'?['Riuscito','ok']:r.conclusion==='cancelled'?['Annullato','warn']:['Fallito','bad']}
+var GH='https://api.github.com/repos/'+REPO+'/actions/';
+Promise.all([get(GH+'workflows/'+WF_DATI+'/runs?per_page=60','w1').catch(function(){return null}),get(GH+'runs?per_page=100','w2').catch(function(){return null}),get('automazioni.json?v='+Date.now(),'w3').catch(function(){return null})]).then(function(x){gh(x[0],x[1]);cl(x[2])});
+function gh(d,all){
+ var el=document.getElementById('slots'),kp=document.getElementById('kp');
+ if(!d){el.innerHTML='<div class="err">GitHub non risponde in questo momento (limite di richieste o rete). Riprova tra qualche minuto.</div>';document.getElementById('runs').innerHTML='';kp.innerHTML='';return}
+ var runs=d.workflow_runs||[],sch=runs.filter(function(r){return r.event==='schedule'}).slice().sort(function(a,b){return new Date(a.created_at)-new Date(b.created_at)}),now=Date.now(),slots=[];
+ for(var dd=-3;dd<=1;dd++){var b=new Date();b.setUTCHours(0,0,0,0);SLOTS.forEach(function(s){var t=new Date(b.getTime()+dd*864e5);t.setUTCHours(s[0],s[1],0,0);slots.push(t.getTime())})}
+ slots.sort(function(a,b){return a-b});
+ var first=sch.length?new Date(sch[0].created_at).getTime()-3600000:now-48*3600000,from=Math.max(now-48*3600000,first),to=now+30*3600000;slots=slots.filter(function(t){return t>=from&&t<=to});
+ var done={};
+ sch.forEach(function(r){var c=new Date(r.created_at).getTime(),best=null;slots.forEach(function(t){if(!done[t]&&t<=c+5*60000&&c-t<=TOL&&(best==null||t>best))best=t});if(best!=null)done[best]=r});
+ var h='',cur='',okN=0,badN=0,skN=0,next=null;
+ slots.forEach(function(t){var k=dayK(t);if(k!==cur){h+=(cur?'</div>':'')+'<div class="day">'+esc(cap(k))+'</div><div class="slots">';cur=k}
+  var run=done[t]||null,cl='next',lb='In programma';
+  if(run){var e=esito(run);cl=e[1]==='ok'?'ok':e[1]==='bad'?'bad':e[1]==='az'?'run':'skip';lb=e[0]+(new Date(run.created_at)-t>20*60000?' · +'+Math.round((new Date(run.created_at)-t)/60000)+' min':'');if(e[1]==='ok')okN++;else if(e[1]==='bad')badN++}
+  else if(t+TOL<now){cl='skip';lb='Saltato';skN++}
+  else if(t<=now){cl='run';lb='Atteso ora'}
+  else if(!next)next=t;
+  h+='<div class="slot '+cl+'"><b>'+hm(t)+'</b><small>'+lb+'</small></div>'});
+ el.innerHTML=h+'</div>';
+ var last=runs.filter(function(r){return r.status==='completed'&&r.conclusion==='success'})[0];
+ kp.innerHTML=[['Ultimo giro riuscito',last?hm(last.updated_at):'–',last?rel(last.updated_at):''],['Prossimo giro',next?hm(next):'–',next?rel(next):''],['Riusciti (48 h)',okN,'su '+(okN+badN+skN)+' previsti'],['Saltati o falliti',skN+badN,skN+' saltati · '+badN+' falliti']].map(function(a){return '<div class="g"><small>'+a[0]+'</small><b>'+a[1]+'</b><span>'+esc(a[2])+'</span></div>'}).join('');
+ var L=(all&&all.workflow_runs||[]).filter(function(r){return WFS[r.name]}).slice(0,14);
+ document.getElementById('runs').innerHTML=L.length?L.map(function(r){var e=esito(r);return '<div class="row"><div class="n">'+esc(WFS[r.name])+'<em>'+esc(r.event==='push'?(r.display_title||''):(EV[r.event]||r.event))+'</em></div><span class="chip '+e[1]+'">'+e[0]+'</span><div class="w">'+fmt(r.created_at)+'</div></div>'}).join(''):'<div class="err">Nessuna esecuzione recente.</div>'}
+function quando(t){return t?fmt(t)+' ('+rel(t)+')':'–'}
+function cl(j){
+ var el=document.getElementById('tk');
+ if(!j||!j.attivita){el.innerHTML='<div class="g card"><div class="err">L’elenco delle attività programmate non è ancora disponibile.</div></div>';return}
+ var A=j.attivita,old=document.getElementById('tko'),ft=document.getElementById('ft');
+ var vive=A.filter(function(a){return a.stato!=='conclusa'}).sort(function(a,b){return (a.prossimo?new Date(a.prossimo):9e15)-(b.prossimo?new Date(b.prossimo):9e15)}),fin=A.filter(function(a){return a.stato==='conclusa'}).sort(function(a,b){return new Date(b.ultimo&&b.ultimo.quando||0)-new Date(a.ultimo&&a.ultimo.quando||0)});
+ function card(a){var u=a.ultimo||{},c=u.esito==='riuscito'?'ok':u.esito==='fallito'?'bad':'';
+  return '<div class="g"><div class="hd"><h3>'+esc(a.nome)+'</h3>'+(u.esito?'<span class="chip '+c+'">'+cap(u.esito)+'</span>':u.quando?'<span class="chip az">Esito in attesa</span>':'<span class="chip">Mai partita</span>')+'</div><div class="m"><span>Quando: <b>'+esc(a.quando||'–')+'</b></span><span>Ultima: <b>'+(u.quando?fmt(u.quando):'–')+'</b></span>'+(a.stato==='conclusa'?'':'<span>Prossima: <b>'+quando(a.prossimo)+'</b></span>')+'</div>'+(a.nota?'<div class="m">'+esc(a.nota)+'</div>':'')+'</div>'}
+ el.innerHTML=vive.map(card).join('');
+ if(fin.length){document.getElementById('old').hidden=false;old.innerHTML=fin.map(card).join('')}
+ var age=Date.now()-new Date(j.aggiornato).getTime();
+ ft.innerHTML='Elenco delle attività aggiornato '+rel(j.aggiornato)+(age>36*3600000?' · <span class="chip warn">Dato non recente</span>':'')+'<br>I giri GitHub sono letti in diretta; l’elenco di Claude si rinnova due volte al giorno.'}
+</script></body></html>
