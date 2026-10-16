@@ -13,8 +13,10 @@ jobs:
           python-version: "3.12"
       - run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
-          pip install edge-tts numpy scipy
+          pip install edge-tts numpy scipy google-genai
       - name: Genera la puntata
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           python voci-src/puntata.py en-US-AndrewMultilingualNeural "" 2>&1 | tee voci-src/puntata-log.txt
           python voci-src/monta.py voci-src/_voci.mp3 lab/voci/puntata.mp3 2>&1 | tee -a voci-src/puntata-log.txt

@@ -32,7 +32,28 @@ g = D["cal"][0]["m"]; der = next((m for m in g if derby(m)), g[0])
 import random, copione
 MERC = json.load(open(R / "mercato.json", encoding="utf-8")) if (R / "mercato.json").exists() else {}
 L = copione.build(D, random.Random(D["aw"][-1]["n"] * 7919), MERC, NOMI)
-import re
+import re, os, wave, subprocess
+GKEY = os.environ.get("GEMINI_API_KEY", "")
+GMOD = os.environ.get("MODELLO", "") or "gemini-3.8-flash-tts"
+GVOCI = {"B": "Charon", "G": "Orus", "S": "Aoede", "C": "Fenrir"}
+GRUOLO = {"B": "un conduttore radiofonico italiano, voce calda e professionale", "G": "un commentatore sportivo italiano, secondo telecronista, ironico e pungente",
+          "S": "un'inviata giornalista italiana, voce chiara e vivace", "C": "un esperto di calciomercato italiano, tono da cronista di mercato"}
+GSTILE = {"urlo": "al massimo dell'entusiasmo, voce potente e squillante, ritmo veloce, come in una telecronaca", "sus": "sussurrando, in tono complice e confidenziale, come se rivelasse un segreto", None: "con ritmo vivace ma chiaro"}
+_gcl = None
+def gemini_uno(k, tx, fn, stile):
+    global _gcl
+    from google import genai
+    from google.genai import types
+    if _gcl is None: _gcl = genai.Client(api_key=GKEY)
+    st = stile if isinstance(stile, str) or stile is None else None
+    istr = f"Sei {GRUOLO[k]}. Leggi il testo seguente {GSTILE.get(st, GSTILE[None])}, in italiano perfetto, senza leggere queste istruzioni: "
+    r = _gcl.models.generate_content(model=GMOD, contents=istr + tx, config=types.GenerateContentConfig(response_modalities=["AUDIO"],
+        speech_config=types.SpeechConfig(voice_config=types.VoiceConfig(prebuilt_voice_config=types.PrebuiltVoiceConfig(voice_name=GVOCI[k])))))
+    pcm = r.candidates[0].content.parts[0].inline_data.data
+    w = fn.with_suffix(".wav")
+    with wave.open(str(w), "wb") as o: o.setnchannels(1); o.setsampwidth(2); o.setframerate(24000); o.writeframes(pcm)
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(w), "-ar", "24000", "-ac", "1", "-b:a", "48k", "-f", "mp3", "-write_xing", "0", "-id3v2_version", "0", str(fn)], check=True)
+    w.unlink()
 STILI = {"urlo": dict(rate="+12%", pitch="+3Hz", volume="+6%"), "sus": dict(rate="-4%", pitch="-3Hz", volume="-10%"), None: dict(rate="+6%")}
 async def uno(voce, tx, fn, stile):
     kw = STILI.get(stile, {}) if isinstance(stile, (str, type(None))) else {"rate": stile}
@@ -43,6 +64,14 @@ async def parla(k, testo, fn, i, stile=None):
     """Prova la riga intera; se la voce non risponde la legge a frasi; come ultima scelta usa Isabella."""
     testo = testo.replace("«", "").replace("»", "")
     for a_, b_ in PRON.items(): testo = testo.replace(a_, b_)
+    if GKEY:
+        for n in range(5):
+            try:
+                await asyncio.get_event_loop().run_in_executor(None, gemini_uno, k, testo, fn, stile)
+                await asyncio.sleep(3); return
+            except Exception as e:
+                print("riga", i, "Gemini tentativo", n, "fallito:", str(e)[:120]); await asyncio.sleep(15 * (n + 1))
+        print("riga", i, "uso edge-tts")
     pulito = testo.replace("«", "").replace("»", "").replace("ª", "a").replace("°", "")
     for n, (tx, st_, lg) in enumerate([(testo, stile, False)] * 5 + [(pulito, "base", False)] * 3):
         LANG_IT[0] = lg
