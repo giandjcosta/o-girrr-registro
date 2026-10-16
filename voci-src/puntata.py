@@ -72,8 +72,8 @@ def gemini_uno(k, tx, fn, stile):
     r = _gcl.models.generate_content(model=GMOD, contents=istr + tx, config=types.GenerateContentConfig(response_modalities=["AUDIO"],
         speech_config=types.SpeechConfig(voice_config=types.VoiceConfig(prebuilt_voice_config=types.PrebuiltVoiceConfig(voice_name=GVOCI[k])))))
     pcm = r.candidates[0].content.parts[0].inline_data.data
-    from gtrim import taglia_coda
-    pcm = taglia_coda(pcm)
+    from gtrim import taglia_coda, rifinisci
+    pcm = rifinisci(taglia_coda(pcm))
     w = fn.with_suffix(".wav")
     with wave.open(str(w), "wb") as o: o.setnchannels(1); o.setsampwidth(2); o.setframerate(24000); o.writeframes(pcm)
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(w), "-ar", "24000", "-ac", "1", "-b:a", "48k", "-f", "mp3", "-write_xing", "0", "-id3v2_version", "0", str(fn)], check=True)
