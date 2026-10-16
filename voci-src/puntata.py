@@ -5,7 +5,7 @@ R = pathlib.Path(__file__).parent
 OUT = R.parent / "lab" / "voci"; OUT.mkdir(parents=True, exist_ok=True)
 D = json.load(open(R / "dati.json", encoding="utf-8"))
 NOMI = json.load(open(R / "nomi.json", encoding="utf-8"))
-VOCI = {"B": "en-US-BrianMultilingualNeural", "G": "fr-FR-RemyMultilingualNeural", "S": "de-DE-SeraphinaMultilingualNeural", "C": "it-IT-GiuseppeMultilingualNeural"}
+VOCI = {"B": "it-IT-DiegoNeural", "G": "fr-FR-RemyMultilingualNeural", "S": "de-DE-SeraphinaMultilingualNeural", "C": "it-IT-GiuseppeMultilingualNeural"}
 RUOLO = {"B": "Conduttore", "G": "Commentatore", "S": "Inviata speciale", "C": "Mercato"}
 def f(x):
     x = float(x)
