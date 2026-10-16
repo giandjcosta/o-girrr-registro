@@ -34,7 +34,7 @@ def build(D, rng, mercato, nomi=None):
     L = []
     def add(k, t, st=None): L.append((k, t, st))
     # --- apertura alla Caressa e Bergomi: la frase passa da una voce all'altra
-    add("B", f"Buongiorno, buonasera e buonanotte a tutti, siete su Radio Girrr! Oggi siamo qui con {b1}", "urlo")
+    add("B", f"Buongiorno, buonasera e buonanotte a tutti, siete su Radio Girrr, la radio ufficiale della Lega O Fant A Girrr! Oggi siamo qui con {b1}", "urlo")
     add("G", f"e {g1}! Si parte!", "urlo")
     add("B", f"Giornata numero {n}! {g0}, hai già guardato i punteggi?")
     add("G", pick(["Guardati, riguardati e ho pure fatto una scommessa con me stesso. Ho perso.", "Sì, con una tazza di tè in mano, come ogni buon britannico. E mi sono rovinato la colazione.", "Altro che guardati: li ho imparati a memoria!"]))
@@ -124,6 +124,6 @@ def build(D, rng, mercato, nomi=None):
             add("C", f"{pref} {z['testo'][0].upper() + z['testo'][1:]}.")
         add("G", "Ciro, come sempre, sicurissimo! Al cento per cento.")
     # --- chiusura
-    add("B", "Per Radio Girrr è tutto! Mettete la formazione, vi vogliamo bene!", "urlo")
+    add("B", "Per Radio Girrr, la radio ufficiale della Lega, è tutto! Mettete la formazione, vi vogliamo bene!", "urlo")
     add("G", "Ci sentiamo mercoledì prossimo! Ciao a tutti!", "urlo")
     return L
