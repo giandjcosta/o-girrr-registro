@@ -10,11 +10,12 @@ def gen(contents, si=None):
     r = cl.models.generate_content(model="gemini-3.8-flash-tts", contents=contents, config=types.GenerateContentConfig(**cfg))
     return r.candidates[0].content.parts[0].inline_data.data
 def tr(pcm, k):
-    fn = f"/tmp/{k}.wav"
-    with wave.open(fn, "wb") as w: w.setnchannels(1); w.setsampwidth(2); w.setframerate(24000); w.writeframes(pcm)
-    seg, _ = wm.transcribe(fn, language="it"); return " ".join(s.text.strip() for s in seg)
+    import numpy as np
+    from scipy.signal import resample_poly
+    x = np.frombuffer(pcm, dtype=np.int16).astype(np.float32) / 32768.0
+    x = resample_poly(x, 2, 3).astype(np.float32)
+    seg, _ = wm.transcribe(x, language="it"); return " ".join(s.text.strip() for s in seg)
 CASI = [
- ("si_urlo", "Che mazzata! Apo Team vola a ottanta punti e il resto della lega guarda da lontano!", "Leggi in italiano come un telecronista radiofonico che urla al massimo dell'entusiasmo."),
  ("tag_ride", "[laughing] Ah ah ah, scusate, non ce la faccio!", None),
  ("tag_sussurro", "[whispering] Lo dirò sottovoce: semi ufficiale, prendetelo con le pinze!", None),
  ("tag_urlo", "[shouting] Che mazzata! Apo Team vola a ottanta punti!", None),
