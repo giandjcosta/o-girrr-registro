@@ -1,6 +1,7 @@
 import os, sys, time, wave, subprocess, pathlib, json
 R = pathlib.Path(__file__).parent
-OUT = R.parent / "lab" / "voci" / "gemini"; OUT.mkdir(parents=True, exist_ok=True)
+TAG = os.environ.get("MODELLO", "").replace(".", "-") or "auto"
+OUT = R.parent / "lab" / "voci" / ("gemini-" + TAG); OUT.mkdir(parents=True, exist_ok=True)
 for f in OUT.glob("*"): f.unlink()
 key = os.environ.get("GEMINI_API_KEY", "")
 if not key: print("Manca GEMINI_API_KEY"); sys.exit(1)
@@ -10,7 +11,7 @@ cl = genai.Client(api_key=key)
 modelli = [m.name for m in cl.models.list() if "tts" in m.name.lower()]
 print("Modelli TTS:", modelli)
 pref = [m for m in modelli if "flash" in m and "lite" not in m] or modelli
-MODELLO = pref[0].split("/")[-1] if pref else "gemini-2.5-flash-preview-tts"
+MODELLO = os.environ.get("MODELLO") or (pref[0].split("/")[-1] if pref else "gemini-2.5-flash-preview-tts")
 print("Uso:", MODELLO)
 STILE = {
  "urlo": "Sei un telecronista radiofonico italiano al massimo dell'entusiasmo, voce potente e squillante, ritmo veloce, come Fabio Caressa: ",
@@ -47,5 +48,5 @@ h = ["<!doctype html><meta charset=utf-8><meta name=viewport content='width=devi
 cur = None
 for nome, v, testo, fn, ok in res:
     if nome != cur: h.append(f"<h3>{nome}</h3><p style='color:#555'>{testo}</p>"); cur = nome
-    h.append(f"<p><b>{v}</b>" + (f"<br><audio controls preload=none src='voci/gemini/{fn}.mp3?v=1' style='width:100%'></audio>" if ok else " — non riuscita") + "</p>")
-(R.parent / "lab" / "gemini.html").write_text("".join(h), encoding="utf-8")
+    h.append(f"<p><b>{v}</b>" + (f"<br><audio controls preload=none src='voci/gemini-{TAG}/{fn}.mp3?v=1' style='width:100%'></audio>" if ok else " — non riuscita") + "</p>")
+(R.parent / "lab" / f"gemini-{TAG}.html").write_text("".join(h), encoding="utf-8")

@@ -1,6 +1,10 @@
 name: Prova voci Gemini
 on:
   workflow_dispatch:
+    inputs:
+      modello:
+        description: Modello TTS
+        default: gemini-3.8-flash-tts
 permissions:
   contents: write
 jobs:
@@ -16,6 +20,7 @@ jobs:
       - run: python voci-src/prova_gemini.py 2>&1 | tee voci-src/gemini-log.txt
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          MODELLO: ${{ inputs.modello }}
         continue-on-error: true
       - run: |
           git config user.name "github-actions"
