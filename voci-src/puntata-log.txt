@@ -1,2 +1,8 @@
-ok 19
-montata 157.8 s
+riga 12 de-DE-SeraphinaMultilingualNeural intera, tentativo 0 fallito: NoAudioReceived
+riga 13 de-DE-SeraphinaMultilingualNeural intera, tentativo 0 fallito: NoAudioReceived
+riga 13 de-DE-SeraphinaMultilingualNeural intera, tentativo 1 fallito: NoAudioReceived
+riga 13 frase 1 de-DE-SeraphinaMultilingualNeural fallita, uso Isabella: nuovo badge in bacheca!
+riga 13 frase 2 de-DE-SeraphinaMultilingualNeural fallita, uso Isabella: Apo team sblocca il traguardo Re della giornata, c
+riga 13 frase 3 de-DE-SeraphinaMultilingualNeural fallita, uso Isabella: Una bella soddisfazione!
+ok 26
+montata 256.5 s
