@@ -6,7 +6,6 @@ def _mk(tc, t):
         if isinstance(t, bytes): t = t.decode("utf-8")
         t = f"<lang xml:lang='it-IT'>{t}</lang>"
     return _mk0(tc, t)
-_ec.mkssml = _mk
 R = pathlib.Path(__file__).parent
 OUT = R.parent / "lab" / "voci" / "confronto"; OUT.mkdir(parents=True, exist_ok=True)
 TESTO = "Grazie Beppe! Qui è un bel caos! Prima notizia: Apo team sta superando le aspettative. Il presidente la voleva intorno al quinto posto, e invece oggi è primo! Parole pesanti, signori."

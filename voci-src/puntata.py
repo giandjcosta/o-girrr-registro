@@ -4,7 +4,7 @@ import asyncio, json, pathlib
 import edge_tts
 import edge_tts.communicate as _ec
 # le voci multilingue a volte "sentono" una lingua sbagliata nelle frasi corte: diciamo loro che il testo è italiano
-LANG_IT = [True]
+LANG_IT = [False]  # l'etichetta della lingua fa rifiutare le voci multilingue: lasciata spenta
 _mk0 = _ec.mkssml
 def _mk(tc, t):
     if LANG_IT[0] and "Multilingual" in tc.voice:
@@ -43,7 +43,7 @@ async def parla(k, testo, fn, i, stile=None):
     """Prova la riga intera; se la voce non risponde la legge a frasi; come ultima scelta usa Isabella."""
     for a_, b_ in PRON.items(): testo = testo.replace(a_, b_)
     pulito = testo.replace("«", "").replace("»", "").replace("ª", "a").replace("°", "")
-    for n, (tx, st_, lg) in enumerate([(testo, stile, True)] * 3 + [(testo, stile, False)] * 2 + [(pulito, "base", False)] * 3):
+    for n, (tx, st_, lg) in enumerate([(testo, stile, False)] * 5 + [(pulito, "base", False)] * 3):
         LANG_IT[0] = lg
         try:
             await uno(VOCI[k], tx, fn, st_); return
@@ -55,7 +55,7 @@ async def parla(k, testo, fn, i, stile=None):
         tmp = fn.with_suffix(f".{j}.part")
         try:
             for _t in range(4):
-                LANG_IT[0] = _t < 2
+                LANG_IT[0] = False
                 try: await uno(VOCI[k], fr, tmp, "base"); break
                 except Exception: await asyncio.sleep(1.5)
             else: raise RuntimeError("sempre fallita")
