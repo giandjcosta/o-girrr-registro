@@ -22,7 +22,9 @@ STORIE = {
 }
 CURVA = ["Chissà cosa staranno scrivendo in Curva i tifosi {t}!", "In Curva, stasera, i tifosi {t} non dormono!", "Diamo un'occhiata alla Curva: i tifosi {t} sono già al lavoro!", "Chissà in Curva cosa ne pensano i tifosi {t}!"]
 CONF = ["Chi non crede in noi può restare a casa.", "Siamo pronti, ci vediamo in campo.", "Non siamo qui per fare i turisti.", "Quest'anno non ci ferma nessuno.", "Un punto alla volta, ma tutti insieme."]
-def build(D, rng, mercato):
+def build(D, rng, mercato, nomi=None):
+    nomi = nomi or {}
+    b1 = nomi.get('B', 'Beppe Rovesciata'); g1 = nomi.get('G', 'Steve Fuorigioco'); g0 = g1.split()[0]; b0 = b1.split()[0]
     a = D["aw"][-1]; T = D["tab"]; P = D["prob"]; n = a["n"]
     row = {r["t"]: r for r in T}
     def pick(x): return rng.choice(x)
@@ -31,9 +33,9 @@ def build(D, rng, mercato):
     L = []
     def add(k, t, st=None): L.append((k, t, st))
     # --- apertura alla Caressa e Bergomi: la frase passa da una voce all'altra
-    add("B", "Buongiorno, buonasera e buonanotte a tutti, siete su Radio Girrr! Oggi siamo qui con Beppe Rovesciata", "urlo")
-    add("G", "e Luigi Fischietti! Si parte!", "urlo")
-    add("B", f"Giornata numero {n}! Luigi, hai già guardato i punteggi?")
+    add("B", f"Buongiorno, buonasera e buonanotte a tutti, siete su Radio Girrr! Oggi siamo qui con {b1}", "urlo")
+    add("G", f"e {g1}! Si parte!", "urlo")
+    add("B", f"Giornata numero {n}! {g0}, hai già guardato i punteggi?")
     add("G", pick(["Guardati, riguardati e ho pure fatto una scommessa con me stesso. Ho perso.", "Sì, e mi sono rovinato la colazione.", "Altro che guardati: li ho imparati a memoria!"]))
     # --- punteggi estremi: a volte si esalta, a volte si prende in giro
     tono = pick(["esalta", "sfotte"])
@@ -91,8 +93,7 @@ def build(D, rng, mercato):
     # --- inviata
     add("B", "Ora ci colleghiamo con la nostra inviata sul campo! Giulia, a te!", "urlo")
     sup = max(((r["t"], EXP.get(r["t"], 5), r["pos"]) for r in T), key=lambda x: x[1] - x[2])
-    add("S", f"Grazie Beppe! Qui è un bel caos! Prima notizia: {sup[0]} sta superando le aspettative! Il presidente la voleva intorno al {sup[1]}° posto, e invece oggi è {ORD.get(sup[2], str(sup[2])+'ª')}!", "urlo")
-    add("S", f"Ultim'ora: nuovo badge in bacheca! {mv[0]} sblocca il traguardo Re della giornata, con {f(mv[1])} punti.")
+    add("S", f"Grazie {b0}! Qui è un bel caos! Prima notizia: {sup[0]} sta superando le aspettative! Il presidente la voleva intorno al {sup[1]}° posto, e invece oggi è {ORD.get(sup[2], str(sup[2])+'ª')}!", "urlo")
     g = D["cal"][0]["m"]; conf = next(((m[0], m[1]) for m in g if "Oranje VC" in m), (g[0][0], g[0][1]))
     add("S", f"Dalla sala stampa, alla vigilia di {conf[0]} contro {conf[1]}, l'allenatore dice: «{pick(CONF)}» Per ora è tutto, restituisco la linea in studio!")
     add("G", pick(["Grazie Giulia! Un allenatore, una frase e mezza lega è già in fermento.", "Grazie Giulia! Questo è calcio!", "Grazie Giulia, collegamento da Oscar!"]))

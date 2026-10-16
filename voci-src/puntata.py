@@ -21,7 +21,7 @@ def derby(m): return any({x.lower(), y.lower()} == {m[0].lower(), m[1].lower()} 
 g = D["cal"][0]["m"]; der = next((m for m in g if derby(m)), g[0])
 import random, copione
 MERC = json.load(open(R / "mercato.json", encoding="utf-8")) if (R / "mercato.json").exists() else {}
-L = copione.build(D, random.Random(D["aw"][-1]["n"] * 7919), MERC)
+L = copione.build(D, random.Random(D["aw"][-1]["n"] * 7919), MERC, NOMI)
 import re
 STILI = {"urlo": dict(rate="+12%", pitch="+3Hz", volume="+6%"), "sus": dict(rate="-4%", pitch="-3Hz", volume="-10%"), None: dict(rate="+6%")}
 async def uno(voce, tx, fn, stile):
