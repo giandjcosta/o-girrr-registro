@@ -40,6 +40,7 @@ GRUOLO = {"B": "un conduttore radiofonico italiano, voce calda e professionale",
           "S": "un'inviata giornalista italiana, voce chiara e vivace", "C": "un esperto di calciomercato italiano, tono da cronista di mercato"}
 GSTILE = {"urlo": "al massimo dell'entusiasmo, voce potente e squillante, ritmo veloce, come in una telecronaca", "sus": "sussurrando, in tono complice e confidenziale, come se rivelasse un segreto", None: "con ritmo vivace ma chiaro"}
 _gcl = None
+GSTOP = [False]
 def gemini_uno(k, tx, fn, stile):
     global _gcl
     from google import genai
@@ -64,13 +65,15 @@ async def parla(k, testo, fn, i, stile=None):
     """Prova la riga intera; se la voce non risponde la legge a frasi; come ultima scelta usa Isabella."""
     testo = testo.replace("«", "").replace("»", "")
     for a_, b_ in PRON.items(): testo = testo.replace(a_, b_)
-    if GKEY:
-        for n in range(5):
+    if GKEY and not GSTOP[0]:
+        for n in range(4):
             try:
                 await asyncio.get_event_loop().run_in_executor(None, gemini_uno, k, testo, fn, stile)
                 await asyncio.sleep(3); return
             except Exception as e:
-                print("riga", i, "Gemini tentativo", n, "fallito:", str(e)[:120]); await asyncio.sleep(15 * (n + 1))
+                print("riga", i, "Gemini tentativo", n, "fallito:", str(e)[:160], flush=True)
+                if "429" in str(e) and "retry in" in str(e) and "m" in str(e).split("retry in")[1][:12]: GSTOP[0] = True; break
+                await asyncio.sleep(8 * (n + 1))
         print("riga", i, "uso edge-tts")
     pulito = testo.replace("«", "").replace("»", "").replace("ª", "a").replace("°", "")
     for n, (tx, st_, lg) in enumerate([(testo, stile, False)] * 5 + [(pulito, "base", False)] * 3):
