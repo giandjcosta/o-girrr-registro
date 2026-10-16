@@ -1,0 +1,15 @@
+name: Sonda Gemini
+on:
+  workflow_dispatch:
+jobs:
+  sonda:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install google-genai
+      - run: python -u voci-src/sonda_gemini.py
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
