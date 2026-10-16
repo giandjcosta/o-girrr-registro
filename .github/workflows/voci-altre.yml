@@ -1,0 +1,31 @@
+name: Altre voci di prova (Kokoro e Piper)
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  voci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg espeak-ng
+      - run: |
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install kokoro soundfile numpy piper-tts
+      - name: Genera gli audio
+        run: |
+          mkdir -p lab/voci
+          python voci-src/altri.py 2>&1 | tee voci-src/altri-log.txt
+        continue-on-error: true
+      - name: Pubblica gli audio
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@users.noreply.github.com"
+          git add lab/voci voci-src/altri-log.txt
+          git commit -m "Audio di prova di Kokoro e Piper" || echo "nessuna modifica"
+          git pull --rebase -q
+          git push
