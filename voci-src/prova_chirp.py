@@ -2,8 +2,13 @@ import os, sys, json, base64, urllib.request, pathlib, time
 R = pathlib.Path(__file__).parent
 OUT = R.parent / "lab" / "voci" / "chirp"; OUT.mkdir(parents=True, exist_ok=True)
 for f in OUT.glob("*"): f.unlink()
-key = os.environ.get("GOOGLE_TTS_KEY") or os.environ.get("GEMINI_API_KEY", "")
-if not key: print("Manca la chiave"); sys.exit(1)
+sa = os.environ.get("GOOGLE_TTS_JSON", "")
+if not sa: print("Manca GOOGLE_TTS_JSON"); sys.exit(1)
+import google.auth.transport.requests
+from google.oauth2 import service_account
+cred = service_account.Credentials.from_service_account_info(json.loads(sa), scopes=["https://www.googleapis.com/auth/cloud-platform"])
+cred.refresh(google.auth.transport.requests.Request())
+print("Token ok per", cred.service_account_email, flush=True)
 PROVE = [
  ("Apertura", 1.05, "Buonasera a tutti e benvenuti a Radio Giirrr, la radio ufficiale della Lega! Io sono Beppe Rovesciata, e questa sera abbiamo davvero tanto da raccontarvi.", ["Charon", "Orus", "Fenrir"]),
  ("Gol", 1.15, "Che mazzata! Apo Team vola a ottanta punti e il resto della lega guarda da lontano! Ahia!", ["Fenrir", "Puck", "Orus"]),
@@ -17,7 +22,7 @@ for nome, rate, testo, voci in PROVE:
         body = json.dumps({"input": {"text": testo}, "voice": {"languageCode": "it-IT", "name": f"it-IT-Chirp3-HD-{v}"}, "audioConfig": {"audioEncoding": "MP3", "speakingRate": rate}}).encode()
         for t in range(3):
             try:
-                rq = urllib.request.Request(f"https://texttospeech.googleapis.com/v1/text:synthesize?key={key}", body, {"Content-Type": "application/json"})
+                rq = urllib.request.Request("https://texttospeech.googleapis.com/v1/text:synthesize", body, {"Content-Type": "application/json", "Authorization": "Bearer " + cred.token})
                 d = json.load(urllib.request.urlopen(rq, timeout=60))
                 (OUT / (fn + ".mp3")).write_bytes(base64.b64decode(d["audioContent"])); ok = True; break
             except Exception as e:
