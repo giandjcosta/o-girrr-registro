@@ -34,7 +34,8 @@ sost("sp==='radio'?spRadio():'';", "sp==='radio'?spRadio():sp==='sfide'?vSfide()
 extra = r"""
 S.cr=S.cr||'ob';
 var vCar0=vCar;
-function vCarr(){return '<div class="seg" role="group" aria-label="Sezioni">'+[['ob','Obiettivi e presidente'],['cassa','Cassa · da decidere']].map(function(x){return '<button data-cr="'+x[0]+'" aria-pressed="'+(S.cr===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>'+(S.cr==='cassa'?vCassa():vCar0())}
+function vStat(){var ok=false;try{ok=JSON.parse(localStorage.getItem('fg')||'{}').team==='Oranje VC'}catch(e){}return ok?'<a class="card" href="@@STAT@@" style="display:block;margin-top:14px;padding:14px 16px;text-decoration:none;color:inherit"><b>📊 Statistiche</b><br><span style="opacity:.75;font-size:13px">Solo per te: chi entra e dove ›</span></a>':''}
+function vCarr(){return '<div class="seg" role="group" aria-label="Sezioni">'+[['ob','Obiettivi e presidente'],['cassa','Cassa · da decidere']].map(function(x){return '<button data-cr="'+x[0]+'" aria-pressed="'+(S.cr===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>'+(S.cr==='cassa'?vCassa():vCar0())+vStat()}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-cr]');if(!b)return;S.cr=b.dataset.cr;render()});
 function route(t){var M={derby:['oro','oro','derby'],albo:['oro','oro','latta'],sfide:['sport','sp','sfide'],borsino:['spog'],prob:['toto'],cassa:['carriera','cr','cassa']};
   if(M[t]){if(M[t][1])S[M[t][1]]=M[t][2];return M[t][0]}return t}
@@ -51,7 +52,7 @@ sost("""'<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'"
      """'<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'" aria-label="'+t[1]+'">'+(t[0]==='sport'?'<img class="gsl" src="'+D.img.gs+'" alt="Girrr Sport">':(({home:1,oro:1,spog:1,carriera:1})[t[0]]?'<img src="'+D.img.lega+'" alt="">':'')+t[1])+'</button>'""")
 s = s.replace('src="voci/', 'src="../lab/voci/').replace("fetch('voci/", "fetch('../lab/voci/")
 out = R / "anteprima" / "index.html"
-out.write_text(s.replace("@@HOME@@", "../ufficiale/nuovo/girrr/index.html"), encoding="utf-8")
+out.write_text(s.replace("@@STAT@@", "../ufficiale/nuovo/girrr/statistiche.html").replace("@@HOME@@", "../ufficiale/nuovo/girrr/index.html"), encoding="utf-8")
 print("scritto", out, len(s))
 # Seconda versione: stesse funzioni, grafica attuale del sito (font Inter, sfondo a barre, tab a pillola)
 skin = """<style id="skin-attuale">
@@ -70,7 +71,7 @@ body::after{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:non
 .seg button[aria-pressed=true]{background:var(--red)!important;color:#fff!important}
 .tabs button{padding:9px 14px;font-size:13px}
 </style>"""
-s_plain = s_plain.replace("@@HOME@@", "../ufficiale/girrr/index.html").replace('src="voci/', 'src="../lab/voci/').replace("fetch('voci/", "fetch('../lab/voci/")
+s_plain = s_plain.replace("@@STAT@@", "../ufficiale/girrr/statistiche.html").replace("@@HOME@@", "../ufficiale/girrr/index.html").replace('src="voci/', 'src="../lab/voci/').replace("fetch('voci/", "fetch('../lab/voci/")
 a = s_plain.replace("</style>", "</style>" + skin, 1)
 a = a.replace("<title>O Girrr · Anteprima 5.0</title>", "<title>O Girrr · Anteprima 5.0 (grafica attuale)</title>")
 a = a.replace("family=Lobster&family=Inter", "family=Inter")

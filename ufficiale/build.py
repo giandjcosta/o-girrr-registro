@@ -103,8 +103,13 @@ extra_cards = ('<a class="c" href="albo.html"><div class="ic"><img src="%s" alt=
                '<a class="c" href="../../anteprima/attuale.html#carriera"><div class="ic"><img src="%s" alt=""></div><h2>Carriera<span class="nt-nv">NOVITÀ</span></h2><p>Obiettivi, fiducia del presidente e conferenza stampa di ogni allenatore.</p><div class="go">ENTRA ›</div></a>') % (LOGO, LOGO)
 i0 = ix.index('<section class="cards">'); i1 = ix.index('</section>', i0)
 ix = ix[:i1] + extra_cards + ix[i1:]
-ix = re.sub(r'<a class="mn" href="albo.html">.*?</a>', '', ix, count=1, flags=re.S)
-(OUT / "index.html").write_text(ix.replace('<a class="mn" id="mst"', tiles("../../anteprima/attuale.html") + '<a class="mn" id="mst"', 1), encoding="utf-8")
+ix = re.sub(r'<section class="mini">.*?</section>\s*<script>try\{var f=JSON.parse\(localStorage.getItem\("fg"\).*?</script>', '', ix, count=1, flags=re.S)
+assert 'class="mini"' not in ix
+ix = ix.replace("</head>", "<style>.cards{grid-template-columns:repeat(3,1fr)!important}@media(max-width:820px){.cards{grid-template-columns:1fr 1fr!important}}@media(max-width:480px){.cards{grid-template-columns:1fr!important}}</style>\n</head>", 1)
+(OUT / "index.html").write_text(ix, encoding="utf-8")
+# Tabellone: Le squadre diventano una sezione del Tabellone
+patch("tabellone.html", '<div class="sw" role="tablist">', '<a class="sqb" href="squadre.html"><span>🛡️</span><b>Le squadre</b><i>Rosa, risultati e forma di ognuno ›</i></a>\n  <div class="sw" role="tablist">')
+patch("tabellone.html", "</head>", "<style>.sqb{display:flex;align-items:center;gap:10px;margin:14px 0 0;max-width:440px;padding:11px 16px;border-radius:16px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);color:inherit;text-decoration:none}.sqb span{font-size:20px}.sqb b{font-weight:800}.sqb i{font-style:normal;font-size:12px;opacity:.75;margin-left:auto}</style>\n</head>")
 SKIN = """html{background:#141d3d}
 body{background:radial-gradient(900px 520px at 85% -8%,rgba(214,40,57,.26),transparent 62%),radial-gradient(1000px 640px at -10% 18%,rgba(61,147,214,.26),transparent 60%),linear-gradient(180deg,#2c3f7c,#1d2a52 45%,#141d3d)!important;background-attachment:fixed!important}
 body::before{display:none!important}
