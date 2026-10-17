@@ -139,7 +139,7 @@ for f in N.glob("*.html"):
     f.write_text(x, encoding="utf-8")
 (N.parent / "index.html").write_text('<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0;url=girrr/index.html"><a href="girrr/index.html">Apri l\'anteprima</a>', encoding="utf-8")
 # Terza grafica: sfondo della lega (rosso e blu divisi da una riga gialla in diagonale)
-LEGA_BG = "body{background:linear-gradient(158deg,transparent 0 33%,#ffd166 33% calc(33% + 5px),transparent calc(33% + 5px)),linear-gradient(158deg,#e03244 0,#a31d2e 33%,#2a3d86 calc(33% + 5px),#141d3d 100%)!important;background-attachment:fixed!important}"
+LEGA_BG = "body{background:linear-gradient(158deg,transparent 0 33%,#ffd166 33% calc(33% + 5px),transparent calc(33% + 5px)),linear-gradient(158deg,#e03244 0,#a31d2e 33%,#1b2a66 calc(33% + 5px),#0b1233 100%)!important;background-attachment:fixed!important}"
 SKIN_L = SKIN + "\n" + LEGA_BG
 Lg = R / "ufficiale" / "lega" / "girrr"
 if Lg.parent.exists(): shutil.rmtree(Lg.parent)
