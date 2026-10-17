@@ -3,7 +3,7 @@
 Voci Gemini: Beppe Rovesciata = Charon, Luigi Fischietti = Orus, Giulia Cronaca = Aoede, Ciro Trattativa = Fenrir.
 Il secondo commentatore si chiama Luigi Fischietti (non Steve Offside, non Sandro Fuorigioco).
 
-Motori, in ordine: Gemini (Lite di default, Pro come alternativa) -> Chirp -> edge-tts.
+Motori, in ordine: Gemini Pro (gemini-3.8-flash-tts) -> Gemini Lite -> Chirp -> edge-tts (ordine deciso da Gianluca).
 Le puntate automatiche usano SOLO_GEMINI=1: se Gemini non risponde per tutte le battute NON si pubblica nulla e resta la puntata precedente.
 Limite Gemini: 100 richieste al giorno PER MODELLO (una puntata ne usa circa 32). Non fare più di una puntata di prova al giorno. Non rilanciare in serie: i tentativi si esauriscono.
 

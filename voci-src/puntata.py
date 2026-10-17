@@ -45,7 +45,7 @@ def accenta(t):
         return n[:1].upper() + n[1:] if w[:1].isupper() else n
     return _re.sub(r"[A-Za-zÀ-ÿ]+", sost, t)
 GKEY = os.environ.get("GEMINI_API_KEY", "")
-GMOD = os.environ.get("MODELLO", "") or "gemini-3.8-flash-lite-tts"
+GMOD = os.environ.get("MODELLO", "") or "gemini-3.8-flash-tts"
 GVOCI = {"B": "Charon", "G": "Orus", "S": "Aoede", "C": "Fenrir"}
 GRUOLO = {"B": "un conduttore radiofonico italiano, voce calda e professionale", "G": "un commentatore sportivo italiano, secondo telecronista, ironico e pungente",
           "S": "un'inviata giornalista italiana, voce chiara e vivace", "C": "un esperto di calciomercato italiano, tono da cronista di mercato"}
@@ -177,7 +177,7 @@ def scegli_modello():
     global GMOD, _gcl
     from google import genai
     from google.genai import types
-    ordine = [GMOD] + [m for m in ("gemini-3.8-flash-lite-tts", "gemini-3.8-flash-tts") if m != GMOD]
+    ordine = [GMOD] + [m for m in ("gemini-3.8-flash-tts", "gemini-3.8-flash-lite-tts") if m != GMOD]
     cl = genai.Client(api_key=GKEY)
     for m in ordine:
         try:

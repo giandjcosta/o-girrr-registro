@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       modello:
-        description: Modello Gemini preferito (vuoto = Lite)
+        description: Modello Gemini preferito (vuoto = Pro, poi Lite)
         required: false
         default: ''
       solo_gemini:
