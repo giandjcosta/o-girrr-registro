@@ -19,23 +19,25 @@ iframe.out{opacity:0}
 <script>
 var BASE=location.origin+location.pathname.replace(/ufficiale\/.*$/,'');var f=document.getElementById('f'),tg=document.getElementById('tg'),la=document.getElementById('la'),ln=document.getElementById('ln');
 var HOME={a:'girrr/index.html',n:'nuovo/girrr/index.html'};
-function modo(u){return (u.indexOf('/ufficiale/nuovo/')>=0||/\/anteprima\/(index\.html)?(#|$)/.test(u))?'n':'a'}
+function fresco(u){var h='',i=u.indexOf('#');if(i>=0){h=u.slice(i);u=u.slice(0,i)}u=u.replace(/[?&]_t=\d+/,'');return u+(u.indexOf('?')<0?'?':'&')+'_t='+Date.now()+h}
+function pulisci(u){return u.replace(/[?&]_t=\d+/,'')}
+function modo(u){return (u.indexOf('/ufficiale/nuovo/')>=0||/\/anteprima\/(index\.html)?(\?[^#]*)?(#|$)/.test(u))?'n':'a'}
 function conv(u,m){
   u=u.replace('/ufficiale/nuovo/girrr/','/ufficiale/girrr/').replace(/\/anteprima\/(index\.html)?(?=#|$)/,'/anteprima/attuale.html');
   return m==='n'?u.replace('/ufficiale/girrr/','/ufficiale/nuovo/girrr/').replace('/anteprima/attuale.html','/anteprima/'):u}
 function mark(m){tg.setAttribute('aria-checked',m==='n');la.className=m==='a'?'on':'';ln.className=m==='n'?'on':''}
 function cambia(m){var u='';try{u=f.contentWindow.location.href}catch(e){}
-  var dest=(!u||u==='about:blank')?HOME[m]:conv(u,m);mark(m);try{localStorage.setItem('orr_gv',m)}catch(e){}
-  f.classList.add('out');setTimeout(function(){f.src=dest},230)}
+  var dest=(!u||u==='about:blank')?HOME[m]:conv(pulisci(u),m);mark(m);try{localStorage.setItem('orr_gv',m)}catch(e){}
+  f.classList.add('out');setTimeout(function(){f.src=fresco(dest)},230)}
 window.addEventListener('message',function(e){if(e.origin===location.origin&&e.data&&(e.data.orrGrafica==='a'||e.data.orrGrafica==='n'))cambia(e.data.orrGrafica)});
 tg.onclick=function(){cambia(tg.getAttribute('aria-checked')==='true'?'a':'n')};
-function salva(){try{var u=f.contentWindow.location.href;if(u&&u.indexOf(BASE)===0)localStorage.setItem('orr_gu',u)}catch(e){}}
+function salva(){try{var u=f.contentWindow.location.href;if(u&&u.indexOf(BASE)===0)localStorage.setItem('orr_gu',pulisci(u))}catch(e){}}
 f.addEventListener('load',function(){f.classList.remove('out');try{var m=modo(f.contentWindow.location.href);mark(m);localStorage.setItem('orr_gv',m)}catch(e){}salva()});setInterval(salva,800);
 // la prima volta: grafica ufficiale (attuale); poi si ricorda l'ultima scelta
 var s='a';try{var v=localStorage.getItem('orr_gv');if(v==='n'||v==='a')s=v}catch(e){}
 var h=(location.hash||'').slice(1);if(h==='nuova')s='n';if(h==='attuale')s='a';
 var gu='';try{gu=localStorage.getItem('orr_gu')||''}catch(e){}
 if(h==='nuova'||h==='attuale')gu='';
-f.src=(gu&&gu.indexOf(BASE)===0)?conv(gu,s):HOME[s];
+f.src=fresco((gu&&gu.indexOf(BASE)===0)?conv(gu,s):HOME[s]);
 mark(s);
 </script></body></html>
