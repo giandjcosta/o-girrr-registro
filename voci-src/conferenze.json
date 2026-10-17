@@ -1,0 +1,4 @@
+{"_come_si_usa": "Conferenze stampa della giornata. 'squadre' = per ogni squadra i toni scelti alle tre domande (0 sicuro, 1 umile, 2 provocatorio). 'partite' = gli scontri della giornata appena giocata. Se 'squadre' è vuoto, la radio salta la parte.",
+ "demo": true, "giornata": 2,
+ "partite": [["Apo team", "AFA SELECCION"], ["WOA", "Mariana Coneja"], ["stif dc", "Real Madrink"], ["Grodah", "Atletico ma non troppo"], ["Oranje VC", "The Blue brothers"]],
+ "squadre": {"Apo team": [0, 0, 0], "Mariana Coneja": [0, 0, 2], "Real Madrink": [1, 1, 1], "Oranje VC": [1, 1, 0], "Grodah": [2, 2, 2]}}

@@ -17,3 +17,11 @@ Montaggio (monta.py): la canzone entra 2 secondi prima del punto scelto, a volum
 Resta da fare: esultanza del pubblico nel mix.
 
 La radio esce automaticamente a fine giornata, quando sarà collegata ai dati veri del Giornale (oggi usa voci-src/dati.json, uno scatto fisso).
+
+## Dati della puntata (deciso da Gianluca il 17 ottobre)
+Si usano SOLO dati veri della lega: ultima giornata (re, flop, mazzata), classifica, probabilità, calendario, Champions Cup, notizie di mercato (mercato.json).
+Restano scritti a mano e vanno bene: storie dei manager, posizione dell'anno scorso, aspettativa del presidente. I derby li decide lui (o si trova un modo oggettivo / si chiede agli amici).
+Niente Totogirrr, niente cassa, niente frasi inventate sulla Curva.
+Conferenze stampa: se qualcuno le fa (conferenze.json) la radio fa un riepilogo mischiato dei toni (sicuro / umile / provocatorio) e lo confronta con la partita: parole mantenute, parole forti per niente, umile ma ha dimostrato di valere, ha dichiarato guerra e ha perso. Se non ci sono, la parte salta.
+Curva: una volta a settimana, prima di far uscire la radio, chiedere a Gianluca se c'è un post vero (curva.json). Se è vuoto la radio non ne parla.
+Attenzione: conferenze.json e mercato.json oggi sono dati di prova (demo: true).

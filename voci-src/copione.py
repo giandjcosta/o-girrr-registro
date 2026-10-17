@@ -27,16 +27,16 @@ STUP = ["Ma davvero?!", "Non ci credo!", "Cosa?! Ma com'è possibile?!"]
 COMM = ["Ragazzi, mi emoziono ancora.", "Il calcio è anche questo: i ritorni.", "Non è solo una classifica, è la nostra storia."]
 CURVA = ["Chissà cosa staranno scrivendo in Curva i tifosi {t}!", "In Curva, stasera, i tifosi {t} non dormono!", "Diamo un'occhiata alla Curva: i tifosi {t} sono già al lavoro!", "Chissà in Curva cosa ne pensano i tifosi {t}!"]
 CONF = ["Chi non crede in noi può restare a casa.", "Siamo pronti, ci vediamo in campo.", "Non siamo qui per fare i turisti.", "Quest'anno non ci ferma nessuno.", "Un punto alla volta, ma tutti insieme."]
-def build(D, rng, mercato, nomi=None):
+def build(D, rng, mercato, nomi=None, conf=None, curva_=None):
     nomi = nomi or {}
     b1 = nomi.get('B', 'Beppe Rovesciata'); g1 = nomi.get('G', 'Luigi Fischietti'); g0 = g1.split()[0]; b0 = b1.split()[0]
     a = D["aw"][-1]; T = D["tab"]; P = D["prob"]; n = a["n"]
     row = {r["t"]: r for r in T}
     def pick(x): return rng.choice(x)
-    def curva(t): return pick(CURVA).format(t="di " + t)
+    def curva(t): return ""   # niente frasi inventate sulla Curva: si legge solo un post vero (curva.json)
     def pct(x): return f(round(x))
     L = []
-    def add(k, t, st=None): L.append((k, t, st))
+    def add(k, t, st=None): L.append((k, " ".join(t.split()), st))
     # --- apertura alla Caressa e Bergomi: la frase passa da una voce all'altra
     add("B", f"Buongiorno, buonasera e buonanotte a tutti, siete su Radio Girrr, la radio ufficiale della Lega O Fant A Girrr! Oggi siamo qui con {b1}", "urlo")
     add("G", f"e {g1}! Si parte!", "urlo")
@@ -103,9 +103,34 @@ def build(D, rng, mercato, nomi=None):
     add("B", "Ora ci colleghiamo con la nostra inviata sul campo! Giulia, a te!", "urlo")
     sup = max(((r["t"], EXP.get(r["t"], 5), r["pos"]) for r in T), key=lambda x: x[1] - x[2])
     add("S", f"Grazie {b0}! Qui è un bel caos! Prima notizia: {sup[0]} sta superando le aspettative! Il presidente la voleva intorno al {ORDM.get(sup[1], str(sup[1]))} posto, e invece oggi è {ORD.get(sup[2], str(sup[2])+'ª')}!", "entusiasmo")
-    g = D["cal"][0]["m"]; conf = next(((m[0], m[1]) for m in g if "Oranje VC" in m), (g[0][0], g[0][1]))
-    add("S", f"Dalla sala stampa, alla vigilia di {conf[0]} contro {conf[1]}, l'allenatore dice: {pick(CONF)} Per ora è tutto, restituisco la linea in studio!", "entusiasmo")
-    add("G", pick(["Grazie Giulia! Un allenatore, una frase e mezza lega è già in fermento.", "Grazie Giulia! Questo è calcio!", "Grazie Giulia, collegamento da Oscar!"]))
+    g = D["cal"][0]["m"]
+    # --- conferenze stampa della settimana (solo se qualcuno le ha fatte): le mischiamo in un piccolo riepilogo e le confrontiamo col campo
+    cf = (conf or {}).get("squadre") or {}
+    if cf:
+        pt = {r[0]: r[1] for r in a["rows"]}
+        avv = {}
+        for x, y in (conf.get("partite") or []): avv[x] = y; avv[y] = x
+        info = []
+        for t, ans in cf.items():
+            if t not in pt or t not in avv or avv[t] not in pt: continue
+            tono = min(2, round(sum(ans) / len(ans))); vinta = pt[t] > pt[avv[t]]
+            info.append((t, tono, vinta, avv[t]))
+        TONO = ["si è presentato come la squadra da battere", "è stato molto umile", "ha lanciato la sfida a tutti"]
+        VERO = {(0, True): "{t} aveva parlato da campione e ha vinto. Parole mantenute!", (0, False): "{t} aveva parole forti per niente: si è fermato contro {o}.",
+                (1, True): "{t} è stato umile, ma in campo ha dimostrato che la sua squadra può fare molto!", (1, False): "{t} è stato umile e il campo gli ha dato ragione: ha perso contro {o}.",
+                (2, True): "{t} ha provocato tutti e poi ha vinto: chi di sfida ferisce...", (2, False): "{t} aveva dichiarato guerra e ha perso la battaglia contro {o}."}
+        if info:
+            ordine = sorted(info, key=lambda z: (z[1] == 1 and not z[2], not ((z[1] == 0 and not z[2]) or (z[1] == 1 and z[2])), z[0]))
+            scelte = ordine[:3]
+            elenco = "; ".join(f"{t} {TONO[tn]}" for t, tn, _, _ in scelte)
+            add("S", f"Dalla sala stampa, nelle conferenze di questa settimana: {elenco}. Vediamo se il campo ha dato ragione!", "entusiasmo")
+            for i, (t, tn, v, o) in enumerate(scelte[:2]):
+                add("G" if i == 0 else "B", VERO[(tn, v)].format(t=t, o=o), "sarcasmo" if (tn == 0 and not v) else None)
+            add("S", "Per ora è tutto, restituisco la linea in studio!", "entusiasmo")
+    # --- Curva: solo un post vero, se Gianluca ne ha dato uno
+    cv = (curva_ or {}).get("post")
+    if cv: add("S", f"E dalla Curva: {cv}", "entusiasmo")
+    if cf or cv: add("G", pick(["Grazie Giulia! Questo è calcio!", "Grazie Giulia, collegamento da Oscar!", "Grazie Giulia! Un'altra settimana di parole, vediamo i fatti."]))
     # --- coppa: storie vere, nessun giro di parole
     cup = D["cup"][-1] if D.get("cup") else None
     if cup:

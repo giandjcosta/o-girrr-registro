@@ -31,7 +31,8 @@ def derby(m): return any({x.lower(), y.lower()} == {m[0].lower(), m[1].lower()} 
 g = D["cal"][0]["m"]; der = next((m for m in g if derby(m)), g[0])
 import random, copione
 MERC = json.load(open(R / "mercato.json", encoding="utf-8")) if (R / "mercato.json").exists() else {}
-L = copione.build(D, random.Random(D["aw"][-1]["n"] * 7919), MERC, NOMI)
+def _json(n): return json.load(open(R / n, encoding="utf-8")) if (R / n).exists() else {}
+L = copione.build(D, random.Random(D["aw"][-1]["n"] * 7919), MERC, NOMI, _json("conferenze.json"), _json("curva.json"))
 import re, os, wave, subprocess
 ACC = {"rovesciata": "rovesciàta", "guardati": "guardàti", "riguardati": "riguardàti", "imparati": "imparàti", "risultati": "risultàti", "ancora": "ancòra",
        "subito": "sùbito", "favorito": "favorìto", "campionato": "campionàto", "mercato": "mercàto", "rovinato": "rovinàto", "infortunato": "infortunàto",
