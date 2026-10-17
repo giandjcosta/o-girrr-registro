@@ -415,16 +415,17 @@ function histScore(t){var qs=[];mgrsOf(t).forEach(function(m){var h=(HIST[m]||[]
 function potenza(t){return .5*histScore(t)+.5*Math.max(0,Math.min(100,((FZ[t]||0)-60)/40*100))}
 var EXPPRES=JSON.parse(JSON.stringify(EXP));
 function lastPos(t){var v=mgrsOf(t).map(function(m){var h=(HIST[m]||[]).filter(function(r){return r[0]==='2025/26'});return h.length?h[0][1]:null}).filter(function(x){return x!=null});return v.length?Math.round(v.reduce(function(a,b){return a+b},0)/v.length):null}
-var LADP=['Lottare per il titolo','Chiudere sul podio','Chiudere tra le prime 4','Puntare alla parte alta','Migliorare il piazzamento dello scorso anno','Salire gradualmente verso l\'alto'];
-var LADA=['Giocarmi il titolo','Puntare al podio','Entrare tra le prime 4','Stare nella parte alta','Fare meglio dello scorso anno','Salire un passo alla volta'];
-var NUMP=[2,3,4,5,6,6];
-function calcObiettivi(){var T=D.teams.slice().sort(function(a,b){return potenza(b)-potenza(a)});T.forEach(function(t,i){var er=i+1,a=EXPPRES[t]||er,tg=Math.max(1,Math.round((er+a)/2)),lp=lastPos(t),ti=mgrsOf(t).reduce(function(n,m){return n+(HIST[m]||[]).filter(function(r){return r[1]===1}).length},0);
-  var ix=tg<=2?0:tg===3?1:tg===4?2:3;
-  if(ix===3&&lp&&lp>5)ix=lp<=7?4:5;
-  var pr=LADP[ix],al=LADA[ix],num=NUMP[ix];
+var LADP=['Vincere il titolo','Chiudere tra le prime due','Chiudere sul podio','Chiudere tra le prime 4','Entrare nella metà alta'];
+var LADA=['Vincere il titolo','Stare tra le prime due','Puntare al podio','Entrare tra le prime 4','Stare nella metà alta'];
+var NUMP=[1,2,3,4,5];
+function calcObiettivi(){var T=D.teams.slice().sort(function(a,b){return potenza(b)-potenza(a)});T.forEach(function(t,i){var er=i+1,a=EXPPRES[t]||er,tg=Math.max(1,Math.round(.8*er+.2*a)),lp=lastPos(t),ti=mgrsOf(t).reduce(function(n,m){return n+(HIST[m]||[]).filter(function(r){return r[1]===1}).length},0);
+  var ix=Math.min(tg,6)-1,pr,al,num;
+  if(ix<=4){pr=LADP[ix];al=LADA[ix];num=NUMP[ix]}
+  else if(lp&&lp>5){pr='Migliorare il piazzamento dello scorso anno ('+lp+'°)';al='Fare meglio dello scorso anno ('+lp+'°)';num=Math.min(6,lp-1)}
+  else if(lp){pr='Puntare alla parte alta';al='Stare nella parte alta';num=5}
+  else{pr='Salire gradualmente verso l\'alto';al='Salire un passo alla volta';num=6}
   if(t==='WOA'){pr='Ripetersi: difendere il titolo';al='Ripetermi';num=2}
   else if(ti>=2&&lp&&lp>6){pr='Tornare in alto, con il titolo nel mirino';al='Tornare a lottare per il vertice';num=5}
-  else{if(ix===4){pr+=' ('+lp+'°)';al+=' ('+lp+'°)'}}
   OB[t]={er:er,pres:pr,all:al,fz:FZ[t]||0,hs:Math.round(histScore(t)),num:num};EXP[t]=num})}
 var OB={};calcObiettivi();
 function molt(g){return .2+.8*Math.min(1,g/NG)}
