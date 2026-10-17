@@ -138,16 +138,4 @@ for f in N.glob("*.html"):
         x = x.replace("</head>", '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">\n<style id="skin-nuova">' + SKIN + "</style>\n</head>", 1)
     f.write_text(x, encoding="utf-8")
 (N.parent / "index.html").write_text('<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0;url=girrr/index.html"><a href="girrr/index.html">Apri l\'anteprima</a>', encoding="utf-8")
-# Terza grafica: sfondo della lega (rosso e blu divisi da una riga gialla in diagonale)
-LEGA_BG = "body{background:linear-gradient(158deg,transparent 0 33%,#ffd166 33% calc(33% + 5px),transparent calc(33% + 5px)),linear-gradient(158deg,#e03244 0,#a31d2e 33%,#2a3d86 calc(33% + 5px),#141d3d 100%)!important;background-attachment:fixed!important}"
-SKIN_L = SKIN + "\n" + LEGA_BG
-Lg = R / "ufficiale" / "lega" / "girrr"
-if Lg.parent.exists(): shutil.rmtree(Lg.parent)
-shutil.copytree(OUT, Lg)
-for f in Lg.glob("*.html"):
-    x = f.read_text(encoding="utf-8").replace("../../anteprima/attuale.html", "../../../anteprima/lega.html")
-    if f.name != "curva.html":
-        x = x.replace("</head>", '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">\n<style id="skin-lega">' + SKIN_L + "</style>\n</head>", 1)
-    f.write_text(x, encoding="utf-8")
-(Lg.parent / "index.html").write_text('<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0;url=girrr/index.html"><a href="girrr/index.html">Apri l\'anteprima</a>', encoding="utf-8")
 print("scritto anche la versione nuova")
