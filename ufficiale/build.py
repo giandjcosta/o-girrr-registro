@@ -71,7 +71,7 @@ for f in ["albo.html", "derby.html", "curva.html"]:
 print("scritto", OUT, len(list(OUT.iterdir())), "file")
 
 # 8) Home: riquadri per le novità che vivono nel Laboratorio (stesse funzioni, aprono l'anteprima con la grafica giusta)
-NUOVE = [("sport","📺","Girrr Sport","Radio, conferenza stampa e Giornale"),("sfide","🥊","Sfide","Lanci una sfida, il rivale risponde"),("prob","🎯","Probabilità","Quanto è davvero probabile il titolo"),("borsino","📈","Borsino","Chi sale e chi scende"),("carriera","🧭","Carriera","Obiettivi e storia di ognuno"),("cassa","💰","Cassa","Dove vanno i soldi")]
+NUOVE = [("sfide","🥊","Sfide","Dentro Girrr Sport: lanci una sfida"),("borsino","📈","Borsino","Dentro lo Spogliatoio: chi sale e chi scende"),("prob","🎯","Probabilità","Dentro Totogirrr: quanto è probabile il titolo"),("carriera","🧭","Carriera","Obiettivi, presidente e Cassa")]
 def tiles(href):
     return "".join('<a class="mn" href="%s#%s"><div class="mi">%s</div><div><b>%s</b><span>%s</span></div></a>' % (href, k, e, n, d) for k, e, n, d in NUOVE)
 shutil.copy(R / "lab" / "girrr-sport.png", OUT / "girrr-sport.png")

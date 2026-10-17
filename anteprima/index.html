@@ -187,7 +187,7 @@ svg text{fill:var(--mute);font-family:var(--fb)}
 .cov small{letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--gold);font-size:10px}
 .cov h3{font-family:var(--fd);font-size:26px;line-height:1.15;margin:6px 0;text-transform:none;letter-spacing:0;color:#fff}
 .arch{display:flex;justify-content:space-between;align-items:center;padding:9px 2px;border-top:1px solid var(--line);font-size:13px}
-.where,.note,.lead,.fb,.proto-only{display:none!important}.hm{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}.hm button{display:flex;flex-direction:column;gap:4px;text-align:left;padding:14px;border-radius:16px;background:linear-gradient(160deg,#17214a,#2a1c52);border:1px solid var(--line);color:#fff;min-height:96px}.hm b{font-family:var(--fd);font-size:20px;font-weight:400}.hm small{color:var(--mute);font-size:12px;font-weight:600}.hm .big{grid-column:1/-1}html{background:#141d3d}body::before{display:none!important}.tabs{background:none!important;backdrop-filter:none}.tabs{gap:5px;padding:6px 0}.tabs button{padding:5px 11px 5px 7px;font-size:12px;display:inline-flex;align-items:center;gap:6px}.tabs button img{width:18px;height:18px;object-fit:contain;border-radius:4px}</style>
+.where,.note,.lead,.fb,.proto-only{display:none!important}.hm{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}.hm button{display:flex;flex-direction:column;gap:4px;text-align:left;padding:14px;border-radius:16px;background:linear-gradient(160deg,#17214a,#2a1c52);border:1px solid var(--line);color:#fff;min-height:96px}.hm b{font-family:var(--fd);font-size:20px;font-weight:400}.hm small{color:var(--mute);font-size:12px;font-weight:600}.hm .big{grid-column:1/-1}html{background:#141d3d}body::before{display:none!important}.seg{flex-wrap:wrap}.tabs{background:none!important;backdrop-filter:none}.tabs{gap:5px;padding:6px 0}.tabs button{padding:5px 11px 5px 7px;font-size:12px;display:inline-flex;align-items:center;gap:6px}.tabs button img.gsl{width:auto;height:22px;border-radius:3px}.tabs button img{width:18px;height:18px;object-fit:contain;border-radius:4px}</style>
 
 <div class="col">
   <div class="top">
@@ -219,7 +219,7 @@ function rnd(seed){var x=seed>>>0;return function(){x=(x*1664525+1013904223)>>>0
 var ME='Oranje VC';
 $('#lg').src=D.img.lega;
 
-var TABS=[['home','Home'],['sport','Girrr Sport'],['oro','Albo d\'oro'],['albo','Albo di Latta'],['derby','Derby'],['sfide','Sfide'],['prob','Probabilità'],['borsino','Borsino'],['carriera','Carriera'],['cassa','Cassa']];
+var TABS=[['home','Home'],['sport','Girrr Sport'],['oro','Albo d\'oro'],['spog','Spogliatoio'],['toto','Totogirrr'],['carriera','Carriera']];
 var cur='home',S={prob:'s',round:1,derbyRound:0,bors:0,carta:0,cteam:ME,conf:{},confDone:false,fb:{},fname:'',badgeTeam:ME,sfide:null,stake:50,opp:'Grodah'};
 
 function where(a,b,c){return '<div class="where"><b>Dove</b><span>'+a+'</span><span class="sep">›</span><span>'+b+'</span>'+(c?'<span class="sep">›</span><span>'+c+'</span>':'')+'</div>'}
@@ -257,10 +257,11 @@ function vSfide(){
 var STAG=[['2021/22','Serie A','Wakanda','apo'],['2022/23','Serie A','Wakanda','apo'],['2023/24','Serie A','Mugiwara','Leanzino'],['2024/25','Costa Cup','PornHub FC','17peppe17'],['2025/26','Gioberti Cup','WOA','ser'],['2025/26','Coppa Campioni','Grodah','RikyArma']];
 S.oro=S.oro||'storia';
 var PRE=[['2016/17','Apo Team','apo'],['2017/18','Urba Team','Urba'],['2018/19','Urba Team','Urba'],['2019/20',null,null],['2020/21',null,null]];
-var OROSEZ=[['storia','La storia della Lega'],['stagioni','Le stagioni'],['prima','Era Precedente'],['derby','I derby'],['all','Gli allenatori']];
+var OROSEZ=[['storia','La storia della Lega'],['stagioni','Le stagioni'],['prima','Era Precedente'],['derby','I derby'],['latta','Albo di Latta'],['all','Gli allenatori']];
 function vOro(){
   var h=where('Home','Albo d\'oro',OROSEZ.filter(function(x){return x[0]===S.oro})[0][1])+'<h2>Albo d\'oro</h2><p class="lead">Nell\'app vera la pagina ha già i trofei, i record e le schede degli allenatori. Qui vedi dove entrerebbero la storia della Lega e i derby. Dalla Home si arriva con il riquadro 🏆 Albo d\'oro.</p>';
   h+='<div class="seg" role="group" aria-label="Sezione">'+OROSEZ.map(function(x){return '<button data-oro="'+x[0]+'" aria-pressed="'+(S.oro===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>';
+  if(S.oro==='derby')return h+vDerby();if(S.oro==='latta')return h+vAlbo();
   if(S.oro==='storia')h+='<div class="card"><h3>La storia della Lega</h3><div class="rac"><div class="rt">Prima del 2021</div><p>Il campionato di questa compagnia esisteva già da prima del 2021: il primo anno è stato il 2016/17, poi due stagioni con Urba sul trono. Nel 2020 il Covid ha interrotto tutto; poi, nell\'estate 2021, subito dopo l\'Europeo, la lega ha cambiato casa e nel trasloco i dati si sono persi, e restano soltanto i ricordi del gruppo.</p><p>Il racconto con i numeri comincia dalla stagione 2021/22, con apo che vince il titolo al debutto. Il nome O Fant A Girrr, invece, ha una storia sua, che racconterà Christian.</p></div></div><p class="note">Va in cima all\'Albo d\'oro, subito dopo i trofei, così chi apre la pagina la legge prima dei record.</p>';
   if(S.oro==='stagioni')h+='<div class="card"><h3>Le stagioni</h3><div class="scroll"><table class="tbl"><tr><th>Stagione</th><th>Competizione</th><th>Vincitore</th></tr>'+STAG.map(function(x){return '<tr><td><b>'+x[0]+'</b></td><td>'+x[1]+'</td><td>'+esc(x[2])+' <span class="mut sm">'+esc(x[3])+'</span></td></tr>'}).join('')+'</table></div></div><p class="note">È la parte che nell\'app c\'è già: qui è solo un promemoria.</p>';
   if(S.oro==='prima'){var tt={};STAG.forEach(function(x){if(x[1]!=='Coppa Campioni')tt[x[3]]=(tt[x[3]]||0)+1});PRE.forEach(function(x){if(x[2])tt[x[2]]=(tt[x[2]]||0)+1});
@@ -649,10 +650,10 @@ function spRadio(){
 
 function spConf(){var x=vConf();return x.replace(/^<div class="where">.*?<\/div>/,'')}
 function vSport(){
-  var sp=S.sp,tabs=[['giornale','Giornale'],['conf','Conferenze stampa'],['radio','Radio'],['moviola','Moviola · presto']];
-  var h=where('Home','Girrr Sport')+gsHead('Girrr Sport')+'<div class="card"><h3>Cosa cambia in Home</h3><p class="sm mut" style="margin-bottom:10px">Il tasto Giornale diventa Girrr Sport, con il suo logo da emittente TV. Da lì si arriva a tutto il resto. Il Live resta solo al Tabellone: il pallino è fermo quando non si gioca e lampeggia durante la giornata.</p>'+homeMock()+'</div>';
+  var sp=S.sp,tabs=[['giornale','Giornale'],['conf','Conferenze stampa'],['radio','Radio'],['sfide','Sfide lanciate'],['moviola','Moviola · presto']];
+  var h=where('Home','Girrr Sport')+gsHead('Girrr Sport');
   h+='<div class="seg" role="group" aria-label="Sezioni di Girrr Sport">'+tabs.map(function(t){return '<button data-sp="'+t[0]+'" aria-pressed="'+(sp===t[0])+'"'+(t[0]==='moviola'?' disabled style="opacity:.5"':'')+'>'+t[1]+'</button>'}).join('')+'</div>';
-  h+=sp==='giornale'?spGiornale():sp==='conf'?spConf():sp==='radio'?spRadio():'';
+  h+=sp==='giornale'?spGiornale():sp==='conf'?spConf():sp==='radio'?spRadio():sp==='sfide'?vSfide():'';
   return h}
 
 
@@ -685,15 +686,24 @@ function vCassa(){var c=S.cs;
   return h}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-pay]');if(!b)return;S.cs.paid[b.dataset.pay]=!S.cs.paid[b.dataset.pay];render()});
 document.addEventListener('input',function(e){var m=/^cs-(.+)$/.exec(e.target.id||'');if(!m)return;var v=e.target.value;S.cs[m[1]]=m[1]==='saldo'?v:(parseFloat(v)||0);var r=$('#csres');if(r)r.innerHTML=csRes()});
-function vHome(){var T=[['sport','Girrr Sport','Radio, conferenza stampa e Giornale','big'],['oro','Albo d\'oro','Storia, stagioni, Era Precedente e derby'],['albo','Albo di Latta','Chi chiude in fondo'],['derby','Derby','Rivalità, sfide decisive, Totogirrr'],['sfide','Sfide','Una sfida a testa, con la posta'],['prob','Probabilità','Chi vince, chi sale, chi cade'],['borsino','Borsino','Il valore dei giocatori'],['carriera','Carriera','Presidente, obiettivi e fiducia'],['cassa','Cassa','I conti della lega']];
-  return '<div class="hm">'+T.map(function(t){return '<button data-tab="'+t[0]+'" class="'+(t[3]||'')+'"><b>'+t[1]+'</b><small>'+t[2]+'</small></button>'}).join('')+'</div>'}
-var V={home:vHome,oro:vOro,cassa:vCassa,sport:vSport,prob:vProb,sfide:vSfide,albo:vAlbo,derby:vDerby,borsino:vBors,carriera:vCar,conf:vConf,radio:vRadio,parere:vParere};
+function vHome(){var T=[['sport','Girrr Sport','Giornale, conferenze stampa, radio e sfide lanciate','big'],['oro','Albo d\'oro','Storia, stagioni, Era Precedente, derby e Albo di Latta'],['spog','Spogliatoio','Il Borsino e la tua squadra'],['toto','Totogirrr','Le probabilità e le quote'],['carriera','Carriera','Obiettivi, presidente e Cassa']];
+  return '<div class="hm">'+T.map(function(t){return '<button data-tab="'+t[0]+'" class="'+(t[3]||'')+'">'+(t[0]==='sport'?'<img src="'+D.img.gs+'" alt="Girrr Sport" style="height:46px;width:auto;align-self:flex-start;border-radius:6px">':'<b>'+t[1]+'</b>')+'<small>'+t[2]+'</small></button>'}).join('')+'</div>'}
+function vSpog(){return vBors()}function vToto(){return vProb()}
+
+S.cr=S.cr||'ob';
+var vCar0=vCar;
+function vCarr(){return '<div class="seg" role="group" aria-label="Sezioni">'+[['ob','Obiettivi e presidente'],['cassa','Cassa']].map(function(x){return '<button data-cr="'+x[0]+'" aria-pressed="'+(S.cr===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>'+(S.cr==='cassa'?vCassa():vCar0())}
+document.addEventListener('click',function(e){var b=e.target.closest('[data-cr]');if(!b)return;S.cr=b.dataset.cr;render()});
+function route(t){var M={derby:['oro','oro','derby'],albo:['oro','oro','latta'],sfide:['sport','sp','sfide'],borsino:['spog'],prob:['toto'],cassa:['carriera','cr','cassa']};
+  if(M[t]){if(M[t][1])S[M[t][1]]=M[t][2];return M[t][0]}return t}
+function vSpog(){return vBors()}function vToto(){return vProb()}
+var V={spog:vSpog,toto:vToto,home:vHome,oro:vOro,cassa:vCassa,sport:vSport,prob:vProb,sfide:vSfide,albo:vAlbo,derby:vDerby,borsino:vBors,carriera:vCarr,conf:vConf,radio:vRadio,parere:vParere};
 function render(){
   $('#view').innerHTML=V[cur]()+'';
-  $('#tabs').innerHTML=TABS.map(function(t){return '<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'">'+(({sport:D.img.gs,home:D.img.lega,oro:D.img.lega,albo:D.img.lega,derby:D.img.lega})[t[0]]?'<img src="'+({sport:D.img.gs}[t[0]]||D.img.lega)+'" alt="">':'')+t[1]+'</button>'}).join('');
+  $('#tabs').innerHTML=TABS.map(function(t){return '<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'" aria-label="'+t[1]+'">'+(t[0]==='sport'?'<img class="gsl" src="'+D.img.gs+'" alt="Girrr Sport">':(({home:1,oro:1,spog:1,carriera:1})[t[0]]?'<img src="'+D.img.lega+'" alt="">':'')+t[1])+'</button>'}).join('');
   try{var s=$('#tabs [aria-selected=true]');if(s&&s.scrollIntoView)s.scrollIntoView({inline:'center',block:'nearest'})}catch(e){}
 }
-function go(t){if(t==='conf'||t==='radio'||t==='giornale'){S.sp=t;t='sport'}if(cur==='radio'&&t!=='radio'){radioStop();RA.i=-1}cur=t;try{history.replaceState(null,'','#'+t)}catch(e){}render();window.scrollTo(0,0)}
+function go(t){t=route(t);if(t==='conf'||t==='radio'||t==='giornale'){S.sp=t;t='sport'}if(cur==='radio'&&t!=='radio'){radioStop();RA.i=-1}cur=t;try{history.replaceState(null,'','#'+t)}catch(e){}render();window.scrollTo(0,0)}
 document.addEventListener('click',function(e){
   var b=e.target.closest('button,[data-card]');if(!b)return;var d=b.dataset;
   if(d.tab)return go(d.tab);
@@ -720,7 +730,7 @@ document.addEventListener('change',function(e){var i=e.target.id;
   if(i==='cteam'){S.cteam=e.target.value;render()}
   if(i==='bteam'){S.badgeTeam=e.target.value;render()}});
 document.addEventListener('input',function(e){if(e.target.id==='fbn'){S.fb[cur]=S.fb[cur]||{};S.fb[cur].n=e.target.value}if(e.target.id==='fbname'){S.fname=e.target.value;var s=$('#sum');if(s)s.textContent=summary()}if(e.target.id==='stake'){S.stake=+e.target.value;var x=$('#stk');if(x)x.textContent=S.stake+' fantacrediti'}});
-var hh=(location.hash||'').slice(1);if(hh==='conf'||hh==='radio'){S.sp=hh;hh='sport'}if(V[hh])cur=hh;
+var hh=(location.hash||'').slice(1);if(hh==='conf'||hh==='radio'){S.sp=hh;hh='sport'}if(V[hh])cur=route(hh);
 window.addEventListener('hashchange',function(){var x=(location.hash||'').slice(1);if(V[x]&&x!==cur)go(x)});
 render();
 })();
