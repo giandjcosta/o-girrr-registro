@@ -237,19 +237,28 @@ if(p.indexOf('/ufficiale/nuovo/girrr/')>=0||p.indexOf('/ufficiale/girrr/')>=0){i
 else if(/\/anteprima\/attuale\.html$/.test(p))d='../ufficiale/girrr/index.html';else if(/\/anteprima\/(index\.html)?$/.test(p))d='../ufficiale/nuovo/girrr/index.html';
 if(!d)return;e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();location.href=d},true);
 var _ls=document.createElement('style');_ls.textContent='#lg,#olg{cursor:pointer}';document.head.appendChild(_ls);
-/* la scritta sopra il logo riporta alla pagina da cui arrivi; il logo riporta alla Home */
+/* la scritta sopra il logo riporta al livello sopra (Home › Albo d'oro › Derby); il logo riporta sempre alla Home */
 (function(){
-var NOMI={index:'O Girrr',albo:"Albo d'oro",derby:'I Derby',rivalita:'Le rivalità',squadre:'Squadre',tabellone:'Tabellone',totogirrr:'Totogirrr',statistiche:'Statistiche',curva:'Curva',giornale:'Giornale'};
+var NOMI={index:'O Girrr',albo:"Albo d'oro",derby:'I Derby',rivalita:'Le rivalità',squadre:'Squadre',tabellone:'Tabellone',totogirrr:'Totogirrr',statistiche:'Statistiche',curva:'Curva',giornale:'Giornale',sport:'Girrr Sport',spog:'Spogliatoio',toto:'Totogirrr'};
+var PADRE={albo:'index',derby:'albo',rivalita:'albo',squadre:'tabellone',tabellone:'index',totogirrr:'index',statistiche:'index',curva:'index',giornale:'index'};
+var LABPADRE={sfide:'sport',prob:'toto',borsino:'spog'};
 var p=location.pathname,lab=/\/anteprima\//.test(p),uf=/\/ufficiale\/(nuovo\/)?girrr\//.test(p);if(!lab&&!uf)return;
-var cur=lab?'lab':(p.split('/').pop().replace('.html','')||'index'),prev=null;
-try{var c=sessionStorage.getItem('orr_cur'),pv=sessionStorage.getItem('orr_prev');if(c&&c!==cur){prev=c;sessionStorage.setItem('orr_prev',c)}else prev=pv;sessionStorage.setItem('orr_cur',cur)}catch(e){}
-if(!prev||prev===cur||!NOMI[prev])prev='index';
+var cur=lab?'lab':(p.split('/').pop().replace('.html','')||'index');
 if(cur==='index')return;
 var dir=lab?p.slice(0,p.indexOf('/anteprima/')+1)+'ufficiale/'+(/attuale\.html$/.test(p)?'':'nuovo/')+'girrr/':p.slice(0,p.lastIndexOf('/')+1);
-function agg(){[].forEach.call(document.querySelectorAll('a.back,a.oback,.oback'),function(a){if(!/^\s*‹/.test(a.textContent))return;a.setAttribute('href',dir+prev+'.html');a.textContent='‹ '+NOMI[prev]})}
+function agg(){var h=lab?(location.hash||'').slice(1):'',pr=lab?LABPADRE[h]:PADRE[cur],href;
+  if(!pr)pr='index';
+  if(lab&&LABPADRE[h])href='#'+pr;else if(pr==='toto'||pr==='totogirrr')href=dir+'totogirrr.html';else href=dir+pr+'.html';
+  [].forEach.call(document.querySelectorAll('a.back,a.oback,.oback'),function(a){if(!/^\s*‹/.test(a.textContent))return;a.setAttribute('href',href);a.textContent='‹ '+NOMI[pr]})}
 if(document.body)agg();else document.addEventListener('DOMContentLoaded',agg);
-setTimeout(agg,600);
+window.addEventListener('hashchange',agg);setTimeout(agg,600);
 })();
+/* il logo della lega riporta alla Home dell'anteprima (stessa grafica) */
+document.addEventListener('click',function(e){var l=e.target.closest&&e.target.closest('#lg,#olg');if(!l)return;var p=location.pathname,d=null;
+if(p.indexOf('/ufficiale/nuovo/girrr/')>=0||p.indexOf('/ufficiale/girrr/')>=0){if(/\/index\.html$|\/girrr\/$/.test(p))return;d='index.html'}
+else if(/\/anteprima\/attuale\.html$/.test(p))d='../ufficiale/girrr/index.html';else if(/\/anteprima\/(index\.html)?$/.test(p))d='../ufficiale/nuovo/girrr/index.html';
+if(!d)return;e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();location.href=d},true);
+var _ls=document.createElement('style');_ls.textContent='#lg,#olg{cursor:pointer}';document.head.appendChild(_ls);
 var last=0;
 function mark(){last=Date.now()}
 document.addEventListener('pointerdown',mark,true);document.addEventListener('keydown',mark,true);document.addEventListener('click',mark,true);
