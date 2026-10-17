@@ -29,7 +29,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 .tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin:0 -2px 12px;scrollbar-width:none;background:linear-gradient(180deg,var(--bg3),transparent)}
 .tabs::-webkit-scrollbar{display:none}
 @media (hover:hover) and (pointer:fine){.tabs{background:none;position:static}}
-.cov a.btn,.garch a.btn{text-decoration:none}.gcov{display:grid;grid-template-columns:minmax(110px,210px) 1fr;gap:16px;align-items:start}.gcov .gimg img{display:block;width:100%;height:auto;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.4)}.garch{display:grid!important;grid-template-columns:64px 1fr;gap:12px;align-items:center;padding:10px 0}.garch .gth img{display:block;width:64px;height:auto;border-radius:6px;box-shadow:0 3px 10px rgba(0,0,0,.35)}.garch .gtx{display:grid;gap:3px;min-width:0}.garch .gtx>span{font-size:12.5px;line-height:1.35}.garch .gbt{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}.garch .gbt .btn{padding:5px 10px!important;font-size:12px}@media(max-width:480px){.gcov{grid-template-columns:100px 1fr;gap:12px}}
+#view button,#view .btn,#view .tag,#view .chp{transition:background-color .45s ease,color .45s ease,border-color .45s ease,opacity .45s ease}.cov a.btn,.garch a.btn{text-decoration:none}.gcov{display:grid;grid-template-columns:minmax(110px,210px) 1fr;gap:16px;align-items:start}.gcov .gimg img{display:block;width:100%;height:auto;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.4)}.garch{display:grid!important;grid-template-columns:64px 1fr;gap:12px;align-items:center;padding:10px 0}.garch .gth img{display:block;width:64px;height:auto;border-radius:6px;box-shadow:0 3px 10px rgba(0,0,0,.35)}.garch .gtx{display:grid;gap:3px;min-width:0}.garch .gtx>span{font-size:12.5px;line-height:1.35}.garch .gbt{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}.garch .gbt .btn{padding:5px 10px!important;font-size:12px}@media(max-width:480px){.gcov{grid-template-columns:100px 1fr;gap:12px}}
 .tabs button:first-child{margin-left:auto}.tabs button:last-child{margin-right:auto}.tabs.fl{-webkit-mask-image:linear-gradient(90deg,transparent,#000 34px);mask-image:linear-gradient(90deg,transparent,#000 34px)}.tabs.fr{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 34px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 34px),transparent)}.tabs.fl.fr{-webkit-mask-image:linear-gradient(90deg,transparent,#000 34px,#000 calc(100% - 34px),transparent);mask-image:linear-gradient(90deg,transparent,#000 34px,#000 calc(100% - 34px),transparent)}.tabs,.at{cursor:grab;scroll-snap-type:none}.tabs.drag,.at.drag{cursor:grabbing;scroll-behavior:auto}
 @media (hover:hover) and (pointer:fine) and (min-width:1060px){.tabs{width:1000px;margin-left:calc((100% - 1000px)/2)}}
 .tabs button{transition:background-color .5s,border-color .5s,color .5s;flex:none;padding:8px 13px;border-radius:99px;font-weight:700;font-size:13px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(14px)}
@@ -242,7 +242,7 @@ var _ls=document.createElement('style');_ls.textContent='#lg,#olg{cursor:pointer
 (function(){
 var NOMI={index:'O Girrr',albo:"Albo d'oro",derby:'I Derby',rivalita:'Le rivalità',squadre:'Squadre',tabellone:'Tabellone',totogirrr:'Totogirrr',statistiche:'Statistiche',curva:'Curva',giornale:'Giornale',sport:'Girrr Sport',spog:'Spogliatoio',toto:'Totogirrr'};
 var PADRE={albo:'index',derby:'albo',rivalita:'albo',squadre:'tabellone',tabellone:'index',totogirrr:'index',statistiche:'index',curva:'index',giornale:'index'};
-var LABPADRE={sfide:'sport',prob:'toto',borsino:'spog'};
+var LABPADRE={sfide:'sport',prob:'toto',duello:'toto',borsino:'spog'};
 var p=location.pathname,lab=/\/anteprima\//.test(p),uf=/\/ufficiale\/(nuovo\/)?girrr\//.test(p);if(!lab&&!uf)return;
 var cur=lab?'lab':(p.split('/').pop().replace('.html','')||'index');
 if(cur==='index')return;
@@ -338,8 +338,8 @@ function cap(o){return Math.max(0,Math.min(200,BAL[ME],BAL[o]||200))}
 function vSfide(){
   if(!S.sfide)S.sfide=[{a:'Oranje VC',b:'Apo team',st:100,s:'aperta',g:'G3'},{a:'Grodah',b:'WOA',st:40,s:'attesa',g:'G3'},{a:'Real Madrink',b:'Oranje VC',st:60,s:'chiusa',g:'G2',w:'Oranje VC',pa:74.0,pb:71.5}];
   var opp=D.teams.filter(function(t){return t!==ME}),mx=cap(S.opp);if(S.stake>mx)S.stake=mx;
-  var h=where('Totogirrr','Sfide')+'<h2>Sfida 1 contro 1 <button class="q1" id="help" aria-expanded="'+(!!S.help)+'" aria-label="Come funziona">?</button></h2>';
-  h+=(S.help?'<div class="card help"><b>Come funziona</b><p>Scegli un avversario e una posta. Se accetta, nella giornata scelta <b>vince chi fa più punti</b> e prende la posta dell\'altro. In caso di pareggio ognuno si riprende i suoi fantacrediti. Nessuno può puntare più di quello che ha in quel momento, e il tetto resta 200.</p></div>':'')+'<p class="lead">Sono sfide per i fantacrediti di Totogirrr: chi fa più punti nella giornata vince la posta. Il risultato esce anche in Curva. I Derby sono un'altra cosa: nascono dai voti degli amici e dalla storia della rivalità.</p>';
+  var h=where('Totogirrr','Sfide 1 contro 1')+'<h2>Sfida 1 contro 1 <button class="q1" id="help" aria-expanded="'+(!!S.help)+'" aria-label="Come funziona">?</button></h2>';
+  h+=(S.help?'<div class="card help"><b>Come funziona</b><p>Scegli un avversario e una posta. Se accetta, nella giornata scelta <b>vince chi fa più punti</b> e prende la posta dell\'altro. In caso di pareggio ognuno si riprende i suoi fantacrediti. Nessuno può puntare più di quello che ha in quel momento, e il tetto resta 200.</p></div>':'')+'<p class="lead">Sono sfide per i fantacrediti di Totogirrr: chi fa più punti nella giornata vince la posta. Il risultato esce anche in Curva. I Derby sono un\'altra cosa: nascono dai voti degli amici e dalla storia della rivalità.</p>';
   h+='<div class="card"><h3>Lancia una sfida</h3><div class="ch"><div>'+av(ME,'me')+'<b style="display:block;margin-top:4px">'+ME+'</b><span class="mut sm">'+BAL[ME]+' fantacrediti</span></div><div class="vs">vs</div><div><div style="display:flex;justify-content:center">'+av(S.opp)+'</div><select id="opp" aria-label="Avversario" style="margin-top:4px">'+opp.map(function(t){return '<option'+(t===S.opp?' selected':'')+'>'+esc(t)+'</option>'}).join('')+'</select><span class="mut sm">'+BAL[S.opp]+' fantacrediti</span></div></div>';
   h+='<div style="margin:14px 0 4px" class="row"><b>Posta</b><span class="grow"></span><b class="num" id="stk" style="font-size:20px;color:var(--gold)">'+S.stake+' fantacrediti</b></div><input type="range" id="stake" min="'+Math.min(10,mx)+'" max="'+mx+'" step="1" value="'+S.stake+'" aria-label="Posta" style="accent-color:#ffd166"><p class="sm mut" style="margin-top:6px">Massimo '+mx+': è il minimo tra quello che hai tu, quello che ha l\'avversario e il tetto di 200.</p><button class="btn" id="lancia" style="width:100%;margin-top:12px"'+(mx<10?' disabled style="width:100%;margin-top:12px;opacity:.45"':'')+'>Lancia la sfida per la giornata 3</button></div>';
   h+='<div class="card"><h3>Sfide della lega</h3>';
@@ -481,7 +481,6 @@ function vDerby(){
   r.m.forEach(function(m){if(!isDer(m[0],m[1]))h+='<div class="mt"><div class="t">'+esc(m[0])+'</div><span class="tag">vs</span><div class="t">'+esc(m[1])+'</div></div>'});
   h+='</div>';
   h+=forteCard()+decisiveCard();
-  h+=sfidaCard();
   var DT=RIV.filter(function(o){return o.n||rvInfo(o.a,o.b).der}).sort(function(x,y){return rvInfo(y.a,y.b).riv-rvInfo(x.a,x.b).riv});
   S.dtab=Math.min(S.dtab||0,DT.length-1);var o=DT[S.dtab],i=rvInfo(o.a,o.b);
   h+='<div class="card"><h3>I Derby della lega</h3><p class="sm mut" style="margin-bottom:8px">Tocca un Derby per leggerne la storia.</p><div class="seg" role="group" aria-label="Derby" style="flex-wrap:wrap">'+DT.map(function(x,j){return '<button data-dtab="'+j+'" aria-pressed="'+(S.dtab===j)+'">'+esc(derName(x))+'</button>'}).join('')+'</div>';
@@ -767,7 +766,7 @@ function vSport(){
   var sp=S.sp,tabs=[['giornale','Giornale'],['conf','Conferenze stampa'],['radio','Radio'],['sfide','Sfide'],['moviola','Moviola · Presto']];
   var h=where('Home','Girrr Sport')+gsHead('Girrr Sport');
   h+='<div class="seg" role="group" aria-label="Sezioni di Girrr Sport">'+tabs.map(function(t){return '<button data-sp="'+t[0]+'" aria-pressed="'+(sp===t[0])+'"'+(t[0]==='moviola'?' disabled style="opacity:.5"':'')+'>'+t[1]+'</button>'}).join('')+'</div>';
-  h+=sp==='giornale'?spGiornale():sp==='conf'?spConf():sp==='radio'?spRadio():sp==='sfide'?vSfide():'';
+  h+=sp==='giornale'?spGiornale():sp==='conf'?spConf():sp==='radio'?spRadio():sp==='sfide'?vSfideDerby():'';
   return h}
 
 
@@ -809,18 +808,37 @@ var vCar0=vCar;
 function vStat(){var ok=false;try{ok=JSON.parse(localStorage.getItem('fg')||'{}').team==='Oranje VC'}catch(e){}return ok?'<a class="card" href="../ufficiale/nuovo/girrr/statistiche.html" style="display:block;margin-top:14px;padding:14px 16px;text-decoration:none;color:inherit"><b>📊 Statistiche</b><br><span style="opacity:.75;font-size:13px">Solo per te: chi entra e dove ›</span></a>':''}
 function vCarr(){return '<div class="seg" role="group" aria-label="Sezioni">'+[['ob','Obiettivi e presidente'],['cassa','Cassa · Da decidere']].map(function(x){return '<button data-cr="'+x[0]+'" aria-pressed="'+(S.cr===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>'+(S.cr==='cassa'?vCassa():vCar0())}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-cr]');if(!b)return;S.cr=b.dataset.cr;render()});
-function route(t){var M={derby:['oro','oro','derby'],albo:['oro','oro','latta'],sfide:['sport','sp','sfide'],borsino:['spog'],prob:['toto'],cassa:['carriera','cr','cassa']};
+function vSfideDerby(){return where('Girrr Sport','Sfide')+'<h2>Sfide</h2><p class="lead">Sfida un rivale in conferenza stampa: la rivalità sale subito e, se lui accetta, nasce un Derby ufficiale.</p>'+sfidaCard()}
+S.tt=S.tt||'prob';
+function vTotoP(){return '<div class="seg" role="group" aria-label="Sezioni di Totogirrr">'+[['prob','Probabilità'],['duello','Sfide 1 contro 1']].map(function(x){return '<button data-tt="'+x[0]+'" aria-pressed="'+(S.tt===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>'+(S.tt==='duello'?vSfide():vProb())}
+document.addEventListener('click',function(e){var b=e.target.closest('[data-tt]');if(!b)return;S.tt=b.dataset.tt;render()});
+function route(t){var M={derby:['oro','oro','derby'],albo:['oro','oro','latta'],sfide:['sport','sp','sfide'],duello:['toto','tt','duello'],borsino:['spog'],prob:['toto','tt','prob'],cassa:['carriera','cr','cassa']};
   if(M[t]){if(M[t][1])S[M[t][1]]=M[t][2];return M[t][0]}return t}
-function vSpog(){return vBors()}function vToto(){return vProb()}
-var V={spog:vSpog,toto:vToto,home:vHome,oro:vOro,cassa:vCassa,sport:vSport,prob:vProb,sfide:vSfide,albo:vAlbo,derby:vDerby,borsino:vBors,carriera:vCarr,conf:vConf,radio:vRadio,parere:vParere};
+function vSpog(){return vBors()}function vToto(){return vTotoP()}
+var V={duello:vSfide,spog:vSpog,toto:vToto,home:vHome,oro:vOro,cassa:vCassa,sport:vSport,prob:vProb,sfide:vSfide,albo:vAlbo,derby:vDerby,borsino:vBors,carriera:vCarr,conf:vConf,radio:vRadio,parere:vParere};
 function morph(prima){/* i selettori ricostruiti partono dallo stato precedente e poi passano al nuovo, così il colore scorre */
   var gr=document.querySelectorAll('#view .seg');gr.forEach(function(g,k){var o=prima[k];if(!o||o.n!==g.children.length)return;var bs=[].slice.call(g.children),now=bs.map(function(b){return b.getAttribute('aria-pressed')});if(o.p.join()===now.join())return;bs.forEach(function(b,j){b.setAttribute('aria-pressed',o.p[j])});g.scrollLeft=o.s;void g.offsetWidth;requestAnimationFrame(function(){bs.forEach(function(b,j){b.setAttribute('aria-pressed',now[j])});var a=g.querySelector('[aria-pressed=true]');if(a)centra(g,a)})})}
+function morphDom(o,n){
+  var oc=o.childNodes,nc=n.childNodes,i=0;
+  for(;i<nc.length;i++){
+    var a=oc[i],b=nc[i];
+    if(!a){o.appendChild(b.cloneNode(true));continue}
+    if(a.nodeType!==b.nodeType||a.nodeName!==b.nodeName){o.replaceChild(b.cloneNode(true),a);continue}
+    if(a.nodeType===3||a.nodeType===8){if(a.nodeValue!==b.nodeValue)a.nodeValue=b.nodeValue;continue}
+    if(a.nodeType!==1)continue;
+    if(a.tagName==='AUDIO'||a.tagName==='VIDEO'||a.tagName==='IFRAME'){if(a.outerHTML!==b.outerHTML)o.replaceChild(b.cloneNode(true),a);continue}
+    var at=b.attributes,k;
+    for(k=0;k<at.length;k++){if(a.getAttribute(at[k].name)!==at[k].value)a.setAttribute(at[k].name,at[k].value)}
+    for(k=a.attributes.length-1;k>=0;k--){var nm=a.attributes[k].name;if(!b.hasAttribute(nm))a.removeAttribute(nm)}
+    if(/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)){if(document.activeElement!==a&&'value' in b&&a.value!==b.value)try{a.value=b.value}catch(e){}if(a.tagName==='INPUT'&&(a.type==='checkbox'||a.type==='radio'))a.checked=b.checked;if(a.tagName==='SELECT'&&document.activeElement!==a)[].forEach.call(a.options,function(op,j){op.selected=b.options[j]&&b.options[j].selected});if(a.tagName!=='SELECT')continue}
+    morphDom(a,b);
+  }
+  while(oc.length>nc.length)o.removeChild(o.lastChild);
+}
 function render(){try{var _t=TABS.filter(function(z){return z[0]===cur})[0];$('#ot').textContent=_t?_t[1]:'';$('#olg').src=D.img.lega;document.title='O Girrr · '+(_t?_t[1]:'')}catch(e){}
-  var _pr=[].map.call(document.querySelectorAll('#view .seg'),function(g){return{n:g.children.length,s:g.scrollLeft,p:[].map.call(g.children,function(b){return b.getAttribute('aria-pressed')})}});
   var _vw=$('#view'),_nv=document.createElement('div');_nv.innerHTML=V[cur]()+'';
-  var _k=0;while(_k<_vw.children.length&&_k<_nv.children.length&&_vw.children[_k].outerHTML===_nv.children[_k].outerHTML)_k++;
-  while(_vw.children.length>_k)_vw.removeChild(_vw.children[_k]);while(_nv.childNodes.length&&_nv.children.length>_k)_vw.appendChild(_nv.children[_k]);
-  morph(_pr);
+  morphDom(_vw,_nv);
+  [].forEach.call(document.querySelectorAll('#view .seg'),function(g){var a=g.querySelector('[aria-pressed=true]');if(a&&g.scrollWidth>g.clientWidth)centra(g,a)});
   var _tb=$('#tabs'),_sl=_tb.scrollLeft;if(_tb.children.length===TABS.length){[].forEach.call(_tb.children,function(b){b.setAttribute('aria-selected',b.dataset.tab===cur)})}else _tb.innerHTML=TABS.map(function(t){return '<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'" aria-label="'+t[1]+'">'+(t[0]==='sport'?'<img class="gsl" src="'+D.img.gs+'" alt="Girrr Sport">':(({home:1,oro:1,spog:1,carriera:1})[t[0]]?'<img src="'+D.img.lega+'" alt="">':'')+t[1])+'</button>'}).join('');
   try{_tb.style.scrollBehavior='auto';_tb.scrollLeft=_sl;var s=$('#tabs [aria-selected=true]');if(s)centra(_tb,s);_tb.style.scrollBehavior='';aggFade(_tb)}catch(e){}
 }

@@ -22,6 +22,8 @@ home = r"""function vHome(){var T=[['sport','Girrr Sport','Giornale, conferenze 
 function vSpog(){return vBors()}function vToto(){return vProb()}
 var V={spog:vSpog,toto:vToto,home:vHome,"""
 sost("var V={", home)
+sost("where('Totogirrr','Sfide')+'<h2>Sfida 1 contro 1", "where('Totogirrr','Sfide 1 contro 1')+'<h2>Sfida 1 contro 1")
+sost("  h+=sfidaCard();\n  var DT=", "  var DT=")
 sost("(cur==='parere'?'':fbBox())", "''")
 sost("S.fb[cur]", "S.fb[cur]")
 
@@ -30,17 +32,21 @@ sost("['derby','I Derby'],['all','Gli allenatori']", "['derby','I Derby'],['latt
 sost("  if(S.oro==='storia')h+=", "  if(S.oro==='derby')return h+vDerby();if(S.oro==='latta')return h+vAlbo();\n  if(S.oro==='storia')h+=")
 s = re.sub(r"\+'<div class=\"card\"><h3>Cosa cambia in Home</h3>.*?homeMock\(\)\+'</div>'", "", s, flags=re.S)
 sost("['moviola','Moviola · Presto']]", "['sfide','Sfide'],['moviola','Moviola · Presto']]")
-sost("sp==='radio'?spRadio():'';", "sp==='radio'?spRadio():sp==='sfide'?vSfide():'';")
+sost("sp==='radio'?spRadio():'';", "sp==='radio'?spRadio():sp==='sfide'?vSfideDerby():'';")
 extra = r"""
 S.cr=S.cr||'ob';
 var vCar0=vCar;
 function vStat(){var ok=false;try{ok=JSON.parse(localStorage.getItem('fg')||'{}').team==='Oranje VC'}catch(e){}return ok?'<a class="card" href="@@STAT@@" style="display:block;margin-top:14px;padding:14px 16px;text-decoration:none;color:inherit"><b>📊 Statistiche</b><br><span style="opacity:.75;font-size:13px">Solo per te: chi entra e dove ›</span></a>':''}
 function vCarr(){return '<div class="seg" role="group" aria-label="Sezioni">'+[['ob','Obiettivi e presidente'],['cassa','Cassa · Da decidere']].map(function(x){return '<button data-cr="'+x[0]+'" aria-pressed="'+(S.cr===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>'+(S.cr==='cassa'?vCassa():vCar0())}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-cr]');if(!b)return;S.cr=b.dataset.cr;render()});
-function route(t){var M={derby:['oro','oro','derby'],albo:['oro','oro','latta'],sfide:['sport','sp','sfide'],borsino:['spog'],prob:['toto'],cassa:['carriera','cr','cassa']};
+function vSfideDerby(){return where('Girrr Sport','Sfide')+'<h2>Sfide</h2><p class="lead">Sfida un rivale in conferenza stampa: la rivalità sale subito e, se lui accetta, nasce un Derby ufficiale.</p>'+sfidaCard()}
+S.tt=S.tt||'prob';
+function vTotoP(){return '<div class="seg" role="group" aria-label="Sezioni di Totogirrr">'+[['prob','Probabilità'],['duello','Sfide 1 contro 1']].map(function(x){return '<button data-tt="'+x[0]+'" aria-pressed="'+(S.tt===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>'+(S.tt==='duello'?vSfide():vProb())}
+document.addEventListener('click',function(e){var b=e.target.closest('[data-tt]');if(!b)return;S.tt=b.dataset.tt;render()});
+function route(t){var M={derby:['oro','oro','derby'],albo:['oro','oro','latta'],sfide:['sport','sp','sfide'],duello:['toto','tt','duello'],borsino:['spog'],prob:['toto','tt','prob'],cassa:['carriera','cr','cassa']};
   if(M[t]){if(M[t][1])S[M[t][1]]=M[t][2];return M[t][0]}return t}
 """
-sost("var V={spog:vSpog,toto:vToto,home:vHome,", extra + "function vSpog(){return vBors()}function vToto(){return vProb()}\nvar V={spog:vSpog,toto:vToto,home:vHome,")
+sost("var V={spog:vSpog,toto:vToto,home:vHome,", extra + "function vSpog(){return vBors()}function vToto(){return vTotoP()}\nvar V={duello:vSfide,spog:vSpog,toto:vToto,home:vHome,")
 sost("function go(t){", "function go(t){t=route(t);if(t==='home'){location.href='@@HOME@@';return}")
 sost("if(V[hh])cur=hh;", "if(V[hh])cur=route(hh);if(cur==='home'){location.replace('@@HOME@@')}")
 sost("carriera:vCar,", "carriera:vCarr,")
