@@ -1,6 +1,7 @@
 /* Transizioni morbide: quando l'utente preme una tab / un selettore, il contenuto che cambia entra con una dissolvenza leggera. */
 (function(){
 if(window._fx)return;window._fx=1;
+var _g=document.createElement('style');_g.textContent='html{scrollbar-gutter:stable}';document.head.appendChild(_g);
 if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)return;
 var st=document.createElement('style');
 st.textContent='@keyframes fxin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}.fx-in{animation:fxin .62s cubic-bezier(.22,.61,.36,1) both;animation-delay:calc(var(--fxd,0)*70ms)}[role=tab],.seg button,.at button,.chips button,.sw button,.ptabs button,.tabs button{transition:background-color .5s ease,color .5s ease,border-color .5s ease,opacity .5s ease,transform .5s ease}';
