@@ -139,11 +139,14 @@ _stat = '<section class="mini" style="margin-top:14px"><a class="mn" id="mst" hr
 ix = ix.replace('<div class="sp">', _stat + '<div class="sp">', 1)
 assert 'id="mst"' in ix
 ix = ix.replace("</head>", '<script src="grafica.js"></script>\n</head>', 1)
+ix = ix.replace("</head>", '<style>@media(min-width:1500px){.wrap{max-width:1380px}.wrap .cards{grid-template-columns:repeat(3,1fr)!important}}</style>\n</head>', 1)
 ix = ix.replace("</head>", "<style>.cards{grid-template-columns:repeat(3,1fr)!important}@media(max-width:820px){.cards{grid-template-columns:1fr 1fr!important}.c h2 .nt-nv{display:block;width:max-content;margin:6px 0 0}}@media(max-width:480px){.cards{grid-template-columns:1fr!important}.c h2 .nt-nv{display:inline-block;margin-left:8px}}</style>\n</head>", 1)
 (OUT / "index.html").write_text(ix, encoding="utf-8")
 # Tabellone: Le squadre diventano una sezione del Tabellone
 patch("tabellone.html", '<div class="sw" role="tablist">', '<a class="sqb" href="squadre.html"><span>🛡️</span><b>Le squadre</b><i>Rosa, risultati e forma di ognuno ›</i></a>\n  <div class="sw" role="tablist">')
 patch("tabellone.html", "</head>", "<style>.sqb{display:flex;align-items:center;gap:10px;margin:14px 0 0;max-width:440px;padding:11px 16px;border-radius:16px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);color:inherit;text-decoration:none}.sqb span{font-size:20px}.sqb b{font-weight:800}.sqb i{font-style:normal;font-size:12px;opacity:.75;margin-left:auto}</style>\n</head>")
+for _n in ["albo", "derby", "rivalita", "squadre", "statistiche", "tabellone", "giornale"]:
+    _p = OUT / (_n + ".html"); _p.write_text(_p.read_text(encoding="utf-8").replace("</head>", "<style>@media(min-width:1500px){.wrap{max-width:1380px}}</style>\n</head>", 1), encoding="utf-8")
 _v = str(int(_t.time()))
 for _f in OUT.glob("*.html"):
     _x = _f.read_text(encoding="utf-8")
