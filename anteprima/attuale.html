@@ -477,6 +477,36 @@ function sfF(t){var p=SFPAIR[rvKey(ME,t)];if(p)return p;var lp=lastPos(t),n=tito
 S.lancio=S.lancio||{r:'Apo team',f:0,ok:null};
 var DNP=new Proxy({},{get:function(o,t){var r=RIVM[rvKey(ME,t)];return (r&&r.n)||'Il Derby della Sfida'}});
 S.dn=S.dn||{};
+S.nm=S.nm||{};S.sft=S.sft||'lancia';
+S.rx=S.rx||{da:'Grodah',f:0,t0:Date.now()-17*3600000,stato:null};
+var RXF=["Quest'anno {X} dovrà guardarmi dal basso.","Prometto di arrivare sempre sopra {X}.","Il titolo passa da me, e {X} se ne farà una ragione."];
+var DNP2=["Il Derby della Rivincita","Il Derby del Conto Aperto","Il Derby della Resa dei Conti"];
+function nmFine(k){var n=S.nm[k];n.done=true;S.dn[k]=n.prop;S.vote[k]=true;delete S.pend[k]}
+function curvaPost(k,team){var nm=S.dn[k];return '<div class="post" style="margin-top:8px"><div class="hd"><img src="'+D.img.gs+'" alt="Girrr Sport"><div><b>Girrr Sport</b><span class="mut sm">@girrrsport · Adesso</span></div></div><q><b>NASCE UN DERBY</b><br>'+esc(ME)+' e '+esc(team)+' hanno accettato la sfida: da oggi è «'+esc(nm)+'». #GirrrSport #Derby</q></div>'}
+function nomeFlow(k,team,chall){
+  var n=S.nm[k]||(S.nm[k]={chall:chall,turn:chall,prop:'',by:'',done:false,note:''}),rv=SFR[team][0],h='';
+  if(n.done)return '<p class="sm" style="margin-top:6px">Nome concordato: <b>'+esc(S.dn[k])+'</b></p>'+curvaPost(k,team)+'<p class="note" style="margin-top:6px">Il Derby è ufficiale: compare tra i Derby della lega con la sua prima storia, e la rivalità tra le due squadre sale. Dura per sempre: se una delle due lascia la lega resta nell\'albo come Derby della storia.</p>';
+  if(n.note)h+='<p class="sm mut" style="margin-top:6px">'+esc(n.note)+'</p>';
+  if(n.turn==='me'){
+    if(n.prop&&n.by==='altro')return h+'<p style="margin-top:6px"><b>'+esc(rv)+' propone «'+esc(n.prop)+'».</b></p><div class="row" style="gap:6px;flex-wrap:wrap;margin-top:6px"><button class="btn" data-nm="ok" data-k="'+esc(k)+'">Accetto</button><button class="btn o" data-nm="no" data-k="'+esc(k)+'">Rifiuto</button></div><div class="row" style="gap:6px;flex-wrap:wrap;margin-top:6px"><input class="nmin" maxlength="40" placeholder="Scrivo la mia proposta" style="flex:1;min-width:140px"><button class="btn" data-nm="ctr" data-k="'+esc(k)+'">Proponi il mio</button></div>';
+    return h+'<p style="margin-top:6px"><b>Scegli il nome del Derby.</b> '+esc(rv)+' potrà accettarlo, rifiutarlo o proporne un altro.</p><div class="row" style="gap:6px;flex-wrap:wrap;margin-top:6px"><button class="btn" data-nm="prop" data-k="'+esc(k)+'" data-v="'+esc(DNP[team])+'">'+esc(DNP[team])+'</button><input class="nmin" maxlength="40" placeholder="Oppure scrivi il tuo" style="flex:1;min-width:140px"><button class="btn o" data-nm="prop" data-k="'+esc(k)+'">Proponi</button></div>'}
+  if(!n.prop)return h+'<p style="margin-top:6px"><b>Aspettiamo che '+esc(rv)+' proponga il nome del Derby.</b></p><div class="row" style="margin-top:6px"><button class="btn o" data-nm="s-prop" data-k="'+esc(k)+'" data-t="'+esc(team)+'">Prova: '+esc(rv)+' propone un nome</button></div>';
+  return h+'<p style="margin-top:6px"><b>Hai proposto «'+esc(n.prop)+'».</b> Aspettiamo la risposta di '+esc(rv)+'.</p><div class="row" style="gap:6px;flex-wrap:wrap;margin-top:6px"><button class="btn o" data-nm="s-ok" data-k="'+esc(k)+'">Prova: accetta</button><button class="btn o" data-nm="s-no" data-k="'+esc(k)+'">Prova: rifiuta</button><button class="btn o" data-nm="s-ctr" data-k="'+esc(k)+'" data-t="'+esc(team)+'">Prova: controproposta</button></div>'}
+function rxLeft(){var ms=S.rx.t0+72*3600000-Date.now();if(ms<=0)return null;var h=Math.floor(ms/3600000),d=Math.floor(h/24),o=h%24;return d>0?d+(d===1?' giorno':' giorni')+' e '+o+(o===1?' ora':' ore'):(h>0?h+(h===1?' ora':' ore')+' e '+Math.floor(ms%3600000/60000)+' minuti':Math.max(1,Math.floor(ms/60000))+' minuti')}
+function rxCount(){var R=S.rx;return (R&&!R.stato&&rxLeft()!==null)?1:0}
+function rxCard(){var R=S.rx,t=R.da,k=rvKey(ME,t),left=R.stato?null:rxLeft();if(!R.stato&&left===null)R.stato='scaduta';
+  var h='<div class="card"><h3>Sfide ricevute</h3>';
+  if(!R.da){return h+'<p class="sm mut">Nessuno ti ha sfidato. Quando succede compare qui.</p></div>'}
+  h+='<div class="post"><div class="hd">'+av(t)+'<div><b>'+esc(SFR[t][0])+'</b><span class="mut sm">In conferenza stampa · '+esc(t)+'</span></div></div><q>«'+esc(RXF[R.f].replace('{X}',ME))+'»</q></div>';
+  if(!R.stato){h+='<p style="margin-top:8px"><b>'+esc(SFR[t][0])+' ti ha lanciato una sfida: vuole un Derby con te.</b></p><p class="sm mut" style="margin-top:4px">Tempo per rispondere: <b>'+left+'</b>. Se lasci passare i tre giorni la sfida decade e la rivalità resta un po\' più alta.</p><div class="row" style="gap:6px;flex-wrap:wrap;margin-top:8px"><button class="btn" data-rx="accetta">Accetto la sfida</button><button class="btn o" data-rx="rifiuta">Rifiuto</button></div><p class="note" style="margin-top:6px">Se non rispondi, la sfida resta in attesa fino alla scadenza.</p>'}
+  if(R.stato==='rifiutata')h+='<div class="post" style="margin-top:8px"><div class="hd"><img src="'+D.img.gs+'" alt="Girrr Sport"><div><b>Girrr Sport</b><span class="mut sm">@girrrsport · Adesso</span></div></div><q><b>RIFIUTO CLAMOROSO</b><br>'+esc(ME)+' non considera '+esc(t)+' nemmeno degno di un Derby. La rivalità, intanto, sale. #GirrrSport</q></div><p class="sm mut" style="margin-top:6px">Niente Derby, ma la rivalità resta un po\' più alta di prima.</p>';
+  if(R.stato==='scaduta')h+='<p style="margin-top:8px"><b>Tre giorni senza risposta: la sfida decade.</b></p><p class="sm mut">Niente Derby, ma la rivalità resta un po\' più alta di prima.</p>';
+  if(R.stato==='accettata')h+='<p style="margin-top:8px"><b>Hai accettato la sfida di '+esc(SFR[t][0])+'.</b> Ora si sceglie il nome del Derby.</p>'+nomeFlow(k,t,'altro');
+  if(R.stato)h+='<button class="btn o" data-rx="nuova" style="margin-top:8px">Ricomincia la prova</button>';
+  return h+'</div>'}
+function sfidaHub(){var n=rxCount();
+  return '<div class="seg" role="group" aria-label="Sfide">'+[['lancia','Lancia'],['rx','Ricevute'+(n?' ('+n+')':'')]].map(function(x){return '<button data-sft="'+x[0]+'" aria-pressed="'+(S.sft===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>'+(S.sft==='rx'?rxCard():sfidaCard())}
+function storiaNuova(o){var k=rvKey(o.a,o.b);return '<p class="sm" style="margin-top:8px">«'+esc(S.dn[k])+'» è un Derby appena nato: è uscito da una sfida lanciata in conferenza stampa e accettata. Le due squadre hanno condiviso '+o.h+(o.h===1?' stagione':' stagioni')+(o.z?', '+o.z+(o.z===1?' nelle zone alte':' nelle zone alte'):'')+'. La storia comune è ancora corta: da oggi si scrive insieme.</p>'}
 function sfidaCard(){var L=S.lancio,x=SFR[L.r][1],k=rvKey(ME,L.r),st=L.stato||null;
   var h='<div class="card"><h3>Lancia una sfida</h3><p class="sm mut" style="margin-bottom:8px">Una dichiarazione in conferenza stampa fa salire la rivalità, ma il Derby diventa ufficiale solo se il rivale accetta. Una sfida alla volta, e al massimo due all\'anno per squadra.</p>';
   if(!st){
@@ -489,11 +519,9 @@ function sfidaCard(){var L=S.lancio,x=SFR[L.r][1],k=rvKey(ME,L.r),st=L.stato||nu
   h+='<div class="post"><div class="hd">'+av(ME)+'<div><b>'+esc(ME)+'</b><span class="mut sm">In conferenza stampa · Adesso</span></div></div><q>«'+esc(tx)+'»</q></div>'
    +'<div class="post" style="margin-top:8px"><div class="hd"><img src="'+D.img.gs+'" alt="Girrr Sport"><div><b>Girrr Sport</b><span class="mut sm">@girrrsport · Adesso</span></div></div><q><b>SFIDA LANCIATA</b><br>'+esc(ME)+' contro '+esc(L.ok.r)+': la dichiarazione fa rumore in lega. Sta per nascere un nuovo Derby? #GirrrSport #Derby</q></div>';
   if(st==='attesa')h+='<p class="note" style="margin-top:8px">La rivalità è già salita. '+esc(L.ok.r)+' ha tre giorni per rispondere: accetta, rifiuta o lascia cadere la sfida.</p><div class="row" style="gap:6px;flex-wrap:wrap;margin-top:6px"><button class="btn" data-sst="accettata">Prova: accetta</button><button class="btn" data-sst="rifiutata">Prova: rifiuta</button><button class="btn" data-sst="scaduta">Prova: passano 3 giorni</button></div>';
-  if(st==='rifiutata')h+='<p style="margin-top:8px"><b>'+esc(L.ok.r)+' ha rifiutato apertamente.</b></p><p class="sm mut">Niente Derby, ma la rivalità resta un po\' più alta di prima.</p>';
+  if(st==='rifiutata')h+='<p style="margin-top:8px"><b>'+esc(L.ok.r)+' ha rifiutato apertamente.</b></p><div class="post" style="margin-top:8px"><div class="hd"><img src="'+D.img.gs+'" alt="Girrr Sport"><div><b>Girrr Sport</b><span class="mut sm">@girrrsport · Adesso</span></div></div><q><b>RIFIUTO CLAMOROSO</b><br>'+esc(L.ok.r)+' non considera '+esc(ME)+' nemmeno degno di un Derby. La rivalità, intanto, sale. #GirrrSport</q></div><p class="sm mut" style="margin-top:6px">Niente Derby, ma la rivalità resta un po\' più alta di prima.</p>';
   if(st==='scaduta')h+='<p style="margin-top:8px"><b>Nessuna risposta in tre giorni: la sfida decade.</b></p><p class="sm mut">Niente Derby, ma la rivalità resta un po\' più alta di prima.</p>';
-  if(st==='accettata'){var nm=S.dn[k]||'';h+='<p style="margin-top:8px"><b>'+esc(L.ok.r)+' ha accettato: ora è un Derby ufficiale.</b></p>'
-    +(nm?'<p class="sm">Nome: <b>'+esc(nm)+'</b></p>':'<p class="sm mut" style="margin-top:4px">Nome proposto: <b>'+esc(DNP[L.ok.r])+'</b>. Lo confermate, o ne scrivete un altro.</p><div class="row" style="gap:6px;flex-wrap:wrap;margin-top:6px"><button class="btn" data-dnok="1">Confermiamo</button><input class="dnin" maxlength="40" placeholder="Un altro nome" style="flex:1;min-width:120px"><button class="btn" data-dnx="1">Usa questo</button></div>')
-    +'<p class="note" style="margin-top:6px">Un Derby ufficiale dura per sempre: se una delle due squadre lascia la lega resta nell\'albo come Derby della storia.</p>'}
+  if(st==='accettata')h+='<p style="margin-top:8px"><b>'+esc(L.ok.r)+' ha accettato la sfida.</b> Ora serve il nome del Derby.</p>'+nomeFlow(k,L.ok.r,'me');
   if(st!=='attesa')h+='<button class="btn" data-nuova="1" style="margin-top:8px">Ricomincia la prova</button>';
   return h+'</div>'}
 function vDerby(){
@@ -515,14 +543,30 @@ function vDerby(){
   h+='<div style="margin-top:12px"><div class="mt"><div class="t">'+esc(o.a)+'<div class="mut sm">'+esc(mg(o.a))+'</div></div><span class="tag">vs</span><div class="t">'+esc(o.b)+'<div class="mut sm">'+esc(mg(o.b))+'</div></div></div>'
    +'<div class="h2h" style="grid-template-columns:1fr 1fr;margin-top:10px"><div><small>Stagioni insieme</small><b class="num" style="font-size:24px">'+o.h+'</b></div><div><small>Nelle zone alte insieme</small><b class="num" style="font-size:24px">'+o.z+'</b></div></div>'
    +'<div class="mut sm" style="margin-top:8px">Rivalità: <b>'+rvWord(i.riv)+'</b> '+(i.der?'<span class="tag g">Derby</span>':'')+'</div>'+rvBar(i.riv)
-   +(o.s?racconto(o):'<p class="sm mut" style="margin-top:8px">Nessuna storia scritta per questa sfida.</p>')
+   +(o.s?racconto(o):(S.dn[rvKey(o.a,o.b)]?storiaNuova(o):'<p class="sm mut" style="margin-top:8px">Nessuna storia scritta per questa sfida.</p>'))
    +'<button class="tag '+(S.vote[rvKey(o.a,o.b)]?'o':'')+'" data-vote="'+esc(rvKey(o.a,o.b))+'" aria-pressed="'+(!!S.vote[rvKey(o.a,o.b)])+'" style="margin-top:8px">Lo sento come Derby</button></div></div>';
   h+='<p class="note">Le storie vengono dall\'Albo d\'oro e compariranno anche lì, una per ogni Derby. I primi voti sono quelli degli amici, gli altri sono di prova.</p>';
   return h;
 }
 document.addEventListener('input',function(e){var f=e.target.closest('.cfree');if(!f)return;var i=+f.dataset.cf;S.cf.free[i]=f.value.slice(0,CFMAX);var pos=f.selectionStart;S.cf.pub=false;S.cf.esito=null;render();var n=document.querySelector('.cfree[data-cf="'+i+'"]');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(x){}}});
 document.addEventListener('change',function(e){if(e.target.id==='fg'||e.target.id==='fp'){S.fdem.g=+document.getElementById('fg').value;S.fdem.p=+document.getElementById('fp').value;render()}});
-document.addEventListener('click',function(e){var q=e.target.closest('[data-sfr],[data-sff],[data-lancia],[data-sst],[data-dnok],[data-dnx],[data-nuova]');if(q){var kk=S.lancio.ok?rvKey(ME,S.lancio.ok.r):'';if(q.dataset.sst){S.lancio.stato=q.dataset.sst;if(q.dataset.sst==='accettata'){S.vote[kk]=true;delete S.pend[kk]}}if(q.dataset.dnok)S.dn[kk]=DNP[S.lancio.ok.r];if(q.dataset.dnx){var ip=document.querySelector('.dnin');if(ip&&ip.value.trim())S.dn[kk]=ip.value.trim().slice(0,40)}if(q.dataset.nuova){delete S.vote[kk];delete S.pend[kk];delete S.dn[kk];S.lancio={r:S.lancio.r,f:0,ok:null,stato:null,n:S.lancio.n||0}}if(q.dataset.sfr)S.lancio.r=q.dataset.sfr;if(q.dataset.sff)S.lancio.f=+q.dataset.sff;if(q.dataset.lancia){S.lancio.ok={r:S.lancio.r,f:S.lancio.f};S.lancio.stato='attesa';S.lancio.n=(S.lancio.n||0)+1;S.pend[rvKey(ME,S.lancio.r)]=true}render();return}var d=e.target.closest('[data-dtab]');if(d){S.dtab=+d.dataset.dtab;render();return}var b=e.target.closest('[data-vote]');if(!b)return;var k=b.dataset.vote;S.vote[k]=!S.vote[k];render()});
+document.addEventListener('click',function(e){var q=e.target.closest('[data-sfr],[data-sff],[data-lancia],[data-sst],[data-nuova],[data-nm],[data-rx],[data-sft]');if(q){var kk=S.lancio.ok?rvKey(ME,S.lancio.ok.r):'';
+  if(q.dataset.sft)S.sft=q.dataset.sft;
+  if(q.dataset.sst){S.lancio.stato=q.dataset.sst}
+  if(q.dataset.nuova){delete S.vote[kk];delete S.pend[kk];delete S.dn[kk];delete S.nm[kk];S.lancio={r:S.lancio.r,f:0,ok:null,stato:null,n:S.lancio.n||0}}
+  if(q.dataset.sfr)S.lancio.r=q.dataset.sfr;if(q.dataset.sff)S.lancio.f=+q.dataset.sff;
+  if(q.dataset.lancia){S.lancio.ok={r:S.lancio.r,f:S.lancio.f};S.lancio.stato='attesa';S.lancio.n=(S.lancio.n||0)+1;S.pend[rvKey(ME,S.lancio.r)]=true}
+  if(q.dataset.rx){var R=S.rx,rk=rvKey(ME,R.da),v=q.dataset.rx;if(v==='accetta'){R.stato='accettata';S.pend[rk]=true}if(v==='rifiuta')R.stato='rifiutata';if(v==='nuova'){delete S.vote[rk];delete S.pend[rk];delete S.dn[rk];delete S.nm[rk];S.rx={da:'Grodah',f:0,t0:Date.now()-17*3600000,stato:null}}}
+  if(q.dataset.nm){var m=q.dataset.nm,nk=q.dataset.k,n=S.nm[nk],box=q.closest('.card'),ip=box&&box.querySelector('.nmin'),val=(q.dataset.v||(ip&&ip.value)||'').trim().slice(0,40);
+    if(n){if((m==='prop'||m==='ctr')&&val){n.prop=val;n.by='me';n.turn='altro';n.note=''}
+      if(m==='ok')nmFine(nk);
+      if(m==='no'){n.note='Hai rifiutato «'+n.prop+'»: tocca a '+SFR[S.lancio.ok&&rvKey(ME,S.lancio.ok.r)===nk?S.lancio.ok.r:S.rx.da][0]+' proporne un altro.';n.prop='';n.by='';n.turn='altro'}
+      if(m==='s-prop'){n.prop=DNP[q.dataset.t];n.by='altro';n.turn='me';n.note=''}
+      if(m==='s-ok')nmFine(nk);
+      if(m==='s-no'){n.note='Il rivale ha rifiutato «'+n.prop+'»: proponine un altro.';n.prop='';n.by='';n.turn='me'}
+      if(m==='s-ctr'){n.prop=DNP2[Math.floor(Math.random()*DNP2.length)];n.by='altro';n.turn='me';n.note=''}}}
+  render();return}
+var d=e.target.closest('[data-dtab]');if(d){S.dtab=+d.dataset.dtab;render();return}var b=e.target.closest('[data-vote]');if(!b)return;var k=b.dataset.vote;S.vote[k]=!S.vote[k];render()});
 
 /* ---------- 5. BORSINO ---------- */
 function series(p){var q=rnd(p.id*7+3),v=[p.q],x=p.q;for(var i=0;i<7;i++){x=Math.max(1,x+(q()-.5)*3.2*(1+p.q/20));v.unshift(x)}return v}
@@ -837,7 +881,7 @@ var vCar0=vCar;
 function vStat(){var ok=false;try{ok=JSON.parse(localStorage.getItem('fg')||'{}').team==='Oranje VC'}catch(e){}return ok?'<a class="card" href="../ufficiale/girrr/statistiche.html" style="display:block;margin-top:14px;padding:14px 16px;text-decoration:none;color:inherit"><b>📊 Statistiche</b><br><span style="opacity:.75;font-size:13px">Solo per te: chi entra e dove ›</span></a>':''}
 function vCarr(){return vCar0()}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-cr]');if(!b)return;S.cr=b.dataset.cr;render()});
-function vSfideDerby(){return where('Girrr Sport','Sfide')+'<h2>Sfide</h2><p class="lead">Sfida un rivale in conferenza stampa: la rivalità sale subito e, se lui accetta, nasce un Derby ufficiale.</p>'+sfidaCard()}
+function vSfideDerby(){return where('Girrr Sport','Sfide')+'<h2>Sfide</h2><p class="lead">Sfida un rivale in conferenza stampa: la rivalità sale subito e, se lui accetta, nasce un Derby ufficiale.</p>'+sfidaHub()}
 S.tt=S.tt||'prob';
 function vTotoP(){return '<div class="seg" role="group" aria-label="Sezioni di Totogirrr">'+[['prob','Probabilità'],['duello','Sfide 1 contro 1']].map(function(x){return '<button data-tt="'+x[0]+'" aria-pressed="'+(S.tt===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>'+(S.tt==='duello'?vSfide():vProb())}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-tt]');if(!b)return;S.tt=b.dataset.tt;render()});

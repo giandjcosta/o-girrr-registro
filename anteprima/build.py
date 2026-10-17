@@ -39,7 +39,7 @@ var vCar0=vCar;
 function vStat(){var ok=false;try{ok=JSON.parse(localStorage.getItem('fg')||'{}').team==='Oranje VC'}catch(e){}return ok?'<a class="card" href="@@STAT@@" style="display:block;margin-top:14px;padding:14px 16px;text-decoration:none;color:inherit"><b>📊 Statistiche</b><br><span style="opacity:.75;font-size:13px">Solo per te: chi entra e dove ›</span></a>':''}
 function vCarr(){return vCar0()}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-cr]');if(!b)return;S.cr=b.dataset.cr;render()});
-function vSfideDerby(){return where('Girrr Sport','Sfide')+'<h2>Sfide</h2><p class="lead">Sfida un rivale in conferenza stampa: la rivalità sale subito e, se lui accetta, nasce un Derby ufficiale.</p>'+sfidaCard()}
+function vSfideDerby(){return where('Girrr Sport','Sfide')+'<h2>Sfide</h2><p class="lead">Sfida un rivale in conferenza stampa: la rivalità sale subito e, se lui accetta, nasce un Derby ufficiale.</p>'+sfidaHub()}
 S.tt=S.tt||'prob';
 function vTotoP(){return '<div class="seg" role="group" aria-label="Sezioni di Totogirrr">'+[['prob','Probabilità'],['duello','Sfide 1 contro 1']].map(function(x){return '<button data-tt="'+x[0]+'" aria-pressed="'+(S.tt===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>'+(S.tt==='duello'?vSfide():vProb())}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-tt]');if(!b)return;S.tt=b.dataset.tt;render()});
