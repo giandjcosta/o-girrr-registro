@@ -145,6 +145,8 @@ for f in N.glob("*.html"):
     x = f.read_text(encoding="utf-8").replace("../../anteprima/attuale.html", "../../../anteprima/index.html")
     if f.name != "curva.html":
         x = x.replace("</head>", '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">\n<style id="skin-nuova">' + SKIN + "</style>\n</head>", 1)
+    else:
+        x = x.replace("</head>", '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">\n<style id="skin-nuova">.bar .tt,.bar .tt>span,h2{font-family:Lobster,\'Brush Script MT\',cursive!important;font-weight:400!important;letter-spacing:0!important}.bar .tt{font-size:25px!important}.bar .tt small{font-family:Inter,system-ui,sans-serif!important;font-size:12px!important;font-weight:500!important}</style>\n</head>', 1)
     f.write_text(x, encoding="utf-8")
 (N.parent / "index.html").write_text('<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0;url=girrr/index.html"><a href="girrr/index.html">Apri l\'anteprima</a>', encoding="utf-8")
 print("scritto anche la versione nuova")
