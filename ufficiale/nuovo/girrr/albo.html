@@ -143,9 +143,9 @@ td small{color:var(--sub);font-weight:600;display:block;font-size:11px}
 </style>
 <script src="pub.js"></script>
 <script src="storia.js?v=1"></script>
-<script src="novita.js?v=1792263959"></script>
-<script src="novita-dati.js?v=1792263959"></script>
-<script src="novita-badge.js?v=1792263959"></script>
+<script src="novita.js?v=1792264042"></script>
+<script src="novita-dati.js?v=1792264042"></script>
+<script src="novita-badge.js?v=1792264042"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">
 <style id="skin-nuova">html{background:#141d3d}
 body{background:radial-gradient(900px 520px at 85% -8%,rgba(214,40,57,.26),transparent 62%),radial-gradient(1000px 640px at -10% 18%,rgba(61,147,214,.26),transparent 60%),linear-gradient(180deg,#2c3f7c,#1d2a52 45%,#141d3d)!important;background-attachment:fixed!important}
@@ -339,7 +339,7 @@ function percorso(name){
   });
   return R;
 }
-function titoli(name){return STORICO.filter(function(e){return can(e.v[1])===name}).length}
+function titoli(name){return STORICO.filter(function(e){return can(e.v[1])===name}).length+(window.NOV&&NOV.pre?NOV.pre.filter(function(x){return x[2]===name}).length:0)}
 function scontri(name){
   var K={};
   function k(o){return K[o]||(K[o]={dav:0,die:0,v:0,n:0,p:0})}
@@ -408,7 +408,7 @@ function stato(){
 function allenatori(){
   var cur=ORD.slice().sort(function(a,b){return titoli(b)-titoli(a)||ORD.indexOf(a)-ORD.indexOf(b)});
   var ex={};STORICO.forEach(function(e){if(!e.t)return;e.t.forEach(function(r){var n=can(r[1]);if(!CFG[n])ex[n]=1})});
-  var exl=Object.keys(ex).sort(function(a,b){return titoli(b)-titoli(a)||(a<b?-1:1)});
+  if(window.NOV&&NOV.pre)NOV.pre.forEach(function(x){if(x[2]&&!CFG[can(x[2])])ex[can(x[2])]=1});var exl=Object.keys(ex).sort(function(a,b){return titoli(b)-titoli(a)||(a<b?-1:1)});
   var h='<h3 class="hh">Gli allenatori</h3><div class="cg">'+cur.map(function(n){var t=titoli(n);
     return '<button class="cb" data-co="'+esc(n)+'">'+av(n,84)+'<b>'+esc(n)+'</b><small>'+(t?'🏆 '.repeat(Math.min(t,3))+t+(t===1?' titolo':' titoli'):esc(CUR[n]))+'</small></button>'}).join('')+'</div>';
   h+='<h3 class="hh" style="margin-top:20px">Chi ha lasciato</h3><div class="cg ex">'+exl.map(function(n){var t=titoli(n);

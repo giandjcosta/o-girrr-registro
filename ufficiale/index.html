@@ -21,8 +21,12 @@ function vai(n){var u;try{u=f.contentWindow.location.href}catch(e){u=''}
   if(!u||u==='about:blank'){f.src=n?'nuovo/girrr/index.html':'girrr/index.html'}else{f.src=conv(u,n)}
   mark(n);try{localStorage.setItem('gv',n?'n':'a')}catch(e){}}
 A.onclick=function(){vai(false)};N.onclick=function(){vai(true)};
-f.addEventListener('load',function(){try{mark(nuova(f.contentWindow.location.href))}catch(e){}});
+function salva(){try{var u=f.contentWindow.location.href;if(u&&u!=='about:blank')localStorage.setItem('gu',u)}catch(e){}}
+f.addEventListener('load',function(){try{mark(nuova(f.contentWindow.location.href))}catch(e){}salva()});setInterval(salva,800);
 var s='a';try{s=localStorage.getItem('gv')||'a'}catch(e){}
 var h=(location.hash||'').slice(1);if(h==='nuova')s='n';if(h==='attuale')s='a';
-f.src=s==='n'?'nuovo/girrr/index.html':'girrr/index.html';mark(s==='n');
+var gu='';try{gu=localStorage.getItem('gu')||''}catch(e){}
+if(h==='nuova'||h==='attuale')gu='';
+if(gu&&gu.indexOf(location.origin+'/')===0){f.src=conv(gu,s==='n');if(!h){}}else{f.src=s==='n'?'nuovo/girrr/index.html':'girrr/index.html'}
+mark(s==='n');
 </script></body></html>

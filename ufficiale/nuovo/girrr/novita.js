@@ -5,7 +5,7 @@ function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;
 window.NOVITA=function(D){var N=window.NOV;if(!N)return {};
   var L=N.leg,tt={},P={};
   var h='';
-  N.stag.forEach(function(x){if(x[1]!=='Coppa Campioni')tt[x[3]]=(tt[x[3]]||0)+1});N.pre.forEach(function(x){if(x[2])tt[x[2]]=(tt[x[2]]||0)+1});
+  N.stag.forEach(function(x){tt[x[3]]=(tt[x[3]]||0)+1});N.pre.forEach(function(x){if(x[2])tt[x[2]]=(tt[x[2]]||0)+1});
   var EN=[L.eras.prima,L.eras.vuoto,L.eras.oggi],ere='';
   L.libro.forEach(function(c,i){
     ere+='<div class="card"><h3>'+esc(EN[i]||c.t)+(i===0?'<span class="nt-nv">NOVITÀ</span>':'')+'</h3><div class="rac">'+c.p.map(function(p){return '<p>'+esc(p)+'</p>'}).join('')+'</div>';
@@ -13,7 +13,7 @@ window.NOVITA=function(D){var N=window.NOV;if(!N)return {};
       +L.titani.map(function(r){return '<div class="rac"><div class="rt">'+esc(r.t)+'</div><p>'+esc(r.p)+'</p></div>'}).join('')+'<p class="nt">'+esc(L.nota)+'</p>'}
     ere+='</div>'});
   P.ere=ere;h='';
-  h+='<div class="card"><h3>Titoli di sempre</h3><table class="nt-t"><tr><th>Allenatore</th><th class="num">Titoli</th></tr>'+Object.keys(tt).sort(function(a,b){return tt[b]-tt[a]}).map(function(u){return '<tr><td>'+esc(u)+'</td><td class="num">'+tt[u]+(N.pre.some(function(x){return x[2]===u})?'*':'')+'</td></tr>'}).join('')+'</table><p class="nt">* Include i titoli dell\'Era dei Titani, che arrivano dai ricordi e non da dati conservati. Contano solo i campionati, non la Coppa Campioni.</p></div>';
+  h+='<div class="card"><h3>Titoli di sempre</h3><table class="nt-t"><tr><th>Allenatore</th><th class="num">Titoli</th></tr>'+Object.keys(tt).sort(function(a,b){return tt[b]-tt[a]}).map(function(u){return '<tr><td>'+esc(u)+'</td><td class="num">'+tt[u]+(N.pre.some(function(x){return x[2]===u})?'*':'')+'</td></tr>'}).join('')+'</table><p class="nt">* Include i titoli dell\'Era dei Titani, che arrivano dai ricordi e non da dati conservati. Il totale conta anche la Coppa Campioni.</p></div>';
   P.titoli=h;h='';
   h+='<a class="card" href="derby.html" style="display:block;text-decoration:none;color:inherit"><h3>I derby della Lega<span class="nt-nv">NOVITÀ</span></h3><div style="font-weight:700;font-size:14px">Le rivalità, i derby con la loro storia e le sfide decisive → </div></a>';
   P.derby=h;return P}
