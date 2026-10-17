@@ -62,6 +62,7 @@ patch("albo.html", "</head>", '<script src="novita.js"></script>\n</head>')
 patch("albo.html", "document.getElementById('al').innerHTML=stato()+allenatori()+storico()+recs();", "document.getElementById('al').innerHTML=window.ALBOTABS?ALBOTABS(D,{stato:stato(),allenatori:allenatori(),storico:storico(),recs:recs()}):stato()+allenatori()+storico()+recs();")
 patch("albo.html", "function titoli(name){return STORICO.filter(function(e){return can(e.v[1])===name}).length}", "function titoli(name){return STORICO.filter(function(e){return can(e.v[1])===name}).length+(window.NOV&&NOV.pre?NOV.pre.filter(function(x){return x[2]===name}).length:0)}")
 patch("albo.html", "var exl=Object.keys(ex).sort(", "if(window.NOV&&NOV.pre)NOV.pre.forEach(function(x){if(x[2]&&!CFG[can(x[2])])ex[can(x[2])]=1});var exl=Object.keys(ex).sort(")
+patch("albo.html", "<b>'+f[2]+' - '+f[6]+'</b><small>'+pt(f[3])+' - '+pt(f[7])+'</small>", "<b>'+f[2]+' - '+f[6]+'</b>")
 patch("albo.html", "Le stagioni passate", "L\\'Era Contemporanea · Le stagioni")
 # 5) Curva: post nuovi dentro il feed
 patch("curva.html", "</head>", '<script src="novita-curva.js"></script>\n</head>')

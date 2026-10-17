@@ -143,9 +143,9 @@ td small{color:var(--sub);font-weight:600;display:block;font-size:11px}
 </style>
 <script src="pub.js"></script>
 <script src="storia.js?v=1"></script>
-<script src="novita.js?v=1792264089"></script>
-<script src="novita-dati.js?v=1792264089"></script>
-<script src="novita-badge.js?v=1792264089"></script>
+<script src="novita.js?v=1792264240"></script>
+<script src="novita-dati.js?v=1792264240"></script>
+<script src="novita-badge.js?v=1792264240"></script>
 </head>
 <body>
 <div class="wrap">
@@ -230,7 +230,7 @@ function storico(){
    +ord.map(function(k){return '<span>🏆 '+esc(k)+' <b>'+cnt[k]+'</b></span>'}).join('')+'</div>';
   STORICO.forEach(function(e){
     var body='';
-    if(e.fin){var f=e.fin;body='<table><tr><td>'+esc(f[0])+'<small>'+esc(alS(f[1]))+'</small></td><td><b>'+f[2]+' - '+f[6]+'</b><small>'+pt(f[3])+' - '+pt(f[7])+'</small></td><td>'+esc(f[4])+'<small>'+esc(alS(f[5]))+'</small></td></tr></table>'}
+    if(e.fin){var f=e.fin;body='<table><tr><td>'+esc(f[0])+'<small>'+esc(alS(f[1]))+'</small></td><td><b>'+f[2]+' - '+f[6]+'</b></td><td>'+esc(f[4])+'<small>'+esc(alS(f[5]))+'</small></td></tr></table>'}
     else{body='<table><tr><th>#</th><th style="text-align:left">Squadra</th><th>Punti</th></tr>'
       +e.t.map(function(r,i){return '<tr><td>'+(i+1)+'°</td><td style="text-align:left;font-weight:700">'+esc(r[0])+'<small>'+esc(alS(r[1]))+'</small></td><td>'+(r[2]!=null?r[2]:'–')+'</td></tr>'}).join('')+'</table>'}
     h+='<div class="card"><details><summary><span class="y">'+e.y+'</span><span><small>'+esc(e.c)+'</small><b>🏆 '+esc(e.v[0])+' · '+esc(alS(e.v[1]))+'</b></span><span class="fr">›</span></summary>'+body+(e.nota?'<div class="nota">'+e.nota+'</div>':'')+'</details></div>';
