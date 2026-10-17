@@ -359,6 +359,7 @@ function vDerby(){
   h+='<p class="note">Le storie vengono dall\'Albo d\'oro e compariranno anche lì, una per ogni derby. I primi voti sono quelli degli amici, gli altri sono di prova.</p>';
   return h;
 }
+document.addEventListener('input',function(e){var f=e.target.closest('.cfree');if(!f)return;var i=+f.dataset.cf;S.cf.free[i]=f.value.slice(0,CFMAX);var pos=f.selectionStart;S.cf.pub=false;S.cf.esito=null;render();var n=document.querySelector('.cfree[data-cf="'+i+'"]');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(x){}}});
 document.addEventListener('change',function(e){if(e.target.id==='fg'||e.target.id==='fp'){S.fdem.g=+document.getElementById('fg').value;S.fdem.p=+document.getElementById('fp').value;render()}});
 document.addEventListener('click',function(e){var q=e.target.closest('[data-sfr],[data-sff],[data-lancia],[data-accetta]');if(q){if(q.dataset.accetta&&S.lancio.ok){S.vote[rvKey(ME,S.lancio.ok.r)]=true;delete S.pend[rvKey(ME,S.lancio.ok.r)]}if(q.dataset.sfr)S.lancio.r=q.dataset.sfr;if(q.dataset.sff)S.lancio.f=+q.dataset.sff;if(q.dataset.lancia){S.lancio.ok={r:S.lancio.r,f:S.lancio.f};if(!S.vote[rvKey(ME,S.lancio.r)])S.pend[rvKey(ME,S.lancio.r)]=true}render();return}var d=e.target.closest('[data-dtab]');if(d){S.dtab=+d.dataset.dtab;render();return}var b=e.target.closest('[data-vote]');if(!b)return;var k=b.dataset.vote;S.vote[k]=!S.vote[k];render()});
 
@@ -455,24 +456,41 @@ function vCar(){
 
 /* ---------- 8. CONFERENZA ---------- */
 function nextOpp(t){var r=D.cal[0].m;for(var i=0;i<r.length;i++){if(r[i][0]===t)return r[i][1];if(r[i][1]===t)return r[i][0]}return 'avversario'}
-var QS=[
- ['Come arrivate alla prossima giornata?',['Siamo la squadra da battere.','Una partita alla volta, con umiltà.','Gli altri possono preparare le scuse.']],
- ['Cosa pensa di {O}?',['Rispetto per tutti, ma la rosa è superiore.','Un ottimo avversario, serve attenzione.','{O}? Chiedete a loro se hanno la formazione.']],
- ['Un messaggio ai tifosi?',['Preparate lo spazio in bacheca.','Grazie, continuiamo a lavorare a testa bassa.','Chi non crede in noi può restare a casa.']]];
 var TONI=['Sicuro','Umile','Provocatorio'];
 var REP=[['Ciro Trattativa','Parole da campione. Ora però servono i punti.'],['Ciro Trattativa','Mi piace l\'umiltà, ma in questa lega non basta.'],['Ciro Trattativa','Ha dichiarato guerra. Si prepari, perché non finisce qui.']];
+S.cf=S.cf||{a:[],free:['','',''],pub:false,esito:null};
+var CFMAX=80;
+function confQs(t){var r=row(t),o=nextOpp(t),ro=row(o),f=fid(t),g=r.g||0,left=NG-g,der=isDer(t,o),ob=OB[t],pr=ob.pres,ok=r.pos<=EXP[t],X=function(x){return x.replace(/\{O\}/g,o)};
+  var q1=ok?'Siete '+r.pos+'° e il presidente chiede: «'+pr+'». Come vedete l\'obiettivo?':'Siete '+r.pos+'° e il presidente chiede: «'+pr+'». Non siete in ritardo?';
+  if(g/NG>.5)q1+=' Mancano '+left+' giornate.';
+  var q2='Domani c\'è '+o+' ('+ro.pos+'°'+(der?', ed è un derby':'')+'). Cosa vi aspettate?';
+  var q3=f<45?'La dirigenza ha fiducia al '+f+'%. Cosa rispondete a chi dubita?':'La dirigenza è soddisfatta ('+f+'%). Un messaggio ai tifosi?';
+  return [
+   {q:q1,a:[{t:ok?'Lo centriamo, senza dubbi.':'Lo recuperiamo, e lo faremo vincendo.',k:0,w:1},{t:ok?'Una partita alla volta, con umiltà.':'È presto: lavoriamo e vediamo.',k:1,w:0},{t:ok?'Chi parla di obiettivi guardi la classifica.':'Mi ricorderanno quando avrò vinto.',k:2,w:1}]},
+   {q:q2,a:[{t:der?'Vinciamo noi, e non è una previsione.':'Vinciamo noi: ci siamo preparati.',k:0,w:1},{t:X('{O} è un ottimo avversario: serve attenzione.'),k:1,w:0},{t:der?X('{O} dovrà guardarmi dal basso.'):X('{O}? Chiedete a loro se hanno la formazione.'),k:2,w:1}]},
+   {q:q3,a:[{t:f<45?'Vi ripago con una vittoria, già domani.':'Ci vediamo a fine stagione, con il trofeo.',k:0,w:1},{t:f<45?'Chiedo tempo: i risultati arriveranno.':'Grazie, continuiamo a lavorare a testa bassa.',k:1,w:0},{t:f<45?'Chi dubita di me può restare a casa.':'Chi non crede in noi può restare a casa.',k:2,w:1}]}]}
+function freeClaim(tx){var s=(tx||'').toLowerCase();if(!s.trim())return null;var win=/vinc|batt|domin|travol|spazz|prime|primo|titolo|sopra/.test(s),pro=/umili|travol|spazz|casa|scuse/.test(s);return {t:tx.trim(),k:pro?2:win?0:1,w:win?1:0}}
+function confChosen(t){var Q=confQs(t);return Q.map(function(q,i){var a=S.cf.a[i];if(a==='free')return freeClaim(S.cf.free[i]);return a===undefined?null:q.a[a]})}
+function confDelta(ch,win){var d=0;ch.forEach(function(c){if(c&&c.w){var peso=c.k===2?2:1;d+=win?peso:-peso}});return Math.max(-3,Math.min(3,d))}
 function vConf(){
-  var t=S.cteam==='x'?ME:ME,o=nextOpp(t),c=S.conf,done=[0,1,2].every(function(i){return c[i]!==undefined});
-  var h=where('Nuovo menu','Conferenza','poi in Curva su Girrr Sport')+'<h2>Conferenza stampa</h2><p class="lead">Prima di ogni giornata rispondi a tre domande. Il tono che scegli decide cosa scrive Girrr Sport in Curva e come reagiscono gli altri.</p>';
-  h+='<div class="card"><h3>Vigilia di '+t+' - '+o+'</h3>';
-  QS.forEach(function(q,i){h+='<div class="q"><p>'+q[0].replace('{O}',esc(o))+'</p><div class="opts">'+q[1].map(function(a,j){return '<button data-q="'+i+'" data-a="'+j+'" aria-pressed="'+(c[i]===j)+'">'+esc(a.replace('{O}',o))+'</button>'}).join('')+'</div></div>'});
-  h+='<button class="btn" id="pub" '+(done?'':'disabled style="opacity:.45;cursor:not-allowed"')+'>Pubblica su Curva</button></div>';
-  if(S.confDone&&done){
-    var tone=Math.round(((c[0]+c[1]+c[2])/3)),a1=QS[0][1][c[0]],a3=QS[2][1][c[2]];
-    h+='<div class="card"><h3>Come appare in Curva</h3><div class="post"><div class="hd"><img src="'+D.img.gs+'" alt="Girrr Sport"><div><b>Girrr Sport</b><span class="mut sm">@girrrsport · adesso</span></div></div><q><b>CONFERENZA STAMPA</b> · '+esc(t)+', alla vigilia di '+esc(t)+' - '+esc(o)+': «'+esc(a1)+'» E ai tifosi: «'+esc(a3)+'»</q><span class="tag g">Tono: '+TONI[Math.min(2,tone)]+'</span><div class="rep"><b>'+REP[Math.min(2,tone)][0]+'</b> risponde: '+esc(REP[Math.min(2,tone)][1])+'</div></div></div>'}
-  return h;
+  var t=ME,o=nextOpp(t),Q=confQs(t),cf=S.cf,ch=confChosen(t),done=ch.every(function(c){return c});
+  var h=where('Nuovo menu','Conferenza','poi in Curva su Girrr Sport')+'<h2>Conferenza stampa</h2><p class="lead">Le domande cambiano con la tua situazione: classifica, obiettivo del presidente, avversario e fiducia della dirigenza. Quello che dici conta: se prometti e poi perdi, la dirigenza se lo ricorda.</p>';
+  h+='<div class="card"><h3>Vigilia di '+esc(t)+' - '+esc(o)+'</h3>';
+  Q.forEach(function(q,i){h+='<div class="q"><p>'+esc(q.q)+'</p><div class="opts">'+q.a.map(function(a,j){return '<button data-cq="'+i+'" data-ca="'+j+'" aria-pressed="'+(cf.a[i]===j)+'">'+esc(a.t)+'</button>'}).join('')+'<button data-cq="'+i+'" data-ca="free" aria-pressed="'+(cf.a[i]==='free')+'">Scrivo io</button></div>'
+    +(cf.a[i]==='free'?'<input class="cfree" data-cf="'+i+'" maxlength="'+CFMAX+'" value="'+esc(cf.free[i])+'" placeholder="La tua risposta (massimo '+CFMAX+' caratteri)" style="width:100%;margin-top:6px"><div class="mut sm">'+cf.free[i].length+' / '+CFMAX+(ch[i]?' · Tono: '+TONI[ch[i].k]+(ch[i].w?' · promessa':''):'')+'</div>':(ch[i]?'<div class="mut sm" style="margin-top:4px">Tono: '+TONI[ch[i].k]+(ch[i].w?' · è una promessa: se perdi, la dirigenza se la segna':'')+'</div>':''))+'</div>'});
+  h+='<button class="btn" id="cpub" '+(done?'':'disabled style="opacity:.45;cursor:not-allowed"')+'>Pubblica su Curva</button></div>';
+  if(cf.pub&&done){
+    var tone=Math.min(2,Math.round(ch.reduce(function(a,c){return a+c.k},0)/3));
+    h+='<div class="card"><h3>Come appare in Curva</h3><div class="post"><div class="hd"><img src="'+D.img.gs+'" alt="Girrr Sport"><div><b>Girrr Sport</b><span class="mut sm">@girrrsport · adesso</span></div></div><q><b>CONFERENZA STAMPA</b> · '+esc(t)+', alla vigilia di '+esc(t)+' - '+esc(o)+': «'+esc(ch[0].t)+'» Su '+esc(o)+': «'+esc(ch[1].t)+'» E alla dirigenza: «'+esc(ch[2].t)+'»</q><span class="tag g">Tono: '+TONI[tone]+'</span><div class="rep"><b>'+REP[tone][0]+'</b> risponde: '+esc(REP[tone][1])+'</div></div></div>';
+    var pw=ch.filter(function(c){return c.w}).length;
+    h+='<div class="card"><h3>Dopo la partita</h3><p class="sm mut" style="margin-bottom:8px">'+(pw?'Hai fatto '+pw+(pw===1?' promessa':' promesse')+'. Il risultato decide cosa pensa la dirigenza.':'Non hai promesso niente: la dirigenza non ha niente da contestarti.')+'</p><div class="row" style="gap:8px"><button class="btn" data-esito="v">Prova: vinci</button><button class="btn" data-esito="p">Prova: perdi</button></div>';
+    if(cf.esito){var win=cf.esito==='v',d=confDelta(ch,win),f0=fid(t),f1v=Math.max(5,Math.min(98,f0+d));
+      var msg=!pw?'Nessun commento dalla dirigenza.':win?'La dirigenza apprezza: parola mantenuta.':'Il presidente: «Potevate evitare di essere così sfacciati».';
+      h+='<div class="post" style="margin-top:10px"><div class="hd"><img src="'+D.img.gs+'" alt="Girrr Sport"><div><b>Girrr Sport</b><span class="mut sm">@girrrsport · dopo la partita</span></div></div><q><b>'+(!pw?'PARTITA FINITA':win?'PAROLA MANTENUTA':'PAROLA TRADITA')+'</b><br>'+(pw?esc(t)+' aveva detto: «'+esc(ch.filter(function(c){return c.w})[0].t)+'». '+(win?'Detto, fatto.':'Non è andata così.'):'')+'</q></div>'
+       +'<p style="margin-top:8px"><b>'+esc(msg)+'</b></p><p class="sm">Fiducia della dirigenza: <b class="num">'+f0+' → '+f1v+'</b> ('+(d>0?'+':'')+d+')</p>'}
+    h+='</div>'}
+  return h+'<p class="note">Le dichiarazioni e il loro esito entrano anche nella radio: "aveva promesso e ha perso" o "parola mantenuta" fanno parte del riassunto della conferenza. Le frasi si aggiornano ogni giornata con classifica, obiettivo e fiducia.</p>';
 }
-
 /* ---------- 9. RADIO ---------- */
 function radioLines(){
   var a=D.aw[D.aw.length-1],T=D.tab,g=D.cal[0].m,der=g.filter(function(m){return isDer(m[0],m[1])})[0]||g[0];
@@ -570,6 +588,7 @@ function spRadio(){
   var seen={},cast=(VP||[]).filter(function(x){if(seen[x.chi])return false;seen[x.chi]=1;return true});
   if(cast.length)h+='<p class="sm mut" style="margin-top:8px">Voci: '+cast.map(function(x){return '<b>'+esc(x.chi)+'</b> ('+esc(x.ruolo.toLowerCase())+')'}).join(', ')+'.</p>';
   return h+'</div>'}
+
 function spConf(){var x=vConf();return x.replace(/^<div class="where">.*?<\/div>/,'')}
 function vSport(){
   var sp=S.sp,tabs=[['giornale','Giornale'],['conf','Conferenze stampa'],['radio','Radio'],['moviola','Moviola · presto']];
@@ -627,8 +646,9 @@ document.addEventListener('click',function(e){
   if(d.der){S.derbyRound=+d.der;return render()}
   if(d.bors){S.bors=+d.bors;return render()}
   if(d.pick){S.carta=+d.pick;return render()}
-  if(d.q){S.conf[d.q]=+d.a;S.confDone=false;return render()}
-  if(b.id==='pub'&&!b.disabled){S.confDone=true;render();var c=$('.post');if(c&&c.scrollIntoView)c.scrollIntoView({block:'center',behavior:'smooth'});return}
+  if(d.cq){S.cf.a[+d.cq]=d.ca==='free'?'free':+d.ca;S.cf.pub=false;S.cf.esito=null;return render()}
+  if(d.esito){S.cf.esito=d.esito;return render()}
+  if(b.id==='cpub'&&!b.disabled){S.cf.pub=true;render();var c=$('.post');if(c&&c.scrollIntoView)c.scrollIntoView({block:'center',behavior:'smooth'});return}
   if(b.id==='help'){S.help=!S.help;return render()}
   if(b.id==='lancia'&&!b.disabled){S.sfide.unshift({a:ME,b:S.opp,st:S.stake,s:'attesa',g:'G3'});return render()}
   if(b.id==='play'){if(RA.playing){radioStop();return render()}RA.playing=true;try{speechSynthesis.cancel()}catch(x){}RA.i=RA.i<0?-1:RA.i-1;return radioNext()}
