@@ -93,7 +93,7 @@ def tiles(href):
 shutil.copy(R / "lab" / "girrr-sport.png", OUT / "girrr-sport.png")
 from PIL import Image as _I
 _a = _I.open(R / "lab" / "immagini" / "albo-alloro-foto.png"); _a.thumbnail((360, 360)); _a.save(OUT / "albo-alloro.png")
-_m = _I.open(R / "lab" / "immagini" / "carriera-microfoni-v3-bianco.png"); _m.thumbnail((700, 700)); _m.save(OUT / "carriera-microfoni.png")
+_m = _I.open(R / "lab" / "immagini" / "carriera-microfoni-lega.png"); _m.thumbnail((700, 700)); _m.save(OUT / "carriera-microfoni.png")
 ix = (OUT / "index.html").read_text(encoding="utf-8")
 assert '<a class="mn" id="mst"' in ix
 # La card Giornale diventa Girrr Sport (logo della TV), come nel Laboratorio; il Live resta solo al Tabellone
@@ -103,7 +103,7 @@ card = '<a class="c" href="../../anteprima/attuale.html#sport"><div class="ic"><
 ix = ix.replace(m.group(0), card, 1).replace('<a href="giornale.html">Leggi il giornale ›</a>', '<a href="giornale.html">Leggi il giornale ›</a>', 1)
 LOGO = LIVE + "assets/logo-lega.png"
 extra_cards = ('<a class="c" href="albo.html"><div class="ic"><img src="albo-alloro.png" alt="" style="height:72px;width:auto;margin-top:-6px"></div><h2>Albo d\'oro<span class="nt-nv">NOVITÀ</span></h2><p>Storia della Lega, Era dei Titani, stagioni, derby, Albo di Latta e record.</p><div class="go">ENTRA ›</div></a>'
-               '<a class="c" href="../../anteprima/attuale.html#carriera"><div class="ic"><img src="carriera-microfoni.png" alt="" style="height:72px;width:auto;margin-top:-6px;border-radius:12px;background:#fff"></div><h2>Carriera<span class="nt-nv">NOVITÀ</span></h2><p>Obiettivi, fiducia del presidente e conferenza stampa di ogni allenatore.</p><div class="go">ENTRA ›</div></a>')
+               '<a class="c" href="../../anteprima/attuale.html#carriera"><div class="ic"><img src="carriera-microfoni.png" alt="" style="height:72px;width:auto;margin-top:-6px"></div><h2>Carriera<span class="nt-nv">NOVITÀ</span></h2><p>Obiettivi, fiducia del presidente e conferenza stampa di ogni allenatore.</p><div class="go">ENTRA ›</div></a>')
 i0 = ix.index('<section class="cards">'); i1 = ix.index('</section>', i0)
 ix = ix[:i1] + extra_cards + ix[i1:]
 ix = re.sub(r'<section class="mini">.*?</section>\s*<script>try\{var f=JSON.parse\(localStorage.getItem\("fg"\).*?</script>', '', ix, count=1, flags=re.S)
