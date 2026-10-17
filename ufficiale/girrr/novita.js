@@ -7,17 +7,17 @@ function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;
 window.NOVITA=function(D){var N=window.NOV;if(!N)return {};
   var L=N.leg,tt={},P={};
   var h='';
-  N.stag.forEach(function(x){tt[x[3]]=(tt[x[3]]||0)+1});N.pre.forEach(function(x){if(x[2])tt[x[2]]=(tt[x[2]]||0)+1});
+  var tc={};N.stag.forEach(function(x){tt[x[3]]=(tt[x[3]]||0)+1;if(x[1]==='Coppa Campioni')tc[x[3]]=(tc[x[3]]||0)+1});N.pre.forEach(function(x){if(x[2])tt[x[2]]=(tt[x[2]]||0)+1});
   var EN=[L.eras.prima,L.eras.vuoto,L.eras.oggi],ere='';
   L.libro.forEach(function(c,i){
     var SUBE=[N.pre[0][0]+' – '+N.pre[N.pre.length-3][0],N.pre[N.pre.length-2][0]+' – '+N.pre[N.pre.length-1][0],'Dal '+N.stag[0][0]];
     ere+='<div class="card era"><button class="eh" type="button" aria-expanded="false"><span><span class="et">'+esc(EN[i]||c.t)+(i===0?'<span class="nt-nv">NOVITÀ</span>':'')+'</span><small>'+esc(SUBE[i]||'')+'</small></span><i class="ch" aria-hidden="true">›</i></button><div class="eb"><div class="ei"><div class="rac">'+c.p.map(function(p){return '<p>'+esc(p)+'</p>'}).join('')+'</div>';
     if(i===0){ere+='<p class="nt" style="margin:8px 0">Prima del cambio di lega del 2021. I dati sono andati persi: queste stagioni arrivano dai ricordi del gruppo.</p><table><tr><th>Stagione</th><th>Vincitore</th></tr>'+N.pre.map(function(x){return '<tr><td>'+x[0]+'</td><td>'+(x[2]?esc(x[1]||x[2])+(x[1]?'<small>'+esc(x[2])+'</small>':''):'<span style="color:var(--sub)">Non assegnato</span>')+'</td></tr>'}).join('')+'</table>'
       +L.titani.map(function(r){return '<div class="rac"><div class="rt">'+esc(r.t)+'</div><p>'+esc(r.p)+'</p></div>'}).join('')+'<p class="nt">'+esc(L.nota)+'</p>'}
-    if(i===2){ere+='<table style="margin-top:10px"><tr><th>Stagione</th><th>Vincitore</th></tr>'+N.stag.map(function(x){return '<tr><td>'+x[0]+(x[1]==='Coppa Campioni'?' · Coppa Campioni':'')+'</td><td>'+esc(x[3])+'<small>'+esc(x[2])+'</small></td></tr>'}).join('')+'</table><p class="nt">I dettagli di ogni stagione sono nella tab Stagioni.</p>'}
+    if(i===2){ere+='<table style="margin-top:10px"><tr><th>Stagione</th><th>Vincitore</th></tr>'+N.stag.map(function(x){return '<tr><td>'+x[0]+(x[1]==='Coppa Campioni'?' · 🎖️ Coppa Campioni':' · 🏆 Campionato')+'</td><td>'+esc(x[3])+'<small>'+esc(x[2])+'</small></td></tr>'}).join('')+'</table><p class="nt">I dettagli di ogni stagione sono nella tab Stagioni.</p>'}
     ere+='</div></div></div>'});
   P.ere=ere;h='';
-  h+='<div class="card"><h3>Titoli di sempre</h3><table class="nt-t"><tr><th>Allenatore</th><th class="num">Titoli</th></tr>'+Object.keys(tt).sort(function(a,b){return tt[b]-tt[a]}).map(function(u){return '<tr><td>'+esc(u)+'</td><td class="num">'+tt[u]+(N.pre.some(function(x){return x[2]===u})?'*':'')+'</td></tr>'}).join('')+'</table><p class="nt">* Include i titoli dell\'Era dei Titani, che arrivano dai ricordi e non da dati conservati. Il totale conta anche la Coppa Campioni.</p></div>';
+  h+='<div class="card"><h3>Titoli di sempre</h3><table class="nt-t"><tr><th>Allenatore</th><th class="num">Titoli</th></tr>'+Object.keys(tt).sort(function(a,b){return tt[b]-tt[a]}).map(function(u){return '<tr><td>'+esc(u)+'</td><td class="num">'+tt[u]+(N.pre.some(function(x){return x[2]===u})?'*':'')+(tc[u]?'<small style="display:block;font-weight:700">🏆 '+(tt[u]-tc[u])+' · 🎖️ '+tc[u]+'</small>':'')+'</td></tr>'}).join('')+'</table><p class="nt">* Include i titoli dell\'Era dei Titani, che arrivano dai ricordi e non da dati conservati. 🏆 è il campionato, 🎖️ la Coppa Campioni: vale come titolo e si conta nel totale.</p></div>';
   P.titoli=h;h='';
   h+='<a class="card" href="derby.html" style="display:block;text-decoration:none;color:inherit"><h3>I Derby della Lega<span class="nt-nv">NOVITÀ</span></h3><div style="font-weight:700;font-size:14px">I Derby con il loro nome, la storia e il Derby della giornata →</div></a><a class="card" href="rivalita.html" style="display:block;text-decoration:none;color:inherit"><h3>Le rivalità<span class="nt-nv">NOVITÀ</span></h3><div style="font-weight:700;font-size:14px">Le rivalità forti e le sfide decisive →</div></a>';
   P.derby=h;return P}
@@ -36,7 +36,7 @@ function STAGIONI(sto){
   pre.slice(0,3).forEach(function(x){
     var po=PODIO[x[0]],tb=po?'<table><tbody><tr><th>#</th><th style="text-align:left">Allenatore</th></tr>'+po.map(function(r,i){return '<tr><td>'+(i+1)+'°</td><td style="text-align:left;font-weight:700">'+e(r[1])+(r[0]?'<small>'+e(r[0])+'</small>':'')+'</td></tr>'}).join('')+'</tbody></table><p class="nt" style="padding:0 16px 12px;margin:0">Dai ricordi del gruppo: i punti non si sono conservati.</p>':'';
     t+=riga(x[0],'Campionato','🏆 '+(x[1]?e(x[1])+' · ':'')+e(x[2]),tb)});
-  t+='</div><div class="sto">'+H3+e(L.eras.vuoto)+' · Le stagioni</h3>'+riga('2019/20','Campionato','Stagione interrotta','')+riga('2020/21','Campionato','Nessun titolo assegnato','')+'</div>';
+  t+='</div><div class="sto">'+H3+e(L.eras.vuoto)+' · Le stagioni</h3>'+riga('2019/20','Campionato','Stagione interrotta','')+riga('2020/21','Campionato','Non si è giocato','')+'</div>';
   var d=document.createElement('div');d.innerHTML=sto;var box=d.querySelector('.sto');
   if(box){var cs=[].slice.call(box.querySelectorAll(':scope>.card')).reverse(),last=null;cs.forEach(function(c){box.appendChild(c)})}
   return t+d.innerHTML;
