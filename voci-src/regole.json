@@ -12,5 +12,26 @@
   "The Blue brothers": 7,
   "Atletico ma non troppo": 8
  },
- "derby_amici": []
+ "derby_amici": [
+  [
+   "The Blue brothers",
+   "Grodah"
+  ],
+  [
+   "The Blue brothers",
+   "Apo team"
+  ],
+  [
+   "stif dc",
+   "Real Madrink"
+  ],
+  [
+   "stif dc",
+   "WOA"
+  ],
+  [
+   "Real Madrink",
+   "WOA"
+  ]
+ ]
 }
