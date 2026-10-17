@@ -93,7 +93,7 @@ def tiles(href):
 shutil.copy(R / "lab" / "girrr-sport.png", OUT / "girrr-sport.png")
 from PIL import Image as _I
 _a = _I.open(R / "lab" / "immagini" / "albo-alloro-foto.png"); _a.thumbnail((360, 360)); _a.save(OUT / "albo-alloro.png")
-_m = _I.open(R / "lab" / "immagini" / "carriera-microfoni-targa.png"); _m.thumbnail((700, 700)); _m.save(OUT / "carriera-microfoni.png")
+_m = _I.open(R / "lab" / "immagini" / "carriera-lavagna-lega.png"); _m.thumbnail((700, 700)); _m.save(OUT / "carriera-microfoni.png")
 ix = (OUT / "index.html").read_text(encoding="utf-8")
 assert '<a class="mn" id="mst"' in ix
 # La card Giornale diventa Girrr Sport (logo della TV), come nel Laboratorio; il Live resta solo al Tabellone
