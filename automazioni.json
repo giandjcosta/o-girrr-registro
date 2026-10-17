@@ -1,5 +1,5 @@
 {
- "aggiornato": "2026-10-16T17:41:59Z",
+ "aggiornato": "2026-10-17T05:42:04Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
@@ -66,9 +66,9 @@
    "nome": "Controllo automatismi del mattino",
    "quando": "Ogni giorno alle 07:33",
    "stato": "attiva",
-   "prossimo": "2026-10-17T05:33:00Z",
+   "prossimo": "2026-10-18T05:33:00Z",
    "ultimo": {
-    "quando": "2026-10-16T05:33:22Z",
+    "quando": "2026-10-17T05:33:26Z",
     "esito": "riuscito"
    },
    "nota": "Avvisa solo se qualcosa è fermo da più di 2 giorni."
@@ -108,6 +108,12 @@
    "prossimo": "2027-02-03T17:00:00Z"
   },
   {
+   "nome": "Serate Hip Hop R&B Throwback",
+   "quando": "Ogni venerdì alle 08:52",
+   "stato": "attiva",
+   "prossimo": "2026-10-23T06:52:00Z"
+  },
+  {
    "nome": "Promemoria: commenti al Giornale",
    "quando": "Una volta: 16 ottobre alle 09:00",
    "stato": "conclusa",
@@ -131,6 +137,15 @@
    "stato": "conclusa",
    "ultimo": {
     "quando": "2026-10-13T16:00:20Z",
+    "esito": "riuscito"
+   }
+  },
+  {
+   "nome": "Promemoria: riprovare radio con Gemini Pro",
+   "quando": "Una volta: 17 ottobre alle 02:18",
+   "stato": "conclusa",
+   "ultimo": {
+    "quando": "2026-10-17T00:18:33Z",
     "esito": "riuscito"
    }
   }
