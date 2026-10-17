@@ -23,7 +23,7 @@ def f(x):
     x = float(x)
     return str(int(x)) if x == int(x) else str(x).replace(".", ",")
 NUM = ["zero","uno","due","tre","quattro","cinque","sei","sette","otto","nove","dieci"]
-PRON = {"Girrr": "Giirrr", "Champions Cup": "Cèmpions Càp", "AFA SELECCION": "Afa Selession", "WOA": "Uoa"}
+PRON = {"Girrr": "Girr", "Champions Cup": "Cèmpions Càp", "AFA SELECCION": "Afa Selession", "WOA": "Uoa"}
 ORD = {1:"prima",2:"seconda",3:"terza",4:"quarta",5:"quinta",6:"sesta",7:"settima",8:"ottava",9:"nona",10:"decima"}
 a = D["aw"][-1]; T = D["tab"]
 DER = [("Grodah","WOA"),("stif dc","Real Madrink"),("Oranje VC","AFA SELECCION"),("Apo team","The Blue brothers"),("Mariana Coneja","Atletico ma non troppo")]
