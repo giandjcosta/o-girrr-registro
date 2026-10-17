@@ -46,6 +46,7 @@ h3{font-weight:800;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
 .seg{display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--glass2);border:1px solid var(--line);margin-bottom:12px;overflow-x:auto}
 .seg button{transition:background-color .5s,color .5s;flex:1;padding:7px 10px;border-radius:10px;font-weight:700;font-size:12.5px;white-space:nowrap}
 .seg button[aria-pressed=true]{background:var(--gold);color:#141d3d}
+.rvl{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px;margin-bottom:6px}.rvl button{position:relative;text-align:left;padding:9px 11px;border-radius:12px;background:var(--glass2);border:1px solid var(--line);color:inherit;display:flex;flex-direction:column;gap:1px;transition:background-color .5s,color .5s,border-color .5s}.rvl button b{font-size:13.5px}.rvl button small{font-size:11px;opacity:.7}.rvl button em{position:absolute;top:8px;right:9px;font-style:normal;font-weight:800;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}.rvl button em.gia{color:inherit;opacity:.6}.rvl button[aria-pressed=true]{background:var(--gold);color:#141d3d;border-color:var(--gold)}.rvl button[aria-pressed=true] em{color:#141d3d}.rvl button:disabled{opacity:.45;cursor:default}
 .mut{color:var(--mute)}.sm{font-size:12px}.num{font-variant-numeric:tabular-nums}
 .btn{padding:10px 16px;border-radius:12px;background:var(--red);color:#fff;font-weight:800;border:1px solid #ff7a88}
 .btn.ghost{background:var(--glass);border-color:var(--line)}
@@ -460,15 +461,18 @@ function derBox(m){var i=rvInfo(m[0],m[1]),o=i.o;
    +'<div class="h2h" style="grid-template-columns:1fr 1fr"><div><b class="num">'+o.h+'</b><small>Stagioni insieme</small></div><div><b class="num">'+o.z+'</b><small>Nelle zone alte insieme</small></div></div>'+rvBar(i.riv)+'<div class="mut sm" style="margin-top:4px">Rivalità: <b>'+rvWord(i.riv)+'</b></div>'
    +racconto(o)+derPromo(m,'campionato')+'<p class="sm" style="margin-top:6px"><b>In palio:</b> bonus di 20 fantacrediti per il vincitore e titolo in prima pagina sul Giornale.</p></div>'}
 
-var SFR={'Apo team':['apo','Apo'],'The Blue brothers':['Leanzino & Mario','Leanzino']};
+var SFR={};D.teams.forEach(function(t){if(t===ME)return;var m=mg(t),w=m.split(/[ &]/)[0];SFR[t]=[m,w.charAt(0).toUpperCase()+w.slice(1)]});
+function sfInfo(t){var i=rvInfo(ME,t);return {der:i.der,riv:i.riv}}
+function sfOrdine(){var a=Object.keys(SFR).map(function(t){var i=sfInfo(t);return {t:t,der:i.der,riv:i.riv}});a.sort(function(x,y){return (x.der-y.der)||(y.riv-x.riv)});var n=0;a.forEach(function(x){x.cons=!x.der&&x.riv>=30&&n<3;if(x.cons)n++});return a}
 var SFF=['Prometto di arrivare sempre sopra {X}.','Quest\'anno {X} dovrà guardarmi dal basso.','Il titolo passa da me, e {X} se ne farà una ragione.'];
 S.lancio=S.lancio||{r:'Apo team',f:0,ok:null};
-var DNP={'Apo team':'Il Derby della Promessa','The Blue brothers':'Il Derby del Ritorno'};
+var DNP=new Proxy({},{get:function(o,t){var r=RIVM[rvKey(ME,t)];return (r&&r.n)||'Il Derby della Sfida'}});
 S.dn=S.dn||{};
 function sfidaCard(){var L=S.lancio,x=SFR[L.r][1],k=rvKey(ME,L.r),st=L.stato||null;
   var h='<div class="card"><h3>Lancia una sfida</h3><p class="sm mut" style="margin-bottom:8px">Una dichiarazione in conferenza stampa fa salire la rivalità, ma il Derby diventa ufficiale solo se il rivale accetta. Una sfida alla volta, e al massimo due all\'anno per squadra.</p>';
   if(!st){
-    h+='<div class="seg" role="group" aria-label="Rivale" style="flex-wrap:wrap">'+Object.keys(SFR).map(function(r){return '<button data-sfr="'+esc(r)+'" aria-pressed="'+(L.r===r)+'">'+esc(SFR[r][0])+'</button>'}).join('')+'</div>';
+    var OR=sfOrdine();if(!SFR[L.r]||sfInfo(L.r).der){var pr=OR.filter(function(z){return !z.der})[0];if(pr)L.r=pr.t}
+    h+='<div class="rvl" role="group" aria-label="Rivale">'+OR.map(function(z){return '<button data-sfr="'+esc(z.t)+'" aria-pressed="'+(L.r===z.t)+'"'+(z.der?' disabled':'')+'><b>'+esc(SFR[z.t][0])+'</b><small>'+esc(z.t)+' · Rivalità '+rvWord(z.riv)+'</small>'+(z.der?'<em class="gia">Già un Derby</em>':(z.cons?'<em>Consigliato</em>':''))+'</button>'}).join('')+'</div>';
     h+='<div class="seg" role="group" aria-label="Frase" style="flex-wrap:wrap;margin-top:6px">'+SFF.map(function(f,i){return '<button data-sff="'+i+'" aria-pressed="'+(L.f===i)+'">'+esc(f.replace('{X}',x))+'</button>'}).join('')+'</div>';
     h+='<button class="btn" data-lancia="1" style="margin-top:10px"'+(L.n>=2?' disabled style="opacity:.45;margin-top:10px"':'')+'>Lancia la sfida</button><p class="note" style="margin-top:6px">'+(L.n>=2?'Hai usato le due sfide di quest\'anno: le prossime dalla stagione nuova.':'Sfide usate quest\'anno: '+(L.n||0)+' su 2.')+'</p>';
     return h+'</div>'}
