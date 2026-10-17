@@ -144,8 +144,10 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
             add("B" if i == 0 else "G", fr)
             if l == "Grodah" if ga != gb else False: add("G", "Cade la campionessa in carica! L'anno scorso la Coppa Campioni era sua!", "urlo")
     # --- derby
-    DER = [tuple(x) for x in ((regole or {}).get("derby") or [("Grodah","WOA"),("stif dc","Real Madrink"),("Oranje VC","AFA SELECCION"),("Apo team","The Blue brothers"),("Mariana Coneja","Atletico ma non troppo")])]
-    der = next((m for m in g if any({x.lower(), y.lower()} == {m[0].lower(), m[1].lower()} for x, y in DER)), None)
+    # derby: prima i voti degli amici di Gianluca (regole.json, "derby_amici"); senza voti si calcola dalla storia della lega (derby.py)
+    import derby as _d
+    cand = [m for m in g if _d.e_derby(m[0], m[1], g, regole)]
+    der = max(cand, key=lambda m: _d.punteggio(m[0], m[1])) if cand else None
     if der: add("B", f"Alla prossima giornata c'è il derby: {der[0]} contro {der[1]}!", "urlo")
     # --- mercato: Ciro c'è solo se ci sono notizie
     notizie = (mercato or {}).get("notizie") or []

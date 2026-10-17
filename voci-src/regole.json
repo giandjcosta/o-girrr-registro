@@ -1,5 +1,5 @@
 {
- "_come_si_usa": "Regole che decide Gianluca. 'aspettative' = entro quale posto il presidente vuole chiudere ogni squadra. 'derby' = coppie di squadre che sono un derby. Quando le regole cambiano si modifica solo questo file.",
+ "_come_si_usa": "Regole che decide Gianluca. 'aspettative' = entro quale posto il presidente vuole chiudere ogni squadra. 'derby_amici' = coppie che i suoi amici sentono come derby: se non è vuoto, contano solo quelle; se è vuoto i derby si calcolano dalla storia della lega (derby.py: stagioni insieme, zone alte, podi, anzianità).",
  "aspettative": {
   "Oranje VC": 4,
   "Apo team": 5,
@@ -12,26 +12,5 @@
   "The Blue brothers": 7,
   "Atletico ma non troppo": 8
  },
- "derby": [
-  [
-   "Grodah",
-   "WOA"
-  ],
-  [
-   "stif dc",
-   "Real Madrink"
-  ],
-  [
-   "Oranje VC",
-   "AFA SELECCION"
-  ],
-  [
-   "Apo team",
-   "The Blue brothers"
-  ],
-  [
-   "Mariana Coneja",
-   "Atletico ma non troppo"
-  ]
- ]
+ "derby_amici": []
 }
