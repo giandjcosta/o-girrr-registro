@@ -28,6 +28,6 @@ Attenzione: conferenze.json e mercato.json oggi sono dati di prova (demo: true).
 
 ## Derby e rivalità (deciso il 17 ottobre)
 Rivalità dalla storia (derby.py + storico.json dall'Albo d'oro), da 0 a 100: stagioni insieme, stagioni insieme nelle prime 4, peso dei podi (titolo 3, secondo 2, terzo 1, vale il più basso dei due) e anzianità (il più basso dei due).
-Derby = voti degli amici di Gianluca (regole.json, "derby_amici"): pesano il 60%, la storia il 40%. Derby se l'intensità arriva a 50. Con la lista vuota decide solo la storia (quarto più alto delle coppie).
+Derby = voti degli amici di Gianluca (regole.json, "derby_amici"): pesano il 60%, la storia il 40%. Derby se l'intensità arriva a 50. Con la lista vuota decide solo la storia: derby se la rivalità storica arriva a 60 su 100, così un derby ha sempre rivalità alta.
 Un derby ha sempre rivalità alta: rivalità finale = storia + 60% del voto degli amici, minimo 70 se il voto è almeno 50. Sopra 70 la radio aggiunge "Una rivalità storica!".
 AFA SELECCION = Maria (mappa dell'app). Squadre con due allenatori (The Blue brothers) = media dei punteggi delle coppie di allenatori.

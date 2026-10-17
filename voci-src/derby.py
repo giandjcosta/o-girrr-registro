@@ -50,10 +50,9 @@ def intensita(a, b, regole=None):
     """Quanto è derby: i voti degli amici pesano il 60%, la storia il 40%."""
     return round(0.6 * voto_amici(a, b, regole) + 0.4 * rivalita_storia(a, b), 1)
 def e_derby(a, b, partite=None, regole=None):
-    """Derby se l'intensità arriva a 50. Se gli amici non hanno ancora detto niente, decide solo la storia: il quarto più alto di tutte le coppie."""
+    """Derby se l'intensità arriva a 50. Se gli amici non hanno ancora detto niente, decide solo la storia: derby se la rivalità storica arriva a 60 su 100."""
     if (regole or {}).get("derby_amici"):
         return intensita(a, b, regole) >= 50
-    cl = classifica(); soglia = cl[len(cl) // 4][0]
-    return punteggio(a, b) >= soglia and punteggio(a, b) > 0
+    return rivalita_storia(a, b) >= 60
 if __name__ == "__main__":
     for p, x, y in classifica()[:12]: print(round(p, 1), x, "-", y, "rivalità", rivalita_storia(x, y))
