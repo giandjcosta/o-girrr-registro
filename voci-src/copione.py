@@ -29,7 +29,7 @@ CURVA = ["Chissà cosa staranno scrivendo in Curva i tifosi {t}!", "In Curva, st
 CONF = ["Chi non crede in noi può restare a casa.", "Siamo pronti, ci vediamo in campo.", "Non siamo qui per fare i turisti.", "Quest'anno non ci ferma nessuno.", "Un punto alla volta, ma tutti insieme."]
 def build(D, rng, mercato, nomi=None):
     nomi = nomi or {}
-    b1 = nomi.get('B', 'Beppe Rovesciata'); g1 = nomi.get('G', 'Steve Offside'); g0 = g1.split()[0]; b0 = b1.split()[0]
+    b1 = nomi.get('B', 'Beppe Rovesciata'); g1 = nomi.get('G', 'Sandro Fuorigioco'); g0 = g1.split()[0]; b0 = b1.split()[0]
     a = D["aw"][-1]; T = D["tab"]; P = D["prob"]; n = a["n"]
     row = {r["t"]: r for r in T}
     def pick(x): return rng.choice(x)
