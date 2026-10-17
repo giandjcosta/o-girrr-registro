@@ -74,7 +74,9 @@ a0 = alb.index("<script>\n(function(){\nvar D=null;"); a1 = alb.index("</script>
 der = alb[:a0] + '<script src="derby.js"></script>\n' + alb[a1 + len("</script>\n"):]
 der = der.replace("<h1>Albo d'oro</h1>", "<h1>I derby</h1>").replace("<title>Albo d'oro", "<title>I derby").replace('<div class="vuoto">Carico i record…</div>', '<div class="vuoto">Carico i derby…</div>')
 der = der.replace("<script src=\"novita.js\"></script>\n", "")
-(OUT / "derby.html").write_text(der, encoding="utf-8")
+(OUT / "derby.html").write_text(der.replace('<script src="derby.js">', '<script>window.PAGINA="derby"</script>\n<script src="derby.js">', 1), encoding="utf-8")
+_riv = der.replace("<h1>I derby</h1>", "<h1>Le rivalità</h1>").replace("<title>I derby", "<title>Le rivalità").replace("Carico i derby…", "Carico le rivalità…").replace('<script src="derby.js">', '<script>window.PAGINA="rivalita"</script>\n<script src="derby.js">', 1)
+(OUT / "rivalita.html").write_text(_riv, encoding="utf-8")
 
 # 7) dati e script nuovi
 (OUT / "novita-dati.js").write_text("window.NOV=" + json.dumps(dati, ensure_ascii=False) + ";", encoding="utf-8")
@@ -82,7 +84,7 @@ for n in ["novita.js", "derby.js", "novita-curva.js", "novita-badge.js", "transi
     sorg = (R / "ufficiale" / "src" / n).read_text(encoding="utf-8")
     sorg = sorg.replace("'../data.json'", "'" + LIVE + "data.json'")
     (OUT / n).write_text(sorg, encoding="utf-8")
-for f in ["index.html", "albo.html", "derby.html", "curva.html", "squadre.html"]:
+for f in ["index.html", "albo.html", "derby.html", "rivalita.html", "curva.html", "squadre.html"]:
     p = OUT / f; t = p.read_text(encoding="utf-8")
     p.write_text(t.replace("</head>", '<script src="novita-dati.js"></script>\n</head>', 1), encoding="utf-8")
 for p in OUT.glob("*.html"):

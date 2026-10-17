@@ -16,7 +16,7 @@ window.NOVITA=function(D){var N=window.NOV;if(!N)return {};
   P.ere=ere;h='';
   h+='<div class="card"><h3>Titoli di sempre</h3><table class="nt-t"><tr><th>Allenatore</th><th class="num">Titoli</th></tr>'+Object.keys(tt).sort(function(a,b){return tt[b]-tt[a]}).map(function(u){return '<tr><td>'+esc(u)+'</td><td class="num">'+tt[u]+(N.pre.some(function(x){return x[2]===u})?'*':'')+'</td></tr>'}).join('')+'</table><p class="nt">* Include i titoli dell\'Era dei Titani, che arrivano dai ricordi e non da dati conservati. Il totale conta anche la Coppa Campioni.</p></div>';
   P.titoli=h;h='';
-  h+='<a class="card" href="derby.html" style="display:block;text-decoration:none;color:inherit"><h3>I derby della Lega<span class="nt-nv">NOVITÀ</span></h3><div style="font-weight:700;font-size:14px">Le rivalità, i derby con la loro storia e le sfide decisive → </div></a>';
+  h+='<a class="card" href="derby.html" style="display:block;text-decoration:none;color:inherit"><h3>I derby della Lega<span class="nt-nv">NOVITÀ</span></h3><div style="font-weight:700;font-size:14px">I derby con il loro nome, la storia e il derby della giornata →</div></a><a class="card" href="rivalita.html" style="display:block;text-decoration:none;color:inherit"><h3>Le rivalità<span class="nt-nv">NOVITÀ</span></h3><div style="font-weight:700;font-size:14px">Le rivalità forti e le sfide decisive →</div></a>';
   P.derby=h;return P}
 
 window.ALBOTABS=function(D,x){

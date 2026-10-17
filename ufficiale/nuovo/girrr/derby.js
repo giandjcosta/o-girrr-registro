@@ -19,18 +19,25 @@ function ctx(a,b){var A=row(a),B=row(b);if(!A||!B)return '';var ap=A.fp/Math.max
 function nome(o){return o.n||('Derby '+o.a+' – '+o.b)}
 function prossima(){var L=D.cal.lega,i;for(i=0;i<L.length;i++){if(L[i].m.some(function(m){return m[4]==='-'}))return L[i]}return L[L.length-1]}
 function render(){
-  var r=prossima(),h='';
-  h+='<div class="card"><h3>Giornata '+r.n+'</h3><p class="nt" style="margin:0 0 6px">Un derby nasce da due cose: quanto lo sentono gli amici della lega e quanto è vecchia e importante la rivalità (stagioni insieme, zone alte, podi, anzianità).</p>';
-  var ders=r.m.filter(function(m){return info(m[0],m[3]).der});
-  if(ders.length)h+=ders.map(function(m){var i=info(m[0],m[3]);return '<div class="dd"><div class="k">Derby della giornata</div><div style="font-weight:800;margin:4px 0">'+esc(nome(i.o))+'</div><div class="vs"><b>'+esc(m[0])+'</b><span>contro</span><b>'+esc(m[3])+'</b></div>'+bar(i.riv)+'<div class="nt" style="margin:0">Rivalità: <b>'+word(i.riv)+'</b> · '+i.o.h+' stagioni insieme, '+i.o.z+' nelle zone alte insieme</div>'+rac(i.o)+'</div>'}).join('');
-  else h+='<p class="nt">Questa giornata non ha nessun derby.</p>';
-  r.m.forEach(function(m){var i=info(m[0],m[3]);if(!i.der&&i.riv>=75)h+='<div class="dd f"><div class="k">Rivalità forte</div><div class="vs" style="margin-top:4px"><b>'+esc(m[0])+'</b><span>contro</span><b>'+esc(m[3])+'</b></div>'+bar(i.riv)+'<div class="nt" style="margin:0">Un gradino sotto il derby · '+esc(ctx(m[0],m[3]))+'</div>'+rac(i.o)+'</div>'});
-  h+='</div>';
-  var F=N.riv.filter(function(o){var i=info(o.a,o.b);return !i.der&&i.riv>=75}).sort(function(x,y){return info(y.a,y.b).riv-info(x.a,x.b).riv});
-  h+='<div class="card"><h3>Rivalità forti</h3><p class="nt" style="margin:0 0 6px">Un gradino sotto il derby: sfide con una storia lunga, che gli amici non hanno votato come derby. Contano per la radio e per la Curva, e si leggono sempre con la classifica e il rendimento di quest\'anno.</p>'+F.map(function(o){return '<div class="dv"><div class="vs"><b>'+esc(o.a)+' – '+esc(o.b)+'</b><span class="tg f">'+word(info(o.a,o.b).riv)+'</span></div><div class="nt" style="margin:4px 0 0">'+esc(ctx(o.a,o.b))+'</div></div>'}).join('')+'</div>';
-  h+='<div class="card"><h3>Sfide decisive</h3><p class="nt" style="margin:0">Si accendono da gennaio, dalla 18ª giornata di Serie A (mercoledì 6 gennaio 2027). Quando due squadre si giocano il 1º e il 2º posto, oppure il 3º e il 4º, la sfida va in radio e in Curva. Nelle ultime giornate il tono diventa quello della volata. Si attiva da sola: guarda il calendario vero e la classifica del momento.</p></div>';
-  var DT=N.riv.filter(function(o){return o.n||info(o.a,o.b).der}).sort(function(x,y){return info(y.a,y.b).riv-info(x.a,x.b).riv});
-  h+='<div class="card"><h3>I derby della Lega</h3>'+DT.map(function(o){var i=info(o.a,o.b);return '<div class="dv"><div style="font-weight:900;font-size:15px">'+esc(nome(o))+(i.der?' <span class="tg">Derby</span>':'')+'</div><div class="vs" style="margin-top:6px"><b>'+esc(o.a)+'</b><span>contro</span><b>'+esc(o.b)+'</b></div>'+bar(i.riv)+'<div class="nt" style="margin:0">Rivalità: <b>'+word(i.riv)+'</b> · '+o.h+' stagioni insieme · '+o.z+' nelle zone alte insieme</div>'+(o.s?'<p style="font-weight:600;font-size:14px;line-height:1.6;margin-top:8px">'+esc(o.s)+'</p>':'')+'</div>'}).join('')+'</div>';
+  var RIV=window.PAGINA==='rivalita',r=prossima(),h='';
+  if(!RIV){
+    h+='<div class="card"><h3>Giornata '+r.n+'</h3><p class="nt" style="margin:0 0 6px">Un derby nasce da due cose: quanto lo sentono gli amici della lega e quanto è vecchia e importante la rivalità (stagioni insieme, zone alte, podi, anzianità).</p>';
+    var ders=r.m.filter(function(m){return info(m[0],m[3]).der});
+    if(ders.length)h+=ders.map(function(m){var i=info(m[0],m[3]);return '<div class="dd"><div class="k">Derby della giornata</div><div style="font-weight:800;margin:4px 0">'+esc(nome(i.o))+'</div><div class="vs"><b>'+esc(m[0])+'</b><span>contro</span><b>'+esc(m[3])+'</b></div>'+bar(i.riv)+'<div class="nt" style="margin:0">Rivalità: <b>'+word(i.riv)+'</b> · '+i.o.h+' stagioni insieme, '+i.o.z+' nelle zone alte insieme</div>'+rac(i.o)+'</div>'}).join('');
+    else h+='<p class="nt">Questa giornata non ha nessun derby.</p>';
+    h+='</div>';
+    var DT=N.riv.filter(function(o){return o.n||info(o.a,o.b).der}).sort(function(x,y){return info(y.a,y.b).riv-info(x.a,x.b).riv});
+    h+='<div class="card"><h3>I derby della Lega</h3>'+DT.map(function(o){var i=info(o.a,o.b);return '<div class="dv"><div style="font-weight:900;font-size:15px">'+esc(nome(o))+(i.der?' <span class="tg">Derby</span>':'')+'</div><div class="vs" style="margin-top:6px"><b>'+esc(o.a)+'</b><span>contro</span><b>'+esc(o.b)+'</b></div>'+bar(i.riv)+'<div class="nt" style="margin:0">Rivalità: <b>'+word(i.riv)+'</b> · '+o.h+' stagioni insieme · '+o.z+' nelle zone alte insieme</div>'+(o.s?'<p style="font-weight:600;font-size:14px;line-height:1.6;margin-top:8px">'+esc(o.s)+'</p>':'')+'</div>'}).join('')+'</div>';
+  }else{
+    h+='<div class="card"><h3>Giornata '+r.n+'</h3><p class="nt" style="margin:0 0 6px">Le rivalità sono un gradino sotto il derby: sfide con una storia lunga che gli amici non hanno votato come derby.</p>';
+    var fo=r.m.filter(function(m){var i=info(m[0],m[3]);return !i.der&&i.riv>=75});
+    if(fo.length)h+=fo.map(function(m){var i=info(m[0],m[3]);return '<div class="dd f"><div class="k">Rivalità forte</div><div class="vs" style="margin-top:4px"><b>'+esc(m[0])+'</b><span>contro</span><b>'+esc(m[3])+'</b></div>'+bar(i.riv)+'<div class="nt" style="margin:0">'+esc(ctx(m[0],m[3]))+'</div>'+rac(i.o)+'</div>'}).join('');
+    else h+='<p class="nt">Questa giornata non ha rivalità forti.</p>';
+    h+='</div>';
+    var F=N.riv.filter(function(o){var i=info(o.a,o.b);return !i.der&&i.riv>=75}).sort(function(x,y){return info(y.a,y.b).riv-info(x.a,x.b).riv});
+    h+='<div class="card"><h3>Rivalità forti</h3><p class="nt" style="margin:0 0 6px">Contano per la radio e per la Curva, e si leggono sempre con la classifica e il rendimento di quest\'anno.</p>'+F.map(function(o){return '<div class="dv"><div class="vs"><b>'+esc(o.a)+' – '+esc(o.b)+'</b><span class="tg f">'+word(info(o.a,o.b).riv)+'</span></div><div class="nt" style="margin:4px 0 0">'+esc(ctx(o.a,o.b))+'</div></div>'}).join('')+'</div>';
+    h+='<div class="card"><h3>Sfide decisive</h3><p class="nt" style="margin:0">Si accendono da gennaio, dalla 18ª giornata di Serie A (mercoledì 6 gennaio 2027). Quando due squadre si giocano il 1º e il 2º posto, oppure il 3º e il 4º, la sfida va in radio e in Curva. Nelle ultime giornate il tono diventa quello della volata. Si attiva da sola: guarda il calendario vero e la classifica del momento.</p></div>';
+  }
   document.getElementById('al').innerHTML=h;
 }
 document.getElementById('lg').onclick=function(){location.href='index.html'};
