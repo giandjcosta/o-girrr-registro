@@ -4,12 +4,15 @@ var st=document.createElement('style');st.textContent='.rac{margin:12px 0;paddin
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 window.NOVITA=function(D){var N=window.NOV;if(!N)return {};
   var L=N.leg,tt={},P={};
-  var h='<div class="card"><h3>La storia della Lega<span class="nt-nv">NOVITÀ</span></h3>'+L.libro.map(function(c){return '<div class="rac"><div class="rt">'+esc(c.t)+'</div>'+c.p.map(function(p){return '<p>'+esc(p)+'</p>'}).join('')+'</div>'}).join('')+'</div>';
+  var h='';
   N.stag.forEach(function(x){if(x[1]!=='Coppa Campioni')tt[x[3]]=(tt[x[3]]||0)+1});N.pre.forEach(function(x){if(x[2])tt[x[2]]=(tt[x[2]]||0)+1});
-  P.storia=h;h='';
-  h+='<div class="card"><h3>'+esc(L.eras.prima)+'<span class="nt-nv">NOVITÀ</span></h3><p class="nt" style="margin:0 0 8px">Prima del cambio di lega del 2021. I dati sono andati persi: queste stagioni arrivano dai ricordi del gruppo.</p><table><tr><th>Stagione</th><th>Vincitore</th></tr>'+N.pre.map(function(x){return '<tr><td>'+x[0]+'</td><td>'+(x[2]?esc(x[1]||x[2])+(x[1]?'<small>'+esc(x[2])+'</small>':''):'<span style="color:var(--sub)">Non assegnato</span>')+'</td></tr>'}).join('')+'</table>'
-   +L.titani.map(function(r){return '<div class="rac"><div class="rt">'+esc(r.t)+'</div><p>'+esc(r.p)+'</p></div>'}).join('')+'<p class="nt">'+esc(L.nota)+'</p></div>';
-  P.titani=h;h='';
+  var EN=[L.eras.prima,L.eras.vuoto,L.eras.oggi],ere='';
+  L.libro.forEach(function(c,i){
+    ere+='<div class="card"><h3>'+esc(EN[i]||c.t)+(i===0?'<span class="nt-nv">NOVITÀ</span>':'')+'</h3><div class="rac">'+c.p.map(function(p){return '<p>'+esc(p)+'</p>'}).join('')+'</div>';
+    if(i===0){ere+='<p class="nt" style="margin:8px 0">Prima del cambio di lega del 2021. I dati sono andati persi: queste stagioni arrivano dai ricordi del gruppo.</p><table><tr><th>Stagione</th><th>Vincitore</th></tr>'+N.pre.map(function(x){return '<tr><td>'+x[0]+'</td><td>'+(x[2]?esc(x[1]||x[2])+(x[1]?'<small>'+esc(x[2])+'</small>':''):'<span style="color:var(--sub)">Non assegnato</span>')+'</td></tr>'}).join('')+'</table>'
+      +L.titani.map(function(r){return '<div class="rac"><div class="rt">'+esc(r.t)+'</div><p>'+esc(r.p)+'</p></div>'}).join('')+'<p class="nt">'+esc(L.nota)+'</p>'}
+    ere+='</div>'});
+  P.ere=ere;h='';
   h+='<div class="card"><h3>Titoli di sempre</h3><table class="nt-t"><tr><th>Allenatore</th><th class="num">Titoli</th></tr>'+Object.keys(tt).sort(function(a,b){return tt[b]-tt[a]}).map(function(u){return '<tr><td>'+esc(u)+'</td><td class="num">'+tt[u]+(N.pre.some(function(x){return x[2]===u})?'*':'')+'</td></tr>'}).join('')+'</table><p class="nt">* Include i titoli dell\'Era dei Titani, che arrivano dai ricordi e non da dati conservati. Contano solo i campionati, non la Coppa Campioni.</p></div>';
   P.titoli=h;h='';
   h+='<a class="card" href="derby.html" style="display:block;text-decoration:none;color:inherit"><h3>I derby della Lega<span class="nt-nv">NOVITÀ</span></h3><div style="font-weight:700;font-size:14px">Le rivalità, i derby con la loro storia e le sfide decisive → </div></a>';
@@ -17,7 +20,7 @@ window.NOVITA=function(D){var N=window.NOV;if(!N)return {};
 
 window.ALBOTABS=function(D,x){
   var P=window.NOVITA?window.NOVITA(D):{};
-  var S=[['storia','Storia',P.storia],['titani','Era dei Titani',P.titani],['titoli','Titoli',P.titoli],['all','Allenatori',x.allenatori],['stag','Stagioni',x.storico],['rec','Record',x.recs],['derby','Derby',P.derby]].filter(function(s){return s[2]});
+  var S=[['ere','Le Ere',P.ere],['titoli','Titoli',P.titoli],['all','Allenatori',x.allenatori],['stag','Stagioni',x.storico],['rec','Record',x.recs],['derby','Derby',P.derby]].filter(function(s){return s[2]});
   var cur=(location.hash||'').slice(1);if(!S.some(function(s){return s[0]===cur}))cur=S[0][0];
   var h=x.stato+'<div class="at" role="tablist">'+S.map(function(s){return '<button role="tab" data-at="'+s[0]+'" aria-selected="'+(s[0]===cur)+'">'+s[1]+'</button>'}).join('')+'</div>'
    +S.map(function(s){return '<div class="ap" data-ap="'+s[0]+'"'+(s[0]===cur?'':' hidden')+'>'+s[2]+'</div>'}).join('');
