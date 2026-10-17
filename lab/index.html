@@ -323,6 +323,20 @@ function derBox(m){var i=rvInfo(m[0],m[1]),o=i.o;
   return '<div class="derby"><div class="hd">Derby della giornata</div><div class="mut sm" style="font-weight:800">'+esc(derName(o))+'</div><div class="row" style="justify-content:space-between;margin-top:6px"><b>'+esc(m[0])+'</b><b>'+esc(m[1])+'</b></div>'
    +'<div class="h2h" style="grid-template-columns:1fr 1fr"><div><b class="num">'+o.h+'</b><small>Stagioni insieme</small></div><div><b class="num">'+o.z+'</b><small>Nelle zone alte insieme</small></div></div>'+rvBar(i.riv)+'<div class="mut sm" style="margin-top:4px">Rivalità: <b>'+rvWord(i.riv)+'</b></div>'
    +racconto(o)+derPromo(m,'campionato')+'<p class="sm" style="margin-top:6px"><b>In palio:</b> bonus di 20 fantacrediti per il vincitore e titolo in prima pagina sul Giornale.</p></div>'}
+
+var SFR={'Apo team':['apo','Apo'],'The Blue brothers':['Leanzino & Mario','Leanzino']};
+var SFF=['Prometto di arrivare sempre sopra {X}.','Quest\'anno {X} dovrà guardarmi dal basso.','Il titolo passa da me, e {X} se ne farà una ragione.'];
+S.lancio=S.lancio||{r:'Apo team',f:0,ok:null};
+function sfidaCard(){var L=S.lancio,x=SFR[L.r][1],t=SFF[L.f].replace('{X}',x);
+  var h='<div class="card"><h3>Lancia una sfida</h3><p class="sm mut" style="margin-bottom:8px">Una dichiarazione in conferenza stampa può far nascere un derby: conta come il tuo voto, e se il rivale risponde o gli amici ci stanno, la rivalità cresce.</p>';
+  h+='<div class="seg" role="group" aria-label="Rivale" style="flex-wrap:wrap">'+Object.keys(SFR).map(function(k){return '<button data-sfr="'+esc(k)+'" aria-pressed="'+(L.r===k)+'">'+esc(SFR[k][0])+'</button>'}).join('')+'</div>';
+  h+='<div class="seg" role="group" aria-label="Frase" style="flex-wrap:wrap;margin-top:6px">'+SFF.map(function(f,i){return '<button data-sff="'+i+'" aria-pressed="'+(L.f===i)+'">'+esc(f.replace('{X}',x))+'</button>'}).join('')+'</div>';
+  h+='<button class="btn" data-lancia="1" style="margin-top:10px">Lancia la sfida</button>';
+  if(L.ok){var tx=SFF[L.ok.f].replace('{X}',SFR[L.ok.r][1]);
+    h+='<div class="post" style="margin-top:10px"><div class="hd">'+av(ME)+'<div><b>'+esc(ME)+'</b><span class="mut sm">In conferenza stampa · adesso</span></div></div><q>«'+esc(tx)+'»</q></div>'
+     +'<div class="post" style="margin-top:8px"><div class="hd"><img src="'+D.img.gs+'" alt="Girrr Sport"><div><b>Girrr Sport</b><span class="mut sm">@girrrsport · adesso</span></div></div><q><b>SFIDA LANCIATA</b><br>'+esc(ME)+' contro '+esc(L.ok.r)+': la dichiarazione fa rumore in lega. Sta per nascere un nuovo derby? #GirrrSport #Derby</q></div>'
+     +'<p class="note" style="margin-top:6px">Il derby compare nelle tab qui sopra come "Derby '+esc(ME)+' – '+esc(L.ok.r)+'", con il nome che deciderai tu.</p>'}
+  return h+'</div>'}
 function vDerby(){
   var r=D.cal[S.derbyRound];
   var h=where('Tabellone','Giornata','Derby')+'<h2>I derby della lega</h2><p class="lead">Un derby nasce da due cose: quanto lo sentono gli amici della lega (pesa di più) e quanto è vecchia e importante la rivalità: stagioni insieme, zone alte, podi e anzianità. Un derby ha sempre una rivalità alta.</p>';
@@ -333,6 +347,7 @@ function vDerby(){
   else{var best=r.m.slice().sort(function(a,b){return rvInfo(b[0],b[1]).riv-rvInfo(a[0],a[1]).riv})[0];h+='<p class="sm mut" style="margin:6px 0">Questa giornata non ha nessun derby. La sfida più sentita è '+esc(best[0])+' – '+esc(best[1])+' (Rivalità: '+rvWord(rvInfo(best[0],best[1]).riv)+').</p>'}
   r.m.forEach(function(m){if(!isDer(m[0],m[1]))h+='<div class="mt"><div class="t">'+esc(m[0])+'</div><span class="tag">vs</span><div class="t">'+esc(m[1])+'</div></div>'});
   h+='</div>';
+  h+=sfidaCard();
   var DT=RIV.filter(function(o){return o.n||rvInfo(o.a,o.b).der}).sort(function(x,y){return rvInfo(y.a,y.b).riv-rvInfo(x.a,x.b).riv});
   S.dtab=Math.min(S.dtab||0,DT.length-1);var o=DT[S.dtab],i=rvInfo(o.a,o.b);
   h+='<div class="card"><h3>I derby della lega</h3><p class="sm mut" style="margin-bottom:8px">Tocca un derby per leggerne la storia.</p><div class="seg" role="group" aria-label="Derby" style="flex-wrap:wrap">'+DT.map(function(x,j){return '<button data-dtab="'+j+'" aria-pressed="'+(S.dtab===j)+'">'+esc(derName(x))+'</button>'}).join('')+'</div>';
@@ -344,7 +359,7 @@ function vDerby(){
   h+='<p class="note">Le storie vengono dall\'Albo d\'oro e compariranno anche lì, una per ogni derby. I primi voti sono quelli degli amici, gli altri sono di prova.</p>';
   return h;
 }
-document.addEventListener('click',function(e){var d=e.target.closest('[data-dtab]');if(d){S.dtab=+d.dataset.dtab;render();return}var b=e.target.closest('[data-vote]');if(!b)return;var k=b.dataset.vote;S.vote[k]=!S.vote[k];render()});
+document.addEventListener('click',function(e){var q=e.target.closest('[data-sfr],[data-sff],[data-lancia]');if(q){if(q.dataset.sfr)S.lancio.r=q.dataset.sfr;if(q.dataset.sff)S.lancio.f=+q.dataset.sff;if(q.dataset.lancia){S.lancio.ok={r:S.lancio.r,f:S.lancio.f};S.vote[rvKey(ME,S.lancio.r)]=true}render();return}var d=e.target.closest('[data-dtab]');if(d){S.dtab=+d.dataset.dtab;render();return}var b=e.target.closest('[data-vote]');if(!b)return;var k=b.dataset.vote;S.vote[k]=!S.vote[k];render()});
 
 /* ---------- 5. BORSINO ---------- */
 function series(p){var q=rnd(p.id*7+3),v=[p.q],x=p.q;for(var i=0;i<7;i++){x=Math.max(1,x+(q()-.5)*3.2*(1+p.q/20));v.unshift(x)}return v}
