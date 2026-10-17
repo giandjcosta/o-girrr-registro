@@ -448,7 +448,7 @@ function derBox(m){var i=rvInfo(m[0],m[1]),o=i.o;
 
 var SFR={};D.teams.forEach(function(t){if(t===ME)return;var m=mg(t),w=m.split(/[ &]/)[0];SFR[t]=[m,w.charAt(0).toUpperCase()+w.slice(1)]});
 function sfInfo(t){var i=rvInfo(ME,t);return {der:i.der,riv:i.riv}}
-function sfOrdine(){var a=Object.keys(SFR).map(function(t){var i=sfInfo(t);return {t:t,der:i.der,riv:i.riv}});a.sort(function(x,y){return (x.der-y.der)||(y.riv-x.riv)});var n=0;a.forEach(function(x){x.cons=!x.der&&x.riv>=30&&n<3;if(x.cons)n++});return a}
+function sfOrdine(){var a=Object.keys(SFR).map(function(t){var i=sfInfo(t);return {t:t,der:i.der,riv:i.riv}});a.sort(function(x,y){return (x.der-y.der)||(y.riv-x.riv)});var n=0;a.forEach(function(x){x.cons=!x.der&&x.riv>=40&&n<3;if(x.cons)n++});return a}
 var SFF=['Prometto di arrivare sempre sopra {X}.','Quest\'anno {X} dovrà guardarmi dal basso.','Il titolo passa da me, e {X} se ne farà una ragione.'];
 S.lancio=S.lancio||{r:'Apo team',f:0,ok:null};
 var DNP=new Proxy({},{get:function(o,t){var r=RIVM[rvKey(ME,t)];return (r&&r.n)||'Il Derby della Sfida'}});
