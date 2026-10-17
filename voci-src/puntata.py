@@ -33,6 +33,17 @@ import random, copione
 MERC = json.load(open(R / "mercato.json", encoding="utf-8")) if (R / "mercato.json").exists() else {}
 L = copione.build(D, random.Random(D["aw"][-1]["n"] * 7919), MERC, NOMI)
 import re, os, wave, subprocess
+ACC = {"rovesciata": "rovesciàta", "guardati": "guardàti", "riguardati": "riguardàti", "imparati": "imparàti", "risultati": "risultàti", "ancora": "ancòra",
+       "subito": "sùbito", "favorito": "favorìto", "campionato": "campionàto", "mercato": "mercàto", "rovinato": "rovinàto", "infortunato": "infortunàto",
+       "sparito": "sparìto", "riuscito": "riuscìto", "arrivato": "arrivàto", "cambiato": "cambiàto", "passato": "passàto", "tornato": "tornàto", "stato": "stàto", "guardato": "guardàto"}
+def accenta(t):
+    """Segna l'accento sulle parole che alcune voci leggono col suono sbagliato (es. Rovescia/Rovesciata, Guàrdati/guardàti)."""
+    import re as _re
+    def sost(m):
+        w = m.group(0); n = ACC.get(w.lower())
+        if not n: return w
+        return n[:1].upper() + n[1:] if w[:1].isupper() else n
+    return _re.sub(r"[A-Za-zÀ-ÿ]+", sost, t)
 GKEY = os.environ.get("GEMINI_API_KEY", "")
 GMOD = os.environ.get("MODELLO", "") or "gemini-3.8-flash-lite-tts"
 GVOCI = {"B": "Charon", "G": "Orus", "S": "Aoede", "C": "Fenrir"}
@@ -93,9 +104,17 @@ def chirp_uno(k, tx, fn, stile):
     if not c.valid: c.refresh(rq_)
     st = stile if isinstance(stile, str) or stile is None else None
     tx = emozione(st, tx)
-    body = json.dumps({"input": {"text": tx}, "voice": {"languageCode": "it-IT", "name": "it-IT-Chirp3-HD-" + CHIRP[k]}, "audioConfig": {"audioEncoding": "MP3", "sampleRateHertz": 24000, "speakingRate": 1.05}}).encode()
+    body = json.dumps({"input": {"text": tx}, "voice": {"languageCode": "it-IT", "name": "it-IT-Chirp3-HD-" + CHIRP[k]}, "audioConfig": {"audioEncoding": "LINEAR16", "sampleRateHertz": 24000, "speakingRate": 1.05}}).encode()
     rq = urllib.request.Request("https://texttospeech.googleapis.com/v1/text:synthesize", body, {"Content-Type": "application/json", "Authorization": "Bearer " + c.token})
-    fn.write_bytes(base64.b64decode(json.load(urllib.request.urlopen(rq, timeout=60))["audioContent"]))
+    raw = base64.b64decode(json.load(urllib.request.urlopen(rq, timeout=60))["audioContent"])
+    import io
+    with wave.open(io.BytesIO(raw)) as wr: pcm = wr.readframes(wr.getnframes())
+    from gtrim import rifinisci
+    pcm = rifinisci(pcm)
+    w = fn.with_suffix(".wav")
+    with wave.open(str(w), "wb") as o: o.setnchannels(1); o.setsampwidth(2); o.setframerate(24000); o.writeframes(pcm)
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(w), "-ar", "24000", "-ac", "1", "-b:a", "48k", "-f", "mp3", "-write_xing", "0", "-id3v2_version", "0", str(fn)], check=True)
+    w.unlink()
 STILI = {"urlo": dict(rate="+12%", pitch="+3Hz", volume="+6%"), "sus": dict(rate="-4%", pitch="-3Hz", volume="-10%"), None: dict(rate="+6%")}
 async def uno(voce, tx, fn, stile):
     kw = STILI.get(stile, {}) if isinstance(stile, (str, type(None))) else {"rate": stile}
@@ -106,6 +125,7 @@ async def parla(k, testo, fn, i, stile=None):
     """Prova la riga intera; se la voce non risponde la legge a frasi; come ultima scelta usa Isabella."""
     testo = testo.replace("«", "").replace("»", "")
     for a_, b_ in PRON.items(): testo = testo.replace(a_, b_)
+    testo = accenta(testo)
     for nome, fun, ok_ in (("gemini", gemini_uno, bool(GKEY) and not GSTOP[0]), ("chirp", chirp_uno, bool(os.environ.get("GOOGLE_TTS_JSON")) and not GSTOP[1])):
         if not ok_: continue
         for n in range(6 if nome == "gemini" else 2):
@@ -152,12 +172,32 @@ async def parla(k, testo, fn, i, stile=None):
     with open(fn, "wb") as o:
         for q in pezzi: o.write(q.read_bytes()); q.unlink()
 
+def scegli_modello():
+    """Prova una richiesta minuscola: usa il modello preferito, altrimenti l'altro; se nessuno risponde restituisce False."""
+    global GMOD, _gcl
+    from google import genai
+    from google.genai import types
+    ordine = [GMOD] + [m for m in ("gemini-3.8-flash-lite-tts", "gemini-3.8-flash-tts") if m != GMOD]
+    cl = genai.Client(api_key=GKEY)
+    for m in ordine:
+        try:
+            cl.models.generate_content(model=m, contents="Ciao.", config=types.GenerateContentConfig(response_modalities=["AUDIO"],
+                speech_config=types.SpeechConfig(voice_config=types.VoiceConfig(prebuilt_voice_config=types.PrebuiltVoiceConfig(voice_name="Charon")))))
+            GMOD = m; print("modello scelto:", m, flush=True); return True
+        except Exception as e:
+            print("modello", m, "non disponibile:", str(e).replace("\n", " ")[:300], flush=True)
+    return False
+SOLO = os.environ.get("SOLO_GEMINI", "") == "1"
 async def main():
+    if SOLO and not (GKEY and scegli_modello()):
+        print("SOLO_GEMINI: Gemini non disponibile, non pubblico nulla", flush=True); sys.exit(3)
     parti = []
     for i, riga in enumerate(L):
         k, t = riga[0], riga[1]; st = riga[2] if len(riga) > 2 else None
         fn = OUT / f"_p{i}.tmp"
         await parla(k, t, fn, i, st); parti.append(fn)
+    if SOLO and (MOTORE.get("chirp") or MOTORE.get("edge")):
+        print("SOLO_GEMINI: alcune battute non sono Gemini, non pubblico nulla:", MOTORE, flush=True); sys.exit(3)
     with open(R / "_voci.mp3", "wb") as o:
         for p in parti: o.write(p.read_bytes()); p.unlink()
     json.dump([{"chi": NOMI[k], "ruolo": RUOLO[k], "testo": t} for k, t, *_ in L], open(OUT / f"puntata{SUF}.json", "w"), ensure_ascii=False)
