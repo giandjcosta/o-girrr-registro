@@ -1,4 +1,4 @@
-/* Pagina Derby: rivalità storiche, derby con nome e storia, rivalità forti e sfide decisive. Stesso stile dell'Albo d'oro. */
+/* Pagina Derby: rivalità storiche, Derby con nome e storia, rivalità forti e sfide decisive. Stesso stile dell'Albo d'oro. */
 (function(){
 var N=window.NOV,D=null;
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
@@ -21,15 +21,15 @@ function prossima(){var L=D.cal.lega,i;for(i=0;i<L.length;i++){if(L[i].m.some(fu
 function render(){
   var RIV=window.PAGINA==='rivalita',r=prossima(),h='';
   if(!RIV){
-    h+='<div class="card"><h3>Giornata '+r.n+'</h3><p class="nt" style="margin:0 0 6px">Un derby nasce da due cose: quanto lo sentono gli amici della lega e quanto è vecchia e importante la rivalità (stagioni insieme, zone alte, podi, anzianità).</p>';
+    h+='<div class="card"><h3>Giornata '+r.n+'</h3><p class="nt" style="margin:0 0 6px">Un Derby nasce da due cose: quanto lo sentono gli amici della lega e quanto è vecchia e importante la rivalità (stagioni insieme, zone alte, podi, anzianità).</p>';
     var ders=r.m.filter(function(m){return info(m[0],m[3]).der});
     if(ders.length)h+=ders.map(function(m){var i=info(m[0],m[3]);return '<div class="dd"><div class="k">Derby della giornata</div><div style="font-weight:800;margin:4px 0">'+esc(nome(i.o))+'</div><div class="vs"><b>'+esc(m[0])+'</b><span>contro</span><b>'+esc(m[3])+'</b></div>'+bar(i.riv)+'<div class="nt" style="margin:0">Rivalità: <b>'+word(i.riv)+'</b> · '+i.o.h+' stagioni insieme, '+i.o.z+' nelle zone alte insieme</div>'+rac(i.o)+'</div>'}).join('');
-    else h+='<p class="nt">Questa giornata non ha nessun derby.</p>';
+    else h+='<p class="nt">Questa giornata non ha nessun Derby.</p>';
     h+='</div>';
     var DT=N.riv.filter(function(o){return o.n||info(o.a,o.b).der}).sort(function(x,y){return info(y.a,y.b).riv-info(x.a,x.b).riv});
-    h+='<div class="card"><h3>I derby della Lega</h3>'+DT.map(function(o){var i=info(o.a,o.b);return '<div class="dv"><div style="font-weight:900;font-size:15px">'+esc(nome(o))+(i.der?' <span class="tg">Derby</span>':'')+'</div><div class="vs" style="margin-top:6px"><b>'+esc(o.a)+'</b><span>contro</span><b>'+esc(o.b)+'</b></div>'+bar(i.riv)+'<div class="nt" style="margin:0">Rivalità: <b>'+word(i.riv)+'</b> · '+o.h+' stagioni insieme · '+o.z+' nelle zone alte insieme</div>'+(o.s?'<p style="font-weight:600;font-size:14px;line-height:1.6;margin-top:8px">'+esc(o.s)+'</p>':'')+'</div>'}).join('')+'</div>';
+    h+='<div class="card"><h3>I Derby della Lega</h3>'+DT.map(function(o){var i=info(o.a,o.b);return '<div class="dv"><div style="font-weight:900;font-size:15px">'+esc(nome(o))+(i.der?' <span class="tg">Derby</span>':'')+'</div><div class="vs" style="margin-top:6px"><b>'+esc(o.a)+'</b><span>contro</span><b>'+esc(o.b)+'</b></div>'+bar(i.riv)+'<div class="nt" style="margin:0">Rivalità: <b>'+word(i.riv)+'</b> · '+o.h+' stagioni insieme · '+o.z+' nelle zone alte insieme</div>'+(o.s?'<p style="font-weight:600;font-size:14px;line-height:1.6;margin-top:8px">'+esc(o.s)+'</p>':'')+'</div>'}).join('')+'</div>';
   }else{
-    h+='<div class="card"><h3>Giornata '+r.n+'</h3><p class="nt" style="margin:0 0 6px">Le rivalità sono un gradino sotto il derby: sfide con una storia lunga che gli amici non hanno votato come derby.</p>';
+    h+='<div class="card"><h3>Giornata '+r.n+'</h3><p class="nt" style="margin:0 0 6px">Le rivalità sono un gradino sotto il Derby: sfide con una storia lunga che gli amici non hanno votato come Derby.</p>';
     var fo=r.m.filter(function(m){var i=info(m[0],m[3]);return !i.der&&i.riv>=75});
     if(fo.length)h+=fo.map(function(m){var i=info(m[0],m[3]);return '<div class="dd f"><div class="k">Rivalità forte</div><div class="vs" style="margin-top:4px"><b>'+esc(m[0])+'</b><span>contro</span><b>'+esc(m[3])+'</b></div>'+bar(i.riv)+'<div class="nt" style="margin:0">'+esc(ctx(m[0],m[3]))+'</div>'+rac(i.o)+'</div>'}).join('');
     else h+='<p class="nt">Questa giornata non ha rivalità forti.</p>';

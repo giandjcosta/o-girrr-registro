@@ -1,4 +1,4 @@
-/* Novità 5.0 per l'Albo d'oro: storia della Lega, Era dei Titani, titoli di sempre, derby. Font e colori sono quelli del sito. */
+/* Novità 5.0 per l'Albo d'oro: storia della Lega, Era dei Titani, titoli di sempre, Derby. Font e colori sono quelli del sito. */
 (function(){
 var st=document.createElement('style');st.textContent='.rac{margin:12px 0;padding:12px 14px;border-radius:14px;background:rgba(0,0,0,.2);border-left:3px solid var(--hi)}.rac .rt{font-weight:900;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--hi);margin-bottom:6px}.rac p{font-weight:600;font-size:14px;line-height:1.6;margin:0 0 8px}.rac p:last-child{margin:0}.nt{color:var(--sub);font-weight:600;font-size:12px;margin-top:8px;line-height:1.5}.nt-r{text-align:right!important}.nt-t td.num,.nt-t th.num{text-align:right}.nt-nv{display:inline-block;margin-left:8px;border-radius:999px;background:var(--acc);color:#fff;font-weight:900;font-size:10px;letter-spacing:.14em;padding:3px 8px;vertical-align:middle}';document.head.appendChild(st);
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
@@ -16,12 +16,31 @@ window.NOVITA=function(D){var N=window.NOV;if(!N)return {};
   P.ere=ere;h='';
   h+='<div class="card"><h3>Titoli di sempre</h3><table class="nt-t"><tr><th>Allenatore</th><th class="num">Titoli</th></tr>'+Object.keys(tt).sort(function(a,b){return tt[b]-tt[a]}).map(function(u){return '<tr><td>'+esc(u)+'</td><td class="num">'+tt[u]+(N.pre.some(function(x){return x[2]===u})?'*':'')+'</td></tr>'}).join('')+'</table><p class="nt">* Include i titoli dell\'Era dei Titani, che arrivano dai ricordi e non da dati conservati. Il totale conta anche la Coppa Campioni.</p></div>';
   P.titoli=h;h='';
-  h+='<a class="card" href="derby.html" style="display:block;text-decoration:none;color:inherit"><h3>I derby della Lega<span class="nt-nv">NOVITÀ</span></h3><div style="font-weight:700;font-size:14px">I derby con il loro nome, la storia e il derby della giornata →</div></a><a class="card" href="rivalita.html" style="display:block;text-decoration:none;color:inherit"><h3>Le rivalità<span class="nt-nv">NOVITÀ</span></h3><div style="font-weight:700;font-size:14px">Le rivalità forti e le sfide decisive →</div></a>';
+  h+='<a class="card" href="derby.html" style="display:block;text-decoration:none;color:inherit"><h3>I Derby della Lega<span class="nt-nv">NOVITÀ</span></h3><div style="font-weight:700;font-size:14px">I Derby con il loro nome, la storia e il Derby della giornata →</div></a><a class="card" href="rivalita.html" style="display:block;text-decoration:none;color:inherit"><h3>Le rivalità<span class="nt-nv">NOVITÀ</span></h3><div style="font-weight:700;font-size:14px">Le rivalità forti e le sfide decisive →</div></a>';
   P.derby=h;return P}
 
+
+/* Stagioni: stesso ordine delle Ere, cioè Titani, Silenzio, Contemporanea; dentro ogni era dalla più vecchia alla più recente */
+function STAGIONI(sto){
+  var N=window.NOV,L=N.leg,pre=N.pre;
+  function e(x){return String(x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  var H3='<h3 style="font-weight:900;font-size:13px;letter-spacing:.3em;color:var(--hi);margin:6px 0 12px;text-transform:uppercase">';
+  var PODIO={'2018/19':[['Urba Team','Urba'],['','RikyArma'],['','Filippo']]};
+  function riga(y,k,b,corpo){return '<div class="card">'+(corpo?'<details>':'<div>')+'<summary><span class="y">'+y+'</span><span><small>'+k+'</small><b>'+b+'</b></span><span class="fr">'+(corpo?'›':'')+'</span></summary>'+(corpo||'')+(corpo?'</details>':'</div>')+'</div>'}
+  var tt={};pre.forEach(function(x){if(x[2])tt[x[2]]=(tt[x[2]]||0)+1});
+  var chips='<div class="sala">'+Object.keys(tt).map(function(k){return '<span>🏆 '+e(k)+' <b>'+tt[k]+'</b></span>'}).join('')+'</div>';
+  var t='<div class="sto">'+H3+e(L.eras.prima)+' · Le stagioni</h3>'+chips;
+  pre.slice(0,3).forEach(function(x){
+    var po=PODIO[x[0]],tb=po?'<table><tbody><tr><th>#</th><th style="text-align:left">Allenatore</th></tr>'+po.map(function(r,i){return '<tr><td>'+(i+1)+'°</td><td style="text-align:left;font-weight:700">'+e(r[1])+(r[0]?'<small>'+e(r[0])+'</small>':'')+'</td></tr>'}).join('')+'</tbody></table><p class="nt" style="padding:0 16px 12px;margin:0">Dai ricordi del gruppo: i punti non si sono conservati.</p>':'';
+    t+=riga(x[0],'Campionato','🏆 '+(x[1]?e(x[1])+' · ':'')+e(x[2]),tb)});
+  t+='</div><div class="sto">'+H3+e(L.eras.vuoto)+' · Le stagioni</h3>'+riga('2019/20','Campionato','Stagione interrotta','')+riga('2020/21','Campionato','Nessun titolo assegnato','')+'</div>';
+  var d=document.createElement('div');d.innerHTML=sto;var box=d.querySelector('.sto');
+  if(box){var cs=[].slice.call(box.querySelectorAll(':scope>.card')).reverse(),last=null;cs.forEach(function(c){box.appendChild(c)})}
+  return t+d.innerHTML;
+}
 window.ALBOTABS=function(D,x){
   var P=window.NOVITA?window.NOVITA(D):{};
-  var S=[['ere','Le Ere',P.ere],['titoli','Titoli',P.titoli],['all','Allenatori',x.allenatori],['stag','Stagioni',x.storico],['rec','Record',x.recs],['derby','Derby',P.derby]].filter(function(s){return s[2]});
+  var S=[['ere','Le Ere',P.ere],['titoli','Titoli',P.titoli],['all','Allenatori',x.allenatori],['stag','Stagioni',x.storico?STAGIONI(x.storico):x.storico],['rec','Record',x.recs],['derby','Derby',P.derby]].filter(function(s){return s[2]});
   var cur=(location.hash||'').slice(1);if(!S.some(function(s){return s[0]===cur}))cur=S[0][0];
   var h=x.stato+'<div class="at" role="tablist">'+S.map(function(s){return '<button role="tab" data-at="'+s[0]+'" aria-selected="'+(s[0]===cur)+'">'+s[1]+'</button>'}).join('')+'</div>'
    +S.map(function(s){return '<div class="ap" data-ap="'+s[0]+'"'+(s[0]===cur?'':' hidden')+'>'+s[2]+'</div>'}).join('');
@@ -32,3 +51,10 @@ window.ALBOTABS=function(D,x){
   return h};
 var st2=document.createElement('style');st2.textContent='.at.fl{-webkit-mask-image:linear-gradient(90deg,transparent,#000 34px);mask-image:linear-gradient(90deg,transparent,#000 34px)}.at.fr{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 34px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 34px),transparent)}.at.fl.fr{-webkit-mask-image:linear-gradient(90deg,transparent,#000 34px,#000 calc(100% - 34px),transparent);mask-image:linear-gradient(90deg,transparent,#000 34px,#000 calc(100% - 34px),transparent)}.at{scroll-snap-type:none}.at button:first-child{margin-left:auto}.at button:last-child{margin-right:auto}.at{cursor:grab}.at.drag{cursor:grabbing}.at{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px;margin:14px 0 12px}.at::-webkit-scrollbar{display:none}.at button{flex:none;height:38px;padding:0 16px;border-radius:19px;border:2px solid transparent;background:rgba(255,255,255,.08);color:var(--chiaro);font:800 14px Inter,system-ui,sans-serif;cursor:pointer;opacity:.6;transition:all .25s}.at button[aria-selected=true]{background:var(--acc);opacity:1}.ap[hidden]{display:none}';document.head.appendChild(st2);
 })();
+
+/* Storie degli allenatori aggiornate: dal primo campionato (2016/17) in poi */
+document.addEventListener('click',function(ev){var b=ev.target.closest&&ev.target.closest('[data-co]');if(!b||!window.NOV||!NOV.storie)return;var n=b.getAttribute('data-co');
+  setTimeout(function(){var m=document.getElementById('mo');if(!m)return;var st=NOV.storie[n];
+    if(st){var tg=m.querySelector('.sh-tag'),tx=m.querySelector('.sh-sto');if(tg)tg.textContent=st[0];if(tx)tx.textContent=st[1]}
+    var am=NOV.amb&&NOV.amb[n];if(am){[].forEach.call(m.querySelectorAll('h5'),function(h){if(/Dove punta/.test(h.textContent)&&h.nextElementSibling)h.nextElementSibling.textContent=am})}
+  },0)});

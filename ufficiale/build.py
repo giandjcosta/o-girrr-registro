@@ -19,6 +19,7 @@ js = "var RIV=%s;\nvar PRE=%s;\nvar LEG=%s;\nvar STAG=%s;\nconsole.log(JSON.stri
 dati = json.loads(subprocess.check_output(["node", str(R / "ufficiale" / "_x.js")]))
 (R / "ufficiale" / "_x.js").unlink()
 vt = re.search(r"S\.vote=S\.vote\|\|\{\};S\.pend=S\.pend\|\|\{\};\[(.*?)\]\.forEach", lab, re.S).group(1)
+dati.update(json.loads((R / "ufficiale" / "src" / "storie.json").read_text(encoding="utf-8")))
 dati["rilascio"] = "2026-10-17"   # data in cui la 5.0 va in linea: il bollino Novità dura 15 giorni da qui
 dati["voti"] = re.findall(r"'([^']+\|[^']+)'", vt)
 
@@ -72,12 +73,21 @@ patch("curva.html", "T(S1,230,230,'800 36px '+F,'#fff','center',330);T(S2,W-230,
 alb = (OUT / "albo.html").read_text(encoding="utf-8")
 a0 = alb.index("<script>\n(function(){\nvar D=null;"); a1 = alb.index("</script>\n<script src=\"" + LIVE + "assets/app.js\">")
 der = alb[:a0] + '<script src="derby.js"></script>\n' + alb[a1 + len("</script>\n"):]
-der = der.replace("<h1>Albo d'oro</h1>", "<h1>I derby</h1>").replace("<title>Albo d'oro", "<title>I derby").replace('<div class="vuoto">Carico i record…</div>', '<div class="vuoto">Carico i derby…</div>')
+der = der.replace("<h1>Albo d'oro</h1>", "<h1>I Derby</h1>").replace("<title>Albo d'oro", "<title>I derby").replace('<div class="vuoto">Carico i record…</div>', '<div class="vuoto">Carico i Derby…</div>')
 der = der.replace("<script src=\"novita.js\"></script>\n", "")
 (OUT / "derby.html").write_text(der.replace('<script src="derby.js">', '<script>window.PAGINA="derby"</script>\n<script src="derby.js">', 1), encoding="utf-8")
-_riv = der.replace("<h1>I derby</h1>", "<h1>Le rivalità</h1>").replace("<title>I derby", "<title>Le rivalità").replace("Carico i derby…", "Carico le rivalità…").replace('<script src="derby.js">', '<script>window.PAGINA="rivalita"</script>\n<script src="derby.js">', 1)
+_riv = der.replace("<h1>I Derby</h1>", "<h1>Le rivalità</h1>").replace("<title>I derby", "<title>Le rivalità").replace("Carico i Derby…", "Carico le rivalità…").replace('<script src="derby.js">', '<script>window.PAGINA="rivalita"</script>\n<script src="derby.js">', 1)
 (OUT / "rivalita.html").write_text(_riv, encoding="utf-8")
 
+
+_s = (OUT / "storia.js").read_text(encoding="utf-8")
+for _a, _b in [("ser è l\\'unico che in cinque stagioni non ha mai cambiato né squadra né nome: la WOA", "ser è l\\'unico che dal 2021 non ha mai cambiato né squadra né nome: la WOA"),
+    ("apo è l\\'unico ad aver vinto due titoli, e di fila: 2021/22 e 2022/23 con il Wakanda", "apo ha tre titoli, più di chiunque altro: il 2017/18 e poi 2021/22 e 2022/23 di fila con il Wakanda"),
+    ("in cinque stagioni di campionato nessuno si è confermato campione tranne apo", "nella storia della lega solo apo si è confermato campione: 2021/22 e 2022/23"),
+    ("'Il Wakanda di apo ha vinto", "'Mario ha vinto il primo campionato della storia della lega, nel 2016/17, con Mertens',\n 'Urba ha vinto il titolo 2018/19 e ha lasciato la lega da campione',\n 'Il Wakanda di apo ha vinto")]:
+    assert _a in _s, _a[:40]
+    _s = _s.replace(_a, _b)
+(OUT / "storia.js").write_text(_s, encoding="utf-8")
 # 7) dati e script nuovi
 (OUT / "novita-dati.js").write_text("window.NOV=" + json.dumps(dati, ensure_ascii=False) + ";", encoding="utf-8")
 for n in ["novita.js", "derby.js", "novita-curva.js", "novita-badge.js", "transizioni.js", "barra.js"]:
@@ -118,7 +128,7 @@ card = '<a class="c" href="../../anteprima/attuale.html#sport"><div class="ic"><
 ix = ix.replace(m.group(0), card, 1).replace('<a href="giornale.html">Leggi il giornale ›</a>', '<a href="giornale.html">Leggi il giornale ›</a>', 1)
 LOGO = LIVE + "assets/logo-lega.png"
 import time as _t
-extra_cards = ('<a class="c" href="albo.html"><div class="ic"><img src="albo-alloro.png?v=@@V@@" alt="" style="height:72px;width:auto;margin-top:-6px"></div><h2>Albo d\'oro<span class="nt-nv">NOVITÀ</span></h2><p>Storia della Lega, Era dei Titani, stagioni, derby e record.</p><div class="go">ENTRA ›</div></a>'
+extra_cards = ('<a class="c" href="albo.html"><div class="ic"><img src="albo-alloro.png?v=@@V@@" alt="" style="height:72px;width:auto;margin-top:-6px"></div><h2>Albo d\'oro<span class="nt-nv">NOVITÀ</span></h2><p>Storia della Lega, Era dei Titani, stagioni, Derby e record.</p><div class="go">ENTRA ›</div></a>'
                '<a class="c" href="../../anteprima/attuale.html#carriera"><div class="ic"><img src="carriera-microfoni.png?v=@@V@@" alt="" style="height:72px;width:auto;margin-top:-6px"></div><h2>Carriera<span class="nt-nv">NOVITÀ</span></h2><p>Obiettivi, fiducia del presidente e conferenza stampa di ogni allenatore.</p><div class="go">ENTRA ›</div></a>')
 extra_cards = extra_cards.replace('@@V@@', str(int(_t.time())))
 i0 = ix.index('<section class="cards">'); i1 = ix.index('</section>', i0)

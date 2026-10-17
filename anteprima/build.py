@@ -17,7 +17,7 @@ sost("</style>", ".where,.note,.lead,.fb,.proto-only{display:none!important}.hm{
 # nav e Home
 sost(re.search(r"var TABS=\[.*?\];", s).group(0), "var TABS=[['home','Home'],['sport','Girrr Sport'],['oro','Albo d\\'oro'],['spog','Spogliatoio'],['toto','Totogirrr'],['carriera','Carriera']];")
 sost("var cur='prob',", "var cur='home',")
-home = r"""function vHome(){var T=[['sport','Girrr Sport','Giornale, conferenze stampa, radio e sfide lanciate','big'],['oro','Albo d\'oro','Storia, stagioni, Era dei Titani, derby e Albo di Latta'],['spog','Spogliatoio','Il Borsino e la tua squadra'],['toto','Totogirrr','Le probabilità e le quote'],['carriera','Carriera','Obiettivi, presidente e Cassa']];
+home = r"""function vHome(){var T=[['sport','Girrr Sport','Giornale, conferenze stampa, radio e sfide lanciate','big'],['oro','Albo d\'oro','Storia, stagioni, Era dei Titani, Derby e Albo di Latta'],['spog','Spogliatoio','Il Borsino e la tua squadra'],['toto','Totogirrr','Le probabilità e le quote'],['carriera','Carriera','Obiettivi, presidente e Cassa']];
   return '<div class="hm">'+T.map(function(t){return '<button data-tab="'+t[0]+'" class="'+(t[3]||'')+'">'+(t[0]==='sport'?'<img src="'+D.img.gs+'" alt="Girrr Sport" style="height:46px;width:auto;align-self:flex-start;border-radius:6px">':'<b>'+t[1]+'</b>')+'<small>'+t[2]+'</small></button>'}).join('')+'</div>'}
 function vSpog(){return vBors()}function vToto(){return vProb()}
 var V={spog:vSpog,toto:vToto,home:vHome,"""
@@ -26,7 +26,7 @@ sost("(cur==='parere'?'':fbBox())", "''")
 sost("S.fb[cur]", "S.fb[cur]")
 
 # --- Ristrutturazione: tutto dentro quattro tab grandi ---
-sost("['derby','I derby'],['all','Gli allenatori']", "['derby','I derby'],['latta','Albo di Latta'],['all','Gli allenatori']")
+sost("['derby','I Derby'],['all','Gli allenatori']", "['derby','I Derby'],['latta','Albo di Latta'],['all','Gli allenatori']")
 sost("  if(S.oro==='storia')h+=", "  if(S.oro==='derby')return h+vDerby();if(S.oro==='latta')return h+vAlbo();\n  if(S.oro==='storia')h+=")
 s = re.sub(r"\+'<div class=\"card\"><h3>Cosa cambia in Home</h3>.*?homeMock\(\)\+'</div>'", "", s, flags=re.S)
 sost("['moviola','Moviola · Presto']]", "['sfide','Sfide lanciate'],['moviola','Moviola · Presto']]")

@@ -14,7 +14,7 @@ if(!d)return;e.preventDefault();e.stopPropagation();e.stopImmediatePropagation()
 var _ls=document.createElement('style');_ls.textContent='#lg,#olg{cursor:pointer}';document.head.appendChild(_ls);
 /* la scritta sopra il logo riporta alla pagina da cui arrivi; il logo riporta alla Home */
 (function(){
-var NOMI={index:'O Girrr',albo:"Albo d'oro",derby:'I derby',rivalita:'Le rivalità',squadre:'Squadre',tabellone:'Tabellone',totogirrr:'Totogirrr',statistiche:'Statistiche',curva:'Curva',giornale:'Giornale'};
+var NOMI={index:'O Girrr',albo:"Albo d'oro",derby:'I Derby',rivalita:'Le rivalità',squadre:'Squadre',tabellone:'Tabellone',totogirrr:'Totogirrr',statistiche:'Statistiche',curva:'Curva',giornale:'Giornale'};
 var p=location.pathname,lab=/\/anteprima\//.test(p),uf=/\/ufficiale\/(nuovo\/)?girrr\//.test(p);if(!lab&&!uf)return;
 var cur=lab?'lab':(p.split('/').pop().replace('.html','')||'index'),prev=null;
 try{var c=sessionStorage.getItem('orr_cur'),pv=sessionStorage.getItem('orr_prev');if(c&&c!==cur){prev=c;sessionStorage.setItem('orr_prev',c)}else prev=pv;sessionStorage.setItem('orr_cur',cur)}catch(e){}
