@@ -1,7 +1,7 @@
 /* Interruttore della grafica nella Home, a destra del titolo. Si sceglie una volta e la scelta resta (orr_gv).
    Nomi provvisori delle due grafiche: si cambiano solo qui e in confronto.html (NOMI). */
 (function(){
-var NOMI={a:'Vecchia scuola',n:'Nuova era'};
+var NOMI={a:'Lega',n:'Stadio'};
 function go(){
 var h=document.querySelector('.hero');if(!h||document.getElementById('gsw'))return;
 var nuova=location.pathname.indexOf('/ufficiale/nuovo/')>=0;
