@@ -115,6 +115,11 @@ ix = ix.replace("</head>", "<style>.cards{grid-template-columns:repeat(3,1fr)!im
 # Tabellone: Le squadre diventano una sezione del Tabellone
 patch("tabellone.html", '<div class="sw" role="tablist">', '<a class="sqb" href="squadre.html"><span>🛡️</span><b>Le squadre</b><i>Rosa, risultati e forma di ognuno ›</i></a>\n  <div class="sw" role="tablist">')
 patch("tabellone.html", "</head>", "<style>.sqb{display:flex;align-items:center;gap:10px;margin:14px 0 0;max-width:440px;padding:11px 16px;border-radius:16px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);color:inherit;text-decoration:none}.sqb span{font-size:20px}.sqb b{font-weight:800}.sqb i{font-style:normal;font-size:12px;opacity:.75;margin-left:auto}</style>\n</head>")
+_v = str(int(_t.time()))
+for _f in OUT.glob("*.html"):
+    _x = _f.read_text(encoding="utf-8")
+    _x = re.sub(r'src="((?:novita|derby)[\w-]*\.js)"', lambda m: 'src="%s?v=%s"' % (m.group(1), _v), _x)
+    _f.write_text(_x, encoding="utf-8")
 SKIN = """html{background:#141d3d}
 body{background:radial-gradient(900px 520px at 85% -8%,rgba(214,40,57,.26),transparent 62%),radial-gradient(1000px 640px at -10% 18%,rgba(61,147,214,.26),transparent 60%),linear-gradient(180deg,#2c3f7c,#1d2a52 45%,#141d3d)!important;background-attachment:fixed!important}
 body::before{display:none!important}
