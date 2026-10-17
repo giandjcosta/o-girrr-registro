@@ -24,6 +24,11 @@ var V={home:vHome,"""
 sost("var V={", home)
 sost("(cur==='parere'?'':fbBox())", "''")
 sost("S.fb[cur]", "S.fb[cur]")
+
+# tab più piccole con i loghi ufficiali
+sost("</style>", ".tabs{gap:5px;padding:6px 0}.tabs button{padding:5px 11px 5px 7px;font-size:12px;display:inline-flex;align-items:center;gap:6px}.tabs button img{width:18px;height:18px;object-fit:contain;border-radius:4px}</style>")
+sost("""'<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'">'+t[1]+'</button>'""",
+     """'<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'">'+(({sport:D.img.gs,home:D.img.lega,oro:D.img.lega,albo:D.img.lega,derby:D.img.lega})[t[0]]?'<img src="'+({sport:D.img.gs}[t[0]]||D.img.lega)+'" alt="">':'')+t[1]+'</button>'""")
 out = R / "anteprima" / "index.html"
 out.write_text(s, encoding="utf-8")
 print("scritto", out, len(s))
