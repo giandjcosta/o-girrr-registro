@@ -441,7 +441,15 @@ function calcObiettivi(){var T=D.teams.slice().sort(function(a,b){return potenza
   else{pr='Salire gradualmente verso l\'alto';al='Salire un passo alla volta';num=6}
   if(t==='WOA'){pr='Ripetersi: difendere il titolo';al='Ripetermi';num=2}
   else if(ti>=2&&lp&&lp>6){pr='Tornare in alto, con il titolo nel mirino';al='Tornare a lottare per il vertice';num=5}
-  OB[t]={er:er,pres:pr,all:al,fz:FZ[t]||0,hs:Math.round(histScore(t)),num:num};EXP[t]=num})}
+  if(t==='Apo team'){pr='Tornare sul podio dopo gli ultimi anni';al='Rifarmi dagli ultimi anni: tornare tra le prime tre';num=3}
+  var cp,ca;
+  if(t==='Grodah'){cp='Difendere la Champions Cup';ca='Difendere la coppa'}
+  else if(t==='The Blue brothers'){cp='Tornare in finale di Champions Cup';ca='Prendermi la rivincita in finale'}
+  else if(er<=2){cp='Vincere la Champions Cup';ca='Vincere la coppa'}
+  else if(er<=4){cp='Arrivare in finale di Champions Cup';ca='Puntare alla finale'}
+  else if(er<=7){cp='Passare il girone di Champions Cup';ca='Passare il girone'}
+  else{cp='Non chiudere ultimi nel girone di Champions Cup';ca='Fare bella figura nel girone'}
+  OB[t]={er:er,pres:pr,all:al,cp:cp,ca:ca,fz:FZ[t]||0,hs:Math.round(histScore(t)),num:num};EXP[t]=num})}
 var OB={};calcObiettivi();
 function molt(g){return .2+.8*Math.min(1,g/NG)}
 function fidA(t,pos,g,dv){var m=molt(g),x=50+((EXP[t]||5)-pos)*7*m+(dv||0)*3*m;return Math.max(5,Math.min(98,Math.round(x)))}
@@ -455,11 +463,11 @@ function vCar(){
   var h=where('Spogliatoio','Carriera')+'<h2>Carriera da allenatore</h2><p class="lead">Poche cose, tutte misurabili. A inizio stagione il presidente dice dove ti aspetta, e un paio di obiettivi arrivano da lui e dallo sponsor. Se rendi meno del previsto la fiducia scende, e sotto una soglia arriva un esonero a titolo simbolico.</p>';
   h+='<select id="cteam" aria-label="Allenatore" style="margin-bottom:12px">'+D.teams.map(function(x){return '<option'+(x===t?' selected':'')+'>'+esc(x)+'</option>'}).join('')+'</select>';
   h+='<div class="card" style="text-align:center"><h3>Fiducia del presidente</h3>'+gauge(f)+'<p style="font-weight:700;margin-top:2px">'+stat+'</p><p class="sm mut">Obiettivo: '+OB[t].pres.toLowerCase().replace(/^./,function(c){return c.toUpperCase()})+' · ora '+r.pos+'°</p></div>';
-  var o=[['P','Presidente',OB[t].pres,Math.min(100,Math.round((e/Math.max(r.pos,1))*100)),r.pos<=e?'In linea':'Da recuperare'],['P','Presidente','Almeno 3 vittorie nelle prime 8 giornate',Math.min(100,Math.round(r.v/3*100)),r.v+' su 3'],[null,'Bomber Gym Club','Supera 75 punti in una giornata',Math.min(100,Math.round(mp/75*100)),'Massimo '+f1(mp)]];
+  var o=[['P','Presidente',OB[t].pres,Math.min(100,Math.round((e/Math.max(r.pos,1))*100)),r.pos<=e?'In linea':'Da recuperare'],['P','Presidente','Almeno 3 vittorie nelle prime 8 giornate',Math.min(100,Math.round(r.v/3*100)),r.v+' su 3'],['P','Presidente',OB[t].cp,0,'Da giocare'],[null,'Bomber Gym Club','Supera 75 punti in una giornata',Math.min(100,Math.round(mp/75*100)),'Massimo '+f1(mp)]];
   var ob=OB[t]||{};S.fdem=S.fdem||{g:2,p:8};
   h+='<div class="card"><h3>Come nasce l\'aspettativa</h3><p class="sm mut" style="margin-bottom:8px">Il presidente guarda tre cose: la storia dell\'allenatore (posizioni e squadre avute), la forza della rosa al completo (11 titolari al modulo migliore e panchina) e la sua ambizione per la stagione.</p>'
    +'<div class="h2h" style="grid-template-columns:1fr 1fr"><div><small>Storia</small><b class="num" style="font-size:22px">'+ob.hs+'</b><span class="mut sm">su 100</span></div><div><small>Forza rosa</small><b class="num" style="font-size:22px">'+ob.fz+'</b><span class="mut sm">su 100</span></div></div>'
-   +'<p class="sm" style="margin-top:8px"><b>Presidente:</b> '+esc(ob.pres)+'.<br><b>Allenatore:</b> '+esc(ob.all)+'.</p></div>';
+   +'<p class="sm" style="margin-top:8px"><b>Presidente:</b> '+esc(ob.pres)+'.<br><b>Allenatore:</b> '+esc(ob.all)+'.</p><p class="sm" style="margin-top:6px"><b>Coppa, presidente:</b> '+esc(ob.cp)+'.<br><b>Coppa, allenatore:</b> '+esc(ob.ca)+'.</p></div>';
   h+='<div class="card"><h3>Come cambia la fiducia con il calendario</h3><p class="sm mut" style="margin-bottom:8px">Essere ottavi alla 2ª giornata pesa poco; esserlo alla 26ª pesa tantissimo. Il peso di ogni risultato cresce man mano che la stagione avanza.</p>'
    +'<div class="row" style="gap:8px"><select id="fg" aria-label="Giornata">'+[2,6,10,18,26,34].map(function(g){return '<option value="'+g+'"'+(S.fdem.g===g?' selected':'')+'>Giornata '+g+'</option>'}).join('')+'</select><select id="fp" aria-label="Posizione">'+[1,2,3,4,5,6,7,8,9,10].map(function(x){return '<option value="'+x+'"'+(S.fdem.p===x?' selected':'')+'>'+x+'° posto</option>'}).join('')+'</select></div>'
    +'<p style="font-weight:700;margin-top:8px">Fiducia: <span class="num">'+fidA(t,S.fdem.p,S.fdem.g,0)+'</span> su 100 <span class="mut sm">(peso del calendario ×'+(Math.round(molt(S.fdem.g)*100)/100).toString().replace('.',',')+')</span></p></div>';
