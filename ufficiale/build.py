@@ -74,8 +74,14 @@ print("scritto", OUT, len(list(OUT.iterdir())), "file")
 NUOVE = [("sport","📺","Girrr Sport","Radio, conferenza stampa e Giornale"),("sfide","🥊","Sfide","Lanci una sfida, il rivale risponde"),("prob","🎯","Probabilità","Quanto è davvero probabile il titolo"),("borsino","📈","Borsino","Chi sale e chi scende"),("carriera","🧭","Carriera","Obiettivi e storia di ognuno"),("cassa","💰","Cassa","Dove vanno i soldi")]
 def tiles(href):
     return "".join('<a class="mn" href="%s#%s"><div class="mi">%s</div><div><b>%s</b><span>%s</span></div></a>' % (href, k, e, n, d) for k, e, n, d in NUOVE)
+shutil.copy(R / "lab" / "girrr-sport.png", OUT / "girrr-sport.png")
 ix = (OUT / "index.html").read_text(encoding="utf-8")
 assert '<a class="mn" id="mst"' in ix
+# La card Giornale diventa Girrr Sport (logo della TV), come nel Laboratorio; il Live resta solo al Tabellone
+m = re.search(r'<a class="c" href="giornale.html">.*?</a>', ix, re.S)
+assert m
+card = '<a class="c" href="../../anteprima/attuale.html#sport"><div class="ic"><img src="girrr-sport.png" alt="Girrr Sport" style="height:54px;width:auto;border-radius:8px"></div><h2>Girrr Sport</h2><p>La TV, il giornale e la radio della lega: tutto quello che si legge, si ascolta e si guarda.</p><div class="go">ENTRA ›</div></a>'
+ix = ix.replace(m.group(0), card, 1).replace('<a href="giornale.html">Leggi il giornale ›</a>', '<a href="giornale.html">Leggi il giornale ›</a>', 1)
 (OUT / "index.html").write_text(ix.replace('<a class="mn" id="mst"', tiles("../../anteprima/attuale.html") + '<a class="mn" id="mst"', 1), encoding="utf-8")
 SKIN = """html{background:#141d3d}
 body{background:radial-gradient(900px 520px at 85% -8%,rgba(214,40,57,.26),transparent 62%),radial-gradient(1000px 640px at -10% 18%,rgba(61,147,214,.26),transparent 60%),linear-gradient(180deg,#2c3f7c,#1d2a52 45%,#141d3d)!important;background-attachment:fixed!important}
