@@ -108,17 +108,19 @@ async def parla(k, testo, fn, i, stile=None):
     for a_, b_ in PRON.items(): testo = testo.replace(a_, b_)
     for nome, fun, ok_ in (("gemini", gemini_uno, bool(GKEY) and not GSTOP[0]), ("chirp", chirp_uno, bool(os.environ.get("GOOGLE_TTS_JSON")) and not GSTOP[1])):
         if not ok_: continue
-        for n in range(4 if nome == "gemini" else 2):
+        for n in range(6 if nome == "gemini" else 2):
             try:
                 await asyncio.get_event_loop().run_in_executor(None, fun, k, testo, fn, stile)
                 MOTORE[nome] = MOTORE.get(nome, 0) + 1
                 await asyncio.sleep(3 if nome == "gemini" else 0.3); return
             except Exception as e:
-                print("riga", i, nome, "tentativo", n, "fallito:", str(e).replace("\n", " ")[:300], flush=True)
+                print("riga", i, nome, "tentativo", n, "fallito:", str(e).replace("\n", " ")[:1200], flush=True)
                 import re as _r
                 mm = _r.search(r"retry in ([\d.]+)(h|m|s)", str(e))
-                if nome == "gemini" and "429" in str(e) and (not mm or mm.group(2) == "h" or (mm.group(2) == "m" and float(mm.group(1)) > 3)):
+                if nome == "gemini" and "429" in str(e) and ("PerDay" in str(e) or "per_day" in str(e) or (mm and (mm.group(2) == "h" or (mm.group(2) == "m" and float(mm.group(1)) > 3)))):
                     GSTOP[0] = True; break
+                if nome == "gemini" and "429" in str(e) and not mm:
+                    await asyncio.sleep(25 * (n + 1)); continue
                 if nome == "gemini" and "402" in str(e): GSTOP[0] = True; break
                 await asyncio.sleep((float(mm.group(1)) + 2 if (mm and mm.group(2) == "s") else 5 * (n + 1)))
         else:
