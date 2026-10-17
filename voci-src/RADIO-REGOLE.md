@@ -34,3 +34,6 @@ AFA SELECCION = Maria (mappa dell'app). Squadre con due allenatori (The Blue bro
 
 
 Promesse e sfide (da conferenze.json): se una squadra ha fatto una promessa in conferenza, la radio dice se è stata mantenuta (e la dirigenza apprezza) o tradita (il presidente: potevate evitare di essere così sfacciati). Le squadre con una promessa passano per prime. Le sfide per il derby lanciate in conferenza (sfide_derby) entrano con il loro esito: accettata (nasce il derby con il suo nome), rifiutata o scaduta. Massimo due sfide all'anno per squadra.
+
+## Voce delle storie
+Tutte le storie (allenatori, dirigenza, Curva, post, radio) si raccontano come un campionato vero: giocatori, gol, squadre e posizioni. Niente crediti, fantapunti o fantamedia, tranne casi estremi (un anno 100 punti e quello dopo 50) o i punti delle partite. Si usano i nomi degli allenatori, non quelli reali.
