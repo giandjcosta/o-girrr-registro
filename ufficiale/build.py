@@ -42,6 +42,25 @@ def patch(nome, a, b, n=1):
     assert a in t, (nome, a[:70])
     p.write_text(t.replace(a, b, n), encoding="utf-8")
 
+
+# Carosello squadre: gira all'infinito e il chip scelto si centra sempre (anche da telefono, tablet e PC)
+sq = (OUT / "squadre.html").read_text(encoding="utf-8")
+a0 = sq.index("function centra(liscio){"); a1 = sq.index("fetch('" + LIVE + "data.json'", a0)
+sq = sq[:a0] + """function centra(liscio){
+  var ch=document.getElementById('chips'),n=D.teams.length,i=D.teams.map(function(t){return t.name}).indexOf(sel),base=ch.children[0].offsetLeft,best=null,bd=1e9;
+  for(var k=0;k<3;k++){var b=ch.children[k*n+i];if(!b)continue;var x=b.offsetLeft-base-(ch.clientWidth-b.offsetWidth)/2,d=Math.abs(x-ch.scrollLeft);if(d<bd){bd=d;best=x}}
+  if(best===null)return;
+  if(liscio)ch.scrollTo({left:best,behavior:'smooth'});else ch.scrollLeft=best;
+}
+""" + sq[a1:]
+old = "sel=b.dataset.t;try{history.replaceState(null,'','#'+encodeURIComponent(sel))}catch(x){}render()});"
+assert old in sq
+sq = sq.replace(old, "sel=b.dataset.t;try{history.replaceState(null,'','#'+encodeURIComponent(sel))}catch(x){}render();centra(true)});", 1)
+old2 = "tmr=setTimeout(function(){"
+assert old2 in sq
+sq = sq.replace("ch.scrollLeft+=W;else if(ch.scrollLeft>W*1.5)ch.scrollLeft-=W},90)", "ch.scrollLeft+=W;else if(ch.scrollLeft>W*1.5)ch.scrollLeft-=W},120)", 1)
+(OUT / "squadre.html").write_text(sq, encoding="utf-8")
+
 # 3) Home: riquadro I derby
 # 4) Albo: sezioni nuove
 patch("albo.html", "</head>", '<script src="novita.js"></script>\n</head>')
