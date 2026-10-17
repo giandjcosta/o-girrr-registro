@@ -8,7 +8,7 @@ ORDM = {1:"primo",2:"secondo",3:"terzo",4:"quarto",5:"quinto",6:"sesto",7:"setti
 ORD = {1:"prima",2:"seconda",3:"terza",4:"quarta",5:"quinta",6:"sesta",7:"settima",8:"ottava",9:"nona",10:"decima"}
 # chi c'è dietro ogni squadra (da confermare) e come stava l'anno scorso (Gioberti Cup 2025/26)
 CHI = {"Apo team":"Apo","WOA":"Ser","Grodah":"RikyArma","Real Madrink":"AndrewTT","stif dc":"Stifson","Mariana Coneja":"Mark Lenders",
-       "The Blue brothers":"Mario e Leanzino","Atletico ma non troppo":"Riccardo","Oranje VC":"Dj Costa"}
+       "The Blue brothers":"Mario e Leanzino","Atletico ma non troppo":"Riccardo","Oranje VC":"Dj Costa","AFA SELECCION":"Maria"}
 ANNO_SCORSO = {"WOA":1,"Grodah":2,"stif dc":4,"Mariana Coneja":5,"Real Madrink":6,"Apo team":10}
 STORIE = {
  "Apo team": ["Apo ha vinto due titoli di fila, nel 2021/22 e nel 2022/23, ed è l'unico ad esserci riuscito!", "Apo è passato da campione per due anni a ultimo per due anni di fila. Una montagna russa!"],

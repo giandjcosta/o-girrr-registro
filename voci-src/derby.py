@@ -1,9 +1,9 @@
 """Derby: se gli amici di Gianluca ne segnalano, vincono loro. Altrimenti si calcola dalla storia della lega (storico.json, preso dall'Albo d'oro)."""
 import json, pathlib, itertools
 R = pathlib.Path(__file__).parent
-# chi c'è dietro ogni squadra di oggi (nomi come nello storico). AFA SELECCION: da confermare
+# chi c'è dietro ogni squadra di oggi (nomi come nello storico, dalla mappa dell'app). Con due allenatori si fa la media
 ALLENATORI = {"Apo team": ["apo"], "WOA": ["ser"], "Grodah": ["RikyArma"], "Real Madrink": ["AndrewTT"], "stif dc": ["stifson"],
-              "Mariana Coneja": ["Mark Lenders"], "The Blue brothers": ["Mario", "Leanzino"], "Atletico ma non troppo": ["Riccardo"], "Oranje VC": ["DJ Cst Brazil"]}
+              "Mariana Coneja": ["Mark Lenders"], "The Blue brothers": ["Mario", "Leanzino"], "Atletico ma non troppo": ["Riccardo"], "Oranje VC": ["DJ Cst Brazil"], "AFA SELECCION": ["Maria"]}
 def carica():
     S = json.load(open(R / "storico.json", encoding="utf-8")); al = S["alias"]
     per = {}   # allenatore -> {stagione: posizione}
@@ -14,18 +14,18 @@ def carica():
     return per
 def prestigio(pos):
     return sum({1: 3, 2: 2, 3: 1}.get(p, 0) for p in pos.values())
-def punteggio(a, b, per=None):
-    """Più è alto, più la sfida è sentita: stagioni insieme, stagioni insieme nelle zone alte, peso dei podi e anzianità."""
-    per = per or carica()
-    A = {}; B = {}
-    for m in ALLENATORI.get(a, []):
-        for y, p in per.get(m, {}).items(): A[y] = min(p, A.get(y, 99))
-    for m in ALLENATORI.get(b, []):
-        for y, p in per.get(m, {}).items(): B[y] = min(p, B.get(y, 99))
+def _singolo(A, B):
+    """Punteggio tra due singoli allenatori: A e B sono {stagione: posizione}."""
     if not A or not B: return 0.0
     insieme = set(A) & set(B)
     zone_alte = sum(1 for y in insieme if A[y] <= 4 and B[y] <= 4)
     return 2 * len(insieme) + 2 * zone_alte + min(prestigio(A), prestigio(B)) + min(len(A), len(B))
+def punteggio(a, b, per=None):
+    """Più è alto, più la sfida è sentita: stagioni insieme, stagioni insieme nelle zone alte, peso dei podi e anzianità.
+    Se una squadra ha due allenatori si fa la media di tutte le coppie di allenatori."""
+    per = per or carica()
+    v = [_singolo(per.get(x, {}), per.get(y, {})) for x in ALLENATORI.get(a, []) for y in ALLENATORI.get(b, [])]
+    return sum(v) / len(v) if v else 0.0
 def classifica():
     per = carica(); sq = list(ALLENATORI)
     return sorted(((punteggio(x, y, per), x, y) for x, y in itertools.combinations(sq, 2)), reverse=True)
