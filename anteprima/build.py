@@ -32,3 +32,23 @@ sost("""'<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'"
 out = R / "anteprima" / "index.html"
 out.write_text(s, encoding="utf-8")
 print("scritto", out, len(s))
+# Seconda versione: stesse funzioni, grafica attuale del sito (font Inter, sfondo a barre, tab a pillola)
+skin = """<style id="skin-attuale">
+:root{--fd:Inter,system-ui,sans-serif;--bg:#1d2a52}
+html,body{background:#1d2a52}
+body{background:radial-gradient(1200px 700px at 80% -10%,#2c3f7c 0,#1d2a52 55%,#141d3d 100%)!important;background-attachment:fixed}
+body::after{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:none;background:repeating-linear-gradient(115deg,rgba(255,255,255,.04) 0 36px,transparent 36px 72px);animation:strisce 9s linear infinite}
+@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}
+@media (prefers-reduced-motion:reduce){body::after{animation:none}}
+.top h1,h2,.derby .hd,.cov h3,.ch .vs{font-weight:900!important;letter-spacing:0}
+.top h1{font-size:26px}h2{font-size:22px}
+.tabs button{background:rgba(255,255,255,.1)!important;border:2px solid transparent!important;font-weight:800;opacity:.75}
+.tabs button[aria-selected=true]{background:var(--red)!important;border-color:transparent!important;opacity:1}
+.rac .rt,.rac h4{font-family:Inter,system-ui,sans-serif!important;font-weight:900}
+.card,.derby{background:linear-gradient(150deg,rgba(255,255,255,.12),rgba(255,255,255,.05))}
+</style>"""
+a = s.replace("</style>", "</style>" + skin, 1)
+a = a.replace("<title>O Girrr · Anteprima 5.0</title>", "<title>O Girrr · Anteprima 5.0 (grafica attuale)</title>")
+a = a.replace("family=Lobster&family=Inter", "family=Inter")
+(R / "anteprima" / "attuale.html").write_text(a, encoding="utf-8")
+print("scritto attuale.html")
