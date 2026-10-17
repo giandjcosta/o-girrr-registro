@@ -28,7 +28,8 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 .proto{display:inline-block;margin-top:6px;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#141d3d;background:var(--gold);padding:2px 8px;border-radius:99px}
 .tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin:0 -2px 12px;scrollbar-width:none;background:linear-gradient(180deg,var(--bg3),transparent)}
 .tabs::-webkit-scrollbar{display:none}
-@media (hover:hover) and (pointer:fine){.tabs{overflow:visible;justify-content:center;background:none;position:static}}
+@media (hover:hover) and (pointer:fine){.tabs{background:none;position:static}}
+.tabs button:first-child{margin-left:auto}.tabs button:last-child{margin-right:auto}.tabs,.at{cursor:grab}.tabs.drag,.at.drag{cursor:grabbing;scroll-behavior:auto}
 @media (hover:hover) and (pointer:fine) and (min-width:1060px){.tabs{width:1000px;margin-left:calc((100% - 1000px)/2)}}
 .tabs button{flex:none;padding:8px 13px;border-radius:99px;font-weight:700;font-size:13px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(14px)}
 .tabs button[aria-selected=true]{background:var(--red);border-color:#ff7a88;color:#fff}
@@ -233,6 +234,9 @@ function hs(s){var h=7;for(var i=0;i<s.length;i++)h=(h*33+s.charCodeAt(i))>>>0;r
 function rnd(seed){var x=seed>>>0;return function(){x=(x*1664525+1013904223)>>>0;return x/4294967296}}
 var ME='Oranje VC';
 $('#lg').src=D.img.lega;
+function carosello(el){if(!el||el._car)return;el._car=1;el.addEventListener('wheel',function(e){if(el.scrollWidth>el.clientWidth&&Math.abs(e.deltaY)>Math.abs(e.deltaX)){el.scrollLeft+=e.deltaY;e.preventDefault()}},{passive:false});var x0=0,s0=0,dn=false,mv=false;el.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse')return;dn=true;mv=false;x0=e.clientX;s0=el.scrollLeft});window.addEventListener('pointermove',function(e){if(!dn)return;var d=e.clientX-x0;if(Math.abs(d)>4){mv=true;el.classList.add('drag')}if(mv)el.scrollLeft=s0-d});window.addEventListener('pointerup',function(){dn=false;el.classList.remove('drag')});el.addEventListener('click',function(e){if(mv){e.stopPropagation();e.preventDefault();mv=false}},true)}
+carosello($('#tabs'));
+
 
 var TABS=[['home','Home'],['sport','Girrr Sport'],['oro','Albo d\'oro'],['spog','Spogliatoio'],['toto','Totogirrr'],['carriera','Carriera']];
 var cur='home',S={prob:'s',round:1,derbyRound:0,bors:0,carta:0,cteam:ME,conf:{},confDone:false,fb:{},fname:'',badgeTeam:ME,sfide:null,stake:50,opp:'Grodah'};
