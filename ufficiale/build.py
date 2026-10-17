@@ -124,7 +124,7 @@ for _f in OUT.glob("*.html"):
     _x = _f.read_text(encoding="utf-8")
     _x = re.sub(r'src="((?:novita|derby)[\w-]*\.js)"', lambda m: 'src="%s?v=%s"' % (m.group(1), _v), _x)
     _f.write_text(_x, encoding="utf-8")
-SKIN = """header.hero,header.top,.ohead{position:relative;padding-bottom:24px!important;margin-bottom:20px!important}header.hero::after,header.top::after,.ohead::after{content:'';position:absolute;left:0;right:0;bottom:0;height:10px;border-radius:2px;transform:skewX(-45deg);background:linear-gradient(90deg,#d62839 0 50%,#ffd166 50% calc(50% + 11px),#1d2a52 calc(50% + 11px) 100%);box-shadow:0 0 0 1px rgba(251,246,236,.45),0 2px 8px rgba(0,0,0,.35)}
+SKIN = """header.hero,header.top,.ohead{position:relative;padding-bottom:24px!important;margin-bottom:20px!important}header.hero::after,header.top::after,.ohead::after{content:'';position:absolute;left:0;right:0;bottom:0;height:10px;border-radius:2px;transform:skewX(-45deg);background:linear-gradient(90deg,#d62839 0 50%,#ffd166 50% calc(50% + 11px),#1d2a52 calc(50% + 11px) 100%);box-shadow:0 0 0 .5px rgba(251,246,236,.4),0 2px 8px rgba(0,0,0,.35)}
 html{background:#141d3d}
 body{background:radial-gradient(900px 520px at 85% -8%,rgba(214,40,57,.26),transparent 62%),radial-gradient(1000px 640px at -10% 18%,rgba(61,147,214,.26),transparent 60%),linear-gradient(180deg,#2c3f7c,#1d2a52 45%,#141d3d)!important;background-attachment:fixed!important}
 body::before{display:none!important}
