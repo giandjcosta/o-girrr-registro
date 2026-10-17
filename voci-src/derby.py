@@ -30,7 +30,8 @@ def classifica():
     per = carica(); sq = list(ALLENATORI)
     return sorted(((punteggio(x, y, per), x, y) for x, y in itertools.combinations(sq, 2)), reverse=True)
 def _massimo():
-    cl = classifica(); return max(1.0, cl[0][0])
+    """Massimo teorico: in ogni stagione della storia due allenatori insieme (2), insieme nelle zone alte (2), con podi pesanti (2) e con anzianità piena (1)."""
+    return 7.0 * len({y for m in carica().values() for y in m})
 def rivalita_storia(a, b):
     """Rivalità dalla sola storia, da 0 a 100."""
     return round(100 * punteggio(a, b) / _massimo(), 1)
@@ -44,7 +45,7 @@ def rivalita(a, b, regole=None):
     """Rivalità finale: la storia, più il peso dei voti degli amici. Un derby ha sempre una rivalità alta (almeno 70)."""
     v = voto_amici(a, b, regole); r = rivalita_storia(a, b)
     tot = min(100.0, r + 0.6 * v)
-    if v >= 50: tot = max(70.0, tot)
+    if v >= 50 or e_derby(a, b, None, regole): tot = max(70.0, tot)
     return round(tot, 1)
 def intensita(a, b, regole=None):
     """Quanto è derby: i voti degli amici pesano il 60%, la storia il 40%."""
@@ -53,6 +54,6 @@ def e_derby(a, b, partite=None, regole=None):
     """Derby se l'intensità arriva a 50. Se gli amici non hanno ancora detto niente, decide solo la storia: derby se la rivalità storica arriva a 60 su 100."""
     if (regole or {}).get("derby_amici"):
         return intensita(a, b, regole) >= 50
-    return rivalita_storia(a, b) >= 60
+    return rivalita_storia(a, b) >= 50
 if __name__ == "__main__":
     for p, x, y in classifica()[:12]: print(round(p, 1), x, "-", y, "rivalità", rivalita_storia(x, y))
