@@ -90,7 +90,7 @@ for _a, _b in [("ser è l\\'unico che in cinque stagioni non ha mai cambiato né
 (OUT / "storia.js").write_text(_s, encoding="utf-8")
 # 7) dati e script nuovi
 (OUT / "novita-dati.js").write_text("window.NOV=" + json.dumps(dati, ensure_ascii=False) + ";", encoding="utf-8")
-for n in ["novita.js", "derby.js", "novita-curva.js", "novita-badge.js", "transizioni.js", "barra.js"]:
+for n in ["novita.js", "derby.js", "novita-curva.js", "novita-badge.js", "transizioni.js", "barra.js", "grafica.js"]:
     sorg = (R / "ufficiale" / "src" / n).read_text(encoding="utf-8")
     sorg = sorg.replace("'../data.json'", "'" + LIVE + "data.json'")
     (OUT / n).write_text(sorg, encoding="utf-8")
@@ -138,6 +138,7 @@ assert 'class="mini"' not in ix
 _stat = '<section class="mini" style="margin-top:14px"><a class="mn" id="mst" href="statistiche.html"><div class="mi">📊</div><div><b>Statistiche</b><span>Solo per te: chi entra e dove</span></div></a></section>\n  '
 ix = ix.replace('<div class="sp">', _stat + '<div class="sp">', 1)
 assert 'id="mst"' in ix
+ix = ix.replace("</head>", '<script src="grafica.js"></script>\n</head>', 1)
 ix = ix.replace("</head>", "<style>.cards{grid-template-columns:repeat(3,1fr)!important}@media(max-width:820px){.cards{grid-template-columns:1fr 1fr!important}.c h2 .nt-nv{display:block;width:max-content;margin:6px 0 0}}@media(max-width:480px){.cards{grid-template-columns:1fr!important}.c h2 .nt-nv{display:inline-block;margin-left:8px}}</style>\n</head>", 1)
 (OUT / "index.html").write_text(ix, encoding="utf-8")
 # Tabellone: Le squadre diventano una sezione del Tabellone
