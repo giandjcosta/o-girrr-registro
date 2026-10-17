@@ -91,6 +91,9 @@ NUOVE = [("sfide","🥊","Sfide","Dentro Girrr Sport: lanci una sfida"),("borsin
 def tiles(href):
     return "".join('<a class="mn" href="%s#%s"><div class="mi">%s</div><div><b>%s</b><span>%s</span></div></a>' % (href, k, e, n, d) for k, e, n, d in NUOVE)
 shutil.copy(R / "lab" / "girrr-sport.png", OUT / "girrr-sport.png")
+from PIL import Image as _I
+_a = _I.open(R / "lab" / "immagini" / "albo-alloro-foto.png"); _a.thumbnail((360, 360)); _a.save(OUT / "albo-alloro.png")
+_m = _I.open(R / "lab" / "immagini" / "carriera-microfoni-v3-bianco.png"); _m.thumbnail((700, 700)); _m.save(OUT / "carriera-microfoni.png")
 ix = (OUT / "index.html").read_text(encoding="utf-8")
 assert '<a class="mn" id="mst"' in ix
 # La card Giornale diventa Girrr Sport (logo della TV), come nel Laboratorio; il Live resta solo al Tabellone
@@ -99,8 +102,8 @@ assert m
 card = '<a class="c" href="../../anteprima/attuale.html#sport"><div class="ic"><img src="girrr-sport.png" alt="Girrr Sport" style="height:54px;width:auto;border-radius:8px"></div><h2>Girrr Sport<span class="nt-nv">NOVITÀ</span></h2><p>La TV, il giornale e la radio della lega: tutto quello che si legge, si ascolta e si guarda.</p><div class="go">ENTRA ›</div></a>'
 ix = ix.replace(m.group(0), card, 1).replace('<a href="giornale.html">Leggi il giornale ›</a>', '<a href="giornale.html">Leggi il giornale ›</a>', 1)
 LOGO = LIVE + "assets/logo-lega.png"
-extra_cards = ('<a class="c" href="albo.html"><div class="ic"><img src="%s" alt=""></div><h2>Albo d\'oro<span class="nt-nv">NOVITÀ</span></h2><p>Storia della Lega, Era dei Titani, stagioni, derby, Albo di Latta e record.</p><div class="go">ENTRA ›</div></a>'
-               '<a class="c" href="../../anteprima/attuale.html#carriera"><div class="ic"><img src="%s" alt=""></div><h2>Carriera<span class="nt-nv">NOVITÀ</span></h2><p>Obiettivi, fiducia del presidente e conferenza stampa di ogni allenatore.</p><div class="go">ENTRA ›</div></a>') % (LOGO, LOGO)
+extra_cards = ('<a class="c" href="albo.html"><div class="ic"><img src="albo-alloro.png" alt="" style="height:72px;width:auto;margin-top:-6px"></div><h2>Albo d\'oro<span class="nt-nv">NOVITÀ</span></h2><p>Storia della Lega, Era dei Titani, stagioni, derby, Albo di Latta e record.</p><div class="go">ENTRA ›</div></a>'
+               '<a class="c" href="../../anteprima/attuale.html#carriera"><div class="ic"><img src="carriera-microfoni.png" alt="" style="height:72px;width:auto;margin-top:-6px;border-radius:12px;background:#fff"></div><h2>Carriera<span class="nt-nv">NOVITÀ</span></h2><p>Obiettivi, fiducia del presidente e conferenza stampa di ogni allenatore.</p><div class="go">ENTRA ›</div></a>')
 i0 = ix.index('<section class="cards">'); i1 = ix.index('</section>', i0)
 ix = ix[:i1] + extra_cards + ix[i1:]
 ix = re.sub(r'<section class="mini">.*?</section>\s*<script>try\{var f=JSON.parse\(localStorage.getItem\("fg"\).*?</script>', '', ix, count=1, flags=re.S)
@@ -115,7 +118,7 @@ body{background:radial-gradient(900px 520px at 85% -8%,rgba(214,40,57,.26),trans
 body::before{display:none!important}
 h1,h2,.nome,.sh-nome,.hh{font-family:Lobster,'Brush Script MT',cursive!important;font-weight:400!important;text-transform:none!important;letter-spacing:0!important}
 h1{font-size:clamp(30px,6vw,48px)!important}
-.cards{grid-template-columns:1fr 1fr!important;gap:10px!important}.c{min-height:0!important;padding:12px!important}.c .ic{height:40px!important;margin-bottom:8px!important}.c .ic img{max-width:100%}.c h2{font-size:19px!important}.c p{display:none!important}.c .go{font-size:11px!important;margin-top:6px}.card,.c,.mn,.lg-leghe{background:linear-gradient(150deg,rgba(255,255,255,.12),rgba(255,255,255,.05))!important}"""
+.cards{grid-template-columns:1fr 1fr!important;gap:10px!important}.c{min-height:0!important;padding:12px!important}.c .ic{height:64px!important;margin-bottom:8px!important}.c .ic img[src*="albo-alloro"],.c .ic img[src*="carriera-micro"]{height:62px!important;margin-top:0!important}.c .ic img{max-width:100%}.c h2{font-size:19px!important}.c p{display:none!important}.c .go{font-size:11px!important;margin-top:6px}.card,.c,.mn,.lg-leghe{background:linear-gradient(150deg,rgba(255,255,255,.12),rgba(255,255,255,.05))!important}"""
 N = R / "ufficiale" / "nuovo" / "girrr"
 if N.parent.exists(): shutil.rmtree(N.parent)
 shutil.copytree(OUT, N)
