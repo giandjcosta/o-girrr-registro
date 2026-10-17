@@ -263,7 +263,9 @@ function vAlbo(){
   var cnt={};D.aw.forEach(function(x){[['m',x.mvp[0]],['f',x.flop[0]],['z',x.maz[0]]].forEach(function(p){cnt[p[1]]=cnt[p[1]]||{m:0,f:0,z:0};cnt[p[1]][p[0]]++})});
   h+='<div class="card"><h3>Stagione finora</h3><div class="scroll"><table class="tbl"><tr><th>Squadra</th><th class="r">Re</th><th class="r">Flop</th><th class="r">Mazzate</th></tr>';
   Object.keys(cnt).sort(function(a,b){return (cnt[b].m-cnt[b].f)-(cnt[a].m-cnt[a].f)}).forEach(function(t){h+='<tr><td><b>'+esc(t)+'</b></td><td class="r num">'+cnt[t].m+'</td><td class="r num">'+cnt[t].f+'</td><td class="r num">'+cnt[t].z+'</td></tr>'});
-  return h+'</table></div></div><p class="note">Nel Giornale di mercoledì ogni giornata avrebbe la sua riga, e in fondo all\'anno si assegna il "Pagliaccio dell\'anno" a chi ha più Flop.</p>';
+  h+='</table></div></div>';
+  h+='<div class="card"><h3>La storia della Lega</h3><div class="rac"><div class="rt">Prima del 2021</div><p>Il fantacalcio, in questa compagnia, esisteva già da prima del 2021: partite, rivalità e titoli che nessun registro ha mai conservato. Poi la lega ha cambiato casa e nel trasloco i dati si sono persi, o chissà che altro è successo: da allora tutto è ripartito da capo. Il racconto che si può ricostruire comincia dalla stagione 2021/22, con apo che vince il titolo al debutto.</p><p>In quel primo anno c\'era anche DJ Cst Brazil, allora StaCo Atto con la Rapid Micatant, quinto in classifica; poi se ne andò e tornò solo dopo quattro stagioni. Il nome Fantagir, invece, ha una storia sua: la racconterà Christian.</p></div><p class="note" style="margin-top:6px">SuperBrok, che quest\'anno esordisce con Gli Spaesati, è cugino di Andrew: la dinastia continua.</p></div>';
+  return h+'<p class="note">Nel Giornale di mercoledì ogni giornata avrebbe la sua riga, e in fondo all\'anno si assegna il "Pagliaccio dell\'anno" a chi ha più Flop.</p>';
 }
 
 /* ---------- 4. DERBY ---------- */
