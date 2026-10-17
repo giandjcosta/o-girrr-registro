@@ -274,6 +274,22 @@ if(p.indexOf('/ufficiale/nuovo/girrr/')>=0||p.indexOf('/ufficiale/girrr/')>=0){i
 else if(/\/anteprima\/attuale\.html$/.test(p))d='../ufficiale/girrr/index.html';else if(/\/anteprima\/(index\.html)?$/.test(p))d='../ufficiale/nuovo/girrr/index.html';
 if(!d)return;e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();location.href=d},true);
 var _ls=document.createElement('style');_ls.textContent='#lg,#olg{cursor:pointer}';document.head.appendChild(_ls);
+/* tendine <details> con la stessa animazione fluida delle Ere */
+(function(){
+var st=document.createElement('style');
+st.textContent='.dw{display:grid;grid-template-rows:0fr;transition:grid-template-rows .6s cubic-bezier(.22,.61,.36,1)}details.ao>.dw{grid-template-rows:1fr}.dwi{min-height:0;overflow:hidden;opacity:0;transition:opacity .45s ease}details.ao>.dw>.dwi{opacity:1;transition:opacity .55s ease .08s}.sto details>summary .fr{transition:transform .55s cubic-bezier(.22,.61,.36,1)!important}.sto details.ao>summary .fr{transform:rotate(90deg)}.sto details[open]:not(.ao)>summary .fr{transform:none}';
+document.head.appendChild(st);
+document.addEventListener('click',function(e){
+  var sm=e.target.closest&&e.target.closest('summary');if(!sm)return;var d=sm.parentNode;if(!d||d.tagName!=='DETAILS'||!d.closest('.sto'))return;
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  e.preventDefault();if(d._busy)return;
+  var w=d.querySelector(':scope>.dw');
+  if(!w){w=document.createElement('div');w.className='dw';var i=document.createElement('div');i.className='dwi';[].slice.call(d.childNodes).forEach(function(n){if(n!==sm)i.appendChild(n)});w.appendChild(i);d.appendChild(w)}
+  d._busy=1;
+  if(!d.open){d.open=true;void w.offsetHeight;requestAnimationFrame(function(){d.classList.add('ao');setTimeout(function(){d._busy=0},620)})}
+  else{d.classList.remove('ao');setTimeout(function(){d.open=false;d._busy=0},620)}
+},true);
+})();
 var last=0;
 function mark(){last=Date.now()}
 document.addEventListener('pointerdown',mark,true);document.addEventListener('keydown',mark,true);document.addEventListener('click',mark,true);
