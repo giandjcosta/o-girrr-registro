@@ -19,6 +19,7 @@ js = "var RIV=%s;\nvar PRE=%s;\nvar LEG=%s;\nvar STAG=%s;\nconsole.log(JSON.stri
 dati = json.loads(subprocess.check_output(["node", str(R / "ufficiale" / "_x.js")]))
 (R / "ufficiale" / "_x.js").unlink()
 vt = re.search(r"S\.vote=S\.vote\|\|\{\};S\.pend=S\.pend\|\|\{\};\[(.*?)\]\.forEach", lab, re.S).group(1)
+dati["rilascio"] = "2026-10-17"   # data in cui la 5.0 va in linea: il bollino Novità dura 15 giorni da qui
 dati["voti"] = re.findall(r"'([^']+\|[^']+)'", vt)
 
 # 2) copia delle pagine vere con i percorsi verso il sito vero
@@ -73,16 +74,18 @@ der = der.replace("<script src=\"novita.js\"></script>\n", "")
 
 # 7) dati e script nuovi
 (OUT / "novita-dati.js").write_text("window.NOV=" + json.dumps(dati, ensure_ascii=False) + ";", encoding="utf-8")
-for n in ["novita.js", "derby.js", "novita-curva.js"]:
+for n in ["novita.js", "derby.js", "novita-curva.js", "novita-badge.js"]:
     sorg = (R / "ufficiale" / "src" / n).read_text(encoding="utf-8")
     sorg = sorg.replace("'../data.json'", "'" + LIVE + "data.json'")
     (OUT / n).write_text(sorg, encoding="utf-8")
-for f in ["albo.html", "derby.html", "curva.html"]:
+for f in ["index.html", "albo.html", "derby.html", "curva.html", "squadre.html"]:
     p = OUT / f; t = p.read_text(encoding="utf-8")
     p.write_text(t.replace("</head>", '<script src="novita-dati.js"></script>\n</head>', 1), encoding="utf-8")
 (R / "ufficiale" / "index.html").write_text('<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0;url=girrr/index.html"><a href="girrr/index.html">Apri l\'anteprima</a>', encoding="utf-8")
 print("scritto", OUT, len(list(OUT.iterdir())), "file")
 
+for f in ["index.html", "albo.html", "derby.html"]:
+    patch(f, '<script src="novita-dati.js"></script>', '<script src="novita-dati.js"></script>\n<script src="novita-badge.js"></script>')
 # 8) Home: riquadri per le novità che vivono nel Laboratorio (stesse funzioni, aprono l'anteprima con la grafica giusta)
 NUOVE = [("sfide","🥊","Sfide","Dentro Girrr Sport: lanci una sfida"),("borsino","📈","Borsino","Dentro lo Spogliatoio: chi sale e chi scende"),("prob","🎯","Probabilità","Dentro Totogirrr: quanto è probabile il titolo")]
 def tiles(href):
@@ -93,11 +96,11 @@ assert '<a class="mn" id="mst"' in ix
 # La card Giornale diventa Girrr Sport (logo della TV), come nel Laboratorio; il Live resta solo al Tabellone
 m = re.search(r'<a class="c" href="giornale.html">.*?</a>', ix, re.S)
 assert m
-card = '<a class="c" href="../../anteprima/attuale.html#sport"><div class="ic"><img src="girrr-sport.png" alt="Girrr Sport" style="height:54px;width:auto;border-radius:8px"></div><h2>Girrr Sport</h2><p>La TV, il giornale e la radio della lega: tutto quello che si legge, si ascolta e si guarda.</p><div class="go">ENTRA ›</div></a>'
+card = '<a class="c" href="../../anteprima/attuale.html#sport"><div class="ic"><img src="girrr-sport.png" alt="Girrr Sport" style="height:54px;width:auto;border-radius:8px"></div><h2>Girrr Sport<span class="nt-nv">NOVITÀ</span></h2><p>La TV, il giornale e la radio della lega: tutto quello che si legge, si ascolta e si guarda.</p><div class="go">ENTRA ›</div></a>'
 ix = ix.replace(m.group(0), card, 1).replace('<a href="giornale.html">Leggi il giornale ›</a>', '<a href="giornale.html">Leggi il giornale ›</a>', 1)
 LOGO = LIVE + "assets/logo-lega.png"
-extra_cards = ('<a class="c" href="albo.html"><div class="ic"><img src="%s" alt=""></div><h2>Albo d\'oro</h2><p>Storia della Lega, Era dei Titani, stagioni, derby, Albo di Latta e record.</p><div class="go">ENTRA ›</div></a>'
-               '<a class="c" href="../../anteprima/attuale.html#carriera"><div class="ic"><img src="%s" alt=""></div><h2>Carriera</h2><p>Obiettivi, fiducia del presidente e conferenza stampa di ogni allenatore.</p><div class="go">ENTRA ›</div></a>') % (LOGO, LOGO)
+extra_cards = ('<a class="c" href="albo.html"><div class="ic"><img src="%s" alt=""></div><h2>Albo d\'oro<span class="nt-nv">NOVITÀ</span></h2><p>Storia della Lega, Era dei Titani, stagioni, derby, Albo di Latta e record.</p><div class="go">ENTRA ›</div></a>'
+               '<a class="c" href="../../anteprima/attuale.html#carriera"><div class="ic"><img src="%s" alt=""></div><h2>Carriera<span class="nt-nv">NOVITÀ</span></h2><p>Obiettivi, fiducia del presidente e conferenza stampa di ogni allenatore.</p><div class="go">ENTRA ›</div></a>') % (LOGO, LOGO)
 i0 = ix.index('<section class="cards">'); i1 = ix.index('</section>', i0)
 ix = ix[:i1] + extra_cards + ix[i1:]
 ix = re.sub(r'<a class="mn" href="albo.html">.*?</a>', '', ix, count=1, flags=re.S)
