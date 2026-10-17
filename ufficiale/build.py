@@ -59,7 +59,7 @@ sq = sq.replace("ch.scrollLeft+=W;else if(ch.scrollLeft>W*1.5)ch.scrollLeft-=W},
 # 3) Home: riquadro I derby
 # 4) Albo: sezioni nuove
 patch("albo.html", "</head>", '<script src="novita.js"></script>\n</head>')
-patch("albo.html", "document.getElementById('al').innerHTML=stato()+allenatori()+storico()+recs();", "document.getElementById('al').innerHTML=stato()+(window.NOVITA?NOVITA(D):'')+allenatori()+storico()+recs();")
+patch("albo.html", "document.getElementById('al').innerHTML=stato()+allenatori()+storico()+recs();", "document.getElementById('al').innerHTML=window.ALBOTABS?ALBOTABS(D,{stato:stato(),allenatori:allenatori(),storico:storico(),recs:recs()}):stato()+allenatori()+storico()+recs();")
 patch("albo.html", "Le stagioni passate", "L\\'Era Contemporanea · Le stagioni")
 # 5) Curva: post nuovi dentro il feed
 patch("curva.html", "</head>", '<script src="novita-curva.js"></script>\n</head>')
@@ -103,7 +103,7 @@ card = '<a class="c" href="../../anteprima/attuale.html#sport"><div class="ic"><
 ix = ix.replace(m.group(0), card, 1).replace('<a href="giornale.html">Leggi il giornale ›</a>', '<a href="giornale.html">Leggi il giornale ›</a>', 1)
 LOGO = LIVE + "assets/logo-lega.png"
 import time as _t
-extra_cards = ('<a class="c" href="albo.html"><div class="ic"><img src="albo-alloro.png?v=@@V@@" alt="" style="height:72px;width:auto;margin-top:-6px"></div><h2>Albo d\'oro<span class="nt-nv">NOVITÀ</span></h2><p>Storia della Lega, Era dei Titani, stagioni, derby, Albo di Latta e record.</p><div class="go">ENTRA ›</div></a>'
+extra_cards = ('<a class="c" href="albo.html"><div class="ic"><img src="albo-alloro.png?v=@@V@@" alt="" style="height:72px;width:auto;margin-top:-6px"></div><h2>Albo d\'oro<span class="nt-nv">NOVITÀ</span></h2><p>Storia della Lega, Era dei Titani, stagioni, derby e record.</p><div class="go">ENTRA ›</div></a>'
                '<a class="c" href="../../anteprima/attuale.html#carriera"><div class="ic"><img src="carriera-microfoni.png?v=@@V@@" alt="" style="height:72px;width:auto;margin-top:-6px"></div><h2>Carriera<span class="nt-nv">NOVITÀ</span></h2><p>Obiettivi, fiducia del presidente e conferenza stampa di ogni allenatore.</p><div class="go">ENTRA ›</div></a>')
 extra_cards = extra_cards.replace('@@V@@', str(int(_t.time())))
 i0 = ix.index('<section class="cards">'); i1 = ix.index('</section>', i0)

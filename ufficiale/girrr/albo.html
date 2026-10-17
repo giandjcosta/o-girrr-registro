@@ -419,7 +419,7 @@ function apri(n,ex){
 function chiudi(){var m=document.getElementById('mo');if(m)m.classList.remove('on');document.body.style.overflow=''}
 document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-co]');if(b)apri(b.getAttribute('data-co'),!!b.getAttribute('data-ex'))});
 fetch('https://giandjcosta.github.io/o-fant-a-girrr/data.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){d=window.CVPUB?CVPUB(d):d;
-  D=d;document.getElementById('al').innerHTML=stato()+(window.NOVITA?NOVITA(D):'')+allenatori()+storico()+recs();
+  D=d;document.getElementById('al').innerHTML=window.ALBOTABS?ALBOTABS(D,{stato:stato(),allenatori:allenatori(),storico:storico(),recs:recs()}):stato()+allenatori()+storico()+recs();
   document.getElementById('foot').textContent='Dati aggiornati al '+(D.cal.date||'');
 }).catch(function(){document.getElementById('al').innerHTML='<div class="err">Non riesco a leggere i dati.</div>'});
 })();

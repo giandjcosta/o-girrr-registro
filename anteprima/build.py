@@ -45,9 +45,14 @@ sost("function go(t){", "function go(t){t=route(t);if(t==='home'){location.href=
 sost("if(V[hh])cur=hh;", "if(V[hh])cur=route(hh);if(cur==='home'){location.replace('@@HOME@@')}")
 sost("carriera:vCar,", "carriera:vCarr,")
 sost(".seg{display:flex;", ".seg{flex-wrap:wrap;display:flex;") if False else None
+
+# Pagine come nel sito ufficiale: niente testata Anteprima né riga di tab; testata con scudo e titolo, link per tornare alla Home
+sost('<div class="tabs" id="tabs" role="tablist" aria-label="Sezioni del prototipo"></div>', '<a class="oback" href="@@HOME@@">‹ O Girrr</a><header class="ohead"><img id="olg" alt=""><div><div class="okick">O FANT A GIRRR · 2026/27</div><h1 id="ot"></h1></div></header><div class="tabs" id="tabs" role="tablist" aria-label="Sezioni del prototipo" style="display:none"></div>')
+sost("function render(){", "function render(){try{var _t=TABS.filter(function(z){return z[0]===cur})[0];$('#ot').textContent=_t?_t[1]:'';$('#olg').src=D.img.lega;document.title='O Girrr · '+(_t?_t[1]:'')}catch(e){}")
+sost("</style>", ".top{display:none!important}.col{max-width:900px;padding:22px 16px 36px}.oback{display:inline-block;font-weight:800;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);text-decoration:none;margin-bottom:10px}.ohead{display:flex;align-items:center;gap:16px;margin:4px 0 18px}.ohead img{height:86px;width:auto;filter:drop-shadow(0 6px 10px rgba(0,0,0,.4))}.okick{font-weight:800;font-size:12px;letter-spacing:.3em;color:var(--gold)}.ohead h1{font-family:var(--fd);font-weight:900;font-size:clamp(34px,7vw,58px);line-height:1;margin:6px 0 0;letter-spacing:-.01em}</style>")
 s_plain = s  # senza loghi nelle tab: serve alla grafica attuale
 # tab più piccole con i loghi ufficiali
-sost("</style>", "html{background:#141d3d}body::before{display:none!important}.seg{flex-wrap:wrap}.tabs{background:none!important;backdrop-filter:none}.tabs{gap:5px;padding:6px 0}.tabs button{padding:5px 11px 5px 7px;font-size:12px;display:inline-flex;align-items:center;gap:6px}.tabs button img.gsl{width:auto;height:22px;border-radius:3px}.tabs button img{width:18px;height:18px;object-fit:contain;border-radius:4px}</style>")
+sost("</style>", "html{background:#141d3d}body{background:radial-gradient(900px 520px at 85% -8%,rgba(214,40,57,.26),transparent 62%),radial-gradient(1000px 640px at -10% 18%,rgba(61,147,214,.26),transparent 60%),linear-gradient(180deg,#2c3f7c,#1d2a52 45%,#141d3d)!important;background-attachment:fixed!important}body::before{display:none!important}.seg{flex-wrap:wrap}.tabs{background:none!important;backdrop-filter:none}.tabs{gap:5px;padding:6px 0}.tabs button{padding:5px 11px 5px 7px;font-size:12px;display:inline-flex;align-items:center;gap:6px}.tabs button img.gsl{width:auto;height:22px;border-radius:3px}.tabs button img{width:18px;height:18px;object-fit:contain;border-radius:4px}</style>")
 sost("""'<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'">'+t[1]+'</button>'""",
      """'<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'" aria-label="'+t[1]+'">'+(t[0]==='sport'?'<img class="gsl" src="'+D.img.gs+'" alt="Girrr Sport">':(({home:1,oro:1,spog:1,carriera:1})[t[0]]?'<img src="'+D.img.lega+'" alt="">':'')+t[1])+'</button>'""")
 s = s.replace('src="voci/', 'src="../lab/voci/').replace("fetch('voci/", "fetch('../lab/voci/")
@@ -57,7 +62,7 @@ print("scritto", out, len(s))
 # Seconda versione: stesse funzioni, grafica attuale del sito (font Inter, sfondo a barre, tab a pillola)
 skin = """<style id="skin-attuale">
 :root{--fd:Inter,system-ui,sans-serif;--bg:#1d2a52}
-html,body{background:#1d2a52}
+html{background:transparent!important}
 body{background:radial-gradient(1200px 700px at 80% -10%,#2c3f7c 0,#1d2a52 55%,#141d3d 100%)!important;background-attachment:fixed}
 body::after{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:none;background:repeating-linear-gradient(115deg,rgba(255,255,255,.04) 0 36px,transparent 36px 72px);animation:strisce 9s linear infinite}
 @keyframes strisce{to{transform:translate3d(79.45px,0,0)}}
