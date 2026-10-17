@@ -272,7 +272,7 @@ S.vote=S.vote||{};
 function rvKey(a,b){return [a,b].map(function(x){return x.toLowerCase()}).sort().join('|')}
 var RIVM={};RIV.forEach(function(o){RIVM[rvKey(o.a,o.b)]=o});
 function rvInfo(a,b){var o=RIVM[rvKey(a,b)]||{a:a,b:b,r:0,h:0,z:0,n:'',s:''},k=rvKey(a,b),V=S.vote[k]?100:0,any=Object.keys(S.vote).some(function(x){return S.vote[x]});
-  var inten=Math.round((.6*V+.4*o.r)*10)/10,der=any?inten>=50:o.r>=50,riv=Math.min(100,o.r+.6*V);if(V>=50||der)riv=Math.max(70,riv);
+  var inten=Math.round((.6*V+.4*o.r)*10)/10,der=any?inten>=50:o.r>=50,riv=Math.min(100,o.r+.6*V);
   return {o:o,V:V,inten:inten,der:der,riv:Math.round(riv)}}
 function isDer(a,b){return rvInfo(a,b).der}
 function derName(o){return o.n||('Derby '+o.a+' – '+o.b)}

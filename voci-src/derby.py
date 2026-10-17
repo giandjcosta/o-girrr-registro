@@ -42,10 +42,9 @@ def voto_amici(a, b, regole=None):
         if {a, b} == set(p[:2]): best = max(best, p[2] if len(p) > 2 else 100)
     return best
 def rivalita(a, b, regole=None):
-    """Rivalità finale: la storia, più il peso dei voti degli amici. Un derby ha sempre una rivalità alta (almeno 70)."""
+    """Rivalità finale: la storia, più il peso dei voti degli amici. Niente soglie minime: si vede il punteggio vero."""
     v = voto_amici(a, b, regole); r = rivalita_storia(a, b)
     tot = min(100.0, r + 0.6 * v)
-    if v >= 50 or e_derby(a, b, None, regole): tot = max(70.0, tot)
     return round(tot, 1)
 def intensita(a, b, regole=None):
     """Quanto è derby: i voti degli amici pesano il 60%, la storia il 40%."""
