@@ -323,6 +323,19 @@ function derPromo(m,comp){var q=qBase(m[0],m[1]),sp=q.map(function(x){return Mat
   var of=comp==='coppa'?['champions_cup','Champions Cup','Fase a gironi'+' · Champions Cup']:['lega_ofantagirrr','O Fant A Girrr','Campionato'];
   var off='<div class="post"><div class="hd"><img src="'+D.img.lega+'" alt="'+of[1]+'"><div><b>'+of[1]+'</b><span class="mut sm">@'+of[0]+' · adesso</span></div></div><q>Derby della giornata: '+esc(m[0])+' – '+esc(m[1])+' ('+(comp==='coppa'?'Champions Cup':'Campionato')+'). '+(o.h?'Si ritrovano per la '+(o.h+1)+'ª stagione insieme in lega'+(o.z?', con '+o.z+(o.z===1?' volta':' volte')+' entrambi nelle prime quattro.':'.'):'Una sfida che la lega aspettava.')+' #'+(comp==='coppa'?'ChampionsCup':'Giornata'+(D.cal[S.derbyRound].n))+' #Derby</q></div>';
   return h+'<div style="margin-top:10px"><div class="k g" style="font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold)">Come esce in Curva</div>'+tv+off+'</div>'}
+var RFORTE=75;
+function isForte(a,b){var i=rvInfo(a,b);return !i.der&&i.riv>=RFORTE}
+function ctxFor(a,b){var A=row(a),B=row(b);if(!A||!B)return '';var d=Math.abs(A.pos-B.pos),ap=A.fp/Math.max(1,A.g),bp=B.fp/Math.max(1,B.g),best=ap>=bp?a:b;
+  return 'In classifica '+a+' è '+A.pos+'ª e '+b+' è '+B.pos+'ª'+(d<=2?', separate da pochissimo':', con '+d+' posti di distanza')+'. '+best+' sta rendendo meglio, con '+f1(Math.max(ap,bp))+' punti di media contro '+f1(Math.min(ap,bp))+'.'}
+function forteBox(m){var i=rvInfo(m[0],m[1]),o=i.o;
+  return '<div class="derby" style="border-style:dashed"><div class="hd">Rivalità forte</div><div class="row" style="justify-content:space-between;margin-top:4px"><b>'+esc(m[0])+'</b><b>'+esc(m[1])+'</b></div>'+rvBar(i.riv)+'<div class="mut sm" style="margin-top:4px">Rivalità: <b>'+rvWord(i.riv)+'</b> · un gradino sotto il derby</div><p class="sm" style="margin-top:6px">'+esc(ctxFor(m[0],m[1]))+'</p>'+racconto(o)
+   +'<div class="post" style="margin-top:8px"><div class="hd"><img src="'+D.img.gs+'" alt="Girrr Sport"><div><b>Girrr Sport</b><span class="mut sm">@girrrsport · adesso</span></div></div><q><b>RIVALITÀ</b><br>'+esc(m[0])+' contro '+esc(m[1])+': una sfida che in lega pesa da anni. '+esc(ctxFor(m[0],m[1]))+' #GirrrSport</q></div></div>'}
+function forteCard(){var L=RIV.filter(function(o){return isForte(o.a,o.b)}).sort(function(x,y){return rvInfo(y.a,y.b).riv-rvInfo(x.a,x.b).riv});
+  return '<div class="card"><h3>Rivalità forti</h3><p class="sm mut" style="margin-bottom:8px">Un gradino sotto il derby: sfide con una storia lunga, ma che gli amici non hanno votato come derby. Contano per la radio e per la Curva, e le leggiamo sempre con la classifica e il rendimento di quest\'anno.</p>'+L.map(function(o){return '<div style="padding:8px 0;border-top:1px solid var(--line)"><div class="row" style="justify-content:space-between"><b>'+esc(o.a)+' – '+esc(o.b)+'</b><span class="tag">'+rvWord(rvInfo(o.a,o.b).riv)+'</span></div><div class="mut sm">'+esc(ctxFor(o.a,o.b))+'</div></div>'}).join('')+'</div>'}
+function decisiveCard(){var T=D.tab.slice().sort(function(a,b){return a.pos-b.pos}),t=T.slice(0,4).map(function(x){return x.t});
+  var ex=[[t[0],t[1],'il titolo'],[t[2],t[3],'il podio']];
+  return '<div class="card"><h3>Sfide decisive</h3><p class="sm mut" style="margin-bottom:8px">Da gennaio in poi, quando mancano poche giornate, una sfida tra le prime due o tra la terza e la quarta va in radio e in Curva come sfida decisiva: per il titolo (1ª–2ª) oppure per il podio (3ª–4ª).</p><p class="sm"><b>Esempio, con la classifica di oggi:</b></p>'
+  +ex.map(function(e){return '<div class="post" style="margin-top:6px"><div class="hd"><img src="'+D.img.gs+'" alt="Girrr Sport"><div><b>Girrr Sport</b><span class="mut sm">@girrrsport · da gennaio</span></div></div><q><b>SFIDA DECISIVA</b><br>'+esc(e[0])+' contro '+esc(e[1])+' per '+e[2]+', a poche giornate dalla fine. Chi vince si prende la corsa. #GirrrSport</q></div>'}).join('')+'<p class="note" style="margin-top:6px">Radio: "Sfida decisiva alla prossima: '+esc(ex[0][0])+' contro '+esc(ex[0][1])+' per il titolo."</p></div>'}
 function derBox(m){var i=rvInfo(m[0],m[1]),o=i.o;
   return '<div class="derby"><div class="hd">Derby della giornata</div><div class="mut sm" style="font-weight:800">'+esc(derName(o))+'</div><div class="row" style="justify-content:space-between;margin-top:6px"><b>'+esc(m[0])+'</b><b>'+esc(m[1])+'</b></div>'
    +'<div class="h2h" style="grid-template-columns:1fr 1fr"><div><b class="num">'+o.h+'</b><small>Stagioni insieme</small></div><div><b class="num">'+o.z+'</b><small>Nelle zone alte insieme</small></div></div>'+rvBar(i.riv)+'<div class="mut sm" style="margin-top:4px">Rivalità: <b>'+rvWord(i.riv)+'</b></div>'
@@ -359,8 +372,10 @@ function vDerby(){
   h+='<div class="card"><h3>Giornata '+r.n+' · Serie A '+r.sa+'</h3>';
   if(ders.length)h+=ders.map(derBox).join('');
   else{var best=r.m.slice().sort(function(a,b){return rvInfo(b[0],b[1]).riv-rvInfo(a[0],a[1]).riv})[0];h+='<p class="sm mut" style="margin:6px 0">Questa giornata non ha nessun derby. La sfida più sentita è '+esc(best[0])+' – '+esc(best[1])+' (Rivalità: '+rvWord(rvInfo(best[0],best[1]).riv)+').</p>'}
+  r.m.filter(function(m){return isForte(m[0],m[1])}).forEach(function(m){h+=forteBox(m)});
   r.m.forEach(function(m){if(!isDer(m[0],m[1]))h+='<div class="mt"><div class="t">'+esc(m[0])+'</div><span class="tag">vs</span><div class="t">'+esc(m[1])+'</div></div>'});
   h+='</div>';
+  h+=forteCard()+decisiveCard();
   h+=sfidaCard();
   var DT=RIV.filter(function(o){return o.n||rvInfo(o.a,o.b).der}).sort(function(x,y){return rvInfo(y.a,y.b).riv-rvInfo(x.a,x.b).riv});
   S.dtab=Math.min(S.dtab||0,DT.length-1);var o=DT[S.dtab],i=rvInfo(o.a,o.b);
@@ -531,6 +546,9 @@ function radioLines(){
   if(S.lancio&&S.lancio.ok&&S.lancio.stato&&S.lancio.stato!=='attesa'){var sr=S.lancio.ok.r,stt=S.lancio.stato;
     L.push(['S','Sfida','Challenge alert: '+ME+' called out '+sr+' at the press conference.','Sfida in vista: '+ME+' ha sfidato '+sr+' in conferenza stampa.']);
     L.push(['C','Sfida',stt==='accettata'?'And it was accepted: a new official derby is born.':stt==='rifiutata'?'But '+sr+' refused. No derby, only a bit more rivalry.':'But '+sr+' never answered. The challenge expired.',stt==='accettata'?'E la sfida è stata accettata: nasce un nuovo derby ufficiale.':stt==='rifiutata'?'Ma '+sr+' ha rifiutato. Niente derby, solo un po\' più di rivalità.':'Ma '+sr+' non ha risposto. La sfida è decaduta.'])}
+  g.filter(function(m){return isForte(m[0],m[1])}).slice(0,1).forEach(function(m){
+    L.push(['S','Rivalità','A strong rivalry is back this round: '+m[0]+' against '+m[1]+'. Not an official derby, but one the league has been watching for years.','Torna una rivalità forte: '+m[0]+' contro '+m[1]+'. Non è un derby ufficiale, ma la lega la guarda da anni.']);
+    L.push(['C','Rivalità',ctxFor(m[0],m[1]),ctxFor(m[0],m[1])])});
   var cup=(D.cup&&D.cup.length)?D.cup[D.cup.length-1]:null;
   if(cup&&cup.m.length){
     var m=cup.m.slice().sort(function(x,y){return Math.abs(y[2]-y[3])-Math.abs(x[2]-x[3])});
