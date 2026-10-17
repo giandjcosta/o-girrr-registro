@@ -7,3 +7,5 @@ import subprocess, pathlib
 R = pathlib.Path(__file__).resolve().parent
 for s in ["anteprima/build.py", "ufficiale/build.py"]:
     subprocess.check_call(["python3", str(R / s)], cwd=R)
+import shutil
+shutil.copy(R / "lab" / "girrr-sport.png", R / "anteprima" / "girrr-sport.png")

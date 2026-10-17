@@ -69,3 +69,27 @@ for f in ["albo.html", "derby.html", "curva.html"]:
     p.write_text(t.replace("</head>", '<script src="novita-dati.js"></script>\n</head>', 1), encoding="utf-8")
 (R / "ufficiale" / "index.html").write_text('<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0;url=girrr/index.html"><a href="girrr/index.html">Apri l\'anteprima</a>', encoding="utf-8")
 print("scritto", OUT, len(list(OUT.iterdir())), "file")
+
+# 8) Home: riquadri per le novità che vivono nel Laboratorio (stesse funzioni, aprono l'anteprima con la grafica giusta)
+NUOVE = [("sport","📺","Girrr Sport","Radio, conferenza stampa e Giornale"),("sfide","🥊","Sfide","Lanci una sfida, il rivale risponde"),("prob","🎯","Probabilità","Quanto è davvero probabile il titolo"),("borsino","📈","Borsino","Chi sale e chi scende"),("carriera","🧭","Carriera","Obiettivi e storia di ognuno"),("cassa","💰","Cassa","Dove vanno i soldi")]
+def tiles(href):
+    return "".join('<a class="mn" href="%s#%s"><div class="mi">%s</div><div><b>%s</b><span>%s</span></div></a>' % (href, k, e, n, d) for k, e, n, d in NUOVE)
+ix = (OUT / "index.html").read_text(encoding="utf-8")
+assert '<a class="mn" id="mst"' in ix
+(OUT / "index.html").write_text(ix.replace('<a class="mn" id="mst"', tiles("../../anteprima/attuale.html") + '<a class="mn" id="mst"', 1), encoding="utf-8")
+SKIN = """html{background:#141d3d}
+body{background:radial-gradient(900px 520px at 85% -8%,rgba(214,40,57,.26),transparent 62%),radial-gradient(1000px 640px at -10% 18%,rgba(61,147,214,.26),transparent 60%),linear-gradient(180deg,#2c3f7c,#1d2a52 45%,#141d3d)!important;background-attachment:fixed!important}
+body::before{display:none!important}
+h1,h2,.nome,.sh-nome,.hh{font-family:Lobster,'Brush Script MT',cursive!important;font-weight:400!important;text-transform:none!important;letter-spacing:0!important}
+h1{font-size:clamp(30px,6vw,48px)!important}
+.card,.c,.mn,.lg-leghe{background:linear-gradient(150deg,rgba(255,255,255,.12),rgba(255,255,255,.05))!important}"""
+N = R / "ufficiale" / "nuovo" / "girrr"
+if N.parent.exists(): shutil.rmtree(N.parent)
+shutil.copytree(OUT, N)
+for f in N.glob("*.html"):
+    x = f.read_text(encoding="utf-8").replace("../../anteprima/attuale.html", "../../../anteprima/index.html")
+    if f.name != "curva.html":
+        x = x.replace("</head>", '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">\n<style id="skin-nuova">' + SKIN + "</style>\n</head>", 1)
+    f.write_text(x, encoding="utf-8")
+(N.parent / "index.html").write_text('<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0;url=girrr/index.html"><a href="girrr/index.html">Apri l\'anteprima</a>', encoding="utf-8")
+print("scritto anche la versione nuova")
