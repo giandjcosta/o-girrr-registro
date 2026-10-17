@@ -44,6 +44,7 @@ sost("function go(t){", "function go(t){t=route(t);")
 sost("if(V[hh])cur=hh;", "if(V[hh])cur=route(hh);")
 sost("carriera:vCar,", "carriera:vCarr,")
 sost(".seg{display:flex;", ".seg{flex-wrap:wrap;display:flex;") if False else None
+s_plain = s  # senza loghi nelle tab: serve alla grafica attuale
 # tab più piccole con i loghi ufficiali
 sost("</style>", "html{background:#141d3d}body::before{display:none!important}.seg{flex-wrap:wrap}.tabs{background:none!important;backdrop-filter:none}.tabs{gap:5px;padding:6px 0}.tabs button{padding:5px 11px 5px 7px;font-size:12px;display:inline-flex;align-items:center;gap:6px}.tabs button img.gsl{width:auto;height:22px;border-radius:3px}.tabs button img{width:18px;height:18px;object-fit:contain;border-radius:4px}</style>")
 sost("""'<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'">'+t[1]+'</button>'""",
@@ -65,9 +66,12 @@ body::after{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:non
 .tabs button{background:rgba(255,255,255,.1)!important;border:2px solid transparent!important;font-weight:800;opacity:.75}
 .tabs button[aria-selected=true]{background:var(--red)!important;border-color:transparent!important;opacity:1}
 .rac .rt,.rac h4{font-family:Inter,system-ui,sans-serif!important;font-weight:900}
-.card,.derby{background:linear-gradient(150deg,rgba(255,255,255,.12),rgba(255,255,255,.05))}
+.card,.derby,.cov,.hm button{background:linear-gradient(150deg,rgba(255,255,255,.12),rgba(255,255,255,.05))!important}
+.seg button[aria-pressed=true]{background:var(--red)!important;color:#fff!important}
+.tabs button{padding:9px 14px;font-size:13px}
 </style>"""
-a = s.replace("</style>", "</style>" + skin, 1)
+s_plain = s_plain.replace('src="voci/', 'src="../lab/voci/').replace("fetch('voci/", "fetch('../lab/voci/")
+a = s_plain.replace("</style>", "</style>" + skin, 1)
 a = a.replace("<title>O Girrr · Anteprima 5.0</title>", "<title>O Girrr · Anteprima 5.0 (grafica attuale)</title>")
 a = a.replace("family=Lobster&family=Inter", "family=Inter")
 (R / "anteprima" / "attuale.html").write_text(a, encoding="utf-8")
