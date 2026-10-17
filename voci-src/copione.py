@@ -27,7 +27,7 @@ STUP = ["Ma davvero?!", "Non ci credo!", "Cosa?! Ma com'è possibile?!"]
 COMM = ["Ragazzi, mi emoziono ancora.", "Il calcio è anche questo: i ritorni.", "Non è solo una classifica, è la nostra storia."]
 CURVA = ["Chissà cosa staranno scrivendo in Curva i tifosi {t}!", "In Curva, stasera, i tifosi {t} non dormono!", "Diamo un'occhiata alla Curva: i tifosi {t} sono già al lavoro!", "Chissà in Curva cosa ne pensano i tifosi {t}!"]
 CONF = ["Chi non crede in noi può restare a casa.", "Siamo pronti, ci vediamo in campo.", "Non siamo qui per fare i turisti.", "Quest'anno non ci ferma nessuno.", "Un punto alla volta, ma tutti insieme."]
-def build(D, rng, mercato, nomi=None, conf=None, curva_=None):
+def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
     nomi = nomi or {}
     b1 = nomi.get('B', 'Beppe Rovesciata'); g1 = nomi.get('G', 'Luigi Fischietti'); g0 = g1.split()[0]; b0 = b1.split()[0]
     a = D["aw"][-1]; T = D["tab"]; P = D["prob"]; n = a["n"]
@@ -85,7 +85,7 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None):
     elif last["v"] == 0 and last["g"] >= 3:
         add("G", f"{last['t']} non vince da {last['g']} partite. Il nostro modello la dà ultima nel {pct(P[last['t']]['u'][-1])} per cento dei casi!")
     # --- presidente
-    EXP = {"Oranje VC":4,"Apo team":5,"Grodah":3,"WOA":2,"Real Madrink":3,"stif dc":6,"Mariana Coneja":6,"AFA SELECCION":4,"The Blue brothers":7,"Atletico ma non troppo":8}
+    EXP = (regole or {}).get("aspettative") or {"Oranje VC":4,"Apo team":5,"Grodah":3,"WOA":2,"Real Madrink":3,"stif dc":6,"Mariana Coneja":6,"AFA SELECCION":4,"The Blue brothers":7,"Atletico ma non troppo":8}
     def fid(t): r = row[t]; return max(5, min(98, round(50 + (EXP.get(t, 5) - r["pos"]) * 6 + r["v"] * 8 - r["p"] * 8)))
     basso = min(row, key=fid); alto = max(row, key=fid)
     if fid(basso) <= 30 and rng.random() < 0.7:
@@ -144,7 +144,7 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None):
             add("B" if i == 0 else "G", fr)
             if l == "Grodah" if ga != gb else False: add("G", "Cade la campionessa in carica! L'anno scorso la Coppa Campioni era sua!", "urlo")
     # --- derby
-    DER = [("Grodah","WOA"),("stif dc","Real Madrink"),("Oranje VC","AFA SELECCION"),("Apo team","The Blue brothers"),("Mariana Coneja","Atletico ma non troppo")]
+    DER = [tuple(x) for x in ((regole or {}).get("derby") or [("Grodah","WOA"),("stif dc","Real Madrink"),("Oranje VC","AFA SELECCION"),("Apo team","The Blue brothers"),("Mariana Coneja","Atletico ma non troppo")])]
     der = next((m for m in g if any({x.lower(), y.lower()} == {m[0].lower(), m[1].lower()} for x, y in DER)), None)
     if der: add("B", f"Alla prossima giornata c'è il derby: {der[0]} contro {der[1]}!", "urlo")
     # --- mercato: Ciro c'è solo se ci sono notizie

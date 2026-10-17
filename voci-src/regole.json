@@ -1,0 +1,37 @@
+{
+ "_come_si_usa": "Regole che decide Gianluca. 'aspettative' = entro quale posto il presidente vuole chiudere ogni squadra. 'derby' = coppie di squadre che sono un derby. Quando le regole cambiano si modifica solo questo file.",
+ "aspettative": {
+  "Oranje VC": 4,
+  "Apo team": 5,
+  "Grodah": 3,
+  "WOA": 2,
+  "Real Madrink": 3,
+  "stif dc": 6,
+  "Mariana Coneja": 6,
+  "AFA SELECCION": 4,
+  "The Blue brothers": 7,
+  "Atletico ma non troppo": 8
+ },
+ "derby": [
+  [
+   "Grodah",
+   "WOA"
+  ],
+  [
+   "stif dc",
+   "Real Madrink"
+  ],
+  [
+   "Oranje VC",
+   "AFA SELECCION"
+  ],
+  [
+   "Apo team",
+   "The Blue brothers"
+  ],
+  [
+   "Mariana Coneja",
+   "Atletico ma non troppo"
+  ]
+ ]
+}
