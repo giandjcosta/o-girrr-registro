@@ -764,14 +764,15 @@ function radioMeta(){
          a.luck[0]+' vince con '+pt(a.luck[1])+' punti: fortuna o colpo di genio?'],
       tag='Lega Giornata '+g+(c?' · Coppa Giornata '+c:'');
   return {titolo:T[g%T.length],tag:tag}}
+var AR=null;
+function archivio(){if(AR===null){AR=[];try{fetch('../lab/voci/archivio.json?v=1').then(function(r){return r.json()}).then(function(j){AR=j||[];if((cur==='radio'||cur==='sport')&&RA.i<0&&!RA.playing)render()}).catch(function(){})}catch(e){}}}
 function spRadio(){
-  try{voci()}catch(e){}
-  var rm=radioMeta();
-  var h='<div class="card"><h3>Radio Girrr</h3><div class="rtit"><b>'+esc(rm.titolo)+'</b><span class="rbadge">'+esc(rm.tag)+'</span></div><p class="sm mut" style="margin:8px 0 10px">La radio ufficiale della Lega. Ogni settimana una nuova puntata: campionato, Coppa, Derby e, quando ci sono notizie, il mercato con Ciro Trattativa.</p>';
-  if(VP&&VP.length){h+='<audio controls preload="none" src="../lab/voci/puntata.mp3?v=20261017e" style="width:100%;margin-bottom:10px"></audio><details><summary style="cursor:pointer;font-weight:800;padding:4px 0">Leggi il testo</summary><div class="tr" style="margin-top:6px">'+VP.map(function(x){return '<p><small>'+esc(x.chi)+'</small>'+esc(x.testo)+'</p>'}).join('')+'</div></details>'}
-  else h+='<p class="note">L\'audio si ascolta aprendo il Laboratorio dall\'indirizzo del Registro (giandjcosta.github.io/o-girrr-registro/lab).</p>';
-  var seen={},cast=(VP||[]).filter(function(x){if(seen[x.chi])return false;seen[x.chi]=1;return true});
-  if(cast.length)h+='<p class="sm mut" style="margin-top:8px">Voci: '+cast.map(function(x){return '<b>'+esc(x.chi)+'</b> ('+esc(x.ruolo.toLowerCase())+')'}).join(', ')+'.</p>';
+  archivio();
+  var g=D.aw.length+1;
+  var h='<div class="card"><h3>Radio Girrr</h3><div class="rtit"><b>La prossima puntata esce dopo la giornata '+g+'</b><span class="rbadge">Lega Giornata '+g+'</span></div><p class="sm mut" style="margin:8px 0 4px">La radio ufficiale della Lega. Ogni settimana una nuova puntata: campionato, Coppa, Derby e, quando ci sono notizie, il mercato con Ciro Trattativa. Le puntate restano qui, da riascoltare quando vuoi.</p></div>';
+  h+='<div class="card"><h3>Le puntate</h3>';
+  if(AR&&AR.length)h+=AR.map(function(x){return '<div style="margin:12px 0 0"><div class="rtit"><b>'+esc(x.titolo)+'</b><span class="rbadge">'+esc(x.tag)+'</span></div><audio controls preload="none" src="../lab/voci/'+esc(x.file)+'" style="width:100%;margin:8px 0"></audio>'+((x.testo&&x.testo.length)?'<details><summary style="cursor:pointer;font-weight:800;padding:4px 0">Leggi il testo</summary><div class="tr" style="margin-top:6px">'+x.testo.map(function(t){return '<p><small>'+esc(t.chi)+'</small>'+esc(t.testo)+'</p>'}).join('')+'</div></details>':'')+'</div>'}).join('');
+  else h+='<p class="sm mut">Nessuna puntata ancora: la prima arriva con la prossima giornata, e da lì restano tutte qui.</p>';
   return h+'</div>'}
 
 function spConf(){var x=vConf();return x.replace(/^<div class="where">.*?<\/div>/,'')}
