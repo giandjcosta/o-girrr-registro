@@ -330,11 +330,11 @@ S.lancio=S.lancio||{r:'Apo team',f:0,ok:null};
 var DNP={'Apo team':'Il Derby della Promessa','The Blue brothers':'Il Derby del Ritorno'};
 S.dn=S.dn||{};
 function sfidaCard(){var L=S.lancio,x=SFR[L.r][1],k=rvKey(ME,L.r),st=L.stato||null;
-  var h='<div class="card"><h3>Lancia una sfida</h3><p class="sm mut" style="margin-bottom:8px">Una dichiarazione in conferenza stampa fa salire la rivalità, ma il derby diventa ufficiale solo se il rivale accetta. Una sfida alla volta, e al massimo una a settimana.</p>';
+  var h='<div class="card"><h3>Lancia una sfida</h3><p class="sm mut" style="margin-bottom:8px">Una dichiarazione in conferenza stampa fa salire la rivalità, ma il derby diventa ufficiale solo se il rivale accetta. Una sfida alla volta, e al massimo due all\'anno per squadra.</p>';
   if(!st){
     h+='<div class="seg" role="group" aria-label="Rivale" style="flex-wrap:wrap">'+Object.keys(SFR).map(function(r){return '<button data-sfr="'+esc(r)+'" aria-pressed="'+(L.r===r)+'">'+esc(SFR[r][0])+'</button>'}).join('')+'</div>';
     h+='<div class="seg" role="group" aria-label="Frase" style="flex-wrap:wrap;margin-top:6px">'+SFF.map(function(f,i){return '<button data-sff="'+i+'" aria-pressed="'+(L.f===i)+'">'+esc(f.replace('{X}',x))+'</button>'}).join('')+'</div>';
-    h+='<button class="btn" data-lancia="1" style="margin-top:10px"'+(L.sett?' disabled style="opacity:.45;margin-top:10px"':'')+'>Lancia la sfida</button>'+(L.sett?'<p class="note" style="margin-top:6px">Hai già lanciato una sfida questa settimana: ne potrai lanciare un\'altra dalla prossima.</p>':'');
+    h+='<button class="btn" data-lancia="1" style="margin-top:10px"'+(L.n>=2?' disabled style="opacity:.45;margin-top:10px"':'')+'>Lancia la sfida</button><p class="note" style="margin-top:6px">'+(L.n>=2?'Hai usato le due sfide di quest\'anno: le prossime dalla stagione nuova.':'Sfide usate quest\'anno: '+(L.n||0)+' su 2.')+'</p>';
     return h+'</div>'}
   var tx=SFF[L.ok.f].replace('{X}',SFR[L.ok.r][1]);
   h+='<div class="post"><div class="hd">'+av(ME)+'<div><b>'+esc(ME)+'</b><span class="mut sm">In conferenza stampa · adesso</span></div></div><q>«'+esc(tx)+'»</q></div>'
@@ -371,7 +371,7 @@ function vDerby(){
 }
 document.addEventListener('input',function(e){var f=e.target.closest('.cfree');if(!f)return;var i=+f.dataset.cf;S.cf.free[i]=f.value.slice(0,CFMAX);var pos=f.selectionStart;S.cf.pub=false;S.cf.esito=null;render();var n=document.querySelector('.cfree[data-cf="'+i+'"]');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(x){}}});
 document.addEventListener('change',function(e){if(e.target.id==='fg'||e.target.id==='fp'){S.fdem.g=+document.getElementById('fg').value;S.fdem.p=+document.getElementById('fp').value;render()}});
-document.addEventListener('click',function(e){var q=e.target.closest('[data-sfr],[data-sff],[data-lancia],[data-sst],[data-dnok],[data-dnx],[data-nuova]');if(q){var kk=S.lancio.ok?rvKey(ME,S.lancio.ok.r):'';if(q.dataset.sst){S.lancio.stato=q.dataset.sst;if(q.dataset.sst==='accettata'){S.vote[kk]=true;delete S.pend[kk]}}if(q.dataset.dnok)S.dn[kk]=DNP[S.lancio.ok.r];if(q.dataset.dnx){var ip=document.querySelector('.dnin');if(ip&&ip.value.trim())S.dn[kk]=ip.value.trim().slice(0,40)}if(q.dataset.nuova){delete S.vote[kk];delete S.pend[kk];delete S.dn[kk];S.lancio={r:S.lancio.r,f:0,ok:null,stato:null,sett:false}}if(q.dataset.sfr)S.lancio.r=q.dataset.sfr;if(q.dataset.sff)S.lancio.f=+q.dataset.sff;if(q.dataset.lancia){S.lancio.ok={r:S.lancio.r,f:S.lancio.f};S.lancio.stato='attesa';S.lancio.sett=true;S.pend[rvKey(ME,S.lancio.r)]=true}render();return}var d=e.target.closest('[data-dtab]');if(d){S.dtab=+d.dataset.dtab;render();return}var b=e.target.closest('[data-vote]');if(!b)return;var k=b.dataset.vote;S.vote[k]=!S.vote[k];render()});
+document.addEventListener('click',function(e){var q=e.target.closest('[data-sfr],[data-sff],[data-lancia],[data-sst],[data-dnok],[data-dnx],[data-nuova]');if(q){var kk=S.lancio.ok?rvKey(ME,S.lancio.ok.r):'';if(q.dataset.sst){S.lancio.stato=q.dataset.sst;if(q.dataset.sst==='accettata'){S.vote[kk]=true;delete S.pend[kk]}}if(q.dataset.dnok)S.dn[kk]=DNP[S.lancio.ok.r];if(q.dataset.dnx){var ip=document.querySelector('.dnin');if(ip&&ip.value.trim())S.dn[kk]=ip.value.trim().slice(0,40)}if(q.dataset.nuova){delete S.vote[kk];delete S.pend[kk];delete S.dn[kk];S.lancio={r:S.lancio.r,f:0,ok:null,stato:null,n:S.lancio.n||0}}if(q.dataset.sfr)S.lancio.r=q.dataset.sfr;if(q.dataset.sff)S.lancio.f=+q.dataset.sff;if(q.dataset.lancia){S.lancio.ok={r:S.lancio.r,f:S.lancio.f};S.lancio.stato='attesa';S.lancio.n=(S.lancio.n||0)+1;S.pend[rvKey(ME,S.lancio.r)]=true}render();return}var d=e.target.closest('[data-dtab]');if(d){S.dtab=+d.dataset.dtab;render();return}var b=e.target.closest('[data-vote]');if(!b)return;var k=b.dataset.vote;S.vote[k]=!S.vote[k];render()});
 
 /* ---------- 5. BORSINO ---------- */
 function series(p){var q=rnd(p.id*7+3),v=[p.q],x=p.q;for(var i=0;i<7;i++){x=Math.max(1,x+(q()-.5)*3.2*(1+p.q/20));v.unshift(x)}return v}
@@ -512,6 +512,13 @@ function radioLines(){
   ['C','Il Flop','Not everyone celebrated, though. '+a.flop[0]+' struggled with just '+P(a.flop[1])+'.','Non tutti hanno festeggiato. '+a.flop[0]+' si ferma a '+P(a.flop[1])+'.'],
   ['S','La mazzata','And the heaviest defeat: '+a.maz[0]+' lost to '+a.maz[3]+' by '+P(a.maz[2])+' points.','E la sconfitta più pesante: '+a.maz[0]+' cede a '+a.maz[3]+' di '+P(a.maz[2])+' punti.'],
   ['C','Classifica','In the table, '+T[0].t+' lead with '+T[0].pts+' points, followed by '+T[1].t+' and '+T[2].t+'.','In classifica comanda '+T[0].t+' con '+T[0].pts+' punti, seguita da '+T[1].t+' e '+T[2].t+'.']];
+  var ch=confChosen(ME);
+  if(S.cf.pub&&S.cf.esito&&ch.every(function(c){return c})){var prom=ch.filter(function(c){return c.w})[0],win=S.cf.esito==='v';
+    L.push(['S','Sala stampa','From the press room: '+ME+' made a promise before the match.','Dalla sala stampa: '+ME+' aveva fatto una promessa prima della partita.']);
+    L.push(['C','Sala stampa',prom?(win?'Promise kept, and the board will like it.':'Promise broken, and the president was not amused.'):'No promises this week, so nothing to check.',prom?(win?'Parola mantenuta, e alla dirigenza piacerà.':'Parola tradita, e il presidente non l\'ha presa bene: potevano evitare di essere così sfacciati.'):'Nessuna promessa questa settimana, quindi niente da controllare.'])}
+  if(S.lancio&&S.lancio.ok&&S.lancio.stato&&S.lancio.stato!=='attesa'){var sr=S.lancio.ok.r,stt=S.lancio.stato;
+    L.push(['S','Sfida','Challenge alert: '+ME+' called out '+sr+' at the press conference.','Sfida in vista: '+ME+' ha sfidato '+sr+' in conferenza stampa.']);
+    L.push(['C','Sfida',stt==='accettata'?'And it was accepted: a new official derby is born.':stt==='rifiutata'?'But '+sr+' refused. No derby, only a bit more rivalry.':'But '+sr+' never answered. The challenge expired.',stt==='accettata'?'E la sfida è stata accettata: nasce un nuovo derby ufficiale.':stt==='rifiutata'?'Ma '+sr+' ha rifiutato. Niente derby, solo un po\' più di rivalità.':'Ma '+sr+' non ha risposto. La sfida è decaduta.'])}
   var cup=(D.cup&&D.cup.length)?D.cup[D.cup.length-1]:null;
   if(cup&&cup.m.length){
     var m=cup.m.slice().sort(function(x,y){return Math.abs(y[2]-y[3])-Math.abs(x[2]-x[3])});

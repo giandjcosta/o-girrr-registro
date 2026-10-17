@@ -31,3 +31,6 @@ Rivalità dalla storia (derby.py + storico.json dall'Albo d'oro), da 0 a 100 su 
 Derby = voti degli amici di Gianluca (regole.json, "derby_amici"): pesano il 60%, la storia il 40%. Derby se l'intensità arriva a 50. Con la lista vuota decide solo la storia: derby se la rivalità storica arriva a 50 su 100. Niente minimo forzato: si vede il punteggio vero (storia + 60% del voto degli amici). Un derby da sola storia ha rivalità almeno 50 (Alta).
 Un derby ha sempre rivalità alta: rivalità finale = storia + 60% del voto degli amici, minimo 70 se il voto è almeno 50. Sopra 70 la radio aggiunge "Una rivalità storica!".
 AFA SELECCION = Maria (mappa dell'app). Squadre con due allenatori (The Blue brothers) = media dei punteggi delle coppie di allenatori.
+
+
+Promesse e sfide (da conferenze.json): se una squadra ha fatto una promessa in conferenza, la radio dice se è stata mantenuta (e la dirigenza apprezza) o tradita (il presidente: potevate evitare di essere così sfacciati). Le squadre con una promessa passano per prime. Le sfide per il derby lanciate in conferenza (sfide_derby) entrano con il loro esito: accettata (nasce il derby con il suo nome), rifiutata o scaduta. Massimo due sfide all'anno per squadra.

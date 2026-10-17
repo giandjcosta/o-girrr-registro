@@ -111,22 +111,40 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
         avv = {}
         for x, y in (conf.get("partite") or []): avv[x] = y; avv[y] = x
         info = []
+        prom = {}
         for t, ans in cf.items():
+            # formato nuovo: {"toni": [...], "promessa": "frase", "pesa": 1|2}; formato vecchio: solo la lista dei toni
+            toni = ans.get("toni") if isinstance(ans, dict) else ans
+            if isinstance(ans, dict) and ans.get("promessa"): prom[t] = ans
             if t not in pt or t not in avv or avv[t] not in pt: continue
-            tono = min(2, round(sum(ans) / len(ans))); vinta = pt[t] > pt[avv[t]]
+            tono = min(2, round(sum(toni) / len(toni))); vinta = pt[t] > pt[avv[t]]
             info.append((t, tono, vinta, avv[t]))
         TONO = ["si è presentato come la squadra da battere", "è stato molto umile", "ha lanciato la sfida a tutti"]
         VERO = {(0, True): "{t} aveva parlato da campione e ha vinto. Parole mantenute!", (0, False): "{t} aveva parole forti per niente: si è fermato contro {o}.",
                 (1, True): "{t} è stato umile, ma in campo ha dimostrato che la sua squadra può fare molto!", (1, False): "{t} è stato umile e il campo gli ha dato ragione: ha perso contro {o}.",
                 (2, True): "{t} ha provocato tutti e poi ha vinto: chi di sfida ferisce...", (2, False): "{t} aveva dichiarato guerra e ha perso la battaglia contro {o}."}
         if info:
-            ordine = sorted(info, key=lambda z: (z[1] == 1 and not z[2], not ((z[1] == 0 and not z[2]) or (z[1] == 1 and z[2])), z[0]))
+            ordine = sorted(info, key=lambda z: (z[0] not in prom, z[1] == 1 and not z[2], not ((z[1] == 0 and not z[2]) or (z[1] == 1 and z[2])), z[0]))
             scelte = ordine[:3]
             elenco = "; ".join(f"{t} {TONO[tn]}" for t, tn, _, _ in scelte)
             add("S", f"Dalla sala stampa, nelle conferenze di questa settimana: {elenco}. Vediamo se il campo ha dato ragione!", "entusiasmo")
+            # una promessa fatta in conferenza pesa sulla fiducia della dirigenza: la radio lo racconta
+            pr = [x for x in info if x[0] in prom]
             for i, (t, tn, v, o) in enumerate(scelte[:2]):
-                add("G" if i == 0 else "B", VERO[(tn, v)].format(t=t, o=o), "sarcasmo" if (tn == 0 and not v) else None)
+                if t in prom:
+                    pz = prom[t]["promessa"].rstrip(".!? ")
+                    fr = (f"{t} aveva promesso: {pz}. Parola mantenuta, e la dirigenza apprezza!" if v
+                          else f"{t} aveva promesso: {pz}. E ha perso contro {o}: parola tradita, e il presidente ha detto che potevano evitare di essere così sfacciati.")
+                    add("G" if i == 0 else "B", fr, None if v else "sarcasmo")
+                else:
+                    add("G" if i == 0 else "B", VERO[(tn, v)].format(t=t, o=o), "sarcasmo" if (tn == 0 and not v) else None)
             add("S", "Per ora è tutto, restituisco la linea in studio!", "entusiasmo")
+    # --- sfide per il derby lanciate in conferenza (stato: accettata / rifiutata / scaduta / attesa)
+    for sd in (conf or {}).get("sfide_derby") or []:
+        da, ar, st_ = sd.get("da"), sd.get("a"), sd.get("stato")
+        if st_ == "accettata": add("S", f"Notizia dalla sala stampa: {da} ha sfidato {ar}, e la sfida è stata accettata! Nasce {sd.get('nome') or 'un nuovo derby'}, derby ufficiale per sempre!", "entusiasmo")
+        elif st_ == "rifiutata": add("S", f"{da} aveva sfidato {ar}, ma {ar} ha rifiutato. Niente derby, solo un po' più di rivalità!", "sarcasmo")
+        elif st_ == "scaduta": add("S", f"{da} aveva sfidato {ar}, ma {ar} non ha risposto: la sfida è decaduta. Resta un po' di rivalità!")
     # --- Curva: solo un post vero, se Gianluca ne ha dato uno
     cv = (curva_ or {}).get("post")
     if cv: add("S", f"E dalla Curva: {cv}", "entusiasmo")
