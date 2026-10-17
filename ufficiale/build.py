@@ -81,7 +81,7 @@ for n in ["novita.js", "derby.js", "novita-curva.js", "novita-badge.js"]:
 for f in ["index.html", "albo.html", "derby.html", "curva.html", "squadre.html"]:
     p = OUT / f; t = p.read_text(encoding="utf-8")
     p.write_text(t.replace("</head>", '<script src="novita-dati.js"></script>\n</head>', 1), encoding="utf-8")
-(R / "ufficiale" / "index.html").write_text('<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0;url=girrr/index.html"><a href="girrr/index.html">Apri l\'anteprima</a>', encoding="utf-8")
+(R / "ufficiale" / "index.html").write_text((R / "ufficiale" / "src" / "confronto.html").read_text(encoding="utf-8"), encoding="utf-8")
 print("scritto", OUT, len(list(OUT.iterdir())), "file")
 
 for f in ["index.html", "albo.html", "derby.html"]:
