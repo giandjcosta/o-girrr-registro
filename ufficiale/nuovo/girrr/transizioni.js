@@ -3,8 +3,14 @@
 if(window._fx)return;window._fx=1;
 if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)return;
 var st=document.createElement('style');
-st.textContent='@keyframes fxin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}.fx-in{animation:fxin .34s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--fxd,0)*38ms)}[role=tab],.seg button,.at button,.chips button,.sw button,.ptabs button,.tabs button{transition:background-color .28s ease,color .28s ease,border-color .28s ease,opacity .28s ease,transform .28s ease}';
+st.textContent='@keyframes fxin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}.fx-in{animation:fxin .62s cubic-bezier(.22,.61,.36,1) both;animation-delay:calc(var(--fxd,0)*70ms)}[role=tab],.seg button,.at button,.chips button,.sw button,.ptabs button,.tabs button{transition:background-color .5s ease,color .5s ease,border-color .5s ease,opacity .5s ease,transform .5s ease}';
 document.head.appendChild(st);
+/* il logo della lega riporta alla Home dell'anteprima (stessa grafica) */
+document.addEventListener('click',function(e){var l=e.target.closest&&e.target.closest('#lg,#olg');if(!l)return;var p=location.pathname,d=null;
+if(p.indexOf('/ufficiale/nuovo/girrr/')>=0||p.indexOf('/ufficiale/girrr/')>=0){if(/\/index\.html$|\/girrr\/$/.test(p))return;d='index.html'}
+else if(/\/anteprima\/attuale\.html$/.test(p))d='../ufficiale/girrr/index.html';else if(/\/anteprima\/(index\.html)?$/.test(p))d='../ufficiale/nuovo/girrr/index.html';
+if(!d)return;e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();location.href=d},true);
+var _ls=document.createElement('style');_ls.textContent='#lg,#olg{cursor:pointer}';document.head.appendChild(_ls);
 var last=0;
 function mark(){last=Date.now()}
 document.addEventListener('pointerdown',mark,true);document.addEventListener('keydown',mark,true);document.addEventListener('click',mark,true);

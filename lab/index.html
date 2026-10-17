@@ -31,7 +31,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 @media (hover:hover) and (pointer:fine){.tabs{background:none;position:static}}
 .tabs button:first-child{margin-left:auto}.tabs button:last-child{margin-right:auto}.tabs.fl{-webkit-mask-image:linear-gradient(90deg,transparent,#000 34px);mask-image:linear-gradient(90deg,transparent,#000 34px)}.tabs.fr{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 34px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 34px),transparent)}.tabs.fl.fr{-webkit-mask-image:linear-gradient(90deg,transparent,#000 34px,#000 calc(100% - 34px),transparent);mask-image:linear-gradient(90deg,transparent,#000 34px,#000 calc(100% - 34px),transparent)}.tabs,.at{cursor:grab;scroll-snap-type:none}.tabs.drag,.at.drag{cursor:grabbing;scroll-behavior:auto}
 @media (hover:hover) and (pointer:fine) and (min-width:1060px){.tabs{width:1000px;margin-left:calc((100% - 1000px)/2)}}
-.tabs button{transition:background-color .28s,border-color .28s,color .28s;flex:none;padding:8px 13px;border-radius:99px;font-weight:700;font-size:13px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(14px)}
+.tabs button{transition:background-color .5s,border-color .5s,color .5s;flex:none;padding:8px 13px;border-radius:99px;font-weight:700;font-size:13px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(14px)}
 .tabs button[aria-selected=true]{background:var(--red);border-color:#ff7a88;color:#fff}
 .where{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:8px;font-size:12px;font-weight:700;color:var(--mute)}
 .where b{color:var(--gold);letter-spacing:.14em;text-transform:uppercase;font-size:10px}
@@ -43,7 +43,7 @@ h3{font-weight:800;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
 .row{display:flex;align-items:center;gap:10px}
 .grow{flex:1;min-width:0}
 .seg{display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--glass2);border:1px solid var(--line);margin-bottom:12px;overflow-x:auto}
-.seg button{transition:background-color .28s,color .28s;flex:1;padding:7px 10px;border-radius:10px;font-weight:700;font-size:12.5px;white-space:nowrap}
+.seg button{transition:background-color .5s,color .5s;flex:1;padding:7px 10px;border-radius:10px;font-weight:700;font-size:12.5px;white-space:nowrap}
 .seg button[aria-pressed=true]{background:var(--gold);color:#141d3d}
 .mut{color:var(--mute)}.sm{font-size:12px}.num{font-variant-numeric:tabular-nums}
 .btn{padding:10px 16px;border-radius:12px;background:var(--red);color:#fff;font-weight:800;border:1px solid #ff7a88}
@@ -228,8 +228,14 @@ carosello($('#tabs'));
 if(window._fx)return;window._fx=1;
 if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)return;
 var st=document.createElement('style');
-st.textContent='@keyframes fxin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}.fx-in{animation:fxin .34s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--fxd,0)*38ms)}[role=tab],.seg button,.at button,.chips button,.sw button,.ptabs button,.tabs button{transition:background-color .28s ease,color .28s ease,border-color .28s ease,opacity .28s ease,transform .28s ease}';
+st.textContent='@keyframes fxin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}.fx-in{animation:fxin .62s cubic-bezier(.22,.61,.36,1) both;animation-delay:calc(var(--fxd,0)*70ms)}[role=tab],.seg button,.at button,.chips button,.sw button,.ptabs button,.tabs button{transition:background-color .5s ease,color .5s ease,border-color .5s ease,opacity .5s ease,transform .5s ease}';
 document.head.appendChild(st);
+/* il logo della lega riporta alla Home dell'anteprima (stessa grafica) */
+document.addEventListener('click',function(e){var l=e.target.closest&&e.target.closest('#lg,#olg');if(!l)return;var p=location.pathname,d=null;
+if(p.indexOf('/ufficiale/nuovo/girrr/')>=0||p.indexOf('/ufficiale/girrr/')>=0){if(/\/index\.html$|\/girrr\/$/.test(p))return;d='index.html'}
+else if(/\/anteprima\/attuale\.html$/.test(p))d='../ufficiale/girrr/index.html';else if(/\/anteprima\/(index\.html)?$/.test(p))d='../ufficiale/nuovo/girrr/index.html';
+if(!d)return;e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();location.href=d},true);
+var _ls=document.createElement('style');_ls.textContent='#lg,#olg{cursor:pointer}';document.head.appendChild(_ls);
 var last=0;
 function mark(){last=Date.now()}
 document.addEventListener('pointerdown',mark,true);document.addEventListener('keydown',mark,true);document.addEventListener('click',mark,true);
@@ -249,6 +255,7 @@ new MutationObserver(function(ms){
 }
 if(document.body)avvia();else document.addEventListener('DOMContentLoaded',avvia);
 })();
+
 
 
 
@@ -734,7 +741,10 @@ function morph(prima){/* i selettori ricostruiti partono dallo stato precedente 
   var gr=document.querySelectorAll('#view .seg');gr.forEach(function(g,k){var o=prima[k];if(!o||o.n!==g.children.length)return;var bs=[].slice.call(g.children),now=bs.map(function(b){return b.getAttribute('aria-pressed')});if(o.p.join()===now.join())return;bs.forEach(function(b,j){b.setAttribute('aria-pressed',o.p[j])});g.scrollLeft=o.s;void g.offsetWidth;requestAnimationFrame(function(){bs.forEach(function(b,j){b.setAttribute('aria-pressed',now[j])});var a=g.querySelector('[aria-pressed=true]');if(a)centra(g,a)})})}
 function render(){
   var _pr=[].map.call(document.querySelectorAll('#view .seg'),function(g){return{n:g.children.length,s:g.scrollLeft,p:[].map.call(g.children,function(b){return b.getAttribute('aria-pressed')})}});
-  $('#view').innerHTML=V[cur]()+(cur==='parere'?'':fbBox());morph(_pr);
+  var _vw=$('#view'),_nv=document.createElement('div');_nv.innerHTML=V[cur]()+(cur==='parere'?'':fbBox());
+  var _k=0;while(_k<_vw.children.length&&_k<_nv.children.length&&_vw.children[_k].outerHTML===_nv.children[_k].outerHTML)_k++;
+  while(_vw.children.length>_k)_vw.removeChild(_vw.children[_k]);while(_nv.childNodes.length&&_nv.children.length>_k)_vw.appendChild(_nv.children[_k]);
+  morph(_pr);
   var _tb=$('#tabs'),_sl=_tb.scrollLeft;if(_tb.children.length===TABS.length){[].forEach.call(_tb.children,function(b){b.setAttribute('aria-selected',b.dataset.tab===cur)})}else _tb.innerHTML=TABS.map(function(t){return '<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'">'+t[1]+'</button>'}).join('');
   try{_tb.style.scrollBehavior='auto';_tb.scrollLeft=_sl;var s=$('#tabs [aria-selected=true]');if(s)centra(_tb,s);_tb.style.scrollBehavior='';aggFade(_tb)}catch(e){}
 }
