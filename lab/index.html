@@ -267,10 +267,26 @@ function vOro(){
   return h}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-oro]');if(!b)return;S.oro=b.dataset.oro;render()});
 
+var LATTA=[["2021/22", [["apo", "Wakanda"], ["Leanzino", "Mugiwara"], ["AndrewTT", "Dio Brigante"], ["ser", "WOA"], ["DJ Cst Brazil", "Rapid Micatant"], ["Nobile", "Laghetto FC"], ["RikyArma", "Tequila Bum Bum"], ["Mario", "Lil plug"]]], ["2023/24", [["Leanzino", "Mugiwara"], ["AleDmz", "SdrogoCalcioFC"], ["RikyArma", "Grodah"], ["Riccardo", "Barolo"], ["Nicolas", "AC Risti"], ["apo", "Wakanda"], ["AndrewTT", "Real Madrink"], ["Mario", "Stortenham"], ["ser", "WOA"], ["17peppe17", "ACPicchia"]]], ["2024/25", [["17peppe17", "PornHub FC"], ["stifson", "Stif dc"], ["AndrewTT", "Real Madrink"], ["Leanzino", "Mugiwara"], ["ser", "WOA"], ["RikyArma", "Grodah"], ["Mario", "Dynamo Loska"], ["AleDmz", "DeadPool FC"], ["Nicolas", "Virgin Van Dick"], ["apo", "Wakanda"]]], ["2025/26", [["ser", "WOA"], ["RikyArma", "Grodah"], ["Maria", "Raimon Junior High"], ["stifson", "Stif dc"], ["Mark Lenders", "Mariana Coneja"], ["AndrewTT", "Real Madrink"], ["Mario", "Dynamo Loska"], ["Leanzino", "Mugiwara"], ["SuperBrok", "Gli Spaesati"], ["apo", "New Wakanda"]]]];
+S.lat=S.lat||'anno';
 /* ---------- 3. ALBO ---------- */
 function vAlbo(){
+  var h=where('Home','Albo di Latta')+'<h2>L\'Albo di Latta</h2><p class="lead">L\'opposto dell\'oro: chi chiude in fondo, chi fa flop, chi prende le mazzate. Si calcola da solo e si accumula anno dopo anno.</p>';
+  h+='<div class="seg" role="group" aria-label="Periodo"><button data-lat="anno" aria-pressed="'+(S.lat==='anno')+'">Questa stagione</button><button data-lat="sempre" aria-pressed="'+(S.lat==='sempre')+'">Di sempre</button></div>';
+  return S.lat==='sempre'?h+latSempre():h+vAlboAnno(true)}
+function latSempre(){
+  var st={},cnt={};
+  D.aw.forEach(function(x){[['f',x.flop[0]],['z',x.maz[0]]].forEach(function(p){cnt[p[1]]=cnt[p[1]]||{f:0,z:0};cnt[p[1]][p[0]]++})});
+  LATTA.forEach(function(se){var n=se[1].length;se[1].forEach(function(r,i){var u=r[0];st[u]=st[u]||{n:0,u:0,m:0,p:0,t:u};var x=st[u];x.n++;x.t=r[1];if(i===n-1)x.u++;if(i+1>n/2)x.m++;if(i+1>x.p)x.p=i+1})});
+  var rows=Object.keys(st).sort(function(a,b){return (st[b].u-st[a].u)||(st[b].m-st[a].m)||(st[b].m/st[b].n-st[a].m/st[a].n)});
+  var h='<div class="card"><h3>La latta di sempre</h3><div class="scroll"><table class="tbl"><tr><th>Allenatore</th><th class="r">Stagioni</th><th class="r">Ultimo</th><th class="r">Metà bassa</th></tr>'+rows.map(function(u){var x=st[u];return '<tr><td><b>'+esc(u)+'</b></td><td class="r num">'+x.n+'</td><td class="r num">'+x.u+'</td><td class="r num">'+x.m+'</td></tr>'}).join('')+'</table></div><p class="note" style="margin-top:6px">"Metà bassa" conta le stagioni chiuse nella parte bassa della classifica, "Ultimo" quelle chiuse all\'ultimo posto. La stagione 2022/23 non c\'è, perché la classifica completa non si è conservata.</p></div>';
+  h+='<div class="card"><h3>La latta di ogni anno</h3>'+LATTA.slice().reverse().map(function(se){var l=se[1][se[1].length-1];return '<div class="row" style="justify-content:space-between;padding:8px 0;border-top:1px solid var(--line)"><b>'+se[0]+'</b><span>'+esc(l[1])+' <span class="mut sm">'+esc(l[0])+'</span></span></div>'}).join('')+'</div>';
+  h+='<div class="card"><h3>Flop e mazzate</h3><div class="scroll"><table class="tbl"><tr><th>Squadra</th><th class="r">Flop</th><th class="r">Mazzate</th></tr>'+Object.keys(cnt).sort(function(a,b){return (cnt[b].f+cnt[b].z)-(cnt[a].f+cnt[a].z)}).map(function(t){return '<tr><td><b>'+esc(t)+'</b></td><td class="r num">'+cnt[t].f+'</td><td class="r num">'+cnt[t].z+'</td></tr>'}).join('')+'</table></div><p class="note" style="margin-top:6px">Flop e mazzate si contano dalla nascita dell\'Albo di Latta e si sommano ogni stagione.</p></div>';
+  return h}
+document.addEventListener('click',function(e){var b=e.target.closest('[data-lat]');if(!b)return;S.lat=b.dataset.lat;render()});
+function vAlboAnno(skip){
   var a=D.aw[S.round-1];
-  var h=where('Home','Albo di Latta')+'<h2>L\'Albo di Latta</h2><p class="lead">Ogni giornata si calcola da sola, senza votare: chi fa più punti, chi ne fa meno, la sconfitta più larga e la vittoria più fortunata. Un albo parallelo a quello dei trofei.</p>';
+  var h=(skip?'':where('Home','Albo di Latta')+'<h2>L\'Albo di Latta</h2>')+'<p class="lead">Ogni giornata si calcola da sola, senza votare: chi fa più punti, chi ne fa meno, la sconfitta più larga e la vittoria più fortunata. Un albo parallelo a quello dei trofei.</p>';
   h+='<div class="seg" role="group" aria-label="Giornata">'+D.aw.map(function(x){return '<button data-round="'+x.n+'" aria-pressed="'+(S.round===x.n)+'">Giornata '+x.n+'</button>'}).join('')+'</div>';
   h+='<div class="card"><div class="aw"><div><div class="k g">Re della giornata</div><b>'+esc(a.mvp[0])+'</b><span class="mut sm num">'+f1(a.mvp[1])+' punti</span></div><div><div class="k" style="color:var(--bad)">Flop della giornata</div><b>'+esc(a.flop[0])+'</b><span class="mut sm num">'+f1(a.flop[1])+' punti</span></div></div>';
   h+='<div class="aw" style="margin-top:8px"><div><div class="k" style="color:var(--bad)">La mazzata</div><b>'+esc(a.maz[0])+'</b><span class="mut sm">battuta da '+esc(a.maz[3])+' di '+f1(a.maz[2])+' punti</span></div><div><div class="k g">Il fortunato</div><b>'+esc(a.luck[0])+'</b><span class="mut sm">vince con soli '+f1(a.luck[1])+' punti</span></div></div></div>';
@@ -317,14 +333,18 @@ function vDerby(){
   else{var best=r.m.slice().sort(function(a,b){return rvInfo(b[0],b[1]).riv-rvInfo(a[0],a[1]).riv})[0];h+='<p class="sm mut" style="margin:6px 0">Questa giornata non ha nessun derby. La sfida più sentita è '+esc(best[0])+' – '+esc(best[1])+' (Rivalità: '+rvWord(rvInfo(best[0],best[1]).riv)+').</p>'}
   r.m.forEach(function(m){if(!isDer(m[0],m[1]))h+='<div class="mt"><div class="t">'+esc(m[0])+'</div><span class="tag">vs</span><div class="t">'+esc(m[1])+'</div></div>'});
   h+='</div>';
-  h+='<div class="card"><h3>Le rivalità della lega</h3><p class="sm mut" style="margin-bottom:8px">Tocca una sfida per leggerne la storia. "Lo sento come derby" serve a provare cosa succede quando gli amici votano: i primi voti sono quelli dei tuoi amici, gli altri sono di prova.</p>';
-  RIV.slice(0,12).forEach(function(o){var i=rvInfo(o.a,o.b);
-    h+='<details style="border-top:1px solid var(--line);padding:8px 0"><summary style="cursor:pointer;list-style:none"><div class="row" style="justify-content:space-between"><b>'+esc(o.a)+' – '+esc(o.b)+'</b>'+(i.der?'<span class="tag g">Derby</span>':'<span class="tag">Rivalità</span>')+'</div><div class="mut sm">'+(o.n?esc(o.n)+' · ':'')+'Rivalità: '+rvWord(i.riv)+'</div>'+rvBar(i.riv)+'</summary>'
-     +(o.s?racconto(o):'<p class="sm mut" style="margin-top:8px">Nessuna storia scritta per questa sfida.</p>')
-     +'<button class="tag '+(S.vote[rvKey(o.a,o.b)]?'o':'')+'" data-vote="'+esc(rvKey(o.a,o.b))+'" aria-pressed="'+(!!S.vote[rvKey(o.a,o.b)])+'" style="margin-top:8px">Lo sento come derby</button></details>'});
-  return h+'</div><p class="note">Le storie vengono dall\'Albo d\'oro e compariranno anche lì, una per ogni derby.</p>';
+  var DT=RIV.filter(function(o){return o.n||rvInfo(o.a,o.b).der}).sort(function(x,y){return rvInfo(y.a,y.b).riv-rvInfo(x.a,x.b).riv});
+  S.dtab=Math.min(S.dtab||0,DT.length-1);var o=DT[S.dtab],i=rvInfo(o.a,o.b);
+  h+='<div class="card"><h3>I derby della lega</h3><p class="sm mut" style="margin-bottom:8px">Tocca un derby per leggerne la storia.</p><div class="seg" role="group" aria-label="Derby" style="flex-wrap:wrap">'+DT.map(function(x,j){return '<button data-dtab="'+j+'" aria-pressed="'+(S.dtab===j)+'">'+esc(derName(x))+'</button>'}).join('')+'</div>';
+  h+='<div style="margin-top:12px"><div class="mt"><div class="t">'+esc(o.a)+'<div class="mut sm">'+esc(mg(o.a))+'</div></div><span class="tag">vs</span><div class="t">'+esc(o.b)+'<div class="mut sm">'+esc(mg(o.b))+'</div></div></div>'
+   +'<div class="h2h" style="grid-template-columns:1fr 1fr;margin-top:10px"><div><small>Stagioni insieme</small><b class="num" style="font-size:24px">'+o.h+'</b></div><div><small>Nelle zone alte insieme</small><b class="num" style="font-size:24px">'+o.z+'</b></div></div>'
+   +'<div class="mut sm" style="margin-top:8px">Rivalità: <b>'+rvWord(i.riv)+'</b> '+(i.der?'<span class="tag g">Derby</span>':'')+'</div>'+rvBar(i.riv)
+   +(o.s?racconto(o):'<p class="sm mut" style="margin-top:8px">Nessuna storia scritta per questa sfida.</p>')
+   +'<button class="tag '+(S.vote[rvKey(o.a,o.b)]?'o':'')+'" data-vote="'+esc(rvKey(o.a,o.b))+'" aria-pressed="'+(!!S.vote[rvKey(o.a,o.b)])+'" style="margin-top:8px">Lo sento come derby</button></div></div>';
+  h+='<p class="note">Le storie vengono dall\'Albo d\'oro e compariranno anche lì, una per ogni derby. I primi voti sono quelli degli amici, gli altri sono di prova.</p>';
+  return h;
 }
-document.addEventListener('click',function(e){var b=e.target.closest('[data-vote]');if(!b)return;var k=b.dataset.vote;S.vote[k]=!S.vote[k];render()});
+document.addEventListener('click',function(e){var d=e.target.closest('[data-dtab]');if(d){S.dtab=+d.dataset.dtab;render();return}var b=e.target.closest('[data-vote]');if(!b)return;var k=b.dataset.vote;S.vote[k]=!S.vote[k];render()});
 
 /* ---------- 5. BORSINO ---------- */
 function series(p){var q=rnd(p.id*7+3),v=[p.q],x=p.q;for(var i=0;i<7;i++){x=Math.max(1,x+(q()-.5)*3.2*(1+p.q/20));v.unshift(x)}return v}
