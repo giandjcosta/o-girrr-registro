@@ -189,8 +189,10 @@ def scegli_modello():
     return False
 SOLO = os.environ.get("SOLO_GEMINI", "") == "1"
 async def main():
-    if SOLO and not (GKEY and scegli_modello()):
-        print("SOLO_GEMINI: Gemini non disponibile, non pubblico nulla", flush=True); sys.exit(3)
+    ok_g = bool(GKEY) and scegli_modello()
+    if not ok_g:
+        GSTOP[0] = True
+        if SOLO: print("SOLO_GEMINI: Gemini non disponibile, non pubblico nulla", flush=True); sys.exit(3)
     parti = []
     for i, riga in enumerate(L):
         k, t = riga[0], riga[1]; st = riga[2] if len(riga) > 2 else None
