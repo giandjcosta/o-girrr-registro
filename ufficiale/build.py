@@ -114,7 +114,7 @@ i0 = ix.index('<section class="cards">'); i1 = ix.index('</section>', i0)
 ix = ix[:i1] + extra_cards + ix[i1:]
 ix = re.sub(r'<section class="mini">.*?</section>\s*<script>try\{var f=JSON.parse\(localStorage.getItem\("fg"\).*?</script>', '', ix, count=1, flags=re.S)
 assert 'class="mini"' not in ix
-_stat = '<section class="mini" style="margin-top:14px"><a class="mn" id="mst" href="statistiche.html" hidden><div class="mi">📊</div><div><b>Statistiche</b><span>Solo per te: chi entra e dove</span></div></a></section><script>try{var f=JSON.parse(localStorage.getItem("fg")||"{}");if(f.team==="Oranje VC")document.getElementById("mst").hidden=false}catch(e){}</script>\n  '
+_stat = '<section class="mini" style="margin-top:14px"><a class="mn" id="mst" href="statistiche.html"><div class="mi">📊</div><div><b>Statistiche</b><span>Solo per te: chi entra e dove</span></div></a></section>\n  '
 ix = ix.replace('<div class="sp">', _stat + '<div class="sp">', 1)
 assert 'id="mst"' in ix
 ix = ix.replace("</head>", "<style>.cards{grid-template-columns:repeat(3,1fr)!important}@media(max-width:820px){.cards{grid-template-columns:1fr 1fr!important}}@media(max-width:480px){.cards{grid-template-columns:1fr!important}}</style>\n</head>", 1)
