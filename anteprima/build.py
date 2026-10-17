@@ -86,7 +86,7 @@ print("scritto attuale.html")
 # Terza versione: sfondo della lega (rosso e blu, riga gialla in diagonale)
 import re as _re
 _n = (R / "anteprima" / "index.html").read_text(encoding="utf-8")
-_lega_bg = "body{background:linear-gradient(158deg,transparent 0 33%,#ffd166 33% calc(33% + 5px),transparent calc(33% + 5px)),linear-gradient(158deg,#e03244 0,#a31d2e 33%,#1b2a66 calc(33% + 5px),#0b1233 100%)!important;background-attachment:fixed!important}"
+_lega_bg = "body{background:linear-gradient(158deg,transparent 0 33%,#ffd166 33% calc(33% + 5px),transparent calc(33% + 5px)),linear-gradient(158deg,#e03244 0,#a31d2e 33%,#2a3d86 calc(33% + 5px),#141d3d 100%)!important;background-attachment:fixed!important}"
 _n2 = _re.sub(r"body\{background:radial-gradient\(900px[^}]*\}", lambda m: _lega_bg, _n, count=1)
 assert _n2 != _n
 _n2 = _n2.replace("../ufficiale/nuovo/girrr/", "../ufficiale/lega/girrr/").replace("<title>O Girrr · Anteprima 5.0</title>", "<title>O Girrr · Anteprima 5.0 (sfondo lega)</title>")
