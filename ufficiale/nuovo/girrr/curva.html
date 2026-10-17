@@ -173,8 +173,8 @@ html,body{overscroll-behavior-y:none;touch-action:manipulation;-webkit-text-size
 .net{margin:0;padding:8px 14px;background:rgba(244,33,46,.12);color:#f4212e;font-size:13px;font-weight:700}
 .av{font-size:15px}.av.e{font-size:22px}.av.sm.e{font-size:17px}.av.xl.e{font-size:44px}
 </style>
-<script src="novita-curva.js?v=1792268835"></script>
-<script src="novita-dati.js?v=1792268835"></script>
+<script src="novita-curva.js?v=1792269180"></script>
+<script src="novita-dati.js?v=1792269180"></script>
 </head>
 <body>
 <div class="shell">
@@ -484,7 +484,7 @@ function memeImg(p){
   T('I NUMERI DELLA GIORNATA',W/2,90,'800 38px '+F,'#e0aaff','center');[n(0,9)+1,10+n(1,20),30+n(2,60)].forEach(function(q,i){var x=W/2-200+i*200;c.strokeStyle='#ffd166';c.lineWidth=5;c.beginPath();c.arc(x,230,70,0,7);c.stroke();T(String(q),x,252,'900 64px '+F,'#ffd166','center')});
   T(PK(['Evitare: il numero 17, i gatti neri, il capitano al primo slot.','Evitare: gli specchi rotti, i lunedì, la formazione già fatta.','Evitare: il rosso, le scale, i portieri con i guanti nuovi.'],5),W/2,390,'600 26px '+F,'#e0aaff','center',W-80);T(PK(['Indossare: il calzino sinistro. Per primo.','Indossare: la sciarpa della fortuna. Non lavata.','Indossare: la maglia al contrario, solo il giovedì.'],6),W/2,440,'600 26px '+F,'#e0aaff','center',W-80);T('Il Mago della Cabala · rimborsi non previsti',W/2,520,'600 20px '+F,'#9d4edd','center')}
  else if(t==='diretta'){c.fillStyle='#0b1220';c.fillRect(0,0,W,H);c.fillStyle='#d62839';c.fillRect(0,0,W,70);T('● DIRETTA',34,48,'900 32px '+F,'#fff');T(PK(['Telecronaca ufficiale (quasi)','Commento tecnico (stanco)','Diretta dal divano','Solo per veri resistenti'],3),W-34,46,'600 24px '+F,'#ffd1d6','right');
-  T(S1,230,230,'800 36px '+F,'#fff','center',330);T(S2,W-230,230,'800 36px '+F,'#fff','center',330);T(n(0,3)+' - '+n(1,3),W/2,260,'900 120px '+F,'#ffd166','center');T('Minuto '+(1+n(2,89))+"'",W/2,330,'700 30px '+F,'#9fb0c9','center');
+  T(S1,165,215,'800 34px '+F,'#fff','center',255);T(S2,W-165,215,'800 34px '+F,'#fff','center',255);T(n(0,3)+' - '+n(1,3),W/2,262,'900 92px '+F,'#ffd166','center');T('Minuto '+(1+n(2,89))+"'",W/2,330,'700 30px '+F,'#9fb0c9','center');
   c.fillStyle='rgba(255,255,255,.08)';c.fillRect(60,390,W-120,100);T(PK(['«Il gioco è piacevole. Io molto meno.»','«Una partita che non dimenticheremo. Vorrei, almeno.»','«Pallone alto. Pallone basso. Pallone in tribuna.»','«E ora, se permettete, un caffè.»','«Squadra che attacca, squadra che si difende. Mah.»'],5),W/2,452,'italic 700 32px '+F,'#fff','center',W-160)}
  else if(t==='striscione'){c.fillStyle='#111';c.fillRect(0,0,W,H);c.fillStyle='#fff';var fr=PK(['VERGOGNA','CAMBIATE TUTTO','NON CI SIAMO','FUORI L\'ALLENATORE','SIETE UNA VERGOGNA','TORNATE AL BAR','BASTA CON QUESTO MODULO','ABBIAMO PAGATO IL FANTACALCIO'],0);var z=130;c.font='900 '+z+'px '+F;while(c.measureText(fr).width>W-80&&z>40){z-=6;c.font='900 '+z+'px '+F}c.textAlign='center';c.fillText(fr,W/2,H/2+z/3);c.fillRect(40,60,W-80,6);c.fillRect(40,H-66,W-80,6);T(S1.toUpperCase()+' · '+PK(['CURVA NORD','CURVA SUD','TRIBUNA OVEST','GRUPPO DEL DIVANO'],1),W/2,H-100,'700 26px '+F,'#bbb','center',W-100)}
  else if(t==='epoca'){c.fillStyle='#d9c7a0';c.fillRect(0,0,W,H);var g3=c.createRadialGradient(W/2,H/2,150,W/2,H/2,520);g3.addColorStop(0,'rgba(0,0,0,0)');g3.addColorStop(1,'rgba(60,35,10,.55)');c.fillStyle=g3;c.fillRect(0,0,W,H);c.fillStyle='#f4ead2';c.fillRect(110,50,W-220,H-170);c.fillStyle='#6b5a3a';var xs=[220,340,460,580,700];xs.forEach(function(x,i){c.beginPath();c.arc(x,230,34,0,7);c.fill();c.fillRect(x-40,266,80,110)});

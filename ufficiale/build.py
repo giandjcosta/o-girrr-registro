@@ -67,6 +67,7 @@ patch("albo.html", "Le stagioni passate", "L\\'Era Contemporanea · Le stagioni"
 # 5) Curva: post nuovi dentro il feed
 patch("curva.html", "</head>", '<script src="novita-curva.js"></script>\n</head>')
 patch("curva.html", "function costruisci(){", "function costruisci(){if(window.ANT_POSTS)S.adm=(S.adm||[]).filter(function(u){return !u.ant}).concat(window.ANT_POSTS());")
+patch("curva.html", "T(S1,230,230,'800 36px '+F,'#fff','center',330);T(S2,W-230,230,'800 36px '+F,'#fff','center',330);T(n(0,3)+' - '+n(1,3),W/2,260,'900 120px '+F,'#ffd166','center');", "T(S1,165,215,'800 34px '+F,'#fff','center',255);T(S2,W-165,215,'800 34px '+F,'#fff','center',255);T(n(0,3)+' - '+n(1,3),W/2,262,'900 92px '+F,'#ffd166','center');")
 # 6) Pagina Derby: stessa grafica dell'Albo
 alb = (OUT / "albo.html").read_text(encoding="utf-8")
 a0 = alb.index("<script>\n(function(){\nvar D=null;"); a1 = alb.index("</script>\n<script src=\"" + LIVE + "assets/app.js\">")
@@ -123,7 +124,8 @@ for _f in OUT.glob("*.html"):
     _x = _f.read_text(encoding="utf-8")
     _x = re.sub(r'src="((?:novita|derby)[\w-]*\.js)"', lambda m: 'src="%s?v=%s"' % (m.group(1), _v), _x)
     _f.write_text(_x, encoding="utf-8")
-SKIN = """html{background:#141d3d}
+SKIN = """header.hero,header.top,.ohead{position:relative;padding-bottom:20px!important;margin-bottom:20px!important}header.hero::after,header.top::after,.ohead::after{content:'';position:absolute;left:0;right:0;bottom:0;height:7px;border-radius:4px;background:linear-gradient(100deg,#d62839 0 50%,#ffd166 50% calc(50% + 7px),#1d3a8a calc(50% + 7px) 100%);box-shadow:0 2px 8px rgba(0,0,0,.35)}
+html{background:#141d3d}
 body{background:radial-gradient(900px 520px at 85% -8%,rgba(214,40,57,.26),transparent 62%),radial-gradient(1000px 640px at -10% 18%,rgba(61,147,214,.26),transparent 60%),linear-gradient(180deg,#2c3f7c,#1d2a52 45%,#141d3d)!important;background-attachment:fixed!important}
 body::before{display:none!important}
 h1,h2,.nome,.sh-nome,.hh{font-family:Lobster,'Brush Script MT',cursive!important;font-weight:400!important;text-transform:none!important;letter-spacing:0!important}
