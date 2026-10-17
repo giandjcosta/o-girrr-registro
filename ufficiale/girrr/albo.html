@@ -225,7 +225,7 @@ function storico(){
   var cnt={},ord=[];
   STORICO.forEach(function(e){var k=al(e.v[1]);if(!cnt[k]){cnt[k]=0;ord.push(k)}cnt[k]++});
   ord.sort(function(a,b){return cnt[b]-cnt[a]});
-  var h='<div class="sto"><h3 style="font-weight:900;font-size:13px;letter-spacing:.3em;color:var(--hi);margin:6px 0 12px;text-transform:uppercase">Le stagioni passate</h3><div class="sala">'
+  var h='<div class="sto"><h3 style="font-weight:900;font-size:13px;letter-spacing:.3em;color:var(--hi);margin:6px 0 12px;text-transform:uppercase">L\'Era Contemporanea · Le stagioni</h3><div class="sala">'
    +ord.map(function(k){return '<span>🏆 '+esc(k)+' <b>'+cnt[k]+'</b></span>'}).join('')+'</div>';
   STORICO.forEach(function(e){
     var body='';

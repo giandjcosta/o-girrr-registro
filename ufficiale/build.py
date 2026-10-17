@@ -14,16 +14,10 @@ def estrai(nome, fine):
     i = lab.index("var " + nome + "=") + len("var " + nome + "=")
     j = lab.index(fine, i)
     return lab[i:j]
-js = "var RIV=%s;\nvar PRE=%s;\nvar STAG=%s;\nconsole.log(JSON.stringify({riv:RIV,pre:PRE,stag:STAG}));" % (estrai("RIV", ";\nS.vote="), estrai("PRE", ";\nvar OROSEZ"), estrai("STAG", ";\nS.oro="))
+js = "var RIV=%s;\nvar PRE=%s;\nvar LEG=%s;\nvar STAG=%s;\nconsole.log(JSON.stringify({riv:RIV,pre:PRE,leg:LEG,stag:STAG}));" % (estrai("RIV", ";\nS.vote="), estrai("PRE", ";\nvar LEG"), estrai("LEG", ";\nvar OROSEZ"), estrai("STAG", ";\nS.oro="))
 (R / "ufficiale" / "_x.js").write_text(js, encoding="utf-8")
 dati = json.loads(subprocess.check_output(["node", str(R / "ufficiale" / "_x.js")]))
 (R / "ufficiale" / "_x.js").unlink()
-# racconti della storia della Lega: dal testo del Laboratorio
-sto = re.search(r"<div class=\"rt\">Prima del 2021</div>(.*?)</div></div>", lab, re.S).group(1)
-dati["storia"] = [p.strip() for p in re.findall(r"<p>(.*?)</p>", sto, re.S)]
-rac = re.search(r"<div class=\"rac\"><div class=\"rt\">Il primo campionato</div>.*?(?=<p class=\"note\")", lab, re.S).group(0)
-dati["racconti"] = [[t, p.replace("\\'", "'")] for t, p in re.findall(r"<div class=\"rt\">(.*?)</div><p>(.*?)</p></div>", rac, re.S)]
-dati["storia"] = [p.replace("\\'", "'") for p in dati["storia"]]
 vt = re.search(r"S\.vote=S\.vote\|\|\{\};S\.pend=S\.pend\|\|\{\};\[(.*?)\]\.forEach", lab, re.S).group(1)
 dati["voti"] = re.findall(r"'([^']+\|[^']+)'", vt)
 
@@ -65,6 +59,7 @@ sq = sq.replace("ch.scrollLeft+=W;else if(ch.scrollLeft>W*1.5)ch.scrollLeft-=W},
 # 4) Albo: sezioni nuove
 patch("albo.html", "</head>", '<script src="novita.js"></script>\n</head>')
 patch("albo.html", "document.getElementById('al').innerHTML=stato()+allenatori()+storico()+recs();", "document.getElementById('al').innerHTML=stato()+(window.NOVITA?NOVITA(D):'')+allenatori()+storico()+recs();")
+patch("albo.html", "Le stagioni passate", "L\\'Era Contemporanea · Le stagioni")
 # 5) Curva: post nuovi dentro il feed
 patch("curva.html", "</head>", '<script src="novita-curva.js"></script>\n</head>')
 patch("curva.html", "function costruisci(){", "function costruisci(){if(window.ANT_POSTS)S.adm=(S.adm||[]).filter(function(u){return !u.ant}).concat(window.ANT_POSTS());")
@@ -101,7 +96,7 @@ assert m
 card = '<a class="c" href="../../anteprima/attuale.html#sport"><div class="ic"><img src="girrr-sport.png" alt="Girrr Sport" style="height:54px;width:auto;border-radius:8px"></div><h2>Girrr Sport</h2><p>La TV, il giornale e la radio della lega: tutto quello che si legge, si ascolta e si guarda.</p><div class="go">ENTRA ›</div></a>'
 ix = ix.replace(m.group(0), card, 1).replace('<a href="giornale.html">Leggi il giornale ›</a>', '<a href="giornale.html">Leggi il giornale ›</a>', 1)
 LOGO = LIVE + "assets/logo-lega.png"
-extra_cards = ('<a class="c" href="albo.html"><div class="ic"><img src="%s" alt=""></div><h2>Albo d\'oro</h2><p>Storia della Lega, Era Precedente, stagioni, derby, Albo di Latta e record.</p><div class="go">ENTRA ›</div></a>'
+extra_cards = ('<a class="c" href="albo.html"><div class="ic"><img src="%s" alt=""></div><h2>Albo d\'oro</h2><p>Storia della Lega, Era dei Titani, stagioni, derby, Albo di Latta e record.</p><div class="go">ENTRA ›</div></a>'
                '<a class="c" href="../../anteprima/attuale.html#carriera"><div class="ic"><img src="%s" alt=""></div><h2>Carriera</h2><p>Obiettivi, fiducia del presidente e conferenza stampa di ogni allenatore.</p><div class="go">ENTRA ›</div></a>') % (LOGO, LOGO)
 i0 = ix.index('<section class="cards">'); i1 = ix.index('</section>', i0)
 ix = ix[:i1] + extra_cards + ix[i1:]
