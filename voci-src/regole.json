@@ -1,5 +1,5 @@
 {
- "_come_si_usa": "Regole che decide Gianluca. 'aspettative' = entro quale posto il presidente vuole chiudere ogni squadra. 'derby_amici' = coppie che i suoi amici sentono come derby: se non è vuoto, contano solo quelle; se è vuoto i derby si calcolano dalla storia della lega (derby.py: stagioni insieme, zone alte, podi, anzianità).",
+ "_come_si_usa": "Regole che decide Gianluca. 'aspettative' = entro quale posto il presidente vuole chiudere ogni squadra. 'derby_amici' = sfide che i suoi amici sentono come derby: [\"A\",\"B\"] vale 100, [\"A\",\"B\",60] vale 60. Pesano il 60% contro il 40% della storia (derby.py). Con la lista vuota decide solo la storia. Un derby ha sempre una rivalità di almeno 70.",
  "aspettative": {
   "Oranje VC": 4,
   "Apo team": 5,

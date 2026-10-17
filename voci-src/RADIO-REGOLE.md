@@ -26,7 +26,8 @@ Conferenze stampa: se qualcuno le fa (conferenze.json) la radio fa un riepilogo 
 Curva: una volta a settimana, prima di far uscire la radio, chiedere a Gianluca se c'è un post vero (curva.json). Se è vuoto la radio non ne parla.
 Attenzione: conferenze.json e mercato.json oggi sono dati di prova (demo: true).
 
-## Derby (deciso il 17 ottobre)
-Valore principale: le coppie che i suoi amici sentono come derby (regole.json, "derby_amici"). Se la lista è vuota si calcola dalla storia della lega (derby.py + storico.json, che viene dall'Albo d'oro):
-stagioni passate insieme, stagioni in cui entrambi sono stati nelle prime 4, peso di titoli/secondi/terzi posti (3/2/1), anzianità. Si prende il quarto più alto di tutte le coppie.
-AFA SELECCION non ha ancora un allenatore abbinato, quindi non ha storia (da confermare con Gianluca). Squadre con due allenatori (The Blue brothers) sommano le stagioni di entrambi.
+## Derby e rivalità (deciso il 17 ottobre)
+Rivalità dalla storia (derby.py + storico.json dall'Albo d'oro), da 0 a 100: stagioni insieme, stagioni insieme nelle prime 4, peso dei podi (titolo 3, secondo 2, terzo 1, vale il più basso dei due) e anzianità (il più basso dei due).
+Derby = voti degli amici di Gianluca (regole.json, "derby_amici"): pesano il 60%, la storia il 40%. Derby se l'intensità arriva a 50. Con la lista vuota decide solo la storia (quarto più alto delle coppie).
+Un derby ha sempre rivalità alta: rivalità finale = storia + 60% del voto degli amici, minimo 70 se il voto è almeno 50. Sopra 70 la radio aggiunge "Una rivalità storica!".
+AFA SELECCION non ha un allenatore abbinato, quindi non ha storia (da confermare). Squadre con due allenatori (The Blue brothers) sommano le stagioni di entrambi.
