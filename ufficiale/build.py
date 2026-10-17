@@ -87,6 +87,11 @@ for f in ["index.html", "albo.html", "derby.html", "curva.html", "squadre.html"]
     p.write_text(t.replace("</head>", '<script src="novita-dati.js"></script>\n</head>', 1), encoding="utf-8")
 for p in OUT.glob("*.html"):
     _t = p.read_text(encoding="utf-8")
+    for _a, _b in [("· i dati arrivano", "· I dati arrivano"), ("' · ex'", "' · Ex'"), ("· giornata '+g.sa", "· Giornata '+g.sa"), ("· si completa", "· Si completa"), ("· quota <b>", "· Quota <b>"), ("· risultati in arrivo", "· Risultati in arrivo"), ("' · con foto'", "' · Con foto'")]:
+        _t = _t.replace(_a, _b)
+    p.write_text(_t, encoding="utf-8")
+for p in OUT.glob("*.html"):
+    _t = p.read_text(encoding="utf-8")
     if "transizioni.js" not in _t:
         p.write_text(_t.replace("</head>", '<script src="transizioni.js"></script>\n<script src="barra.js"></script>\n</head>', 1), encoding="utf-8")
 (R / "ufficiale" / "index.html").write_text((R / "ufficiale" / "src" / "confronto.html").read_text(encoding="utf-8"), encoding="utf-8")

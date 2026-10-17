@@ -29,13 +29,13 @@ sost("S.fb[cur]", "S.fb[cur]")
 sost("['derby','I derby'],['all','Gli allenatori']", "['derby','I derby'],['latta','Albo di Latta'],['all','Gli allenatori']")
 sost("  if(S.oro==='storia')h+=", "  if(S.oro==='derby')return h+vDerby();if(S.oro==='latta')return h+vAlbo();\n  if(S.oro==='storia')h+=")
 s = re.sub(r"\+'<div class=\"card\"><h3>Cosa cambia in Home</h3>.*?homeMock\(\)\+'</div>'", "", s, flags=re.S)
-sost("['moviola','Moviola · presto']]", "['sfide','Sfide lanciate'],['moviola','Moviola · presto']]")
+sost("['moviola','Moviola · Presto']]", "['sfide','Sfide lanciate'],['moviola','Moviola · Presto']]")
 sost("sp==='radio'?spRadio():'';", "sp==='radio'?spRadio():sp==='sfide'?vSfide():'';")
 extra = r"""
 S.cr=S.cr||'ob';
 var vCar0=vCar;
 function vStat(){var ok=false;try{ok=JSON.parse(localStorage.getItem('fg')||'{}').team==='Oranje VC'}catch(e){}return ok?'<a class="card" href="@@STAT@@" style="display:block;margin-top:14px;padding:14px 16px;text-decoration:none;color:inherit"><b>📊 Statistiche</b><br><span style="opacity:.75;font-size:13px">Solo per te: chi entra e dove ›</span></a>':''}
-function vCarr(){return '<div class="seg" role="group" aria-label="Sezioni">'+[['ob','Obiettivi e presidente'],['cassa','Cassa · da decidere']].map(function(x){return '<button data-cr="'+x[0]+'" aria-pressed="'+(S.cr===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>'+(S.cr==='cassa'?vCassa():vCar0())}
+function vCarr(){return '<div class="seg" role="group" aria-label="Sezioni">'+[['ob','Obiettivi e presidente'],['cassa','Cassa · Da decidere']].map(function(x){return '<button data-cr="'+x[0]+'" aria-pressed="'+(S.cr===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>'+(S.cr==='cassa'?vCassa():vCar0())}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-cr]');if(!b)return;S.cr=b.dataset.cr;render()});
 function route(t){var M={derby:['oro','oro','derby'],albo:['oro','oro','latta'],sfide:['sport','sp','sfide'],borsino:['spog'],prob:['toto'],cassa:['carriera','cr','cassa']};
   if(M[t]){if(M[t][1])S[M[t][1]]=M[t][2];return M[t][0]}return t}

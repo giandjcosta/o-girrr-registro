@@ -133,7 +133,7 @@ body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:no
     <aside class="panel"><div class="swap" id="tab"></div></aside>
   </div>
   <div class="sp"><span>Gentilmente offerto da</span><div class="lg"><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/loghi/sponsor-birra-contropiede.png" alt=""><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/loghi/sponsor-pizzeria-fuorigioco.png" alt=""><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/loghi/sponsor-bomber-gym-club.png" alt=""><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/loghi/sponsor-amaro-del-mister.png" alt=""></div></div>
-  <div class="foot" id="foot">O Girrr · i dati arrivano dallo Spogliatoio</div>
+  <div class="foot" id="foot">O Girrr · I dati arrivano dallo Spogliatoio</div>
 </div>
 <script>
 (function(){
@@ -179,7 +179,7 @@ function render(){
   document.getElementById('tit').textContent=tit;
   document.getElementById('kick').textContent=pl?'RISULTATI':(n===lp+1?'PROSSIMA GIORNATA':'DA GIOCARE');
   document.title='Tabellone · '+tit;
-  var b='<div class="nota">Serie A · giornata '+g.sa+'</div>';
+  var b='<div class="nota">Serie A · Giornata '+g.sa+'</div>';
   g.m.forEach(function(m,k){
     var gir='',casa,pc,pf,fuori,ris;
     if(cup){gir=m[0];casa=m[1];pc=m[2];pf=m[3];fuori=m[4];ris=m[5]}else{casa=m[0];pc=m[1];pf=m[2];fuori=m[3];ris=m[4]}
@@ -205,7 +205,7 @@ function renderKo(c,ko){
   document.getElementById('tit').textContent='Champions Cup · '+ko.tit;
   document.getElementById('kick').textContent='DA GIOCARE';
   document.title='Tabellone · Champions Cup · '+ko.tit;
-  var b='<div class="nota">Fase finale · si completa dopo i gironi</div>';
+  var b='<div class="nota">Fase finale · Si completa dopo i gironi</div>';
   for(var k=0;k<ko.k;k++){
     b+='<div class="m cp ko" style="animation-delay:'+(k*70)+'ms"><div class="g">'+ko.ic+(ko.k>1?(k+1):'')+'</div><div class="t h"><span>Da definire</span></div><div class="sc"><b>–</b><i></i><b>–</b></div><div class="t"><span>Da definire</span></div></div>';
   }

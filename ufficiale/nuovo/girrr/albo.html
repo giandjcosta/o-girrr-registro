@@ -143,9 +143,9 @@ td small{color:var(--sub);font-weight:600;display:block;font-size:11px}
 </style>
 <script src="pub.js"></script>
 <script src="storia.js?v=1"></script>
-<script src="novita.js?v=1792271589"></script>
-<script src="novita-dati.js?v=1792271589"></script>
-<script src="novita-badge.js?v=1792271589"></script>
+<script src="novita.js?v=1792271729"></script>
+<script src="novita-dati.js?v=1792271729"></script>
+<script src="novita-badge.js?v=1792271729"></script>
 <script src="transizioni.js"></script>
 <script src="barra.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">
@@ -162,7 +162,7 @@ h1{font-size:clamp(30px,6vw,48px)!important}
   <a class="back" href="index.html">‹ O Girrr</a>
   <header class="top"><img id="lg" src="https://giandjcosta.github.io/o-fant-a-girrr/assets/loghi/logo-lega-o-fant-a-girrr.png" alt="O Fant A Girrr" title="Torna a O Girrr"><div><div class="kick">O FANT A GIRRR · 2026/27</div><h1>Albo d'oro</h1></div></header>
   <div class="swap" id="al" style="margin-top:16px"><div class="vuoto">Carico i record…</div></div>
-  <div class="foot" id="foot">O Girrr · i dati arrivano dallo Spogliatoio</div>
+  <div class="foot" id="foot">O Girrr · I dati arrivano dallo Spogliatoio</div>
 </div>
 <script>
 (function(){
@@ -227,7 +227,7 @@ function recs(){
 }
 /* Storico: nomi degli allenatori come su Leghe; alias confermati da Gianluca */
 var ALIAS=CVS.ALIAS,EX=CVS.EX;
-function al(n){n=ALIAS[n]||n;return EX[n]?n+' · ex':n}
+function al(n){n=ALIAS[n]||n;return EX[n]?n+' · Ex':n}
 /* nel tabellone di una stagione: nome di allora, con tra parentesi quello attuale */
 function alS(n){var c=ALIAS[n];return c?n+' ('+al(n)+')':al(n)}
 var STORICO=CVS.STORICO;
