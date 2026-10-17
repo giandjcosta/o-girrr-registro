@@ -11,6 +11,10 @@ def carica():
         if "t" not in e: continue   # la Coppa Campioni non è il campionato
         for pos, riga in enumerate(e["t"], 1):
             m = al.get(riga[1], riga[1]); per.setdefault(m, {})[e["y"]] = pos
+    # stagioni prima del 2021 (dai ricordi): posizione nota, oppure solo la presenza (99 = c'era, posizione non ricordata)
+    for e in S.get("pre", []):
+        for m, pos in e.get("pos", {}).items(): per.setdefault(al.get(m, m), {})[e["y"]] = pos
+        for m in e.get("pres", []): per.setdefault(al.get(m, m), {}).setdefault(e["y"], 99)
     return per
 def prestigio(pos):
     return sum({1: 3, 2: 2, 3: 1}.get(p, 0) for p in pos.values())
@@ -31,10 +35,11 @@ def classifica():
     return sorted(((punteggio(x, y, per), x, y) for x, y in itertools.combinations(sq, 2)), reverse=True)
 def _massimo():
     """Massimo teorico: in ogni stagione della storia due allenatori insieme (2), insieme nelle zone alte (2), con podi pesanti (2) e con anzianità piena (1)."""
-    return 7.0 * len({y for m in carica().values() for y in m})
+    # il massimo si calcola sulle stagioni con classifica completa: gli anni prima del 2021 (dai ricordi) aggiungono solo punti, senza abbassare le rivalità già note
+    return 7.0 * len({e["y"] for e in json.load(open(R / "storico.json", encoding="utf-8"))["storico"] if "t" in e})
 def rivalita_storia(a, b):
     """Rivalità dalla sola storia, da 0 a 100."""
-    return round(100 * punteggio(a, b) / _massimo(), 1)
+    return min(100.0, round(100 * punteggio(a, b) / _massimo(), 1))
 def voto_amici(a, b, regole=None):
     """Quanto i suoi amici sentono la sfida come derby, da 0 a 100. Una coppia semplice vale 100; [a, b, 60] vale 60."""
     best = 0

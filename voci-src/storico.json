@@ -298,5 +298,42 @@
     ]
    ]
   }
+ ],
+ "pre": [
+  {
+   "y": "2016/17",
+   "pos": {
+    "apo": 1,
+    "DJ Cst Brazil": 4
+   },
+   "pres": [
+    "Leanzino",
+    "Mario"
+   ]
+  },
+  {
+   "y": "2017/18",
+   "pos": {
+    "Urba": 1
+   },
+   "pres": [
+    "DJ Cst Brazil",
+    "Leanzino",
+    "Mario"
+   ]
+  },
+  {
+   "y": "2018/19",
+   "pos": {
+    "Urba": 1,
+    "RikyArma": 2,
+    "Filippo": 3
+   },
+   "pres": [
+    "DJ Cst Brazil",
+    "Leanzino",
+    "Mario"
+   ]
+  }
  ]
 }
