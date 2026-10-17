@@ -29,6 +29,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 .tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin:0 -2px 12px;scrollbar-width:none;background:linear-gradient(180deg,var(--bg3),transparent)}
 .tabs::-webkit-scrollbar{display:none}
 @media (hover:hover) and (pointer:fine){.tabs{background:none;position:static}}
+.cov a.btn,.garch a.btn{text-decoration:none}.gcov{display:grid;grid-template-columns:minmax(110px,210px) 1fr;gap:16px;align-items:start}.gcov .gimg img{display:block;width:100%;height:auto;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.4)}.garch{display:grid!important;grid-template-columns:64px 1fr;gap:12px;align-items:center;padding:10px 0}.garch .gth img{display:block;width:64px;height:auto;border-radius:6px;box-shadow:0 3px 10px rgba(0,0,0,.35)}.garch .gtx{display:grid;gap:3px;min-width:0}.garch .gtx>span{font-size:12.5px;line-height:1.35}.garch .gbt{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}.garch .gbt .btn{padding:5px 10px!important;font-size:12px}@media(max-width:480px){.gcov{grid-template-columns:100px 1fr;gap:12px}}
 .tabs button:first-child{margin-left:auto}.tabs button:last-child{margin-right:auto}.tabs.fl{-webkit-mask-image:linear-gradient(90deg,transparent,#000 34px);mask-image:linear-gradient(90deg,transparent,#000 34px)}.tabs.fr{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 34px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 34px),transparent)}.tabs.fl.fr{-webkit-mask-image:linear-gradient(90deg,transparent,#000 34px,#000 calc(100% - 34px),transparent);mask-image:linear-gradient(90deg,transparent,#000 34px,#000 calc(100% - 34px),transparent)}.tabs,.at{cursor:grab;scroll-snap-type:none}.tabs.drag,.at.drag{cursor:grabbing;scroll-behavior:auto}
 @media (hover:hover) and (pointer:fine) and (min-width:1060px){.tabs{width:1000px;margin-left:calc((100% - 1000px)/2)}}
 .tabs button{transition:background-color .5s,border-color .5s,color .5s;flex:none;padding:8px 13px;border-radius:99px;font-weight:700;font-size:13px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(14px)}
@@ -728,10 +729,19 @@ function homeMock(){
   var base=['Tabellone','Totogirrr','Curva','Squadre','Albo','Statistiche'];
   function grid(first){return '<div class="gt">'+first+base.map(function(x){return '<i>'+x+'</i>'}).join('')+'</div>'}
   return '<div class="hm"><div class="fr"><b>Prima</b>'+grid('<i class="g0">Giornale</i>')+'</div><div class="fr dopo"><b>Dopo</b>'+grid('<i class="g1"><img src="'+D.img.gs+'" alt="Girrr Sport" style="width:84%;height:auto"></i>')+'</div></div>'}
+var GI=null,GIL='https://giandjcosta.github.io/o-fant-a-girrr/';
+try{fetch(GIL+'riepiloghi/indice.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(j){GI=j;if(cur==='sport'&&S.sp==='giornale')render()}).catch(function(){})}catch(e){}
+function gbt(it){return '<a class="btn" style="padding:8px 14px" href="'+GIL+it.pdf+'?v='+it.v+'" target="_blank" rel="noopener">Leggi il giornale</a><a class="btn o" style="padding:8px 14px" href="'+GIL+it.pdf+'?v='+it.v+'" download target="_blank" rel="noopener">Scarica</a>'}
 function spGiornale(){
+  var h='';
+  if(GI&&GI.length){
+    var u=GI[0];
+    h+='<div class="cov gcov"><a class="gimg" href="'+GIL+u.pdf+'?v='+u.v+'" target="_blank" rel="noopener"><img src="'+GIL+u.copertina+'?v='+u.v+'" alt="Copertina del giornale, numero '+u.n+'"></a><div><small>Ultimo numero · N° '+u.n+' · '+esc(u.data)+'</small><h3>'+esc(u.titolone)+'</h3><p class="sm" style="opacity:.85">'+esc(u.sommario)+'</p><div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">'+gbt(u)+'</div></div></div>';
+    h+='<div class="card"><h3>I numeri precedenti</h3>'+(GI.slice(1).map(function(x){return '<div class="arch garch"><a class="gth" href="'+GIL+x.pdf+'?v='+x.v+'" target="_blank" rel="noopener"><img src="'+GIL+x.copertina+'?v='+x.v+'" alt="Copertina numero '+x.n+'" loading="lazy"></a><div class="gtx"><b>N° '+x.n+' · '+esc(x.data)+'</b><span class="mut">'+esc(x.titolone)+'</span><div class="gbt">'+gbt(x)+'</div></div></div>'}).join('')||'<p class="note">Il primo numero è quello in alto: gli altri arriveranno con le prossime giornate.</p>')+'</div>';
+    return h}
   var a=D.aw[D.aw.length-1];
-  var h='<div class="cov"><small>Il Giornale · Giornata '+a.n+'</small><h3>'+esc(a.mvp[0])+' è il re della giornata</h3><p class="sm" style="opacity:.85">'+a.mvp[1]+' punti. Flop: '+esc(a.flop[0])+' a '+a.flop[1]+'. Mazzata: '+esc(a.maz[0])+', battuta da '+esc(a.maz[3])+'.</p><div style="display:flex;gap:8px;margin-top:10px"><span class="btn" style="padding:8px 14px">Leggi il PDF</span><span class="btn o" style="padding:8px 14px">Scarica</span></div></div>';
-  h+='<div class="card"><h3>Le giornate precedenti</h3>'+D.aw.slice(0,-1).reverse().map(function(x){return '<div class="arch"><span>Giornata '+x.n+' · Re: '+esc(x.mvp[0])+'</span><span class="mut">PDF</span></div>'}).join('')+'</div>';
+  h='<div class="cov"><small>Il Giornale · Giornata '+a.n+'</small><h3>'+esc(a.mvp[0])+' è il re della giornata</h3><p class="sm" style="opacity:.85">'+a.mvp[1]+' punti. Flop: '+esc(a.flop[0])+' a '+a.flop[1]+'. Mazzata: '+esc(a.maz[0])+', battuta da '+esc(a.maz[3])+'.</p><p class="note" style="margin-top:8px">Carico le copertine…</p></div>';
+  h+='<div class="card"><h3>I numeri precedenti</h3>'+D.aw.slice(0,-1).reverse().map(function(x){return '<div class="arch"><span>Giornata '+x.n+' · Re: '+esc(x.mvp[0])+'</span></div>'}).join('')+'</div>';
   return h}
 function radioMeta(){
   var a=D.aw[D.aw.length-1],g=D.aw.length,c=(D.cup||[]).filter(function(r){return r.m.some(function(m){return m[5]!=='-'})}).length,pt=function(x){return String(x).replace('.',',')};
