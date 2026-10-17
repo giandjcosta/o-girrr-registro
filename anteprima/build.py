@@ -57,7 +57,7 @@ sost("""'<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'"
      """'<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'" aria-label="'+t[1]+'">'+(t[0]==='sport'?'<img class="gsl" src="'+D.img.gs+'" alt="Girrr Sport">':(({home:1,oro:1,spog:1,carriera:1})[t[0]]?'<img src="'+D.img.lega+'" alt="">':'')+t[1])+'</button>'""")
 s = s.replace('src="voci/', 'src="../lab/voci/').replace("fetch('voci/", "fetch('../lab/voci/")
 out = R / "anteprima" / "index.html"
-out.write_text(s.replace("@@STAT@@", "../ufficiale/nuovo/girrr/statistiche.html").replace("@@HOME@@", "../ufficiale/nuovo/girrr/index.html"), encoding="utf-8")
+out.write_text(s.replace("@@STAT@@", "../ufficiale/nuovo/girrr/statistiche.html").replace("@@HOME@@", "../ufficiale/nuovo/girrr/index.html") + '\n<script src="../ufficiale/girrr/barra.js"></script>\n', encoding="utf-8")
 print("scritto", out, len(s))
 # Seconda versione: stesse funzioni, grafica attuale del sito (font Inter, sfondo a barre, tab a pillola)
 skin = """<style id="skin-attuale">
@@ -80,5 +80,5 @@ s_plain = s_plain.replace("@@STAT@@", "../ufficiale/girrr/statistiche.html").rep
 a = s_plain.replace("</style>", "</style>" + skin, 1)
 a = a.replace("<title>O Girrr · Anteprima 5.0</title>", "<title>O Girrr · Anteprima 5.0 (grafica attuale)</title>")
 a = a.replace("family=Lobster&family=Inter", "family=Inter")
-(R / "anteprima" / "attuale.html").write_text(a, encoding="utf-8")
+(R / "anteprima" / "attuale.html").write_text(a + '\n<script src="../ufficiale/girrr/barra.js"></script>\n', encoding="utf-8")
 print("scritto attuale.html")

@@ -78,7 +78,7 @@ der = der.replace("<script src=\"novita.js\"></script>\n", "")
 
 # 7) dati e script nuovi
 (OUT / "novita-dati.js").write_text("window.NOV=" + json.dumps(dati, ensure_ascii=False) + ";", encoding="utf-8")
-for n in ["novita.js", "derby.js", "novita-curva.js", "novita-badge.js", "transizioni.js"]:
+for n in ["novita.js", "derby.js", "novita-curva.js", "novita-badge.js", "transizioni.js", "barra.js"]:
     sorg = (R / "ufficiale" / "src" / n).read_text(encoding="utf-8")
     sorg = sorg.replace("'../data.json'", "'" + LIVE + "data.json'")
     (OUT / n).write_text(sorg, encoding="utf-8")
@@ -88,7 +88,7 @@ for f in ["index.html", "albo.html", "derby.html", "curva.html", "squadre.html"]
 for p in OUT.glob("*.html"):
     _t = p.read_text(encoding="utf-8")
     if "transizioni.js" not in _t:
-        p.write_text(_t.replace("</head>", '<script src="transizioni.js"></script>\n</head>', 1), encoding="utf-8")
+        p.write_text(_t.replace("</head>", '<script src="transizioni.js"></script>\n<script src="barra.js"></script>\n</head>', 1), encoding="utf-8")
 (R / "ufficiale" / "index.html").write_text((R / "ufficiale" / "src" / "confronto.html").read_text(encoding="utf-8"), encoding="utf-8")
 print("scritto", OUT, len(list(OUT.iterdir())), "file")
 
