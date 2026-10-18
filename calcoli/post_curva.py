@@ -10,7 +10,7 @@ Formato di eventi.json: lista di oggetti con "tipo" e "k" (chiave unica dell'eve
   {"tipo":"rifiuto", "k":"S12", "da":"Oranje VC", "a":"Grodah"}                     (a ha rifiutato)
   {"tipo":"scaduta", "k":"S12", "da":"Oranje VC", "a":"Grodah"}                     (nessuna risposta in 3 giorni)
   {"tipo":"derby",   "k":"S12", "da":"Oranje VC", "a":"Grodah", "nome":"Il Derby della Rivincita"}
-  {"tipo":"promessa","k":"C7-Apo", "team":"Apo team", "giornata":3, "promessa":"Vinciamo noi", "esito":"v"|"p"}
+  {"tipo":"promessa","k":"C7-Apo", "team":"Apo team", "giornata":3, "promessa":"Vinciamo noi", "esito":"v"|"s"}   (v mantenuta, s tradita, p pareggio: come nel database)
 Regole (decise da Gianluca): i post usano i nomi degli allenatori; i post ufficiali non parlano mai di scommesse; "Derby" sempre con la D maiuscola.
 Ogni post è al massimo di 280 caratteri.
 """
@@ -31,7 +31,8 @@ def m(t):
 def post(e):
     t = e["tipo"]
     if t == "sfida":
-        return [(GS, f"SFIDA LANCIATA\n{m(e['da'])} contro {m(e['a'])}: «{e['frase']}» Sta per nascere un nuovo Derby? #GirrrSport #Derby")]
+        fr = f": «{e['frase']}»" if e.get("frase") else "."
+        return [(GS, f"SFIDA LANCIATA\n{m(e['da'])} contro {m(e['a'])}{fr} Sta per nascere un nuovo Derby? #GirrrSport #Derby")]
     if t == "rifiuto":
         return [(GS, f"RIFIUTO CLAMOROSO\n{m(e['a'])} non considera {m(e['da'])} nemmeno degno di un Derby. La rivalità, intanto, sale. #GirrrSport")]
     if t == "scaduta":
@@ -42,7 +43,7 @@ def post(e):
     if t == "promessa":
         if e["esito"] == "v":
             return [(GIORNALE, f"PAROLA MANTENUTA\n{m(e['team'])} l'aveva detto in conferenza stampa: «{e['promessa']}». Poi è andato in campo e l'ha fatto. #ConferenzaStampa")]
-        if e["esito"] == "p":
+        if e["esito"] == "s":   # come nel database: v mantenuta, p pareggio (nessun post), s tradita
             return [(GIORNALE, f"PROMESSA TRADITA\n{m(e['team'])} in conferenza stampa: «{e['promessa']}». Il campo ha risposto altro, e la dirigenza ha preso nota. #ConferenzaStampa")]
     return []
 

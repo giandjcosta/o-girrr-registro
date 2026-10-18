@@ -69,6 +69,8 @@ patch("albo.html", "Le stagioni passate", "L\\'Era Contemporanea · Le stagioni"
 patch("curva.html", "</head>", '<script src="novita-curva.js"></script>\n</head>')
 patch("curva.html", "function costruisci(){", "function costruisci(){if(window.ANT_POSTS)S.adm=(S.adm||[]).filter(function(u){return !u.ant}).concat(window.ANT_POSTS());")
 patch("curva.html", "T(S1,230,230,'800 36px '+F,'#fff','center',330);T(S2,W-230,230,'800 36px '+F,'#fff','center',330);T(n(0,3)+' - '+n(1,3),W/2,260,'900 120px '+F,'#ffd166','center');", "T(S1,165,215,'800 34px '+F,'#fff','center',255);T(S2,W-165,215,'800 34px '+F,'#fff','center',255);T(n(0,3)+' - '+n(1,3),W/2,262,'900 92px '+F,'#ffd166','center');")
+# Curva da telefono: niente evidenziazione del post toccato o scorso (su touch :hover resta appiccicato)
+patch("curva.html", "</head>", '<style>@media(hover:none){.post:hover,.nav button:hover,.ib:hover,.tabs button:hover,.acts button:hover{background:transparent!important}.acts .rsp:hover:not(.on),.acts .ril:hover:not(.on),.acts .app:hover:not(.on),.acts .del:hover{color:var(--mu)!important}.pn b:hover{text-decoration:none}}.post,.acts button,.tabs button{-webkit-tap-highlight-color:transparent}</style>\n</head>')
 # 6) Pagina Derby: stessa grafica dell'Albo
 alb = (OUT / "albo.html").read_text(encoding="utf-8")
 a0 = alb.index("<script>\n(function(){\nvar D=null;"); a1 = alb.index("</script>\n<script src=\"" + LIVE + "assets/app.js\">")
