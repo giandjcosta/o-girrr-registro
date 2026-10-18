@@ -132,6 +132,27 @@ if not RIL:
     (R / "ufficiale" / "index.html").write_text((R / "ufficiale" / "src" / "confronto.html").read_text(encoding="utf-8"), encoding="utf-8")
 print("scritto", OUT, len(list(OUT.iterdir())), "file")
 
+# 7b) Totogirrr: due schede nuove nel suo menu (Probabilità e Sfide 1 contro 1), menu a scorrimento e Quote Derby
+_tp = OUT / "totogirrr.html"
+_t = _tp.read_text(encoding="utf-8")
+def _rp(a, b, n=1):
+    global _t
+    assert _t.count(a) >= 1, a[:70]
+    _t = _t.replace(a, b) if n == 0 else _t.replace(a, b, n)
+_rp("</style>", (R / "ufficiale" / "src" / "toto-schede.css").read_text(encoding="utf-8") + ".dby{display:inline-block;margin-left:6px;padding:2px 7px;border-radius:99px;background:var(--hi);color:var(--bg);font:900 9px Inter;letter-spacing:.06em;text-transform:uppercase;vertical-align:middle}\n</style>")
+_rp("'<nav>'+[['partite','Partite'],['vinc','Vincenti'],['mie','Le mie'],['class','Classifica'],['prestiti','Prestiti'],['regole','Regole']]", "'<nav><div class=\"nvi\">'+[['partite','Partite'],['vinc','Vincenti'],['mie','Le mie'],['class','Classifica'],['prob','Probabilità'],['sfide','Sfida 1 contro 1'],['prestiti','Prestiti'],['regole','Regole']]")
+_rp("+'</nav>'+ticker();", "+'</div></nav>'+ticker();")
+_rp("tab==='prestiti'?vPrestiti():vRegole();", "tab==='prestiti'?vPrestiti():tab==='prob'?vProbT():tab==='sfide'?vSfideT():vRegole();")
+_rp("var keep=document.getElementById('stake');", "navPre();var keep=document.getElementById('stake');")
+_rp("ANIM=false;\n  tickCd();", "ANIM=false;\n  tickCd();navPost();")
+_rp("if(tab==='prestiti')loadPR();return}", "if(tab==='prestiti')loadPR();if(tab==='prob')probLoad();if(tab==='sfide')duLoad(false);return}")
+_rp("function nm(p){return p.comp==='vinc'?esc(p.casa):esc(p.casa)+' – '+esc(p.trasf)}", "function nm(p){return p.comp==='vinc'?esc(p.casa):esc(p.casa)+' – '+esc(p.trasf)+(p.derby?'<span class=\"dby\">Derby</span>':'')}")
+_rp("function quotaDi(p,m){var f={'1':p.q1,'X':p.qx,'2':p.q2,'O':p.qo,'U':p.qu}[m];return Number(f!=null?f:(p.extra||{})[m])}", "function quotaDi(p,m){var f={'1':p.q1,'X':p.qx,'2':p.q2,'O':p.qo,'U':p.qu}[m],v=Number(f!=null?f:(p.extra||{})[m]);return p.derby?Math.round(Math.round(v*100)*115/100)/100:v}\nfunction slipDerby(){return slip.some(function(x){var p=pm(x.p);return p&&p.derby})}")
+_rp("q=Math.min(500,Math.round(q*100)/100)", "q=Math.min(500,Math.round(q*(slipDerby()?1.1:1)*100)/100)", 0)
+_rp("function vRegole(){", "function vRegole(){return vRegole0()+REGDERBY}\nfunction vRegole0(){")
+_rp("function fmtCd(ms)", (R / "ufficiale" / "src" / "toto-schede.js").read_text(encoding="utf-8") + "\nvar REGDERBY='<div class=\"card\"><b>Quote Derby</b><p style=\"margin-top:6px;line-height:1.5\">Le partite tra squadre che hanno un Derby ufficiale hanno la quota maggiorata del 15% su ogni esito. Se la tua schedina contiene un Derby la quota finale vale il 10% in più, e se la schedina perde ti torna il 20% della puntata. Valgono dalla giornata successiva alla nascita del Derby: le schedine già giocate non cambiano.</p></div>';\nvar _qi=/[?&]t=(prob|sfide)/.exec(location.search);if(_qi){tab=_qi[1]}\nfunction fmtCd(ms)")
+_tp.write_text(_t, encoding="utf-8")
+
 for f in ["index.html", "albo.html", "derby.html"]:
     patch(f, '<script src="novita-dati.js"></script>', '<script src="novita-dati.js"></script>\n<script src="novita-badge.js"></script>')
 # 8) Home: riquadri per le novità che vivono nel Laboratorio (stesse funzioni, aprono l'anteprima con la grafica giusta)
@@ -204,4 +225,28 @@ if RIL:
         x = re.sub(r"([\"'(])\.\./(?!\.)", lambda m: m.group(1) + "../../", x)
         f.write_text(x, encoding="utf-8")
 else: (N.parent / "index.html").write_text('<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0;url=girrr/index.html"><a href="girrr/index.html">Apri l\'anteprima</a>', encoding="utf-8")
+# percorso dei dati delle probabilità, diverso per Lega e Stadio
+for _d, _paths in ((OUT, ['dati/lab-dati.json'] if RIL else ['../../anteprima/dati/lab-dati.json']),
+                   (N, ['../../girrr/dati/lab-dati.json'] if RIL else ['../../../anteprima/dati/lab-dati.json'])):
+    _f = _d / "totogirrr.html"
+    _f.write_text(_f.read_text(encoding="utf-8").replace("@@DATI@@", json.dumps(_paths)), encoding="utf-8")
+# sui dispositivi touch (telefoni e tablet) niente effetto "si alza col contorno giallo": resta solo con il mouse (PC e Smart TV)
+def _solo_mouse(css):
+    out, i, n = [], 0, len(css)
+    while i < n:
+        j = css.find("{", i)
+        if j < 0: out.append(css[i:]); break
+        sel = css[i:j]
+        d, k = 1, j + 1
+        while k < n and d:
+            d += (css[k] == "{") - (css[k] == "}"); k += 1
+        blocco = css[i:k]
+        out.append(("@media (hover:hover) and (pointer:fine){" + blocco + "}") if (":hover" in sel and "@" not in sel) else blocco)
+        i = k
+    return "".join(out)
+for _d in (OUT, N):
+    for _f in _d.glob("*.html"):
+        _x = _f.read_text(encoding="utf-8")
+        _y = re.sub(r"(<style[^>]*>)(.*?)(</style>)", lambda m: m.group(1) + _solo_mouse(m.group(2)) + m.group(3), _x, flags=re.S)
+        if _y != _x: _f.write_text(_y, encoding="utf-8")
 print("scritto anche la versione nuova")

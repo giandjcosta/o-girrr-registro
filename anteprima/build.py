@@ -49,6 +49,9 @@ document.addEventListener('click',function(e){var b=e.target.closest('[data-tt]'
 function route(t){var M={derby:['oro','oro','derby'],albo:['oro','oro','latta'],sfide:['sport','sp','sfide'],duello:['toto','tt','duello'],borsino:['spog'],prob:['toto','tt','prob'],cassa:['carriera','cr','cassa']};
   if(M[t]){if(M[t][1])S[M[t][1]]=M[t][2];return M[t][0]}return t}
 """
+
+if os.environ.get("APP_RIL"):   # nel sito vero Probabilità e Sfide 1 contro 1 vivono dentro Totogirrr, con il suo menu e la sua grafica
+    extra += "(function(){function go(){var h=(location.hash||'').slice(1);if(h==='toto'||h==='prob'||h==='duello')location.replace('@@TOTO@@?t='+(h==='duello'?'sfide':'prob'))}go();window.addEventListener('hashchange',go)})();\n"
 sost("var V={spog:vSpog,toto:vToto,home:vHome,", extra + "function vSpog(){return vBors()}function vToto(){return vTotoP()}\nvar V={duello:vSfide,spog:vSpog,toto:vToto,home:vHome,")
 sost("function go(t){", "function go(t){t=route(t);if(t==='home'){location.href='@@HOME@@';return}")
 sost("if(V[hh])cur=hh;", "if(V[hh])cur=route(hh);if(cur==='home'){location.replace('@@HOME@@')}")
@@ -69,6 +72,7 @@ RIL = bool(os.environ.get("APP_RIL"))   # rilascio: pagine per il sito vero (per
 VOCI = os.environ.get("APP_VOCI", "voci/")
 def fin(t, stat, home):
     t = t.replace("@@STAT@@", stat).replace("@@HOME@@", home)
+    t = t.replace("@@TOTO@@", stat.replace("statistiche.html", "totogirrr.html"))
     if RIL:
         t = t.replace("../lab/voci/", VOCI).replace('<link rel="icon" href="../favicon-64.png">', "")
         t = re.sub(r'<link rel="icon"[^>]*favicon-64[^>]*>', "", t)
