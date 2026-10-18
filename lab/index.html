@@ -243,7 +243,7 @@ var _ls=document.createElement('style');_ls.textContent='#lg,#olg{cursor:pointer
 (function(){
 var NOMI={index:'O Girrr',albo:"Albo d'oro",derby:'I Derby',rivalita:'Le rivalità',squadre:'Squadre',tabellone:'Tabellone',totogirrr:'Totogirrr',statistiche:'Statistiche',curva:'Curva',giornale:'Giornale',sport:'Girrr Sport',spog:'Spogliatoio',toto:'Totogirrr'};
 var PADRE={albo:'index',derby:'albo',rivalita:'albo',squadre:'tabellone',tabellone:'index',totogirrr:'index',statistiche:'index',curva:'index',giornale:'index'};
-var LABPADRE={sfide:'sport',prob:'toto',duello:'toto',borsino:'spog'};
+var LABPADRE={sfide:'sport'};
 var p=location.pathname,lab=/\/anteprima\//.test(p),uf=/\/ufficiale\/(nuovo\/)?girrr\//.test(p);if(!lab&&!uf)return;
 var cur=lab?'lab':(p.split('/').pop().replace('.html','')||'index');
 if(cur==='index')return;
