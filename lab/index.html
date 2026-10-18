@@ -603,9 +603,10 @@ var FZ={"The Blue brothers": 99, "Apo team": 100, "Grodah": 84, "WOA": 81, "Real
 var NG=34;
 function mgrsOf(t){return t==='The Blue brothers'?['Leanzino','Mario']:[mg(t)]}
 function histScore(t){var qs=[];mgrsOf(t).forEach(function(m){var h=(HIST[m]||[]).slice().sort(function(a,b){return a[0]<b[0]?1:-1}),w=1,sw=1,sq=.5;h.forEach(function(r){var q=(r[2]+1-r[1])/r[2];sq+=w*q;sw+=w;w*=.85});qs.push(sq/sw*100)});return qs.reduce(function(a,b){return a+b},0)/qs.length}
-/* Titoli: campione in carica +12, titolo negli ultimi 3 anni +6, Champions Cup in carica +6. I titoli vecchi senza continuità (es. Apo) non danno bonus */
+/* Ogni titolo di campionato conta, di più se è recente: ultimo anno +12, 2-3 anni fa +6, più vecchio +3 (massimo 25 in tutto). Champions Cup in carica +6. Apo ha vinto anche nel 2017 (fuori dallo storico) */
 var STAG=['2025/26','2024/25','2023/24'];
-function bonusTitoli(t){var b=0;mgrsOf(t).forEach(function(m){(HIST[m]||[]).forEach(function(r){if(r[1]===1){var i=STAG.indexOf(r[0]);if(i===0)b=Math.max(b,12);else if(i>0)b=Math.max(b,6)}})});if(t==='Grodah')b+=6;return b}
+var TITOLI_EXTRA={'apo':[2017]};
+function bonusTitoli(t){var b=0;mgrsOf(t).forEach(function(m){(HIST[m]||[]).forEach(function(r){if(r[1]===1){var i=STAG.indexOf(r[0]);b+=i===0?12:i>0?6:3}});(TITOLI_EXTRA[m]||[]).forEach(function(){b+=3})});b=Math.min(25,b);if(t==='Grodah')b+=6;return b}
 function potenza(t){return .5*histScore(t)+.5*Math.max(0,Math.min(100,((FZ[t]||0)-60)/40*100))+bonusTitoli(t)}
 function fascia(t){var e=(OB[t]||{}).er||5;return e<=3?'Big':e<=6?'Emergente':'Outsider'}
 var EXPPRES=JSON.parse(JSON.stringify(EXP));
