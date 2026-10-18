@@ -58,6 +58,15 @@ def main():
         if f.is_file() and f.name not in stato and f.suffix in (".py", ".json", ".md"):
             shutil.copy(f, MAIN / "calcoli" / f.name)
     (MAIN / "calcoli" / "conferenze.json").write_text("[]", encoding="utf-8")
+    # sfondo su un livello fisso a parte in tutte le pagine (Safari non rispetta background-attachment:fixed)
+    sys.path.insert(0, str(R / "rilascio"))
+    import sfondo
+    for cartella in (GH / "girrr", GH / "stadio" / "girrr"):
+        for f in sorted(cartella.glob("*.html")):
+            t, k = sfondo.applica(f.read_text(encoding="utf-8"))
+            if k:
+                f.write_text(t, encoding="utf-8")
+                print(f"sfondo fisso: {f.relative_to(GH)} ({k} regole)")
     n = sum(1 for _ in PAC.rglob("*") if _.is_file())
     mb = sum(f.stat().st_size for f in PAC.rglob("*") if f.is_file()) / 1e6
     print(f"Pacchetto pronto: {n} file, {mb:.1f} MB in {PAC}")

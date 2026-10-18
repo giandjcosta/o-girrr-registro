@@ -156,9 +156,6 @@ _rp("var keep=document.getElementById('stake');", "navPre();var keep=document.ge
 _rp("ANIM=false;\n  tickCd();", "ANIM=false;\n  tickCd();navPost();")
 # cambio scheda: cambia solo il contenuto, senza far sparire e riapparire tutta la pagina (la dissolvenza resta all'apertura)
 _rp("tab=b.getAttribute('data-tab');ANIM=true;render();", "tab=b.getAttribute('data-tab');render();")
-# sfondo: il gradiente sta su un livello fisso a parte (Safari ignora background-attachment:fixed e lo stirava sull'altezza della pagina, quindi cambiava colore tra una scheda e l'altra)
-_rp("background:var(--bg);\n background-image:radial-gradient(1200px 700px at 80% -10%,var(--bg2) 0,var(--bg) 55%,var(--bg3) 100%);background-attachment:fixed}",
-    "background:var(--bg)}\nhtml::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;z-index:-2;pointer-events:none;background:radial-gradient(1200px 700px at 80% -10%,var(--bg2) 0,var(--bg) 55%,var(--bg3) 100%)}")
 # se testata (logo, saldo, menu, ticker) e schedina non sono cambiati, si riscrive solo il contenuto: niente lampo, logo e ticker restano fermi
 _rp("var QS=1,ANIM=true,", "var LASTHS='',LASTSV='',QS=1,ANIM=true,")
 _rp("var hs=head(),sv=vSlip(),isNew=!!sv&&!SLIPWAS;SLIPWAS=!!sv;",
