@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Dice se è il momento di fare i calcoli dopo una giornata.
 
-Una giornata è chiusa quando tutte le sue partite di campionato hanno il risultato in data.json. La prima volta che la vede chiusa
-lo segna in calcoli/giornate.json; dopo ATTESA_ORE ore (default 3) dice di eseguire. Dopo i calcoli la giornata si segna come fatta
+Una giornata è chiusa quando tutte le sue partite di campionato hanno risultato e punteggi in data.json. La prima volta che la vede chiusa
+lo segna in calcoli/giornate.json con la firma dei suoi dati; se i dati cambiano (bonus ricalcolati) l'attesa riparte. Dopo ATTESA_ORE ore (default 3) senza cambiamenti dice di eseguire. Dopo i calcoli la giornata si segna come fatta
 (--fatta N, vale per tutte le giornate fino a N) e non si ripete.
 Uso:  python3 calcoli/giornata_chiusa.py data.json            stampa esegui=true|false e giornata=N (per GitHub Actions)
       python3 calcoli/giornata_chiusa.py data.json --fatta N  segna la giornata N come elaborata
@@ -28,15 +28,19 @@ def main():
         STATO.write_text(json.dumps(stato, indent=1), encoding="utf-8")
         return
     lega = json.loads(Path(A[0]).read_text(encoding="utf-8"))["cal"]["lega"]
-    chiuse = [r["n"] for r in lega if r["m"] and all(m[4] and m[4] != "-" for m in r["m"])]
+    # chiusa = ogni partita ha risultato e punteggi di entrambe le squadre (più di zero)
+    chiuse = [r["n"] for r in lega if r["m"] and all(m[4] and m[4] != "-" and m[1] and m[2] for m in r["m"])]
+    firma = {r["n"]: json.dumps(r["m"], sort_keys=True) for r in lega}
     esegui, giornata = False, ""
     for n in sorted(chiuse):
         s = stato.setdefault(str(n), {})
         if s.get("fatta"):
             continue
-        if "visto" not in s:
-            s["visto"] = adesso().isoformat()
-            print(f"Giornata {n}: chiusa, la segno. Calcoli tra {ATTESA_ORE:g} ore.", file=sys.stderr)
+        if s.get("firma") != firma[n]:
+            # prima volta, oppure risultati o punteggi cambiati (bonus ricalcolati): l'attesa riparte da adesso
+            motivo = "chiusa" if "visto" not in s else "cambiata"
+            s["visto"], s["firma"] = adesso().isoformat(), firma[n]
+            print(f"Giornata {n}: {motivo}, la segno. Calcoli tra {ATTESA_ORE:g} ore se non cambia più.", file=sys.stderr)
         elif adesso() - datetime.datetime.fromisoformat(s["visto"]) >= datetime.timedelta(hours=ATTESA_ORE):
             esegui, giornata = True, str(n)
             break
