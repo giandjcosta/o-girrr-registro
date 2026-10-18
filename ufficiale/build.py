@@ -23,6 +23,7 @@ dati = json.loads(subprocess.check_output(["node", str(R / "ufficiale" / "_x.js"
 (R / "ufficiale" / "_x.js").unlink()
 vt = re.search(r"S\.vote=S\.vote\|\|\{\};S\.pend=S\.pend\|\|\{\};\[(.*?)\]\.forEach", lab, re.S).group(1)
 dati.update(json.loads((R / "ufficiale" / "src" / "storie.json").read_text(encoding="utf-8")))
+dati["fino"] = "2026-10-21"   # ultimo giorno del bollino Novità (mercoledì, a fine giornata)
 dati["rilascio"] = "2026-10-17"   # data in cui la 5.0 va in linea: il bollino Novità dura 15 giorni da qui
 dati["voti"] = re.findall(r"'([^']+\|[^']+)'", vt)
 
