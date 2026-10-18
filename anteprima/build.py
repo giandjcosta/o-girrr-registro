@@ -5,7 +5,7 @@ R = pathlib.Path(__file__).resolve().parent.parent
 s = (R / "lab" / "index.html").read_text(encoding="utf-8")
 import sys; sys.path.insert(0, str(R / "rilascio"))
 import livepatch
-s = livepatch.applica(s, os.environ.get("APP_MODO", "prova"), "dati/lab-dati.json")   # dati veri + database (in anteprima: finto, nel browser)
+s = livepatch.applica(s, os.environ.get("APP_MODO", "prova"), os.environ.get("APP_DATI", "dati/lab-dati.json"))   # dati veri + database (in anteprima: finto, nel browser)
 def sost(a, b, n=1):
     global s
     assert a in s, a[:60]
@@ -65,8 +65,23 @@ sost("</style>", "header.hero,header.top,.ohead{position:relative;padding-bottom
 sost("""'<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'">'+t[1]+'</button>'""",
      """'<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'" aria-label="'+t[1]+'">'+(t[0]==='sport'?'<img class="gsl" src="'+D.img.gs+'" alt="Girrr Sport">':(({home:1,oro:1,spog:1,carriera:1})[t[0]]?'<img src="'+D.img.lega+'" alt="">':'')+t[1])+'</button>'""")
 s = s.replace('src="voci/', 'src="../lab/voci/').replace("fetch('voci/", "fetch('../lab/voci/")
-out = R / "anteprima" / "index.html"
-out.write_text(s.replace("@@STAT@@", "../ufficiale/nuovo/girrr/statistiche.html").replace("@@HOME@@", "../ufficiale/nuovo/girrr/index.html") + '\n<script src="../ufficiale/girrr/barra.js"></script>\n', encoding="utf-8")
+RIL = bool(os.environ.get("APP_RIL"))   # rilascio: pagine per il sito vero (percorsi relativi, niente barra da anteprima)
+VOCI = os.environ.get("APP_VOCI", "voci/")
+def fin(t, stat, home):
+    t = t.replace("@@STAT@@", stat).replace("@@HOME@@", home)
+    if RIL:
+        t = t.replace("../lab/voci/", VOCI).replace('<link rel="icon" href="../favicon-64.png">', "")
+        t = re.sub(r'<link rel="icon"[^>]*favicon-64[^>]*>', "", t)
+        t = re.sub(r'<span class="proto">.*?</span>( <a class="back"[^>]*>[^<]*</a>)+', "", t, count=1, flags=re.S)
+        return t
+    return t + '\n<script src="../ufficiale/girrr/barra.js"></script>\n'
+if RIL:
+    out = pathlib.Path(os.environ["APP_OUT_STADIO"])
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(fin(s, "statistiche.html", "index.html"), encoding="utf-8")
+else:
+    out = R / "anteprima" / "index.html"
+    out.write_text(fin(s, "../ufficiale/nuovo/girrr/statistiche.html", "../ufficiale/nuovo/girrr/index.html"), encoding="utf-8")
 print("scritto", out, len(s))
 # Seconda versione: stesse funzioni, grafica attuale del sito (font Inter, sfondo a barre, tab a pillola)
 skin = """<style id="skin-attuale">
@@ -85,9 +100,13 @@ body::after{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:non
 .seg button[aria-pressed=true]{background:var(--red)!important;color:#fff!important}
 .tabs button{padding:9px 14px;font-size:13px}
 </style>"""
-s_plain = s_plain.replace("@@STAT@@", "../ufficiale/girrr/statistiche.html").replace("@@HOME@@", "../ufficiale/girrr/index.html").replace('src="voci/', 'src="../lab/voci/').replace("fetch('voci/", "fetch('../lab/voci/")
+s_plain = s_plain.replace('src="voci/', 'src="../lab/voci/').replace("fetch('voci/", "fetch('../lab/voci/")
 a = s_plain.replace("</style>", "</style>" + skin, 1)
 a = a.replace("<title>O Girrr · Anteprima 5.0</title>", "<title>O Girrr · Anteprima 5.0 (grafica attuale)</title>")
 a = a.replace("family=Lobster&family=Inter", "family=Inter")
-(R / "anteprima" / "attuale.html").write_text(a + '\n<script src="../ufficiale/girrr/barra.js"></script>\n', encoding="utf-8")
+if RIL:
+    pathlib.Path(os.environ["APP_OUT_LEGA"]).parent.mkdir(parents=True, exist_ok=True)
+    pathlib.Path(os.environ["APP_OUT_LEGA"]).write_text(fin(a, "statistiche.html", "index.html"), encoding="utf-8")
+else:
+    (R / "anteprima" / "attuale.html").write_text(fin(a, "../ufficiale/girrr/statistiche.html", "../ufficiale/girrr/index.html"), encoding="utf-8")
 print("scritto attuale.html")

@@ -45,6 +45,9 @@ def eventi(stato, promesse):
 
 
 if __name__ == "__main__":
-    ev = eventi(rpc("derby_stato", {}), rpc("conf_promesse", {}))
+    prom = rpc("conf_promesse", {})
+    ev = eventi(rpc("derby_stato", {}), prom)
     USCITA.write_text(json.dumps(ev, ensure_ascii=False, indent=1), encoding="utf-8")
-    print("eventi.json scritto:", len(ev), "eventi")
+    # le promesse grezze servono a fiducia.py (che ricalcola l'esito dai risultati veri)
+    (USCITA.parent / "conferenze.json").write_text(json.dumps(prom, ensure_ascii=False, indent=1), encoding="utf-8")
+    print("eventi.json scritto:", len(ev), "eventi;", "conferenze.json:", len(prom), "promesse")

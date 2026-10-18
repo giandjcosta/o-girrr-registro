@@ -1,0 +1,67 @@
+name: Calcoli dopo la giornata
+# Si lancia a mano (Actions, Run workflow) quando una giornata è finita e le statistiche sono aggiornate.
+# Chiude le promesse delle conferenze, ricalcola fiducia, probabilità e Borsino, prepara i dati per le pagine nuove
+# e mette i nuovi post della Curva in coda (o li pubblica, quando finisce il periodo di approvazione).
+# Non tocca il workflow "Aggiorna statistiche e voti".
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: calcoli-giornata
+env:
+  CURVA_URL: ${{ secrets.CURVA_URL }}
+  CURVA_KEY: ${{ secrets.CURVA_KEY }}
+  CURVA_TEAM: ${{ secrets.CURVA_TEAM }}
+  CURVA_CODE: ${{ secrets.CURVA_CODE }}
+jobs:
+  calcola:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          path: code
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: site
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Leggo sfide e promesse dal database
+        run: python3 code/calcoli/leggi_eventi.py code/calcoli/eventi.json
+      - name: Chiudo le promesse dopo le partite
+        run: python3 code/calcoli/risolvi_conferenze.py site/data.json --vai
+      - name: Rileggo con gli esiti aggiornati
+        run: python3 code/calcoli/leggi_eventi.py code/calcoli/eventi.json
+      - name: Fiducia, probabilità e Borsino
+        run: |
+          mkdir -p site/girrr/dati
+          python3 code/calcoli/fiducia.py site/data.json site/girrr/dati/fiducia.json
+          python3 code/calcoli/probabilita.py site/data.json site/girrr/dati/probabilita.json site/scripts
+          python3 code/calcoli/borsino.py site/data.json site/girrr/dati/borsino.json
+      - name: Dati per le pagine nuove
+        run: python3 code/calcoli/dati_lab.py site/data.json site/girrr/dati/probabilita.json site/girrr/dati/lab-dati.json site/scripts site/girrr/dati/borsino.json site/girrr/dati/fiducia.json
+      - name: Post della Curva (in coda o pubblicati, secondo il periodo)
+        run: |
+          python3 code/calcoli/post_curva.py code/calcoli/eventi.json code/calcoli/post_curva.json
+          python3 code/calcoli/pubblica_curva.py --vai
+      - name: Salvo i dati del sito
+        run: |
+          cd site
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add girrr/dati
+          git diff --cached --quiet || git commit -m "Calcoli dopo la giornata"
+          git pull --rebase origin gh-pages
+          git push origin gh-pages
+      - name: Salvo la coda e i post già pubblicati
+        run: |
+          cd code
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add calcoli/eventi.json calcoli/conferenze.json calcoli/post_curva.json calcoli/coda_curva.json calcoli/pubblicati.json
+          git diff --cached --quiet || git commit -m "Curva: coda e post aggiornati"
+          git pull --rebase origin main
+          git push origin main
