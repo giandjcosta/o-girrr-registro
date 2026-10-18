@@ -2,11 +2,14 @@
 Copia le pagine vere di O Girrr (repo o-fant-a-girrr, ramo gh-pages) con il loro stile e il loro font, punta dati e immagini al sito vero
 e aggiunge: sezioni nuove nell'Albo d'oro, pagina Derby, riquadro in Home, post nuovi nella Curva.
 Non scrive niente nel database e non tocca il sito vero. Si lancia con: python3 ufficiale/build.py (dalla cartella del repo)."""
-import pathlib, re, json, subprocess, shutil, sys
+import pathlib, re, json, subprocess, shutil, sys, os
 R = pathlib.Path(__file__).resolve().parent.parent
-SRC = pathlib.Path("/home/claude/o-fant-a-girrr/girrr")
-OUT = R / "ufficiale" / "girrr"
-LIVE = "https://giandjcosta.github.io/o-fant-a-girrr/"
+RIL = bool(os.environ.get("RILASCIO"))   # modo rilascio: pagine per il sito vero (percorsi relativi, niente cose da anteprima)
+SRC = pathlib.Path(os.environ.get("SORGENTE_GIRRR", "/home/claude/o-fant-a-girrr/girrr"))
+PAC = R / "rilascio" / "pacchetto" / "gh-pages"
+OUT = PAC / "girrr" if RIL else R / "ufficiale" / "girrr"
+LIVE = "../" if RIL else "https://giandjcosta.github.io/o-fant-a-girrr/"
+APP = "app.html" if RIL else "../../anteprima/attuale.html"
 lab = (R / "lab" / "index.html").read_text(encoding="utf-8")
 
 # 1) dati dal Laboratorio, valutati con node
@@ -29,9 +32,24 @@ OUT.mkdir(parents=True)
 for f in SRC.iterdir():
     if f.suffix not in (".html", ".js"): continue
     t = f.read_text(encoding="utf-8")
-    t = re.sub(r"([\"'])\.\./", lambda m: m.group(1) + LIVE, t)
-    t = "\n".join(l for l in t.split("\n") if "goatcounter" not in l)   # niente conteggi sulle aperture di prova
+    if not RIL:
+        t = re.sub(r"([\"'])\.\./", lambda m: m.group(1) + LIVE, t)
+        t = "\n".join(l for l in t.split("\n") if "goatcounter" not in l)   # niente conteggi sulle aperture di prova
     (OUT / f.name).write_text(t, encoding="utf-8")
+
+def ril_js(s, n):
+    """Percorsi del sito vero: Lega in /girrr/, Stadio in /stadio/girrr/, la app delle novità è app.html nella stessa cartella."""
+    if n == "grafica.js":
+        s = s.replace("location.pathname.indexOf('/ufficiale/nuovo/')>=0", "location.pathname.indexOf('/stadio/girrr/')>=0")
+        s = s.replace("p.replace('/ufficiale/girrr/','/ufficiale/nuovo/girrr/'):p.replace('/ufficiale/nuovo/girrr/','/ufficiale/girrr/')", "p.replace('/girrr/','/stadio/girrr/'):p.replace('/stadio/girrr/','/girrr/')")
+    if n == "transizioni.js":
+        s = s.replace("p.indexOf('/ufficiale/nuovo/girrr/')>=0||p.indexOf('/ufficiale/girrr/')>=0", "/\\/girrr\\/(?!app\\.html)/.test(p)")
+        s = s.replace("else if(/\\/anteprima\\/attuale\\.html$/.test(p))d='../ufficiale/girrr/index.html';else if(/\\/anteprima\\/(index\\.html)?$/.test(p))d='../ufficiale/nuovo/girrr/index.html';", "else if(/\\/girrr\\/app\\.html$/.test(p))d='index.html';")
+        s = s.replace("lab=/\\/anteprima\\//.test(p),uf=/\\/ufficiale\\/(nuovo\\/)?girrr\\//.test(p)", "lab=/\\/girrr\\/app\\.html$/.test(p),uf=/\\/girrr\\//.test(p)&&!lab")
+        s = s.replace("var dir=lab?p.slice(0,p.indexOf('/anteprima/')+1)+'ufficiale/'+(/attuale\\.html$/.test(p)?'':'nuovo/')+'girrr/':p.slice(0,p.lastIndexOf('/')+1);", "var dir=p.slice(0,p.lastIndexOf('/')+1);")
+        # il look scelto vale in tutto il sito: chi ha scelto Stadio (o Lega) ci resta
+        s = s.replace("if(window._fx)return;window._fx=1;", "if(window._fx)return;window._fx=1;\ntry{var _v=localStorage.getItem('orr_gv'),_p=location.pathname,_st=_p.indexOf('/stadio/girrr/')>=0;if(_v==='n'&&!_st&&/\\/girrr\\//.test(_p)){location.replace(_p.replace('/girrr/','/stadio/girrr/')+location.search+location.hash);return}if(_v==='a'&&_st){location.replace(_p.replace('/stadio/girrr/','/girrr/')+location.search+location.hash);return}}catch(e){}",1)
+    return s
 
 def patch(nome, a, b, n=1):
     p = OUT / nome; t = p.read_text(encoding="utf-8")
@@ -66,8 +84,9 @@ patch("albo.html", "var exl=Object.keys(ex).sort(", "if(window.NOV&&NOV.pre)NOV.
 patch("albo.html", "<b>'+f[2]+' - '+f[6]+'</b><small>'+pt(f[3])+' - '+pt(f[7])+'</small>", "<b>'+f[2]+' - '+f[6]+'</b>")
 patch("albo.html", "Le stagioni passate", "L\\'Era Contemporanea · Le stagioni")
 # 5) Curva: post nuovi dentro il feed
-patch("curva.html", "</head>", '<script src="novita-curva.js"></script>\n</head>')
-patch("curva.html", "function costruisci(){", "function costruisci(){if(window.ANT_POSTS)S.adm=(S.adm||[]).filter(function(u){return !u.ant}).concat(window.ANT_POSTS());")
+if not RIL:   # i post d'esempio della 5.0 si vedono solo in anteprima, mai nel sito vero
+    patch("curva.html", "</head>", '<script src="novita-curva.js"></script>\n</head>')
+    patch("curva.html", "function costruisci(){", "function costruisci(){if(window.ANT_POSTS)S.adm=(S.adm||[]).filter(function(u){return !u.ant}).concat(window.ANT_POSTS());")
 patch("curva.html", "T(S1,230,230,'800 36px '+F,'#fff','center',330);T(S2,W-230,230,'800 36px '+F,'#fff','center',330);T(n(0,3)+' - '+n(1,3),W/2,260,'900 120px '+F,'#ffd166','center');", "T(S1,165,215,'800 34px '+F,'#fff','center',255);T(S2,W-165,215,'800 34px '+F,'#fff','center',255);T(n(0,3)+' - '+n(1,3),W/2,262,'900 92px '+F,'#ffd166','center');")
 # Curva da telefono: niente evidenziazione del post toccato o scorso (su touch :hover resta appiccicato)
 patch("curva.html", "</head>", '<style>@media(hover:none){.post:hover,.nav button:hover,.ib:hover,.tabs button:hover,.acts button:hover{background:transparent!important}.acts .rsp:hover:not(.on),.acts .ril:hover:not(.on),.acts .app:hover:not(.on),.acts .del:hover{color:var(--mu)!important}.pn b:hover{text-decoration:none}}.post,.acts button,.tabs button{-webkit-tap-highlight-color:transparent}</style>\n</head>')
@@ -92,9 +111,10 @@ for _a, _b in [("ser è l\\'unico che in cinque stagioni non ha mai cambiato né
 (OUT / "storia.js").write_text(_s, encoding="utf-8")
 # 7) dati e script nuovi
 (OUT / "novita-dati.js").write_text("window.NOV=" + json.dumps(dati, ensure_ascii=False) + ";", encoding="utf-8")
-for n in ["novita.js", "derby.js", "novita-curva.js", "novita-badge.js", "transizioni.js", "barra.js", "grafica.js"]:
+for n in (["novita.js", "derby.js", "novita-badge.js", "transizioni.js", "grafica.js"] if RIL else ["novita.js", "derby.js", "novita-curva.js", "novita-badge.js", "transizioni.js", "barra.js", "grafica.js"]):
     sorg = (R / "ufficiale" / "src" / n).read_text(encoding="utf-8")
     sorg = sorg.replace("'../data.json'", "'" + LIVE + "data.json'")
+    if RIL: sorg = ril_js(sorg, n)
     (OUT / n).write_text(sorg, encoding="utf-8")
 for f in ["index.html", "albo.html", "derby.html", "rivalita.html", "curva.html", "squadre.html"]:
     p = OUT / f; t = p.read_text(encoding="utf-8")
@@ -107,8 +127,9 @@ for p in OUT.glob("*.html"):
 for p in OUT.glob("*.html"):
     _t = p.read_text(encoding="utf-8")
     if "transizioni.js" not in _t:
-        p.write_text(_t.replace("</head>", '<script src="transizioni.js"></script>\n<script src="barra.js"></script>\n</head>', 1), encoding="utf-8")
-(R / "ufficiale" / "index.html").write_text((R / "ufficiale" / "src" / "confronto.html").read_text(encoding="utf-8"), encoding="utf-8")
+        p.write_text(_t.replace("</head>", '<script src="transizioni.js"></script>\n' + ('' if RIL else '<script src="barra.js"></script>\n') + '</head>', 1), encoding="utf-8")
+if not RIL:
+    (R / "ufficiale" / "index.html").write_text((R / "ufficiale" / "src" / "confronto.html").read_text(encoding="utf-8"), encoding="utf-8")
 print("scritto", OUT, len(list(OUT.iterdir())), "file")
 
 for f in ["index.html", "albo.html", "derby.html"]:
@@ -161,15 +182,26 @@ body::before{display:none!important}
 h1,h2,.nome,.sh-nome,.hh{font-family:Lobster,'Brush Script MT',cursive!important;font-weight:400!important;text-transform:none!important;letter-spacing:0!important}
 h1{font-size:clamp(30px,6vw,48px)!important}
 .cards{grid-template-columns:1fr 1fr!important;gap:10px!important}.c{min-height:0!important;padding:12px!important}.c .ic{height:64px!important;margin-bottom:8px!important}.c .ic img[src*="albo-alloro"],.c .ic img[src*="carriera-micro"]{height:62px!important;margin-top:0!important}.c .ic img{max-width:100%}.c h2{font-size:19px!important}.c p{display:none!important}.c .go{font-size:11px!important;margin-top:6px}.card,.c,.mn,.lg-leghe{background:linear-gradient(150deg,rgba(255,255,255,.12),rgba(255,255,255,.05))!important}"""
-N = R / "ufficiale" / "nuovo" / "girrr"
+for f in list(OUT.glob("*.html")) + list(OUT.glob("novita.js")):
+    x = f.read_text(encoding="utf-8").replace("../../anteprima/attuale.html", APP).replace("@@APP@@", APP)
+    f.write_text(x, encoding="utf-8")
+N = PAC / "stadio" / "girrr" if RIL else R / "ufficiale" / "nuovo" / "girrr"
 if N.parent.exists(): shutil.rmtree(N.parent)
 shutil.copytree(OUT, N)
+_APP_N = "app.html" if RIL else "../../../anteprima/index.html"
+_nv = N / "novita.js"; _nv.write_text(_nv.read_text(encoding="utf-8").replace(APP, _APP_N), encoding="utf-8")
 for f in N.glob("*.html"):
-    x = f.read_text(encoding="utf-8").replace("../../anteprima/attuale.html", "../../../anteprima/index.html")
+    x = f.read_text(encoding="utf-8").replace(APP, _APP_N)
     if f.name != "curva.html":
         x = x.replace("</head>", '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">\n<style id="skin-nuova">' + SKIN + "</style>\n</head>", 1)
     else:
         x = x.replace("</head>", '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">\n<style id="skin-nuova">.bar .tt,.bar .tt>span,h2{font-family:Lobster,\'Brush Script MT\',cursive!important;font-weight:400!important;letter-spacing:0!important}.bar .tt{font-size:25px!important}.bar .tt small{font-family:Inter,system-ui,sans-serif!important;font-size:12px!important;font-weight:500!important}</style>\n</head>', 1)
     f.write_text(x, encoding="utf-8")
-(N.parent / "index.html").write_text('<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0;url=girrr/index.html"><a href="girrr/index.html">Apri l\'anteprima</a>', encoding="utf-8")
+if RIL:
+    # Stadio sta una cartella più in basso: i percorsi verso il resto del sito salgono di un livello
+    for f in list(N.glob("*.html")) + list(N.glob("*.js")):
+        x = f.read_text(encoding="utf-8")
+        x = re.sub(r"([\"'(])\.\./(?!\.)", lambda m: m.group(1) + "../../", x)
+        f.write_text(x, encoding="utf-8")
+else: (N.parent / "index.html").write_text('<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0;url=girrr/index.html"><a href="girrr/index.html">Apri l\'anteprima</a>', encoding="utf-8")
 print("scritto anche la versione nuova")

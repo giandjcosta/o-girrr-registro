@@ -14,7 +14,7 @@ from pathlib import Path
 QUI = Path(__file__).resolve().parent
 DATI = Path(sys.argv[1]) if len(sys.argv) > 1 else QUI.parent / "data.json"
 USCITA = Path(sys.argv[2]) if len(sys.argv) > 2 else QUI.parent / "probabilita.json"
-SCRIPTS = Path(sys.argv[3]) if len(sys.argv) > 3 else Path("/home/claude/o-fant-a-girrr/scripts")
+SCRIPTS = Path(sys.argv[3]) if len(sys.argv) > 3 else (QUI.parent / "scripts" if (QUI.parent / "scripts" / "toto_quote.py").exists() else Path("/home/claude/o-fant-a-girrr/scripts"))
 SIMS = 8000
 
 spec = importlib.util.spec_from_file_location("toto_quote", SCRIPTS / "toto_quote.py")
