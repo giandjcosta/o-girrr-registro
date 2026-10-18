@@ -635,10 +635,10 @@ function gauge(v){var a=Math.PI*(1-v/100),cx=110,cy=100,R=82,x=cx+R*Math.cos(a),
   return '<svg class="gauge" viewBox="0 0 220 128" width="260" role="img" aria-label="Fiducia del presidente '+v+' su 100"><path d="M28 100A82 82 0 0 1 192 100" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="16" stroke-linecap="round"/><path d="M28 100A82 82 0 0 1 '+x.toFixed(1)+' '+y.toFixed(1)+'" fill="none" stroke="'+c+'" stroke-width="16" stroke-linecap="round"/><text x="110" y="96" text-anchor="middle" font-size="40" font-weight="900" style="fill:var(--ink)">'+v+'</text><text x="8" y="122" text-anchor="start" font-size="10">Esonero</text><text x="212" y="122" text-anchor="end" font-size="10">Fiducia piena</text></svg>'}
 
 /* Ogni allenatore ha obiettivi suoi: il presidente guarda storia, rosa e ambizione; lo sponsor è diverso e chiede una cosa diversa, sempre misurabile */
-function vittObj(t){var er=(OB[t]||{}).er||5;return er<=2?6:er<=4?5:er<=7?4:3}
+function vittObj(t){var er=(OB[t]||{}).er||5;if(lastPos(t)===1)return Math.max(5,er<=2?6:5);return er<=2?6:er<=4?5:er<=7?4:3}
 function ptsGiornate(t,soglia){var n=0;D.aw.forEach(function(a){a.rows.forEach(function(r){if(r[0]===t&&r[1]>=soglia)n++})});return n}
 function sponsorDi(t){var ob=OB[t]||{},er=ob.er||5,fz=ob.fz||70,lp=lastPos(t),r=row(t),mp=maxPts(t);
-  if(er<=4){var x=Math.max(60,Math.min(80,5*Math.round((58+(fz-60)*.45)/5)));return {nome:'Bomber Gym Club',testo:'Supera '+x+' punti in una giornata',pct:Math.min(100,Math.round(mp/x*100)),stato:'Massimo '+f1(mp)}}
+  if(er<=4||lp===1){var x=Math.max(60,Math.min(80,5*Math.round((58+(fz-60)*.45)/5)));return {nome:'Bomber Gym Club',testo:'Supera '+x+' punti in una giornata',pct:Math.min(100,Math.round(mp/x*100)),stato:'Massimo '+f1(mp)}}
   var h=0;for(var i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))%997;var k=h%6,n60=ptsGiornate(t,60),n65=ptsGiornate(t,65);
   if(k===0&&lp&&lp>=4)return {nome:'Cassa di Risparmio Girrr',testo:'Chiudi meglio dello scorso anno ('+lp+'°)',pct:Math.min(100,Math.round((lp/Math.max(r.pos,1))*70)),stato:'Ora '+r.pos+'°'};
   if(k===1)return {nome:'Termoidraulica Bepi',testo:'Resta nella metà alta dopo la 10ª giornata',pct:Math.min(100,Math.round(5/Math.max(r.pos,1)*100)),stato:'Ora '+r.pos+'°'};
