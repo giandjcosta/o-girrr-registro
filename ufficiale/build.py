@@ -17,7 +17,7 @@ def estrai(nome, fine):
     i = lab.index("var " + nome + "=") + len("var " + nome + "=")
     j = lab.index(fine, i)
     return lab[i:j]
-js = "var RIV=%s;\nvar PRE=%s;\nvar LEG=%s;\nvar STAG=%s;\nconsole.log(JSON.stringify({riv:RIV,pre:PRE,leg:LEG,stag:STAG}));" % (estrai("RIV", ";\nS.vote="), estrai("PRE", ";\nvar LEG"), estrai("LEG", ";\nvar OROSEZ"), estrai("STAG", ";\nS.oro="))
+js = "var RIV=%s;\nvar PRE=%s;\nvar LEG=%s;\nvar STAG=%s;\nvar LATTA=%s;\nconsole.log(JSON.stringify({riv:RIV,pre:PRE,leg:LEG,stag:STAG,latta:LATTA}));" % (estrai("RIV", ";\nS.vote="), estrai("PRE", ";\nvar LEG"), estrai("LEG", ";\nvar OROSEZ"), estrai("STAG", ";\nS.oro="), estrai("LATTA", ";\nS.lat="))
 (R / "ufficiale" / "_x.js").write_text(js, encoding="utf-8")
 dati = json.loads(subprocess.check_output(["node", str(R / "ufficiale" / "_x.js")]))
 (R / "ufficiale" / "_x.js").unlink()
@@ -231,8 +231,9 @@ else: (N.parent / "index.html").write_text('<!doctype html><meta charset="utf-8"
 # percorso dei dati delle probabilità, diverso per Lega e Stadio
 for _d, _paths in ((OUT, ['dati/lab-dati.json'] if RIL else ['../../anteprima/dati/lab-dati.json']),
                    (N, ['../../girrr/dati/lab-dati.json'] if RIL else ['../../../anteprima/dati/lab-dati.json'])):
-    _f = _d / "totogirrr.html"
-    _f.write_text(_f.read_text(encoding="utf-8").replace("@@DATI@@", json.dumps(_paths)), encoding="utf-8")
+    for _n in ("totogirrr.html", "novita.js"):
+        _f = _d / _n
+        _f.write_text(_f.read_text(encoding="utf-8").replace("@@DATI@@", json.dumps(_paths)), encoding="utf-8")
 # sui dispositivi touch (telefoni e tablet) niente effetto "si alza col contorno giallo": resta solo con il mouse (PC e Smart TV)
 def _solo_mouse(css):
     out, i, n = [], 0, len(css)
