@@ -93,6 +93,10 @@ if not RIL:   # i post d'esempio della 5.0 si vedono solo in anteprima, mai nel 
     patch("curva.html", "</head>", '<script src="novita-curva.js"></script>\n</head>')
     patch("curva.html", "function costruisci(){", "function costruisci(){if(window.ANT_POSTS)S.adm=(S.adm||[]).filter(function(u){return !u.ant}).concat(window.ANT_POSTS());")
 patch("curva.html", "T(S1,230,230,'800 36px '+F,'#fff','center',330);T(S2,W-230,230,'800 36px '+F,'#fff','center',330);T(n(0,3)+' - '+n(1,3),W/2,260,'900 120px '+F,'#ffd166','center');", "T(S1,165,215,'800 34px '+F,'#fff','center',255);T(S2,W-165,215,'800 34px '+F,'#fff','center',255);T(n(0,3)+' - '+n(1,3),W/2,262,'900 92px '+F,'#ffd166','center');")
+# Curva: il logo della Lega porta alla Home della Lega, la casa resta la Home della Curva
+patch("curva.html", "<div class=\"logo\" data-v=\"home\">", "<div class=\"logo\" data-lega=\"1\">")
+patch("curva.html", "<i class=\"lg\" style=\"width:28px;height:28px\"></i>", "<i class=\"lg\" data-lega=\"1\" style=\"width:28px;height:28px;cursor:pointer\"></i>")
+patch("curva.html", "</head>", '<script>document.addEventListener("click",function(e){var l=e.target.closest&&e.target.closest("[data-lega]");if(l){e.preventDefault();e.stopPropagation();location.href="index.html"}},true)</script>\n</head>')
 # Curva da telefono: niente evidenziazione del post toccato o scorso (su touch :hover resta appiccicato)
 patch("curva.html", "</head>", '<style>@media(hover:none){.post:hover,.nav button:hover,.ib:hover,.tabs button:hover,.acts button:hover{background:transparent!important}.acts .rsp:hover:not(.on),.acts .ril:hover:not(.on),.acts .app:hover:not(.on),.acts .del:hover{color:var(--mu)!important}.pn b:hover{text-decoration:none}}.post,.acts button,.tabs button{-webkit-tap-highlight-color:transparent}</style>\n</head>')
 # 6) Pagina Derby: stessa grafica dell'Albo
