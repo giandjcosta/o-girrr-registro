@@ -75,7 +75,7 @@ td small{color:var(--sub);font-weight:600;display:block;font-size:11px}
 .foot{margin-top:14px;text-align:center;font-size:12px;color:var(--sub);opacity:.8}
 </style>
 <script src="pub.js"></script>
-<script src="novita-dati.js?v=1792327978"></script>
+<script src="novita-dati.js?v=1792328074"></script>
 <script src="transizioni.js"></script>
 <script src="barra.js"></script>
 <style>@media(min-width:1500px){.wrap{max-width:1380px}}</style>
@@ -161,7 +161,7 @@ function render(){
   var T=D.teams.filter(function(x){return x.name===sel})[0];if(!T)return;
   var cl=classLega(),pos=cl.map(function(x){return x.n}).indexOf(sel)+1,c=cl[pos-1],cp=coppa(sel),pr=partite(sel);
   var h='<div class="card"><div class="nome">'+esc(cap(sel))+(sel===ME?' <span style="font-size:.4em;letter-spacing:.2em;color:var(--hi)">· LA TUA</span>':'')+'</div>'
-   +'<div class="sub">'+(c.g?pos+'º in campionato · '+c.g+' partita'+(c.g>1?'e':'')+' giocata'+(c.g>1?'e':''):'Il campionato non è ancora iniziato per lei')+'</div>'
+   +'<div class="sub">'+(c.g?pos+'º in campionato · '+c.g+' '+(c.g>1?'partite giocate':'partita giocata'):'Il campionato non è ancora iniziato per lei')+'</div>'
    +'<div class="kp"><div><small>Punti</small><b>'+c.pt+'</b></div><div><small>Fantapunti</small><b>'+pt(c.fp)+'</b></div>'
    +'<div><small>Media</small><b>'+(c.g?pt(c.fp/c.g):'–')+'</b></div><div><small>V · N · P</small><b>'+c.v+' · '+c.pa+' · '+c.p+'</b></div></div></div>';
   /* ultimi risultati */
