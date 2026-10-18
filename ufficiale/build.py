@@ -80,6 +80,8 @@ sq = sq.replace("ch.scrollLeft+=W;else if(ch.scrollLeft>W*1.5)ch.scrollLeft-=W},
 # 4) Albo: sezioni nuove
 # Correzione: "partitae giocatae" -> "partite giocate" (singolare: partita giocata)
 patch("squadre.html", "' partita'+(c.g>1?'e':'')+' giocata'+(c.g>1?'e':'')", "' '+(c.g>1?'partite giocate':'partita giocata')")
+# Il logo della Lega nel Tabellone riporta alla Home (nella pagina vera non è un link)
+patch("tabellone.html", "</head>", '<style>img.shield[alt="O Fant A Girrr"]{cursor:pointer}</style><script>document.addEventListener("click",function(e){var i=e.target.closest&&e.target.closest(\'img.shield[alt="O Fant A Girrr"]\');if(i&&!i.closest("a"))location.href="index.html"})</script>\n</head>')
 patch("albo.html", "</head>", '<script src="novita.js"></script>\n</head>')
 patch("albo.html", "document.getElementById('al').innerHTML=stato()+allenatori()+storico()+recs();", "document.getElementById('al').innerHTML=window.ALBOTABS?ALBOTABS(D,{stato:stato(),allenatori:allenatori(),storico:storico(),recs:recs()}):stato()+allenatori()+storico()+recs();")
 patch("albo.html", "function titoli(name){return STORICO.filter(function(e){return can(e.v[1])===name}).length}", "function titoli(name){return STORICO.filter(function(e){return can(e.v[1])===name}).length+(window.NOV&&NOV.pre?NOV.pre.filter(function(x){return x[2]===name}).length:0)}")
