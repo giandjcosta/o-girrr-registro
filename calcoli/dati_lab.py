@@ -4,7 +4,7 @@
 Senza questo file le pagine mostrano la fotografia incorporata al momento della costruzione. Con questo file mostrano i dati di oggi.
 Legge data.json (della lega) e, se c'è, probabilita.json. Scrive lab-dati.json con: teams, tab (classifica), aw (premi di ogni giornata),
 bors (valore dei giocatori per il Borsino), cal (giornate ancora da giocare), cup (Coppa Campioni), rank (Serie A), ros (la rosa di Oranje VC dalle carte), prob (probabilità).
-Uso: python3 calcoli/dati_lab.py [data.json] [probabilita.json] [uscita.json] [cartella/scripts] [borsino.json]
+Uso: python3 calcoli/dati_lab.py [data.json] [probabilita.json] [uscita.json] [cartella/scripts] [borsino.json] [fiducia.json]
 """
 import importlib.util, json, sys
 from pathlib import Path
@@ -15,6 +15,7 @@ DATI = Path(A[0]) if len(A) > 0 else QUI.parent / "data.json"
 PROB = Path(A[1]) if len(A) > 1 else QUI.parent / "probabilita.json"
 USCITA = Path(A[2]) if len(A) > 2 else QUI.parent / "lab-dati.json"
 BORS = Path(A[4]) if len(A) > 4 else QUI.parent / "borsino.json"
+FID = Path(A[5]) if len(A) > 5 else QUI.parent / "fiducia.json"
 SCRIPTS = Path(A[3]) if len(A) > 3 else (QUI.parent / "scripts" if (QUI.parent / "scripts" / "toto_quote.py").exists() else Path("/home/claude/o-fant-a-girrr/scripts"))
 ME = "Oranje VC"
 spec = importlib.util.spec_from_file_location("toto_quote", SCRIPTS / "toto_quote.py")
@@ -70,13 +71,18 @@ def main():
     d = json.loads(DATI.read_text(encoding="utf-8"))
     squadre = [t["name"] for t in d["teams"]]
     lega = d["cal"]["lega"]
-    pl = {p["id"]: p["c"] for t in d["teams"] if t["name"] == ME for p in t["pl"]}
-    ros = []
-    for pid in pl:
-        p = d["P"].get(str(pid))
-        if p:
-            ros.append(dict(id=pid, n=p["n"], t=p["t"], r=p["r"], q=p["q"], f=p["f"]))
-    ros = sorted(ros, key=lambda p: -p["f"])[:14]
+    rosters = {}
+    for t in d["teams"]:
+        lst = []
+        for p0 in t["pl"]:
+            p = d["P"].get(str(p0["id"]))
+            if p:
+                lst.append(dict(id=p0["id"], n=p["n"], t=p["t"], r=p["r"], q=p["q"], f=p["f"]))
+        rosters[t["name"]] = sorted(lst, key=lambda p: -p["f"])[:14]
+    ros = rosters.get(ME, [])
+    fid = {}
+    if FID.exists():   # fiducia di ogni squadra, da fiducia.py (con le promesse)
+        fid = {t: v["fiducia"] for t, v in json.loads(FID.read_text(encoding="utf-8")).get("squadre", {}).items()}
     prob = {}
     if PROB.exists():
         prob = {t: v for t, v in json.loads(PROB.read_text(encoding="utf-8")).get("squadre", {}).items()}
@@ -89,7 +95,7 @@ def main():
     cup = [c for c in cup if c["m"]]
     out = dict(aggiornato=d.get("updated"), teams=squadre, tab=classifica(lega, squadre), aw=premi(lega),
                cal=[dict(n=x["n"], sa=x["sa"], m=[[c, f] for c, pc, pf, f, r in x["m"]]) for x in lega if not all(giocata(m) for m in x["m"])][:4],   # le prossime quattro giornate
-               cup=cup, rank=d["rank"], ros=ros, prob=prob, bors=bors)
+               cup=cup, rank=d["rank"], ros=ros, rosters=rosters, fid=fid, prob=prob, bors=bors)
     USCITA.write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     print("lab-dati.json scritto:", USCITA, "-", len(out["tab"]), "squadre,", len(out["aw"]), "giornate giocate,", len(out["cal"]), "da giocare")
 

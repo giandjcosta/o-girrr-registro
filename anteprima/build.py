@@ -1,8 +1,11 @@
 """Genera anteprima/index.html a partire dal Lab: stessa logica, ma impaginata come l'app vera (Home con riquadri, niente voti né note del laboratorio).
 Si lancia con: python3 anteprima/build.py (dalla cartella del repo). Va rilanciato ogni volta che cambia lab/index.html."""
-import pathlib, re
+import os, pathlib, re
 R = pathlib.Path(__file__).resolve().parent.parent
 s = (R / "lab" / "index.html").read_text(encoding="utf-8")
+import sys; sys.path.insert(0, str(R / "rilascio"))
+import livepatch
+s = livepatch.applica(s, os.environ.get("APP_MODO", "prova"), "dati/lab-dati.json")   # dati veri + database (in anteprima: finto, nel browser)
 def sost(a, b, n=1):
     global s
     assert a in s, a[:60]
