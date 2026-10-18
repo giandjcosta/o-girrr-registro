@@ -23,6 +23,7 @@ def applica(s, modo, dati_url):
          "var LVQ=new URLSearchParams(location.search),FG={};try{FG=JSON.parse(localStorage.getItem('fg')||'{}')}catch(e){}\n"
          "var ME=(" + ("LVQ.get('come')||" if prova else "") + "FG.team||" + ("'Oranje VC'" if prova else "''") + "),CODE=FG.code||'',GUEST=D.teams.indexOf(ME)<0;if(GUEST)ME='Oranje VC';\n"
          "if(D.rosters&&D.rosters[ME])D.ros=D.rosters[ME];")
+    sost("</style>", ".nmin,.cfree{-webkit-appearance:none;appearance:none;width:100%;box-sizing:border-box;min-height:50px;padding:13px 18px;font:inherit;font-size:16px;font-weight:600;color:#fff;background:rgba(255,255,255,.14);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);border:1px solid rgba(255,255,255,.32);border-radius:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 4px 14px rgba(0,0,0,.2);outline:none;transition:border-color .15s,background .15s}.nmin::placeholder,.cfree::placeholder{color:rgba(255,255,255,.6);font-weight:500}.nmin:focus,.cfree:focus{border-color:#ffd166;background:rgba(255,255,255,.2)}.nmin{flex:1 1 100%!important;min-width:0!important}</style>")
     # niente voti finti: i Derby nascono dai dati veri
     s2 = re.sub(r"S\.vote=S\.vote\|\|\{\};S\.pend=S\.pend\|\|\{\};\[.*?\]\.forEach\(function\(p\)\{var x=p\.split\('\|'\);S\.vote\[rvKey\(x\[0\],x\[1\]\)\]=true\}\);",
                 "S.vote=S.vote||{};S.pend=S.pend||{};", s, flags=re.S)
