@@ -156,6 +156,14 @@ _rp("var keep=document.getElementById('stake');", "navPre();var keep=document.ge
 _rp("ANIM=false;\n  tickCd();", "ANIM=false;\n  tickCd();navPost();")
 # cambio scheda: cambia solo il contenuto, senza far sparire e riapparire tutta la pagina (la dissolvenza resta all'apertura)
 _rp("tab=b.getAttribute('data-tab');ANIM=true;render();", "tab=b.getAttribute('data-tab');render();")
+# se testata (logo, saldo, menu, ticker) e schedina non sono cambiati, si riscrive solo il contenuto: niente lampo, logo e ticker restano fermi
+_rp("var QS=1,ANIM=true,", "var LASTHS='',LASTSV='',QS=1,ANIM=true,")
+_rp("var hs=head(),sv=vSlip(),isNew=!!sv&&!SLIPWAS;SLIPWAS=!!sv;",
+    r'''var hs=head(),sv=vSlip(),isNew=!!sv&&!SLIPWAS;SLIPWAS=!!sv;
+  var pn=a.querySelector('.pane'),hsK=hs.replace(/class="on"/g,'class=""');
+  if(pn&&hsK===LASTHS&&sv===LASTSV){pn.className='pane'+(ANIM?' an':'');pn.innerHTML=body;ANIM=false;
+    [].forEach.call(a.querySelectorAll('nav [data-tab]'),function(x){x.classList.toggle('on',x.getAttribute('data-tab')===tab)});tickCd();return}
+  LASTHS=hsK;LASTSV=sv;''')
 _rp("if(tab==='prestiti')loadPR();return}","if(tab==='prestiti')loadPR();if(tab==='prob')probLoad();if(tab==='sfide')duLoad(false);return}")
 _rp("function nm(p){return p.comp==='vinc'?esc(p.casa):esc(p.casa)+' – '+esc(p.trasf)}", "function nm(p){return p.comp==='vinc'?esc(p.casa):esc(p.casa)+' – '+esc(p.trasf)+(p.derby?'<span class=\"dby\">Derby</span>':'')}")
 _rp("function quotaDi(p,m){var f={'1':p.q1,'X':p.qx,'2':p.q2,'O':p.qo,'U':p.qu}[m];return Number(f!=null?f:(p.extra||{})[m])}", "function quotaDi(p,m){var f={'1':p.q1,'X':p.qx,'2':p.q2,'O':p.qo,'U':p.qu}[m],v=Number(f!=null?f:(p.extra||{})[m]);return p.derby?Math.round(Math.round(v*100)*115/100)/100:v}\nfunction slipDerby(){return slip.some(function(x){var p=pm(x.p);return p&&p.derby})}")
