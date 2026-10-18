@@ -21,9 +21,12 @@ Sera del 18 ottobre, con il "vai" di Gianluca:
 - Post "Conferenza pre partita · Giornata X" su Girrr Sport: uno per squadra, solo per l'ultima giornata che ha conferenze, con la risposta libera, la promessa e le altre risposte nei 280 caratteri. Legge la nuova funzione `conf_pubbliche()` (`sql/6-conf-pubbliche.sql`: tutte le conferenze con le risposte; `conf_promesse` resta com'era, solo promesse, per `fiducia.py`).
 - Totogirrr: il cambio scheda non fa più sparire e riapparire la pagina (tolta l'animazione `ANIM` al click sulle schede; resta all'apertura). Patch in `ufficiale/build.py`.
 - Database: `4-pulizia.sql` applicato (una sola `derby_sfida_lancia`, con `p_testo`).
+- Totogirrr: il cambio scheda riscrive solo il contenuto (`render()` salta testata, logo, ticker e schedina se non cambiano). Verificato in un DOM simulato e in Chromium.
+- Sfondo: il gradiente non sta più su `body` con `background-attachment:fixed` (Safari lo stirava sull'altezza della pagina e cambiava colore tra pagine corte e lunghe) ma su `html::before` fisso, in tutte le pagine di Lega e Stadio. Lo fa `rilascio/sfondo.py`, chiamato da `pacchetto.py`. Non provato su Safari da me: Gianluca deve controllare.
 - Verificati da Gianluca: iPhone, unificazione statistiche di Riccardo e Nobile, "Calcoli dopo la giornata" lanciato.
 
 ## Da fare
+0. Dopo mercoledì 21 ottobre: il Borsino nello Spogliatoio. Gianluca si aspettava di trovarlo lì e non c'è (il Borsino c'è nei calcoli, `calcoli/borsino.py`, e nella app come scheda `vBors`): capire se manca nel menu dello Spogliatoio o se è solo nascosto, e deciderlo con lui.
 1. Derby "The Continental" (Oranje VC–Apo): Apo deve ancora confermare il nome nell'app (`nome_ok` falso). Appena conferma, il post "Nasce un Derby" parte da solo al giro successivo della Curva.
 2. Controllare il primo giro della Curva dopo le novità: l'Intervista speciale con il testo vero (alla prossima sfida lanciata) e il post Conferenza di Apo.
 3. Aperto: decidere se aggiungere il post della sfida anche sul profilo della squadra (per ora solo Girrr Sport).
