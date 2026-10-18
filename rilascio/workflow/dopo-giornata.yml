@@ -52,6 +52,14 @@ jobs:
       - name: Chiudo le promesse dopo le partite
         if: steps.c.outputs.esegui == 'true'
         run: python3 code/calcoli/risolvi_conferenze.py site/data.json --vai
+      - name: Chiudo le sfide 1 contro 1 di Totogirrr
+        if: steps.c.outputs.esegui == 'true' && steps.c.outputs.giornata != ''
+        env:
+          CURVA_URL: ${{ secrets.CURVA_URL }}
+          CURVA_KEY: ${{ secrets.CURVA_KEY }}
+          CURVA_TEAM: ${{ secrets.CURVA_TEAM }}
+          CURVA_CODE: ${{ secrets.CURVA_CODE }}
+        run: python3 code/calcoli/chiudi_duelli.py site/data.json "${{ steps.c.outputs.giornata }}" --vai
       - name: Rileggo con gli esiti aggiornati
         if: steps.c.outputs.esegui == 'true'
         run: python3 code/calcoli/leggi_eventi.py code/calcoli/eventi.json
