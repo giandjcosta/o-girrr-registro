@@ -646,7 +646,7 @@ function sponsorDi(t){var ob=OB[t]||{},er=ob.er||5,fz=ob.fz||70,lp=lastPos(t),r=
   if(fa==='Big'){var x=Math.max(60,Math.min(80,5*Math.round((58+(fz-60)*.45)/5)));return {nome:'Bomber Gym Club',testo:'Supera '+x+' punti in una giornata',pct:Math.min(100,Math.round(mp/x*100)),stato:'Massimo '+f1(mp)}}
   var h=0;for(var i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))%997;var n60=ptsGiornate(t,60),n65=ptsGiornate(t,65);
   var P=fa==='Emergente'?[0,1,5]:[2,3,4],k=P[(er-(fa==='Emergente'?4:7))%3];
-  if(k===0&&!(lp&&lp>=4))k=1;
+  if(k===0&&!(lp&&lp>=4))k=4;
   if(k===0)return {nome:'Cassa di Risparmio Girrr',testo:'Chiudi meglio dello scorso anno ('+lp+'°)',pct:Math.min(100,Math.round((lp/Math.max(r.pos,1))*70)),stato:'Ora '+r.pos+'°'};
   if(k===1)return {nome:'Termoidraulica Bepi',testo:'Resta nella metà alta dopo la 10ª giornata',pct:Math.min(100,Math.round(5/Math.max(r.pos,1)*100)),stato:'Ora '+r.pos+'°'};
   if(k===2)return {nome:'Pizzeria Da Gigi',testo:'Fai almeno 2 giornate sopra i 65 punti',pct:Math.min(100,Math.round(n65/2*100)),stato:n65+' su 2'};
