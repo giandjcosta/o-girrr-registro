@@ -1029,13 +1029,21 @@ function dbApply(){
   var G=D.cal[0]&&D.cal[0].n,row=DBS.conf.filter(function(c){return c.giornata===G})[0];S.cf.esito=row&&row.esito?(row.esito==='v'?'v':'p'):null;
   if(row&&!S.cfok&&Array.isArray(row.risposte)){S.cfok=true;S.cf.a=[];S.cf.free=['','',''];row.risposte.forEach(function(r,i){S.cf.a[i]=r.a==='free'?'free':r.a;if(r.a==='free')S.cf.free[i]=r.t||''});S.cf.pub=true}
 }
+var LVTRY=0,LVBUSY=false,LVTIM=null;
 function dbLoad(quiet){
+  if(LVBUSY)return Promise.resolve();LVBUSY=true;
   return dbRpc('derby_stato',{p_team:ME,p_code:CODE}).then(function(r){
     if(!r||!r.sfide)throw new Error('stato');
-    var sig=JSON.stringify(r);if(quiet&&sig===DBSIG&&DBN===1)return;
+    LVTRY=0;clearTimeout(LVTIM);
+    var sig=JSON.stringify(r),era=DBN;
+    if(r.ok===false){DBS=r;DBN=-2;dbApply();if(era!==-2)render();return}   /* il database non riconosce il codice di questa squadra */
+    if(quiet&&sig===DBSIG&&DBN===1)return;
     DBSIG=sig;DBS=r;DBN=1;dbApply();
     var a=document.activeElement;if(quiet&&a&&/INPUT|TEXTAREA/.test(a.tagName))return;render()
-  }).catch(function(){var era=DBN;DBN=-1;if(era!==-1&&!quiet)render()});
+  }).catch(function(){var era=DBN;DBN=-1;if(era!==-1&&!quiet)render();
+    /* riprovo da solo, con attese sempre più lunghe (2, 4, 8, 15 secondi, poi ogni 30) finché non risponde */
+    var d=[2000,4000,8000,15000,30000][Math.min(LVTRY,4)];LVTRY++;clearTimeout(LVTIM);LVTIM=setTimeout(function(){dbLoad(true)},d);
+  }).then(function(){LVBUSY=false},function(){LVBUSY=false});
 }
 function lvCall(nome,body,ok){
   return dbRpc(nome,body).then(function(){if(ok)lvToast(ok);return dbLoad(false)}).catch(function(e){lvToast(e.message||'Qualcosa non ha funzionato');dbLoad(true)});
@@ -1054,7 +1062,7 @@ function lvAltro(s){return s.da===ME?s.a:s.da}
 function lvAttive(){return DBS.sfide.filter(function(s){return s.stato==='attesa'||(s.stato==='accettata'&&!s.nome_ok)})}
 function rxList(){return DBS.sfide.filter(function(s){return s.a===ME})}
 function rxCount(){return rxList().filter(function(s){return (s.stato==='attesa'&&lvLeft(s.ts)!==null)||(s.stato==='accettata'&&!s.nome_ok&&s.nome&&s.nome_da!==ME)}).length}
-function lvStato(){return DBN===0?'<p class="sm mut">Carico le sfide…</p>':(DBN<0?'<p class="sm" style="color:var(--bad)">Non riesco a collegarmi in questo momento. Riprova tra poco.</p>':'')}
+function lvStato(){if(DBN===-2)return '<p class="sm" style="color:var(--bad)">Il sito non riconosce il codice della tua squadra. Esci e rientra con il tuo codice dalla pagina principale.</p>';return DBN===0?'<p class="sm mut">Carico le sfide…</p>':(DBN<0?'<p class="sm" style="color:var(--bad)">Non riesco a collegarmi in questo momento: riprovo da solo.</p>':'')}
 
 function nomeFlow2(s){
   var rv=SFR[lvAltro(s)][0],id=s.id,h='',k=rvKey(s.da,s.a);
