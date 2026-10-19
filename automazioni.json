@@ -1,5 +1,5 @@
 {
- "aggiornato": "2026-10-18T17:42:38Z",
+ "aggiornato": "2026-10-19T05:41:58Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
@@ -59,9 +59,9 @@
    "nome": "Controllo giornata calcolata su Leghe",
    "quando": "Domenica, lunedì, martedì e sabato, ogni 3 ore dalle 09:07 alle 21:07",
    "stato": "attiva",
-   "prossimo": "2026-10-18T19:07:00Z",
+   "prossimo": "2026-10-19T07:07:00Z",
    "ultimo": {
-    "quando": "2026-10-18T16:08:14Z",
+    "quando": "2026-10-18T19:08:05Z",
     "esito": "riuscito"
    }
   },
@@ -69,9 +69,9 @@
    "nome": "Controllo automatismi del mattino",
    "quando": "Ogni giorno alle 07:33",
    "stato": "attiva",
-   "prossimo": "2026-10-19T05:33:00Z",
+   "prossimo": "2026-10-20T05:33:00Z",
    "ultimo": {
-    "quando": "2026-10-18T05:33:17Z",
+    "quando": "2026-10-19T05:33:29Z",
     "esito": "riuscito"
    },
    "nota": "Avvisa solo se qualcosa è fermo da più di 2 giorni."
