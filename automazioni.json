@@ -1,14 +1,13 @@
 {
- "aggiornato": "2026-10-19T05:41:58Z",
+ "aggiornato": "2026-10-21T21:26:34Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
    "quando": "Ogni 3 giorni alle 11:17",
    "stato": "attiva",
-   "prossimo": "2026-10-19T09:17:00Z",
+   "prossimo": "2026-10-22T09:17:00Z",
    "ultimo": {
-    "quando": "2026-10-16T09:17:46Z",
-    "esito": "riuscito"
+    "quando": "2026-10-21T21:25:55Z"
    },
    "nota": "Fonte principale Sky Sport (45%), poi Fantacalcio.it e i giornali."
   },
@@ -27,20 +26,19 @@
    "nome": "Aggiornamento del martedì (partite giocate e formazioni)",
    "quando": "Ogni martedì alle 08:47",
    "stato": "attiva",
-   "prossimo": "2026-10-20T06:47:00Z",
+   "prossimo": "2026-10-27T07:47:00Z",
    "ultimo": {
-    "quando": "2026-10-13T06:48:49Z",
-    "esito": "riuscito"
+    "quando": "2026-10-21T21:25:51Z"
    }
   },
   {
    "nome": "Risultati di lega e coppa dal PC (Leghe)",
    "quando": "Ogni martedì alle 21:07",
    "stato": "attiva",
-   "prossimo": "2026-10-20T19:07:00Z",
+   "prossimo": "2026-10-27T20:07:00Z",
    "ultimo": {
-    "quando": "2026-10-13T19:08:47Z",
-    "esito": "riuscito"
+    "quando": "2026-10-20T19:27:55Z",
+    "esito": "fallito"
    },
    "nota": "Serve il PC acceso con Chrome."
   },
@@ -48,10 +46,10 @@
    "nome": "Controllo risultati del martedì sera",
    "quando": "Ogni martedì alle 22:37",
    "stato": "attiva",
-   "prossimo": "2026-10-20T20:37:00Z",
+   "prossimo": "2026-10-27T21:37:00Z",
    "ultimo": {
-    "quando": "2026-10-13T20:37:49Z",
-    "esito": "riuscito"
+    "quando": "2026-10-20T20:37:52Z",
+    "esito": "fallito"
    },
    "nota": "Avvisa solo se i risultati non sono aggiornati."
   },
@@ -59,20 +57,19 @@
    "nome": "Controllo giornata calcolata su Leghe",
    "quando": "Domenica, lunedì, martedì e sabato, ogni 3 ore dalle 09:07 alle 21:07",
    "stato": "attiva",
-   "prossimo": "2026-10-19T07:07:00Z",
+   "prossimo": "2026-10-24T07:07:00Z",
    "ultimo": {
-    "quando": "2026-10-18T19:08:05Z",
-    "esito": "riuscito"
+    "quando": "2026-10-20T19:50:45Z",
+    "esito": "fallito"
    }
   },
   {
    "nome": "Controllo automatismi del mattino",
    "quando": "Ogni giorno alle 07:33",
    "stato": "attiva",
-   "prossimo": "2026-10-20T05:33:00Z",
+   "prossimo": "2026-10-22T05:33:00Z",
    "ultimo": {
-    "quando": "2026-10-19T05:33:29Z",
-    "esito": "riuscito"
+    "quando": "2026-10-21T21:25:58Z"
    },
    "nota": "Avvisa solo se qualcosa è fermo da più di 2 giorni."
   },
@@ -80,10 +77,10 @@
    "nome": "O Giornale del Girrr (PDF settimanale)",
    "quando": "Ogni mercoledì alle 08:51",
    "stato": "attiva",
-   "prossimo": "2026-10-21T06:51:00Z",
+   "prossimo": "2026-10-28T07:51:00Z",
    "ultimo": {
-    "quando": "2026-10-14T06:52:49Z",
-    "esito": "riuscito"
+    "quando": "2026-10-21T06:52:46Z",
+    "esito": "fallito"
    }
   },
   {
