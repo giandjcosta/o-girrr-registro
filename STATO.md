@@ -32,6 +32,12 @@ Sera del 18 ottobre, con il "vai" di Gianluca:
 3. Aperto: decidere se aggiungere il post della sfida anche sul profilo della squadra (per ora solo Girrr Sport).
 4. Se serve, provare il cambio tab di Totogirrr anche su Firefox e PWA.
 
+## Aggiornamenti del 21 ottobre (sera)
+- Giornata 3 (Serie A 7) importata da Leghe, Giornale n°3 e tabellone online. `scripts/leghe_estrai.js` (sito, gh-pages): ora legge il modificatore difesa di entrambe le squadre (`md` di B prima restava vuoto) e aspetta il cambio di pagina invece di 1,8 s fissi a partita.
+- Nuovo workflow `controllo-fallimenti.yml` (+ `calcoli/controllo_fallimenti.py`, copiati in `rilascio/workflow/` e `calcoli/`): ogni giorno alle 07:50 apre una Issue nel repo del sito (notifica GitHub) se un workflow è fallito nelle ultime 26 ore, se "Aggiorna statistiche e voti" non gira da 2 giorni o se una giornata finita non è stata importata. Se è tutto a posto chiude la Issue. Le schedule di Claude che falliscono per "limite di utilizzo raggiunto" non si vedono dalle Actions: si notano da questi dati fermi.
+- Radio: `voci-src/dati.json` aggiornato alla giornata 3 con i dati veri di `lab-dati.json`; `conferenze.json` e `mercato.json` svuotati (erano di prova), `curva.json` vuoto (niente post questa settimana, la radio non ne parla). Puntata lanciata dal workflow "Puntata di prova della Radio" con solo Gemini.
+- Tolto il tag Derby dalle liste dei Derby (anche nelle sorgenti del Registro) e Borsino come tab dello Spogliatoio.
+
 ## Note
 - Il workflow Curva salva lo stato in `calcoli/pubblicati.json` su `main`; l'opzione `solo_segna` segna i post attuali come già usciti senza inviarli.
 - Le storie degli allenatori stanno in `ufficiale/src/storie.json`.
