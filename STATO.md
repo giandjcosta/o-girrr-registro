@@ -26,7 +26,7 @@ Sera del 18 ottobre, con il "vai" di Gianluca:
 - Verificati da Gianluca: iPhone, unificazione statistiche di Riccardo e Nobile, "Calcoli dopo la giornata" lanciato.
 
 ## Da fare
-0. Dopo mercoledì 21 ottobre: il Borsino nello Spogliatoio. Gianluca si aspettava di trovarlo lì e non c'è (il Borsino c'è nei calcoli, `calcoli/borsino.py`, e nella app come scheda `vBors`): capire se manca nel menu dello Spogliatoio o se è solo nascosto, e deciderlo con lui.
+0. FATTO il 21 ottobre: tab Borsino nello Spogliatoio vero (index.html del sito, legge girrr/dati/borsino.json) e tolto il tag Derby dalle liste dei Derby. Prima era: il Borsino nello Spogliatoio. Gianluca si aspettava di trovarlo lì e non c'è (il Borsino c'è nei calcoli, `calcoli/borsino.py`, e nella app come scheda `vBors`): capire se manca nel menu dello Spogliatoio o se è solo nascosto, e deciderlo con lui.
 1. Derby "The Continental" (Oranje VC–Apo): Apo deve ancora confermare il nome nell'app (`nome_ok` falso). Appena conferma, il post "Nasce un Derby" parte da solo al giro successivo della Curva.
 2. Controllare il primo giro della Curva dopo le novità: l'Intervista speciale con il testo vero (alla prossima sfida lanciata) e il post Conferenza di Apo.
 3. Aperto: decidere se aggiungere il post della sfida anche sul profilo della squadra (per ora solo Girrr Sport).
