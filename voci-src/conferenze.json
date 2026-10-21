@@ -1,66 +1,8 @@
 {
  "_come_si_usa": "Conferenze stampa della giornata. 'squadre' = per ogni squadra i toni scelti alle tre domande (0 sicuro, 1 umile, 2 provocatorio). 'partite' = gli scontri della giornata appena giocata. Se 'squadre' è vuoto, la radio salta la parte. Una squadra può essere {\"toni\":[..],\"promessa\":\"frase\",\"pesa\":1|2} se ha fatto una promessa: la radio dice se è stata mantenuta o tradita. 'sfide_derby' = sfide lanciate in conferenza con lo stato (accettata/rifiutata/scaduta/attesa).",
- "demo": true,
- "giornata": 2,
- "partite": [
-  [
-   "Apo team",
-   "AFA SELECCION"
-  ],
-  [
-   "WOA",
-   "Mariana Coneja"
-  ],
-  [
-   "stif dc",
-   "Real Madrink"
-  ],
-  [
-   "Grodah",
-   "Atletico ma non troppo"
-  ],
-  [
-   "Oranje VC",
-   "The Blue brothers"
-  ]
- ],
- "squadre": {
-  "Apo team": [
-   0,
-   0,
-   0
-  ],
-  "Mariana Coneja": [
-   0,
-   0,
-   2
-  ],
-  "Real Madrink": [
-   1,
-   1,
-   1
-  ],
-  "Oranje VC": {
-   "toni": [
-    0,
-    1,
-    0
-   ],
-   "promessa": "vinciamo noi, ci siamo preparati",
-   "pesa": 1
-  },
-  "Grodah": [
-   2,
-   2,
-   2
-  ]
- },
- "sfide_derby": [
-  {
-   "da": "Oranje VC",
-   "a": "Apo team",
-   "stato": "accettata",
-   "nome": "Il Derby della Promessa"
-  }
- ]
+ "demo": false,
+ "giornata": 3,
+ "partite": [],
+ "squadre": {},
+ "sfide_derby": []
 }
