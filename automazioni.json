@@ -1,5 +1,5 @@
 {
- "aggiornato": "2026-10-21T21:26:34Z",
+ "aggiornato": "2026-10-22T05:42:42Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
@@ -7,7 +7,8 @@
    "stato": "attiva",
    "prossimo": "2026-10-22T09:17:00Z",
    "ultimo": {
-    "quando": "2026-10-21T21:25:55Z"
+    "quando": "2026-10-21T21:25:55Z",
+    "esito": "riuscito"
    },
    "nota": "Fonte principale Sky Sport (45%), poi Fantacalcio.it e i giornali."
   },
@@ -28,7 +29,8 @@
    "stato": "attiva",
    "prossimo": "2026-10-27T07:47:00Z",
    "ultimo": {
-    "quando": "2026-10-21T21:25:51Z"
+    "quando": "2026-10-21T21:25:51Z",
+    "esito": "riuscito"
    }
   },
   {
@@ -67,9 +69,10 @@
    "nome": "Controllo automatismi del mattino",
    "quando": "Ogni giorno alle 07:33",
    "stato": "attiva",
-   "prossimo": "2026-10-22T05:33:00Z",
+   "prossimo": "2026-10-23T05:33:00Z",
    "ultimo": {
-    "quando": "2026-10-21T21:25:58Z"
+    "quando": "2026-10-22T05:34:01Z",
+    "esito": "riuscito"
    },
    "nota": "Avvisa solo se qualcosa è fermo da più di 2 giorni."
   },
