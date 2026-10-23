@@ -8,9 +8,10 @@ Uso:    python3 calcoli/post_curva.py [eventi.json] [uscita.json]
 Formato di eventi.json: lista di oggetti con "tipo" e "k" (chiave unica dell'evento, evita doppioni):
   {"tipo":"sfida",   "k":"S12", "da":"Oranje VC", "a":"Grodah", "frase":"Quest'anno Grodah dovrà guardarmi dal basso."}
      (opzionali: "f" = numero 0-2 della frase, "testo" = frase vera scelta nell'app: esce nell'Intervista speciale di qualsiasi coppia)
-  {"tipo":"conferenza","k":"C3-Apo team", "team":"Apo team", "giornata":3, "libera":"...", "promessa":"", "risposte":["...","..."]}   (conferenza pre partita, su Girrr Sport)
+  {"tipo":"conferenza","k":"C3-Apo team", "team":"Apo team", "giornata":3, "libera":"...", "promessa":"", "risposte":["...","..."]}   (conferenza pre partita, su Girrr Sport; opzionali "avversario" e "tono" 0-2: se ci sono, esce anche il commento di Ciro Trattativa)
   {"tipo":"rifiuto", "k":"S12", "da":"Oranje VC", "a":"Grodah"}                     (a ha rifiutato)
   {"tipo":"scaduta", "k":"S12", "da":"Oranje VC", "a":"Grodah"}                     (nessuna risposta in 3 giorni)
+  {"tipo":"accettata","k":"S12", "da":"Oranje VC", "a":"Grodah"}                     (a ha accettato: il Derby nasce quando si accordano sul nome)
   {"tipo":"derby",   "k":"S12", "da":"Oranje VC", "a":"Grodah", "nome":"Il Derby della Rivincita"}
   {"tipo":"promessa","k":"C7-Apo", "team":"Apo team", "giornata":3, "promessa":"Vinciamo noi", "esito":"v"|"s"}   (v mantenuta, s tradita, p pareggio: come nel database)
 Regole (decise da Gianluca): i post usano i nomi degli allenatori; i post ufficiali non parlano mai di scommesse; "Derby" sempre con la D maiuscola.
@@ -24,6 +25,10 @@ EVENTI = Path(sys.argv[1]) if len(sys.argv) > 1 else QUI / "eventi.json"
 USCITA = Path(sys.argv[2]) if len(sys.argv) > 2 else QUI / "post_curva.json"
 NOMI = json.loads((QUI / "nomi.json").read_text(encoding="utf-8"))
 GS, LEGA, GIORNALE = "girrr_sport", "lega_ofantagirrr", "giornale_girrr"
+CIRO_H = "ciro_trattativa"
+# Tono della conferenza e commento di Ciro Trattativa, gli stessi dell'app (TONI e REP in girrr/app.html)
+CIRO = [("Sicuro", "Parole da campione. Ora però servono i punti."), ("Umile", "Mi piace l'umiltà, ma in questa lega non basta."),
+        ("Provocatorio", "Ha dichiarato guerra. Si prepari, perché non finisce qui.")]
 
 
 # Frasi scritte a mano per le coppie con storia lunga (le stesse dell'app). {X} = il rivale.
@@ -54,28 +59,39 @@ def post(e):
             out.append((GS, iv))
         return out
     if t == "conferenza":
-        testa = f"CONFERENZA PRE PARTITA · Giornata {e['giornata']}\n{m(e['team'])}: "
+        # Stesso testo che si vede nell'app in "Come appare in Curva", con le risposte nell'ordine delle tre domande
+        ris = [r for r in e.get("risposte", []) if r]
+        if len(ris) != 3:   # conferenza vecchia o incompleta: formato corto
+            ris = ([e["libera"]] if e.get("libera") else []) + ris
+            if not ris:
+                return []
+            testa = f"CONFERENZA STAMPA · Giornata {e['giornata']}\n{m(e['team'])}: "
+            return [(GS, (testa + " ".join(f"«{r}»" for r in ris))[:280])]
+        me, opp = m(e["team"]), m(e["avversario"]) if e.get("avversario") else ""
+        vigilia = f"alla vigilia di {me} - {opp}" if opp else f"alla vigilia della giornata {e['giornata']}"
+        su = f" Su {opp}:" if opp else " Sulla partita:"
+
+        def monta(r, coda):
+            return f"CONFERENZA STAMPA · {me}, {vigilia}: «{r[0]}»{su} «{r[1]}» E alla dirigenza: «{r[2]}»{coda}"
         coda = " #ConferenzaStampa"
-        pezzi = []
-        if e.get("libera"):
-            pezzi.append(f"«{e['libera']}»")
-        if e.get("promessa"):
-            pezzi.append(f"Promessa: «{e['promessa']}»")
-        pezzi += [f"«{r}»" for r in e.get("risposte", [])]
-        testo = ""
-        for p in pezzi:   # si aggiungono le risposte finché stanno nei 280 caratteri
-            prova = (testo + " " + p).strip()
-            if len(testa + prova + coda) > 280:
-                if not testo:   # la prima è già troppo lunga: la si accorcia
-                    prova = p[:280 - len(testa) - len(coda) - 2] + "…»"
-                else:
-                    continue
-            testo = prova
-        return [(GS, testa + testo + coda)] if testo else []
+        testo = monta(ris, coda)
+        if len(testo) > 280:
+            testo = monta(ris, "")                      # prima si toglie l'hashtag
+        while len(testo) > 280:                         # poi si accorcia la risposta più lunga, un po' alla volta
+            k = max(range(3), key=lambda i: len(ris[i]))
+            ris[k] = ris[k].rstrip(" …")[:-4].rstrip() + "…"
+            testo = monta(ris, "")
+        out = [(GS, testo)]
+        if e.get("tono") in (0, 1, 2):   # nell'app c'è anche il tono e la risposta di Ciro Trattativa
+            _, parola = CIRO[e["tono"]]
+            out.append((CIRO_H, parola, 0))   # il commento di Ciro, tale e quale all'app: esce sotto il post della conferenza (indice 0)
+        return out
     if t == "rifiuto":
         return [(GS, f"RIFIUTO CLAMOROSO\n{m(e['a'])} non considera {m(e['da'])} nemmeno degno di un Derby. La rivalità, intanto, sale. #GirrrSport")]
     if t == "scaduta":
         return [(GS, f"SILENZIO\n{m(e['a'])} non ha risposto alla sfida di {m(e['da'])}: la sfida decade, ma la rivalità resta più alta di prima. #GirrrSport")]
+    if t == "accettata":
+        return [(GS, f"SFIDA ACCETTATA\n{m(e['a'])} ha detto sì a {m(e['da'])}. Manca solo il nome: appena si accordano nasce il Derby. #GirrrSport #Derby")]
     if t == "derby":
         return [(GS, f"NASCE UN DERBY\n{m(e['da'])} e {m(e['a'])} hanno trovato l'accordo: da oggi è «{e['nome']}». #GirrrSport #Derby"),
                 (LEGA, f"Novità dall'Albo d'oro: nasce «{e['nome']}», il Derby tra {m(e['da'])} e {m(e['a'])}. Entra nella storia della Lega. #Derby #AlboDoro")]
@@ -91,9 +107,15 @@ def main():
     eventi = json.loads(EVENTI.read_text(encoding="utf-8")) if EVENTI.exists() else []
     out = []
     for e in eventi:
-        for i, (h, body) in enumerate(post(e)):
+        lista = post(e)
+        for i, voce in enumerate(lista):
+            h, body = voce[0], voce[1]
             assert len(body) <= 280, (e["k"], len(body))
-            out.append(dict(chiave=f"{e['tipo']}:{e['k']}:{i}", h=h, body=body))
+            d = dict(chiave=f"{e['tipo']}:{e['k']}:{i}", h=h, body=body)
+            if len(voce) > 2:   # è un commento sotto un altro post dello stesso evento
+                padre = lista[voce[2]]
+                d.update(re=f"{e['tipo']}:{e['k']}:{voce[2]}", re_h=padre[0], re_body=padre[1])
+            out.append(d)
     USCITA.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     print("post_curva.json scritto:", len(out), "post")
 
