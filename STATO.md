@@ -64,9 +64,9 @@ Sera del 18 ottobre, con il "vai" di Gianluca:
 - Ordine dei 3: prima chi ha deciso, poi per peso sul risultato (gol spostati, poi punti dell'effetto), poi rosso, rigore sbagliato, autogol, rigore parato, partita sul filo.
 - Testi "Ha deciso la partita": 3 o 4 varianti per rosso, rigore sbagliato, autogol e rigore parato, con allenatori e risultato della partita (mai punti o crediti). Il risultato usa un trattino che non va a capo. Colore: viola chiaro su fondo viola tenue con una barretta viola a sinistra della card, visto in Stadio e Lega.
 - `--rigenera` riscrive tutto, `--rigenera 2,3` solo quelle giornate; senza, le giornate già scritte non cambiano.
-- ATTENZIONE: `calcoli/moviola.json` è ancora quello scritto dal passo 1 (giornate 1-3 con le regole vecchie) e per la regola sopra non cambia. Con le regole nuove cambierebbe solo la giornata 2: l'autogol di Vasquez (Real Madrink, titolare) diventerebbe "Ha deciso la partita" (senza, Real Madrink avrebbe vinto invece del 2-2). Per vederlo serve `python3 calcoli/moviola.py data.json formazioni.json --rigenera 2`: da decidere con Gianluca.
+- Giornata 2 riscritta con le regole nuove (`--rigenera 2`, con `data.json` e `formazioni.json` di `gh-pages` del sito, commit 53cef58): l'autogol di Vasquez (Real Madrink, titolare) ora è "Ha deciso la partita" (senza, Real Madrink avrebbe vinto invece del 2-2). Giornate 1 e 3 lasciate come le aveva scritte il passo 1 (identiche).
 - Provato con dati finti: rosso decisivo, partita sul filo (Da rivedere), titolare che decide (Ha deciso la partita), panchinaro nella stessa situazione (Regolare), giornata senza formazione (scartati). Playwright su Chromium, iPhone SE, iPhone 13, PC 1366 e TV 1920, in Lab, Stadio e Lega: tutto a posto. WebKit non si scarica in questo ambiente (rete bloccata verso `cdn.playwright.dev`).
-- Da fare: Safari vero; decidere se rigenerare la giornata 2; dove legge il file il sito vero al rilascio (vedi passo 1); `ufficiale/` non toccata, niente online.
+- Da fare: Safari vero; dove legge il file il sito vero al rilascio (vedi passo 1); `ufficiale/` non toccata, niente online.
 
 
 ## Note
