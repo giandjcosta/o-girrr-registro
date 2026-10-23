@@ -1,4 +1,4 @@
-# Stato del progetto O Girrr (aggiornato 18 ottobre 2026, sera)
+# Stato del progetto O Girrr (aggiornato 23 ottobre 2026)
 
 Per aprire una chat nuova: incolla "Leggi STATO.md nel repo o-girrr-registro e continuiamo da lì".
 
@@ -37,6 +37,14 @@ Sera del 18 ottobre, con il "vai" di Gianluca:
 - Nuovo workflow `controllo-fallimenti.yml` (+ `calcoli/controllo_fallimenti.py`, copiati in `rilascio/workflow/` e `calcoli/`): ogni giorno alle 07:50 apre una Issue nel repo del sito (notifica GitHub) se un workflow è fallito nelle ultime 26 ore, se "Aggiorna statistiche e voti" non gira da 2 giorni o se una giornata finita non è stata importata. Se è tutto a posto chiude la Issue. Le schedule di Claude che falliscono per "limite di utilizzo raggiunto" non si vedono dalle Actions: si notano da questi dati fermi.
 - Radio: `voci-src/dati.json` aggiornato alla giornata 3 con i dati veri di `lab-dati.json`; `conferenze.json` e `mercato.json` svuotati (erano di prova), `curva.json` vuoto (niente post questa settimana, la radio non ne parla). Puntata lanciata dal workflow "Puntata di prova della Radio" con solo Gemini.
 - Tolto il tag Derby dalle liste dei Derby (anche nelle sorgenti del Registro) e Borsino come tab dello Spogliatoio.
+
+## Aggiornamenti del 23 ottobre: Moviola (solo Lab, in prova)
+- Tab "Moviola" di Girrr Sport attiva nel Lab (`lab/index.html`, funzioni `spMoviola`, `mvEpisodi`, testi in `MVT`) e nelle due grafiche dell'Anteprima (`anteprima/build.py` aggiornato: etichetta "Moviola" e routing; `index.html` e `attuale.html` rigenerati). `ufficiale/` non toccata, niente online sul sito vero: serve il "vai".
+- Dati: legge `data.json` (voti `votes[id][sa].b`, gli stessi del post Moviola di `curva-banca.js`) e `formazioni.json` dal sito, come il Giornale legge le copertine. Squadra del giocatore: dalla formazione di quella giornata se c'è in `formazioni.json`, altrimenti dalla rosa attuale.
+- Al massimo 3 episodi per giornata, per priorità: rosso, rigore sbagliato, autogol, rigore parato, partita vinta per meno di 1 punto (i pareggi no). Verdetto fisso per tipo: rosso → Rosso confermato; rigore sbagliato, autogol, rigore parato → Regolare; partita sul filo → Da rivedere. 3 o 4 varianti di testo per tipo, scelte in modo stabile (stessa giornata e stesso giocatore danno sempre lo stesso testo). Giornata senza episodi: "Giornata tranquilla, nessun episodio". Selettore della giornata con tutte le giornate giocate.
+- Cartellini rossi: NON ci sono nei dati. Le voci di `b` sono solo gol, assist, gol subiti, rigori (segnati, sbagliati, parati), autogol, subentrato, senza voto, migliore in campo. Il codice è pronto: se compare una voce con "espulso" o "rosso" entra da sola come primo episodio. Volendo si potrebbero dedurre da fantavoto meno voto (5 casi con -1 non spiegato), ma è una stima: da decidere con Gianluca.
+- La tab deselezionata di Girrr Sport torna neutra subito (`#view .seg button[data-sp][aria-pressed=false]{transition:none}`).
+- Provato in Chromium su iPhone SE, iPhone 13, PC 1366 e TV 1920: niente scroll orizzontale né testi fuori dalle card, selettore a 16px (niente zoom su iPhone). Provati anche con dati finti il rosso, la partita sul filo e la giornata tranquilla. Non provato su Safari vero.
 
 ## Note
 - Il workflow Curva salva lo stato in `calcoli/pubblicati.json` su `main`; l'opzione `solo_segna` segna i post attuali come già usciti senza inviarli.
