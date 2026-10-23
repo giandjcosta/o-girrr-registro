@@ -4,10 +4,14 @@ name: Calcoli dopo la giornata
 # Chiude le promesse delle conferenze, ricalcola fiducia, probabilità e Borsino, prepara i dati per le pagine nuove
 # e mette i nuovi post della Curva in coda (o li pubblica, quando finisce il periodo di approvazione).
 # Non tocca il workflow "Aggiorna statistiche e voti".
+# Quando cambia solo calcoli/moviola-manuale.json (episodi e video a mano) rifà solo la Moviola.
 on:
   schedule:
     - cron: "40 */2 * * *"
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["calcoli/moviola-manuale.json"]
 permissions:
   contents: write
 concurrency:
@@ -35,7 +39,9 @@ jobs:
       - name: C'è una giornata da calcolare?
         id: c
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "esegui=false" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "esegui=true" >> "$GITHUB_OUTPUT"
             python3 - <<'PY' >> "$GITHUB_OUTPUT"
           import json
@@ -73,8 +79,8 @@ jobs:
       - name: Dati per le pagine nuove
         if: steps.c.outputs.esegui == 'true'
         run: python3 code/calcoli/dati_lab.py site/data.json site/girrr/dati/probabilita.json site/girrr/dati/lab-dati.json site/scripts site/girrr/dati/borsino.json site/girrr/dati/fiducia.json
-      - name: Moviola di Girrr Sport (episodi della giornata, scritti una volta sola)
-        if: steps.c.outputs.esegui == 'true'
+      - name: Moviola di Girrr Sport (episodi della giornata, scritti una volta sola, più le voci a mano)
+        if: steps.c.outputs.esegui == 'true' || github.event_name == 'push'
         run: python3 code/calcoli/moviola.py site/data.json site/formazioni.json code/calcoli/moviola.json
       - name: Post della Curva (in coda o pubblicati, secondo il periodo)
         if: steps.c.outputs.esegui == 'true'
@@ -100,7 +106,7 @@ jobs:
           cd code
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add calcoli/*.json
-          git diff --cached --quiet || git commit -m "Curva: coda e post aggiornati"
+          git add calcoli/*.json moviola-video.html
+          git diff --cached --quiet || git commit -m "Curva e Moviola: coda, post ed episodi aggiornati"
           git pull --rebase origin main
           git push origin main

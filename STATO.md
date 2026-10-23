@@ -69,6 +69,15 @@ Sera del 18 ottobre, con il "vai" di Gianluca:
 - Da fare: Safari vero; dove legge il file il sito vero al rilascio (vedi passo 1); `ufficiale/` non toccata, niente online.
 
 
+## Moviola passo 3: voci a mano e video (ramo `claude/moviola-manuale-step-3-7qapus`, rifatto da `main` dopo i passi 1 e 2, solo prova)
+- Tutto dentro `calcoli/moviola.py` di main, un solo output: `calcoli/moviola.json`. Campi esistenti invariati; nuovi: per giornata `automatici` (tutti gli episodi trovati, senza taglio a 3), per episodio `id`, `squadra_reale`, `avversario_reale`, `in_casa`, `data_partita`, `video`, `manuale`. `episodi` è quello da mostrare: si rifà a ogni giro dagli automatici più le voci a mano, quindi le voci a mano valgono anche sulle giornate già scritte e dopo `--rigenera`. Le giornate scritte prima (1, 2, 3) prendono come automatici i loro episodi di allora: testi e verdetti identici a main, `--rigenera` dà gli stessi episodi.
+- `calcoli/moviola-manuale.json` (oggi vuoto, esempio nel LEGGIMI): voce uguale a un automatico (giornata, giocatore, tipo) → aggiunge solo i campi mancanti; altrimenti episodio nuovo (rosso → Rosso confermato, altro → Da rivedere, testo facoltativo dai modelli); `nascondi` toglie un automatico e il posto va al successivo. Le voci a mano entrano sempre e scalzano gli automatici meno importanti. Solo link `https://`; secondo di partenza come `t=` su YouTube.
+- Card: pulsante "Guarda il momento" (nuova scheda, `rel=noopener`) solo se c'è il video, in Lab, Stadio e Lega. Niente video incorporati.
+- `moviola-video.html` nella radice (non collegata): per episodio titolo, giocatore, giornata, squadra reale, partita e data, ricerca YouTube già compilata, riga pronta da copiare.
+- Dati: squadra reale = club di oggi in `P[id].t` (non quello della giornata); avversario e data da `fx`/`sa` di `data.json`, che coprono solo la Serie A dalla giornata 6 in poi (la giornata 1 della lega, Serie A 5, non ha avversario); si salvano la prima volta e non si perdono. Mancano rossi, minuto, risultato reale.
+- Workflow `dopo-giornata.yml`: il passo Moviola c'era già; aggiunto il trigger `push` su `main` solo per `calcoli/moviola-manuale.json` (in quel caso fa solo la Moviola, niente Curva né altri calcoli) e `moviola-video.html` nel commit finale. Nessun cron nuovo.
+- Provato con voci finte (rosso nuovo con video, video su un automatico, link http scartato, nascondi, altro con testo, episodio a mano su una giornata con soli scartati) con Playwright su Chromium: iPhone SE 320 e 375, iPhone 13, PC 1366, TV 1920, in Lab, Stadio, Lega e pagina dei video. Tutto a posto. WebKit non scaricabile qui.
+
 ## Note
 - Il workflow Curva salva lo stato in `calcoli/pubblicati.json` su `main`; l'opzione `solo_segna` segna i post attuali come già usciti senza inviarli.
 - Le storie degli allenatori stanno in `ufficiale/src/storie.json`.

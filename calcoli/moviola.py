@@ -20,12 +20,22 @@ Regole:
   - Testo scelto tra le varianti in modo stabile (stessa giornata, stesso tipo e stesso giocatore danno lo stesso testo).
   - Solo le giornate con tutti i risultati entrano. Una giornata già scritta non cambia più, anche se i voti vengono
     corretti dopo: --rigenera riscrive tutto, --rigenera 2,3 solo quelle. Il file si riscrive solo se cambia qualcosa.
+  - Voci a mano (calcoli/moviola-manuale.json, vedi calcoli/LEGGIMI.md): se corrispondono a un episodio automatico
+    (stessa giornata, giocatore e tipo) aggiungono solo i campi che mancano, per esempio il video; altrimenti sono episodi
+    nuovi (rosso → Rosso confermato, testo dai modelli se non c'è). "nascondi" toglie un automatico sbagliato. Entrano sempre,
+    prima del taglio a 3, e si riapplicano a ogni giro: valgono anche sulle giornate già scritte e dopo --rigenera.
+    Per questo ogni giornata tiene anche "automatici" (tutti gli episodi trovati, senza taglio) e "episodi" è quello da mostrare.
+  - Video: solo link https; il secondo di partenza vale per YouTube.
+  - Squadra e avversario reali (Serie A) si salvano quando data.json li ha (fx e sa coprono solo le ultime giornate e le
+    prossime) e non si perdono dopo, nemmeno con --rigenera.
+  - Scrive anche moviola-video.html nella radice del repo: ricerca dei video su YouTube e righe pronte per il file a mano.
 Non scrive nel database.
 """
-import json, re, sys
+import copy, html, json, re, sys, unicodedata
 from collections import Counter, defaultdict
 from datetime import date
 from pathlib import Path
+from urllib.parse import parse_qsl, quote_plus, urlencode, urlsplit, urlunsplit
 
 QUI = Path(__file__).resolve().parent
 ARG, RIGENERA = [], None   # RIGENERA: None solo giornate nuove, True tutte, insieme di numeri solo quelle
@@ -39,9 +49,14 @@ while _a:
 DATI = Path(ARG[0]) if len(ARG) > 0 else QUI.parent / "data.json"
 FORM = Path(ARG[1]) if len(ARG) > 1 else QUI.parent / "formazioni.json"
 USCITA = Path(ARG[2]) if len(ARG) > 2 else QUI / "moviola.json"
+MANUALE = QUI / "moviola-manuale.json"
+PAGINA = QUI.parent / "moviola-video.html"
+MAX = 3
 
 MGR = json.loads((QUI / "nomi.json").read_text(encoding="utf-8"))
-PRIO = {"rosso": 0, "sbagliato": 1, "autogol": 2, "parato": 3, "stretta": 4}
+PRIO = {"rosso": 0, "sbagliato": 1, "autogol": 2, "parato": 3, "altro": 4, "stretta": 5}
+TIPI = {"rosso": "rosso", "rigore sbagliato": "sbagliato", "autogol": "autogol", "rigore parato": "parato", "altro": "altro"}   # come si scrivono a mano
+NOME_TIPO = {v: k for k, v in TIPI.items()}
 
 MVT = {
  "rosso": {"t": "Rosso diretto", "x": [
@@ -61,6 +76,9 @@ MVT = {
   "{G} intuisce, si allunga e para il rigore. Al replay i piedi sono sulla linea: tutto regolare, e che parata per {S}.",
   "Rigore contro {S}, ma {G} ci arriva. Nessun movimento in anticipo: la parata è buona e la panchina di {A} esulta.",
   "Dal dischetto parte il tiro, {G} lo respinge. Controllato il posizionamento: regolare. Una parata che vale come un gol."]},
+ "altro": {"t": "Episodio da rivedere", "x": [
+  "Episodio da rivedere per {G}: sulla panchina di {A} se ne parla ancora. Al replay qualche dubbio resta.",
+  "Al centro della discussione c'è {G}. Immagini al rallentatore e opinioni diverse: {S} aspetta un chiarimento."]},
  "stretta": {"t": "Partita decisa sul filo", "x": [
   "{C} {R} {O}: finisce {P}, decisa da un soffio. Basta un episodio per cambiare tutto, e in studio se ne parlerà a lungo.",
   "Un dettaglio separa {C} e {O}: {R} e punteggio di {P}. Festa per {AC}, rabbia per {AO}: c'è chi chiede di rivedere tutto.",
@@ -199,7 +217,7 @@ def episodi(G, d, F, val, sg):
                 scartati.append({"tipo": k, "giocatore": P[pid]["n"], "id": pid, "motivo": "squadra non ricavabile dalla formazione"})
                 continue
             sq, titolare = chi[pid]
-            e = dict(k=k, g=P[pid]["n"], s=sq, id=pid, deciso=False, peso=0.0, gol=0)
+            e = dict(k=k, g=P[pid]["n"], s=sq, id=pid, deciso=False, peso=0.0, gol=0, reale=reale(d, sa, P[pid].get("t")))
             m = partita(sq)
             if m:
                 casa = m[0] == sq
@@ -219,32 +237,227 @@ def episodi(G, d, F, val, sg):
             ep.append(dict(k="stretta", c=m[0], o=m[3], r=m[4], id=m[0] + m[3], deciso=False, peso=0.0, gol=0, sul_filo=True,
                            p=f"{m[1]:g} a {m[2]:g}".replace(".", ",")))
     ep.sort(key=lambda e: (not e["deciso"], -e["gol"], -e["peso"], PRIO[e["k"]], (e.get("g") or e.get("c")).casefold()))
-    out = []
-    for e in ep[:3]:
-        k, chiave = e["k"], f"{G['n']}:{e['k']}:{e['id']}"
-        if k == "rosso":
-            ver = "Rosso confermato"
-        elif e["deciso"]:
-            ver = "Ha deciso la partita"
-        elif e.get("sul_filo"):
-            ver = "Da rivedere"
-        else:
-            ver = "Regolare"
-        x = pick(DECISO[k], chiave) if e["deciso"] else pick(MVT[k]["x"], chiave)
-        m = e.get("m")
-        rep = {"G": e.get("g", ""), "S": e.get("s", ""), "A": " e ".join(allenatori(e["s"])) if e.get("s") else "",
-               "C": e.get("c", ""), "O": e.get("o", ""), "R": ris(e.get("r", "")), "P": e.get("p", ""),
-               "AC": " e ".join(allenatori(e["c"])) if e.get("c") else "", "AO": " e ".join(allenatori(e["o"])) if e.get("o") else "",
-               "M": f"{m[0]}–{m[3]} {ris(m[4])}" if m else "", "E": CONTRO.get(e.get("contro"), "")}
-        x = re.sub(r"\{(\w+)\}", lambda z: rep[z.group(1)], x)
-        r = {"tipo": k, "titolo": MVT[k]["t"], "verdetto": ver, "testo": x}
-        if k == "stretta":
-            r.update(casa=e["c"], ospite=e["o"], allenatori_casa=allenatori(e["c"]), allenatori_ospite=allenatori(e["o"]))
-        else:
-            r.update(giocatore=e["g"], squadra=e["s"], allenatori=allenatori(e["s"]))
-        out.append(r)
-    return {"sa": G["sa"], "scritta": date.today().isoformat(), "episodi": out, "scartati": scartati}
+    tutti = [scheda(G["n"], e) for e in ep]
+    return {"sa": G["sa"], "scritta": date.today().isoformat(), "episodi": tutti[:MAX], "scartati": scartati, "automatici": tutti}
 
+
+def scheda(n, e):
+    """L'episodio come lo legge il Lab: titolo, verdetto e testo scelto in modo stabile, più i dati reali se ci sono."""
+    k, chiave = e["k"], f"{n}:{e['k']}:{e['id']}"
+    if k == "rosso":
+        ver = "Rosso confermato"
+    elif e["deciso"]:
+        ver = "Ha deciso la partita"
+    elif e.get("sul_filo") or k == "altro":
+        ver = "Da rivedere"
+    else:
+        ver = "Regolare"
+    x = e.get("testo") or (pick(DECISO[k], chiave) if e["deciso"] else pick(MVT[k]["x"], chiave))
+    m = e.get("m")
+    rep = {"G": e.get("g", ""), "S": e.get("s", ""), "A": " e ".join(allenatori(e["s"])) if e.get("s") else "",
+           "C": e.get("c", ""), "O": e.get("o", ""), "R": ris(e.get("r", "")), "P": e.get("p", ""),
+           "AC": " e ".join(allenatori(e["c"])) if e.get("c") else "", "AO": " e ".join(allenatori(e["o"])) if e.get("o") else "",
+           "M": f"{m[0]}–{m[3]} {ris(m[4])}" if m else "", "E": CONTRO.get(e.get("contro"), "")}
+    if not e.get("testo"):
+        x = re.sub(r"\{(\w+)\}", lambda z: rep[z.group(1)], x)
+    r = {"tipo": k, "titolo": MVT[k]["t"], "verdetto": ver, "testo": x}
+    if k == "stretta":
+        r.update(casa=e["c"], ospite=e["o"], allenatori_casa=allenatori(e["c"]), allenatori_ospite=allenatori(e["o"]))
+    else:
+        r.update(giocatore=e["g"], squadra=e["s"], allenatori=allenatori(e["s"]), id=e["id"], **(e.get("reale") or {}))
+    return r
+
+
+def reale(d, sa, club):
+    """Squadra reale del giocatore (il club di oggi in data.json) e, se data.json conosce quella giornata di Serie A,
+    avversario, casa o trasferta e data della partita."""
+    if not club:
+        return {}
+    r = {"squadra_reale": club}
+    for fonte in (d.get("fx") or {}, d.get("sa") or {}):
+        for casa, fuori, quando in fonte.get(str(sa), []):
+            if club in (casa, fuori):
+                r.update(avversario_reale=fuori if club == casa else casa, in_casa=club == casa, data_partita=quando)
+                return r
+    return r
+
+
+def norm(s):
+    s = unicodedata.normalize("NFD", str(s or "")).encode("ascii", "ignore").decode()
+    return re.sub(r"[^a-z0-9]+", " ", s.lower()).strip()
+
+
+def trova(nome, elenco):
+    """Il giocatore scritto a mano tra le coppie (chiave, nome): prima il nome uguale, poi l'unico che comincia così ("Ramos" → "Ramos G.")."""
+    n = norm(nome)
+    if not n:
+        return None
+    for x in elenco:
+        if norm(x[1]) == n:
+            return x
+    inizio = [x for x in elenco if norm(x[1]).split(" ")[0] == n or norm(x[1]).startswith(n + " ")]
+    return inizio[0] if len(inizio) == 1 else None
+
+
+def video(v, avvisi, dove):
+    """Il link del video, con il secondo di partenza se è YouTube. Solo https: il resto si ignora con un avviso."""
+    if not isinstance(v, dict):
+        v = {"url": v}
+    url = str(v.get("url") or "").strip()
+    if not url:
+        return None
+    if not url.lower().startswith("https://"):
+        avvisi.append(f"{dove}: video ignorato, il link deve cominciare con https://")
+        return None
+    sec = v.get("secondo")
+    if sec in (None, ""):
+        return url
+    try:
+        sec = int(sec)
+        assert sec >= 0
+    except (ValueError, TypeError, AssertionError):
+        avvisi.append(f"{dove}: secondo di partenza non valido, uso il link senza")
+        return url
+    p = urlsplit(url)
+    host = (p.hostname or "").lower()
+    if host in ("youtu.be", "youtube.com") or host.endswith(".youtube.com"):
+        q = [(a, b) for a, b in parse_qsl(p.query, keep_blank_values=True) if a not in ("t", "start")] + [("t", f"{sec}s")]
+        return urlunsplit((p.scheme, p.netloc, p.path, urlencode(q), p.fragment))
+    return url
+
+
+def applica_manuale(gg, voci_mano, d, avvisi):
+    """Rifà "episodi" di ogni giornata dagli automatici e dalle voci a mano. Le voci a mano entrano sempre;
+    gli automatici riempiono i posti rimasti fino a 3, nel loro ordine."""
+    P = d.get("P") or {}
+    giocatori = [(i, p["n"]) for i, p in P.items()]
+    squadre = {t["name"] for t in d.get("teams") or []}
+    for n, x in gg.items():
+        auto = [copy.deepcopy(e) for e in x["automatici"]]
+        tenuti, nascosti, nuovi = set(), set(), []
+        for j, v in enumerate(voci_mano):
+            if str(v.get("giornata")) != n:
+                continue
+            dove = f"Voce {j + 1} (giornata {n}, {v.get('giocatore') or '?'})"
+            k = TIPI.get(norm(v.get("tipo")))
+            if not k:
+                avvisi.append(f"{dove}: tipo sconosciuto, ignorata")
+                continue
+            m = trova(v.get("giocatore"), [(i, e["giocatore"]) for i, e in enumerate(auto) if e["tipo"] == k and e.get("giocatore")])
+            if v.get("nascondi") is True:
+                if m:
+                    nascosti.add(m[0])
+                else:
+                    avvisi.append(f"{dove}: da nascondere, ma non c'è un episodio automatico così")
+                continue
+            vid = video(v.get("video"), avvisi, dove)
+            if m:   # stesso episodio: si aggiunge solo quello che manca
+                e = auto[m[0]]
+                if vid and not e.get("video"):
+                    e["video"] = vid
+                e["manuale"] = True
+                tenuti.add(m[0])
+                continue
+            sq = v.get("squadra") or ""
+            if not v.get("giocatore") or not sq:
+                avvisi.append(f"{dove}: servono giocatore e squadra, ignorata")
+                continue
+            if sq not in squadre:
+                avvisi.append(f"{dove}: la squadra \"{sq}\" non è della lega")
+            pg = trova(v["giocatore"], giocatori)
+            e = scheda(n, dict(k=k, id=pg[0] if pg else v["giocatore"], g=P[pg[0]]["n"] if pg else v["giocatore"], s=sq,
+                               deciso=False, testo=str(v.get("testo") or "").strip(),
+                               reale=reale(d, x["sa"], P[pg[0]].get("t")) if pg else {}))
+            if vid:
+                e["video"] = vid
+            e["manuale"] = True
+            nuovi.append(e)
+        dentro = [i for i in range(len(auto)) if i in tenuti and i not in nascosti]
+        posti = MAX - len(dentro) - len(nuovi)
+        for i in range(len(auto)):
+            if posti <= 0:
+                break
+            if i not in tenuti and i not in nascosti:
+                dentro.append(i); posti -= 1
+        dentro.sort()
+        # prima gli automatici che hanno deciso la partita, poi quelli a mano (rosso, rigori, autogol, altro), poi gli altri automatici
+        decisi = [auto[i] for i in dentro if auto[i]["verdetto"] == "Ha deciso la partita"]
+        x["episodi"] = decisi + sorted(nuovi, key=lambda e: PRIO[e["tipo"]]) + [auto[i] for i in dentro if auto[i] not in decisi]
+    for j, v in enumerate(voci_mano):
+        if str(v.get("giornata")) not in gg:
+            avvisi.append(f"Voce {j + 1}: la giornata {v.get('giornata')} non è ancora scritta, la applico quando arriva")
+
+
+def ricerca(e, sa):
+    parole = [e.get("giocatore"), e.get("squadra_reale"), e.get("avversario_reale"), "Serie A", f"giornata {sa}", "highlights"]
+    return "https://www.youtube.com/results?search_query=" + quote_plus(" ".join(p for p in parole if p))
+
+
+def pagina(gg):
+    blocchi = []
+    for n in sorted(gg, key=int, reverse=True):
+        x = gg[n]
+        eps = [e for e in x["episodi"] if e.get("giocatore")]
+        b = [f'<section><h2>Giornata {n} <small>Serie A, giornata {x["sa"]}</small></h2>']
+        if not eps:
+            b.append('<p class="mut">Nessun episodio con un giocatore in questa giornata.</p>')
+        for e in eps:
+            riga = json.dumps({"giornata": int(n), "tipo": NOME_TIPO[e["tipo"]], "giocatore": e["giocatore"], "squadra": e["squadra"],
+                               "video": {"url": "", "secondo": ""}}, ensure_ascii=False)
+            club, avv = e.get("squadra_reale"), e.get("avversario_reale")
+            partita = (f"{club} – {avv}" if e.get("in_casa") else f"{avv} – {club}") if avv else ""
+            info = [t for t in (club and f"Squadra reale: {club}", partita and f"Partita: {partita}",
+                                e.get("data_partita") and f"Quando: {e['data_partita']}") if t]
+            manca = [t for t, ok in (("squadra reale", club), ("avversario", avv)) if not ok]
+            b.append('<article>'
+                     f'<span class="tag">{html.escape(e["titolo"])}</span>'
+                     f'<h3>{html.escape(e["giocatore"])}</h3>'
+                     f'<p class="mut">{html.escape(e["squadra"])} · Giornata {n}</p>'
+                     + "".join(f'<p class="sm">{html.escape(t)}</p>' for t in info)
+                     + (f'<p class="sm mut">Mancano nei dati: {", ".join(manca)}. La ricerca usa quello che c\'è.</p>' if manca else "")
+                     + f'<a class="btn" href="{html.escape(ricerca(e, x["sa"]))}" target="_blank" rel="noopener">Cerca su YouTube</a>'
+                     + (f'<p class="sm ok">Video già inserito: <a href="{html.escape(e["video"])}" target="_blank" rel="noopener">Apri il video</a></p>' if e.get("video") else "")
+                     + '<p class="lab">Riga per moviola-manuale.json</p>'
+                     f'<pre>{html.escape(riga)}</pre><button type="button" class="copia">Copia la riga</button>'
+                     '</article>')
+        b.append("</section>")
+        blocchi.append("".join(b))
+    return PAGINA_HTML.replace("{{BLOCCHI}}", "\n".join(blocchi) or '<p class="mut">Ancora nessuna giornata giocata.</p>')
+
+
+PAGINA_HTML = """<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<link rel="icon" href="favicon-64.png"><title>Moviola, ricerca video</title>
+<style>
+:root{--bg:#141d3d;--ink:#fbf6ec;--mute:#bfe3ff;--gold:#ffd166;--ok:#7be495;--line:rgba(255,255,255,.22);--glass:rgba(255,255,255,.08);color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:Inter,system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.45;padding:16px;max-width:760px;margin:0 auto;-webkit-text-size-adjust:100%}
+h1{font-size:24px;margin-bottom:6px}
+h2{font-size:19px;margin:22px 0 10px}
+h2 small{display:block;font-size:13px;font-weight:600;color:var(--mute)}
+h3{font-size:18px;margin:8px 0 2px;overflow-wrap:anywhere}
+p{overflow-wrap:anywhere}
+.mut{color:var(--mute)}.sm{font-size:13.5px;margin-top:4px}.ok,.ok a{color:var(--ok)}
+article{background:var(--glass);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;min-width:0}
+.tag{display:inline-block;background:var(--gold);color:#141d3d;font-weight:800;font-size:11px;letter-spacing:.06em;padding:4px 10px;border-radius:99px;text-transform:uppercase}
+.btn,.copia{display:flex;align-items:center;justify-content:center;width:100%;min-height:44px;margin-top:12px;border-radius:12px;font:inherit;font-weight:800;text-decoration:none;cursor:pointer}
+.btn{background:#d62839;color:#fff;border:0}
+.copia{background:transparent;color:var(--ink);border:1px solid var(--line);margin-top:8px}
+.lab{font-size:12px;font-weight:800;color:var(--mute);margin-top:14px}
+pre{margin-top:6px;padding:10px;border-radius:10px;background:rgba(0,0,0,.35);font-size:12.5px;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;-webkit-user-select:all;user-select:all}
+</style></head><body>
+<h1>Moviola, ricerca video</h1>
+<p class="mut">Pagina di servizio, non collegata all'app. Per ogni episodio: il link di ricerca su YouTube e la riga da completare con il link e il secondo di partenza.</p>
+<p class="sm mut">Come mandarli: in chat a Claude Code, "Moviola giornata X: giocatore, tipo, link, secondo".</p>
+{{BLOCCHI}}
+<script>
+document.addEventListener('click',function(e){var b=e.target.closest('.copia');if(!b)return;var el=b.previousElementSibling;
+ function ok(){b.textContent='Copiata';setTimeout(function(){b.textContent='Copia la riga'},1600)}
+ function sel(){var r=document.createRange();r.selectNodeContents(el);var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selezionata: copiala'}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(el.textContent).then(ok,sel);else sel()});
+</script>
+</body></html>
+"""
 
 def main():
     d = json.loads(DATI.read_text(encoding="utf-8"))
@@ -253,8 +466,10 @@ def main():
     val = valori_voci(d.get("votes") or {})
     sg = soglie(lega)
     print("Valori ricavati:", {k: val[k] for k in ("rigore sbagliato", "autogol", "rigore parato") if k in val}, "· soglie dei gol:", sg)
-    prima = {} if RIGENERA is True or not USCITA.exists() else json.loads(USCITA.read_text(encoding="utf-8"))
+    vecchio = json.loads(USCITA.read_text(encoding="utf-8")) if USCITA.exists() else {}
+    prima = {} if RIGENERA is True else vecchio
     gg = dict(prima.get("giornate") or {})
+    voci_mano = json.loads(MANUALE.read_text(encoding="utf-8")) if MANUALE.exists() else []
     giocate = [g for g in lega if g["m"] and all(m[4] and m[4] != "-" for m in g["m"])]
     for G in giocate:
         n = str(G["n"])
@@ -265,6 +480,32 @@ def main():
         print("Giornata %s: %d episodi%s" % (n, len(x["episodi"]), "".join("\n  - %s: %s → %s" % (e["titolo"], e.get("giocatore") or e["casa"] + "–" + e["ospite"], e["verdetto"]) for e in x["episodi"])))
         for s in x["scartati"]:
             print("  ! SCARTATO %s di %s (giornata %s): %s" % (MVT[s["tipo"]]["t"].lower(), s["giocatore"], n, s["motivo"]))
+    P = d.get("P") or {}
+    for n, x in gg.items():
+        if "automatici" not in x:   # giornata scritta prima delle voci a mano: gli automatici sono gli episodi di allora
+            x["automatici"] = [copy.deepcopy(e) for e in x["episodi"] if not e.get("manuale")]
+        prec = ((vecchio.get("giornate") or {}).get(n) or {}).get("automatici") or []
+        for e in x["automatici"]:
+            if not e.get("giocatore"):
+                continue
+            # dati reali: quelli salvati la prima volta restano, quelli che mancano si aggiungono se data.json ora li ha
+            v = next((y for y in prec if y.get("tipo") == e["tipo"] and y.get("giocatore") == e["giocatore"]), {})
+            pid = e.get("id") or next((i for i, q in P.items() if q["n"] == e["giocatore"]), None)
+            ora = reale(d, x["sa"], (P.get(pid) or {}).get("t")) if pid else {}
+            for c in ("squadra_reale", "avversario_reale", "in_casa", "data_partita"):
+                if e.get(c) in (None, ""):
+                    if v.get(c) not in (None, ""):
+                        e[c] = v[c]
+                    elif ora.get(c) not in (None, ""):
+                        e[c] = ora[c]
+    avvisi = []
+    applica_manuale(gg, voci_mano, d, avvisi)
+    for a in avvisi:
+        print("  ! " + a)
+    pag = pagina(gg)
+    if not PAGINA.exists() or PAGINA.read_text(encoding="utf-8") != pag:
+        PAGINA.write_text(pag, encoding="utf-8")
+        print("scritto", PAGINA)
     nuovo = {"giocate": [g["n"] for g in giocate], "giornate": {k: gg[k] for k in sorted(gg, key=int)}}
     testo = json.dumps(nuovo, ensure_ascii=False, indent=1) + "\n"
     if USCITA.exists() and USCITA.read_text(encoding="utf-8") == testo:
