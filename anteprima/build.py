@@ -70,8 +70,12 @@ sost("""'<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'"
 s = s.replace('src="voci/', 'src="../lab/voci/').replace("fetch('voci/", "fetch('../lab/voci/")
 RIL = bool(os.environ.get("APP_RIL"))   # rilascio: pagine per il sito vero (percorsi relativi, niente barra da anteprima)
 VOCI = os.environ.get("APP_VOCI", "voci/")
+MOV = os.environ.get("APP_MOV")   # nel sito vero la Moviola sta in girrr/dati/moviola.json (gh-pages), copiata dal workflow
 def fin(t, stat, home):
     t = t.replace("@@STAT@@", stat).replace("@@HOME@@", home)
+    if MOV:
+        assert t.count("MVU='../calcoli/moviola.json'") == 1
+        t = t.replace("MVU='../calcoli/moviola.json'", "MVU='" + MOV + "'")
     t = t.replace("@@TOTO@@", stat.replace("statistiche.html", "totogirrr.html"))
     if RIL:
         t = t.replace("../lab/voci/", VOCI).replace('<link rel="icon" href="../favicon-64.png">', "")

@@ -107,13 +107,14 @@ def post(e):
     if t == "derby":
         return [(GS, f"NASCE UN DERBY\n{m(e['da'])} e {m(e['a'])} hanno trovato l'accordo: da oggi è «{e['nome']}». #GirrrSport #Derby"),
                 (LEGA, f"Novità dall'Albo d'oro: nasce «{e['nome']}», il Derby tra {m(e['da'])} e {m(e['a'])}. Entra nella storia della Lega. #Derby #AlboDoro")]
-    if t == "moviola":   # l'episodio principale; il testo si accorcia se non sta nei 280 caratteri
-        ep = e["episodi"][0]
-        testa, coda = f"MOVIOLA · Giornata {e['giornata']}\n{ep['titolo']}. ", f" Verdetto: {ep['verdetto']}. #GirrrSport #Moviola"
-        x = ep["testo"]
-        if len(testa + x + coda) > 280:
-            x = x[:280 - len(testa) - len(coda) - 1].rstrip() + "…"
-        return [(GS, testa + x + coda)]
+    if t == "moviola":   # l'episodio principale, con il testo intero della tab: se non sta nei 280 caratteri prima vanno via
+        ep = e["episodi"][0]   # gli hashtag, e solo all'ultimo si accorcia il testo (intero resta nella tab, a cui il post rimanda)
+        testa, x = f"MOVIOLA · Giornata {e['giornata']}\n{ep['titolo']}. ", ep["testo"]
+        for coda in (" #GirrrSport #Moviola", " #Moviola", ""):
+            coda = f" Verdetto: {ep['verdetto']}." + coda
+            if len(testa + x + coda) <= 280:
+                return [(GS, testa + x + coda)]
+        return [(GS, testa + x[:280 - len(testa) - len(coda) - 1].rstrip() + "…" + coda)]
     if t == "promessa":
         if e["esito"] == "v":
             return [(GIORNALE, f"PAROLA MANTENUTA\n{m(e['team'])} l'aveva detto in conferenza stampa: «{e['promessa']}». Poi è andato in campo e l'ha fatto. #ConferenzaStampa")]
@@ -153,9 +154,10 @@ def leggi_dati():
         return None
 
 
-def evento_moviola(mv, D, adesso=None):
+def evento_moviola(mv, D):
     """Evento 'moviola' per l'ultima giornata di moviola.json (le vecchie non si ripostano). Nessun episodio: nessun evento.
-    "quando" = post del Giornale + SCALETTA["moviola"] minuti; se è passato da più di un giorno, si pubblica subito."""
+    "quando" = post del Giornale + SCALETTA["moviola"] minuti (anche se è già passato: il post prende il suo posto nella Curva).
+    Senza data.json, o se l'ultima giornata giocata non è quella della Moviola, esce subito (comunque dopo il Giornale)."""
     gg = (mv or {}).get("giornate") or {}
     if not gg:
         return []
@@ -164,11 +166,8 @@ def evento_moviola(mv, D, adesso=None):
         return []
     ev = dict(tipo="moviola", k=f"G{n}", giornata=int(n), episodi=gg[n]["episodi"])
     g, t = ora_giornale(D)
-    adesso = adesso or datetime.datetime.now(datetime.timezone.utc).timestamp() * 1000
     if g == int(n) and t is not None:
-        t += SCALETTA["moviola"] * 60000
-        if t > adesso - 24 * 36e5:
-            ev["quando"] = datetime.datetime.fromtimestamp(t / 1000, datetime.timezone.utc).isoformat()
+        ev["quando"] = datetime.datetime.fromtimestamp((t + SCALETTA["moviola"] * 60000) / 1000, datetime.timezone.utc).isoformat()
     return [ev]
 
 

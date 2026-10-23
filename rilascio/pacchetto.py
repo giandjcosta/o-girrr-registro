@@ -24,10 +24,12 @@ def main():
     tmp = pathlib.Path(tempfile.mkdtemp())
     lega, stadio = GH / "girrr" / "app.html", GH / "stadio" / "girrr" / "app.html"
     base = {"APP_MODO": "reale", "APP_RIL": "1"}
-    esegui(dict(base, APP_DATI="dati/lab-dati.json", APP_VOCI="voci/", APP_OUT_LEGA=str(lega), APP_OUT_STADIO=str(tmp / "x.html")), "anteprima/build.py")
-    esegui(dict(base, APP_DATI="../../girrr/dati/lab-dati.json", APP_VOCI="../../girrr/voci/", APP_OUT_LEGA=str(tmp / "y.html"), APP_OUT_STADIO=str(stadio)), "anteprima/build.py")
+    esegui(dict(base, APP_DATI="dati/lab-dati.json", APP_VOCI="voci/", APP_MOV="dati/moviola.json", APP_OUT_LEGA=str(lega), APP_OUT_STADIO=str(tmp / "x.html")), "anteprima/build.py")
+    esegui(dict(base, APP_DATI="../../girrr/dati/lab-dati.json", APP_VOCI="../../girrr/voci/", APP_MOV="../../girrr/dati/moviola.json", APP_OUT_LEGA=str(tmp / "y.html"), APP_OUT_STADIO=str(stadio)), "anteprima/build.py")
     # dati di partenza (il workflow "Calcoli dopo la giornata" li rinnova)
     shutil.copytree(R / "anteprima" / "dati", GH / "girrr" / "dati")
+    # Moviola: la app del sito vero la legge da girrr/dati/moviola.json (gh-pages); il workflow la copia lì da calcoli/ di main
+    shutil.copy(R / "calcoli" / "moviola.json", GH / "girrr" / "dati" / "moviola.json")
     # voci della radio: solo i file che la app usa davvero
     V = R / "lab" / "voci"
     usati = {"archivio.json", "elenco.json", "elenco2.json", "puntata.json", "puntata.mp3", "radio-it.mp3", "radio-en.mp3"}
