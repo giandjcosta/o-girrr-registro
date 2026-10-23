@@ -73,6 +73,9 @@ jobs:
       - name: Dati per le pagine nuove
         if: steps.c.outputs.esegui == 'true'
         run: python3 code/calcoli/dati_lab.py site/data.json site/girrr/dati/probabilita.json site/girrr/dati/lab-dati.json site/scripts site/girrr/dati/borsino.json site/girrr/dati/fiducia.json
+      - name: Moviola di Girrr Sport (episodi della giornata, scritti una volta sola)
+        if: steps.c.outputs.esegui == 'true'
+        run: python3 code/calcoli/moviola.py site/data.json site/formazioni.json code/calcoli/moviola.json
       - name: Post della Curva (in coda o pubblicati, secondo il periodo)
         if: steps.c.outputs.esegui == 'true'
         run: |

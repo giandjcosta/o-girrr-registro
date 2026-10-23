@@ -841,26 +841,28 @@ function spRadio(){
   return h+'</div>'}
 
 /* ---------- MOVIOLA ---------- */
-/* Episodi scelti e giudicati da calcoli/moviola.py (moviola.json): al massimo 3 per giornata, chi ha deciso la partita per primo */
-var MV=null;
+/* Gli episodi arrivano già scelti e giudicati da calcoli/moviola.py (calcoli/moviola.json): qui si mostrano e basta */
+var MV=null,MVU='../calcoli/moviola.json';
 function mvCarica(){if(MV!==null)return;MV=false;try{
-  fetch('../lab/moviola.json',{cache:'no-cache'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){MV=j;if(cur==='sport'&&S.sp==='moviola')render()}).catch(function(){MV='errore';if(cur==='sport'&&S.sp==='moviola')render()})}catch(e){MV='errore'}}
-function mvGiocate(){var g=(MV&&MV.giornate)||{};return Object.keys(g).map(Number).sort(function(a,b){return a-b}).map(function(n){return {n:n,e:g[n].episodi||[]}})}
-function mvAll(t){var m=mgrsOf(t);return m.join(' e ')}
+  fetch(MVU+'?v='+Date.now(),{cache:'no-cache'}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(j){MV=j&&j.giornate?j:'errore';if(cur==='sport'&&S.sp==='moviola')render()}).catch(function(){MV='errore';if(cur==='sport'&&S.sp==='moviola')render()})}catch(e){MV='errore'}}
+function mvAll(a){return (a||[]).join(' e ')}
 var MVC={'Regolare':'ok','Rosso confermato':'ko','Ha deciso la partita':'dec'};
 function spMoviola(){
   mvCarica();
   var h='<div class="card"><h3>Moviola</h3><p class="sm mut" style="margin:6px 0 0">Gli episodi che hanno fatto discutere, giornata per giornata: rigori, autogol e partite decise sul filo, rivisti al rallentatore. Prima quelli che hanno deciso la partita.</p></div>';
-  if(MV===false||MV===null)return h+'<div class="card"><p class="sm mut">Carico gli episodi…</p></div>';
-  if(MV==='errore')return h+'<div class="card"><p class="sm mut">Non riesco a caricare gli episodi. Riprova tra poco.</p></div>';
-  var GG=mvGiocate();if(!GG.length)return h+'<div class="card"><p class="sm mut">La prima moviola arriva con la prima giornata giocata.</p></div>';
-  var n=S.mvg&&GG.some(function(g){return g.n===S.mvg})?S.mvg:GG[GG.length-1].n,E=GG.filter(function(g){return g.n===n})[0].e;
-  h+='<div class="mvsel"><label for="mvg">Giornata</label><select id="mvg" aria-label="Giornata della moviola">'+GG.slice().reverse().map(function(g){return '<option value="'+g.n+'"'+(g.n===n?' selected':'')+'>Giornata '+g.n+'</option>'}).join('')+'</select></div>';
+  if(MV===false||MV===null)return h+'<div class="card mvq"><b>Carico gli episodi…</b></div>';
+  if(MV==='errore')return h+'<div class="card mvq"><b>La Moviola non si è caricata</b><span class="sm mut">Non riesco a leggere gli episodi. Riprova tra poco: se continua, avvisa Gianluca.</span></div>';
+  var GG=(MV.giocate||[]).slice();if(!GG.length)return h+'<div class="card mvq"><b>Nessuna giornata giocata</b><span class="sm mut">La prima moviola arriva con la prima giornata.</span></div>';
+  var n=S.mvg&&GG.indexOf(S.mvg)>=0?S.mvg:GG[GG.length-1],G=MV.giornate[String(n)];
+  h+='<div class="mvsel"><label for="mvg">Giornata</label><select id="mvg" aria-label="Giornata della moviola">'+GG.slice().reverse().map(function(g){return '<option value="'+g+'"'+(g===n?' selected':'')+'>Giornata '+g+'</option>'}).join('')+'</select></div>';
+  if(!G)return h+'<div class="card mvq"><b>Episodi della giornata '+n+' non ancora pronti</b><span class="sm mut">Arrivano con i calcoli dopo la giornata. Riprova più tardi.</span></div>';
+  var E=G.episodi||[];
+  if(!E.length&&(G.scartati||[]).length)return h+'<div class="card mvq"><b>Episodi della giornata '+n+' non disponibili</b><span class="sm mut">Ci sono stati episodi, ma non si riesce a capire per quale squadra giocavano i protagonisti.</span></div>';
   if(!E.length)return h+'<div class="card mvq"><b>Giornata tranquilla, nessun episodio</b><span class="sm mut">Niente rigori, autogol o partite decise sul filo nella giornata '+n+'.</span></div>';
-  return h+E.map(function(e){var vc=MVC[e.v]||'dub';
-    return '<div class="card mv'+(vc==='dec'?' mvd':'')+'"><div class="mvh"><span class="rbadge">Giornata '+n+'</span><h4>'+esc(e.t)+'</h4></div>'+
-     (e.g?'<p class="mvw"><b>'+esc(e.g)+'</b><span>'+esc(e.s)+' · Allenator'+(mgrsOf(e.s).length>1?'i ':'e ')+esc(mvAll(e.s))+'</span></p>':'<p class="mvw"><b>'+esc(e.c)+' – '+esc(e.o)+'</b><span>'+esc(mvAll(e.c))+' contro '+esc(mvAll(e.o))+'</span></p>')+
-     '<p class="mvx">'+esc(e.x)+'</p><div class="mvv '+vc+'"><small>Verdetto</small><b>'+esc(e.v)+'</b></div></div>'}).join('')}
+  return h+E.map(function(e){var vc=MVC[e.verdetto]||'dub';
+    return '<div class="card mv'+(vc==='dec'?' mvd':'')+'"><div class="mvh"><span class="rbadge">Giornata '+n+'</span><h4>'+esc(e.titolo)+'</h4></div>'+
+     (e.giocatore?'<p class="mvw"><b>'+esc(e.giocatore)+'</b><span>'+esc(e.squadra)+' · Allenator'+((e.allenatori||[]).length>1?'i ':'e ')+esc(mvAll(e.allenatori))+'</span></p>':'<p class="mvw"><b>'+esc(e.casa)+' – '+esc(e.ospite)+'</b><span>'+esc(mvAll(e.allenatori_casa))+' contro '+esc(mvAll(e.allenatori_ospite))+'</span></p>')+
+     '<p class="mvx">'+esc(e.testo)+'</p><div class="mvv '+vc+'"><small>Verdetto</small><b>'+esc(e.verdetto)+'</b></div></div>'}).join('')}
 document.addEventListener('change',function(e){if(e.target.id==='mvg'){S.mvg=+e.target.value;render()}});
 
 function spConf(){var x=vConf();return x.replace(/^<div class="where">.*?<\/div>/,'')}

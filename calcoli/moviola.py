@@ -1,17 +1,30 @@
 #!/usr/bin/env python3
-"""Moviola di Girrr Sport: sceglie e giudica gli episodi di ogni giornata e li scrive in moviola.json (lo legge la tab Moviola del Lab).
+"""Moviola di Girrr Sport: sceglie e giudica gli episodi di ogni giornata giocata e li scrive una volta sola in calcoli/moviola.json.
+La tab Moviola (Lab, Anteprima Lega e Stadio) legge quel file così com'è, senza ricalcolare niente.
 
-Legge data.json (voti con le voci `b`, calendario con punteggi e risultati) e formazioni.json (titolari e panchina di ogni giornata).
-Per ogni episodio (rosso, rigore sbagliato, autogol, rigore parato) toglie il suo effetto dal punteggio della squadra e guarda
-se l'esito (vittoria, pareggio, sconfitta) cambierebbe. Il valore di ogni voce e le soglie dei gol si ricavano dai dati, niente numeri a mano.
-Verdetto: rosso → Rosso confermato; ha cambiato l'esito → Ha deciso la partita; partita decisa per meno di 1 punto → Da rivedere; altrimenti Regolare.
-Ordine (al massimo 3): prima quelli che hanno deciso, poi per peso sul risultato, poi rosso, rigore sbagliato, autogol, rigore parato, partita sul filo.
-Le giornate già scritte in moviola.json restano come sono: si scrivono solo le giornate nuove, oppure tutte con --rigenera
-(o solo alcune con --rigenera 2,3).
-Uso: python3 calcoli/moviola.py [data.json] [formazioni.json] [uscita.json] [--rigenera [N,M]]
+Legge data.json (calendario in "cal.lega", voti con le voci "b", nomi in "P", rose in "teams") e formazioni.json del sito.
+Uso:  python3 calcoli/moviola.py [data.json] [formazioni.json] [moviola.json] [--rigenera [N,M]]
+
+Regole:
+  - Episodi: rosso, rigore sbagliato, autogol, rigore parato, partita vinta per meno di 1 punto (i pareggi no).
+  - La squadra del giocatore viene solo dalla formazione di quella giornata (titolari e panchina). Se non si ricava,
+    l'episodio non esce, finisce tra gli "scartati" e lo script lo scrive nell'output.
+  - Ha deciso la partita: si toglie l'effetto dell'episodio dal punteggio della squadra, si ricalcolano i gol e si guarda
+    se l'esito (vittoria, pareggio, sconfitta) cambia. Il valore di ogni voce e le soglie dei gol si ricavano dai dati.
+    Vale solo per i titolari con voto: se il giocatore partiva dalla panchina, sapere se è entrato sarebbe una stima,
+    e l'episodio resta Regolare (o Da rivedere se la partita è sul filo).
+  - Verdetto: rosso → Rosso confermato; ha cambiato l'esito → Ha deciso la partita; partita decisa per meno di 1 punto
+    → Da rivedere; altrimenti Regolare.
+  - Ordine (al massimo 3): prima quelli che hanno deciso, poi per peso sul risultato (gol spostati, poi punti dell'effetto),
+    poi rosso, rigore sbagliato, autogol, rigore parato, partita sul filo.
+  - Testo scelto tra le varianti in modo stabile (stessa giornata, stesso tipo e stesso giocatore danno lo stesso testo).
+  - Solo le giornate con tutti i risultati entrano. Una giornata già scritta non cambia più, anche se i voti vengono
+    corretti dopo: --rigenera riscrive tutto, --rigenera 2,3 solo quelle. Il file si riscrive solo se cambia qualcosa.
+Non scrive nel database.
 """
 import json, re, sys
 from collections import Counter, defaultdict
+from datetime import date
 from pathlib import Path
 
 QUI = Path(__file__).resolve().parent
@@ -25,7 +38,7 @@ while _a:
         ARG.append(x)
 DATI = Path(ARG[0]) if len(ARG) > 0 else QUI.parent / "data.json"
 FORM = Path(ARG[1]) if len(ARG) > 1 else QUI.parent / "formazioni.json"
-USCITA = Path(ARG[2]) if len(ARG) > 2 else QUI.parent / "lab" / "moviola.json"
+USCITA = Path(ARG[2]) if len(ARG) > 2 else QUI / "moviola.json"
 
 MGR = json.loads((QUI / "nomi.json").read_text(encoding="utf-8"))
 PRIO = {"rosso": 0, "sbagliato": 1, "autogol": 2, "parato": 3, "stretta": 4}
@@ -88,7 +101,7 @@ def pick(a, k):
 
 
 def allenatori(t):
-    return "Leanzino e Mario" if t == "The Blue brothers" else MGR.get(t, t)
+    return [n.strip() for n in MGR.get(t, t).split("&")]
 
 
 def voci(v):
@@ -157,62 +170,46 @@ def esito(a, b):
     return (a > b) - (a < b)
 
 
-def in_campo(sa, F, V):
-    """Chi gioca per chi in quella giornata e se il suo voto conta: titolare con voto, oppure panchinaro che entra al posto
-    di un titolare del suo ruolo senza voto (in ordine di panchina). Senza formazione: squadra dalla rosa, conta sconosciuto (None)."""
-    out = {}
-    if F is None:
-        return None
-    for t, x in F.items():
-        manca = Counter()
-        for i in x.get("tit") or []:
-            v = (V.get(str(i)) or {}).get(sa)
-            gioca = bool(v) and v.get("v") is not None
-            out[str(i)] = (t, gioca)
-            if not gioca:
-                manca[RUOLO.get(str(i), "?")] += 1
-        for i in x.get("pan") or []:
-            v = (V.get(str(i)) or {}).get(sa)
-            r = RUOLO.get(str(i), "?")
-            entra = bool(v) and v.get("v") is not None and manca[r] > 0
-            if entra:
-                manca[r] -= 1
-            out[str(i)] = (t, entra)
-    return out
-
-
 def episodi(G, d, F, val, sg):
     sa = str(G["sa"])
     V, P = d.get("votes") or {}, d.get("P") or {}
-    chi = in_campo(sa, F, V)
-    if chi is None:
-        chi = {str(p["id"]): (t["name"], None) for t in d.get("teams") or [] for p in t.get("pl") or []}
+    chi = {}   # giocatore → (squadra, titolare con voto)
+    for t, x in (F or {}).items():
+        for i in x.get("tit") or []:
+            v = (V.get(str(i)) or {}).get(sa)
+            chi[str(i)] = (t, bool(v) and v.get("v") is not None)
+        for i in x.get("pan") or []:
+            chi[str(i)] = (t, False)
+    rosa = {str(p["id"]) for t in d.get("teams") or [] for p in t.get("pl") or []} | set(chi)   # i giocatori della lega
     partite = [m for m in G["m"] if m[4] and m[4] != "-"]
     def partita(t):
         for m in partite:
             if t in (m[0], m[3]):
                 return m
-    ep = []
-    for pid, (sq, conta) in chi.items():
-        v = (V.get(pid) or {}).get(sa)
-        if not v or pid not in P:
+    ep, scartati = [], []
+    for pid, gg in V.items():
+        v = gg.get(sa)
+        if not v or pid not in P or pid not in rosa:
             continue
         for voce, n in voci(v).items():
             k = tipo(voce)
             if not k:
                 continue
+            if pid not in chi:
+                scartati.append({"tipo": k, "giocatore": P[pid]["n"], "id": pid, "motivo": "squadra non ricavabile dalla formazione"})
+                continue
+            sq, titolare = chi[pid]
             e = dict(k=k, g=P[pid]["n"], s=sq, id=pid, deciso=False, peso=0.0, gol=0)
             m = partita(sq)
             if m:
                 casa = m[0] == sq
-                mio, suo = (m[1], m[2]) if casa else (m[2], m[1])
+                mio = m[1] if casa else m[2]
                 gm, gs = map(int, m[4].split("-")) if casa else map(int, m[4].split("-")[::-1])
                 e.update(o=m[3] if casa else m[0], m=m, sul_filo=gm != gs and abs(m[1] - m[2]) < 1)
                 eff = val.get(voce)
-                if conta and eff and sg:
+                if titolare and eff and sg:   # dalla panchina sarebbe una stima: niente effetto, niente "decide"
                     senza = gol(mio - eff * n, *sg)
-                    e["peso"] = abs(eff * n)
-                    e["gol"] = abs(gm - senza)
+                    e["peso"], e["gol"] = abs(eff * n), abs(gm - senza)
                     if esito(senza, gs) != esito(gm, gs):
                         e.update(deciso=True, contro=esito(senza, gs))
             ep.append(e)
@@ -221,7 +218,7 @@ def episodi(G, d, F, val, sg):
         if r[0] != r[1] and abs(m[1] - m[2]) < 1:
             ep.append(dict(k="stretta", c=m[0], o=m[3], r=m[4], id=m[0] + m[3], deciso=False, peso=0.0, gol=0, sul_filo=True,
                            p=f"{m[1]:g} a {m[2]:g}".replace(".", ",")))
-    ep.sort(key=lambda e: (not e["deciso"], -e["gol"], -e["peso"], PRIO[e["k"]], e.get("g") or e.get("c")))
+    ep.sort(key=lambda e: (not e["deciso"], -e["gol"], -e["peso"], PRIO[e["k"]], (e.get("g") or e.get("c")).casefold()))
     out = []
     for e in ep[:3]:
         k, chiave = e["k"], f"{G['n']}:{e['k']}:{e['id']}"
@@ -235,48 +232,47 @@ def episodi(G, d, F, val, sg):
             ver = "Regolare"
         x = pick(DECISO[k], chiave) if e["deciso"] else pick(MVT[k]["x"], chiave)
         m = e.get("m")
-        rep = {"G": e.get("g", ""), "S": e.get("s", ""), "A": allenatori(e["s"]) if e.get("s") else "",
+        rep = {"G": e.get("g", ""), "S": e.get("s", ""), "A": " e ".join(allenatori(e["s"])) if e.get("s") else "",
                "C": e.get("c", ""), "O": e.get("o", ""), "R": ris(e.get("r", "")), "P": e.get("p", ""),
-               "AC": allenatori(e["c"]) if e.get("c") else "", "AO": allenatori(e["o"]) if e.get("o") else "",
+               "AC": " e ".join(allenatori(e["c"])) if e.get("c") else "", "AO": " e ".join(allenatori(e["o"])) if e.get("o") else "",
                "M": f"{m[0]}–{m[3]} {ris(m[4])}" if m else "", "E": CONTRO.get(e.get("contro"), "")}
         x = re.sub(r"\{(\w+)\}", lambda z: rep[z.group(1)], x)
-        r = {"k": k, "t": MVT[k]["t"], "v": ver, "x": x}
-        for c in ("g", "s", "c", "o"):
-            if e.get(c):
-                r[c] = e[c]
+        r = {"tipo": k, "titolo": MVT[k]["t"], "verdetto": ver, "testo": x}
+        if k == "stretta":
+            r.update(casa=e["c"], ospite=e["o"], allenatori_casa=allenatori(e["c"]), allenatori_ospite=allenatori(e["o"]))
+        else:
+            r.update(giocatore=e["g"], squadra=e["s"], allenatori=allenatori(e["s"]))
         out.append(r)
-    return out
+    return {"sa": G["sa"], "scritta": date.today().isoformat(), "episodi": out, "scartati": scartati}
 
 
 def main():
-    global RUOLO
     d = json.loads(DATI.read_text(encoding="utf-8"))
     form = json.loads(FORM.read_text(encoding="utf-8")) if FORM.exists() else {}
-    RUOLO = {k: p.get("r", "?") for k, p in (d.get("P") or {}).items()}
     lega = (d.get("cal") or {}).get("lega") or []
     val = valori_voci(d.get("votes") or {})
     sg = soglie(lega)
-    old = json.loads(USCITA.read_text(encoding="utf-8")) if USCITA.exists() else {}
-    gg = dict(old.get("giornate") or {})
-    nuove = []
-    for G in lega:
-        if not any(m[4] and m[4] != "-" for m in G["m"]):
-            continue
+    print("Valori ricavati:", {k: val[k] for k in ("rigore sbagliato", "autogol", "rigore parato") if k in val}, "· soglie dei gol:", sg)
+    prima = {} if RIGENERA is True or not USCITA.exists() else json.loads(USCITA.read_text(encoding="utf-8"))
+    gg = dict(prima.get("giornate") or {})
+    giocate = [g for g in lega if g["m"] and all(m[4] and m[4] != "-" for m in g["m"])]
+    for G in giocate:
         n = str(G["n"])
-        if n in gg and not (RIGENERA is True or (isinstance(RIGENERA, set) and G["n"] in RIGENERA)):
+        if n in gg and not (isinstance(RIGENERA, set) and G["n"] in RIGENERA):
+            print("Giornata %s: già scritta il %s, non cambia" % (n, gg[n]["scritta"]))
             continue
-        gg[n] = {"sa": G["sa"], "episodi": episodi(G, d, form.get(str(G["sa"])), val, sg)}
-        nuove.append(n)
-    out = {"aggiornato": d.get("updated"), "giornate": dict(sorted(gg.items(), key=lambda z: int(z[0])))}
-    USCITA.parent.mkdir(parents=True, exist_ok=True)
-    USCITA.write_text(json.dumps(out, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-    print("valori:", {k: val[k] for k in ("rigore sbagliato", "autogol", "rigore parato") if k in val}, "soglie:", sg)
-    print("giornate scritte:", ", ".join(nuove) if nuove else f"nessuna (quelle già in {USCITA.name} restano come sono)")
-    for n in nuove:
-        for e in gg[n]["episodi"]:
-            print(f"  G{n} {e['t']}: {e.get('g') or e.get('c')} → {e['v']}")
+        gg[n] = x = episodi(G, d, form.get(str(G["sa"])), val, sg)
+        print("Giornata %s: %d episodi%s" % (n, len(x["episodi"]), "".join("\n  - %s: %s → %s" % (e["titolo"], e.get("giocatore") or e["casa"] + "–" + e["ospite"], e["verdetto"]) for e in x["episodi"])))
+        for s in x["scartati"]:
+            print("  ! SCARTATO %s di %s (giornata %s): %s" % (MVT[s["tipo"]]["t"].lower(), s["giocatore"], n, s["motivo"]))
+    nuovo = {"giocate": [g["n"] for g in giocate], "giornate": {k: gg[k] for k in sorted(gg, key=int)}}
+    testo = json.dumps(nuovo, ensure_ascii=False, indent=1) + "\n"
+    if USCITA.exists() and USCITA.read_text(encoding="utf-8") == testo:
+        print("moviola.json invariato")
+        return
+    USCITA.write_text(testo, encoding="utf-8")
+    print("scritto", USCITA)
 
 
-RUOLO = {}
 if __name__ == "__main__":
     main()
