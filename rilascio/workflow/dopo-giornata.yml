@@ -2,7 +2,7 @@ name: Calcoli dopo la giornata
 # Parte da solo: ogni due ore controlla se c'è una giornata chiusa (tutti i risultati in data.json) e, tre ore dopo averla vista chiusa,
 # fa i calcoli. Si può lanciare anche a mano (Actions, Run workflow): in quel caso li fa subito.
 # Chiude le promesse delle conferenze, ricalcola fiducia, probabilità e Borsino, prepara i dati per le pagine nuove
-# e mette i nuovi post della Curva in coda (o li pubblica, quando finisce il periodo di approvazione).
+# calcola gli episodi della Moviola (calcoli/moviola.json) e mette i nuovi post della Curva in coda (o li pubblica, quando finisce il periodo di approvazione).
 # Non tocca il workflow "Aggiorna statistiche e voti".
 on:
   schedule:
@@ -73,10 +73,13 @@ jobs:
       - name: Dati per le pagine nuove
         if: steps.c.outputs.esegui == 'true'
         run: python3 code/calcoli/dati_lab.py site/data.json site/girrr/dati/probabilita.json site/girrr/dati/lab-dati.json site/scripts site/girrr/dati/borsino.json site/girrr/dati/fiducia.json
+      - name: Episodi della Moviola
+        if: steps.c.outputs.esegui == 'true'
+        run: python3 code/calcoli/moviola.py site/data.json site/formazioni.json code/calcoli/moviola.json
       - name: Post della Curva (in coda o pubblicati, secondo il periodo)
         if: steps.c.outputs.esegui == 'true'
         run: |
-          python3 code/calcoli/post_curva.py code/calcoli/eventi.json code/calcoli/post_curva.json
+          python3 code/calcoli/post_curva.py code/calcoli/eventi.json code/calcoli/post_curva.json code/calcoli/moviola.json
           python3 code/calcoli/pubblica_curva.py --vai
       - name: Salvo i dati del sito
         if: steps.c.outputs.esegui == 'true'

@@ -9,6 +9,7 @@ Quando la 5.0 esce, vanno copiati in `scripts/` del repo della lega e agganciati
 | `probabilita.py` | Probabilità di scudetto, podio e ultimo posto dopo ogni giornata, con il motore di Totogirrr (`scripts/toto_quote.py` del repo della lega). Scrive `probabilita.json`. | Fatto |
 | `borsino.py` | Valore dei giocatori giornata per giornata: parte dalla quotazione e sale o scende col fantavoto rispetto alla media del ruolo. Scrive `borsino.json`. | Fatto, regola da confermare |
 | `post_curva.py` | Post automatici della Curva: sfida lanciata, rifiutata, scaduta, nascita di un Derby, promesse mantenute o tradite. Legge `eventi.json` (dal database), scrive `post_curva.json`. | Fatto |
+| `moviola.py` | Episodi della Moviola di ogni giornata giocata (stessa logica e stessi testi della tab Moviola dell'app). Legge `data.json` e `formazioni.json`, scrive `moviola.json`; `post_curva.py` ne fa il post Moviola di Girrr Sport. | Fatto, solo sul ramo (passo 4) |
 | `pubblica_curva.py` | Pubblica i post nella Curva una volta sola ciascuno, con la funzione `curva_adm_scrivi`. Di default prova a vuoto; per pubblicare servono `--vai` e quattro segreti d'ambiente (mai nel repo). | Fatto, mai provato sul database vero |
 | `fine_stagione.py` | A stagione finita: riga per l'Albo d'oro, riga per la Coppa Campioni, classifica completa per l'Albo di Latta, cucchiai di legno e mazzate. Scrive `fine_stagione.json`. | Fatto |
 | `aspettative.json` | Aspettative a inizio stagione (obiettivo del presidente, posto atteso). Fisse per tutta la stagione. | Generato dal Laboratorio |

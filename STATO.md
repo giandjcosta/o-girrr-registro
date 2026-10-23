@@ -1,4 +1,4 @@
-# Stato del progetto O Girrr (aggiornato 23 ottobre 2026)
+# Stato del progetto O Girrr (aggiornato 23 ottobre 2026, sera)
 
 Per aprire una chat nuova: incolla "Leggi STATO.md nel repo o-girrr-registro e continuiamo da lì".
 
@@ -45,6 +45,21 @@ Sera del 18 ottobre, con il "vai" di Gianluca:
 - Cartellini rossi: NON ci sono nei dati. Le voci di `b` sono solo gol, assist, gol subiti, rigori (segnati, sbagliati, parati), autogol, subentrato, senza voto, migliore in campo. Il codice è pronto: se compare una voce con "espulso" o "rosso" entra da sola come primo episodio. Volendo si potrebbero dedurre da fantavoto meno voto (5 casi con -1 non spiegato), ma è una stima: da decidere con Gianluca.
 - La tab deselezionata di Girrr Sport torna neutra subito (`#view .seg button[data-sp][aria-pressed=false]{transition:none}`).
 - Provato in Chromium su iPhone SE, iPhone 13, PC 1366 e TV 1920: niente scroll orizzontale né testi fuori dalle card, selettore a 16px (niente zoom su iPhone). Provati anche con dati finti il rosso, la partita sul filo e la giornata tranquilla. Non provato su Safari vero.
+
+## Aggiornamenti del 23 ottobre (sera): Moviola passo 4, post in Curva (solo sul ramo, NON online)
+Ramo `claude/moviola-passo-4-girrr-kss5r2` del registro. Niente portato sul sito vero: serve il "vai".
+- Nuovo `calcoli/moviola.py`: da `data.json` e `formazioni.json` scrive `calcoli/moviola.json` con gli episodi di ogni giornata giocata, con la stessa logica, gli stessi testi e lo stesso verdetto della tab (`mvEpisodi` del Lab). Se si cambiano i testi, vanno cambiati in tutti e due i posti: la prova lo controlla.
+- `calcoli/post_curva.py` legge `moviola.json`: un post "MOVIOLA · Giornata N" su Girrr Sport con l'episodio principale (il primo), il suo testo e il verdetto, solo per l'ultima giornata. Chiave `moviola:G<n>:0` (formato tipo:k:indice, esce una volta sola). Giornata senza episodi: nessun post.
+- Ordine dopo la giornata (`SCALETTA` in `post_curva.py`, minuti dopo `_pub` della giornata, la stessa ora del post del Giornale nella Curva): Giornale +0, Radio +5, Moviola +10. `pubblica_curva.py` passa l'orario a `curva_adm_scrivi` come `p_quando` (la funzione lo accetta già, nessuna modifica al database).
+- Curva (`ufficiale/girrr` e `ufficiale/nuovo/girrr`, e come patch in `ufficiale/build.py`): tolto il vecchio post automatico `gs:mov` di `curva-banca.js`; il post Moviola del database mostra "Apri la Moviola ›" che porta alla tab (`app.html#moviola`). Nella app (Lab e Anteprima rigenerata) `#moviola` apre Girrr Sport sulla tab Moviola.
+- Workflow "Calcoli dopo la giornata" (`rilascio/workflow/dopo-giornata.yml`): nuovo passo "Episodi della Moviola" prima dei post. `moviola.json` è file di stato: `pacchetto.py` non lo copia.
+- Prova con dati finti: `python3 prove/prova_moviola.py` (13 controlli, tutti OK): stessi episodi della tab, un solo post con chiave giusta, ordine Giornale/Radio/Moviola, secondo giro senza doppioni, la Curva non fa più `gs:mov` (la versione vecchia con gli stessi dati lo faceva), giornata senza episodi e moviola.json assente senza post.
+- Da sapere prima del "vai":
+  - La Radio non ha ancora un post nella Curva: il suo posto (+5 minuti) è tenuto libero, la Moviola esce comunque a +10.
+  - "Per sempre": i post di Girrr Sport dal database (anche Conferenze e Derby) il feed `curva_feed` li mostra per 60 giorni (`quando > now() - 60 days`). Il post Moviola fa lo stesso. Per tenerli per sempre bisogna togliere quel limite nel database: non fatto, da decidere.
+  - La tab Moviola non è ancora nella app del sito vero (passo 3, solo Lab): il link "Apri la Moviola" funziona dopo il rilascio della app con la tab.
+  - Al rilascio il vecchio post `gs:mov` dell'ultima giornata sparisce subito; quello nuovo arriva al primo "Calcoli dopo la giornata" (si può lanciare a mano).
+  - Non provato sul sito vero né sul database vero (data.json del sito non raggiungibile da qui).
 
 ## Note
 - Il workflow Curva salva lo stato in `calcoli/pubblicati.json` su `main`; l'opzione `solo_segna` segna i post attuali come già usciti senza inviarli.

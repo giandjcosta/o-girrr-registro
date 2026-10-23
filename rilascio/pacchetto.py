@@ -53,7 +53,7 @@ def main():
     for y in (R / "rilascio" / "workflow").glob("*.yml"):
         shutil.copy(y, MAIN / ".github" / "workflows" / y.name)
     (MAIN / "calcoli").mkdir()
-    stato = {"eventi.json", "post_curva.json", "coda_curva.json", "pubblicati.json", "conferenze.json"}
+    stato = {"eventi.json", "post_curva.json", "coda_curva.json", "pubblicati.json", "conferenze.json", "moviola.json"}
     for f in (R / "calcoli").iterdir():
         if f.is_file() and f.name not in stato and f.suffix in (".py", ".json", ".md"):
             shutil.copy(f, MAIN / "calcoli" / f.name)

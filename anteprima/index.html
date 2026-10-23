@@ -978,7 +978,7 @@ function render(){try{var _t=TABS.filter(function(z){return z[0]===cur})[0];$('#
   var _tb=$('#tabs'),_sl=_tb.scrollLeft;if(_tb.children.length===TABS.length){[].forEach.call(_tb.children,function(b){b.setAttribute('aria-selected',b.dataset.tab===cur)})}else _tb.innerHTML=TABS.map(function(t){return '<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'" aria-label="'+t[1]+'">'+(t[0]==='sport'?'<img class="gsl" src="'+D.img.gs+'" alt="Girrr Sport">':(({home:1,oro:1,spog:1,carriera:1})[t[0]]?'<img src="'+D.img.lega+'" alt="">':'')+t[1])+'</button>'}).join('');
   try{_tb.style.scrollBehavior='auto';_tb.scrollLeft=_sl;var s=$('#tabs [aria-selected=true]');if(s)centra(_tb,s);_tb.style.scrollBehavior='';aggFade(_tb)}catch(e){}
 }
-function go(t){t=route(t);if(t==='home'){location.href='../ufficiale/nuovo/girrr/index.html';return}if(t==='conf'||t==='radio'||t==='giornale'){S.sp=t;t='sport'}if(cur==='radio'&&t!=='radio'){radioStop();RA.i=-1}cur=t;try{history.replaceState(null,'','#'+t)}catch(e){}render();window.scrollTo(0,0)}
+function go(t){t=route(t);if(t==='home'){location.href='../ufficiale/nuovo/girrr/index.html';return}if(t==='conf'||t==='radio'||t==='giornale'||t==='moviola'){S.sp=t;t='sport'}if(cur==='radio'&&t!=='radio'){radioStop();RA.i=-1}cur=t;try{history.replaceState(null,'','#'+t)}catch(e){}render();window.scrollTo(0,0)}
 document.addEventListener('click',function(e){
   var b=e.target.closest('button,[data-card]');if(!b)return;var d=b.dataset;
   if(d.tab)return go(d.tab);
@@ -1298,8 +1298,8 @@ document.addEventListener('click',function(e){
   if(d.lesito){MOCK.esito(ME,D.cal[0].n,d.lesito);return dbLoad(false)}
 },true);
 
-var hh=(location.hash||'').slice(1);if(hh==='conf'||hh==='radio'){S.sp=hh;hh='sport'}if(V[hh])cur=route(hh);if(cur==='home'){location.replace('../ufficiale/nuovo/girrr/index.html')}
-window.addEventListener('hashchange',function(){var x=(location.hash||'').slice(1);if(V[x]&&x!==cur)go(x)});
+var hh=(location.hash||'').slice(1);if(hh==='conf'||hh==='radio'||hh==='moviola'){S.sp=hh;hh='sport'}if(V[hh])cur=route(hh);if(cur==='home'){location.replace('../ufficiale/nuovo/girrr/index.html')}
+window.addEventListener('hashchange',function(){var x=(location.hash||'').slice(1);if(x==='moviola'||(V[x]&&x!==cur))go(x)});
 render();
 })();
 </script>

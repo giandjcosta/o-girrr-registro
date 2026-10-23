@@ -16,7 +16,8 @@ Comandi (da cartella del repo):
 Per pubblicare davvero servono --vai e quattro segreti d'ambiente (mai nel repo):
   CURVA_URL indirizzo del database      CURVA_KEY chiave publishable
   CURVA_TEAM squadra amministratrice    CURVA_CODE codice della squadra amministratrice
-Usa la funzione curva_adm_scrivi del database. Se il database non risponde ci si ferma subito, senza riprovare e senza segnare niente come pubblicato.
+Usa la funzione curva_adm_scrivi del database. Se il post ha "quando" (es. la Moviola, dopo Giornale e Radio) lo passa come p_quando:
+il post esce con quell'orario (nel passato: compare subito, al suo posto nell'ordine; nel futuro: aspetta quell'ora). Se il database non risponde ci si ferma subito, senza riprovare e senza segnare niente come pubblicato.
 File di lavoro: pubblicati.json (post già usciti), coda_curva.json (in attesa o scartati).
 """
 import datetime, json, os, sys, urllib.request
@@ -66,7 +67,10 @@ def invia(p):
         sys.exit("Mancano CURVA_URL, CURVA_KEY, CURVA_TEAM o CURVA_CODE: non pubblico niente.")
     if len(p["body"]) > 280:
         sys.exit("Post troppo lungo (oltre 280 caratteri), mi fermo: " + breve(p))
-    corpo = json.dumps(dict(p_team=team, p_code=code, p_h=p["h"], p_body=p["body"])).encode()
+    arg = dict(p_team=team, p_code=code, p_h=p["h"], p_body=p["body"])
+    if p.get("quando"):
+        arg["p_quando"] = p["quando"]
+    corpo = json.dumps(arg).encode()
     rich = urllib.request.Request(f"{url}/rest/v1/rpc/curva_adm_scrivi", corpo,
                                   {"apikey": key, "Authorization": "Bearer " + key, "Content-Type": "application/json"})
     try:

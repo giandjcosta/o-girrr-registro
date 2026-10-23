@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Post automatici della Curva per gli eventi della 5.0 (sfide, Derby, promesse).
 
-Legge:  calcoli/eventi.json  (esportato dal database: tabelle derby_sfida e conf_risposta) e calcoli/nomi.json
+Legge:  calcoli/eventi.json  (esportato dal database: tabelle derby_sfida e conf_risposta), calcoli/nomi.json
+        e calcoli/moviola.json (episodi della Moviola, scritto da calcoli/moviola.py)
 Scrive: calcoli/post_curva.json  (lista di post da pubblicare)  -  poi li pubblica calcoli/pubblica_curva.py
-Uso:    python3 calcoli/post_curva.py [eventi.json] [uscita.json]
+Uso:    python3 calcoli/post_curva.py [eventi.json] [uscita.json] [moviola.json]
 
 Formato di eventi.json: lista di oggetti con "tipo" e "k" (chiave unica dell'evento, evita doppioni):
   {"tipo":"sfida",   "k":"S12", "da":"Oranje VC", "a":"Grodah", "frase":"Quest'anno Grodah dovrà guardarmi dal basso."}
@@ -13,15 +14,19 @@ Formato di eventi.json: lista di oggetti con "tipo" e "k" (chiave unica dell'eve
   {"tipo":"scaduta", "k":"S12", "da":"Oranje VC", "a":"Grodah"}                     (nessuna risposta in 3 giorni)
   {"tipo":"derby",   "k":"S12", "da":"Oranje VC", "a":"Grodah", "nome":"Il Derby della Rivincita"}
   {"tipo":"promessa","k":"C7-Apo", "team":"Apo team", "giornata":3, "promessa":"Vinciamo noi", "esito":"v"|"s"}   (v mantenuta, s tradita, p pareggio: come nel database)
+Moviola: un post su Girrr Sport per l'ultima giornata di moviola.json, con l'episodio principale (il primo) e il suo verdetto,
+  uguali alla tab Moviola; nella Curva rimanda alla tab (link "Apri la Moviola"). Giornata senza episodi: nessun post.
+  Chiave moviola:G<giornata>:0. Esce all'orario della SCALETTA dopo la pubblicazione della giornata ("quando", passato a curva_adm_scrivi).
 Regole (decise da Gianluca): i post usano i nomi degli allenatori; i post ufficiali non parlano mai di scommesse; "Derby" sempre con la D maiuscola.
 Ogni post è al massimo di 280 caratteri.
 """
-import json, sys
+import datetime, json, sys
 from pathlib import Path
 
 QUI = Path(__file__).resolve().parent
 EVENTI = Path(sys.argv[1]) if len(sys.argv) > 1 else QUI / "eventi.json"
 USCITA = Path(sys.argv[2]) if len(sys.argv) > 2 else QUI / "post_curva.json"
+MOVIOLA = Path(sys.argv[3]) if len(sys.argv) > 3 else QUI / "moviola.json"
 NOMI = json.loads((QUI / "nomi.json").read_text(encoding="utf-8"))
 GS, LEGA, GIORNALE = "girrr_sport", "lega_ofantagirrr", "giornale_girrr"
 
@@ -31,6 +36,11 @@ FRASI = {("Oranje VC", "Apo team"): [
     "{X} c'è dal primo giorno e ha tre titoli: io sono andato e tornato, e il conto aperto lo chiudo io.",
     "{X} non si è mai mosso, io ho girato il mondo: vediamo chi arriva prima, andata e ritorno.",
     "Nel 2016/17 chiusi quarto a un passo dal podio: stavolta il podio lo voglio, e passo sopra {X}."]}
+
+
+# Ordine dei post di Girrr Sport dopo la giornata: minuti dopo la pubblicazione della giornata (_pub in data.json, la stessa ora
+# del post del Giornale nella Curva). La Radio ha il suo posto ma oggi non ha ancora un post.
+SCALETTA = {"giornale": 0, "radio": 5, "moviola": 10}
 
 
 def m(t):
@@ -79,6 +89,13 @@ def post(e):
     if t == "derby":
         return [(GS, f"NASCE UN DERBY\n{m(e['da'])} e {m(e['a'])} hanno trovato l'accordo: da oggi è «{e['nome']}». #GirrrSport #Derby"),
                 (LEGA, f"Novità dall'Albo d'oro: nasce «{e['nome']}», il Derby tra {m(e['da'])} e {m(e['a'])}. Entra nella storia della Lega. #Derby #AlboDoro")]
+    if t == "moviola":   # solo l'episodio principale; il testo si accorcia se non sta nei 280 caratteri
+        ep = e["episodi"][0]
+        testa, coda = f"MOVIOLA · Giornata {e['giornata']}\n{ep['t']}. ", f" Verdetto: {ep['v']}. #GirrrSport #Moviola"
+        x = ep["x"]
+        if len(testa + x + coda) > 280:
+            x = x[:280 - len(testa) - len(coda) - 1].rstrip() + "…"
+        return [(GS, testa + x + coda)]
     if t == "promessa":
         if e["esito"] == "v":
             return [(GIORNALE, f"PAROLA MANTENUTA\n{m(e['team'])} l'aveva detto in conferenza stampa: «{e['promessa']}». Poi è andato in campo e l'ha fatto. #ConferenzaStampa")]
@@ -87,13 +104,33 @@ def post(e):
     return []
 
 
+def quando(pub, minuti):
+    """Orario di uscita (ISO, UTC): pub è l'istante di pubblicazione della giornata in millisecondi (o testo ISO)."""
+    if pub in (None, ""):
+        return None
+    t = datetime.datetime.fromtimestamp(pub / 1000, datetime.timezone.utc) if isinstance(pub, (int, float)) \
+        else datetime.datetime.fromisoformat(str(pub).replace("Z", "+00:00"))
+    return (t + datetime.timedelta(minutes=minuti)).isoformat()
+
+
+def evento_moviola(mv):
+    """Evento 'moviola' per l'ultima giornata di moviola.json (le vecchie non si ripostano). Nessun episodio: nessun evento."""
+    G = max((mv or {}).get("giornate") or [], key=lambda g: g["n"], default=None)
+    if not G or not G.get("episodi"):
+        return []
+    return [dict(tipo="moviola", k=f"G{G['n']}", giornata=G["n"], episodi=G["episodi"], quando=quando(G.get("pub"), SCALETTA["moviola"]))]
+
+
 def main():
     eventi = json.loads(EVENTI.read_text(encoding="utf-8")) if EVENTI.exists() else []
+    eventi += evento_moviola(json.loads(MOVIOLA.read_text(encoding="utf-8")) if MOVIOLA.exists() else None)
     out = []
     for e in eventi:
         for i, (h, body) in enumerate(post(e)):
             assert len(body) <= 280, (e["k"], len(body))
             out.append(dict(chiave=f"{e['tipo']}:{e['k']}:{i}", h=h, body=body))
+            if e.get("quando"):
+                out[-1]["quando"] = e["quando"]
     USCITA.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     print("post_curva.json scritto:", len(out), "post")
 
