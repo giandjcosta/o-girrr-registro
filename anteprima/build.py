@@ -34,8 +34,8 @@ sost("S.fb[cur]", "S.fb[cur]")
 sost("['derby','I Derby'],['all','Gli allenatori']", "['derby','I Derby'],['latta','Albo di Latta'],['all','Gli allenatori']")
 sost("  if(S.oro==='storia')h+=", "  if(S.oro==='derby')return h+vDerby();if(S.oro==='latta')return h+vAlbo();\n  if(S.oro==='storia')h+=")
 s = re.sub(r"\+'<div class=\"card\"><h3>Cosa cambia in Home</h3>.*?homeMock\(\)\+'</div>'", "", s, flags=re.S)
-sost("['moviola','Moviola · Presto']]", "['sfide','Sfide'],['moviola','Moviola · Presto']]")
-sost("sp==='radio'?spRadio():'';", "sp==='radio'?spRadio():sp==='sfide'?vSfideDerby():'';")
+sost("['moviola','Moviola']]", "['sfide','Sfide'],['moviola','Moviola']]")
+sost("sp==='radio'?spRadio():sp==='moviola'?spMoviola():'';", "sp==='radio'?spRadio():sp==='sfide'?vSfideDerby():sp==='moviola'?spMoviola():'';")
 extra = r"""
 S.cr=S.cr||'ob';
 var vCar0=vCar;
