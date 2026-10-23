@@ -1,5 +1,5 @@
 {
- "aggiornato": "2026-10-23T05:43:06Z",
+ "aggiornato": "2026-10-23T17:42:09Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
@@ -16,12 +16,11 @@
    "nome": "Aggiornamento del venerdì (partite giocate e formazioni)",
    "quando": "Ogni venerdì alle 17:12",
    "stato": "attiva",
-   "prossimo": "2026-10-23T15:12:00Z",
+   "prossimo": "2026-10-30T16:12:00Z",
    "ultimo": {
-    "quando": "2026-10-16T15:13:55Z",
+    "quando": "2026-10-23T15:16:58Z",
     "esito": "riuscito"
-   },
-   "nota": "Prova manuale delle 09:58 in corso: la precedente delle 09:32 non era riuscita a pubblicare (403 sul repository)."
+   }
   },
   {
    "nome": "Aggiornamento del martedì (partite giocate e formazioni)",
@@ -114,7 +113,11 @@
    "nome": "Serate Hip Hop R&B Throwback",
    "quando": "Ogni venerdì alle 08:52",
    "stato": "attiva",
-   "prossimo": "2026-10-23T06:52:00Z"
+   "prossimo": "2026-10-30T07:52:00Z",
+   "ultimo": {
+    "quando": "2026-10-23T06:53:04Z",
+    "esito": "riuscito"
+   }
   },
   {
    "nome": "Promemoria: commenti al Giornale",
