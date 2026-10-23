@@ -1,4 +1,4 @@
-# Stato del progetto O Girrr (aggiornato 23 ottobre 2026)
+# Stato del progetto O Girrr (aggiornato 23 ottobre 2026, sera)
 
 Per aprire una chat nuova: incolla "Leggi STATO.md nel repo o-girrr-registro e continuiamo da lì".
 
@@ -45,6 +45,19 @@ Sera del 18 ottobre, con il "vai" di Gianluca:
 - Cartellini rossi: NON ci sono nei dati. Le voci di `b` sono solo gol, assist, gol subiti, rigori (segnati, sbagliati, parati), autogol, subentrato, senza voto, migliore in campo. Il codice è pronto: se compare una voce con "espulso" o "rosso" entra da sola come primo episodio. Volendo si potrebbero dedurre da fantavoto meno voto (5 casi con -1 non spiegato), ma è una stima: da decidere con Gianluca.
 - La tab deselezionata di Girrr Sport torna neutra subito (`#view .seg button[data-sp][aria-pressed=false]{transition:none}`).
 - Provato in Chromium su iPhone SE, iPhone 13, PC 1366 e TV 1920: niente scroll orizzontale né testi fuori dalle card, selettore a 16px (niente zoom su iPhone). Provati anche con dati finti il rosso, la partita sul filo e la giornata tranquilla. Non provato su Safari vero.
+
+## Aggiornamenti del 23 ottobre (sera): Moviola passo 2, verdetti (ramo `moviola-verdetti`, solo Lab)
+- Nuovo `calcoli/moviola.py`: sceglie e giudica gli episodi e li scrive in `lab/moviola.json`. La tab Moviola (Lab, anteprima Stadio `index.html` e Lega `attuale.html`) ora legge solo quel file (`../lab/moviola.json`); la logica e i testi non stanno più nel JavaScript. Uso: `python3 calcoli/moviola.py data.json formazioni.json [lab/moviola.json] [--rigenera [N,M]]`.
+- Ha deciso la partita: per ogni episodio toglie il suo effetto dal punteggio della squadra, ricalcola i gol e guarda se l'esito (vittoria, pareggio, sconfitta) cambia. Valori ricavati dai dati, niente numeri a mano: ogni voce vale la differenza fantavoto meno voto più frequente (oggi rigore sbagliato −3, autogol −2, rigore parato +3; a parità vince il valore più alto perché i gialli, che non sono tra le voci, tolgono mezzo punto); soglie dei gol dai risultati giocati (oggi 66 il primo gol, poi uno ogni 5 punti).
+- L'effetto conta solo se il giocatore era davvero in campo: titolare con voto, oppure panchinaro che entra al posto di un titolare del suo ruolo senza voto (in ordine di panchina, stima). Senza formazione in `formazioni.json` (oggi la giornata 1, Serie A 5) l'episodio c'è ma non può "decidere".
+- Verdetti: rosso → Rosso confermato (sempre, anche se ha deciso: il testo però racconta che ha deciso); ha cambiato l'esito → Ha deciso la partita; partita vinta per meno di 1 punto → Da rivedere; il resto → Regolare. La partita sul filo non ha un effetto da togliere: non "decide" mai.
+- Ordine dei 3: prima chi ha deciso, poi per peso sul risultato (gol spostati, poi punti dell'effetto), poi rosso, rigore sbagliato, autogol, rigore parato, partita sul filo.
+- Testi "Ha deciso la partita": 3 o 4 varianti per rosso, rigore sbagliato, autogol e rigore parato, con allenatori e risultato della partita (mai punti o crediti). Il risultato usa un trattino che non va a capo.
+- Colore del nuovo verdetto: viola chiaro (#e0ccff) su fondo viola tenue, con una barretta viola a sinistra della card. Distinto da Regolare (verde), Da rivedere (oro) e Rosso confermato (rosa); visto in Stadio e Lega.
+- Giornate già scritte in `moviola.json`: restano com'erano, si aggiungono solo le nuove; `--rigenera` riscrive tutto, `--rigenera 2,3` solo quelle. Il file non c'era: la prima scrittura (giornate 1-3) usa già le regole nuove.
+- Oggi sui dati veri: giornata 2, autogol di Vasquez (Real Madrink) → Ha deciso la partita (senza, Real Madrink avrebbe vinto invece del 2-2); tutto il resto Regolare.
+- Provato con Playwright su iPhone SE, iPhone 13, PC 1366 e TV 1920, in Lab, Stadio e Lega, con dati veri e finti (rosso decisivo, partita sul filo con Da rivedere): 72 controlli ok, niente scroll orizzontale né testi fuori dalle card. SOLO Chromium: WebKit non si scarica (la rete dell'ambiente blocca `cdn.playwright.dev` e `playwright.download.prss.microsoft.com`).
+- Da fare: provare su WebKit/Safari vero; agganciare `moviola.py` al giro dopo la giornata (oggi va lanciato a mano); decidere con Gianluca se, senza formazione, un episodio può "decidere" (oggi no); `ufficiale/` non toccata, niente online.
 
 ## Note
 - Il workflow Curva salva lo stato in `calcoli/pubblicati.json` su `main`; l'opzione `solo_segna` segna i post attuali come già usciti senza inviarli.
