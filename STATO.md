@@ -1,4 +1,4 @@
-# Stato del progetto O Girrr (aggiornato 23 ottobre 2026)
+# Stato del progetto O Girrr (aggiornato 23 ottobre 2026, sera)
 
 Per aprire una chat nuova: incolla "Leggi STATO.md nel repo o-girrr-registro e continuiamo da lì".
 
@@ -45,6 +45,29 @@ Sera del 18 ottobre, con il "vai" di Gianluca:
 - Cartellini rossi: NON ci sono nei dati. Le voci di `b` sono solo gol, assist, gol subiti, rigori (segnati, sbagliati, parati), autogol, subentrato, senza voto, migliore in campo. Il codice è pronto: se compare una voce con "espulso" o "rosso" entra da sola come primo episodio. Volendo si potrebbero dedurre da fantavoto meno voto (5 casi con -1 non spiegato), ma è una stima: da decidere con Gianluca.
 - La tab deselezionata di Girrr Sport torna neutra subito (`#view .seg button[data-sp][aria-pressed=false]{transition:none}`).
 - Provato in Chromium su iPhone SE, iPhone 13, PC 1366 e TV 1920: niente scroll orizzontale né testi fuori dalle card, selettore a 16px (niente zoom su iPhone). Provati anche con dati finti il rosso, la partita sul filo e la giornata tranquilla. Non provato su Safari vero.
+
+## Moviola passo 1: una sola fonte (ramo `moviola-json`, solo prova)
+- Nuovo `calcoli/moviola.py`: da `data.json` e `formazioni.json` del sito scrive `calcoli/moviola.json` con gli episodi di ogni giornata con tutti i risultati. Stesse regole del 23 ottobre (massimo 3, stesse priorità, stessi verdetti, stessi testi scelti nello stesso modo stabile: per le giornate 2 e 3 escono identici a prima).
+- Una giornata scritta non cambia più, anche se i voti vengono corretti (`--rigenera` riscrive tutto). Il file si riscrive solo se cambia qualcosa.
+- La squadra del giocatore si prende solo dalla formazione di quella giornata (titolari e panchina). Se non si ricava, l'episodio non esce, va in `scartati` e lo script stampa "! SCARTATO ...". Contano solo i giocatori della lega (in una rosa o in una formazione).
+- `formazioni.json` tiene solo le ultime giornate di Serie A (oggi la 6 e la 7). Per questo la giornata 1 (Serie A 5) è scritta senza episodi, con 2 scartati (rigore sbagliato di Yeboah J. e rigore parato di Mandas). La tab mostra "Episodi della giornata 1 non disponibili", non "Giornata tranquilla".
+- La tab del Lab non ricalcola più niente: legge `../calcoli/moviola.json`. Messaggi: "Carico gli episodi…" mentre carica; "La Moviola non si è caricata" se il file non arriva; "non ancora pronti" se manca la giornata; "Giornata tranquilla, nessun episodio" solo se la giornata è scritta senza episodi e senza scartati.
+- Workflow `rilascio/workflow/dopo-giornata.yml`: nuovo passo "Moviola di Girrr Sport" dopo "Dati per le pagine nuove". `moviola.json` viene salvato su `main` dal passo finale insieme agli altri `calcoli/*.json`. Il workflow è solo nella copia del registro: nel sito vero arriva con il "vai".
+- Da fare: il Lab legge la copia del registro, che oggi si aggiorna solo lanciando lo script a mano. Al rilascio va deciso dove la legge il sito vero, perché `main` del sito non è pubblicato su Pages: o il workflow la copia in `site/girrr/dati/`, o la pagina la legge da `main`. Il post Moviola della Curva (`curva-banca.js`) calcola ancora per conto suo: si allinea nel passo 5.
+- Test: Chromium su iPhone SE, iPhone 13, PC e TV, nel Lab e nelle due Anteprime, con i dati veri e con dati finti (rosso, partita sul filo, giornata tranquilla, giornata mancante, file non trovato, caricamento lento). Tutto a posto. WebKit/Safari non provato: in questo ambiente non c'è e non si può scaricare. Il riquadro "Cosa cambia in Home", che c'è solo nel Lab e c'era già prima, esce di 22 px su iPhone SE (320 px).
+
+## Moviola passo 2: verdetti calcolati (ramo `moviola-verdetti`, unito con `moviola-json`, solo prova)
+- Base: la logica del passo 2 in `calcoli/moviola.py`; dal passo 1 restano il file unico `calcoli/moviola.json` (formato con `giocate`, `giornate`, `episodi`, `scartati`), gli scartati segnalati, il "già scritta, non cambia", la riscrittura solo se cambia qualcosa e il passo nel workflow `dopo-giornata.yml`. `lab/moviola.json` non c'è più: Lab, Anteprima Stadio (`index.html`) e Lega (`attuale.html`) leggono `../calcoli/moviola.json`.
+- Ha deciso la partita: toglie l'effetto dell'episodio dal punteggio della squadra, ricalcola i gol e guarda se l'esito (vittoria, pareggio, sconfitta) cambia. Valori dai dati, niente numeri a mano: ogni voce vale la differenza fantavoto meno voto più frequente (oggi rigore sbagliato −3, autogol −2, rigore parato +3; a parità vince il valore più alto perché i gialli, che non sono tra le voci, tolgono mezzo punto); soglie dei gol dai risultati giocati (oggi 66 il primo gol, poi uno ogni 5 punti).
+- Solo per i titolari con voto nella formazione di quella giornata. Chi parte dalla panchina non può "decidere" (sapere se è entrato sarebbe una stima): resta Regolare, o Da rivedere se la partita è sul filo, e non pesa nell'ordine.
+- Verdetti: rosso → Rosso confermato (sempre; se ha deciso lo dice il testo); ha cambiato l'esito → Ha deciso la partita; partita vinta per meno di 1 punto → Da rivedere; il resto → Regolare. La partita sul filo non ha un effetto da togliere: non "decide" mai.
+- Ordine dei 3: prima chi ha deciso, poi per peso sul risultato (gol spostati, poi punti dell'effetto), poi rosso, rigore sbagliato, autogol, rigore parato, partita sul filo.
+- Testi "Ha deciso la partita": 3 o 4 varianti per rosso, rigore sbagliato, autogol e rigore parato, con allenatori e risultato della partita (mai punti o crediti). Il risultato usa un trattino che non va a capo. Colore: viola chiaro su fondo viola tenue. Ogni card ha a sinistra una barretta del colore del suo verdetto (viola Ha deciso la partita, verde Regolare, oro Da rivedere, rosa Rosso confermato), sopra l'ombra normale della card; viste in Stadio e Lega.
+- `--rigenera` riscrive tutto, `--rigenera 2,3` solo quelle giornate; senza, le giornate già scritte non cambiano.
+- Giornata 2 riscritta con le regole nuove (`--rigenera 2`, con `data.json` e `formazioni.json` di `gh-pages` del sito, commit 53cef58): l'autogol di Vasquez (Real Madrink, titolare) ora è "Ha deciso la partita" (senza, Real Madrink avrebbe vinto invece del 2-2). Giornate 1 e 3 lasciate come le aveva scritte il passo 1 (identiche).
+- Provato con dati finti: rosso decisivo, partita sul filo (Da rivedere), titolare che decide (Ha deciso la partita), panchinaro nella stessa situazione (Regolare), giornata senza formazione (scartati). Playwright su Chromium, iPhone SE, iPhone 13, PC 1366 e TV 1920, in Lab, Stadio e Lega: tutto a posto. WebKit non si scarica in questo ambiente (rete bloccata verso `cdn.playwright.dev`).
+- Da fare: Safari vero; dove legge il file il sito vero al rilascio (vedi passo 1); `ufficiale/` non toccata, niente online.
+
 
 ## Note
 - Il workflow Curva salva lo stato in `calcoli/pubblicati.json` su `main`; l'opzione `solo_segna` segna i post attuali come già usciti senza inviarli.

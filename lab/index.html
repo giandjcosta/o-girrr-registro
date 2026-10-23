@@ -190,7 +190,7 @@ svg text{fill:var(--mute);font-family:var(--fb)}
 .cov small{letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--gold);font-size:10px}
 .cov h3{font-family:var(--fd);font-size:26px;line-height:1.15;margin:6px 0;text-transform:none;letter-spacing:0;color:#fff}
 .arch{display:flex;justify-content:space-between;align-items:center;padding:9px 2px;border-top:1px solid var(--line);font-size:13px}
-.cfree{display:block;width:100%;margin:0;padding:14px 16px;border-radius:12px;border:1px solid var(--gold);background:rgba(255,209,102,.16);color:var(--ink);font:700 16px Inter,system-ui,sans-serif;-webkit-appearance:none;appearance:none}.cfree::placeholder{color:var(--mute);opacity:.85}.cfree:focus{outline:2px solid var(--gold);outline-offset:1px}.rtit{display:flex;flex-direction:column;gap:8px;margin-bottom:2px}.rtit b{font-size:19px;line-height:1.2;font-weight:900}.rbadge{align-self:flex-start;background:var(--gold);color:#141d3d;font-weight:800;font-size:11px;letter-spacing:.06em;padding:4px 10px;border-radius:99px;text-transform:uppercase}#view .seg button[data-sp][aria-pressed=false]{transition:none}.mvsel{display:flex;align-items:center;gap:10px;margin:0 0 12px}.mvsel label{font-weight:800;font-size:13px}.mvsel select{font-size:16px;min-height:44px;flex:1;max-width:260px;min-width:0}.mv .mvh{display:flex;flex-direction:column;gap:6px}.mv h4{margin:0;font-family:var(--fd);font-size:22px;line-height:1.15;color:#fff;overflow-wrap:anywhere}.mvw{display:flex;flex-direction:column;gap:2px;margin:10px 0 0;min-width:0}.mvw b{font-size:16px;overflow-wrap:anywhere}.mvw span{font-size:13px;color:var(--mute);overflow-wrap:anywhere}.mvx{margin:10px 0 0;font-size:14.5px;line-height:1.5;overflow-wrap:anywhere}.mvv{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.06)}.mvv small{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}.mvv b{font-size:15px}.mvv.ok b{color:var(--ok)}.mvv.dub b{color:var(--gold)}.mvv.ko b{color:#ff8a95}.mvq{display:flex;flex-direction:column;gap:4px;text-align:center;padding:22px 14px}.mvq b{font-size:16px}.rac p+p{margin-top:9px}</style>
+.cfree{display:block;width:100%;margin:0;padding:14px 16px;border-radius:12px;border:1px solid var(--gold);background:rgba(255,209,102,.16);color:var(--ink);font:700 16px Inter,system-ui,sans-serif;-webkit-appearance:none;appearance:none}.cfree::placeholder{color:var(--mute);opacity:.85}.cfree:focus{outline:2px solid var(--gold);outline-offset:1px}.rtit{display:flex;flex-direction:column;gap:8px;margin-bottom:2px}.rtit b{font-size:19px;line-height:1.2;font-weight:900}.rbadge{align-self:flex-start;background:var(--gold);color:#141d3d;font-weight:800;font-size:11px;letter-spacing:.06em;padding:4px 10px;border-radius:99px;text-transform:uppercase}#view .seg button[data-sp][aria-pressed=false]{transition:none}.mvsel{display:flex;align-items:center;gap:10px;margin:0 0 12px}.mvsel label{font-weight:800;font-size:13px}.mvsel select{font-size:16px;min-height:44px;flex:1;max-width:260px;min-width:0}.mv .mvh{display:flex;flex-direction:column;gap:6px}.mv h4{margin:0;font-family:var(--fd);font-size:22px;line-height:1.15;color:#fff;overflow-wrap:anywhere}.mvw{display:flex;flex-direction:column;gap:2px;margin:10px 0 0;min-width:0}.mvw b{font-size:16px;overflow-wrap:anywhere}.mvw span{font-size:13px;color:var(--mute);overflow-wrap:anywhere}.mvx{margin:10px 0 0;font-size:14.5px;line-height:1.5;overflow-wrap:anywhere}.mvv{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.06)}.mvv small{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}.mvv b{font-size:15px}.mvv.ok b{color:var(--ok)}.mvv.dub b{color:var(--gold)}.mvv.ko b{color:#ff8a95}.mvv.dec{background:rgba(176,132,255,.18);border-color:rgba(205,175,255,.6)}.mvv.dec b{color:#e0ccff}.mv{box-shadow:inset 3px 0 0 var(--mvc,transparent),inset 0 1px 0 rgba(255,255,255,.3),0 10px 24px rgba(7,12,35,.35)}.mv-ok{--mvc:var(--ok)}.mv-dub{--mvc:var(--gold)}.mv-ko{--mvc:#ff8a95}.mv-dec{--mvc:#b98cff}.mvq{display:flex;flex-direction:column;gap:4px;text-align:center;padding:22px 14px}.mvq b{font-size:16px}.rac p+p{margin-top:9px}</style>
 
 <div class="col">
   <div class="top">
@@ -841,64 +841,28 @@ function spRadio(){
   return h+'</div>'}
 
 /* ---------- MOVIOLA ---------- */
-/* Episodi veri della giornata, dai voti del sito (gli stessi del post Moviola della Curva): al massimo 3, per priorità */
-var MV=null,MVF={};
+/* Gli episodi arrivano già scelti e giudicati da calcoli/moviola.py (calcoli/moviola.json): qui si mostrano e basta */
+var MV=null,MVU='../calcoli/moviola.json';
 function mvCarica(){if(MV!==null)return;MV=false;try{
-  fetch(GIL+'data.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(j){MV=j;if(cur==='sport'&&S.sp==='moviola')render()}).catch(function(){MV='errore';if(cur==='sport'&&S.sp==='moviola')render()});
-  fetch(GIL+'formazioni.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(j){MVF=j||{};if(MV&&cur==='sport'&&S.sp==='moviola')render()}).catch(function(){})}catch(e){MV='errore'}}
-function mvGiocate(){return ((MV&&MV.cal&&MV.cal.lega)||[]).filter(function(g){return g.m.some(function(m){return m[4]!=='-'})})}
-function mvH(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h}
-function mvPk(a,k){return a[mvH(k)%a.length]}
-function mvAll(t){var m=mgrsOf(t);return m.join(' e ')}
-var MVT={
- rosso:{t:'Rosso diretto',v:'Rosso confermato',x:[
-  '{G} lascia {S} in dieci: l\'arbitro non ha dubbi e mostra il rosso. Le immagini confermano, per {A} un problema in più.',
-  'Intervento in ritardo di {G} e cartellino rosso. Rivisto al rallentatore, l\'episodio è netto: {S} resta in inferiorità.',
-  'Espulsione per {G}: la squadra di {A} finisce la partita con un uomo in meno. Il replay dà ragione al direttore di gara.']},
- sbagliato:{t:'Rigore sbagliato',v:'Regolare',x:[
-  '{G} va sul dischetto e non trova la porta. Il rigore era netto, l\'errore pure: sulla panchina di {A} nessuno ci crede.',
-  'Rigore concesso a {S}, sul pallone va {G}. Tiro debole, l\'occasione sfuma. Nessun dubbio sul fischio, tanti sull\'esecuzione.',
-  'Dal replay il contatto c\'è: rigore giusto. Poi però {G} lo calcia male e {S} resta a bocca asciutta.',
-  'Il dischetto tradisce {G}. Il fallo era evidente, il rigore anche, il gol no: dalle parti di {A} si mastica amaro.']},
- autogol:{t:'Autogol',v:'Regolare',x:[
-  'Cross teso in area, {G} prova a spazzare e la mette nella propria porta. Rivista l\'azione, la deviazione è sua.',
-  'Sfortuna per {G}: tocco decisivo nella sua porta. Nessun fallo prima, il gol è valido e {S} lo paga caro.',
-  'La moviola non lascia scampo: l\'ultimo tocco è di {G}. Autogol regolare, e sulla panchina di {A} cala il silenzio.']},
- parato:{t:'Rigore parato',v:'Regolare',x:[
-  '{G} intuisce, si allunga e para il rigore. Al replay i piedi sono sulla linea: tutto regolare, e che parata per {S}.',
-  'Rigore contro {S}, ma {G} ci arriva. Nessun movimento in anticipo: la parata è buona e la panchina di {A} esulta.',
-  'Dal dischetto parte il tiro, {G} lo respinge. Controllato il posizionamento: regolare. Una parata che vale come un gol.']},
- stretta:{t:'Partita decisa sul filo',v:'Da rivedere',x:[
-  '{C} {R} {O}: finisce {P}, decisa da un soffio. Basta un episodio per cambiare tutto, e in studio se ne parlerà a lungo.',
-  'Un dettaglio separa {C} e {O}: {R} e punteggio di {P}. Festa per {AC}, rabbia per {AO}: c\'è chi chiede di rivedere tutto.',
-  'La più tirata della giornata: {C}–{O} {R}, con un punteggio di {P}. Partita da rivedere azione per azione.']}};
-var MVP={rosso:0,sbagliato:1,autogol:2,parato:3,stretta:4};
-function mvEpisodi(G){
-  var sa=String(G.sa),V=MV.votes||{},P=MV.P||{},F=MVF[sa],ep=[],chi={};
-  (MV.teams||[]).forEach(function(t){var ids=F&&F[t.name]?(F[t.name].tit||[]).concat(F[t.name].pan||[]):(t.pl||[]).map(function(p){return p.id});ids.forEach(function(id){chi[id]=t.name})});
-  Object.keys(chi).forEach(function(id){var v=V[id]&&V[id][sa];if(!v||!P[id])return;(v.b||[]).forEach(function(b){
-    var k=/espuls|\brosso\b/i.test(b)?'rosso':/rigore sbagliato/.test(b)?'sbagliato':/autogol/.test(b)?'autogol':/rigore parato/.test(b)?'parato':null;
-    if(k)ep.push({k:k,g:P[id].n,s:chi[id],id:id})})});
-  G.m.forEach(function(m){if(m[4]==='-')return;var r=m[4].split('-');if(r[0]===r[1]||Math.abs(m[1]-m[2])>=1)return;
-    ep.push({k:'stretta',c:m[0],o:m[3],r:m[4],p:String(m[1]).replace('.',',')+' a '+String(m[2]).replace('.',','),id:m[0]+m[3]})});
-  ep.sort(function(a,b){return MVP[a.k]-MVP[b.k]||(a.g||a.c).localeCompare(b.g||b.c)});
-  return ep.slice(0,3).map(function(e){var T=MVT[e.k],x=mvPk(T.x,G.n+':'+e.k+':'+e.id);
-    x=x.replace(/\{G\}/g,e.g||'').replace(/\{S\}/g,e.s||'').replace(/\{A\}/g,e.s?mvAll(e.s):'').replace(/\{C\}/g,e.c||'').replace(/\{O\}/g,e.o||'').replace(/\{R\}/g,e.r||'').replace(/\{P\}/g,e.p||'').replace(/\{AC\}/g,e.c?mvAll(e.c):'').replace(/\{AO\}/g,e.o?mvAll(e.o):'');
-    return {t:T.t,v:T.v,x:x,g:e.g,s:e.s,c:e.c,o:e.o}})}
+  fetch(MVU+'?v='+Date.now(),{cache:'no-cache'}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(j){MV=j&&j.giornate?j:'errore';if(cur==='sport'&&S.sp==='moviola')render()}).catch(function(){MV='errore';if(cur==='sport'&&S.sp==='moviola')render()})}catch(e){MV='errore'}}
+function mvAll(a){return (a||[]).join(' e ')}
+var MVC={'Regolare':'ok','Rosso confermato':'ko','Ha deciso la partita':'dec'};
 function spMoviola(){
   mvCarica();
-  var h='<div class="card"><h3>Moviola</h3><p class="sm mut" style="margin:6px 0 0">Gli episodi che hanno fatto discutere, giornata per giornata: rigori, autogol e partite decise sul filo, rivisti al rallentatore.</p></div>';
-  if(MV===false||MV===null)return h+'<div class="card"><p class="sm mut">Carico gli episodi…</p></div>';
-  if(MV==='errore')return h+'<div class="card"><p class="sm mut">Non riesco a caricare gli episodi. Riprova tra poco.</p></div>';
-  var GG=mvGiocate();if(!GG.length)return h+'<div class="card"><p class="sm mut">La prima moviola arriva con la prima giornata giocata.</p></div>';
-  var n=S.mvg&&GG.some(function(g){return g.n===S.mvg})?S.mvg:GG[GG.length-1].n,G=GG.filter(function(g){return g.n===n})[0];
-  h+='<div class="mvsel"><label for="mvg">Giornata</label><select id="mvg" aria-label="Giornata della moviola">'+GG.slice().reverse().map(function(g){return '<option value="'+g.n+'"'+(g.n===n?' selected':'')+'>Giornata '+g.n+'</option>'}).join('')+'</select></div>';
-  var E=mvEpisodi(G);
+  var h='<div class="card"><h3>Moviola</h3><p class="sm mut" style="margin:6px 0 0">Gli episodi che hanno fatto discutere, giornata per giornata: rigori, autogol e partite decise sul filo, rivisti al rallentatore. Prima quelli che hanno deciso la partita.</p></div>';
+  if(MV===false||MV===null)return h+'<div class="card mvq"><b>Carico gli episodi…</b></div>';
+  if(MV==='errore')return h+'<div class="card mvq"><b>La Moviola non si è caricata</b><span class="sm mut">Non riesco a leggere gli episodi. Riprova tra poco: se continua, avvisa Gianluca.</span></div>';
+  var GG=(MV.giocate||[]).slice();if(!GG.length)return h+'<div class="card mvq"><b>Nessuna giornata giocata</b><span class="sm mut">La prima moviola arriva con la prima giornata.</span></div>';
+  var n=S.mvg&&GG.indexOf(S.mvg)>=0?S.mvg:GG[GG.length-1],G=MV.giornate[String(n)];
+  h+='<div class="mvsel"><label for="mvg">Giornata</label><select id="mvg" aria-label="Giornata della moviola">'+GG.slice().reverse().map(function(g){return '<option value="'+g+'"'+(g===n?' selected':'')+'>Giornata '+g+'</option>'}).join('')+'</select></div>';
+  if(!G)return h+'<div class="card mvq"><b>Episodi della giornata '+n+' non ancora pronti</b><span class="sm mut">Arrivano con i calcoli dopo la giornata. Riprova più tardi.</span></div>';
+  var E=G.episodi||[];
+  if(!E.length&&(G.scartati||[]).length)return h+'<div class="card mvq"><b>Episodi della giornata '+n+' non disponibili</b><span class="sm mut">Ci sono stati episodi, ma non si riesce a capire per quale squadra giocavano i protagonisti.</span></div>';
   if(!E.length)return h+'<div class="card mvq"><b>Giornata tranquilla, nessun episodio</b><span class="sm mut">Niente rigori, autogol o partite decise sul filo nella giornata '+n+'.</span></div>';
-  return h+E.map(function(e){var vc=e.v==='Regolare'?'ok':e.v==='Rosso confermato'?'ko':'dub';
-    return '<div class="card mv"><div class="mvh"><span class="rbadge">Giornata '+n+'</span><h4>'+esc(e.t)+'</h4></div>'+
-     (e.g?'<p class="mvw"><b>'+esc(e.g)+'</b><span>'+esc(e.s)+' · Allenator'+(mgrsOf(e.s).length>1?'i ':'e ')+esc(mvAll(e.s))+'</span></p>':'<p class="mvw"><b>'+esc(e.c)+' – '+esc(e.o)+'</b><span>'+esc(mvAll(e.c))+' contro '+esc(mvAll(e.o))+'</span></p>')+
-     '<p class="mvx">'+esc(e.x)+'</p><div class="mvv '+vc+'"><small>Verdetto</small><b>'+e.v+'</b></div></div>'}).join('')}
+  return h+E.map(function(e){var vc=MVC[e.verdetto]||'dub';
+    return '<div class="card mv mv-'+vc+'"><div class="mvh"><span class="rbadge">Giornata '+n+'</span><h4>'+esc(e.titolo)+'</h4></div>'+
+     (e.giocatore?'<p class="mvw"><b>'+esc(e.giocatore)+'</b><span>'+esc(e.squadra)+' · Allenator'+((e.allenatori||[]).length>1?'i ':'e ')+esc(mvAll(e.allenatori))+'</span></p>':'<p class="mvw"><b>'+esc(e.casa)+' – '+esc(e.ospite)+'</b><span>'+esc(mvAll(e.allenatori_casa))+' contro '+esc(mvAll(e.allenatori_ospite))+'</span></p>')+
+     '<p class="mvx">'+esc(e.testo)+'</p><div class="mvv '+vc+'"><small>Verdetto</small><b>'+esc(e.verdetto)+'</b></div></div>'}).join('')}
 document.addEventListener('change',function(e){if(e.target.id==='mvg'){S.mvg=+e.target.value;render()}});
 
 function spConf(){var x=vConf();return x.replace(/^<div class="where">.*?<\/div>/,'')}
