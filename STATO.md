@@ -118,11 +118,11 @@ Prima del rilascio: fasi A e B fatte, tutte verdi; il primo tentativo di push er
 - Workflow del sito tutti verdi (Curva, controllo fallimenti, aggiornamento statistiche, Pages). Nessuna Issue aperta: il controllo fallimenti delle 09:48 non ha trovato nulla.
 - Restano da guardare solo a occhio su Safari/iPhone e da provare su Firefox e PWA (voce 4 del Da fare), e l'Intervista speciale con il testo vero e la Conferenza di Apo alla prossima sfida lanciata (voce 2, il post Moviola è già verificato).
 
-## Home: stato della striscia (24 ottobre, solo prova)
+## Home: stato della striscia (24 ottobre) — ONLINE dal 24 ottobre
 - La striscia della Home (classifica, ultima giornata, prossimo turno, Champions Cup) prima restava vuota se `data.json` era lento o non arrivava. Ora: "Aggiorno i dati…" con una rotellina mentre carica; "I dati della lega non si sono caricati. Controlla la connessione." con il pulsante "Riprova" (ricarica la pagina) se non arriva; "Il campionato non è ancora cominciato…" se non ci sono giornate giocate; sotto la striscia, a destra, "Dati aggiornati oggi" o "Dati aggiornati a mercoledì 21 ottobre" (campo `updated` di `data.json`).
 - Codice in `ufficiale/src/home_stato.py`, chiamato da `ufficiale/build.py` (vale per Lega e Stadio, in anteprima e nel rilascio). Applicato con lo stesso script a `ufficiale/girrr/index.html` e `ufficiale/nuovo/girrr/index.html` senza rifare tutta la build (qui mancavano Pillow e la copia del sito al commit giusto).
 - Provato in Chromium (telefono 375 e PC) con dati che arrivano, che arrivano dopo 6 secondi e che non arrivano (404), in Lega e Stadio: niente scroll orizzontale, Riprova ricarica, nessun errore nuovo in console. Safari vero non provato.
-- Non online: serve il "vai" di Gianluca.
+- Online con il "vai" di Gianluca: sito `gh-pages` commit `5d89629` (`girrr/index.html` e `stadio/girrr/index.html`, stesso `home_stato.py`). Provato prima in locale e poi sul sito pubblicato: "Dati aggiornati oggi", 4 riquadri, nessun errore in console. Per tornare indietro: `git revert --no-edit 5d89629` su gh-pages del sito.
 
 ## Note
 - Il workflow Curva salva lo stato in `calcoli/pubblicati.json` su `main`; l'opzione `solo_segna` segna i post attuali come già usciti senza inviarli.
