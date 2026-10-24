@@ -209,6 +209,9 @@ ix = ix.replace('<div class="sp">', _stat + '<div class="sp">', 1)
 assert 'id="mst"' in ix
 ix = ix.replace("</head>", '<script src="grafica.js"></script>\n</head>', 1)
 ix = ix.replace("</head>", '<style>@media(min-width:1500px){.wrap{max-width:1380px}.wrap .cards{grid-template-columns:repeat(3,1fr)!important}}</style>\n</head>', 1)
+# striscia della Home: "Aggiorno i dati…", errore con Riprova e "Dati aggiornati al …" (ufficiale/src/home_stato.py)
+sys.path.insert(0, str(R / "ufficiale" / "src")); import home_stato
+ix = home_stato.applica(ix)
 ix = ix.replace("</head>", "<style>.cards{grid-template-columns:repeat(3,1fr)!important}@media(max-width:820px){.cards{grid-template-columns:1fr 1fr!important}.c h2 .nt-nv{display:block;width:max-content;margin:6px 0 0}}@media(max-width:480px){.cards{grid-template-columns:1fr!important}.c h2 .nt-nv{display:inline-block;margin-left:8px}}</style>\n</head>", 1)
 (OUT / "index.html").write_text(ix, encoding="utf-8")
 # Tabellone: Le squadre diventano una sezione del Tabellone
