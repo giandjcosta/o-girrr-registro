@@ -4,7 +4,7 @@ con una copia degli script di calcoli/ (moviola.py, post_curva.py, pubblica_curv
 Uso (dalla cartella del repo): python3 prove/prova_moviola.py      -  serve node per la Curva (ufficiale/src/sito/girrr/curva-banca.js).
 
 Cinque giornate giocate una dopo l'altra, come nella stagione vera:
-  1 tre episodi (più un quarto che resta fuori)    2 nessun episodio            3 solo scartati (giocatore senza formazione)
+  1 quattro episodi (più un quinto che resta fuori) 2 nessun episodio            3 solo scartati (giocatore senza formazione)
   4 un episodio scritto a mano                     5 un episodio con il video (aggiunto a mano)
 Dopo ogni giornata: moviola.py, post_curva.py e pubblica_curva.py (due giri). Controlla:
   - un solo post Moviola per giornata, chiave moviola:G<n>:0, con titolo, testo e verdetto del primo episodio di moviola.json;
@@ -57,7 +57,7 @@ def stagione(k):
                 votes.setdefault(x, {})[str(sa)] = dict(v=6, f=6, b=[])
     def voce(x, n, b, eff):
         votes[x][str(n + 4)] = dict(v=6, f=6 + eff, b=[b])
-    voce("101", 1, "1 rigore sbagliato", -3); voce("112", 1, "1 autogol", -2); voce("120", 1, "1 rigore parato", 3); voce("133", 1, "1 rigore sbagliato", -3)
+    voce("101", 1, "1 rigore sbagliato", -3); voce("112", 1, "1 autogol", -2); voce("120", 1, "1 rigore parato", 3); voce("133", 1, "1 rigore sbagliato", -3); voce("114", 1, "1 rigore sbagliato", -3)
     if k >= 3:
         voce("145", 3, "1 rigore sbagliato", -3)   # 145 è in rosa ma non in formazione (solo i primi 5): scartato
     if k >= 5:
@@ -138,7 +138,7 @@ def main():
     pj = json.loads((C / "pubblicati.json").read_text(encoding="utf-8"))
     ok(sorted(x for x in pj if x.startswith("moviola:")) == ["moviola:G1:0", "moviola:G4:0", "moviola:G5:0"], "chiavi moviola:G<n>:0 solo per le giornate 1, 4 e 5")
     M = json.loads((C / "moviola.json").read_text(encoding="utf-8"))
-    ok(len(M["giornate"]["1"]["episodi"]) == 3 and len(M["giornate"]["1"]["automatici"]) == 4, "giornata 1: 4 episodi trovati, 3 mostrati")
+    ok(len(M["giornate"]["1"]["episodi"]) == 4 and len(M["giornate"]["1"]["automatici"]) == 5, "giornata 1: 5 episodi trovati, 4 mostrati")
     ok(M["giornate"]["4"]["episodi"][0].get("manuale") and post_mov.get(4) and "fuorigioco" in post_mov[4][0]["p_body"], "giornata 4: il post usa l'episodio scritto a mano")
     ok(any(x.get("video") for x in M["giornate"]["5"]["episodi"]) and 5 in post_mov, "giornata 5: episodio con video, post regolare")
 
