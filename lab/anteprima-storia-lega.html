@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#1d2a52">
+<title>La storia della Lega · Bozza grafica</title>
+<link rel="icon" href="../favicon-64.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Lora:ital,wght@0,500;0,600;1,500&display=swap">
+<style>
+:root{color-scheme:dark;--bg:#1d2a52;--bg2:#2c3f7c;--bg3:#141d3d;--ink:#fbf6ec;--gold:#ffd166;--sub:#bfe3ff;--red:#d62839;--line:rgba(255,255,255,.16);--glass:rgba(255,255,255,.07)}
+*{box-sizing:border-box}
+html{min-height:100%;background:var(--bg)}
+body{min-height:100vh;margin:0;padding:20px 16px 44px;color:var(--ink);font:500 14px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(900px 560px at 85% -8%,var(--bg2),transparent 68%),linear-gradient(160deg,#233563 0%,var(--bg) 52%,var(--bg3) 100%)}
+a{color:inherit}
+.wrap{width:min(100%,900px);margin:0 auto}
+.back{display:inline-flex;align-items:center;gap:7px;margin-bottom:16px;color:var(--gold);font-size:11px;font-weight:900;letter-spacing:.14em;text-decoration:none;text-transform:uppercase}
+.top{display:flex;align-items:center;gap:14px;padding-bottom:20px;border-bottom:5px solid transparent;border-image:linear-gradient(90deg,var(--red) 0 12%,var(--gold) 12% 14%,rgba(255,255,255,.24) 14%) 1}
+.top img{width:68px;height:68px;object-fit:contain;filter:drop-shadow(0 6px 12px rgba(0,0,0,.35))}
+.kick{color:var(--gold);font-size:10px;font-weight:900;letter-spacing:.28em}
+h1{margin:4px 0 0;font-size:clamp(27px,6vw,42px);font-weight:900;letter-spacing:-.035em;line-height:1.05}
+.context{margin:18px 0 0;padding:12px 14px;border:1px solid var(--line);border-radius:13px;background:rgba(0,0,0,.15);color:var(--sub);font-size:12px;font-weight:700}
+.context b{color:var(--ink)}
+.tabs{display:flex;gap:7px;overflow-x:auto;margin:14px -2px 18px;padding:3px 2px 8px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs span{flex:none;padding:8px 12px;border:1px solid rgba(255,255,255,.12);border-radius:999px;background:rgba(255,255,255,.06);color:var(--ink);font-size:11px;font-weight:800;white-space:nowrap;opacity:.62}
+.tabs .active{border-color:rgba(255,209,102,.55);background:var(--red);opacity:1}
+.intro{margin:0 0 16px;color:var(--sub);font-size:14px}
+.intro strong{color:var(--ink)}
+.feature{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:20px;align-items:center;min-height:220px;margin:0 0 16px;padding:clamp(20px,5vw,34px);border:1px solid rgba(255,255,255,.2);border-radius:20px;background:linear-gradient(115deg,rgba(20,29,61,.94),rgba(44,63,124,.78));box-shadow:0 18px 44px rgba(0,0,0,.22)}
+.feature:before{content:"";position:absolute;z-index:-1;right:-95px;top:-115px;width:310px;height:310px;border:1px solid rgba(255,209,102,.17);border-radius:50%;box-shadow:0 0 0 18px rgba(255,209,102,.025),0 0 0 44px rgba(255,209,102,.025),0 0 0 72px rgba(255,209,102,.02)}
+.eyebrow{display:flex;align-items:center;gap:9px;color:var(--gold);font-size:10px;font-weight:900;letter-spacing:.2em;text-transform:uppercase}
+.eyebrow:before{content:"";width:22px;height:2px;background:var(--red)}
+.feature h2{margin:12px 0 6px;font-size:clamp(25px,5vw,38px);font-weight:900;letter-spacing:-.035em;line-height:1.08}
+.feature h2 span{color:var(--gold)}
+.feature p{max-width:48ch;margin:0;color:var(--sub);font-size:13px}
+.seal{display:grid;place-items:center;justify-self:center;width:126px;aspect-ratio:1;border:1px solid rgba(255,209,102,.55);border-radius:50%;outline:1px solid rgba(255,209,102,.2);outline-offset:7px;background:radial-gradient(circle,rgba(255,209,102,.12),rgba(255,255,255,.02) 65%);color:var(--gold);font-size:37px;font-weight:900;letter-spacing:-.08em;text-shadow:0 3px 18px rgba(255,209,102,.18)}
+.seal small{display:block;margin-top:-30px;color:var(--ink);font-size:8px;font-weight:900;letter-spacing:.2em}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:25px 0 11px}
+.section-head h2{margin:0;font-size:18px;font-weight:900;letter-spacing:-.02em}
+.section-head span{color:var(--sub);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.timeline{position:relative;display:grid;gap:9px}
+.timeline:before{content:"";position:absolute;left:16px;top:23px;bottom:23px;width:1px;background:linear-gradient(var(--gold),rgba(255,255,255,.08))}
+.chapter{position:relative;display:grid;grid-template-columns:34px minmax(0,1fr) 22px;gap:12px;align-items:start;padding:15px;border:1px solid var(--line);border-radius:15px;background:var(--glass)}
+.dot{position:relative;z-index:1;display:grid;place-items:center;width:32px;height:32px;border:1px solid rgba(255,209,102,.52);border-radius:50%;background:#202f5a;color:var(--gold);font-size:10px;font-weight:900}
+.chapter h3{margin:0 0 4px;font-size:14px;font-weight:900}
+.chapter p{margin:0;color:var(--sub);font-size:12px;line-height:1.5}
+.chapter .arrow{padding-top:3px;color:var(--gold);font-size:19px}
+.placement{margin-top:16px;padding:14px 16px;border-left:3px solid var(--gold);border-radius:0 12px 12px 0;background:rgba(0,0,0,.16);color:var(--sub);font-size:12px}
+.placement b{color:var(--ink)}
+.foot{margin:24px 0 0;text-align:center;color:var(--sub);font-size:10px;letter-spacing:.12em}
+@media(max-width:520px){body{padding:14px 12px 34px}.top img{width:56px;height:56px}.feature{grid-template-columns:minmax(0,1fr) 70px;gap:12px;min-height:190px}.seal{width:62px;font-size:23px;outline-offset:4px}.seal small{margin-top:-17px;font-size:5px}.chapter{padding:12px;gap:9px}.tabs span{padding:8px 10px}}
+@media(max-width:350px){.feature{grid-template-columns:1fr;min-height:0}.seal{display:none}.top{gap:10px}.kick{letter-spacing:.17em}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <a class="back" href="../ufficiale/">‹ Torna all’Anteprima</a>
+  <header class="top">
+    <img src="../logo-lega.png" alt="">
+    <div><div class="kick">O FANT A GIRRR · ALBO D’ORO</div><h1>La storia della Lega</h1></div>
+  </header>
+  <p class="context"><b>Posizione proposta</b>　Home › Albo d’oro › Le Ere</p>
+  <nav class="tabs" aria-label="Sezioni dell’Albo d’oro">
+    <span class="active" aria-current="page">Le Ere</span><span>Titoli</span><span>Allenatori</span><span>Stagioni</span><span>Record</span><span>Derby</span><span>Albo di Latta</span>
+  </nav>
+  <p class="intro">L’apertura del percorso storico: <strong>le origini, il nome e i capitoli della Lega</strong>, prima delle cronache delle singole stagioni.</p>
+  <section class="feature" aria-labelledby="nome">
+    <div>
+      <div class="eyebrow">Il nome · Le origini</div>
+      <h2 id="nome">O Fant A <span>Girrr</span></h2>
+      <p>Il racconto delle origini del nome troverà qui il suo spazio, come apertura della storia della Lega.</p>
+    </div>
+    <div class="seal" aria-hidden="true">OG<small>DALLE ORIGINI</small></div>
+  </section>
+  <div class="section-head"><h2>Le pagine della storia</h2><span>Il filo della Lega</span></div>
+  <section class="timeline" aria-label="Capitoli della storia della Lega">
+    <article class="chapter"><span class="dot">01</span><div><h3>Le origini</h3><p>Il racconto dei primi passi e di ciò che ha dato inizio a tutto.</p></div><span class="arrow" aria-hidden="true">›</span></article>
+    <article class="chapter"><span class="dot">02</span><div><h3>La nascita del nome</h3><p>La storia dietro il nome che identifica la Lega.</p></div><span class="arrow" aria-hidden="true">›</span></article>
+    <article class="chapter"><span class="dot">03</span><div><h3>Una storia che continua</h3><p>Il passaggio dai primi capitoli alla Lega di oggi.</p></div><span class="arrow" aria-hidden="true">›</span></article>
+  </section>
+  <p class="placement"><b>Perché qui:</b> “Le Ere” è già la sezione storica dell’Albo d’oro. La storia del nome può aprirla senza aggiungere un’altra voce al menu generale; sotto, restano la cronologia e le pagine delle stagioni.</p>
+  <footer class="foot">BOZZA GRAFICA · IL RACCONTO VERRÀ SCRITTO DOPO AVER RICEVUTO LA STORIA</footer>
+</main>
+</body>
+</html>
