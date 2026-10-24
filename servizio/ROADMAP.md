@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Fase 0 · Adesso
-Una sola lega (O Fant A Girrr), sito statico su GitHub Pages, Curva su Supabase, versione 5.0 in anteprima.
+Una sola lega (O Fant A Girrr), sito statico su GitHub Pages, Curva su Supabase, Anteprima 5.1 in prova.
 
 ## Fase 1 · Rendere il sito "a più leghe" senza cambiare niente per gli utenti
 - Togliere dal codice i nomi fissi (lega, squadre, colori, loghi) e metterli in un file di configurazione per lega.

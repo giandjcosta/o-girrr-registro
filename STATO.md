@@ -155,9 +155,16 @@ Prima del rilascio: fasi A e B fatte, tutte verdi; il primo tentativo di push er
 - La tavola grafica è pubblicata solo nel Registro: https://giandjcosta.github.io/o-girrr-registro/lab/anteprima-storia-lega.html. La bozza include un selettore Lega/Stadio per mostrare le strisce animate della Lega e i titoli corsivi dello Stadio; le tre Ere hanno una linea dorata che si attenua verso il futuro.
 - Il testo del racconto usa il carattere Inter della pagina in entrambe le grafiche; il corsivo Lobster resta riservato ai titoli dello Stadio.
 - La presentazione precisa che la passione ha attraversato stagioni e continenti, senza nominare luoghi. Nella scheda "Le Ere" restano i nomi ufficiali "L'Era dei Titani", "Il Grande Silenzio" e "L'Era Contemporanea", ciascuno seguito da un punto mediano e da una breve descrizione. Solo la bozza del Registro è stata aggiornata: grafiche e transizioni del sito non sono state toccate.
+- Nel mock il titolo grande sotto "O Fant A Girrr · Albo d'oro" cambia con la scheda selezionata: La Storia della Lega, I Capitoli della Storia, La Bacheca dei Titoli, Gli Allenatori della Lega, Le Stagioni della Lega, I Record della Lega, I Derby della Lega e L'Albo di Latta. Le schede non inerenti alla storia mostrano un riquadro-segnaposto per provare i titoli; contenuti, menu e interazioni reali dell'Albo d'oro non sono stati modificati.
 
 ## Squadre: card dell'allenatore (24 ottobre) — ONLINE
 - Nella pagina di ogni squadra (`ufficiale/girrr/squadre.html` e `ufficiale/nuovo/girrr/squadre.html`) c'è la card "Allenatore" in fondo alla colonna di destra, dove prima su PC restava spazio vuoto; su telefono compare sotto "I migliori della rosa". The Blue brothers mostra "Allenatori: Leanzino e Mario".
 - I nomi vengono dallo stesso elenco di `CUR` in `albo.html` del sito: se cambia un allenatore va aggiornato in tutti e due i posti.
 - Provato in Chromium e WebKit (iPhone SE emulato), a 1458 e 320 px, tutte e 10 le squadre in Lega e Stadio: nome giusto, niente scorrimento di lato, console pulita.
 - ONLINE dal 24 ottobre, con il "vai" di Gianluca: sito `gh-pages` commit `11ce2ca` (sopra `27487c0`), solo `girrr/squadre.html` e `stadio/girrr/squadre.html`, stessa modifica dell'Anteprima. `main` del sito non toccato. Per tornare indietro: `git revert 11ce2ca` su `gh-pages`. Controllato sul sito vero: tutte e 10 le squadre, Lega e Stadio, Chromium e WebKit a 1458 e 320 px, console pulita.
+
+## Anteprima evolutiva 5.1 (24 ottobre)
+- Le etichette della preview corrente sono state aggiornate a "Anteprima 5.1" nel Registro, nella pagina ufficiale di confronto, nelle barre di navigazione e nel builder con i relativi output. La pagina della 5.0 resta disponibile come archivio storico.
+- La navigazione condivisa del Registro va a capo su schermi stretti: verificata la pagina principale a 320 px senza scorrimento orizzontale.
+- La bozza della storia aggiorna il titolo per ogni scheda dell'Albo; ora anche le schede che condividono il pannello-segnaposto lo rendono visibile correttamente.
+- Rigenerata l'Anteprima con `python anteprima\build.py`. Verificata in Chromium a 320 px: tutti gli otto titoli e pannelli, un solo pannello visibile per volta, nessuno scorrimento orizzontale e nessun errore in console.

@@ -91,7 +91,7 @@ h1{margin:4px 0 0;font-size:clamp(27px,6vw,42px);font-weight:900;letter-spacing:
   <a class="back" href="../ufficiale/">‹ Torna all’Anteprima</a>
   <header class="top">
     <img src="../logo-lega.png" alt="">
-    <div><div class="kick">O FANT A GIRRR · ALBO D’ORO</div><h1>La storia della Lega</h1></div>
+    <div><div class="kick">O FANT A GIRRR · ALBO D’ORO</div><h1 id="page-title">La storia della Lega</h1></div>
   </header>
   <p class="context"><b>Posizione proposta</b>　Home › Albo d’oro › La Storia</p>
   <div class="skins" aria-label="Anteprima delle grafiche">
@@ -100,9 +100,14 @@ h1{margin:4px 0 0;font-size:clamp(27px,6vw,42px);font-weight:900;letter-spacing:
     <button type="button" data-skin="stadio" aria-pressed="false">Stadio</button>
   </div>
   <nav class="tabs" role="tablist" aria-label="Sezioni dell’Albo d’oro">
-    <button class="tab" id="tab-storia" type="button" role="tab" aria-selected="true" aria-controls="panel-storia">La Storia</button>
-    <button class="tab" id="tab-ere" type="button" role="tab" aria-selected="false" aria-controls="panel-ere" tabindex="-1">Le Ere</button>
-    <span class="tab" aria-disabled="true">Titoli</span><span class="tab" aria-disabled="true">Allenatori</span><span class="tab" aria-disabled="true">Stagioni</span><span class="tab" aria-disabled="true">Record</span><span class="tab" aria-disabled="true">Derby</span><span class="tab" aria-disabled="true">Albo di Latta</span>
+    <button class="tab" id="tab-storia" type="button" role="tab" aria-selected="true" aria-controls="panel-storia" data-title="La storia della Lega">La Storia</button>
+    <button class="tab" id="tab-ere" type="button" role="tab" aria-selected="false" aria-controls="panel-ere" data-title="I capitoli della storia" tabindex="-1">Le Ere</button>
+    <button class="tab" id="tab-titoli" type="button" role="tab" aria-selected="false" aria-controls="panel-titolo-preview" data-title="La bacheca dei titoli" tabindex="-1">Titoli</button>
+    <button class="tab" id="tab-allenatori" type="button" role="tab" aria-selected="false" aria-controls="panel-titolo-preview" data-title="Gli allenatori della Lega" tabindex="-1">Allenatori</button>
+    <button class="tab" id="tab-stagioni" type="button" role="tab" aria-selected="false" aria-controls="panel-titolo-preview" data-title="Le stagioni della Lega" tabindex="-1">Stagioni</button>
+    <button class="tab" id="tab-record" type="button" role="tab" aria-selected="false" aria-controls="panel-titolo-preview" data-title="I record della Lega" tabindex="-1">Record</button>
+    <button class="tab" id="tab-derby" type="button" role="tab" aria-selected="false" aria-controls="panel-titolo-preview" data-title="I Derby della Lega" tabindex="-1">Derby</button>
+    <button class="tab" id="tab-latta" type="button" role="tab" aria-selected="false" aria-controls="panel-titolo-preview" data-title="L’Albo di Latta" tabindex="-1">Albo di Latta</button>
   </nav>
   <section class="tab-panel" id="panel-storia" role="tabpanel" aria-labelledby="tab-storia">
     <p class="intro">Una scheda tutta sua per il racconto delle origini e del nome, prima delle cronache delle singole stagioni.</p>
@@ -154,12 +159,37 @@ h1{margin:4px 0 0;font-size:clamp(27px,6vw,42px);font-weight:900;letter-spacing:
     </section>
     <p class="placement"><b>La linea del tempo:</b> parte dal primo cerchio, accompagna i tre capitoli e si dissolve verso il basso: il futuro resta da scrivere.</p>
   </section>
+  <section class="tab-panel" id="panel-titolo-preview" role="tabpanel" aria-live="polite" hidden>
+    <p class="intro" id="title-description"></p>
+    <section class="feature" aria-labelledby="feature-title">
+      <div>
+        <div class="eyebrow">Albo d’oro</div>
+        <h2 id="feature-title"></h2>
+        <p>La scheda mantiene i suoi contenuti: qui stiamo provando il titolo che la introduce.</p>
+      </div>
+      <div class="seal">OG<small>ALBO D’ORO</small></div>
+    </section>
+  </section>
   <footer class="foot">BOZZA GRAFICA · TESTO PROPOSTO SULLA STORIA RACCONTATA DA GIANLUCA</footer>
 </main>
 <script>
 const tabs=[...document.querySelectorAll('[role="tab"]')];
+const previewDescriptions={
+  'tab-titoli':'I titoli conquistati e il palmarès della Lega.',
+  'tab-allenatori':'I nomi e i percorsi di chi siede in panchina.',
+  'tab-stagioni':'Il cammino della Lega, stagione dopo stagione.',
+  'tab-record':'I primati e i traguardi che hanno fatto storia.',
+  'tab-derby':'Le sfide che hanno lasciato il segno e le rivalità della Lega.',
+  'tab-latta':'L’altra faccia dell’Albo: gli ultimi posti, i flop e le mazzate.'
+};
 tabs.forEach(tab=>tab.addEventListener('click',()=>{
-  tabs.forEach(item=>{const active=item===tab;item.setAttribute('aria-selected',String(active));item.tabIndex=active?0:-1;document.getElementById(item.getAttribute('aria-controls')).hidden=!active});
+  tabs.forEach(item=>{const active=item===tab;item.setAttribute('aria-selected',String(active));item.tabIndex=active?0:-1});
+  document.querySelectorAll('.tab-panel').forEach(panel=>{panel.hidden=panel.id!==tab.getAttribute('aria-controls')});
+  document.getElementById('page-title').textContent=tab.dataset.title;
+  if(previewDescriptions[tab.id]){
+    document.getElementById('title-description').textContent=previewDescriptions[tab.id];
+    document.getElementById('feature-title').textContent=tab.dataset.title;
+  }
 }));
 document.querySelector('[role="tablist"]').addEventListener('keydown',event=>{
   const index=tabs.indexOf(document.activeElement);

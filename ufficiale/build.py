@@ -1,4 +1,4 @@
-"""Anteprima del sito ufficiale con le novità della 5.0.
+"""Anteprima del sito ufficiale con le novità evolutive attuali.
 Copia le pagine vere di O Girrr (repo o-fant-a-girrr, ramo gh-pages) con il loro stile e il loro font, punta dati e immagini al sito vero
 e aggiunge: sezioni nuove nell'Albo d'oro, pagina Derby, riquadro in Home, post nuovi nella Curva.
 Non scrive niente nel database e non tocca il sito vero. Si lancia con: python3 ufficiale/build.py (dalla cartella del repo)."""

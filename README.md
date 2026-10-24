@@ -12,8 +12,8 @@ Per riprendere il lavoro in una chat nuova: "Leggi STATO.md nel repo o-girrr-reg
 | Cartella / file | A cosa serve |
 |---|---|
 | `index.html`, `aggiornamenti.html` | **Registro modifiche**: legge i commit pubblici di o-fant-a-girrr e li mostra giorno per giorno, con l'elenco delle attività automatiche (`automazioni.json`). Si aggiorna da solo (`aggiorna.py`). |
-| `lab/` | **Laboratorio**: i prototipi delle idee nuove, da far provare agli amici. Si apre da `/lab/`. `lab/versione-5.html` elenca cosa è pronto e cosa manca per la 5.0. |
-| `anteprima/` | **Anteprima**: il Laboratorio impaginato come l'app vera, in tutte e due le grafiche (`index.html` Stadio, `attuale.html` Lega), con database finto. Si genera con `python3 anteprima/build.py` e si apre da `/anteprima/`. |
+| `lab/` | **Laboratorio**: i prototipi delle idee nuove, da far provare agli amici. Si apre da `/lab/`. `lab/versione-5.html` conserva l'archivio della 5.0. |
+| `anteprima/` | **Anteprima**: il Laboratorio impaginato come l'app vera, in tutte e due le grafiche (`index.html` Stadio, `attuale.html` Lega), con database finto. La versione in prova è la 5.1. Si genera con `python3 anteprima/build.py` e si apre da `/anteprima/`. |
 | `calcoli/` | Calcoli automatici prima di passarli al sito: fiducia, probabilità, Borsino, Moviola, post della Curva, fine stagione. Spiegati in `calcoli/LEGGIMI.md`. |
 | `ufficiale/` | Le sorgenti delle pagine del sito vero (Lega e Stadio) da cui si costruisce il rilascio (`ufficiale/build.py`). |
 | `rilascio/` | Gli strumenti per portare le novità sul sito vero: `pacchetto.py` prepara i file, `applica.py` mostra le differenze e, con `--vai`, fa i commit. Procedura in `rilascio/LEGGIMI.md`. |
