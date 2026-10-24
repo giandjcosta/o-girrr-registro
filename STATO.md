@@ -168,3 +168,10 @@ Prima del rilascio: fasi A e B fatte, tutte verdi; il primo tentativo di push er
 - La navigazione condivisa del Registro va a capo su schermi stretti: verificata la pagina principale a 320 px senza scorrimento orizzontale.
 - La bozza della storia aggiorna il titolo per ogni scheda dell'Albo; ora anche le schede che condividono il pannello-segnaposto lo rendono visibile correttamente.
 - Rigenerata l'Anteprima con `python anteprima\build.py`. Verificata in Chromium a 320 px: tutti gli otto titoli e pannelli, un solo pannello visibile per volta, nessuno scorrimento orizzontale e nessun errore in console.
+
+## Tabellone: le partite di Derby segnate (25 ottobre, solo Anteprima)
+- Nel Tabellone (`ufficiale/girrr/tabellone.html` e `ufficiale/nuovo/girrr/tabellone.html`) le partite di Derby hanno bordo e sfondo dorati e, sopra le squadre, "DERBY · nome del Derby". Vale per Campionato e Champions Cup.
+- Stessa regola della pagina Derby: Derby se votato dai più o nato da una sfida accettata col nome (lettura pubblica di `derby_stato`, niente scritto nel database), altrimenti se la rivalità è almeno Alta e i più non l'hanno bocciato. Il nome è quello accettato nell'app, se c'è, poi quello dei dati RIV. La pagina carica anche `novita-dati.js`.
+- Provato in Chromium e WebKit (iPhone SE emulato) a 1300 e 320 px, giornate 1-8 in Lega e Stadio: Derby giusti (per esempio G4 Il Derby delle Due Finali, G5 Wakanda, Emma e Due Corone), niente scorrimento di lato, console pulita.
+- Il Totogirrr segna già i Derby e alza le quote (+15% sugli esiti, +10% sulla schedina con un Derby, 20% di rimborso se perde): manca solo chi lo dica in Curva.
+- Non ancora sul sito vero: al rilascio la stessa modifica va in `girrr/tabellone.html` e `stadio/girrr/tabellone.html` di `gh-pages`.
