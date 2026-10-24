@@ -168,3 +168,7 @@ Prima del rilascio: fasi A e B fatte, tutte verdi; il primo tentativo di push er
 - La navigazione condivisa del Registro va a capo su schermi stretti: verificata la pagina principale a 320 px senza scorrimento orizzontale.
 - La bozza della storia aggiorna il titolo per ogni scheda dell'Albo; ora anche le schede che condividono il pannello-segnaposto lo rendono visibile correttamente.
 - Rigenerata l'Anteprima con `python anteprima\build.py`. Verificata in Chromium a 320 px: tutti gli otto titoli e pannelli, un solo pannello visibile per volta, nessuno scorrimento orizzontale e nessun errore in console.
+
+## Derby: tolta la riga "In palio" (25 ottobre, solo Lab e Anteprima)
+- Su richiesta di Gianluca tolta dal riquadro "Derby della giornata" del Lab (`derBox` in `lab/index.html`, Anteprima rigenerata) la riga "In palio: bonus di 20 fantacrediti per il vincitore e titolo in prima pagina sul Giornale".
+- Nota: `derBox` non è chiamata da nessuna parte, né nel Lab né in `app.html` del sito, quindi quella riga non si vedeva comunque; sul sito resta solo nel codice, senza effetti. Si toglie anche lì al prossimo rilascio di `app.html`.

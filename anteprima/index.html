@@ -448,7 +448,7 @@ function decisiveCard(){var T=D.tab.slice().sort(function(a,b){return a.pos-b.po
 function derBox(m){var i=rvInfo(m[0],m[1]),o=i.o;
   return '<div class="derby"><div class="hd">Derby della giornata</div><div class="mut sm" style="font-weight:800">'+esc(derName(o))+'</div><div class="row" style="justify-content:space-between;margin-top:6px"><b>'+esc(m[0])+'</b><b>'+esc(m[1])+'</b></div>'
    +'<div class="h2h" style="grid-template-columns:1fr 1fr"><div><b class="num">'+o.h+'</b><small>Stagioni insieme</small></div><div><b class="num">'+o.z+'</b><small>Nelle zone alte insieme</small></div></div>'+rvBar(i.riv)+'<div class="mut sm" style="margin-top:4px">Rivalità: <b>'+rvWord(i.riv)+'</b></div>'
-   +racconto(o)+derPromo(m,'campionato')+'<p class="sm" style="margin-top:6px"><b>In palio:</b> bonus di 20 fantacrediti per il vincitore e titolo in prima pagina sul Giornale.</p></div>'}
+   +racconto(o)+derPromo(m,'campionato')+'</div>'}
 
 var SFR={};D.teams.forEach(function(t){if(t===ME)return;var m=mg(t),w=m.split(/[ &]/)[0];SFR[t]=[m,m.indexOf('&')>=0?m.replace(' & ',' e '):w.charAt(0).toUpperCase()+w.slice(1)]});
 function sfInfo(t){var i=rvInfo(ME,t);return {der:i.der,riv:i.riv}}
