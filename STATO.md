@@ -141,3 +141,8 @@ Prima del rilascio: fasi A e B fatte, tutte verdi; il primo tentativo di push er
 - Il workflow Curva salva lo stato in `calcoli/pubblicati.json` su `main`; l'opzione `solo_segna` segna i post attuali come già usciti senza inviarli.
 - Le storie degli allenatori stanno in `ufficiale/src/storie.json`.
 - Le chiavi dei post sono `tipo:k:indice` (es. `conferenza:C3-Apo team:0`): ogni post esce una sola volta.
+
+## Interruttore Lega/Stadio: nitidezza e transizione (24 ottobre)
+- Nell'Anteprima ufficiale, rimosso l'effetto di sfocatura dai pulsanti Lega/Stadio e mantenuto uno sfondo scuro durante il cambio di pagina per evitare il flash bianco. Sorgente: `ufficiale/src/grafica.js`; copie per il test: `ufficiale/girrr/grafica.js` e `ufficiale/nuovo/girrr/grafica.js`.
+- Verificato in Chromium con viewport mobile 320 px: selettore nitido, cambio Lega → Stadio funzionante, canvas scuro e nessuno scroll orizzontale. Safari e iPhone 15 fisici non provati.
+- Anteprima condivisa: https://giandjcosta.github.io/o-girrr-registro/ufficiale/ (selettore di grafica in alto; le pagine si aprono nel frame qui sotto). Resta solo nell'Anteprima del Registro; non copiare sui rami `gh-pages` o `main` di `o-fant-a-girrr` finché non arriva il relativo via.
