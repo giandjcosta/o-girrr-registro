@@ -97,6 +97,22 @@ Prima del rilascio: fasi A e B fatte, tutte verdi; il primo tentativo di push er
 - Rilascio pronto: `rilascio/moviola-passo4/gh-pages.patch` (9 file: app.html, curva-banca.js, curva.html, novita-dati.js di Lega e Stadio, girrr/dati/moviola.json) e `main.patch` (dopo-giornata.yml, LEGGIMI, moviola.py, moviola.json, moviola-manuale.json, post_curva.py, pubblica_curva.py), fatti sopra gh-pages 53cef58 e main 0eb3f22. Per pubblicare: nel repo del sito `git am` della patch sul ramo giusto e push (prima gh-pages, poi main), poi unire `moviola-curva` a `main` del registro. Effetto in più su novita-dati.js: la stagione 2022/23 entra nell'Albo di Latta anche nelle pagine dell'Albo (era già nella app dal 22 ottobre).
 - Database: `curva_feed` mostrava i post del database solo per 60 giorni; `sql/curva-tieni-post.sql` applicato il 24 ottobre, ora restano.
 
+## Moviola: gol, assist e cambi decisivi (ramo `moviola-gol`) — ONLINE dal 24 ottobre
+- Chiesto da Gianluca il 24 ottobre. In `calcoli/moviola.py`: nuovi tipi "Gol decisivo" (anche su rigore; "La doppietta", "La tripletta" nel testo), "Assist decisivo" e "Decisivo dalla panchina" (gol o assist di chi è entrato a partita in corso nella partita vera, voce `subentrato`). Entrano solo se, tolti dal punteggio, il risultato cambia (stesso calcolo di "Ha deciso la partita"), e solo per i titolari con voto della formazione. Una card per giocatore (gol e assist insieme). Verdetto sempre "Ha deciso la partita".
+- Limite: 4 episodi per giornata (prima 3), di cui al massimo 2 tra gol, assist e panchina, così restano rigori e autogol. Le voci a mano entrano sempre; in `moviola-manuale.json` valgono anche i tipi `gol`, `assist`, `dalla panchina`.
+- Ordine: deciso, gol spostati, peso, poi rosso, panchina, gol, assist, rigore sbagliato, autogol, rigore parato, partita sul filo.
+- Non fatti, decisi con Gianluca: gialli e rossi stimati da fantavoto meno voto (troppi e non sicuri); punizioni, VAR, fuorigioco, gol annullati solo a mano con `altro`. L'assist non si può legare al gol del compagno (i dati non dicono chi ha servito chi): è una card a parte.
+- Dati veri (gh-pages del sito al 24 ottobre): giornate 2 e 3 rifatte con `--rigenera 2,3` in `calcoli/moviola.json` del ramo. G2: gol decisivi di De Bruyne (doppietta) e Osmajic, autogol di Vasquez (fuori Isaksen e Rabiot per il limite). G3: doppietta di Simeone, Carlos Augusto dalla panchina, rigori sbagliati di De Bruyne e Ramos G. (fuori Bonny, Castro S., Douvikas, Belghali e i due rigori parati).
+- Lab: testo della tab "gol decisivi, rigori, autogol…"; Anteprima rigenerata (`anteprima/build.py`).
+- Prove: `prove/prova_moviola.py` (giornata 1 ora 5 trovati, 4 mostrati) e nuova `prove/prova_moviola_gol.py` (gol, panchina, assist, gol di chi parte dalla panchina della formazione, non decisivi, doppietta, limite 4 e 2, ordine, voce a mano `gol`): tutto a posto. Chromium su iPhone SE, iPhone 13 e PC in Lab, Anteprima Lega e Stadio: niente fuori dalle card, nessun errore.
+- Sito finto per vederle: https://claude.ai/artifact/EwQoH5LySRXByeTMbs2TWn (giornata 3 vera e giornata 4 inventata con tutti i colori).
+- Rilascio del 24 ottobre, con il "vai" di Gianluca ("mettiamo ste stats anche nel sito vero"): giornate 2 e 3 riscritte con le regole nuove.
+  - Sito `gh-pages`: commit `a2e611a` sopra `a8ae5c0` (testo della tab in `girrr/app.html` e `stadio/girrr/app.html`, `girrr/dati/moviola.json`). Deploy Pages riuscito.
+  - Sito `main`: commit `6ef4017` sopra `afa4034` (`calcoli/moviola.py`, `LEGGIMI.md`, `moviola.json`, `moviola-video.html`). Con i dati di oggi `moviola.py` lascia `moviola.json` invariato.
+  - Prova nel browser (`prove/prova_moviola_browser.js`, ora legge da `moviola.json` quanti episodi aspettarsi): 132/132 sul candidato contro il sito di prima. github.io non si raggiunge da qui: da guardare a occhio.
+  - Curva: il post Moviola della giornata 3 non era ancora uscito (nessun giro della Curva dopo il rilascio delle 08:33). Al prossimo giro esce "Gol decisivo" con la doppietta di Simeone (letto in prova, 270 caratteri circa, chiave `moviola:G3:0`).
+  - Per tornare indietro: `git revert --no-edit a2e611a` su gh-pages e `git revert --no-edit 6ef4017` su main del sito; nel registro `git revert -m 1` del merge di `moviola-gol`.
+
 ## Note
 - Il workflow Curva salva lo stato in `calcoli/pubblicati.json` su `main`; l'opzione `solo_segna` segna i post attuali come già usciti senza inviarli.
 - Le storie degli allenatori stanno in `ufficiale/src/storie.json`.

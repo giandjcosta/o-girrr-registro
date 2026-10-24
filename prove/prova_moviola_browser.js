@@ -5,6 +5,8 @@
 const { chromium } = require('/opt/node-tools/node_modules/playwright');
 const fs = require('fs'), path = require('path');
 const S = process.argv[2], OUT = path.join(S, 'pw');
+// quanti episodi deve mostrare l'ultima giornata: quelli di moviola.json del registro (prima erano sempre 3)
+const MJ = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'calcoli', 'moviola.json'), 'utf8')), NEP = MJ.giornate[String(MJ.giocate[MJ.giocate.length - 1])].episodi.length;
 const VIVO = 'http://127.0.0.1:8001/o-fant-a-girrr/', NUOVO = 'http://127.0.0.1:8002/o-fant-a-girrr/', REG = 'http://127.0.0.1:8003/';
 const DEV = [['iPhone SE 320', 320, 568, true], ['iPhone SE', 375, 667, true], ['iPhone 13', 390, 844, true], ['PC', 1366, 768, false], ['TV', 1920, 1080, false]];
 const esiti = [];
@@ -61,7 +63,7 @@ async function tab(b, dev, nome, url, base) {
   });
   const lay = await impaginazione(p, '#view');
   const tag = `${nome} · ${dev[0]}`;
-  ok(st.premuto === 'true' && !st.disattivato && st.card.length === 3, `${tag}: tab Moviola aperta da #moviola, giornata ${st.giornate[0]}, ${st.card.length} episodi`);
+  ok(st.premuto === 'true' && !st.disattivato && st.card.length === NEP, `${tag}: tab Moviola aperta da #moviola, giornata ${st.giornate[0]}, ${st.card.length} episodi`);
   ok(!lay.scroll && !lay.fuori.length, `${tag}: niente scroll orizzontale né testi fuori` + (lay.fuori.length ? ' → ' + lay.fuori.slice(0, 3).join(' | ') : ''));
   ok(!lay.minuscole.length, `${tag}: etichette con la maiuscola` + (lay.minuscole.length ? ' → ' + lay.minuscole.slice(0, 4).join(' | ') : ''));
   const altre = {};
@@ -127,7 +129,7 @@ async function errori(b, base, rel) {
     if (l.length) {
       await p.click('a.lnk[href="app.html#moviola"]'); await p.waitForSelector('.mv, .mvq', { timeout: 15000 }).catch(() => { });
       const s = await p.evaluate(() => ({ u: location.pathname + location.hash, pr: (document.querySelector('[data-sp="moviola"]') || {}).getAttribute && document.querySelector('[data-sp="moviola"]').getAttribute('aria-pressed'), n: document.querySelectorAll('.card.mv').length }));
-      ok(/app\.html#moviola$/.test(s.u) && s.pr === 'true' && s.n === 3, `Curva ${sito}: il link apre la tab Moviola (${s.n} episodi)`);
+      ok(/app\.html#moviola$/.test(s.u) && s.pr === 'true' && s.n === NEP, `Curva ${sito}: il link apre la tab Moviola (${s.n} episodi)`);
     }
     await c.close();
   }
