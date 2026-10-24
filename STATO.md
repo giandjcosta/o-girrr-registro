@@ -172,3 +172,7 @@ Prima del rilascio: fasi A e B fatte, tutte verdi; il primo tentativo di push er
 ## Derby: tolta la riga "In palio" (25 ottobre, solo Lab e Anteprima)
 - Su richiesta di Gianluca tolta dal riquadro "Derby della giornata" del Lab (`derBox` in `lab/index.html`, Anteprima rigenerata) la riga "In palio: bonus di 20 fantacrediti per il vincitore e titolo in prima pagina sul Giornale".
 - Nota: `derBox` non è chiamata da nessuna parte, né nel Lab né in `app.html` del sito, quindi quella riga non si vedeva comunque; sul sito resta solo nel codice, senza effetti. Si toglie anche lì al prossimo rilascio di `app.html`.
+
+## Derby apo-DJ Cst Brazil ("The Continental"): corretto l'anno (25 ottobre) — ONLINE
+- La storia diceva che apo ha vinto il primo titolo nel 2016/17 "quando DJ Cst Brazil chiuse quarto"; per l'Albo d'oro il 2016/17 l'ha vinto Mario e il primo titolo di apo è del 2017/18. Ora: "ha vinto tre campionati, il primo nel 2017/18". Tolto il quarto posto di DJ Cst Brazil (anno non certo). Lab, Anteprima rigenerata, `novita-dati.js` di Lega e Stadio.
+- ONLINE con il "vai" di Gianluca: sito `gh-pages` commit `48a1b21` (sopra `1a5b48a`), solo quel testo in `girrr/novita-dati.js` e `stadio/girrr/novita-dati.js`. Per tornare indietro: `git revert 48a1b21` su `gh-pages`. Controllato sul sito vero (pagina Derby, Lega e Stadio, Chromium 320 px e WebKit): testo nuovo, console pulita.
