@@ -10,6 +10,7 @@ Per aprire una chat nuova: incolla "Leggi STATO.md nel repo o-girrr-registro e c
 - ATTENZIONE prima di applicare: il `main` online può avere file più nuovi di quelli del registro (era successo con `curva-subito.yml`, `pubblica_curva.py`, `post_curva.py`, `leggi_eventi.py`). Guardare sempre il diff di `main` nella prova a vuoto e, se ci sono file che non ho toccato, copiarli prima dal sito vero nel registro (`calcoli/`, `rilascio/workflow/`). Ora sono allineati.
 
 ## Regole di pubblicazione
+- Regole per tutti gli assistenti (Claude Code, agente di VS Code, Perplexity, Aider): file `AGENTS.md` in `o-girrr-registro`, `o-fant-a-girrr` (ramo `main`) e `armocromatic`, con una parte comune uguale in tutti (24 ottobre).
 - Micro correzioni di testo: online in automatico, avviso dopo. Tutto il resto: serve il "vai" di Gianluca.
 - Niente disclaimer "notizia inventata" o "dati finti". Storie come un campionato vero (giocatori, gol, squadre, allenatori), niente riferimenti a fantacalcio, crediti, fantapunti o fantamedia, salvo punteggi. "Derby" sempre con la D maiuscola. Titoli ed etichette con la maiuscola iniziale. Post ufficiali mai sulle scommesse.
 
