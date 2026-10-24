@@ -110,7 +110,7 @@ Prima del rilascio: fasi A e B fatte, tutte verdi; il primo tentativo di push er
   - Sito `gh-pages`: commit `a2e611a` sopra `a8ae5c0` (testo della tab in `girrr/app.html` e `stadio/girrr/app.html`, `girrr/dati/moviola.json`). Deploy Pages riuscito.
   - Sito `main`: commit `6ef4017` sopra `afa4034` (`calcoli/moviola.py`, `LEGGIMI.md`, `moviola.json`, `moviola-video.html`). Con i dati di oggi `moviola.py` lascia `moviola.json` invariato.
   - Prova nel browser (`prove/prova_moviola_browser.js`, ora legge da `moviola.json` quanti episodi aspettarsi): 132/132 sul candidato contro il sito di prima. github.io non si raggiunge da qui: da guardare a occhio.
-  - Curva: il post Moviola della giornata 3 non era ancora uscito (nessun giro della Curva dopo il rilascio delle 08:33). Al prossimo giro esce "Gol decisivo" con la doppietta di Simeone (letto in prova, 270 caratteri circa, chiave `moviola:G3:0`).
+  - Curva: il post Moviola della giornata 3 non era ancora uscito (nessun giro della Curva dopo il rilascio delle 08:33). Al prossimo giro esce "Gol decisivo" con la doppietta di Simeone (letto in prova: 241 caratteri, testo intero, chiave `moviola:G3:0`).
   - Per tornare indietro: `git revert --no-edit a2e611a` su gh-pages e `git revert --no-edit 6ef4017` su main del sito; nel registro `git revert -m 1 82256d8` su main.
 
 ## Note
