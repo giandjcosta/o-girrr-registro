@@ -27,7 +27,7 @@ Sera del 18 ottobre, con il "vai" di Gianluca:
 
 ## Da fare
 0. FATTO il 21 ottobre: tab Borsino nello Spogliatoio vero (index.html del sito, legge girrr/dati/borsino.json) e tolto il tag Derby dalle liste dei Derby. Prima era: il Borsino nello Spogliatoio. Gianluca si aspettava di trovarlo lì e non c'è (il Borsino c'è nei calcoli, `calcoli/borsino.py`, e nella app come scheda `vBors`): capire se manca nel menu dello Spogliatoio o se è solo nascosto, e deciderlo con lui.
-1. Derby "The Continental" (Oranje VC–Apo): Apo deve ancora confermare il nome nell'app (`nome_ok` falso). Appena conferma, il post "Nasce un Derby" parte da solo al giro successivo della Curva.
+1. FATTO: Derby "The Continental" (Oranje VC–Apo): nome confermato nell'app (`nome_ok` vero), il Derby è nelle liste del sito.
 2. Controllare il primo giro della Curva dopo le novità: l'Intervista speciale con il testo vero (alla prossima sfida lanciata) e il post Conferenza di Apo.
 3. Aperto: decidere se aggiungere il post della sfida anche sul profilo della squadra (per ora solo Girrr Sport).
 4. Se serve, provare il cambio tab di Totogirrr anche su Firefox e PWA.
@@ -123,6 +123,12 @@ Prima del rilascio: fasi A e B fatte, tutte verdi; il primo tentativo di push er
 - Codice in `ufficiale/src/home_stato.py`, chiamato da `ufficiale/build.py` (vale per Lega e Stadio, in anteprima e nel rilascio). Applicato con lo stesso script a `ufficiale/girrr/index.html` e `ufficiale/nuovo/girrr/index.html` senza rifare tutta la build (qui mancavano Pillow e la copia del sito al commit giusto).
 - Provato in Chromium (telefono 375 e PC) con dati che arrivano, che arrivano dopo 6 secondi e che non arrivano (404), in Lega e Stadio: niente scroll orizzontale, Riprova ricarica, nessun errore nuovo in console. Safari vero non provato.
 - Online con il "vai" di Gianluca: sito `gh-pages` commit `5d89629` (`girrr/index.html` e `stadio/girrr/index.html`, stesso `home_stato.py`). Provato prima in locale e poi sul sito pubblicato: "Dati aggiornati oggi", 4 riquadri, nessun errore in console. Per tornare indietro: `git revert --no-edit 5d89629` su gh-pages del sito.
+## Derby dell'Emma: la storia scritta (24 ottobre, solo Registro, serve il "vai")
+- Chiesto da Gianluca: il Derby dell'Emma (The Blue brothers–Oranje VC, accettato nell'app con nome confermato) non aveva la storia. Scritta nei dati RIV: fonte `lab/index.html`, poi anteprima rigenerata (`anteprima/build.py`) e aggiornati a mano i due file generati `ufficiale/girrr/novita-dati.js` e `ufficiale/nuovo/girrr/novita-dati.js` (senza rilanciare `ufficiale/build.py`: vedi nota sotto).
+- La storia, solo fatti veri: Mario e Leanzino c'erano nel 2016 (titolo di Mario nel 2016/17, titolo di Leanzino nel 2023/24 col Mugiwara); DJ Cst Brazil fondatore, partito nel 2018/19, tornato un anno nel 2021/22 col Rapid Micatant, di nuovo via e quest'anno di ritorno dall'Olanda con l'Oranje VC; Leanzino e Mario insieme nella The Blue Brothers. Primo atto alla quinta giornata; dopo tre giornate in classifica l'Oranje è davanti (6 punti contro 4). Niente riferimenti a fantacalcio o crediti, "Derby" con la D maiuscola.
+- Provato nel browser (Chromium, 390px): pagina Derby con la tendina "Derby dell'Emma" aperta, storia intera e leggibile, barra e numeri a posto, nessun errore in console. The Continental già in lista. Nella pagina Rivalità la storia esce nella card "Derby della giornata" quando il turno ha il match (G5, in casa della Blue) e nella lista "I Derby della Lega"; nei turni senza Derby (come la 3) la lista non c'è, come per gli altri Derby.
+- Per pubblicare: al "vai", portare l'entry RIV dell'Emma (nome e storia) in `novita-dati.js` di `girrr/` e `stadio/girrr/` su gh-pages del sito.
+- Nota su `ufficiale/build.py`: si ferma su un assert se rilanciato oggi (le patch della 5.0 cercano testi vecchi in `squadre.html`, ma le pagine del sito vero contengono già quelle novità). Da sistemare prima del prossimo rilascio fatto con il build; per i soli dati di `novita-dati.js` non serve.
 
 ## Note
 - Il workflow Curva salva lo stato in `calcoli/pubblicati.json` su `main`; l'opzione `solo_segna` segna i post attuali come già usciti senza inviarli.
