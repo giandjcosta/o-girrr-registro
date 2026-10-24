@@ -99,6 +99,11 @@ patch("curva.html", "<i class=\"lg\" style=\"width:28px;height:28px\"></i>", "<i
 patch("curva.html", "</head>", '<script>document.addEventListener("click",function(e){var l=e.target.closest&&e.target.closest("[data-lega]");if(l){e.preventDefault();e.stopPropagation();location.href="index.html"}},true)</script>\n</head>')
 # Curva da telefono: niente evidenziazione del post toccato o scorso (su touch :hover resta appiccicato)
 patch("curva.html", "</head>", '<style>@media(hover:none){.post:hover,.nav button:hover,.ib:hover,.tabs button:hover,.acts button:hover{background:transparent!important}.acts .rsp:hover:not(.on),.acts .ril:hover:not(.on),.acts .app:hover:not(.on),.acts .del:hover{color:var(--mu)!important}.pn b:hover{text-decoration:none}}.post,.acts button,.tabs button{-webkit-tap-highlight-color:transparent}</style>\n</head>')
+# Moviola (passo 4): niente più post automatico gs:mov (il post Moviola di Girrr Sport arriva dal database, da calcoli/post_curva.py)
+# e il post Moviola nella Curva rimanda alla tab Moviola della app. Nel rilascio vale ufficiale/src/sito/ (vedi in fondo).
+patch("curva-banca.js", "    (v.b||[]).forEach(function(b){if(/rigore sbagliato|autogol|rigore parato/.test(b)&&(!mov||b.indexOf('rigore sbagliato')>=0))mov={b:b,n:NM2[id].n,sq:NM2[id].sq}})});", '    });')
+patch("curva-banca.js", "   if(mov){var txt=/sbagliato/.test(mov.b)?'Moviola: '+mov.n+' ('+mov.sq+') sbaglia un rigore. Le immagini non lasciano dubbi, il palo sì. #GirrrSport #Moviola':/autogol/.test(mov.b)?'Moviola: autogol di '+mov.n+' ('+mov.sq+'). Rivediamo l\\'azione: purtroppo è proprio lui. #GirrrSport #Moviola':'Moviola: '+mov.n+' ('+mov.sq+') para un rigore. Tutto regolare, e che parata. #GirrrSport #Moviola';gp('gs:mov'+n,txt,P1.ts+100*60000)}\n", "")
+patch("curva.html", '(p.tipo===\'rc\'?\'<a class="lnk" href="tabellone.html#coppa-\'+(p.k.split(\':c\')[1]||\'\')+\'">Vedi i risultati ›</a>\':\'\');', '(p.tipo===\'rc\'?\'<a class="lnk" href="tabellone.html#coppa-\'+(p.k.split(\':c\')[1]||\'\')+\'">Vedi i risultati ›</a>\':\'\')+(p.uf&&p.a===\'girrr_sport\'&&/^MOVIOLA · Giornata /.test(p.x||\'\')?\'<a class="lnk" href="@@APP@@#moviola">Apri la Moviola ›</a>\':\'\');')
 # 6) Pagina Derby: stessa grafica dell'Albo
 alb = (OUT / "albo.html").read_text(encoding="utf-8")
 a0 = alb.index("<script>\n(function(){\nvar D=null;"); a1 = alb.index("</script>\n<script src=\"" + LIVE + "assets/app.js\">")
@@ -114,6 +119,7 @@ _s = (OUT / "storia.js").read_text(encoding="utf-8")
 for _a, _b in [("ser è l\\'unico che in cinque stagioni non ha mai cambiato né squadra né nome: la WOA", "ser è l\\'unico che dal 2021 non ha mai cambiato né squadra né nome: la WOA"),
     ("apo è l\\'unico ad aver vinto due titoli, e di fila: 2021/22 e 2022/23 con il Wakanda", "apo ha tre titoli, più di chiunque altro: il 2017/18 e poi 2021/22 e 2022/23 di fila con il Wakanda"),
     ("in cinque stagioni di campionato nessuno si è confermato campione tranne apo", "nella storia della lega solo apo si è confermato campione: 2021/22 e 2022/23"),
+    (",nota:'Classifica parziale: mancano i punti e le squadre dal 7° posto in poi.'}", "}"),   # 2022/23 completa (sul sito dal 22 ottobre, 93d2ffd)
     ("'Il Wakanda di apo ha vinto", "'Mario ha vinto il primo campionato della storia della lega, nel 2016/17, con Mertens',\n 'Urba ha vinto il titolo 2018/19 e ha lasciato la lega da campione',\n 'Il Wakanda di apo ha vinto")]:
     assert _a in _s, _a[:40]
     _s = _s.replace(_a, _b)
@@ -269,4 +275,10 @@ for _d in (OUT, N):
         _x = _f.read_text(encoding="utf-8")
         _y = re.sub(r"(<style[^>]*>)(.*?)(</style>)", lambda m: m.group(1) + _solo_mouse(m.group(2)) + m.group(3), _x, flags=re.S)
         if _y != _x: _f.write_text(_y, encoding="utf-8")
+# La Curva vera è stata cambiata direttamente sul sito il 21-22 ottobre (post per ogni giornata, Radio Girrr, commenti dei profili
+# ufficiali): nel rilascio si usano quelle versioni, salvate in ufficiale/src/sito/ con le modifiche della Moviola (passo 4).
+if RIL:
+    for _d, _rel in ((OUT, "girrr"), (N, "stadio/girrr")):
+        for _n in ("curva-banca.js", "curva.html"):
+            shutil.copy(R / "ufficiale" / "src" / "sito" / _rel / _n, _d / _n)
 print("scritto anche la versione nuova")

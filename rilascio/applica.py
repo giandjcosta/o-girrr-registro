@@ -11,7 +11,7 @@ Fa in ordine:
   3. scrive la data di oggi in calcoli/curva_config.json ("rilascio"): da lì parte il periodo di approvazione dei post della Curva (14 giorni);
   4. commit in locale, uno per ramo. Non tocca mai .github/workflows/aggiorna-dati.yml.
 """
-import datetime, filecmp, json, pathlib, shutil, subprocess, sys
+import datetime, filecmp, fnmatch, json, pathlib, re, shutil, subprocess, sys
 
 PAC = pathlib.Path(__file__).resolve().parent / "pacchetto"
 A = sys.argv[1:]
@@ -20,7 +20,10 @@ def arg(n):
     return pathlib.Path(A[A.index(n) + 1]) if n in A else sys.exit(f"Manca {n}")
 GH, MAIN = arg("--gh-pages"), arg("--main")
 INTOCCABILI = {".github/workflows/aggiorna-dati.yml", ".github/workflows/riepilogo.yml"}
-TRAILER = "\n\nCo-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01GK5zscNUimtKKY8gDEaZw5"
+# File che dopo il primo rilascio cambiano sul sito (li scrivono i workflow o Gianluca): si copiano solo se mancano
+SE_MANCANO = ["girrr/dati/*.json", "girrr/voci/*", "calcoli/moviola.json", "calcoli/moviola-manuale.json", "calcoli/conferenze.json", "calcoli/curva_config.json"]
+TRAILER = "\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01YPem5mJXheCh3AsQYT91c7"
+TITOLO = A[A.index("--titolo") + 1] if "--titolo" in A else ""   # titolo dei commit (es. "Moviola"); senza, quelli del primo rilascio
 
 
 def piano(sorg, dest):
@@ -32,9 +35,19 @@ def piano(sorg, dest):
         d = dest / rel
         if not d.exists():
             nuovi.append(rel)
-        elif not filecmp.cmp(f, d, shallow=False):
+        elif any(fnmatch.fnmatch(rel, m) for m in SE_MANCANO):
+            continue
+        elif not filecmp.cmp(f, d, shallow=False) and not uguali(f, d):
             cambiati.append(rel)
     return nuovi, cambiati
+
+
+def uguali(a, b):
+    """Stesso contenuto a parte i numeri di versione ?v=... (cambiano a ogni costruzione)."""
+    if a.suffix not in (".html", ".js"):
+        return False
+    t = lambda p: re.sub(r"\?v=\d+", "", p.read_text(encoding="utf-8"))
+    return t(a) == t(b)
 
 
 def copia(sorg, dest, rel):
@@ -60,12 +73,13 @@ def main():
         return
     cfg = MAIN / "calcoli" / "curva_config.json"
     c = json.loads(cfg.read_text(encoding="utf-8"))
-    c["rilascio"] = datetime.date.today().isoformat()
-    cfg.write_text(json.dumps(c, indent=1, ensure_ascii=False), encoding="utf-8")
+    if not c.get("rilascio"):   # solo al primo rilascio: dopo, la data resta quella
+        c["rilascio"] = datetime.date.today().isoformat()
+        cfg.write_text(json.dumps(c, indent=1, ensure_ascii=False), encoding="utf-8")
     git(GH, "add", "-A")
-    git(GH, "commit", "-m", "5.0: pagine nuove (Girrr Sport, Spogliatoio, Totogirrr, Carriera), Derby e Sfide" + TRAILER)
+    git(GH, "commit", "-m", (TITOLO + ": pagine" if TITOLO else "5.0: pagine nuove (Girrr Sport, Spogliatoio, Totogirrr, Carriera), Derby e Sfide") + TRAILER)
     git(MAIN, "add", "-A")
-    git(MAIN, "commit", "-m", "5.0: workflow dei calcoli e della coda della Curva, script dei calcoli" + TRAILER)
+    git(MAIN, "commit", "-m", (TITOLO + ": workflow e calcoli" if TITOLO else "5.0: workflow dei calcoli e della coda della Curva, script dei calcoli") + TRAILER)
     print("Fatto in locale. Per pubblicare: git push origin gh-pages (cartella gh-pages) e git push origin main (cartella main).")
 
 
