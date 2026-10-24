@@ -130,6 +130,12 @@ Prima del rilascio: fasi A e B fatte, tutte verdi; il primo tentativo di push er
 - Per pubblicare: al "vai", portare l'entry RIV dell'Emma (nome e storia) in `novita-dati.js` di `girrr/` e `stadio/girrr/` su gh-pages del sito.
 - Nota su `ufficiale/build.py`: si ferma su un assert se rilanciato oggi (le patch della 5.0 cercano testi vecchi in `squadre.html`, ma le pagine del sito vero contengono già quelle novità). Da sistemare prima del prossimo rilascio fatto con il build; per i soli dati di `novita-dati.js` non serve.
 
+## Accessi dell'ambiente di Claude (24 ottobre)
+- Gianluca ha aggiunto `giandjcosta.github.io` agli Allowed domains e un network secret per `api.netlify.com` (token Netlify, Claude non lo vede). Da ora Claude apre il sito vero dopo i rilasci. Restano bloccati da qui Supabase REST (`*.supabase.co`, la Curva non carica i post nel browser di prova) e GoatCounter (`gc.zgo.at`): errori di rete solo nell'ambiente di Claude, non sul sito.
+- Netlify: account collegato, NON usato. Il sito resta su GitHub Pages. GitLab: non serve.
+- Controllo sul sito vero (24 ottobre, Chromium a 390 px): tab Moviola in Lega e Stadio con i 4 episodi della giornata 3 e il testo nuovo, nessun errore JavaScript in Moviola, Home, Curva, Giornale, Radio, Spogliatoio, Albo, Totogirrr.
+- Trovato, già presente prima della Moviola (c'era in 53cef58): la Curva dello Stadio chiede `voci/archivio.json` relativo, che in `stadio/girrr/` non esiste (404), quindi i post della Radio Girrr dall'archivio nella Curva Stadio non escono. In Lega va. Da sistemare (percorso `../../girrr/voci/archivio.json` in `ufficiale/src/sito/stadio/girrr/curva.html`), serve il "vai".
+
 ## Note
 - Il workflow Curva salva lo stato in `calcoli/pubblicati.json` su `main`; l'opzione `solo_segna` segna i post attuali come già usciti senza inviarli.
 - Le storie degli allenatori stanno in `ufficiale/src/storie.json`.
