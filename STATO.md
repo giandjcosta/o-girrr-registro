@@ -177,3 +177,9 @@ Prima del rilascio: fasi A e B fatte, tutte verdi; il primo tentativo di push er
 ## Derby apo-DJ Cst Brazil ("The Continental"): corretto l'anno (25 ottobre) — ONLINE
 - La storia diceva che apo ha vinto il primo titolo nel 2016/17 "quando DJ Cst Brazil chiuse quarto"; per l'Albo d'oro il 2016/17 l'ha vinto Mario e il primo titolo di apo è del 2017/18. Ora: "ha vinto tre campionati, il primo nel 2017/18". Tolto il quarto posto di DJ Cst Brazil (anno non certo). Lab, Anteprima rigenerata, `novita-dati.js` di Lega e Stadio.
 - ONLINE con il "vai" di Gianluca: sito `gh-pages` commit `48a1b21` (sopra `1a5b48a`), solo quel testo in `girrr/novita-dati.js` e `stadio/girrr/novita-dati.js`. Per tornare indietro: `git revert 48a1b21` su `gh-pages`. Controllato sul sito vero (pagina Derby, Lega e Stadio, Chromium 320 px e WebKit): testo nuovo, console pulita.
+
+## Albo d'oro: scheda "La Storia" (25 ottobre, solo Anteprima)
+- Nuova prima scheda dell'Albo d'oro, "La Storia", in `novita.js` (sorgente `ufficiale/src/novita.js` e copie `ufficiale/girrr/` e `ufficiale/nuovo/girrr/`): il nome e le origini, il racconto della bozza `lab/anteprima-storia-lega.html` (già corretto: 2016/17, apo e ser come su Leghe) e i sei Padri Fondatori con le squadre di oggi. "Le Ere" resta la seconda scheda con i suoi tre capitoli; `#ere` apre ancora Le Ere.
+- Provato in Chromium e WebKit (iPhone SE emulato) a 1300 e 320 px, Lega e Stadio: La Storia aperta di default, le altre schede funzionano, niente scorrimento di lato, console pulita.
+- Da sistemare a parte: il Capitolo III delle Ere (dati `leg.libro` di `novita-dati.js`) dice ancora che la storia del nome "la racconterà Christian".
+- Non ancora sul sito vero: al rilascio vanno `girrr/novita.js` e `stadio/girrr/novita.js` di `gh-pages` (stessa modifica; il sito ha solo il percorso dei dati del Lab diverso).
