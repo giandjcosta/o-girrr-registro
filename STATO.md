@@ -153,6 +153,7 @@ Prima del rilascio: fasi A e B fatte, tutte verdi; il primo tentativo di push er
 - Posizione proposta: prima scheda "La Storia" nell'Albo d'oro; "Le Ere" resta una scheda separata con tre pannelli apribili. Nessuna nuova voce nel menu principale.
 - La bozza racconta la fondazione nel 2015/16 e presenta i sei Padri Fondatori con i nomi e le squadre attuali: Leanzino e Mario (The Blue Brothers), Ser (WOA), RikyArma (Grodah), Apo (Apo Team), DJ Cst Brazil (Oranje VC). Il prologo ricorda come Leanzino apprese il gioco da ragazzo; il nuovo nome è collegato all'estate 2021, al successo europeo dell'Italia e al "tiraggiro" di Insigne.
 - La tavola grafica è pubblicata solo nel Registro: https://giandjcosta.github.io/o-girrr-registro/lab/anteprima-storia-lega.html. La bozza include un selettore Lega/Stadio per mostrare le strisce animate della Lega e i titoli corsivi dello Stadio; le tre Ere hanno una linea dorata che si attenua verso il futuro.
+- Il testo del racconto usa il carattere Inter della pagina in entrambe le grafiche; il corsivo Lobster resta riservato ai titoli dello Stadio.
 
 ## Squadre: card dell'allenatore (24 ottobre) — ONLINE
 - Nella pagina di ogni squadra (`ufficiale/girrr/squadre.html` e `ufficiale/nuovo/girrr/squadre.html`) c'è la card "Allenatore" in fondo alla colonna di destra, dove prima su PC restava spazio vuoto; su telefono compare sotto "I migliori della rosa". The Blue brothers mostra "Allenatori: Leanzino e Mario".
