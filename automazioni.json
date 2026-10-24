@@ -1,5 +1,5 @@
 {
- "aggiornato": "2026-10-23T17:42:09Z",
+ "aggiornato": "2026-10-24T05:41:51Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
@@ -68,9 +68,9 @@
    "nome": "Controllo automatismi del mattino",
    "quando": "Ogni giorno alle 07:33",
    "stato": "attiva",
-   "prossimo": "2026-10-24T05:33:00Z",
+   "prossimo": "2026-10-25T06:33:00Z",
    "ultimo": {
-    "quando": "2026-10-23T05:33:29Z",
+    "quando": "2026-10-24T05:33:54Z",
     "esito": "riuscito"
    },
    "nota": "Avvisa solo se qualcosa è fermo da più di 2 giorni."
@@ -93,7 +93,7 @@
   },
   {
    "nome": "Taratura quote Totogirrr dopo la 4ª giornata",
-   "quando": "Una volta: 28 ottobre alle 11:00",
+   "quando": "Una volta: 28 ottobre alle 10:00",
    "stato": "attiva",
    "prossimo": "2026-10-28T09:00:00Z"
   },
