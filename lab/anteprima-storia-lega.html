@@ -7,25 +7,36 @@
 <meta name="theme-color" content="#1d2a52">
 <title>La storia della Lega · Bozza grafica</title>
 <link rel="icon" href="../favicon-64.png">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Lora:ital,wght@0,500;0,600;1,500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Lobster&display=swap">
 <style>
 :root{color-scheme:dark;--bg:#1d2a52;--bg2:#2c3f7c;--bg3:#141d3d;--ink:#fbf6ec;--gold:#ffd166;--sub:#bfe3ff;--red:#d62839;--line:rgba(255,255,255,.16);--glass:rgba(255,255,255,.07)}
 *{box-sizing:border-box}
 html{min-height:100%;background:var(--bg)}
-body{min-height:100vh;margin:0;padding:20px 16px 44px;color:var(--ink);font:500 14px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(900px 560px at 85% -8%,var(--bg2),transparent 68%),linear-gradient(160deg,#233563 0%,var(--bg) 52%,var(--bg3) 100%)}
+body{position:relative;isolation:isolate;min-height:100vh;margin:0;padding:20px 16px 44px;color:var(--ink);font:500 14px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(900px 560px at 85% -8%,var(--bg2),transparent 68%),linear-gradient(160deg,#233563 0%,var(--bg) 52%,var(--bg3) 100%);transition:background .3s ease}
+body:before{content:"";position:fixed;inset:-120px;z-index:-1;pointer-events:none;background:repeating-linear-gradient(115deg,rgba(255,255,255,.045) 0 36px,transparent 36px 72px);animation:stripes 9s linear infinite}
+@keyframes stripes{to{transform:translate3d(72px,0,0)}}
+body.stadio{background:linear-gradient(160deg,#1d2a52 0%,#141d3d 100%)}
+body.stadio:before{display:none}
+body.stadio h1,body.stadio h2,body.stadio h3{font-family:Lobster,"Brush Script MT",cursive;font-style:italic;font-weight:400;letter-spacing:0}
 a{color:inherit}
 .wrap{width:min(100%,900px);margin:0 auto}
 .back{display:inline-flex;align-items:center;gap:7px;margin-bottom:16px;color:var(--gold);font-size:11px;font-weight:900;letter-spacing:.14em;text-decoration:none;text-transform:uppercase}
-.top{display:flex;align-items:center;gap:14px;padding-bottom:20px;border-bottom:5px solid transparent;border-image:linear-gradient(90deg,var(--red) 0 12%,var(--gold) 12% 14%,rgba(255,255,255,.24) 14%) 1}
+.top{display:flex;align-items:center;gap:14px;padding-bottom:20px;border-bottom:6px solid transparent;border-image:linear-gradient(90deg,var(--red) 0 12%,var(--gold) 12% 14%,rgba(255,255,255,.24) 14%) 1}
 .top img{width:68px;height:68px;object-fit:contain;filter:drop-shadow(0 6px 12px rgba(0,0,0,.35))}
 .kick{color:var(--gold);font-size:10px;font-weight:900;letter-spacing:.28em}
 h1{margin:4px 0 0;font-size:clamp(27px,6vw,42px);font-weight:900;letter-spacing:-.035em;line-height:1.05}
 .context{margin:18px 0 0;padding:12px 14px;border:1px solid var(--line);border-radius:13px;background:rgba(0,0,0,.15);color:var(--sub);font-size:12px;font-weight:700}
 .context b{color:var(--ink)}
+.skins{display:flex;align-items:center;gap:8px;margin-top:14px}
+.skins strong{margin-right:auto;color:var(--sub);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.skins button{padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--glass);color:var(--ink);font:700 11px Inter,system-ui,sans-serif}
+.skins button[aria-pressed=true]{border:2px solid var(--gold);padding:6px 11px;background:rgba(214,40,57,.82)}
 .tabs{display:flex;gap:7px;overflow-x:auto;margin:14px -2px 18px;padding:3px 2px 8px;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
-.tabs span{flex:none;padding:8px 12px;border:1px solid rgba(255,255,255,.12);border-radius:999px;background:rgba(255,255,255,.06);color:var(--ink);font-size:11px;font-weight:800;white-space:nowrap;opacity:.62}
-.tabs .active{border-color:rgba(255,209,102,.55);background:var(--red);opacity:1}
+.tabs .tab{flex:none;padding:8px 12px;border:1px solid rgba(255,255,255,.12);border-radius:999px;background:rgba(255,255,255,.06);color:var(--ink);font:800 11px Inter,system-ui,sans-serif;white-space:nowrap;opacity:.68}
+.tabs .tab[aria-selected=true]{border:2px solid rgba(255,209,102,.75);padding:7px 11px;background:var(--red);opacity:1}
+.tabs .tab:focus-visible,.skins button:focus-visible,.era summary:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.tab-panel[hidden]{display:none}
 .intro{margin:0 0 16px;color:var(--sub);font-size:14px}
 .intro strong{color:var(--ink)}
 .feature{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:20px;align-items:center;min-height:220px;margin:0 0 16px;padding:clamp(20px,5vw,34px);border:1px solid rgba(255,255,255,.2);border-radius:20px;background:linear-gradient(115deg,rgba(20,29,61,.94),rgba(44,63,124,.78));box-shadow:0 18px 44px rgba(0,0,0,.22)}
@@ -35,24 +46,43 @@ h1{margin:4px 0 0;font-size:clamp(27px,6vw,42px);font-weight:900;letter-spacing:
 .feature h2{margin:12px 0 6px;font-size:clamp(25px,5vw,38px);font-weight:900;letter-spacing:-.035em;line-height:1.08}
 .feature h2 span{color:var(--gold)}
 .feature p{max-width:48ch;margin:0;color:var(--sub);font-size:13px}
-.seal{display:grid;place-items:center;justify-self:center;width:126px;aspect-ratio:1;border:1px solid rgba(255,209,102,.55);border-radius:50%;outline:1px solid rgba(255,209,102,.2);outline-offset:7px;background:radial-gradient(circle,rgba(255,209,102,.12),rgba(255,255,255,.02) 65%);color:var(--gold);font-size:37px;font-weight:900;letter-spacing:-.08em;text-shadow:0 3px 18px rgba(255,209,102,.18)}
+.seal{position:relative;display:grid;place-items:center;justify-self:center;width:126px;aspect-ratio:1;border:2px solid rgba(255,209,102,.72);border-radius:50%;background:radial-gradient(circle,rgba(255,209,102,.19),rgba(255,255,255,.02) 65%);color:var(--gold);font-size:37px;font-weight:900;letter-spacing:-.08em;text-shadow:0 3px 18px rgba(255,209,102,.18)}
+.seal:before,.seal:after{content:"";position:absolute;inset:-12px;border:2px solid rgba(255,209,102,.26);border-radius:50%;box-shadow:0 0 12px 3px rgba(255,209,102,.2),0 0 0 12px rgba(255,209,102,.05);filter:blur(1.5px);pointer-events:none}
+.seal:after{inset:-25px;border-color:rgba(255,209,102,.12);box-shadow:0 0 18px 5px rgba(255,209,102,.13),0 0 0 12px rgba(255,209,102,.035);filter:blur(3px)}
 .seal small{display:block;margin-top:-30px;color:var(--ink);font-size:8px;font-weight:900;letter-spacing:.2em}
 .section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:25px 0 11px}
 .section-head h2{margin:0;font-size:18px;font-weight:900;letter-spacing:-.02em}
 .section-head span{color:var(--sub);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
-.timeline{position:relative;display:grid;gap:9px}
-.timeline:before{content:"";position:absolute;left:16px;top:23px;bottom:23px;width:1px;background:linear-gradient(var(--gold),rgba(255,255,255,.08))}
-.chapter{position:relative;display:grid;grid-template-columns:34px minmax(0,1fr) 22px;gap:12px;align-items:start;padding:15px;border:1px solid var(--line);border-radius:15px;background:var(--glass)}
-.dot{position:relative;z-index:1;display:grid;place-items:center;width:32px;height:32px;border:1px solid rgba(255,209,102,.52);border-radius:50%;background:#202f5a;color:var(--gold);font-size:10px;font-weight:900}
-.chapter h3{margin:0 0 4px;font-size:14px;font-weight:900}
-.chapter p{margin:0;color:var(--sub);font-size:12px;line-height:1.5}
-.chapter .arrow{padding-top:3px;color:var(--gold);font-size:19px}
+.timeline{--node-center:30px;position:relative;display:grid;gap:10px}
+.timeline:before{content:"";position:absolute;left:var(--node-center);top:var(--node-center);bottom:0;width:3px;background:linear-gradient(var(--gold) 0%,rgba(255,209,102,.75) 48%,rgba(255,209,102,0) 100%);border-radius:9px}
+.era{position:relative;border:1px solid var(--line);border-radius:15px;background:var(--glass)}
+.era summary{position:relative;z-index:1;display:grid;grid-template-columns:34px minmax(0,1fr) 22px;gap:12px;align-items:center;padding:14px;list-style:none;cursor:pointer}
+.era summary::-webkit-details-marker{display:none}
+.dot{display:grid;place-items:center;width:32px;height:32px;border:2px solid rgba(255,209,102,.8);border-radius:50%;background:#202f5a;color:var(--gold);font-size:10px;font-weight:900;box-shadow:0 0 10px rgba(255,209,102,.12)}
+.era h3{margin:0 0 2px;font-size:14px;font-weight:900}
+.era .hint{color:var(--sub);font-size:11px}
+.era .arrow{color:var(--gold);font-size:19px;transition:transform .2s}
+.era[open] .arrow{transform:rotate(90deg)}
+.era-copy{margin:0;padding:0 18px 16px 60px;color:var(--sub);font-size:12px;line-height:1.6}
+.story{margin:0 0 14px;padding:clamp(20px,5vw,34px);border:1px solid rgba(255,255,255,.2);border-radius:20px;background:linear-gradient(115deg,rgba(20,29,61,.94),rgba(44,63,124,.78));box-shadow:0 18px 44px rgba(0,0,0,.22)}
+.story p{margin:12px 0 0;color:var(--sub);font:500 14px/1.8 Lora,Georgia,serif}
+.story p:first-of-type{margin-top:18px}
+.story strong{color:var(--ink)}
+.stadio .story p{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px;font-style:normal;line-height:1.8}
+.founders{margin:22px 0 0;padding:15px;border:2px solid rgba(255,209,102,.62);border-radius:16px;background:rgba(0,0,0,.13);box-shadow:0 0 18px rgba(255,209,102,.08)}
+.founders h3{margin:0 0 12px;color:var(--gold);font-size:18px;text-align:center}
+.founder-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0;padding:0;list-style:none}
+.founder-list li{min-width:0;padding:9px 7px;border-left:3px solid var(--gold);background:rgba(255,255,255,.045);text-align:center}
+.founder-list strong,.founder-list span{display:block;overflow-wrap:anywhere}
+.founder-list strong{font-size:12px;color:var(--ink)}
+.founder-list span{margin-top:2px;color:var(--sub);font-size:10px}
+.stadio .founders h3{font-family:Lobster,"Brush Script MT",cursive;font-style:italic;font-weight:400}
 .placement{margin-top:16px;padding:14px 16px;border-left:3px solid var(--gold);border-radius:0 12px 12px 0;background:rgba(0,0,0,.16);color:var(--sub);font-size:12px}
 .placement b{color:var(--ink)}
 .foot{margin:24px 0 0;text-align:center;color:var(--sub);font-size:10px;letter-spacing:.12em}
-@media(max-width:520px){body{padding:14px 12px 34px}.top img{width:56px;height:56px}.feature{grid-template-columns:minmax(0,1fr) 70px;gap:12px;min-height:190px}.seal{width:62px;font-size:23px;outline-offset:4px}.seal small{margin-top:-17px;font-size:5px}.chapter{padding:12px;gap:9px}.tabs span{padding:8px 10px}}
+@media(max-width:520px){body{padding:14px 12px 34px}.top img{width:56px;height:56px}.feature{grid-template-columns:minmax(0,1fr) 70px;gap:12px;min-height:190px}.seal{width:62px;font-size:23px}.seal:before{inset:-8px}.seal:after{inset:-17px}.seal small{margin-top:-17px;font-size:5px}.timeline{--node-center:28px}.era summary{padding:12px;gap:9px}.era-copy{padding:0 14px 14px 55px}.tabs .tab{padding:8px 10px}.tabs .tab[aria-selected=true]{padding:7px 9px}.story p{font-size:13px}}
 @media(max-width:350px){.feature{grid-template-columns:1fr;min-height:0}.seal{display:none}.top{gap:10px}.kick{letter-spacing:.17em}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}body:before{animation:none}}
 </style>
 </head>
 <body>
@@ -62,27 +92,84 @@ h1{margin:4px 0 0;font-size:clamp(27px,6vw,42px);font-weight:900;letter-spacing:
     <img src="../logo-lega.png" alt="">
     <div><div class="kick">O FANT A GIRRR · ALBO D’ORO</div><h1>La storia della Lega</h1></div>
   </header>
-  <p class="context"><b>Posizione proposta</b>　Home › Albo d’oro › Le Ere</p>
-  <nav class="tabs" aria-label="Sezioni dell’Albo d’oro">
-    <span class="active" aria-current="page">Le Ere</span><span>Titoli</span><span>Allenatori</span><span>Stagioni</span><span>Record</span><span>Derby</span><span>Albo di Latta</span>
+  <p class="context"><b>Posizione proposta</b>　Home › Albo d’oro › La Storia</p>
+  <div class="skins" aria-label="Anteprima delle grafiche">
+    <strong>Veste grafica</strong>
+    <button type="button" data-skin="lega" aria-pressed="true">Lega</button>
+    <button type="button" data-skin="stadio" aria-pressed="false">Stadio</button>
+  </div>
+  <nav class="tabs" role="tablist" aria-label="Sezioni dell’Albo d’oro">
+    <button class="tab" id="tab-storia" type="button" role="tab" aria-selected="true" aria-controls="panel-storia">La Storia</button>
+    <button class="tab" id="tab-ere" type="button" role="tab" aria-selected="false" aria-controls="panel-ere" tabindex="-1">Le Ere</button>
+    <span class="tab" aria-disabled="true">Titoli</span><span class="tab" aria-disabled="true">Allenatori</span><span class="tab" aria-disabled="true">Stagioni</span><span class="tab" aria-disabled="true">Record</span><span class="tab" aria-disabled="true">Derby</span><span class="tab" aria-disabled="true">Albo di Latta</span>
   </nav>
-  <p class="intro">L’apertura del percorso storico: <strong>le origini, il nome e i capitoli della Lega</strong>, prima delle cronache delle singole stagioni.</p>
-  <section class="feature" aria-labelledby="nome">
-    <div>
-      <div class="eyebrow">Il nome · Le origini</div>
-      <h2 id="nome">O Fant A <span>Girrr</span></h2>
-      <p>Il racconto delle origini del nome troverà qui il suo spazio, come apertura della storia della Lega.</p>
-    </div>
-    <div class="seal" aria-hidden="true">OG<small>DALLE ORIGINI</small></div>
+  <section class="tab-panel" id="panel-storia" role="tabpanel" aria-labelledby="tab-storia">
+    <p class="intro">Una scheda tutta sua per il racconto delle origini e del nome, prima delle cronache delle singole stagioni.</p>
+    <section class="feature" aria-labelledby="nome">
+      <div>
+        <div class="eyebrow">Il nome · Le origini</div>
+        <h2 id="nome">O Fant A <span>Girrr</span></h2>
+        <p>Una passione nata tra fratelli e amici, diventata una Lega capace di attraversare stagioni, cambiamenti e ritorni.</p>
+      </div>
+      <div class="seal" aria-hidden="true">OG<small>DALLE ORIGINI</small></div>
+    </section>
+    <article class="story" aria-label="Il racconto delle origini">
+      <div class="eyebrow">Il primo capitolo</div>
+      <p>Prima che la Lega avesse un nome, c’era una passione tramandata tra fratelli. Da giovanissimo, Leanzino ne aveva appreso le regole accanto al fratello maggiore e agli amici più esperti: una piccola scuola, destinata a diventare il preludio di qualcosa di più grande.</p>
+      <p>Nella stagione <strong>2015/16</strong>, tra amici cresciuti nello stesso paese, arrivò il momento di trasformare quella passione in una sfida comune. Attorno a una tavola rotonda — più patto che cerimonia — si ritrovarono Leanzino, Mario, Ser, Riky, Apo e DJ Cst Brazil. Le loro strade avrebbero preso nomi e colori diversi; insieme posarono la prima pietra. Furono i <strong>Padri Fondatori</strong>.</p>
+      <section class="founders" aria-labelledby="founders-title">
+        <h3 id="founders-title">I Padri Fondatori</h3>
+        <ul class="founder-list">
+          <li><strong>Leanzino</strong><span>The Blue Brothers</span></li>
+          <li><strong>Mario</strong><span>The Blue Brothers</span></li>
+          <li><strong>Ser</strong><span>WOA</span></li>
+          <li><strong>Riky</strong><span>Grodah</span></li>
+          <li><strong>Apo</strong><span>Apo Team</span></li>
+          <li><strong>DJ Cst Brazil</strong><span>Oranje VC</span></li>
+        </ul>
+      </section>
+      <p>Un tempo su strade diverse, oggi Leanzino e Mario guidano insieme la The Blue Brothers: anche i ritorni fanno parte della storia.</p>
+      <p>Passarono le stagioni, ma il nome attendeva ancora la sua forma. Nel <strong>2021</strong>, dopo i mesi sospesi della pandemia, l’Italia tornò a far sognare e conquistò l’Europa. Tra le immagini di quell’estate restò il tiro a giro di Insigne, presto ribattezzato “<strong>tiraggiro</strong>”: un’eco azzurra che aiutò a trovare il nome nuovo della Lega. Da quella scintilla nacque <strong>O Fant A Girrr</strong>.</p>
+      <p>Da allora il cammino è proseguito tra alti e bassi, allenatori che si sono allontanati e poi ritrovati, e presenze rimaste fedeli a ogni stagione. I capitoli cambiano; il filo che li unisce continua. E la storia, ancora aperta, aspetta la sua prossima pagina.</p>
+    </article>
+    <p class="placement"><b>La proposta:</b> “La Storia” apre l’Albo d’oro con le origini in primo piano. “Le Ere” resta una scheda distinta, con i suoi tre capitoli apribili.</p>
   </section>
-  <div class="section-head"><h2>Le pagine della storia</h2><span>Il filo della Lega</span></div>
-  <section class="timeline" aria-label="Capitoli della storia della Lega">
-    <article class="chapter"><span class="dot">01</span><div><h3>Le origini</h3><p>Il racconto dei primi passi e di ciò che ha dato inizio a tutto.</p></div><span class="arrow" aria-hidden="true">›</span></article>
-    <article class="chapter"><span class="dot">02</span><div><h3>La nascita del nome</h3><p>La storia dietro il nome che identifica la Lega.</p></div><span class="arrow" aria-hidden="true">›</span></article>
-    <article class="chapter"><span class="dot">03</span><div><h3>Una storia che continua</h3><p>Il passaggio dai primi capitoli alla Lega di oggi.</p></div><span class="arrow" aria-hidden="true">›</span></article>
+  <section class="tab-panel" id="panel-ere" role="tabpanel" aria-labelledby="tab-ere" hidden>
+    <p class="intro">Tre capitoli da aprire per attraversare le ere della Lega, dalle origini fino alla stagione che deve ancora venire.</p>
+    <div class="section-head"><h2>Le Ere della Lega</h2><span>Il filo continua</span></div>
+    <section class="timeline" aria-label="Ere della Lega">
+      <details class="era">
+        <summary><span class="dot">01</span><div><h3>Le origini</h3><span class="hint">La scintilla · 2015/16</span></div><span class="arrow" aria-hidden="true">›</span></summary>
+        <p class="era-copy">Leanzino, Mario, Ser, Riky, Apo e DJ Cst Brazil: sei amici dello stesso paese, attorno alla tavola rotonda. La prima stagione e i Padri Fondatori.</p>
+      </details>
+      <details class="era">
+        <summary><span class="dot">02</span><div><h3>Il nome prende forma</h3><span class="hint">L’estate azzurra · 2021</span></div><span class="arrow" aria-hidden="true">›</span></summary>
+        <p class="era-copy">L’Italia campione d’Europa, il tiro a giro di Insigne diventato “tiraggiro” e l’ispirazione per il nome nuovo della Lega.</p>
+      </details>
+      <details class="era">
+        <summary><span class="dot">03</span><div><h3>Una storia che continua</h3><span class="hint">I ritorni · Oggi</span></div><span class="arrow" aria-hidden="true">›</span></summary>
+        <p class="era-copy">Nuove stagioni, partenze e ritorni: il gruppo cambia, ma il filo della Lega continua a passare di mano in mano.</p>
+      </details>
+    </section>
+    <p class="placement"><b>La linea del tempo:</b> parte dal primo cerchio, accompagna i tre capitoli e si dissolve verso il basso: il futuro resta da scrivere.</p>
   </section>
-  <p class="placement"><b>Perché qui:</b> “Le Ere” è già la sezione storica dell’Albo d’oro. La storia del nome può aprirla senza aggiungere un’altra voce al menu generale; sotto, restano la cronologia e le pagine delle stagioni.</p>
-  <footer class="foot">BOZZA GRAFICA · IL RACCONTO VERRÀ SCRITTO DOPO AVER RICEVUTO LA STORIA</footer>
+  <footer class="foot">BOZZA GRAFICA · TESTO PROPOSTO SULLA STORIA RACCONTATA DA GIANLUCA</footer>
 </main>
+<script>
+const tabs=[...document.querySelectorAll('[role="tab"]')];
+tabs.forEach(tab=>tab.addEventListener('click',()=>{
+  tabs.forEach(item=>{const active=item===tab;item.setAttribute('aria-selected',String(active));item.tabIndex=active?0:-1;document.getElementById(item.getAttribute('aria-controls')).hidden=!active});
+}));
+document.querySelector('[role="tablist"]').addEventListener('keydown',event=>{
+  const index=tabs.indexOf(document.activeElement);
+  const next=event.key==='ArrowRight'?(index+1)%tabs.length:event.key==='ArrowLeft'?(index+tabs.length-1)%tabs.length:event.key==='Home'?0:event.key==='End'?tabs.length-1:-1;
+  if(next>=0){event.preventDefault();tabs[next].focus();tabs[next].click()}
+});
+document.querySelectorAll('[data-skin]').forEach(button=>button.addEventListener('click',()=>{
+  const stadio=button.dataset.skin==='stadio';
+  document.body.classList.toggle('stadio',stadio);
+  document.querySelectorAll('[data-skin]').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
+}));
+</script>
 </body>
 </html>

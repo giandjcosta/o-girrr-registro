@@ -149,5 +149,6 @@ Prima del rilascio: fasi A e B fatte, tutte verdi; il primo tentativo di push er
 - Anteprima condivisa: https://giandjcosta.github.io/o-girrr-registro/ufficiale/ (selettore di grafica in alto; le pagine si aprono nel frame qui sotto). Resta solo nell'Anteprima del Registro; non copiare sui rami `gh-pages` o `main` di `o-fant-a-girrr` finché non arriva il relativo via.
 
 ## Bozza grafica: storia della Lega (24 ottobre)
-- Posizione consigliata: Albo d'oro → Le Ere, come apertura del percorso storico prima della cronologia; nessuna nuova voce nel menu principale.
-- Tavola grafica pubblicata solo nel Registro: https://giandjcosta.github.io/o-girrr-registro/lab/anteprima-storia-lega.html. Testi volutamente segnaposto: la storia del nome e il racconto verranno scritti dopo aver ricevuto le informazioni da Gianluca.
+- Posizione proposta: prima scheda "La Storia" nell'Albo d'oro; "Le Ere" resta una scheda separata con tre pannelli apribili. Nessuna nuova voce nel menu principale.
+- La bozza racconta la fondazione nel 2015/16 e presenta i sei Padri Fondatori con i nomi e le squadre attuali: Leanzino e Mario (The Blue Brothers), Ser (WOA), Riky (Grodah), Apo (Apo Team), DJ Cst Brazil (Oranje VC). Il prologo ricorda come Leanzino apprese il gioco da ragazzo; il nuovo nome è collegato all'estate 2021, al successo europeo dell'Italia e al "tiraggiro" di Insigne.
+- La tavola grafica è pubblicata solo nel Registro: https://giandjcosta.github.io/o-girrr-registro/lab/anteprima-storia-lega.html. La bozza include un selettore Lega/Stadio per mostrare le strisce animate della Lega e i titoli corsivi dello Stadio; le tre Ere hanno una linea dorata che si attenua verso il futuro.
