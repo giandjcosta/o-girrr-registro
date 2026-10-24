@@ -1,4 +1,4 @@
-# Stato del progetto O Girrr (aggiornato 23 ottobre 2026, sera)
+# Stato del progetto O Girrr (aggiornato 24 ottobre 2026, mattina)
 
 Per aprire una chat nuova: incolla "Leggi STATO.md nel repo o-girrr-registro e continuiamo da lì".
 
@@ -78,8 +78,15 @@ Sera del 18 ottobre, con il "vai" di Gianluca:
 - Workflow `dopo-giornata.yml`: il passo Moviola c'era già; aggiunto il trigger `push` su `main` solo per `calcoli/moviola-manuale.json` (in quel caso fa solo la Moviola, niente Curva né altri calcoli) e `moviola-video.html` nel commit finale. Nessun cron nuovo.
 - Provato con voci finte (rosso nuovo con video, video su un automatico, link http scartato, nascondi, altro con testo, episodio a mano su una giornata con soli scartati) con Playwright su Chromium: iPhone SE 320 e 375, iPhone 13, PC 1366, TV 1920, in Lab, Stadio, Lega e pagina dei video. Tutto a posto. WebKit non scaricabile qui.
 
-## Moviola passo 4: post in Curva e rilascio (ramo `moviola-curva`, da main 10b0a07) — PRONTO, NON ANCORA ONLINE
-Fasi A e B fatte, tutte verdi. Il rilascio (fase C) è preparato ma NON pubblicato: il push sul repo del sito è stato bloccato dal controllo di sicurezza dell'ambiente di Claude Code. `moviola-curva` NON è unito a `main` del registro (si unisce insieme al rilascio).
+## Moviola passo 4: post in Curva e rilascio (ramo `moviola-curva`, da main 10b0a07) — ONLINE dal 24 ottobre
+Rilascio fatto il 24 ottobre con il "vai" di Gianluca:
+- Sito, `gh-pages`: commit `a8ae5c0` sopra `0ccac01` (gh-pages era andato avanti di un commit automatico, "Aggiorna statistiche e voti": `data.json`, riepiloghi, `toto-quote.json`, file che la patch non tocca). Patch rifatta sopra `0ccac01` (`rilascio/moviola-passo4/gh-pages.patch`, contenuto identico); `moviola.py` con il `data.json` nuovo dà lo stesso `moviola.json` (giornate 1-3 già scritte). Deploy Pages riuscito.
+- Sito, `main`: commit `c505036` sopra `0eb3f22` (non era cambiato), patch `main.patch` invariata.
+- Registro: `moviola-curva` unito a `main`.
+- Verifica: `github.io` è bloccato dalla rete dell'ambiente di Claude, quindi la prova nel browser (`prove/prova_moviola_browser.js`, 132/132) è stata fatta sulla copia esatta del commit pubblicato `a8ae5c0` contro `0ccac01`: tab Moviola in Lega e Stadio con i 3 episodi della giornata 3, Curva, Giornale, Radio, Spogliatoio, Albo, Totogirrr, Tabellone senza errori nuovi, Anteprima del registro a posto. Da guardare a occhio sul sito vero: Gianluca.
+- Database non toccato: `sql/curva-tieni-post.sql` NON applicato (decide Gianluca).
+- Per tornare indietro: nel repo del sito `git revert --no-edit a8ae5c0` su `gh-pages` e `git revert --no-edit c505036` su `main`, push; nel registro `git revert -m 1 <merge>` su `main`.
+Prima del rilascio: fasi A e B fatte, tutte verdi; il primo tentativo di push era stato bloccato dal controllo di sicurezza dell'ambiente.
 - Allineamento: il sito vero aveva file più nuovi del registro. Su `main` del sito: `post_curva.py`, `pubblica_curva.py`, `leggi_eventi.py` (commenti di Ciro, sfida accettata) e `curva-subito.yml` (ogni 5 minuti): copiati nel registro. Su `gh-pages`, cambiati a mano il 21-22 ottobre: `curva-banca.js` e `curva.html` (post per ogni giornata, Radio Girrr, risposte dei profili ufficiali), `app.html` (stagione 2022/23, titoli) e `storia.js`. La Curva vera ora sta in `ufficiale/src/sito/` (Lega e Stadio) e `build.py` la usa nel rilascio; Lab e `storia.js` sono allineati alle correzioni del 22 ottobre.
 - Post Moviola (`calcoli/post_curva.py`): legge l'ultima giornata di `calcoli/moviola.json` (formato finale con episodi, scartati, automatici, video, manuale); esce l'episodio principale (il primo di `episodi`) con titolo, testo e verdetto della tab; chiave `moviola:G<n>:0`; nessun post se la giornata non ha episodi (anche con soli scartati). Se non sta nei 280 caratteri prima vanno via gli hashtag e solo all'ultimo si accorcia il testo (capita con "Ha deciso la partita" e nomi lunghi; intero resta nella tab).
 - Ordine (`SCALETTA` 0/5/10): Giornale all'ora della Curva (`_pub` o martedì 14:30 della settimana di `cal.date`, stesso calcolo di `curva-banca.js`), Radio Girrr 5 minuti dopo (prima era un'ora dopo), Moviola 10 minuti dopo, con `p_quando` a `curva_adm_scrivi`. Per la giornata 3: 20 ottobre 14:30, 14:35, 14:40.
