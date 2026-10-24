@@ -152,3 +152,9 @@ Prima del rilascio: fasi A e B fatte, tutte verdi; il primo tentativo di push er
 ## Bozza grafica: storia della Lega (24 ottobre)
 - Posizione consigliata: Albo d'oro → Le Ere, come apertura del percorso storico prima della cronologia; nessuna nuova voce nel menu principale.
 - Tavola grafica pubblicata solo nel Registro: https://giandjcosta.github.io/o-girrr-registro/lab/anteprima-storia-lega.html. Testi volutamente segnaposto: la storia del nome e il racconto verranno scritti dopo aver ricevuto le informazioni da Gianluca.
+
+## Squadre: card dell'allenatore (24 ottobre, solo Anteprima)
+- Nella pagina di ogni squadra (`ufficiale/girrr/squadre.html` e `ufficiale/nuovo/girrr/squadre.html`) c'è la card "Allenatore" in fondo alla colonna di destra, dove prima su PC restava spazio vuoto; su telefono compare sotto "I migliori della rosa". The Blue brothers mostra "Allenatori: Leanzino e Mario".
+- I nomi vengono dallo stesso elenco di `CUR` in `albo.html` del sito: se cambia un allenatore va aggiornato in tutti e due i posti.
+- Provato in Chromium e WebKit (iPhone SE emulato), a 1458 e 320 px, tutte e 10 le squadre in Lega e Stadio: nome giusto, niente scorrimento di lato, console pulita.
+- Non è ancora sul sito vero: al rilascio la stessa modifica va in `girrr/squadre.html` e `stadio/girrr/squadre.html` di `gh-pages`.
