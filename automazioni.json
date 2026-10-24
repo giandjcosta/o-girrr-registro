@@ -1,5 +1,5 @@
 {
- "aggiornato": "2026-10-24T05:41:51Z",
+ "aggiornato": "2026-10-24T17:42:02Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
@@ -58,10 +58,10 @@
    "nome": "Controllo giornata calcolata su Leghe",
    "quando": "Domenica, lunedì, martedì e sabato, ogni 3 ore dalle 09:07 alle 21:07",
    "stato": "attiva",
-   "prossimo": "2026-10-24T07:07:00Z",
+   "prossimo": "2026-10-24T19:07:00Z",
    "ultimo": {
-    "quando": "2026-10-20T19:50:45Z",
-    "esito": "fallito"
+    "quando": "2026-10-24T17:06:25Z",
+    "esito": "riuscito"
    }
   },
   {
@@ -116,6 +116,15 @@
    "prossimo": "2026-10-30T07:52:00Z",
    "ultimo": {
     "quando": "2026-10-23T06:53:04Z",
+    "esito": "riuscito"
+   }
+  },
+  {
+   "nome": "Promemoria: SQL Curva su Supabase",
+   "quando": "Una volta: 24 ottobre alle 10:32",
+   "stato": "conclusa",
+   "ultimo": {
+    "quando": "2026-10-24T08:32:32Z",
     "esito": "riuscito"
    }
   },
