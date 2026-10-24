@@ -2,9 +2,10 @@
    Nomi provvisori delle due grafiche: si cambiano solo qui e in confronto.html (NOMI). */
 (function(){
 var NOMI={a:'Lega',n:'Stadio'};
+/* Stadio: fondo scuro già sulla pagina, niente lampo bianco nel cambio. Non sulla Lega: un colore su html coprirebbe le strisce di body::before */
 /* Cambio fluido tra Lega e Stadio: dove il browser sa dissolvere da una pagina all'altra (Chrome, Edge, Safari recenti) lo fa lui; negli altri la pagina sfuma in uscita e rientra in entrata */
 var VT=('CSSViewTransitionRule' in window);
-try{var _s=document.createElement('style');_s.textContent='html{background-color:#1d2a52!important}'+(VT?'@view-transition{navigation:auto}::view-transition-old(root),::view-transition-new(root){animation-duration:.45s;animation-timing-function:ease}':'html.gsw-out body{opacity:0;transition:opacity .3s ease}'+(sessionStorage.getItem('gsw_da')?'body{animation:gswin .45s ease both}@keyframes gswin{from{opacity:0}to{opacity:1}}':''));document.head.appendChild(_s)}catch(x){}
+try{var _s=document.createElement('style');_s.textContent=(location.pathname.indexOf('/ufficiale/nuovo/')>=0?'html{background-color:#141d3d!important}':'')+(VT?'@view-transition{navigation:auto}::view-transition-old(root),::view-transition-new(root){animation-duration:.45s;animation-timing-function:ease}':'html.gsw-out body{opacity:0;transition:opacity .3s ease}'+(sessionStorage.getItem('gsw_da')?'body{animation:gswin .45s ease both}@keyframes gswin{from{opacity:0}to{opacity:1}}':''));document.head.appendChild(_s)}catch(x){}
 function go(){
 var h=document.querySelector('.hero');if(!h||document.getElementById('gsw'))return;
 var nuova=location.pathname.indexOf('/ufficiale/nuovo/')>=0;
