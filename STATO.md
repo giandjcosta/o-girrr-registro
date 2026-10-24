@@ -113,6 +113,11 @@ Prima del rilascio: fasi A e B fatte, tutte verdi; il primo tentativo di push er
   - Curva: il post Moviola della giornata 3 non era ancora uscito (nessun giro della Curva dopo il rilascio delle 08:33). Al prossimo giro esce "Gol decisivo" con la doppietta di Simeone (letto in prova: 241 caratteri, testo intero, chiave `moviola:G3:0`).
   - Per tornare indietro: `git revert --no-edit a2e611a` su gh-pages e `git revert --no-edit 6ef4017` su main del sito; nel registro `git revert -m 1 82256d8` su main.
 
+## Verifica del 24 ottobre (pomeriggio): rilascio a posto
+- Post Moviola della G3 uscito: `moviola:G3:0` è in `calcoli/pubblicati.json` (giro della Curva delle 09:47). `girrr/dati/moviola.json` su gh-pages ha le giornate 1-3 e la G3 con gli episodi previsti: doppietta di Simeone, Carlos Augusto dalla panchina, rigori sbagliati di De Bruyne e Ramos G.
+- Workflow del sito tutti verdi (Curva, controllo fallimenti, aggiornamento statistiche, Pages). Nessuna Issue aperta: il controllo fallimenti delle 09:48 non ha trovato nulla.
+- Restano da guardare solo a occhio su Safari/iPhone e da provare su Firefox e PWA (voce 4 del Da fare), e l'Intervista speciale con il testo vero e la Conferenza di Apo alla prossima sfida lanciata (voce 2, il post Moviola è già verificato).
+
 ## Note
 - Il workflow Curva salva lo stato in `calcoli/pubblicati.json` su `main`; l'opzione `solo_segna` segna i post attuali come già usciti senza inviarli.
 - Le storie degli allenatori stanno in `ufficiale/src/storie.json`.
