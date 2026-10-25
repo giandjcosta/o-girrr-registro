@@ -57,6 +57,12 @@ Lo **storico del progetto**, ricostruito dalle cronologie Git e dalle note, è i
 
 Niente di questo va sul sito vero senza altro "vai" esplicito (lo SQL feed è già autorizzato).
 
+## Lazy Loading Spogliatoio — prova grafica Lega (ChatGPT, 25 ottobre 2026)
+- Sul ramo `chatgpt/lab-lazy-grafica-lega` (derivato da `grok/spogliatoio-lazy`) è stata creata `lab/prova-lazy-tabs-lega.html`: demo con la grafica O Girrr/Lega, nove tab e dati dimostrativi; importa direttamente `lab/spogliatoio-lazy.js` dalla stessa revisione.
+- Aggiunto in `lab/index.html` il collegamento alla demo. Il codice lazy è quello già preparato da Grok; nessun cambiamento al modulo in questo intervento.
+- **Non ancora online:** il lavoro è su ramo e richiede autorizzazione per unire a `main` del Registro e pubblicare la pagina GitHub Pages. Non sono stati eseguiti test browser completi né la rigenerazione di `anteprima/`; prima del rilascio verificare console, navigazione rapida, schermi 320 px e ricalcolare l'Anteprima con `python3 anteprima/build.py`.
+- `gh-pages` del sito vero non è stato toccato. Nessuna autorizzazione al rilascio.
+
 ## Carriera: obiettivi con scadenza (25 ottobre)
 - Obiettivi di posizione non risultano più "Fatto" prima della scadenza. Dettaglio nello storico / lavori del 25 ottobre.
 - Online sul sito vero (`gh-pages` `b75fb68`, `girrr/app.html` e `stadio/girrr/app.html`).
