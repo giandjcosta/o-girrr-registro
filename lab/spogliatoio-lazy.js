@@ -1,14 +1,12 @@
 /* Spogliatoio — lazy loading tab (Grok)
  *
  * Cosa fa:
- * 1) Prima paint della tab attiva, poi costruisce il contenuto pesante (requestAnimationFrame).
- * 2) Invalida la cache quando cambiano dati o filtri rilevanti.
+ * 1) Prima paint della tab attiva, poi costruisce il contenuto pesante (doppio requestAnimationFrame).
+ * 2) Invalida quando cambiano dati o filtri rilevanti (signature).
  * 3) Borsino e Statistiche restano già lazy nel codice originale.
  *
- * Uso: dopo lo <script> principale di index.html dello Spogliatoio:
- *   <script src="…/spogliatoio-lazy.js?v=1"></script>
- *
- * Richiede che render, tab, app, vRosa… siano nello scope globale (come oggi).
+ * Uso: DOPO lo <script> principale di index.html e PRIMA di assets/app.js
+ * Richiede render, tab, app, authed, D… nello scope globale (come oggi).
  */
 (function () {
   if (typeof render !== 'function') return;
@@ -63,7 +61,7 @@
     var tabsEl = document.getElementById('tabs');
     if (tabsEl) tabsEl.hidden = !ok;
 
-    // gate login: lascia il render originale (form di ingresso)
+    // Gate login: form originale, niente skeleton
     if (!ok) {
       lastSig = '';
       return orig();
@@ -73,10 +71,10 @@
     var heavy = HEAVY[tab];
     var appEl = document.getElementById('app');
 
-    // Tab pesanti: prima skeleton, poi contenuto al frame successivo
+    // Tab pesanti: skeleton subito, contenuto al frame successivo
     if (heavy && appEl && s !== lastSig) {
       var my = ++pending;
-      // aggiorna subito stato tab selezionata
+
       try {
         if (tab === 'stat' && team !== 'Oranje VC') tab = 'rosa';
         [].forEach.call(document.querySelectorAll('#tabs button'), function (b) {
@@ -98,7 +96,7 @@
 
       requestAnimationFrame(function () {
         requestAnimationFrame(function () {
-          if (my !== pending) return; // un click più recente ha vinto
+          if (my !== pending) return;
           lastSig = sig();
           orig();
         });
@@ -110,14 +108,12 @@
     return orig();
   };
 
-  // Se data.json si aggiorna in background, invalida
+  // Se D viene riassegnato (es. dopo fetch data.json), invalida
   var _D = typeof D !== 'undefined' ? D : null;
   try {
     Object.defineProperty(window, 'D', {
       configurable: true,
-      get: function () {
-        return _D;
-      },
+      get: function () { return _D; },
       set: function (v) {
         _D = v;
         lastSig = '';
