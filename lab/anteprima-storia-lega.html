@@ -35,7 +35,7 @@ h1{margin:4px 0 0;font-size:clamp(27px,6vw,42px);font-weight:900;letter-spacing:
 .tabs::-webkit-scrollbar{display:none}
 .tabs .tab{flex:none;padding:8px 12px;border:1px solid rgba(255,255,255,.12);border-radius:999px;background:rgba(255,255,255,.06);color:var(--ink);font:800 11px Inter,system-ui,sans-serif;white-space:nowrap;opacity:.68}
 .tabs .tab[aria-selected=true]{border:2px solid rgba(255,209,102,.75);padding:7px 11px;background:var(--red);opacity:1}
-.tabs .tab:focus-visible,.skins button:focus-visible,.era summary:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.tabs .tab:focus-visible,.skins button:focus-visible,.eh:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 .tab-panel[hidden]{display:none}
 .intro{margin:0 0 16px;color:var(--sub);font-size:14px}
 .intro strong{color:var(--ink)}
@@ -55,17 +55,19 @@ h1{margin:4px 0 0;font-size:clamp(27px,6vw,42px);font-weight:900;letter-spacing:
 .section-head span{color:var(--sub);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
 .timeline{--node-center:30px;position:relative;display:grid;gap:10px}
 .timeline:before{content:"";position:absolute;left:var(--node-center);top:var(--node-center);bottom:0;width:3px;background:linear-gradient(var(--gold) 0%,rgba(255,209,102,.75) 48%,rgba(255,209,102,0) 100%);border-radius:9px}
-.era{position:relative;border:1px solid var(--line);border-radius:15px;background:var(--glass)}
-.era summary{position:relative;z-index:1;display:grid;grid-template-columns:34px minmax(0,1fr) 22px;gap:12px;align-items:center;padding:14px;list-style:none;cursor:pointer}
-.era summary::-webkit-details-marker{display:none}
+.era{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:15px;background:var(--glass)}
+.eh{all:unset;box-sizing:border-box;display:grid;width:100%;grid-template-columns:34px minmax(0,1fr) 22px;gap:12px;align-items:center;padding:14px;color:var(--ink);font:inherit;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.eh:focus-visible{outline:3px solid var(--gold);outline-offset:-3px;border-radius:14px}
 .dot{display:grid;place-items:center;width:32px;height:32px;border:2px solid rgba(255,209,102,.8);border-radius:50%;background:#202f5a;color:var(--gold);font-size:10px;font-weight:900;box-shadow:0 0 10px rgba(255,209,102,.12)}
-.era h3{margin:0 0 2px;font-size:14px;font-weight:900}
-.era-title{display:inline}
-.era-detail{color:var(--gold);font-size:.9em;font-weight:700}
-.era .hint{color:var(--sub);font-size:11px}
-.era .arrow{color:var(--gold);font-size:19px;transition:transform .2s}
-.era[open] .arrow{transform:rotate(90deg)}
-.era-copy{margin:0;padding:0 18px 16px 60px;color:var(--sub);font-size:12px;line-height:1.6}
+.era-title{display:block;font-size:14px;font-weight:900}
+.era .hint{display:block;margin-top:2px;color:var(--sub);font-size:11px;font-weight:500}
+.era .ch{color:var(--gold);font-size:19px;font-style:normal;transition:transform .55s cubic-bezier(.22,.61,.36,1);transform:rotate(90deg)}
+.era.open .ch{transform:rotate(-90deg)}
+.eb{display:grid;grid-template-rows:0fr;transition:grid-template-rows .6s cubic-bezier(.22,.61,.36,1)}
+.era.open .eb{grid-template-rows:1fr}
+.ei{min-height:0;overflow:hidden;padding:0 18px;opacity:0;visibility:hidden;transition:opacity .45s ease,padding .6s cubic-bezier(.22,.61,.36,1),visibility 0s .6s}
+.era.open .ei{padding:0 18px 16px;opacity:1;visibility:visible;transition:opacity .55s ease .08s,padding .6s cubic-bezier(.22,.61,.36,1),visibility 0s}
+.era-copy{margin:0;padding-left:42px;color:var(--sub);font-size:12px;line-height:1.6}
 .story{margin:0 0 14px;padding:clamp(20px,5vw,34px);border:1px solid rgba(255,255,255,.2);border-radius:20px;background:linear-gradient(115deg,rgba(20,29,61,.94),rgba(44,63,124,.78));box-shadow:0 18px 44px rgba(0,0,0,.22)}
 .story p{margin:12px 0 0;color:var(--sub);font:500 14px/1.8 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
 .story p:first-of-type{margin-top:18px}
@@ -81,9 +83,9 @@ h1{margin:4px 0 0;font-size:clamp(27px,6vw,42px);font-weight:900;letter-spacing:
 .placement{margin-top:16px;padding:14px 16px;border-left:3px solid var(--gold);border-radius:0 12px 12px 0;background:rgba(0,0,0,.16);color:var(--sub);font-size:12px}
 .placement b{color:var(--ink)}
 .foot{margin:24px 0 0;text-align:center;color:var(--sub);font-size:10px;letter-spacing:.12em}
-@media(max-width:520px){body{padding:14px 12px 34px}.top img{width:56px;height:56px}.feature{grid-template-columns:minmax(0,1fr) 70px;gap:12px;min-height:190px}.seal{width:62px;font-size:23px}.seal:before{inset:-8px}.seal:after{inset:-17px}.seal small{margin-top:-17px;font-size:5px}.timeline{--node-center:28px}.era summary{padding:12px;gap:9px}.era-copy{padding:0 14px 14px 55px}.tabs .tab{padding:8px 10px}.tabs .tab[aria-selected=true]{padding:7px 9px}.story p{font-size:13px}}
+@media(max-width:520px){body{padding:14px 12px 34px}.top img{width:56px;height:56px}.feature{grid-template-columns:minmax(0,1fr) 70px;gap:12px;min-height:190px}.seal{width:62px;font-size:23px}.seal:before{inset:-8px}.seal:after{inset:-17px}.seal small{margin-top:-17px;font-size:5px}.timeline{--node-center:28px}.eh{padding:12px;gap:9px}.ei{padding-right:14px;padding-left:14px}.era.open .ei{padding-right:14px;padding-left:14px}.era-copy{padding-left:41px}.tabs .tab{padding:8px 10px}.tabs .tab[aria-selected=true]{padding:7px 9px}.story p{font-size:13px}}
 @media(max-width:350px){.feature{grid-template-columns:1fr;min-height:0}.seal{display:none}.top{gap:10px}.kick{letter-spacing:.17em}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}body:before{animation:none}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}body:before{animation:none}.ei{visibility:hidden}.era.open .ei{visibility:visible}}
 </style>
 </head>
 <body>
@@ -144,18 +146,18 @@ h1{margin:4px 0 0;font-size:clamp(27px,6vw,42px);font-weight:900;letter-spacing:
     <p class="intro">Tre capitoli da aprire per attraversare le ere della Lega, dalle origini fino alla stagione che deve ancora venire.</p>
     <div class="section-head"><h2>Le Ere della Lega</h2><span>Il filo continua</span></div>
     <section class="timeline" aria-label="Ere della Lega">
-      <details class="era">
-        <summary><span class="dot">01</span><div><h3><span class="era-title">L'Era dei Titani</span> <span class="era-detail">· Le origini</span></h3><span class="hint">La scintilla · 2016/17–2018/19</span></div><span class="arrow" aria-hidden="true">›</span></summary>
-        <p class="era-copy">Leanzino, Mario, ser, RikyArma, apo e DJ Cst Brazil. Sei amici dello stesso paese attorno alla tavola rotonda; la prima stagione e i Padri Fondatori.</p>
-      </details>
-      <details class="era">
-        <summary><span class="dot">02</span><div><h3><span class="era-title">Il Grande Silenzio</span> <span class="era-detail">· Gli anni sospesi</span></h3><span class="hint">La pausa · 2019/20–2020/21</span></div><span class="arrow" aria-hidden="true">›</span></summary>
-        <p class="era-copy">Due stagioni senza campionato. Il gruppo si disperde e ognuno prende la sua strada; la passione resta in attesa del momento giusto.</p>
-      </details>
-      <details class="era">
-        <summary><span class="dot">03</span><div><h3><span class="era-title">L'Era Contemporanea</span> <span class="era-detail">· La rinascita e i ritorni</span></h3><span class="hint">Il nuovo nome · Dal 2021/22</span></div><span class="arrow" aria-hidden="true">›</span></summary>
-        <p class="era-copy">L’estate del 2021, l’Italia campione d’Europa e il tiraggiro di Insigne. Nasce O Fant A Girrr; poi nuove stagioni, partenze e ritorni, e il filo della Lega passa di mano in mano.</p>
-      </details>
+      <div class="era">
+        <button class="eh" type="button" aria-expanded="false"><span class="dot">01</span><span><span class="era-title">L'Era dei Titani</span><small class="hint">2016/17 – 2018/19 · La scintilla</small></span><i class="ch" aria-hidden="true">›</i></button>
+        <div class="eb"><div class="ei"><p class="era-copy">Leanzino, Mario, ser, RikyArma, apo e DJ Cst Brazil. Sei amici dello stesso paese attorno alla tavola rotonda; la prima stagione e i Padri Fondatori.</p></div></div>
+      </div>
+      <div class="era">
+        <button class="eh" type="button" aria-expanded="false"><span class="dot">02</span><span><span class="era-title">Il Grande Silenzio</span><small class="hint">2019/20 – 2020/21 · La pausa</small></span><i class="ch" aria-hidden="true">›</i></button>
+        <div class="eb"><div class="ei"><p class="era-copy">Due stagioni senza campionato. Il gruppo si disperde e ognuno prende la sua strada; la passione resta in attesa del momento giusto.</p></div></div>
+      </div>
+      <div class="era">
+        <button class="eh" type="button" aria-expanded="false"><span class="dot">03</span><span><span class="era-title">L'Era Contemporanea</span><small class="hint">Dal 2021/22 · Il nuovo nome</small></span><i class="ch" aria-hidden="true">›</i></button>
+        <div class="eb"><div class="ei"><p class="era-copy">L’estate del 2021, l’Italia campione d’Europa e il tiraggiro di Insigne. Nasce O Fant A Girrr; poi nuove stagioni, partenze e ritorni, e il filo della Lega passa di mano in mano.</p></div></div>
+      </div>
     </section>
     <p class="placement"><b>La linea del tempo:</b> parte dal primo cerchio, accompagna i tre capitoli e si dissolve verso il basso: il futuro resta da scrivere.</p>
   </section>
@@ -200,6 +202,11 @@ document.querySelectorAll('[data-skin]').forEach(button=>button.addEventListener
   const stadio=button.dataset.skin==='stadio';
   document.body.classList.toggle('stadio',stadio);
   document.querySelectorAll('[data-skin]').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
+}));
+document.querySelectorAll('.eh').forEach(button=>button.addEventListener('click',()=>{
+  const open=button.getAttribute('aria-expanded')!=='true';
+  button.setAttribute('aria-expanded',String(open));
+  button.closest('.era').classList.toggle('open',open);
 }));
 </script>
 </body>
