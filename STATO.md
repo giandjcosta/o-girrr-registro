@@ -186,3 +186,9 @@ Prima del rilascio: fasi A e B fatte, tutte verdi; il primo tentativo di push er
 - Provato in Chromium e WebKit (iPhone SE emulato): Derby giusti nelle giornate 1-8 con i dati veri; con dati di prova fino alla 29ª, alla 30ª "Sfida scudetto" e "Sfida podio" sulle coppie giuste; Totogirrr demo con classifica di prova: "Sfida scudetto" e "Sfida podio" sulle righe giuste. Console pulita.
 - Già presente sul sito vero e non toccato qui: a 320 px la barra delle schede del Totogirrr (`.nvi`) sporge di qualche pixel e la pagina scorre di lato (324 px in Chromium, 331 in WebKit).
 - Non ancora sul sito vero: al rilascio vanno `tabellone.html`, `totogirrr.html`, `derby.js` di `girrr/` e `stadio/girrr/` e `app.html` (soglia del Lab tramite livepatch).
+
+## Albo d'oro: scheda "La Storia" (25 ottobre, solo Anteprima)
+- Nuova prima scheda dell'Albo d'oro, "La Storia", in `novita.js` (sorgente `ufficiale/src/novita.js` e copie `ufficiale/girrr/` e `ufficiale/nuovo/girrr/`): il nome e le origini, il racconto della bozza `lab/anteprima-storia-lega.html` (già corretto: 2016/17, apo e ser come su Leghe) e i sei Padri Fondatori con le squadre di oggi. "Le Ere" resta la seconda scheda con i suoi tre capitoli; `#ere` apre ancora Le Ere.
+- Provato in Chromium e WebKit (iPhone SE emulato) a 1300 e 320 px, Lega e Stadio: La Storia aperta di default, le altre schede funzionano, niente scorrimento di lato, console pulita.
+- Da sistemare a parte: il Capitolo III delle Ere (dati `leg.libro` di `novita-dati.js`) dice ancora che la storia del nome "la racconterà Christian".
+- Non ancora sul sito vero: al rilascio vanno `girrr/novita.js` e `stadio/girrr/novita.js` di `gh-pages` (stessa modifica; il sito ha solo il percorso dei dati del Lab diverso).
