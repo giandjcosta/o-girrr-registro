@@ -88,7 +88,7 @@ body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:no
 .big h2{font-weight:900;font-size:clamp(32px,7vw,68px);line-height:.98;letter-spacing:-.02em;margin:12px 0 12px}
 .big p{font-weight:600;font-size:clamp(14px,1.8vw,18px);line-height:1.45;color:#ffe2e6;max-width:640px}
 .big .bt{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-.big .bt a{font-weight:900;font-size:12px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;padding:12px 16px;border-radius:10px;background:var(--hi);color:var(--bg);transition:transform .15s}
+.big .bt a{font-weight:900;font-size:12px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;padding:12px 16px;border-radius:10px;background:var(--acc);color:#fff;transition:transform .15s}
 .big .bt a.s{background:rgba(255,255,255,.14);color:var(--chiaro)}@media (hover:hover) and (pointer:fine){
 .big .bt a:hover{transform:translateY(-2px)}}
 .big .cv{flex:none;width:clamp(110px,22vw,230px);position:relative;z-index:1;transform:rotate(3deg);transition:transform .3s}@media (hover:hover) and (pointer:fine){
@@ -119,7 +119,7 @@ body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:no
 <script src="grafica.js"></script>
 <style>@media(min-width:1500px){.wrap{max-width:1380px}.wrap .cards{grid-template-columns:repeat(3,1fr)!important}}</style>
 <style>.cards{grid-template-columns:repeat(3,1fr)!important}@media(max-width:820px){.cards{grid-template-columns:1fr 1fr!important}.c h2 .nt-nv{display:block;width:max-content;margin:6px 0 0}}@media(max-width:480px){.cards{grid-template-columns:1fr!important}.c h2 .nt-nv{display:inline-block;margin-left:8px}}</style>
-<style>.st0{grid-column:1/-1;display:flex;align-items:center;gap:12px;flex-wrap:wrap}.st0 span{margin:0!important}.st0 .gir{width:14px;height:14px;flex:none;border-radius:50%;border:2px solid var(--sub);border-top-color:var(--hi);animation:stgir .9s linear infinite}@keyframes stgir{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.st0 .gir{animation:none}}.st0 button{margin-left:auto;font:800 12px Inter,system-ui,sans-serif;letter-spacing:.08em;padding:8px 14px;border-radius:99px;border:0;background:var(--hi);color:#1d2a52;cursor:pointer}.agg{margin:-18px 0 26px;font-size:12px;font-weight:600;color:var(--sub);text-align:right}.agg:empty{display:none}</style>
+<style>.st0{grid-column:1/-1;display:flex;align-items:center;gap:12px;flex-wrap:wrap}.st0 span{margin:0!important}.st0 .gir{width:14px;height:14px;flex:none;border-radius:50%;border:2px solid var(--sub);border-top-color:var(--hi);animation:stgir .9s linear infinite}@keyframes stgir{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.st0 .gir{animation:none}}.st0 button{margin-left:auto;font:800 12px Inter,system-ui,sans-serif;letter-spacing:.08em;padding:8px 14px;border-radius:99px;border:0;background:var(--acc);color:#fff;cursor:pointer}.agg{margin:-18px 0 26px;font-size:12px;font-weight:600;color:var(--sub);text-align:right}.agg:empty{display:none}</style>
 </head>
 <body>
 <div class="wrap">
@@ -144,68 +144,9 @@ body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:no
   <a class="cvw" id="cvw" href="curva.html"><div class="cvh"><span class="cvl"></span><div><b>Curva <i class="nd" id="cvd" hidden></i></b><span>Il social della lega</span></div></div><div class="cvp" id="cvp"></div><span class="cvg">ENTRA ›</span></a>
   
   <section class="mini" style="margin-top:14px"><a class="mn" id="mst" href="statistiche.html"><div class="mi">📊</div><div><b>Statistiche</b><span>Solo per te: chi entra e dove</span></div></a></section>
-  <div class="sp"><span>Gentilmente offerto da</span><div class="lg"><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/loghi/sponsor-birra-contropiede.png" alt=""><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/loghi/sponsor-pizzeria-fuorigioco.png" alt=""><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/loghi/sponsor-bomber-gym-club.png" alt=""><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/loghi/sponsor-amaro-del-mister.png" alt=""></div></div>
-  <div class="foot">O Girrr · Fantacalcio 2026/27</div>
+  <div class="sp"><span>Gentilmente offerto da</span><div class="lg"><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/loghi/sponsor-birra-contropiede.png" alt=""><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/loghi/sponsor-wegwezen.png" alt=""><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/loghi/sponsor-turbo-werkstatt.png" alt=""><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/loghi/sponsor-amaro-del-mister.png" alt=""></div></div>
+  <p class="foot">O Girrr · Fantacalcio 2026/27</p>
 </div>
-<script>
-(function(){
-function cap(s){s=String(s);return s.charAt(0).toUpperCase()+s.slice(1)}
-function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-var ORD=["The Blue brothers","Apo team","Mariana Coneja","stif dc","Real Madrink","Atletico ma non troppo","Oranje VC","AFA SELECCION","Grodah","WOA"];
-function classifica(rounds){
-  var sq={};function r(n){return sq[n]||(sq[n]={n:n,g:0,pt:0,fp:0,gf:0,gs:0})}
-  rounds.forEach(function(g){g.m.forEach(function(m){
-    var a=r(m[0]),b=r(m[3]);if(m[4]==='-')return;var s=m[4].split('-').map(Number);
-    [[a,s[0],s[1],m[1]],[b,s[1],s[0],m[2]]].forEach(function(x){x[0].g++;x[0].gf+=x[1];x[0].gs+=x[2];x[0].fp+=x[3];x[0].pt+=x[1]>x[2]?3:(x[1]===x[2]?1:0)})})});
-  return Object.keys(sq).map(function(k){return sq[k]}).sort(function(x,y){return y.pt-x.pt||y.fp-x.fp||(y.gf-y.gs)-(x.gf-x.gs)||y.gf-x.gf||((ORD.indexOf(x.n)<0?99:ORD.indexOf(x.n))-(ORD.indexOf(y.n)<0?99:ORD.indexOf(y.n)))});
-}
-function pt(x){return String(Math.round(x*100)/100).replace('.',',')}
-window.addEventListener('hashchange',function(){location.reload()});
-function hshF(s){var h=2166136261,i;for(i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return (h>>>0).toString(36)}
-function loginDaLink(d){var k=(location.hash||'').replace('#','').trim().toUpperCase();if(!k||/^(LEGA|COPPA)/.test(k)||!d||!d.lock)return false;var ok=false;
-  d.teams.forEach(function(x){if(hshF(x.name+'|'+k)===d.lock[x.name]){var o={};try{o=JSON.parse(localStorage.getItem('fg')||'{}')||{}}catch(e){}o.team=x.name;o.code=k;try{localStorage.setItem('fg',JSON.stringify(o))}catch(e){}ok=x.name}});
-  if(ok){try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}return ok}
-fetch('https://giandjcosta.github.io/o-fant-a-girrr/data.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){d=window.CVPUB?CVPUB(d):d;
-  loginDaLink(d);
-  try{var u=CVB.ultimo(d,Date.now()),vs=+(localStorage.getItem('cv-ultimo')||0);if(u>vs)document.getElementById('cvd').hidden=false;document.getElementById('cvp').innerHTML=CVB.anteprima(d,Date.now(),2).map(function(x){return '<div><small>'+x.n.replace(/[<>&]/g,'')+'</small><p>'+x.x.replace(/[<>&]/g,'')+'</p></div>'}).join('')}catch(e){}
-  try{var _u=new Date(d.updated+'T12:00:00'),_o=new Date();document.getElementById('agg').textContent=isNaN(_u)?'':(_u.toDateString()===_o.toDateString()?'Dati aggiornati oggi':'Dati aggiornati a '+_u.toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long'}))}catch(e){}
-  var L=d.cal.lega,pl=L.filter(function(g){return g.m.some(function(m){return m[4]!=='-'})});
-  var h='';
-  if(pl.length){
-    var cl=classifica(pl),last=pl[pl.length-1];
-    h+='<a class="st" href="tabellone.html#lega-'+last.n+'"><small>IN TESTA ALLA CLASSIFICA</small><b>'+esc(cap(cl[0].n))+'</b><span>'+cl[0].pt+' punti · '+pt(cl[0].fp)+' fantapunti</span><span class="vai">VEDI LA CLASSIFICA ›</span></a>';
-    var big=last.m.slice().sort(function(a,b){var d1=Math.abs(a[1]-a[2]),d2=Math.abs(b[1]-b[2]);return d2-d1})[0];
-    h+='<a class="st" href="tabellone.html#lega-'+last.n+'"><small>ULTIMA GIORNATA · '+last.n+'ª</small><b>'+esc(cap(big[0]))+' '+big[4].replace('-','–')+' '+esc(cap(big[3]))+'</b><span>Lo scarto più largo: '+pt(Math.abs(big[1]-big[2]))+' punti</span><span class="vai">VEDI I RISULTATI ›</span></a>';
-    var nx=L.filter(function(g){return g.m.every(function(m){return m[4]==='-'})})[0];
-    if(nx)h+='<a class="st" href="tabellone.html#lega-'+nx.n+'"><small>PROSSIMO TURNO · '+nx.n+'ª</small><b>Serie A, giornata '+nx.sa+'</b><span>'+nx.m.map(function(m){return esc(cap(m[0]))+' – '+esc(cap(m[3]))}).slice(0,2).join('<br>')+'<br>…</span><span class="vai">VEDI IL CALENDARIO ›</span></a>';
-    var cn=(d.cal.cup||[]).filter(function(g){return g.m.every(function(m){return m[5]==='-'})})[0];
-    if(cn)h+='<a class="st" href="tabellone.html#coppa-'+cn.n+'"><small>CHAMPIONS CUP · TURNO '+cn.n+'</small><b>Serie A, giornata '+cn.sa+'</b><span>'+cn.m.map(function(m){return esc(cap(m[1]))+' – '+esc(cap(m[4]))}).slice(0,2).join('<br>')+'<br>…</span><span class="vai">VEDI I GIRONI ›</span></a>';
-  }
-  document.getElementById('strip').innerHTML=h||'<div class="st st0"><span>Il campionato non è ancora cominciato: qui arrivano classifica e risultati.</span></div>';
-  var nx2=L.filter(function(g){return g.m.every(function(m){return m[4]==='-'})})[0];
-  if(nx2&&d.fx&&d.fx[nx2.sa]){
-    var best=null,worst=null;d.fx[nx2.sa].forEach(function(f){var q=(f[2]||'').split(' ');if(q.length<3)return;var dm=q[1].split('/').map(Number),hm=q[2].split(':').map(Number);
-      var y=dm[1]>=7?2026:2027,iso=y+'-'+String(dm[1]).padStart(2,'0')+'-'+String(dm[0]).padStart(2,'0')+'T'+String(hm[0]).padStart(2,'0')+':'+String(hm[1]).padStart(2,'0')+':00';
-      var off=(function(){var t=new Date(iso+'Z'),r=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Rome',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(t);var rh=Number(r.filter(function(x){return x.type==='hour'})[0].value);return(rh-t.getUTCHours()+24)%24})();
-      var t=new Date(iso+'Z').getTime()-off*3600e3;if(best===null||t<best)best=t;if(worst===null||t>worst)worst=t});
-    if(best)window.NEXT={t:best,e:worst+2*3600e3,n:nx2.n};
-  }
-}).catch(function(){var s=document.getElementById('strip');if(s&&s.querySelector('.gir'))s.innerHTML='<div class="st st0"><span>I dati della lega non si sono caricati. Controlla la connessione.</span><button type="button" onclick="location.reload()">RIPROVA</button></div>'});
-function cdTxt(ms){var s=Math.floor(ms/1000),d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60);return d>0?d+'g '+h+'h':h>0?h+'h '+m+'m':m+'m '+String(s%60).padStart(2,'0')+'s'}
-function tickNx(){var e=document.getElementById('bn');if(!e||!window.NEXT)return;var N=window.NEXT,now=Date.now(),ms=N.t-now;
-  e.innerHTML=ms>0?'<span class="nx">Giornata '+N.n+': si gioca fra <b>'+cdTxt(ms)+'</b></span>':now<N.e?'<span class="nx"><i class="live"></i>Giornata '+N.n+' <b>in corso</b></span>':'<span class="nx">Giornata '+N.n+' <b>conclusa</b> · Risultati in arrivo</span>'}
-setInterval(tickNx,1000);
-fetch('https://giandjcosta.github.io/o-fant-a-girrr/riepiloghi/indice.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(v){v=v.filter(function(x){return !x.pub||Date.parse(x.pub)<=Date.now()});
-  if(v.length){var u=v[0];document.getElementById('bk').textContent='ULTIMO NUMERO · N° '+u.n+' · '+String(u.occhiello||'').toUpperCase();document.getElementById('bh').textContent=u.titolone;document.getElementById('bp').textContent=u.sommario;document.getElementById('bc').src='https://giandjcosta.github.io/o-fant-a-girrr/'+u.copertina+'?v='+(u.v||0);document.getElementById('big').classList.add('on');tickNx();
-    var g=document.getElementById('gico');g.src='https://giandjcosta.github.io/o-fant-a-girrr/'+v[0].copertina+'?v='+(v[0].v||0);g.style.display='block';g.style.borderRadius='4px';g.style.height='100%';document.getElementById('gtxt').style.display='none'}
-}).catch(function(){});
-})();
-
-(function(){var L=['sponsor-birra-contropiede','sponsor-pizzeria-fuorigioco','sponsor-bomber-gym-club','sponsor-amaro-del-mister','sponsor-la-camiseta','sponsor-turbo-werkstatt','sponsor-banque-premier-but','sponsor-tubarao-credito-facil','sponsor-wegwezen-reizen','sponsor-pixelbay-electronics','sponsor-velox-sportswear','sponsor-ouchguard-injury-insurance'];
-var a=L.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}
-var e=document.querySelector('.sp .lg');if(e)e.innerHTML=a.slice(0,4).map(function(n){return '<img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/loghi/'+n+'.png" alt="">'}).join('')})();
-</script>
-<script src="curva-banca.js"></script>
-<script src="https://giandjcosta.github.io/o-fant-a-girrr/assets/app.js"></script>
+<script src="novita.js?v=1792789946"></script>
 </body>
 </html>
