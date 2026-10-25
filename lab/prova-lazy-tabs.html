@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Prova lazy loading · Spogliatoio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1220;--card:#1a1f35;--line:#2a3150;--tx:#eef1ff;--mu:#9aa3c7;--acc:#a78bfa;--hi:#ffd166}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
+.wrap{max-width:720px;margin:0 auto;padding:18px 14px 40px}
+h1{font-size:22px;font-weight:900;margin-bottom:6px}
+.note{background:#241a12;border:1px solid #5a3d1a;color:#ffd9a8;padding:12px 14px;border-radius:12px;font-size:13px;line-height:1.45;margin:12px 0 18px}
+tabs-row, .tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.tabs button{border:1px solid var(--line);background:var(--card);color:var(--tx);font:800 12px Inter,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:10px 12px;border-radius:999px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--acc);color:#1a1030;border-color:transparent}
+#app{min-height:220px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:10px}
+.card b{display:block;font-size:16px;margin-bottom:6px}
+.card p{color:var(--mu);font-size:13px;line-height:1.4}
+.meta{color:var(--mu);font-size:12px;font-weight:700;margin-bottom:8px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:560px){.row{grid-template-columns:1fr}}
+.pill{display:inline-block;background:rgba(167,139,250,.18);color:var(--acc);font:800 11px Inter;padding:3px 8px;border-radius:99px;margin-right:6px}
+#log{margin-top:16px;font:600 12px/1.5 ui-monospace,monospace;color:var(--mu);white-space:pre-wrap}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Lazy loading tab · Spogliatoio</h1>
+  <p class="meta">Demo Lab · come si comporta il modulo sulle tab pesanti</p>
+  <div class="note">
+    Le tab leggere (Rosa, Giornata) si aprono subito.<br>
+    Le tab pesanti (Scambi, Mercato, Svincolati…) mostrano prima «Carico…» e poi il contenuto al frame successivo — così l’interfaccia resta reattiva.
+  </div>
+  <div class="tabs" id="tabs" role="tablist">
+    <button data-t="rosa" aria-selected="true">Rosa</button>
+    <button data-t="day" aria-selected="false">Giornata</button>
+    <button data-t="swap" aria-selected="false">Chi scambiare</button>
+    <button data-t="mkt" aria-selected="false">Mercato</button>
+    <button data-t="fa" aria-selected="false">Svincolati</button>
+    <button data-t="bor" aria-selected="false">Borsino</button>
+  </div>
+  <div id="app"></div>
+  <div id="log"></div>
+</div>
+<script>
+var tab='rosa', team='Demo FC', filter='ALL', role='D', sortBy='score', open=null;
+var D={updated:'demo'};
+function authed(){return true}
+function log(msg){
+  var el=document.getElementById('log');
+  el.textContent = new Date().toLocaleTimeString()+'  '+msg+'\n'+el.textContent.split('\n').slice(0,6).join('\n');
+}
+function heavyWork(n){
+  // simula calcolo pesante (liste lunghe)
+  var t=0; for(var i=0;i<n;i++) t+=Math.sqrt(i%97);
+  return t;
+}
+function vRosa(){
+  return '<div class="card"><span class="pill">leggera</span><b>Rosa</b><p>25 giocatori · apertura immediata.</p><div class="row"><div class="card"><b>Titolari</b><p>11 nomi</p></div><div class="card"><b>Panchina</b><p>14 nomi</p></div></div></div>';
+}
+function vDay(){
+  return '<div class="card"><span class="pill">leggera</span><b>Giornata</b><p>Formazione e voto atteso · subito.</p></div>';
+}
+function vSwap(){
+  heavyWork(8e5);
+  var h='<div class="card"><span class="pill">pesante</span><b>Chi scambiare</b><p>Calcolo candidati…</p></div>';
+  for(var i=1;i<=6;i++) h+='<div class="card"><b>Cedi giocatore '+i+'</b><p>Prendi alternativa A/B · score '+(70-i)+'</p></div>';
+  return h;
+}
+function vMkt(){
+  heavyWork(1.2e6);
+  var h='<div class="card"><span class="pill">pesante</span><b>Mercato Scambi</b><p>Lista lunga filtrabile.</p></div>';
+  for(var i=1;i<=10;i++) h+='<div class="card"><b>Offerta #'+i+'</b><p>Rosa vs rosa · delta crediti</p></div>';
+  return h;
+}
+function vFa(){
+  heavyWork(9e5);
+  var h='<div class="card"><span class="pill">pesante</span><b>Svincolati</b></div>';
+  for(var i=1;i<=8;i++) h+='<div class="card"><b>Svincolato '+i+'</b><p>Qt e FVM stimati</p></div>';
+  return h;
+}
+function vBor(){
+  heavyWork(5e5);
+  return '<div class="card"><span class="pill">pesante</span><b>Borsino</b><p>JSON dedicato (nel sito vero già in lazy load).</p></div>';
+}
+function render(){
+  var t0=performance.now();
+  var app=document.getElementById('app');
+  [].forEach.call(document.querySelectorAll('#tabs button'),function(b){b.setAttribute('aria-selected',b.dataset.t===tab)});
+  app.innerHTML = tab==='rosa'?vRosa():tab==='day'?vDay():tab==='swap'?vSwap():tab==='mkt'?vMkt():tab==='fa'?vFa():vBor();
+  log('render «'+tab+'» in '+(performance.now()-t0).toFixed(1)+' ms');
+}
+document.getElementById('tabs').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b)return;
+  tab=b.dataset.t; render();
+});
+</script>
+<script src="spogliatoio-lazy.js?v=1"></script>
+<script>render();</script>
+</body>
+</html>
