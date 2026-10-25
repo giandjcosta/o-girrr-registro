@@ -211,7 +211,7 @@ function render(){
     if(ris!=='-'){var s=ris.split('-').map(Number);wc=s[0]>=s[1]?'w':'';wf=s[1]>=s[0]?'w':'';
       if(s[0]>s[1])wf='';if(s[1]>s[0])wc='';
       sc='<b>'+s[0]+'</b><i></i><b>'+s[1]+'</b>';fc='<small>'+pt(pc)+'</small>';ff='<small>'+pt(pf)+'</small>'}
-    var dn=derby(casa,fuori),sc=cup?'':sfidaCl(D.cal.lega,n,casa,fuori),tg=[];if(dn!==null)tg.push('<b>DERBY</b>'+(dn?' · '+esc(dn):''));if(sc)tg.push('<b>'+sc.toUpperCase()+'</b>');
+    var dn=derby(casa,fuori),scl=cup?'':sfidaCl(D.cal.lega,n,casa,fuori),tg=[];if(dn!==null)tg.push('<b>DERBY</b>'+(dn?' · '+esc(dn):''));if(scl)tg.push('<b>'+scl.toUpperCase()+'</b>');
     b+='<div class="m'+(cup?' cp':'')+(tg.length?' dby':'')+'" style="animation-delay:'+(k*70)+'ms">'+(tg.length?'<div class="dn">'+tg.join(' · ')+'</div>':'')+(cup?'<div class="g">'+esc(gir)+'</div>':'')+'<div class="t h '+wc+(casa===ME?' mine':'')+'"><span>'+esc(cap(casa))+'</span>'+fc+'</div><div class="sc">'+sc+'</div><div class="t '+wf+(fuori===ME?' mine':'')+'"><span>'+esc(cap(fuori))+'</span>'+ff+'</div></div>';
   });
   if(cup&&g.rest&&g.rest.length)b+='<div class="rip">Riposano: '+g.rest.map(function(x){return (x[1]===ME?'<b>'+esc(cap(x[1]))+'</b>':esc(cap(x[1])))+' (gir. '+esc(x[0])+')'}).join(' · ')+'</div>';
