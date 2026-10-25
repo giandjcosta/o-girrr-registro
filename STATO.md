@@ -187,6 +187,12 @@ Prima del rilascio: fasi A e B fatte, tutte verdi; il primo tentativo di push er
 - Già presente sul sito vero: a 320 px la pagina del Totogirrr scorre di lato (324-331 px). Corretto il 25 ottobre, vedi sotto.
 - Non ancora sul sito vero: al rilascio vanno `tabellone.html`, `totogirrr.html`, `derby.js` di `girrr/` e `stadio/girrr/` e `app.html` (soglia del Lab tramite livepatch).
 
+## Albo d'oro: scheda "La Storia" (25 ottobre, solo Anteprima)
+- Nuova prima scheda dell'Albo d'oro, "La Storia", in `novita.js` (sorgente `ufficiale/src/novita.js` e copie `ufficiale/girrr/` e `ufficiale/nuovo/girrr/`): il nome e le origini, il racconto della bozza `lab/anteprima-storia-lega.html` (già corretto: 2016/17, apo e ser come su Leghe) e i sei Padri Fondatori con le squadre di oggi. "Le Ere" resta la seconda scheda con i suoi tre capitoli; `#ere` apre ancora Le Ere.
+- Provato in Chromium e WebKit (iPhone SE emulato) a 1300 e 320 px, Lega e Stadio: La Storia aperta di default, le altre schede funzionano, niente scorrimento di lato, console pulita.
+- Da sistemare a parte: il Capitolo III delle Ere (dati `leg.libro` di `novita-dati.js`) dice ancora che la storia del nome "la racconterà Christian".
+- Non ancora sul sito vero: al rilascio vanno `girrr/novita.js` e `stadio/girrr/novita.js` di `gh-pages` (stessa modifica; il sito ha solo il percorso dei dati del Lab diverso).
+
 ## Totogirrr a 320 px: niente scorrimento di lato (25 ottobre, ramo `claude/gracious-meitner-lmt0ny`, solo prova)
 - Il colpevole non era la barra delle schede: `nav` ha già `overflow-x:auto` e la `.nvi` scorre al suo interno (292 px visibili, 730 interni). Usciva dallo schermo l'etichetta "CAMPIONATO"/"COPPA" delle card "In evidenza" (`.fc .tg`): la regola generica `.tg` di `ufficiale/src/toto-schede.css`, pensata per gli stati delle Sfide 1 contro 1, le dava anche pillola e 8 px di imbottitura per lato, e a 320 px "FAVORITA"/"COLPACCIO" più "CAMPIONATO" non stavano nei 115 px della card.
 - Correzione: `.fc .tg{padding:0;border-radius:0;background:none;flex-wrap:wrap;row-gap:2px}` in `ufficiale/src/toto-schede.css` e nelle due pagine dell'Anteprima (`ufficiale/girrr/totogirrr.html` Lega, `ufficiale/nuovo/girrr/totogirrr.html` Stadio). L'etichetta torna senza pillola e, se non c'è posto, "CAMPIONATO" va sotto.
