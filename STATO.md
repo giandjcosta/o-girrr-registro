@@ -24,6 +24,7 @@ Lo **storico del progetto**, ricostruito dalle cronologie Git e dalle note, è i
 - Storie come un campionato vero. "Derby" con la D maiuscola. Post ufficiali mai sulle scommesse.
 
 ## Online negli ultimi giorni
+- **25 ottobre, sera — Curva ripristinata**: un push di prova dell'infinite scroll (`99aabf9` e seguenti) aveva lasciato `girrr/curva.html` come guscio di 2 KB che caricava la pagina dal registro. Rimessa la versione completa di `b75fb68` (`gh-pages` `2489bf3`). Provata online in Chromium e WebKit, senza errori in console. L'infinite scroll resta da fare nel registro prima di un nuovo rilascio. Già da prima la Curva a 320 px scorre di lato di circa 60 px: ci sono dei pulsanti che escono dallo schermo.
 - **24 ottobre — Moviola passo 4** (post in Curva e rilascio): online su sito vero.
 - **25 ottobre — Ere** (racconto + descrizione): online (`gh-pages` `85a9415`).
 - **25 ottobre — colori home Lega** (registro): primari giornale/strip in rosso.
