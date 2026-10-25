@@ -29,4 +29,4 @@ Per riprendere il lavoro in una chat nuova: "Leggi STATO.md nel repo o-girrr-reg
 2. Si prepara il pacchetto con `rilascio/pacchetto.py` e si guarda cosa cambierebbe con `rilascio/applica.py`.
 3. Solo con il "vai" di Gianluca si fa il push sui rami `gh-pages` e `main` di o-fant-a-girrr.
 
-Le micro correzioni di testo vanno online in automatico, con avviso dopo; tutto il resto aspetta il "vai".
+Ogni modifica destinata al sito, comprese le correzioni di testo, viene prima mostrata e provata nel Lab. Il sito vero aspetta la certificazione della prova e il "vai" esplicito di Gianluca.

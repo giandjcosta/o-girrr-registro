@@ -1,7 +1,7 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 26 ottobre 2026)
 
 Per aprire una chat nuova: incolla "Leggi STATO.md nel repo o-girrr-registro e continuiamo da lì".
-Lo **storico completo** (dall'inizio fino al 25 ottobre) è in `STATO-storico.md` e nel commit `940d2d374df4`.
+Lo **storico del progetto**, ricostruito dalle cronologie Git e dalle note, è in [STATO-storico.md](./STATO-storico.md). La cronologia Git consultabile parte dal 7 ottobre 2026 per il sito; attività precedenti non sono documentate nei repository esaminati.
 
 ## Dove vive tutto
 - Sito vero: repo `giandjcosta/o-fant-a-girrr`, ramo `gh-pages` (pagine) e `main` (workflow e calcoli). Sito: https://giandjcosta.github.io/o-fant-a-girrr/
@@ -20,7 +20,7 @@ Lo **storico completo** (dall'inizio fino al 25 ottobre) è in `STATO-storico.md
 
 ## Regole di pubblicazione
 - Assistenti: Claude Code, agente di VS Code, Perplexity, Aider, **Grok** (e Gianluca). Regole in `AGENTS.md`.
-- Micro correzioni di testo: online in automatico, avviso dopo. Tutto il resto: serve il "vai" di Gianluca.
+- Ogni modifica destinata al sito, comprese le correzioni di testo, va prima mostrata e provata nella [preview del Lab](https://giandjcosta.github.io/o-girrr-registro/lab/). Il sito vero resta invariato fino alla certificazione della prova e al «Vai» esplicito di Gianluca.
 - Storie come un campionato vero. "Derby" con la D maiuscola. Post ufficiali mai sulle scommesse.
 
 ## Online negli ultimi giorni

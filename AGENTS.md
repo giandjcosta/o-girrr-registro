@@ -3,7 +3,7 @@
 Qui ci sono il Lab, l'Anteprima, le sorgenti delle pagine del sito vero e lo stato del progetto. Il sito vero è nel repository `giandjcosta/o-fant-a-girrr`.
 
 ## Prima di tutto
-- Leggi `STATO.md`: dice cosa è online, cosa è in prova, i comandi di build e rilascio e cosa resta da fare. Alla fine di ogni lavoro aggiornalo. Lo storico lungo è in `STATO-storico.md` (puntatore al commit completo).
+- Leggi `STATO.md`: dice cosa è online, cosa è in prova, i comandi di build e rilascio e cosa resta da fare. Alla fine di ogni lavoro aggiornalo. La cronologia raggruppata è in `STATO-storico.md`; la pagina Registro mostra i commit.
 
 ## Come è fatto
 - `lab/index.html`: il Lab, dove si provano le novità. Dopo ogni modifica al Lab rigenera l'Anteprima con `python3 anteprima/build.py` (scrive `anteprima/index.html` per lo Stadio e `anteprima/attuale.html` per la Lega).
@@ -14,6 +14,8 @@ Qui ci sono il Lab, l'Anteprima, le sorgenti delle pagine del sito vero e lo sta
 
 ## Regole di questo repository
 - Le novità si fanno su un ramo e si uniscono a `main` insieme al rilascio sul sito, con il "vai" di Gianluca.
+- Ogni modifica destinata al sito, comprese le correzioni di testo, deve prima essere mostrata e provata nella preview navigabile del Laboratorio: `https://giandjcosta.github.io/o-girrr-registro/lab/`. Un branch Git o un file isolato non sostituiscono la preview.
+- Il sito vero resta invariato finché Gianluca non certifica la prova nel Lab e dà il suo «Vai» esplicito. Le modifiche documentali o agli strumenti interni che non cambiano il comportamento del sito non richiedono un prototipo nel Lab.
 - Se il `main` del sito ha file più nuovi del registro (workflow, script della Curva), copiali prima qui: non sovrascriverli con versioni vecchie.
 
 ## Regole sui contenuti
@@ -41,7 +43,7 @@ Repository: `o-fant-a-girrr` (sito della lega), `o-girrr-registro` (laboratorio 
 - Prima di consegnare, prova davvero: le pagine devono funzionare a 320 px di larghezza (iPhone SE) senza scorrere di lato, e la console del browser non deve avere errori nuovi.
 
 ### Cosa serve il "vai" di Gianluca
-- Qualsiasi cosa che va online (merge sul ramo pubblicato, push sul sito vero). Unica eccezione: micro correzioni di testo nel sito della lega, che vanno online con un avviso dopo.
+- Qualsiasi modifica al sito vero, anche una correzione di testo: prima preview nel Lab, poi certificazione e «Vai» esplicito di Gianluca.
 - Qualsiasi modifica al database Supabase (progetto `qmjqfgmvimsuxvghetgi`): niente SQL, niente migrazioni, niente dati cambiati senza il suo "vai" esplicito.
 - Cancellare file, rami, Pull Request o dati.
 - Se un controllo di sicurezza blocca un'operazione, fermati e spiega cosa è successo: non aggirarlo.
