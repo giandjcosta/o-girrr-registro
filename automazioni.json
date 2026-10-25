@@ -1,5 +1,5 @@
 {
- "aggiornato": "2026-10-24T17:42:02Z",
+ "aggiornato": "2026-10-25T06:43:00Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
@@ -58,9 +58,9 @@
    "nome": "Controllo giornata calcolata su Leghe",
    "quando": "Domenica, lunedì, martedì e sabato, ogni 3 ore dalle 09:07 alle 21:07",
    "stato": "attiva",
-   "prossimo": "2026-10-24T19:07:00Z",
+   "prossimo": "2026-10-25T08:07:00Z",
    "ultimo": {
-    "quando": "2026-10-24T17:06:25Z",
+    "quando": "2026-10-24T19:07:59Z",
     "esito": "riuscito"
    }
   },
@@ -68,9 +68,9 @@
    "nome": "Controllo automatismi del mattino",
    "quando": "Ogni giorno alle 07:33",
    "stato": "attiva",
-   "prossimo": "2026-10-25T06:33:00Z",
+   "prossimo": "2026-10-26T06:33:00Z",
    "ultimo": {
-    "quando": "2026-10-24T05:33:54Z",
+    "quando": "2026-10-25T06:33:37Z",
     "esito": "riuscito"
    },
    "nota": "Avvisa solo se qualcosa è fermo da più di 2 giorni."
@@ -116,6 +116,15 @@
    "prossimo": "2026-10-30T07:52:00Z",
    "ultimo": {
     "quando": "2026-10-23T06:53:04Z",
+    "esito": "riuscito"
+   }
+  },
+  {
+   "nome": "Promemoria: controllo lavoro di VS Code Copilot sul registro",
+   "quando": "Una volta: 25 ottobre alle 03:59",
+   "stato": "conclusa",
+   "ultimo": {
+    "quando": "2026-10-25T03:00:00Z",
     "esito": "riuscito"
    }
   },
