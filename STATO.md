@@ -24,7 +24,8 @@ Lo **storico del progetto**, ricostruito dalle cronologie Git e dalle note, è i
 - Storie come un campionato vero. "Derby" con la D maiuscola. Post ufficiali mai sulle scommesse.
 
 ## Online negli ultimi giorni
-- **25 ottobre, sera — Curva ripristinata**: un push di prova dell'infinite scroll (`99aabf9` e seguenti) aveva lasciato `girrr/curva.html` come guscio di 2 KB che caricava la pagina dal registro. Rimessa la versione completa di `b75fb68` (`gh-pages` `2489bf3`). Provata online in Chromium e WebKit, senza errori in console. L'infinite scroll resta da fare nel registro prima di un nuovo rilascio. Già da prima la Curva a 320 px scorre di lato di circa 60 px: ci sono dei pulsanti che escono dallo schermo.
+- **25 ottobre, sera — Curva ripristinata**: un push di prova dell'infinite scroll (`99aabf9` e seguenti) aveva lasciato `girrr/curva.html` come guscio di 2 KB che caricava la pagina dal registro. Rimessa la versione completa di `b75fb68` (`gh-pages` `2489bf3`). Provata online in Chromium e WebKit, senza errori in console. L'infinite scroll resta da fare nel registro prima di un nuovo rilascio. 
+- **25 ottobre, sera — Curva a 320 px**: la riga dei pulsanti sotto i post (risposta, rilancio, applausi, visite, condividi, elimina) usciva dallo schermo fino a 380 px. Ora a meno di 420 px i pulsanti si stringono e, solo in casi estremi (sotto 320 px o contatori molto lunghi), vanno a capo. Online su Lega e Stadio (`gh-pages` `a4154c4`); stesse righe in `ufficiale/src/sito/`, `ufficiale/girrr/` e `ufficiale/nuovo/girrr/`. Provata da 300 a 768 px in Chromium e WebKit: nessuno scorrimento laterale e console pulita.
 - **24 ottobre — Moviola passo 4** (post in Curva e rilascio): online su sito vero.
 - **25 ottobre — Ere** (racconto + descrizione): online (`gh-pages` `85a9415`).
 - **25 ottobre — colori home Lega** (registro): primari giornale/strip in rosso.
