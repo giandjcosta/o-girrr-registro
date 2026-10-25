@@ -10,12 +10,12 @@ def sost(a, b, n=1):
     global s
     assert a in s, a[:60]
     s = s.replace(a, b, n)
-sost("<title>Laboratorio O Girrr</title>", "<title>O Girrr · Anteprima 5.1</title>")
+sost("<title>Laboratorio O Girrr</title>", "<title>O Girrr · Anteprima 5.2</title>")
 sost('href="../favicon-64.png"', 'href="../favicon-64.png"')
-sost("<h1>Laboratorio O Girrr</h1>", "<h1>O Girrr 5.1</h1>")
+sost("<h1>Laboratorio O Girrr</h1>", "<h1>O Girrr 5.2</h1>")
 sost("<p>Prova ogni idea e dai un voto. Alla fine trovi il riassunto da mandare a Gianluca.</p>", "<p>Anteprima della nuova versione: così apparirà tutto quando andrà in linea.</p>")
-sost('<span class="proto">Prototipo</span> <a class="back" href="../">Torna al Registro</a>', '<span class="proto">Anteprima 5.1</span> <a class="back" href="../lab/versione-5.html">Archivio 5.0</a>')
-sost('<a class="back" href="versione-5.html">Archivio 5.0</a>', '')
+sost('<span class="proto">Prototipo</span> <a class="back" href="../">Torna al Registro</a>', '<span class="proto">Anteprima 5.2</span> <a class="back" href="../lab/versione-5-1.html">Archivio 5.1</a>')
+sost('<a class="back" href="versione-5-1.html">Archivio 5.1</a>', '')
 # nascondere il materiale da laboratorio
 sost("</style>", ".where,.note,.lead,.fb,.proto-only{display:none!important}.hm{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}.hm button{display:flex;flex-direction:column;gap:4px;text-align:left;padding:14px;border-radius:16px;background:linear-gradient(160deg,#17214a,#2a1c52);border:1px solid var(--line);color:#fff;min-height:96px}.hm b{font-family:var(--fd);font-size:20px;font-weight:400}.hm small{color:var(--mute);font-size:12px;font-weight:600}.hm .big{grid-column:1/-1}</style>", 1)
 # nav e Home
@@ -111,7 +111,7 @@ body::after{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:non
 </style>"""
 s_plain = s_plain.replace('src="voci/', 'src="../lab/voci/').replace("fetch('voci/", "fetch('../lab/voci/")
 a = s_plain.replace("</style>", "</style>" + skin, 1)
-a = a.replace("<title>O Girrr · Anteprima 5.1</title>", "<title>O Girrr · Anteprima 5.1 (grafica attuale)</title>")
+a = a.replace("<title>O Girrr · Anteprima 5.2</title>", "<title>O Girrr · Anteprima 5.2 (grafica attuale)</title>")
 a = a.replace("family=Lobster&family=Inter", "family=Inter")
 if RIL:
     pathlib.Path(os.environ["APP_OUT_LEGA"]).parent.mkdir(parents=True, exist_ok=True)
