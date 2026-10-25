@@ -1,4 +1,4 @@
-# Stato del progetto O Girrr (aggiornato 24 ottobre 2026, mattina)
+# Stato del progetto O Girrr (aggiornato 25 ottobre 2026, pomeriggio)
 
 Per aprire una chat nuova: incolla "Leggi STATO.md nel repo o-girrr-registro e continuiamo da lì".
 
@@ -208,3 +208,10 @@ Con il "vai" di Gianluca (dato a condizione che VS Code avesse finito e che le p
 - Controllato sul sito vero in Chromium e WebKit (iPhone SE emulato), a 1300 e 320 px, Lega e Stadio: Albo con La Storia aperta per prima e le Ere nuove, pagina Derby, Tabellone con punteggi e Derby giusti (G1 Il Classico, G4 Due Finali, G5 Emma e Due Corone, G6 The Continental e Camaleonte), Totogirrr (anche `?demo`) e app senza scorrimento di lato, console pulita. Il Totogirrr a 320 px era già online (`d8ce210`, PR #11).
 - Da decidere: nella pagina Derby l'elenco "I Derby della Lega" mostra anche le rivalità con un nome e una storia che non sono Derby (Wakanda, Eterna Rincorsa, Mille Volti, Sorpasso, Due Facce), con il loro livello. Si potrebbero spostare tra le rivalità forti.
 - Ancora da fare: il Capitolo III delle Ere dice "la racconterà Christian" (dati `leg.libro` di `novita-dati.js`); il database del Totogirrr è ancora a 70 (`derby_aggiorna`), oggi equivalente a 80, da allineare solo con il "vai" sull'SQL.
+
+## Controllo infortuni (25 ottobre, pomeriggio) — ONLINE
+- Routine automatica "Controllo infortuni" su tutta la Serie A (servono anche per le quote). Fonti e pesi fissi: Sky Sport "indisponibili, infortunati e squalificati per la Nª giornata" 45%; il resto diviso tra Fantacalcio.it, quotidiani e siti dei club, Transfermarkt/DAZN/SOS Fanta. Se discordano sui tempi vale Sky, salvo notizia più recente o comunicato del club; una sola fonte non Sky = voce, non si modifica.
+- Aggiornato `data.json` (voci `inj` e stato `st`) su `gh-pages` del sito, commit `f1263a0` (sopra `8cd6bb4`), con il "vai" di Gianluca. Per tornare indietro: `git revert f1263a0`. Voci passate da 81 a 90.
+- Nuovi: Kessiè, Colombo, Meichtry, Baldanzi (in dubbio), Stones (in dubbio, tentativo per il Derby del 31 ottobre), Ciurria (in dubbio), Touré I., Zaniolo, Busio (in dubbio). Una quarantina di tempi di rientro corretti su Sky ("dopo la sosta" = 22 novembre).
+- Voci non modificate: Bella-Kotchap (solo Fantacalcio), Cristante (solo introduzione Sky), Piccoli (Sky discorde con se stesso). Da controllare alla prossima giro: Ehizibue, Pinamonti, Solet, Maye (restano in lista ma Sky non li cita).
+- Non controllato il sito dopo il rilascio (pagina e console): da guardare.
