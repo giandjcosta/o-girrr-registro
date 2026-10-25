@@ -106,7 +106,14 @@ document.getElementById('tabs').addEventListener('click',function(e){
   tab=b.dataset.t; render();
 });
 </script>
-<script src="spogliatoio-lazy.js?v=2"></script>
-<script>render();</script>
+<script src="spogliatoio-lazy.js?v=3"></script>
+<script>
+render = window.spgLazyWrap(render, function () {
+  return {tab:tab,team:team,data:D,filter:filter,role:role,sortBy:sortBy,
+    open:open,mkV:'',mkT:'',calComp:'',calIdx:'',authed:authed(),
+    setTab:function(t){tab=t}};
+});
+render();
+</script>
 </body>
 </html>
