@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Prova infinite scroll · Curva</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&display=swap">
+<style>
+:root{--bg:#fff;--bg2:#f7f9f9;--tx:#0f1419;--mu:#536471;--ln:#eff3f4;--acc:#d62839;--blu:#1d9bf0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
+.wrap{max-width:600px;margin:0 auto;border-left:1px solid var(--ln);border-right:1px solid var(--ln);min-height:100vh}
+header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--ln);padding:14px 16px}
+header b{font-size:18px;font-weight:900}
+header p{color:var(--mu);font-size:13px;margin-top:4px;font-weight:600}
+.note{margin:12px 16px;padding:12px 14px;border-radius:12px;background:#fff5f5;border:1px solid #ffd0d5;font-size:13px;line-height:1.45;color:#5a1a22}
+.note code{background:#ffe8eb;padding:1px 5px;border-radius:4px;font-size:12px}
+.post{display:flex;gap:12px;padding:14px 16px;border-bottom:1px solid var(--ln)}
+.av{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:13px}
+.meta{font-size:14px;margin-bottom:4px}
+.meta b{font-weight:800}
+.meta span{color:var(--mu);font-weight:500}
+.body{font-size:15px;line-height:1.4}
+.acts{display:flex;gap:18px;margin-top:8px;color:var(--mu);font-size:12px;font-weight:600}
+#piu{padding:22px;text-align:center;color:var(--mu);font-weight:700;font-size:14px}
+#piu.done{color:#1a7a4c}
+.bar{height:3px;background:var(--ln);position:sticky;top:64px;z-index:9}
+.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .2s}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <b>Prova infinite scroll</b>
+    <p>Come sarà la Curva: 20 cori alla volta, altri allo scroll</p>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="note">
+    Questa è una <b>demo nel Lab</b> (dati finti). Sul sito vero non è ancora attivo.<br>
+    Scorri in basso: quando compare «Scorri per altri cori…» se ne caricano altri 20.
+    Totale simulato: <code id="tot">0</code> cori · mostrati: <code id="shown">0</code>
+  </div>
+  <div id="feed"></div>
+  <div id="piu">Scorri per altri cori…</div>
+</div>
+<script>
+(function(){
+var PAGE=20, shown=0, loading=false;
+var SQUADRE=['Apo team','The Blue brothers','Oranje VC','Real Madrink','Grodah','stif dc','WOA','AFA SELECCION','Mariana Coneja','Atletico ma non troppo'];
+var COLORI=['#d62839','#1d9bf0','#f5b301','#00ba7c','#7c3aed','#f91880','#0ea5e9','#ea580c','#64748b','#16a34a'];
+var FRASI=[
+  'Partita tosta, testa alta e si riparte.',
+  'Mercato: stiamo valutando tre profili in mediana.',
+  'La difesa ha tenuto, il gol è arrivato al 89\'.',
+  'Conferenza stampa: «Fiducia nel gruppo, punto e basta.»',
+  'Derby in arrivo. Non si scherza.',
+  'Tre punti d\'oro. La classifica sorride.',
+  'Rigore sbagliato, ma la squadra non si è scomposita.',
+  'Aggiornamento rosa: un innesto a sorpresa in attacco?',
+  'Tabellino e voti online. Andate a leggere il Giornale.',
+  'Allenamento chiuso, focus sulla fase difensiva.'
+];
+// Genera 87 cori finti (come un feed lungo)
+var ALL=[];
+for(var i=0;i<87;i++){
+  var s=SQUADRE[i%SQUADRE.length];
+  ALL.push({
+    team:s,
+    col:COLORI[i%COLORI.length],
+    ini:s.split(' ').map(function(w){return w[0]}).join('').slice(0,2).toUpperCase(),
+    body:FRASI[i%FRASI.length]+(i%3===0?' #'+['Giornata3','FantaDivano','PanchinaCorta'][i%3]:''),
+    min: (i+1)+' min'
+  });
+}
+document.getElementById('tot').textContent=ALL.length;
+
+function card(p,i){
+  return '<article class="post">'+
+    '<div class="av" style="background:'+p.col+'">'+p.ini+'</div>'+
+    '<div><div class="meta"><b>'+p.team+'</b> <span>· '+p.min+' · #'+(i+1)+'</span></div>'+
+    '<div class="body">'+p.body+'</div>'+
+    '<div class="acts"><span>💬 '+(2+(i%7))+'</span><span>♡ '+(5+(i*3)%40)+'</span><span>↗ '+(1+(i%5))+'</span></div>'+
+    '</div></article>';
+}
+
+function aggiornaBarra(){
+  var pct=Math.min(100, Math.round(shown/ALL.length*100));
+  document.getElementById('prog').style.width=pct+'%';
+  document.getElementById('shown').textContent=shown;
+}
+
+function caricaAltri(){
+  if(loading||shown>=ALL.length)return;
+  loading=true;
+  var piu=document.getElementById('piu');
+  piu.textContent='Carico…';
+  // piccola pausa per far vedere il caricamento (in Curva vera è istantaneo)
+  setTimeout(function(){
+    var next=ALL.slice(shown, shown+PAGE);
+    var html=next.map(function(p,j){return card(p,shown+j)}).join('');
+    document.getElementById('feed').insertAdjacentHTML('beforeend', html);
+    shown+=next.length;
+    aggiornaBarra();
+    loading=false;
+    if(shown>=ALL.length){
+      piu.textContent='Fine del feed · '+ALL.length+' cori';
+      piu.className='done';
+    }else{
+      piu.textContent='Scorri per altri cori…';
+    }
+  },180);
+}
+
+window.addEventListener('scroll',function(){
+  var el=document.getElementById('piu');
+  if(!el||shown>=ALL.length)return;
+  if(el.getBoundingClientRect().top < window.innerHeight+200) caricaAltri();
+},{passive:true});
+
+caricaAltri(); // primi 20
+})();
+</script>
+</body>
+</html>
