@@ -39,3 +39,9 @@ Deciso insieme: separazione pubblico/privato, login unico, infinite scroll Curva
 5. **Fuori per ora:** notifiche; ricerca globale; menu laterale.
 
 Niente di questo va online sul sito vero senza il "vai" di Gianluca.
+
+## Carriera: obiettivi con scadenza corretti (25 ottobre, solo Lab e Anteprima)
+- Segnalato da Gianluca: "Resta nella metà alta dopo la 10ª giornata" risultava "Fatto" alla 4ª. Prima l'etichetta "Fatto" usciva appena la barra arrivava al 100%, anche per gli obiettivi di posizione (presidente: piazzamento finale; sponsor: metà alta o fuori dagli ultimi 3 dopo la 10ª, meglio dello scorso anno).
+- Ora (`lab/index.html`, funzioni `esito`, `aGiornata`, `gioc`; Anteprima rigenerata): prima della scadenza un obiettivo di posizione non è mai "Fatto" (barra al massimo 99%, etichetta "In linea", "Da recuperare" o "Ora 5° · conta la 10ª"); dopo la scadenza si guarda la classifica di quella giornata e diventa "Fatto" o "Mancato". Gli obiettivi che si accumulano (giornate sopra 60/65, punteggio massimo) sono "Fatto" appena raggiunti e "Mancato" se a fine stagione non lo sono. "Almeno N vittorie nelle prime 8 giornate" conta solo le prime 8. La classifica per giornata si calcola dai risultati di `data.json` del sito (34 giornate).
+- Provato: con i dati veri nessun obiettivo di posizione risulta "Fatto" (Oranje VC: "Ora 5° · conta la 10ª"); con dati di prova a 12 giornate gli obiettivi della 10ª diventano "Fatto" o "Mancato" secondo la classifica della 10ª (Chromium). WebKit con i dati veri, 320 px, console pulita.
+- Non ancora sul sito vero: al rilascio va `app.html` di `girrr/` e `stadio/girrr/`.
