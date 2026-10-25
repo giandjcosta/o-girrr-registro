@@ -57,6 +57,8 @@
   }
 
   render = function () {
+    // Invalida i render precedenti anche quando si seleziona una tab leggera.
+    var my = ++pending;
     var ok = typeof authed === 'function' ? authed() : true;
     var tabsEl = document.getElementById('tabs');
     if (tabsEl) tabsEl.hidden = !ok;
@@ -73,7 +75,6 @@
 
     // Tab pesanti: skeleton subito, contenuto al frame successivo
     if (heavy && appEl && s !== lastSig) {
-      var my = ++pending;
 
       try {
         if (tab === 'stat' && team !== 'Oranje VC') tab = 'rosa';
