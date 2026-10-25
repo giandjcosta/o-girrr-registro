@@ -19,10 +19,10 @@ window.NOVITA=function(D){var N=window.NOV;if(!N)return {};
   var L=N.leg,tt={},P={};
   var h='';
   var tc={};N.stag.forEach(function(x){tt[x[3]]=(tt[x[3]]||0)+1;if(x[1]==='Coppa Campioni')tc[x[3]]=(tc[x[3]]||0)+1});N.pre.forEach(function(x){if(x[2])tt[x[2]]=(tt[x[2]]||0)+1});
-  var EN=[L.eras.prima,L.eras.vuoto,L.eras.oggi],ere='';
+  var EN=[L.eras.prima,L.eras.vuoto,L.eras.oggi],ED=['La scintilla','La pausa','Il nuovo nome'],ere='';
   L.libro.forEach(function(c,i){
     var SUBE=[N.pre[0][0]+' – '+N.pre[N.pre.length-3][0],N.pre[N.pre.length-2][0]+' – '+N.pre[N.pre.length-1][0],'Dal '+N.stag[0][0]];
-    ere+='<div class="card era"><button class="eh" type="button" aria-expanded="false"><span><span class="et">'+esc(EN[i]||c.t)+(i===0?'<span class="nt-nv">NOVITÀ</span>':'')+'</span><small>'+esc(SUBE[i]||'')+'</small></span><i class="ch" aria-hidden="true">›</i></button><div class="eb"><div class="ei"><div class="rac">'+c.p.map(function(p){return '<p>'+esc(p)+'</p>'}).join('')+'</div>';
+    ere+='<div class="card era"><button class="eh" type="button" aria-expanded="false"><span><span class="et">'+esc(EN[i]||c.t)+(ED[i]?' · '+ED[i]:'')+(i===0?'<span class="nt-nv">NOVITÀ</span>':'')+'</span><small>'+esc(SUBE[i]||'')+'</small></span><i class="ch" aria-hidden="true">›</i></button><div class="eb"><div class="ei"><div class="rac">'+c.p.map(function(p){return '<p>'+esc(p)+'</p>'}).join('')+'</div>';
     if(i===0){ere+='<p class="nt" style="margin:8px 0">Prima del cambio di lega del 2021. I dati sono andati persi: queste stagioni arrivano dai ricordi del gruppo.</p><table><tr><th>Stagione</th><th>Vincitore</th></tr>'+N.pre.map(function(x){return '<tr><td>'+x[0]+'</td><td>'+(x[2]?esc(x[1]||x[2])+(x[1]?'<small>'+esc(x[2])+'</small>':''):'<span style="color:var(--sub)">Non assegnato</span>')+'</td></tr>'}).join('')+'</table>'
       +L.titani.map(function(r){return '<div class="rac"><div class="rt">'+esc(r.t)+'</div><p>'+esc(r.p)+'</p></div>'}).join('')+'<p class="nt">'+esc(L.nota)+'</p>'}
     if(i===2){ere+='<table style="margin-top:10px"><tr><th>Stagione</th><th>Vincitore</th></tr>'+N.stag.map(function(x){return '<tr><td>'+x[0]+(x[1]==='Coppa Campioni'?' · 🎖️ Coppa Campioni':' · 🏆 Campionato')+'</td><td>'+esc(x[3])+'<small>'+esc(x[2])+'</small></td></tr>'}).join('')+'</table><p class="nt">I dettagli di ogni stagione sono nella tab Stagioni.</p>'}
