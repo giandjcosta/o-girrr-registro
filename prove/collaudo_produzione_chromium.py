@@ -9,6 +9,8 @@ with sync_playwright() as p:
         page=browser.new_page(viewport={'width':width,'height':850})
         errors=[]
         page.on('pageerror',lambda err:errors.append(str(err)))
+        # Solo nell'harness locale: imposta una squadra esistente con codice fittizio.
+        page.add_init_script("localStorage.setItem('fg', JSON.stringify({team:'Oranje VC',code:'TEST-ONLY'}))")
         page.goto(BASE+'/girrr/app.html#carriera',wait_until='domcontentloaded',timeout=30000)
         page.wait_for_timeout(2500)
         cards=page.locator('.ob')
