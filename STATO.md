@@ -93,5 +93,9 @@ Niente di questo va sul sito vero senza altro "vai" esplicito (lo SQL feed è gi
 ## 26 ottobre 2026 — ChatGPT: Fiducia 5.2 e premi Carriera (solo Anteprima)
 - Arco SVG progressivo troncato al valore, resto grigio, nessun pallino; numero flip ~520 ms quando cambia la squadra, con rispetto di reduced-motion. Modifiche in Lab e nelle due Anteprime.
 - Fiducia: bonus di leadership tardiva max +4 e +3 aggiuntivi per capolista emergente; ipotesi 78→85 alla 34ª giornata, non bonus permanente.
-- Premi presidente (+2 reputazione), sponsor (+1 reputazione e 5–15 Fantacrediti) mostrati come **simulazione non accreditata**. Per il server predisposti proposta schema SQL privato anti-duplicazione e piano in `proposte/`. Nessuna mutazione di Supabase, né di `gh-pages`.
+- Premi presidente (+2 reputazione), sponsor (+1 reputazione e 50–125 Fantacrediti) mostrati come **simulazione non accreditata**. Per il server predisposti proposta schema SQL privato anti-duplicazione e piano in `proposte/`. Nessuna mutazione di Supabase, né di `gh-pages`.
 - Controlli GitHub Actions: build Anteprima 5.2 e browser Chromium/WebKit sul cambio squadra.
+
+## 26 ottobre 2026 — Seconda revisione Fiducia 5.2
+- Eliminato il bonus riservato a capolista emergente. Ogni squadra riceve bonus **o** malus sulla fiducia in base a differenza tra posizione effettiva e posizione attesa, aumentato gradualmente con le giornate giocate e limitato a ±11 punti. Vale per Big, Emergenti e Outsider.
+- Simulazione sponsor: premi 50/75/100/125 Fantacrediti secondo difficoltà, non accreditati realmente. Solo Lab e Anteprima 5.2.
