@@ -29,6 +29,31 @@ with sync_playwright() as p:
               cardWidth:C.width, cardLeft:C.left,logoWidth:logo?rect(logo).width:0,
               overflow:document.documentElement.scrollWidth>innerWidth};
           }""")
+          # Semicerchio multicolore e righe Fiducia in lega.
+          colors=page.evaluate("""() => {
+            const arc=document.querySelector('.gauge');
+            const stops=arc ? Array.from(arc.querySelectorAll('linearGradient stop')).map(x=>x.getAttribute('stop-color')) : [];
+            const marker=arc?.querySelector('circle');
+            const card=Array.from(document.querySelectorAll('.card')).find(x=>x.querySelector('h3')?.textContent.trim()==='Fiducia in lega');
+            const rows=card ? Array.from(card.querySelectorAll('.row')).map(el=>{
+              const num=el.querySelector('b.num');
+              const fill=el.querySelector('.pbar i');
+              return {score:Number(num?.textContent),fill:fill?.style.background,width:fill?.style.width,
+                track:getComputedStyle(fill?.parentElement).backgroundColor};
+            }) : [];
+            return {stops,marker:marker?.getAttribute('cx'),rows};
+          }""")
+          palette=['#ff6174','#ff9b4a','#ffd166','#70df90','#36c9c5','#3d93d6']
+          def choose(v):
+            return palette[5] if v>=100 else palette[4] if v>=81 else palette[3] if v>=61 else palette[2] if v>=41 else palette[1] if v>=21 else palette[0]
+          color_pass=(colors['stops']==palette and colors['marker'] is not None
+            and len(colors['rows'])==10
+            and all(r['fill']==choose(r['score']) and r['width']==str(r['score'])+'%'
+              and r['track'] not in ('transparent','rgba(0, 0, 0, 0)') for r in colors['rows']))
+          print('FIDUCIA',browser_name,route,width,'passed',color_pass,
+            'scores',[r['score'] for r in colors['rows']])
+          if not color_pass:
+            failures.append(f'{browser_name} {route} {width}: gradient/colors {colors}')
           mobile=width<=700
           # In mobile testo non deve essere schiacciato; badge sotto testo e barra sotto badge.
           checks=[
