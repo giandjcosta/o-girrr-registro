@@ -82,3 +82,10 @@ Niente di questo va sul sito vero senza altro "vai" esplicito (lo SQL feed è gi
 - Collaudo Chromium su layout rappresentativo a 300, 320, 375, 390, 430, 640, 768 e 1024 px: nessun overflow orizzontale, titolo leggibile, stato nei limiti, track barra distinto e riempimento al 99%; **8/8 viewport PASS**. Questo è un test del componente, non del sito completo online.
 - Preparato nel repository originale, **solo ramo** `chatgpt/staging-20261026-lazy-curva-carriera`, l'integrazione Carriera + Lazy Loading Spogliatoio + Infinite Scroll Curva (Lega e Stadio). Sintassi JS inline delle cinque pagine controllata senza errori. Ingresso unico Grok non applicato: la Home vera contiene già `ospite.js`, e non va duplicato un secondo controllo d'accesso senza test d'integrazione.
 - **Non ancora pubblicato su `gh-pages`**: attende verifica end-to-end sulla UI completa, build canonica `python3 anteprima/build.py` e via libera finale. Nessuna mutazione a Supabase.
+
+## Anteprima 5.2 — proseguimento lavori (26 ottobre 2026)
+- Le modifiche pubblicate oggi al sito originale (lazy loading dello Spogliatoio, infinite scroll Curva, correzione card sponsor, colori Fiducia in lega e arco multicolore) sono **parte del ciclo 5.2**; non costituiscono l'avvio della 5.3.
+- Le nuove idee e rifiniture della 5.2 vanno prima nel **Lab/Anteprima 5.2**. Nessun rilascio automatico su `gh-pages` senza ulteriore decisione esplicita.
+- La card sponsor in `lab/index.html`, `anteprima/index.html`, `anteprima/attuale.html` usa ora markup con badge sotto al titolo su mobile e progress bar a larghezza piena.
+- La Fiducia in lega mostra barre monocolore basate sul valore (rosso→arancione→giallo→verde→turchese→blu), con track grigio e numero invariati.
+- Il semicerchio Fiducia del presidente mantiene il gradiente completo, ma il cursore è ridotto da r=9 a **r=6**, riempimento **blu notte #141d3d** e bordo crema chiaro, in linea con la grafica del sito. Questa ulteriore rifinitura è **solo in Anteprima 5.2**, non ancora nel sito ufficiale.
