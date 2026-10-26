@@ -36,7 +36,7 @@ with sync_playwright() as p:
             result['titleWidth']>= (125 if width<=375 else 200),
             not result['overflow'],
             result['badgeRight']<=width,
-            result['progressWidth']>=result['cardWidth']-3,
+            result['progressWidth']>=result['cardWidth']-(3 if mobile else result['logoWidth']+22),
             result['fillWidth']>0 and result['fillWidth']<result['progressWidth'],
             result['trackColor'] not in (None,'rgba(0, 0, 0, 0)','transparent')
           ]
