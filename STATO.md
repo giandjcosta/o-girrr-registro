@@ -68,3 +68,5 @@ Niente di questo va sul sito vero senza altro "vai" esplicito (lo SQL feed è gi
 ## Carriera: obiettivi con scadenza (25 ottobre)
 - Obiettivi di posizione non risultano più "Fatto" prima della scadenza. Dettaglio nello storico / lavori del 25 ottobre.
 - Online sul sito vero (`gh-pages` `b75fb68`, `girrr/app.html` e `stadio/girrr/app.html`).
+
+- **ChatGPT 26/10 — collaudo su copia integrale:** aggiunta `lab/prova-spogliatoio-reale.html`, copia dell'`index.html` vero con wrapper lazy inserito *prima* della IIFE e agganciato alla `render()` interna. Il collegamento è presente nella demo grafica Lega. Parsing di tutti gli script JavaScript inline superato (il seed JSON è escluso). La pagina usa il `data.json` remoto dell'originale via `<base>` e **non** è stata provata online con codice squadra vero; serve unirla al Lab soltanto dopo il «Vai» ed eseguire test end-to-end. Nessuna modifica a `gh-pages`.
