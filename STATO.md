@@ -66,3 +66,5 @@ Niente di questo va sul sito vero senza altro "vai" esplicito (lo SQL feed è gi
 ## Carriera: obiettivi con scadenza (25 ottobre)
 - Obiettivi di posizione non risultano più "Fatto" prima della scadenza. Dettaglio nello storico / lavori del 25 ottobre.
 - Online sul sito vero (`gh-pages` `b75fb68`, `girrr/app.html` e `stadio/girrr/app.html`).
+
+- **ChatGPT 26/10 — PR #27 Curva completa:** su ramo `chatgpt/collaudo-curva-infinite` preparata `lab/prova-curva-completa-infinite.html` dal sorgente integrale della Curva, con 20 post visibili per batch, ulteriori pagine RPC da 150 post tramite `p_before`, deduplicazione e conservazione archivio al refresh. La demo originaria `lab/prova-infinite-scroll.html` collega la prova completa. Test sintassi JS positivo; test Supabase **solo lettura**: funzione `curva_feed(text,text,int,double precision)` presente, chiamate con `p_limit=2` e successiva `p_before` restituiscono due pagine ordinate. Nessun SQL modificato, nessuna produzione toccata. Richiede test UI online e «Vai» prima di `main`.
