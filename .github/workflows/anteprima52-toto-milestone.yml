@@ -1,0 +1,18 @@
+name: Anteprima Totogirrr 5.2 QA
+on:
+  push:
+    paths:
+      - 'lab/index.html'
+      - 'anteprima/**'
+      - 'prove/collaudo_preview52_totogirrr_milestone.js'
+      - '.github/workflows/anteprima52-toto-milestone.yml'
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rigenera anteprima da Lab
+        run: python3 anteprima/build.py
+      - name: Verifica codice, milestone e premi sponsor in modalità demo
+        run: node prove/collaudo_preview52_totogirrr_milestone.js
