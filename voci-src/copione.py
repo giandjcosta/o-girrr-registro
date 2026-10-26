@@ -112,7 +112,9 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
         for x, y in (conf.get("partite") or []): avv[x] = y; avv[y] = x
         info = []
         prom = {}
+        pare = set()   # squadre la cui promessa si è chiusa in pareggio (esito "p" dal database)
         for t, ans in cf.items():
+            if isinstance(ans, dict) and ans.get("esito") == "p": pare.add(t)
             # formato nuovo: {"toni": [...], "promessa": "frase", "pesa": 1|2}; formato vecchio: solo la lista dei toni
             toni = ans.get("toni") if isinstance(ans, dict) else ans
             if isinstance(ans, dict) and ans.get("promessa"): prom[t] = ans
@@ -133,17 +135,18 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
             for i, (t, tn, v, o) in enumerate(scelte[:2]):
                 if t in prom:
                     pz = prom[t]["promessa"].rstrip(".!? ")
-                    fr = (f"{t} aveva promesso: {pz}. Parola mantenuta, e la dirigenza apprezza!" if v
+                    fr = (f"{t} aveva promesso: {pz}. Contro {o} è finita in pareggio: parola a metà, e la dirigenza aspetta di vedere di più." if t in pare
+                          else f"{t} aveva promesso: {pz}. Parola mantenuta, e la dirigenza apprezza!" if v
                           else f"{t} aveva promesso: {pz}. E ha perso contro {o}: parola tradita, e il presidente ha detto che potevano evitare di essere così sfacciati.")
-                    add("G" if i == 0 else "B", fr, None if v else "sarcasmo")
+                    add("G" if i == 0 else "B", fr, None if (v or t in pare) else "sarcasmo")
                 else:
                     add("G" if i == 0 else "B", VERO[(tn, v)].format(t=t, o=o), "sarcasmo" if (tn == 0 and not v) else None)
             add("S", "Per ora è tutto, restituisco la linea in studio!", "entusiasmo")
     # --- sfide per il derby lanciate in conferenza (stato: accettata / rifiutata / scaduta / attesa)
     for sd in (conf or {}).get("sfide_derby") or []:
         da, ar, st_ = sd.get("da"), sd.get("a"), sd.get("stato")
-        if st_ == "accettata": add("S", f"Notizia dalla sala stampa: {da} ha sfidato {ar}, e la sfida è stata accettata! Nasce {sd.get('nome') or 'un nuovo derby'}, derby ufficiale per sempre!", "entusiasmo")
-        elif st_ == "rifiutata": add("S", f"{da} aveva sfidato {ar}, ma {ar} ha rifiutato. Niente derby, solo un po' più di rivalità!", "sarcasmo")
+        if st_ == "accettata": add("S", f"Notizia dalla sala stampa: {da} ha sfidato {ar}, e la sfida è stata accettata! Nasce {sd.get('nome') or 'un nuovo Derby'}, Derby ufficiale per sempre!", "entusiasmo")
+        elif st_ == "rifiutata": add("S", f"{da} aveva sfidato {ar}, ma {ar} ha rifiutato. Niente Derby, solo un po' più di rivalità!", "sarcasmo")
         elif st_ == "scaduta": add("S", f"{da} aveva sfidato {ar}, ma {ar} non ha risposto: la sfida è decaduta. Resta un po' di rivalità!")
     # --- Curva: solo un post vero, se Gianluca ne ha dato uno
     cv = (curva_ or {}).get("post")
@@ -166,7 +169,12 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
     import derby as _d
     cand = [m for m in g if _d.e_derby(m[0], m[1], g, regole)]
     der = max(cand, key=lambda m: _d.intensita(m[0], m[1], regole) + _d.rivalita(m[0], m[1], regole)) if cand else None
-    if der: add("B", f"Alla prossima giornata c'è il derby: {der[0]} contro {der[1]}!" + (" Una rivalità storica!" if _d.rivalita(der[0], der[1], regole) >= 70 else ""), "urlo")
+    # i Derby nati dalle sfide accettate sono ufficiali: se si giocano alla prossima giornata hanno la precedenza
+    uff = [(m, sd) for m in g for sd in ((conf or {}).get("sfide_derby") or []) if sd.get("stato") == "accettata" and {sd.get("da"), sd.get("a")} == {m[0], m[1]}]
+    if uff:
+        m, sd = uff[0]
+        add("B", f"Alla prossima giornata c'è il Derby! {sd.get('nome') or 'Derby'}: {m[0]} contro {m[1]}!", "urlo")
+    elif der: add("B", f"Alla prossima giornata c'è il Derby: {der[0]} contro {der[1]}!" + (" Una rivalità storica!" if _d.rivalita(der[0], der[1], regole) >= 70 else ""), "urlo")
     # --- mercato: Ciro c'è solo se ci sono notizie
     notizie = (mercato or {}).get("notizie") or []
     if notizie:
