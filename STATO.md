@@ -57,12 +57,16 @@ Lo **storico del progetto**, ricostruito dalle cronologie Git e dalle note, è i
 
 Niente di questo va sul sito vero senza altro "vai" esplicito (lo SQL feed è già autorizzato).
 
-## Lazy Loading Spogliatoio — prova grafica Lega (ChatGPT, 25 ottobre 2026)
-- Sul ramo `chatgpt/lab-lazy-grafica-lega` (derivato da `grok/spogliatoio-lazy`) è stata creata `lab/prova-lazy-tabs-lega.html`: demo con la grafica O Girrr/Lega, nove tab e dati dimostrativi; importa direttamente `lab/spogliatoio-lazy.js` dalla stessa revisione.
-- Aggiunto in `lab/index.html` il collegamento alla demo. Il codice lazy è quello già preparato da Grok; nessun cambiamento al modulo in questo intervento.
-- **Non ancora online:** il lavoro è su ramo e richiede autorizzazione per unire a `main` del Registro e pubblicare la pagina GitHub Pages. Non sono stati eseguiti test browser completi né la rigenerazione di `anteprima/`; prima del rilascio verificare console, navigazione rapida, schermi 320 px e ricalcolare l'Anteprima con `python3 anteprima/build.py`.
-- `gh-pages` del sito vero non è stato toccato. Nessuna autorizzazione al rilascio.
+## Lazy Loading Spogliatoio — prova grafica Lega (ChatGPT, 26 ottobre 2026)
+- Ramo `chatgpt/lab-lazy-grafica-lega`: `lab/prova-lazy-tabs-lega.html` usa grafica O Girrr (blu/rosso/vetro) e nove tab con dati simulati; il link compare in `lab/index.html`.
+- **Corretta l'architettura:** la versione iniziale Grok non poteva intercettare `render` esterno alla IIFE del sito. Il modulo `lab/spogliatoio-lazy.js` ora esporta `window.spgLazyWrap`, che è installato dal codice originale attraverso un callback che legge lo stato privato. Non espone `D` globalmente. Guida puntuale in `lab/spogliatoio-lazy-README.md`.
+- **Controlli svolti:** parsing JavaScript del modulo e degli script inline della demo (OK); verifiche statiche di link e nove tab (OK); simulazione con finto DOM per tab leggere/pesanti, skeleton, doppio frame, annullamento di click rapidi, login, cambio dati e controllo Statistiche (OK, con la limitazione del DOM simulato).
+- **Test eseguiti da ChatGPT (26 ottobre):** test Node.js `prove/prova_spogliatoio_lazy.js` ricostruito con lo stesso codice del ramo: **PASS**, otto verifiche; Chromium headless con Playwright su **harness HTML locale equivalente** a 320/375/768/1280 px: **PASS** per skeleton, passaggio rapido tab, logout, overflow e console senza eccezioni. La navigazione diretta verso il sito GitHub Pages e il server localhost è bloccata dall'ambiente; test via `page.set_content`. Non sono test end-to-end sulla pagina pubblicata e non validano la resa visiva integrale della demo GitHub.
+- **Da completare:** build `python3 anteprima/build.py` sul checkout completo; test browser **sulla pagina reale** del Lab, WebKit/Safari e iPhone a 320 px, autenticazione con codice valido, caricamento remoto del Borsino e fetch aggiornamenti `data.json`. La demo resta un ambiente con dati simulati.
+- **Non online:** ramo e PR in attesa del «Vai» esplicito per `main` del Registro e pubblicazione nel Lab. `gh-pages` del sito vero invariato; niente rilascio senza certificazione e ulteriore «Vai».
 
 ## Carriera: obiettivi con scadenza (25 ottobre)
 - Obiettivi di posizione non risultano più "Fatto" prima della scadenza. Dettaglio nello storico / lavori del 25 ottobre.
 - Online sul sito vero (`gh-pages` `b75fb68`, `girrr/app.html` e `stadio/girrr/app.html`).
+
+- **ChatGPT 26/10 — collaudo su copia integrale:** aggiunta `lab/prova-spogliatoio-reale.html`, copia dell'`index.html` vero con wrapper lazy inserito *prima* della IIFE e agganciato alla `render()` interna. Il collegamento è presente nella demo grafica Lega. Parsing di tutti gli script JavaScript inline superato (il seed JSON è escluso). La pagina usa il `data.json` remoto dell'originale via `<base>` e **non** è stata provata online con codice squadra vero; serve unirla al Lab soltanto dopo il «Vai» ed eseguire test end-to-end. Nessuna modifica a `gh-pages`.
