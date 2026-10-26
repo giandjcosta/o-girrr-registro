@@ -1,0 +1,35 @@
+name: ChatGPT collaudo staging O Girrr
+on:
+  push:
+    paths:
+      - '.github/workflows/chatgpt-collaudo-staging.yml'
+      - 'prove/collaudo_produzione_chromium.py'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - name: Checkout Registro
+        uses: actions/checkout@v4
+      - name: Checkout sito (solo ramo staging)
+        uses: actions/checkout@v4
+        with:
+          repository: giandjcosta/o-fant-a-girrr
+          ref: chatgpt/staging-20261026-lazy-curva-carriera
+          path: produzione
+      - name: Verify Anteprima build
+        run: python3 anteprima/build.py
+      - name: Node lazy loading test
+        run: node prove/prova_spogliatoio_lazy.js
+      - name: Chromium setup
+        run: |
+          python3 -m pip install --break-system-packages playwright
+          python3 -m playwright install --with-deps chromium
+      - name: Serve staging site
+        run: |
+          python3 -m http.server 8765 -d produzione > /tmp/ogirrr-qa-server.log 2>&1 &
+          sleep 2
+      - name: Browser smoke tests
+        run: python3 prove/collaudo_produzione_chromium.py
