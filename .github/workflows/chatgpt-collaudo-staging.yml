@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: giandjcosta/o-fant-a-girrr
-          ref: chatgpt/fix-sponsor-card-grid-20261026
+          ref: chatgpt/fiducia-colori-20261026
           path: produzione
       - name: Verify Anteprima build
         run: python3 anteprima/build.py
