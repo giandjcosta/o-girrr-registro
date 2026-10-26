@@ -736,11 +736,11 @@ function vCarL(){
    +'<p style="font-weight:700;margin-top:8px">Fiducia: <span class="num">'+fidA(t,S.fdem.p,S.fdem.g,0)+'</span> su 100 <span class="mut sm">(peso del calendario ×'+(Math.round(molt(S.fdem.g)*100)/100).toString().replace('.',',')+')</span></p></div>';
   h+='<div class="card"><h3>Obiettivi della stagione</h3>'+o.map(function(x){return '<div class="ob">'+(x[0]?'<span class="src">Pres.</span>':'<img src="'+(SPIMG[x[1]]||D.img.sp2)+'" alt="'+x[1]+'">')+'<div class="grow"><b>'+x[2]+'</b><div class="mut sm">'+x[1]+'</div></div><span class="tag '+(x[4]==='Fatto'?'o':'')+'">'+x[4]+'</span><div class="pbar" role="progressbar" aria-label="Progresso obiettivo" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+x[3]+'"><i style="width:'+x[3]+'%"></i></div></div>'}).join('')+'</div>';
   var bonusPres=(e1[1]==='Fatto'?2:0)+(e2[1]==='Fatto'?2:0),bonusSponsor=e4[1]==='Fatto'?1:0;
-  var credSponsor=e4[1]==='Fatto'?((sp.dl||GTOT)<=10?10:(/Chiudi|giornate/i.test(sp.testo)?15:5)):0;
+  var credSponsor=e4[1]==='Fatto'?(/Chiudi meglio/i.test(sp.testo)?125:(sp.dl||GTOT)<=10?100:/giornate/i.test(sp.testo)?75:50):0;
   h+='<div class="card" aria-label="Premi Carriera in simulazione"><h3>Premi reputazione e sponsor · Proposta 5.2</h3>'
     +'<p class="sm mut">La reputazione sarà permanente anche nelle stagioni successive. I premi verranno assegnati una sola volta dopo la verifica degli obiettivi.</p>'
     +'<div class="row" style="flex-wrap:wrap;gap:8px;margin-top:10px"><span class="tag">Presidente: +'+bonusPres+' reputazione</span><span class="tag">Sponsor: +'+bonusSponsor+' reputazione</span><span class="tag">Totogirrr: +'+credSponsor+' Fantacrediti</span></div>'
-    +'<p class="sm mut" style="margin-top:9px">Questi valori sono solo una simulazione: nessun premio è ancora registrato o accreditato. Bonus standard: +2 reputazione per obiettivo del presidente, +1 sponsor, 5–15 Fantacrediti sponsor secondo difficoltà.</p></div>';
+    +'<p class="sm mut" style="margin-top:9px">Questi valori sono solo una simulazione: nessun premio è ancora registrato o accreditato. Bonus standard: +2 reputazione per obiettivo del presidente, +1 sponsor, 50–125 Fantacrediti sponsor secondo difficoltà.</p></div>';
   h+='<div class="card"><h3>Fiducia in lega</h3>'+D.teams.slice().sort(function(a,b){return fid(b)-fid(a)}).map(function(x){var v=fid(x);return '<div class="row" style="padding:6px 0">'+av(x,x===t?'me':'')+'<div class="grow"><b>'+esc(x)+'</b><div class="pbar"><i style="width:'+v+'%;background:'+fiduciaColore(v)+'"></i></div></div><b class="num">'+v+'</b></div>'}).join('')+'</div>';
   return h+'<p class="note">Nessun obiettivo del tipo "metti tre giovani". Solo classifica, vittorie e punti, che l\'app calcola da sola.</p>';
 }
