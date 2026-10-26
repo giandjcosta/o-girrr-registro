@@ -1,5 +1,5 @@
 {
- "aggiornato": "2026-10-26T06:42:27Z",
+ "aggiornato": "2026-10-26T18:42:57Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
@@ -58,9 +58,9 @@
    "nome": "Controllo giornata calcolata su Leghe",
    "quando": "Domenica, lunedì, martedì e sabato, ogni 3 ore dalle 09:07 alle 21:07",
    "stato": "attiva",
-   "prossimo": "2026-10-26T08:07:00Z",
+   "prossimo": "2026-10-26T20:07:00Z",
    "ultimo": {
-    "quando": "2026-10-25T20:07:46Z",
+    "quando": "2026-10-26T17:08:26Z",
     "esito": "riuscito"
    },
    "nota": "Al momento sospesa: il computer non è raggiungibile."
