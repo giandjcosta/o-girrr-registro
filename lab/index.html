@@ -145,6 +145,9 @@ svg text{fill:var(--mute);font-family:var(--fb)}
  .ob>.pbar{grid-column:1/-1;grid-row:auto;width:100%}
 }
 @media(max-width:370px){.ob{grid-template-columns:55px minmax(0,1fr);column-gap:10px}.ob img{width:53px;max-width:53px;height:35px}.ob .grow>b{font-size:14px}}
+/* Anche le barre numeriche seguono transizioni morbide durante un aggiornamento. */
+.pbar i{transition:width .52s cubic-bezier(.2,.8,.2,1),background-color .52s ease}
+@media(prefers-reduced-motion:reduce){.pbar i{transition:none}}
 /* 5.2: indicatore di fiducia animato e accessibile */
 .trust-visual{width:min(260px,100%);margin:0 auto;perspective:500px}
 .trust-visual svg{display:block;width:100%;height:auto}
