@@ -3,7 +3,9 @@ from pathlib import Path
 for filename in ('lab/index.html', 'anteprima/index.html', 'anteprima/attuale.html'):
     s=Path(filename).read_text(encoding='utf8')
     expected=(
-      'r="6" fill="#141d3d" stroke="#f1e8d8"',
+      'class="trust-fill"',
+      'stroke-dasharray=',
+      'function animaFiducia(t,v)',
       'id="fiducia-scala"',
       "function fiduciaColore(v)",
       'background:rgba(255,255,255,.24)',

@@ -89,3 +89,9 @@ Niente di questo va sul sito vero senza altro "vai" esplicito (lo SQL feed è gi
 - La card sponsor in `lab/index.html`, `anteprima/index.html`, `anteprima/attuale.html` usa ora markup con badge sotto al titolo su mobile e progress bar a larghezza piena.
 - La Fiducia in lega mostra barre monocolore basate sul valore (rosso→arancione→giallo→verde→turchese→blu), con track grigio e numero invariati.
 - Il semicerchio Fiducia del presidente mantiene il gradiente completo, ma il cursore è ridotto da r=9 a **r=6**, riempimento **blu notte #141d3d** e bordo crema chiaro, in linea con la grafica del sito. Questa ulteriore rifinitura è **solo in Anteprima 5.2**, non ancora nel sito ufficiale.
+
+## 26 ottobre 2026 — ChatGPT: Fiducia 5.2 e premi Carriera (solo Anteprima)
+- Arco SVG progressivo troncato al valore, resto grigio, nessun pallino; numero flip ~520 ms quando cambia la squadra, con rispetto di reduced-motion. Modifiche in Lab e nelle due Anteprime.
+- Fiducia: bonus di leadership tardiva max +4 e +3 aggiuntivi per capolista emergente; ipotesi 78→85 alla 34ª giornata, non bonus permanente.
+- Premi presidente (+2 reputazione), sponsor (+1 reputazione e 5–15 Fantacrediti) mostrati come **simulazione non accreditata**. Per il server predisposti proposta schema SQL privato anti-duplicazione e piano in `proposte/`. Nessuna mutazione di Supabase, né di `gh-pages`.
+- Controlli GitHub Actions: build Anteprima 5.2 e browser Chromium/WebKit sul cambio squadra.

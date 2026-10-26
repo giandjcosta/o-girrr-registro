@@ -1,0 +1,27 @@
+name: Fiducia 5.2 Browser QA
+on:
+  push:
+    paths:
+      - 'lab/index.html'
+      - 'anteprima/**'
+      - 'prove/collaudo_fiducia52_browser.py'
+      - '.github/workflows/fiducia52-qa.yml'
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify Anteprima build
+        run: python3 anteprima/build.py
+      - name: Install Playwright browsers
+        run: |
+          python3 -m pip install --break-system-packages playwright
+          python3 -m playwright install --with-deps chromium webkit
+      - name: Serve Lab
+        run: |
+          python3 -m http.server 8765 > /tmp/girrr-52-http.log 2>&1 &
+          sleep 2
+      - name: Test animated trust gauge
+        run: python3 prove/collaudo_fiducia52_browser.py
