@@ -11,7 +11,7 @@ create table if not exists private.carriera_premi (
   obiettivo_key text not null,
   tipo text not null check (tipo in ('presidente','sponsor')),
   reputazione integer not null check (reputazione between 1 and 3),
-  fantacrediti numeric(10,2) not null default 0 check (fantacrediti between 0 and 15),
+  fantacrediti numeric(10,2) not null default 0 check (fantacrediti between 0 and 125),
   prova jsonb not null,
   verificato_il timestamptz not null default now(),
   primary key (stagione,allenatore_id,obiettivo_key),
