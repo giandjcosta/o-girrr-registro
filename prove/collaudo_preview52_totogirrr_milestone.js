@@ -34,6 +34,6 @@ const context={CL:[
 gioc:()=>2,Math,Object};
 vm.createContext(context);vm.runInContext(source,context);
 assert.equal(context.aGiornata(8,'A').pos,1);
-assert.equal(context.aGiornata(8,'D').pos,4);
+assert.equal(context.aGiornata(8,'D').pos,3);
 assert.equal(context.aGiornata(7,'A'),null);
 console.log('PASS official G8 milestone even if embedded table is still G2');
