@@ -66,3 +66,5 @@ Niente di questo va sul sito vero senza altro "vai" esplicito (lo SQL feed è gi
 ## Carriera: obiettivi con scadenza (25 ottobre)
 - Obiettivi di posizione non risultano più "Fatto" prima della scadenza. Dettaglio nello storico / lavori del 25 ottobre.
 - Online sul sito vero (`gh-pages` `b75fb68`, `girrr/app.html` e `stadio/girrr/app.html`).
+
+- **ChatGPT 26/10 — PR #28 Carriera:** corretta la funzione `esito` in `lab/index.html` e applicata la stessa sostituzione mirata a `anteprima/index.html` e `anteprima/attuale.html`. Senza storico della giornata interessata, l'obiettivo passa a `In attesa della classifica alla Nª`, mai `Fatto`/`Mancato` in base alla classifica corrente. Test JS di 4 casi superati. La build completa `python3 anteprima/build.py` non è stata eseguita per mancato checkout (DNS github.com bloccato); le due Anteprime sono state allineate con patch identica, ma serve rigenerarle/verificarle in checkout prima del merge. Nessuna produzione/Supabase modificata.
