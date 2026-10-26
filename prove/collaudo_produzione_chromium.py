@@ -26,6 +26,31 @@ with sync_playwright() as p:
             print('CAREER',width,q)
         if errors:failures.append(f'Carriera {width} JS errors: {errors[:2]}')
         page.close()
+    for route in ('girrr/curva.html','stadio/girrr/curva.html'):
+        page=browser.new_page(viewport={'width':320,'height':800})
+        errors=[]
+        page.on('pageerror',lambda err:errors.append(str(err)))
+        page.goto(BASE+'/'+route,wait_until='domcontentloaded',timeout=30000)
+        page.wait_for_timeout(3000)
+        feed=page.locator('#vista article.post')
+        before=feed.count()
+        marker=page.locator('#piu-feed').count()
+        if before>20:
+            failures.append(f'{route}: {before} post renderizzati al primo caricamento (limite 20)')
+        if before>=20 and marker:
+            page.evaluate('window.scrollTo(0,document.body.scrollHeight)')
+            page.wait_for_timeout(1500)
+            after=feed.count()
+            if after<=before:
+                failures.append(f'{route}: scroll non ha caricato altri cori ({before}→{after})')
+        else:
+            after=before
+        overflow=page.evaluate('document.documentElement.scrollWidth>innerWidth')
+        if overflow:
+            failures.append(f'{route}: overflow a 320px')
+        print('CURVA',route,{'prima':before,'dopo':after,'marker':marker,'overflow':overflow,'js_errors':errors[:2]})
+        if errors:failures.append(f'{route} JS errors: {errors[:2]}')
+        page.close()
     page=browser.new_page()
     page.goto(BASE+'/index.html',wait_until='domcontentloaded',timeout=30000)
     page.wait_for_timeout(500)
