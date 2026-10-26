@@ -659,7 +659,7 @@ function aGiornata(n,t){if(!CL||gioc()<n)return null;var T={};function r(x){retu
 /* esito di un obiettivo: [percentuale, etichetta]; pos: obiettivo di posizione alla giornata dl (ok decide), altrimenti si accumula fino a fine stagione */
 function esito(t,pct,stato,dl,ok){var G=gioc();
   if(G<dl)return ok?[Math.min(99,pct),stato]:[pct,pct>=100?'Fatto':stato];
-  var x=ok?(aGiornata(dl,t)||row(t)):null,f=ok?ok(x):pct>=100;return [f?100:Math.min(99,pct),f?'Fatto':'Mancato']}
+  var x=ok?aGiornata(dl,t):null;if(ok&&!x)return [Math.min(99,pct),'In attesa della classifica alla '+dl+'ª'];var f=ok?ok(x):pct>=100;return [f?100:Math.min(99,pct),f?'Fatto':'Mancato']}
 function sponsorDi(t){var ob=OB[t]||{},er=ob.er||5,fz=ob.fz||70,lp=lastPos(t),r=row(t),mp=maxPts(t);
   var fa=fascia(t);
   if(fa==='Big'){var x=Math.max(60,Math.min(80,5*Math.round((58+(fz-60)*.45)/5)));return {nome:'Phönix Automobile',testo:'Supera '+x+' punti in una giornata',pct:Math.min(100,Math.round(mp/x*100)),stato:'Massimo '+f1(mp),dl:GTOT}}
