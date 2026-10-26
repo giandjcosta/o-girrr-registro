@@ -48,7 +48,7 @@ with sync_playwright() as p:
             return palette[5] if v>=100 else palette[4] if v>=81 else palette[3] if v>=61 else palette[2] if v>=41 else palette[1] if v>=21 else palette[0]
           color_pass=(colors['stops']==palette and colors['marker'] is not None
             and len(colors['rows'])==10
-            and all(r['fill']==choose(r['score']) and r['width']==str(r['score'])+'%'
+            and all(r['fill']==('rgb('+', '.join(str(int(choose(r['score'])[i:i+2],16)) for i in (1,3,5))+')') and r['width']==str(r['score'])+'%'
               and r['track'] not in ('transparent','rgba(0, 0, 0, 0)') for r in colors['rows']))
           print('FIDUCIA',browser_name,route,width,'passed',color_pass,
             'scores',[r['score'] for r in colors['rows']])
