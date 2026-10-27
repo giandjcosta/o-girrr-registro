@@ -53,3 +53,10 @@ Repository: `o-fant-a-girrr` (sito della lega), `o-girrr-registro` (laboratorio 
 - Di' cosa hai cambiato, cosa hai provato e cosa non hai potuto provare (per esempio Safari).
 - Per la lega: aggiorna `STATO.md` nel repository `o-girrr-registro`.
 - Rispondi in italiano.
+
+## Distinzione obbligatoria: Laboratorio, Anteprima integrata e Changelog
+- **Laboratorio (`lab/`)**: prototipi, prove di singole funzionalità, pagine isolate e demo parziali. Non chiamare «Anteprima 5.2» una pagina che presenta soltanto un pezzo dell'app.
+- **Anteprima della versione (`anteprima/` e, dove previsto, `ufficiale/`)**: un unico sito navigabile che riproduce l'intera app con la grafica reale e tutte le sezioni collegate. Le novità si integrano nelle sezioni corrette (per esempio sponsor e premi in Carriera/Totogirrr); non creare demo standalone come sostituto. Mantieni le due grafiche Lega/Stadio e i dati di prova isolati. Dopo aver cambiato il Lab, rigenera entrambe le varianti tramite `python3 anteprima/build.py` e verifica navigazione e comportamento in browser.
+- **Changelog e `STATO.md`**: aggiornarli per cambiamenti significativi, indicando chiaramente cosa è solo in Lab, cosa è nella preview integrata e cosa è realmente in produzione. Non presentare un commit di prova come funzionalità già rilasciata nel sito ufficiale.
+- **Approvazione**: pubblicare o integrare nel sito vero, nel suo `main`/`gh-pages`, o applicare cambiamenti a Supabase di produzione richiede sempre il «Vai, pubblica» esplicito. Eventuali link demo devono essere verificati prima di essere presentati come funzionanti.
+- **Errore da evitare**: `anteprima/demo-5-2.html` è una demo standalone di prova; non è la versione integrata 5.2. Spostarla concettualmente nel Laboratorio e non spacciarla come la preview completa.
