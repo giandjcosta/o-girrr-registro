@@ -19,6 +19,7 @@ with sync_playwright() as p:
      other=next(t for t in options if t!='Oranje VC')
      page.locator('#cteam').select_option(label=other)
      page.wait_for_function("old => document.querySelector('.trust-visual')?.dataset.target !== old",arg=before,timeout=10000)
+     page.wait_for_timeout(1500)
      page.wait_for_function("Math.abs(Number(document.querySelector('.trust-fill').getAttribute('stroke-dasharray').split(' ')[0])-Number(document.querySelector('.trust-visual').dataset.target))<0.06",timeout=6000)
      q=page.evaluate("""() => {
        const el=document.querySelector('.trust-visual'), path=el?.querySelector('.trust-fill'), num=el?.querySelector('.trust-number'),
