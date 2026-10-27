@@ -37,6 +37,22 @@ with sync_playwright() as p:
     except Exception as ex:
      failures.append((browser_name,route,width,str(ex)))
     page.close()
+  for width in (320,390,1440):
+   page=browser.new_page(viewport={'width':width,'height':900})
+   try:
+    page.goto(base+'anteprima/totogirrr-52.html',wait_until='domcontentloaded')
+    page.locator('#riscatta-sponsor').wait_for(timeout=18000)
+    pre=page.locator('.bal b').inner_text()
+    page.locator('#riscatta-sponsor').click()
+    page.locator('.prize-corner.claimed').wait_for(timeout=10000)
+    post=page.locator('.bal b').inner_text()
+    assert pre!=post,(browser_name,width,'balance unchanged',pre,post)
+    assert not page.locator('#riscatta-sponsor').count()
+    print('TOTOGIRRR-CLAIM',browser_name,width,'PASS',pre,post)
+   except Exception as ex:
+    failures.append(('TOTOGIRRR-CLAIM',browser_name,width,str(ex)))
+    print('TOTOGIRRR-CLAIM',browser_name,width,'FAIL',str(ex))
+   page.close()
   browser.close()
 print('QA', 'PASS' if not failures else 'FAIL', failures[:5])
 sys.exit(1 if failures else 0)
