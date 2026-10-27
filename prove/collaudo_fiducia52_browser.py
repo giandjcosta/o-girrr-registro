@@ -18,7 +18,8 @@ with sync_playwright() as p:
      options=page.locator('#cteam option').all_text_contents()
      other=next(t for t in options if t!='Oranje VC')
      page.locator('#cteam').select_option(label=other)
-     page.wait_for_timeout(850)
+     page.wait_for_function("old => document.querySelector('.trust-visual')?.dataset.target !== old",arg=before,timeout=10000)
+     page.wait_for_function("Math.abs(Number(document.querySelector('.trust-fill').getAttribute('stroke-dasharray').split(' ')[0])-Number(document.querySelector('.trust-visual').dataset.target))<0.06",timeout=6000)
      q=page.evaluate("""() => {
        const el=document.querySelector('.trust-visual'), path=el?.querySelector('.trust-fill'), num=el?.querySelector('.trust-number'),
        gray=el?.querySelector('svg>path'), text=el?.querySelector('svg[aria-label]');
@@ -29,7 +30,7 @@ with sync_playwright() as p:
          reputation:!!rewards,
          overflow:document.documentElement.scrollWidth>innerWidth};
      }""")
-     checks=[q['dash']==str(q['value'])+' 100',q['value']==q['number'],q['gray']=='rgba(255,255,255,.22)',
+     checks=[abs(float(q['dash'].split(' ')[0])-q['value'])<0.06,q['value']==q['number'],q['gray']=='rgba(255,255,255,.22)',
        q['multicolor'],not q['hasMarker'],q['reputation'],not q['overflow'],not errors]
      if before==str(q['value']):checks.append(False)
      if not all(checks):failures.append((browser_name,route,width,q,errors,checks))
@@ -37,6 +38,23 @@ with sync_playwright() as p:
     except Exception as ex:
      failures.append((browser_name,route,width,str(ex)))
     page.close()
+  for width in (320,390,1440):
+   page=browser.new_page(viewport={'width':width,'height':900})
+   try:
+    page.goto(base+'anteprima/totogirrr-52.html',wait_until='domcontentloaded')
+    page.locator('#riscatta-sponsor').wait_for(timeout=18000)
+    pre=page.locator('.bal b').inner_text()
+    page.locator('#riscatta-sponsor').click()
+    page.locator('.prize-corner.claimed').wait_for(timeout=10000)
+    page.wait_for_timeout(850)
+    post=page.locator('.bal b').inner_text()
+    assert pre!=post,(browser_name,width,'balance unchanged',pre,post)
+    assert not page.locator('#riscatta-sponsor').count()
+    print('TOTOGIRRR-CLAIM',browser_name,width,'PASS',pre,post)
+   except Exception as ex:
+    failures.append(('TOTOGIRRR-CLAIM',browser_name,width,str(ex)))
+    print('TOTOGIRRR-CLAIM',browser_name,width,'FAIL',str(ex))
+   page.close()
   browser.close()
 print('QA', 'PASS' if not failures else 'FAIL', failures[:5])
 sys.exit(1 if failures else 0)

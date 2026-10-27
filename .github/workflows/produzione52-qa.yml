@@ -1,0 +1,28 @@
+name: Collaudo completo release 5.2
+on:
+  push:
+    paths:
+      - 'prove/collaudo_produzione52_browser.py'
+      - '.github/workflows/produzione52-qa.yml'
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: giandjcosta/o-fant-a-girrr
+          ref: chatgpt/release52-carriera-rewards-milestones
+          path: prod
+      - name: Install browsers
+        run: |
+          python3 -m pip install --break-system-packages playwright
+          python3 -m playwright install --with-deps chromium webkit
+      - name: Serve site
+        run: |
+          python3 -m http.server 8765 > /tmp/o52.log 2>&1 &
+          sleep 2
+      - name: Test Chromium and WebKit, mobile and desktop
+        run: python3 prove/collaudo_produzione52_browser.py
