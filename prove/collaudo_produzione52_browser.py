@@ -12,16 +12,16 @@ with sync_playwright() as p:
      page.locator('.trust-visual .trust-fill').wait_for(timeout=14000)
      gauge=page.locator('.trust-visual')
      assert gauge.locator('circle').count()==0
-     assert page.locator('select#fg').input_value()=='2'
-     assert page.locator('select#fp').input_value()=='5'
-     assert page.locator('.ob > .pbar').count()>=4
-     assert page.locator('h3').filter(has_text='Reputazione permanente').count()>=1
+     assert page.locator('select#fg').input_value()=='2','giornata='+page.locator('select#fg').input_value()
+     assert page.locator('select#fp').input_value()=='5','posizione='+page.locator('select#fp').input_value()
+     assert page.locator('.ob > .pbar').count()>=4,'progressbar='+str(page.locator('.ob > .pbar').count())
+     assert page.locator('h3').filter(has_text='Reputazione permanente').count()>=1,'reputation card missing'
      page.locator('#fp').select_option('8')
      page.locator('#cteam').select_option(label='Apo team')
-     assert page.locator('#fg').input_value()=='2'
-     assert page.locator('#fp').input_value()=='1'
+     assert page.locator('#fg').input_value()=='2','next day='+page.locator('#fg').input_value()
+     assert page.locator('#fp').input_value()=='1','next position='+page.locator('#fp').input_value()
      page.wait_for_function("""() => {const e=document.querySelector('.trust-visual');return e&&Math.abs(Number(e.querySelector('.trust-fill').getAttribute('stroke-dasharray').split(' ')[0])-Number(e.dataset.target))<.1}""",timeout=9000)
-     assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
+     assert page.evaluate('document.documentElement.scrollWidth<=innerWidth'),'horizontal overflow'
      print('CAREER-PASS',engine,route,width)
     except Exception as e:errors.append((engine,route,width,str(e)));print('CAREER-FAIL',engine,route,width,str(e))
     page.close()
