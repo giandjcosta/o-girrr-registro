@@ -1,11 +1,11 @@
 {
- "aggiornato": "2026-10-27T06:44:12Z",
+ "aggiornato": "2026-10-27T18:43:57Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
-   "quando": "Ogni 3 giorni alle 11:17",
+   "quando": "Una volta: 30 ottobre alle 11:17",
    "stato": "attiva",
-   "prossimo": "2026-10-28T10:17:00Z",
+   "prossimo": "2026-10-30T10:17:00Z",
    "ultimo": {
     "quando": "2026-10-25T10:17:43Z",
     "esito": "riuscito"
@@ -14,7 +14,7 @@
   },
   {
    "nome": "Aggiornamento del venerdì (partite giocate e formazioni)",
-   "quando": "Ogni venerdì alle 17:12",
+   "quando": "Una volta: 30 ottobre alle 17:12",
    "stato": "attiva",
    "prossimo": "2026-10-30T16:12:00Z",
    "ultimo": {
@@ -24,19 +24,19 @@
   },
   {
    "nome": "Aggiornamento del martedì (partite giocate e formazioni)",
-   "quando": "Ogni martedì alle 08:47",
+   "quando": "Una volta: 30 ottobre alle 11:47",
    "stato": "attiva",
-   "prossimo": "2026-10-27T07:47:00Z",
+   "prossimo": "2026-10-30T10:47:00Z",
    "ultimo": {
-    "quando": "2026-10-21T21:25:51Z",
+    "quando": "2026-10-27T08:11:35Z",
     "esito": "riuscito"
    }
   },
   {
    "nome": "Risultati di lega e coppa dal PC (Leghe)",
-   "quando": "Ogni martedì alle 21:07",
+   "quando": "Una volta: 30 ottobre alle 18:07",
    "stato": "attiva",
-   "prossimo": "2026-10-27T20:07:00Z",
+   "prossimo": "2026-10-30T17:07:00Z",
    "ultimo": {
     "quando": "2026-10-20T19:27:55Z",
     "esito": "fallito"
@@ -44,26 +44,26 @@
    "nota": "Serve il PC acceso con Chrome."
   },
   {
-   "nome": "Controllo risultati del martedì sera",
-   "quando": "Ogni martedì alle 22:37",
+   "nome": "Regista del calendario",
+   "quando": "Una volta: 31 ottobre alle 08:43",
    "stato": "attiva",
-   "prossimo": "2026-10-27T21:37:00Z",
+   "prossimo": "2026-10-31T07:43:00Z",
    "ultimo": {
     "quando": "2026-10-20T20:37:52Z",
     "esito": "fallito"
    },
-   "nota": "Avvisa solo se i risultati non sono aggiornati."
+   "nota": "Ogni mattina dopo il giornale programma le altre attività sulle date vere della Serie A."
   },
   {
    "nome": "Controllo giornata calcolata su Leghe",
-   "quando": "Domenica, lunedì, martedì e sabato, ogni 3 ore dalle 09:07 alle 21:07",
+   "quando": "Una volta: 30 giugno 2027 alle 10:00",
    "stato": "attiva",
-   "prossimo": "2026-10-27T08:07:00Z",
+   "prossimo": "2027-06-30T08:00:00Z",
    "ultimo": {
     "quando": "2026-10-26T20:10:24Z",
     "esito": "riuscito"
    },
-   "nota": "Al momento sospesa: il computer non è raggiungibile."
+   "nota": "Sospesa fino a fine stagione."
   },
   {
    "nome": "Controllo automatismi del mattino",
@@ -78,9 +78,9 @@
   },
   {
    "nome": "O Giornale del Girrr (PDF settimanale)",
-   "quando": "Ogni mercoledì alle 08:51",
+   "quando": "Una volta: 30 ottobre alle 18:51",
    "stato": "attiva",
-   "prossimo": "2026-10-28T07:51:00Z",
+   "prossimo": "2026-10-30T17:51:00Z",
    "ultimo": {
     "quando": "2026-10-21T06:52:46Z",
     "esito": "fallito"
