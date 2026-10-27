@@ -32,8 +32,8 @@ with sync_playwright() as p:
     page.locator('#riscatta-sponsor').wait_for(timeout=16000)
     page.locator('#riscatta-sponsor').click()
     page.locator('.prize-corner.claimed').wait_for(timeout=12000)
-    page.wait_for_timeout(900)
-    assert '550' in page.locator('.bal b').inner_text()
+    page.wait_for_function("document.querySelector('.bal b')?.textContent.includes('550')",timeout=9000)
+    assert '550' in page.locator('.bal b').inner_text(),'saldo finale errato'
     print('CLAIM-PASS',engine,width)
    except Exception as e:errors.append((engine,'Totogirrr',width,str(e)));print('CLAIM-FAIL',engine,width,str(e))
    page.close()
