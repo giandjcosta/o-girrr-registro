@@ -1,0 +1,24 @@
+name: Carriera 5.2 Backend QA
+on:
+  push:
+    paths:
+      - '.github/workflows/carriera-backend-52-qa.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check official verifier is idempotent
+        run: |
+          python3 - <<'PY'
+          import json, urllib.request
+          url='https://qmjqfgmvimsuxvghetgi.supabase.co/functions/v1/carriera-verifica-52'
+          req=urllib.request.Request(url,data=b'{}',headers={'Content-Type':'application/json'},method='POST')
+          with urllib.request.urlopen(req, timeout=80) as response:
+              result=json.load(response)
+          print(result)
+          assert result.get('ok'),result
+          assert result.get('verified_through',0)>=4
+          assert result.get('eligible',0)>=7
+          PY
