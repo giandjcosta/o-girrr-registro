@@ -31,6 +31,20 @@ Lo **storico del progetto**, ricostruito dalle cronologie Git e dalle note, è i
 - **25 ottobre — Ere** (racconto + descrizione): online (`gh-pages` `85a9415`).
 - **25 ottobre — colori home Lega** (registro): primari giornale/strip in rosso.
 
+## Attività programmate della lega passate a Claude Code (27 ottobre, sera)
+- **Problema:** le cinque attività che scrivono sul sito (create dalla Chat) aprivano sessioni senza il repository collegato e senza `add_repo`: il push su `gh-pages` dava 403 (es. aggiornamento dopo la giornata del 27/10, 08:11).
+- **Soluzione:** per ognuna c'è ora una **sessione fissa** di Claude Code con `giandjcosta/o-fant-a-girrr` collegato e permesso di push su `gh-pages`, più un'attività programmata che la sveglia. Stessi prompt di prima, tolta solo la parte su `add_repo`. Nella sessione di "dopo la giornata" il controllo del push su `gh-pages` ha raggiunto GitHub senza 403; la prima pubblicazione vera è prevista venerdì 30/10.
+- **Nuovi ID** (nome con "(Code)" in fondo):
+  - Aggiornamento dopo la giornata: `trig_01NDvYyfSF9pavDgkkJeV2is`
+  - Aggiornamento prima della giornata: `trig_011ZXpXwa3sTcQMUDDQVtEaj`
+  - Controllo infortuni: `trig_015kiv7PW8fmZLhPSmttrEoL`
+  - Risultati di lega dal PC: `trig_01Pi2QEqTu4XCGmMeXe7Ypuf` (da verificare se dal cloud raggiunge Chrome sul PC)
+  - PDF settimanale per il gruppo: `trig_01QamTD2JKnvRXp5G74XgU9P`
+- **Vecchie versioni disattivate** (non cancellate): `trig_01YY2aU5gLMArmdfmpuG8ruo`, `trig_01Aq9MFhdBWTgTkBpt45GWyq`, `trig_01W9jizZmD38AbYfJRswsQeq`, `trig_01SXt7fEq639tSLxtxCpyCq7`, `trig_015wDnZLhJJemHRbAoXERhDW`. Per tornare indietro: riattivarle e rimettere i loro ID nel Regista.
+- **Regista** (`trig_01VRgffRnmPexGbVEkhKKivw`) aggiornato con i nuovi ID.
+- Resta una prova senza repository e senza orario, `trig_01PoPH9oo9xWfNHcGorarnPu`: non parte mai, da cancellare a mano (la cancellazione automatica è stata bloccata).
+- Registro (`trig_0135nvrdNX2KNX5gZENkNDXJ`) invariato: già funzionava.
+
 ## Changelog e archivio (25 ottobre)
 - Il Changelog del registro sembrava fermo al 16 ottobre: la pagina leggeva da GitHub 6 pagine di commit a ogni apertura; senza accesso GitHub ne concede 60 l'ora, e se una sola falliva si vedeva la copia salvata del 16 ottobre.
 - Ora legge solo le ultime 100 modifiche (una richiesta, tenuta 10 minuti nel browser) e le unisce alla copia salvata, rinfrescata fino al 25 ottobre. Le modifiche con lo stesso titolo nello stesso giorno compaiono una volta sola. Per rinfrescare la copia: `python3 changelog.py`.
