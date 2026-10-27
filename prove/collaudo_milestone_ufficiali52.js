@@ -1,3 +1,4 @@
+// Verifica che la milestone rispetti solo i risultati con cinque incontri conclusi e consecutivi.
 const fs=require('fs'),assert=require('assert');
 for(const file of ['prod/girrr/app.html','prod/stadio/girrr/app.html']){
  const s=fs.readFileSync(file,'utf8');
