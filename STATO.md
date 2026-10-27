@@ -37,12 +37,13 @@ Lo **storico del progetto**, ricostruito dalle cronologie Git e dalle note, è i
 - **Nuovi ID** (nome con "(Code)" in fondo):
   - Aggiornamento dopo la giornata: `trig_01NDvYyfSF9pavDgkkJeV2is`
   - Aggiornamento prima della giornata: `trig_011ZXpXwa3sTcQMUDDQVtEaj`
-  - Controllo infortuni: `trig_015kiv7PW8fmZLhPSmttrEoL`
+  - Controllo infortuni ogni 3 giorni: `trig_015kiv7PW8fmZLhPSmttrEoL` (orario fisso, alle 11:17 ogni 3 giorni; il Regista non lo sposta)
   - Risultati di lega dal PC: `trig_01Pi2QEqTu4XCGmMeXe7Ypuf` (da verificare se dal cloud raggiunge Chrome sul PC)
   - PDF settimanale per il gruppo: `trig_01QamTD2JKnvRXp5G74XgU9P`
 - **Vecchie versioni disattivate** (non cancellate): `trig_01YY2aU5gLMArmdfmpuG8ruo`, `trig_01Aq9MFhdBWTgTkBpt45GWyq`, `trig_01W9jizZmD38AbYfJRswsQeq`, `trig_01SXt7fEq639tSLxtxCpyCq7`, `trig_015wDnZLhJJemHRbAoXERhDW`. Per tornare indietro: riattivarle e rimettere i loro ID nel Regista.
-- **Regista** (`trig_01VRgffRnmPexGbVEkhKKivw`) aggiornato con i nuovi ID.
-- Resta una prova senza repository e senza orario, `trig_01PoPH9oo9xWfNHcGorarnPu`: non parte mai, da cancellare a mano (la cancellazione automatica è stata bloccata).
+- **Regista** (`trig_01VRgffRnmPexGbVEkhKKivw`) aggiornato con i nuovi ID: segue il calendario di Serie A solo per aggiornamento prima/dopo la giornata, risultati e giornale.
+- Le attività programmate possono sovrascrivere i dati che scrivono loro stesse (`data.json`, giornale): permesso di Gianluca del 27 ottobre.
+- Resta una prova senza repository e senza orario, rinominata "DA CANCELLARE - prova senza repository" (`trig_01PoPH9oo9xWfNHcGorarnPu`): non parte mai, da cancellare a mano (la cancellazione automatica è stata bloccata).
 - Registro (`trig_0135nvrdNX2KNX5gZENkNDXJ`) invariato: già funzionava.
 
 ## Changelog e archivio (25 ottobre)
