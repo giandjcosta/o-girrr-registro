@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'prove/collaudo_produzione52_browser.py'
+      - 'prove/collaudo_milestone_ufficiali52.js'
       - '.github/workflows/produzione52-qa.yml'
   workflow_dispatch:
 jobs:
@@ -16,6 +17,8 @@ jobs:
           repository: giandjcosta/o-fant-a-girrr
           ref: chatgpt/release52-carriera-rewards-milestones
           path: prod
+      - name: Test milestone ufficiali con dati in ritardo
+        run: node prove/collaudo_milestone_ufficiali52.js
       - name: Install browsers
         run: |
           python3 -m pip install --break-system-packages playwright
