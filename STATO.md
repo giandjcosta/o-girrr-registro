@@ -1,4 +1,11 @@
-# Stato del progetto O Girrr (ultimi giorni — aggiornato 26 ottobre 2026)
+# Stato del progetto O Girrr (ultimi giorni — aggiornato 29 ottobre 2026)
+
+## 29 ottobre 2026 — Anteprima 5.2 integrata (ChatGPT)
+- Aggiornate **solo** le pagine `anteprima/index.html` (Stadio) e `anteprima/attuale.html` (Lega) sul Registro: le sezioni esistenti restano navigabili, con nuovi riquadri 5.2 **dentro Carriera e Totogirrr**.
+- Moduli di UI disponibili: milestone giornata/posizione, stato sponsor, reputazione, riscatto sponsor e saldo simulato. Tutte le operazioni nuove usano dati locali effimeri e non inviano scritture a Supabase.
+- Questa è una **prima integrazione visiva simulata**, NON ancora parità funzionale con tutte le modifiche della PR di produzione 5.2: occorre allineare regole complete, premi e backend in modalità isolata, collaudare browser/telefono e verificare il deployment pubblico.
+- Nessuna modifica eseguita in `o-fant-a-girrr` (produzione); niente merge della PR 5.2, niente cambi di database.
+- Il prototipo isolato `anteprima/demo-5-2.html` resta materiale sperimentale e non è la preview integrata definitiva; in seguito trasferirlo nel Laboratorio.
 
 Per aprire una chat nuova: incolla "Leggi STATO.md nel repo o-girrr-registro e continuiamo da lì".
 Lo **storico del progetto**, ricostruito dalle cronologie Git e dalle note, è in [STATO-storico.md](./STATO-storico.md). La cronologia Git consultabile parte dal 7 ottobre 2026 per il sito; attività precedenti non sono documentate nei repository esaminati.
