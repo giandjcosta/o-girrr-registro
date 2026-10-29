@@ -1,6 +1,7 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 29 ottobre 2026)
 
 ## 29 ottobre 2026 — Anteprima 5.2 integrata (ChatGPT)
+- **29 ottobre — rifinitura UI 5.2 in anteprima:** movimenti positivi verdi e negativi rossi; bubble vetro/trasparente in Carriera mostrata soltanto con premi sponsor simulati disponibili, scompare dopo aver riscosso tutti i premi. Solo simulazione in memoria: al ricaricamento i dati demo si azzerano. Nessuna modifica al sito ufficiale o a Supabase. Verifica browser online ancora da effettuare.
 - **29 ottobre — Totogirrr/Carriera in anteprima**: aggiunto link da Carriera a Totogirrr per riscuotere i premi; inserita scheda «Movimenti» dentro la navigazione Totogirrr (grafica Lega e Stadio) con storico di prova di vincite, sponsor, prestiti, rimborsi e trattenute. I riscatti demo generano una riga nello storico e incrementano soltanto il saldo simulato. Richieste di prestito ancora in attesa mostrate separatamente: non impattano il saldo. Tutto su `o-girrr-registro/anteprima/`, senza toccare produzione/Supabase. **Collaudo browser e verifica link online ancora da fare; non è uno storico persistente reale.**
 - Aggiornate **solo** le pagine `anteprima/index.html` (Stadio) e `anteprima/attuale.html` (Lega) sul Registro: le sezioni esistenti restano navigabili, con nuovi riquadri 5.2 **dentro Carriera e Totogirrr**.
 - Moduli di UI disponibili: milestone giornata/posizione, stato sponsor, reputazione, riscatto sponsor e saldo simulato. Tutte le operazioni nuove usano dati locali effimeri e non inviano scritture a Supabase.
