@@ -755,6 +755,7 @@ function vCarFiduciaGiornate(t){var P=[];for(var n=1;n<=GTOT;n++){var x=aGiornat
     +'<div class="row sm mut" style="justify-content:space-between;margin-top:4px"><span>'+P[0][0]+'ª giornata</span><span>'+P[P.length-1][0]+'ª giornata · '+P[P.length-1][1]+'</span></div></div>'}
 
 /* === TAB CARRIERA: OBIETTIVI (ChatGPT) === */
+/* C: o (righe [pres?, fonte, titolo, percentuale, stato]), e1/e2/e4 (esiti), sp (sponsorDi), wn (vittorie richieste), premio (premioSponsor), riscosso (bool), cObiettivi (riquadro attuale) */
 function vCarObiettivi(t,C){
   var scadenze=[2,6,8,10,18,26,34],spDl=Number(C.sp.dl)||GTOT;
   var giocata=Math.max(gioc(),(CL||[]).filter(function(g){return g.m&&g.m.length&&g.m.every(function(m){return m[4]&&m[4]!=='-'})}).reduce(function(max,g){return Math.max(max,Number(g.n)||0)},0));
