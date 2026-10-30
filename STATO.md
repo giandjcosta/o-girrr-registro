@@ -22,9 +22,10 @@ Piano e prompt in `proposte/carriera-tab-piano.md`. Base: ramo `claude/review-ai
 - Chromium sul componente isolato a 320/375/1280 px, Oranje VC/Grodah/The Blue brothers: 9 casi PASS, nessun overflow o errore JS; stati premio e link verificati.
 - Non eseguiti `python3 anteprima/build.py` e `git diff --exit-code anteprima/` in checkout locale (DNS GitHub bloccato); blocco generato propagato nelle anteprime e confrontato.
 - Non eseguito browser end-to-end delle tre pagine complete via HTTP, né Safari; serve verifica CI/QA della PR.
+- **Verifica Claude (unione PR #36):** `build.py` dà un'Anteprima identica a quella committata; test JS e `collaudo_anteprima_52.py` superati. Chromium sulle pagine complete (Lab, Lega, Stadio) a 320, 375 e 1280 px con Oranje VC, Grodah e The Blue brothers (`?premi=prova`): nessuno scorrimento laterale, console pulita, link «Vai a Totogirrr» solo quando il premio è da riscuotere. A 320 px la linea del tempo scorre dentro la sua card.
 
 ### Tab Storia (Grok)
-In attesa.
+- **Non consegnato (verifica Claude):** il ramo `grok/carriera-tab-storia` contiene solo un commit su STATO.md, senza il codice di `vCarStoria`. Quel commit cancella circa 80 righe di STATO.md e mette parole inglesi nel testo («with», «for», «the»), quindi **non è stato unito**. Nel Lab resta la versione base (elenco stagioni).
 
 ## 30 ottobre 2026 — Claude: Carriera/Totogirrr 5.2 sistemati (ramo `claude/review-ai-changes-test-ui9gjy`, non ancora su `main`)
 - **Revisione del lavoro ChatGPT fino a `33fdfc4`:** tutto il codice 5.2 era stato scritto a mano in `anteprima/index.html` e `attuale.html`. `python3 anteprima/build.py` lo cancellava, e i workflow restavano verdi perché rigeneravano l'Anteprima prima di provarla.
