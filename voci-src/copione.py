@@ -173,6 +173,7 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
             add("S", "Per ora è tutto, restituisco la linea in studio!", "entusiasmo")
     # --- sfide per il derby lanciate in conferenza (stato: accettata / rifiutata / scaduta / attesa)
     for sd in (conf or {}).get("sfide_derby") or []:
+        if sd.get("annunciata"): continue   # già annunciata in una puntata: l'annuncio va in onda una volta sola (il Derby si nomina comunque quando si gioca)
         da, ar, st_ = sd.get("da"), sd.get("a"), sd.get("stato")
         if st_ == "accettata": add("S", f"Notizia dalla sala stampa: {da} ha sfidato {ar}, e la sfida è stata accettata! Nasce {sd.get('nome') or 'un nuovo Derby'}, Derby ufficiale per sempre!", "entusiasmo")
         elif st_ == "rifiutata": add("S", f"{da} aveva sfidato {ar}, ma {ar} ha rifiutato. Niente Derby, solo un po' più di rivalità!", "sarcasmo")

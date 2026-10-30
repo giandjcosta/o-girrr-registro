@@ -20,13 +20,15 @@
    "da": "Oranje VC",
    "a": "Apo team",
    "stato": "accettata",
-   "nome": "The Continental"
+   "nome": "The Continental",
+   "annunciata": true
   },
   {
    "da": "The Blue brothers",
    "a": "Oranje VC",
    "stato": "accettata",
-   "nome": "Derby dell'Emma"
+   "nome": "Derby dell'Emma",
+   "annunciata": true
   }
  ]
 }
