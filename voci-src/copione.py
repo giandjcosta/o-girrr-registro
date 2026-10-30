@@ -27,6 +27,31 @@ STUP = ["Ma davvero?!", "Non ci credo!", "Cosa?! Ma com'è possibile?!"]
 COMM = ["Ragazzi, mi emoziono ancora.", "Il calcio è anche questo: i ritorni.", "Non è solo una classifica, è la nostra storia."]
 CURVA = ["Chissà cosa staranno scrivendo in Curva i tifosi {t}!", "In Curva, stasera, i tifosi {t} non dormono!", "Diamo un'occhiata alla Curva: i tifosi {t} sono già al lavoro!", "Chissà in Curva cosa ne pensano i tifosi {t}!"]
 CONF = ["Chi non crede in noi può restare a casa.", "Siamo pronti, ci vediamo in campo.", "Non siamo qui per fare i turisti.", "Quest'anno non ci ferma nessuno.", "Un punto alla volta, ma tutti insieme."]
+# --- numeri del campionato: attacco, difesa e differenza reti dalla classifica vera (gf/gs di ogni squadra)
+def numeri(T, n, rng):
+    """Una o due curiosità sui gol, solo dalla 3ª giornata (prima i numeri dicono poco). Restituisce battute (voce, testo, tono)."""
+    if n < 3 or not T or "gf" not in T[0]: return []
+    def capo(k, rev=False):   # chi guida la statistica; None se a pari merito sono più di due
+        v = (min if rev else max)(r[k] for r in T); c = [r["t"] for r in T if r[k] == v]
+        return (" e ".join(c), v, len(c) > 1) if len(c) <= 2 else None
+    for r in T: r["_dr"] = r["gf"] - r["gs"]
+    fatti = []
+    a = capo("gf")
+    if a: fatti.append([("B", f"Il miglior attacco è quello di {a[0]}: {a[1]} gol fatti in {n} giornate{', a pari merito' if a[2] else ''}!", "urlo"),
+                        ("G", rng.choice(["Davanti fanno paura!", "Quando partono non li fermi più!", "Altro che catenaccio!"]), None)])
+    d = capo("gs", True)
+    if d: fatti.append([("B", f"La difesa meno battuta è quella di {d[0]}: solo {d[1]} gol subiti{', a pari merito' if d[2] else ''}.", None),
+                        ("G", rng.choice(["Lì dietro non passa nessuno!", "Un muro, signori!", "Le partite si vincono anche così."]), None)])
+    w = capo("gs")
+    if w and w[1] >= 2 * n: fatti.append([("G", f"E poi c'è la difesa di {w[0]}: {w[1]} gol presi. Qualcuno chiuda la porta!", "sarcasmo")])
+    t1 = T[0]
+    if a and t1["t"] not in a[0].split(" e ") and t1["gf"] < a[1]:
+        fatti.append([("B", f"Curiosità: {t1['t']} comanda la classifica, ma non ha il miglior attacco. Vince con la testa!", None)])
+    dr = capo("_dr")
+    if dr and dr[1] >= 4: fatti.append([("B", f"La differenza reti migliore è di {dr[0]}: più {dr[1]}!", None)])
+    for r in T: r.pop("_dr", None)
+    rng.shuffle(fatti)
+    return [b for f_ in fatti[:2] for b in f_]
 def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
     nomi = nomi or {}
     b1 = nomi.get('B', 'Beppe Rovesciata'); g1 = nomi.get('G', 'Luigi Fischietti'); g0 = g1.split()[0]; b0 = b1.split()[0]
@@ -71,6 +96,10 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
     if rng.random() < 0.5 or (last["v"] == 0 and last["g"] >= 3):
         add("B", f"In fondo c'è {last['t']}. Può risalire e sperare di uscire dall'ultima posizione?")
         add("G", pick(["Io dico di sì. Poi però bisogna scrivere la formazione!", "La speranza è l'ultima a morire. Come l'ultimo in classifica!", "Una vittoria e si cambia musica!"]))
+    nm = numeri(T, n, rng)
+    if nm:
+        add("B", rng.choice(["E adesso un po' di numeri!", "Diamo i numeri, in senso buono!", "Due numeri sulla stagione!"]))
+        for k, t, st in nm: add(k, t, st)
     # --- percentuali solo nei momenti buoni
     gap = t1["pts"] - t2["pts"]
     quarto = T[3]["pts"] if len(T) > 3 else None
