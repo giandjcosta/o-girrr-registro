@@ -1,5 +1,12 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 30 ottobre 2026)
 
+## 30 ottobre 2026 — Fix login Totogirrr Anteprima 5.2 (ChatGPT)
+- **Corretto il bug segnalato dall'utente:** il file `anteprima/totogirrr.html` aveva ancora `gate()` e `render()` poteva mostrare «Codice squadra». Il fix precedente era nel file distinto `anteprima/totogirrr-52.html`, ma la navigazione delle due anteprime continuava ad aprire il file vecchio.
+- Ora **entrambi i file** sono senza schermata codice/login; lo stato della squadra viene inizializzato prima del primo render. In `anteprima/index.html` (Stadio) e `anteprima/attuale.html` (Lega), i link Totogirrr puntano a `totogirrr-52.html?skin=...` per evitare vecchie copie in cache.
+- **Test eseguiti:** esecuzione JavaScript del Totogirrr con DOM simulato, in modalità Lega e Stadio. In entrambi: squadra, saldo, intestazione SVG, partite, premio, Movimenti e «Cambia squadra» visibili; **nessun campo codice/login**. Test di sintassi JavaScript delle pagine aggiornate riuscito.
+- **Supabase:** plugin collegato, progetto «Girrr» individuato; nessuna modifica effettuata al database. I file Totogirrr in anteprima non contengono più l'indirizzo Supabase di produzione.
+- **Limiti:** il sito GitHub Pages non è accessibile dal browser remoto del modello: il deployment pubblico non è stato collaudato visivamente. Nessuna modifica a `o-fant-a-girrr` ufficiale.
+
 ## 30 ottobre 2026 — Anteprima Carriera/Totogirrr: squadra visitabile
 - Tolta **esclusivamente la seconda card «Milestone e premi»** aggiunta in fondo alla Carriera delle due anteprime (Lega e Stadio). Restano i controlli originali «Come cambia la fiducia con il calendario» e gli obiettivi nativi. La bubble premio e il riquadro reputazione/sponsor rimangono, con importi e stato condizionale, e riutilizzano la giornata/posizione selezionata sopra.
 - Totogirrr `anteprima/totogirrr.html` ora **si apre già su una squadra di esempio estratta casualmente** (scelta persistente per sessione, senza richiesta codice): saldo iniziale 346 FC, partite aperte e concluse, schedine vinte/perse, prestito attivo e richiesta in attesa, movimenti e premio sponsor riscuotibile. Nessun banner «demo», stessa grafica CSS originale ufficiale. La scelta di squadra è locale e non corrisponde a identità reali.
