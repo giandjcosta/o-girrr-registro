@@ -1,5 +1,12 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 30 ottobre 2026)
 
+## 30 ottobre 2026 — Correzione doppio clic «Restituisci» in Totogirrr (ChatGPT)
+- Corrette le due versioni dell'anteprima (`anteprima/totogirrr-52.html` navigata dalle Anteprime e `anteprima/totogirrr.html` storico): blocco di rimborso per ID prestito, disabilitazione immediata di tutti i pulsanti «Restituisci» del prestito, ripristino UI solo dopo aggiornamento completo.
+- Una notifica `toast` unica viene riutilizzata, con annullamento del precedente timer, impedendo la sovrapposizione e la comparsa/scomparsa immediata dovuta a doppie risposte. Un solo rendering al completamento del rimborso al posto della doppia combinazione `loadPR()`/`carica()`.
+- Nel backend isolato della preview un rimborso valido detrae l'importo dal saldo, aggiorna il prestito e registra una sola uscita nella lista movimenti. Respinge importi negativi, eccessivi, ripetizioni oltre residuo e saldo insufficiente; chiude il prestito saldato.
+- **Test eseguito:** due click sincroni sullo stesso pulsante `Restituisci 10` nel DOM simulato. Da saldo 346 FC/restituito 50 FC a saldo 336 FC/restituito 60 FC; una sola nuova riga movimenti e una sola notifica. Sintassi JavaScript di entrambe le pagine verificata. Non è un collaudo visuale su Safari/GitHub Pages.
+- **Nessun dato reale alterato**, nessun commit o merge in produzione `o-fant-a-girrr`, nessun cambiamento Supabase. Per correggere anche il Totogirrr ufficiale serve modifica/rilascio separato con approvazione.
+
 ## 30 ottobre 2026 — Fix login Totogirrr Anteprima 5.2 (ChatGPT)
 - **Corretto il bug segnalato dall'utente:** il file `anteprima/totogirrr.html` aveva ancora `gate()` e `render()` poteva mostrare «Codice squadra». Il fix precedente era nel file distinto `anteprima/totogirrr-52.html`, ma la navigazione delle due anteprime continuava ad aprire il file vecchio.
 - Ora **entrambi i file** sono senza schermata codice/login; lo stato della squadra viene inizializzato prima del primo render. In `anteprima/index.html` (Stadio) e `anteprima/attuale.html` (Lega), i link Totogirrr puntano a `totogirrr-52.html?skin=...` per evitare vecchie copie in cache.
