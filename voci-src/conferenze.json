@@ -1,14 +1,10 @@
 {
  "_come_si_usa": "Conferenze stampa della giornata (dati veri dal database del sito).",
  "demo": false,
- "giornata": 4,
+ "giornata": 5,
  "partite": [
   [
    "Apo team",
-   "stif dc"
-  ],
-  [
-   "Oranje VC",
    "Real Madrink"
   ]
  ],
@@ -16,18 +12,7 @@
   "Apo team": {
    "toni": [
     1
-   ],
-   "promessa": "Sarà sicuramente una bella partita, che vinca il migliore",
-   "pesa": 1,
-   "esito": "s"
-  },
-  "Oranje VC": {
-   "toni": [
-    1
-   ],
-   "promessa": "Chi parla di obiettivi guardi la classifica.",
-   "pesa": 2,
-   "esito": "p"
+   ]
   }
  },
  "sfide_derby": [
