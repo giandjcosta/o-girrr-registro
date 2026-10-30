@@ -230,6 +230,11 @@ svg text{fill:var(--mute);font-family:var(--fb)}
     </div>
   </div>
   <div class="card proto-only" style="margin:12px 0;padding:15px 16px;border-left:4px solid var(--gold)">
+    <b>Tabellone · Più dati in classifica</b>
+    <p style="margin:7px 0 10px;color:var(--mute)">Vittorie, pareggi, sconfitte, gol fatti, gol subiti e differenza reti. Sul telefono restano DR, Pt e Fantapunti; il resto da 560 px in su. Dati veri del sito.</p>
+    <a href="prova-tabellone-lega.html" style="display:inline-block;padding:9px 14px;background:var(--red);color:white;font-weight:800;border-radius:12px;text-decoration:none">Grafica Lega</a> <a href="prova-tabellone-stadio.html" style="display:inline-block;padding:9px 14px;background:var(--gold);color:#1d2a52;font-weight:800;border-radius:12px;text-decoration:none">Grafica Stadio</a>
+  </div>
+  <div class="card proto-only" style="margin:12px 0;padding:15px 16px;border-left:4px solid var(--gold)">
     <b>Spogliatoio · Lazy Loading</b>
     <p style="margin:7px 0 10px;color:var(--mute)">Prova le tab Rosa, Giornata, Mercato, Svincolati e Borsino nella grafica ufficiale della Lega, con dati dimostrativi.</p>
     <a href="prova-lazy-tabs-lega.html" style="display:inline-block;padding:9px 14px;background:var(--red);color:white;font-weight:800;border-radius:12px;text-decoration:none">Apri la prova Spogliatoio</a>
@@ -798,11 +803,13 @@ function vCarObiettivi(t,C){
 function vCarStoria(t){return '<div class="card"><h3>Stagioni</h3>'+mgrsOf(t).map(function(m){return '<p style="font-weight:800;margin-top:6px">'+esc(m)+'</p>'+(HIST[m]||[]).slice().reverse().map(function(r){return '<div class="row sm" style="padding:6px 0;border-top:1px solid var(--line)"><span class="grow">'+r[0]+'</span><b>'+(r[1]===1?'🏆 ':'')+r[1]+'° su '+r[2]+'</b></div>'}).join('')}).join('')+'</div>'}
 /* === FINE TAB STORIA === */
 
+/* ognuno vede solo la propria Carriera (ME = squadra entrata col codice); il selettore resta solo nel Lab, per provare le altre squadre */
+var CARSCELTA=true;
 function vCar(){
-  var t=S.cteam,r=row(t),e=EXP[t]||5,f=fid(t),mp=maxPts(t);
+  var t=CARSCELTA?S.cteam:ME,r=row(t),e=EXP[t]||5,f=fid(t),mp=maxPts(t);
   var stat=f>=70?'Il presidente è entusiasta.':f>=45?'Il presidente è soddisfatto, per ora.':f>=25?'Il presidente comincia a perdere la pazienza.':'Il presidente sta cercando un sostituto.';
   var h=where('Spogliatoio','Carriera')+'<h2>Carriera da allenatore</h2><p class="lead">Poche cose, tutte misurabili. A inizio stagione il presidente dice dove ti aspetta, e un paio di obiettivi arrivano da lui e dallo sponsor. Se rendi meno del previsto la fiducia scende, e sotto una soglia arriva un esonero a titolo simbolico.</p>';
-  h+='<select id="cteam" aria-label="Allenatore" style="margin-bottom:12px">'+D.teams.map(function(x){return '<option'+(x===t?' selected':'')+'>'+esc(x)+'</option>'}).join('')+'</select>'+bolla52(t)+carTabs();
+  h+=(CARSCELTA?'<select id="cteam" aria-label="Allenatore" style="margin-bottom:12px">'+D.teams.map(function(x){return '<option'+(x===t?' selected':'')+'>'+esc(x)+'</option>'}).join('')+'</select>':'<p style="font-weight:800;margin:0 0 12px">'+esc(t)+'</p>')+bolla52(t)+carTabs();
   var correttivo=fiduciaScarto(t,r.pos,r.g||0),correttivoTxt=(correttivo>0?'+':'')+correttivo;
   var cGauge='<div class="card" style="text-align:center"><h3>Fiducia del presidente</h3>'+gauge(f)+'<p style="font-weight:700;margin-top:2px">'+stat+'</p><p class="sm mut" style="margin-top:5px">Scostamento dalle attese alla '+(r.g||0)+'ª giornata: <b>'+correttivoTxt+'</b> fiducia (attesa '+e+'ª · attuale '+r.pos+'ª)</p><p class="sm mut">Fascia: '+fascia(t)+' · Obiettivo: '+OB[t].pres.toLowerCase().replace(/^./,function(c){return c.toUpperCase()})+' · Ora '+r.pos+'°</p></div>';
   var sp=sponsorDi(t),wn=vittObj(t),x8=gioc()>=8?aGiornata(8,t):null,v8=x8?x8.v:r.v,e1=esito(t,Math.min(100,Math.round((e/Math.max(r.pos,1))*100)),r.pos<=e?'In linea':'Da recuperare',GTOT,function(x){return x.pos<=e}),e2=esito(t,Math.min(100,Math.round(v8/wn*100)),v8+' su '+wn,8),e4=esito(t,sp.pct,sp.stato,sp.dl||GTOT,sp.ok);var o=[['P','Presidente',OB[t].pres,e1[0],e1[1]],['P','Presidente','Almeno '+wn+(wn===1?' vittoria':' vittorie')+' nelle prime 8 giornate',e2[0],e2[1]],['P','Presidente',OB[t].cp,0,'Da giocare'],[null,sp.nome,sp.testo,e4[0],e4[1]]];
