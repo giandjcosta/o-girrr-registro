@@ -755,8 +755,44 @@ function vCarFiduciaGiornate(t){var P=[];for(var n=1;n<=GTOT;n++){var x=aGiornat
     +'<div class="row sm mut" style="justify-content:space-between;margin-top:4px"><span>'+P[0][0]+'ª giornata</span><span>'+P[P.length-1][0]+'ª giornata · '+P[P.length-1][1]+'</span></div></div>'}
 
 /* === TAB CARRIERA: OBIETTIVI (ChatGPT) === */
-/* C: o (righe [pres?, fonte, titolo, percentuale, stato]), e1/e2/e4 (esiti), sp (sponsorDi), wn (vittorie richieste), premio (premioSponsor), riscosso (bool), cObiettivi (riquadro attuale) */
-function vCarObiettivi(t,C){return C.cObiettivi}
+function vCarObiettivi(t,C){
+  var scadenze=[2,6,8,10,18,26,34],spDl=Number(C.sp.dl)||GTOT;
+  var giocata=Math.max(gioc(),(CL||[]).filter(function(g){return g.m&&g.m.length&&g.m.every(function(m){return m[4]&&m[4]!=='-'})}).reduce(function(max,g){return Math.max(max,Number(g.n)||0)},0));
+  var prossima=scadenze.filter(function(n){return n>giocata})[0]||0;
+  var nomi=function(n){var a=[];if(n===8)a.push('Vittorie');if(n===spDl)a.push('Sponsor');if(n===34)a.push('Posizione finale');return a.join(' · ')||'—'};
+  var linea='<div class="card" style="min-width:0;overflow:hidden"><h3>Linea del tempo</h3>'+
+    '<div class="ob-timeline-scroll" role="region" aria-label="Scadenze della stagione" tabindex="0" style="max-width:100%;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;padding:12px 2px 8px">'+
+    '<div class="ob-timeline" style="position:relative;display:flex;min-width:630px;width:100%;align-items:flex-start">'+
+    '<div aria-hidden="true" style="position:absolute;left:7%;right:7%;height:2px;top:11px;background:var(--line)"></div>'+
+    scadenze.map(function(n){var passato=n<=giocata,successivo=n===prossima;
+      return '<div style="position:relative;z-index:1;flex:1 1 0;min-width:0;text-align:center;padding:0 4px">'+
+        '<span aria-label="Giornata '+n+(passato?', giocata':successivo?', prossima':', futura')+'" style="display:block;width:22px;height:22px;margin:0 auto 9px;border:2px solid '+(successivo?'var(--gold)':passato?'var(--ok)':'var(--mute)')+';border-radius:50%;background:'+(passato?'var(--ok)':'var(--bg2)')+';box-shadow:'+(successivo?'0 0 0 4px rgba(255,209,102,.2)':'none')+'"></span>'+
+        '<b class="num" style="display:block;font-size:13px;color:'+(successivo?'var(--gold)':'var(--ink)')+'">'+n+'ª</b>'+
+        '<span class="sm mut" style="display:block;line-height:1.35;margin-top:5px;overflow-wrap:normal">'+nomi(n)+'</span>'+
+        (successivo?'<span class="sm" style="display:block;color:var(--gold);margin-top:4px">Prossima</span>':'')+'</div>';
+    }).join('')+'</div></div></div>';
+  var riga=function(x,scadenza){var pct=Math.max(0,Math.min(100,Number(x[3])||0)),stato=String(x[4]||''),pres=x[0]==='P';
+    return '<div class="ob ob-target" style="display:flex;flex-wrap:wrap;align-items:center;gap:9px 12px;min-width:0">'+
+      (pres?'<span class="src" aria-label="Presidente">Pres.</span>':'<img src="'+esc(SPIMG[x[1]]||D.img.sp2)+'" alt="'+esc(x[1])+'">')+
+      '<div class="grow" style="flex:1 1 155px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;min-width:0">'+
+        '<div style="flex:1 1 155px;min-width:0;word-break:normal;overflow-wrap:normal;hyphens:none"><b style="display:block;line-height:1.4">'+esc(x[2])+'</b><span class="sm mut" style="display:block;margin-top:3px">'+esc(x[1])+' · '+scadenza+'</span></div>'+
+        '<span class="tag '+(stato==='Fatto'?'o':'')+'" style="flex:0 1 auto;max-width:100%;overflow-wrap:break-word">'+esc(stato)+'</span></div>'+
+      '<div class="pbar" role="progressbar" aria-label="Progresso obiettivo" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'" style="flex:0 0 100%;width:100%;margin:2px 0 0"><i style="width:'+pct+'%"></i></div></div>';
+  };
+  var stag='<div class="card" style="min-width:0"><h3>Obiettivi della stagione</h3>'+
+    [0,1,3].map(function(i){return riga(C.o[i],i===1?'entro la 8ª':i===3&&spDl!==34?'alla '+spDl+'ª':'a fine stagione')}).join('')+'</div>';
+  var coppa=C.o[2],stCoppa=esc(coppa[4]||'Da giocare');
+  var cup='<div class="card" style="min-width:0"><h3>Champions Cup</h3>'+
+    '<div class="ob" style="display:flex;flex-wrap:wrap;gap:9px 12px;min-width:0"><span class="src">Pres.</span><div class="grow" style="min-width:0;flex:1 1 170px"><b style="display:block;line-height:1.4">'+esc(OB[t].cp)+'</b><span class="sm mut">Presidente</span></div><span class="tag '+(coppa[4]==='Fatto'?'o':'')+'">'+stCoppa+'</span></div>'+
+    '<div class="ob" style="display:flex;flex-wrap:wrap;gap:9px 12px;min-width:0"><span class="src" aria-label="Allenatore">All.</span><div class="grow" style="min-width:0;flex:1 1 170px"><b style="display:block;line-height:1.4">'+esc(OB[t].ca)+'</b><span class="sm mut">Allenatore</span></div><span class="tag '+(coppa[4]==='Fatto'?'o':'')+'">'+stCoppa+'</span></div></div>';
+  var premio=C.premio,stPremio=C.riscosso?'Riscosso':premio.ok?'Da riscuotere':'In corso';
+  var link=(!C.riscosso&&premio.ok)?toto52Url(t,(/\/lab\//.test(location.pathname)?'../lab/':'')+(location.pathname.split('/').pop()||'index.html')+'#carriera'):'';
+  var sponsor='<div class="card" style="min-width:0"><h3>Premio sponsor</h3>'+
+    '<div class="row" style="align-items:flex-start;gap:10px;flex-wrap:wrap"><div class="grow" style="min-width:0;flex:1 1 160px"><b style="display:block">'+esc(premio.sponsor)+'</b><p class="sm mut" style="margin-top:6px;line-height:1.5">'+esc(premio.testo)+'</p></div><span class="tag '+(C.riscosso?'o':'')+'">'+stPremio+'</span></div>'+
+    '<p style="margin-top:12px;font-weight:800"><span class="num">'+Number(premio.crediti)+'</span> crediti Totogirrr</p>'+
+    (link?'<a class="btn" href="'+esc(link)+'" style="display:inline-block;margin-top:12px;text-decoration:none">Vai a Totogirrr ›</a>':'')+'</div>';
+  return linea+stag+cup+sponsor;
+}
 /* === FINE TAB OBIETTIVI === */
 
 /* === TAB CARRIERA: STORIA (Grok) === */
