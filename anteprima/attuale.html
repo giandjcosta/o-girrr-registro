@@ -845,7 +845,7 @@ function vCarStoria(t){
       '<div style="flex:1 1 80px;min-width:0;text-align:center"><b class="num" style="display:block;font-size:23px">'+podi+'</b><span class="sm mut">Podi</span></div></div></div>';
     h+='<div class="card" style="min-width:0;overflow:hidden"><h3>Posizioni stagione per stagione</h3>';
     if(stagioni.length){
-      var w=560,hh=194,x0=36,x1=542,yTop=18,yBottom=147;
+      var w=320,hh=194,x0=34,x1=292,yTop=24,yBottom=147;   /* larghezza vicina a quella del telefono: scritte e coppa restano leggibili */
       var px=function(i){return stagioni.length===1?(x0+x1)/2:x0+(x1-x0)*i/(stagioni.length-1)};
       var py=function(r){var ultimo=Math.max(2,Number(r[2])),pos=Math.min(ultimo,Math.max(1,Number(r[1])));return yTop+(pos-1)/(ultimo-1)*(yBottom-yTop)};
       var pts=stagioni.map(function(r,i){return px(i).toFixed(1)+','+py(r).toFixed(1)}).join(' ');
@@ -859,7 +859,7 @@ function vCarStoria(t){
           return '<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+(campione?7:5)+'" fill="'+(campione?'var(--gold)':'var(--ink)')+'" stroke="var(--gold)" stroke-width="2">'+
             '<title>'+esc(r[0])+': '+Number(r[1])+'° su '+Number(r[2])+'</title></circle>'+
             (campione?'<text x="'+x.toFixed(1)+'" y="'+(y-12).toFixed(1)+'" text-anchor="middle" font-size="15">🏆</text>':'')+
-            '<text x="'+x.toFixed(1)+'" y="173" text-anchor="middle" fill="var(--mute)" font-size="'+(stagioni.length>6?'10':'12')+'">'+esc(String(r[0]).slice(2))+'</text>'
+            '<text x="'+x.toFixed(1)+'" y="173" text-anchor="middle" fill="var(--mute)" font-size="'+(stagioni.length>6?'11':'13')+'">'+esc(String(r[0]).slice(2))+'</text>'
         }).join('')+'</svg>'+
         '<p class="sm mut" style="margin-top:5px">Il primo posto è in alto; la scala si adatta alle squadre di ogni stagione.</p>';
     }else h+='<p class="sm mut">Prima stagione in lega</p>';
@@ -881,7 +881,7 @@ function vCarStoria(t){
     else{
       var ultima=stagioni[stagioni.length-1];
       racconto=esc(m)+' ha disputato '+stagioni.length+(stagioni.length===1?' stagione registrata':' stagioni registrate')+
-        ' e conquistato '+podiRegistrati+(podiRegistrati===1?' podio':' podi')+' in queste annate. '+
+        (podiRegistrati?' e conquistato '+podiRegistrati+(podiRegistrati===1?' podio':' podi')+' in queste annate. ':', senza podi. ')+
         'Nell’ultima, '+esc(ultima[0])+', ha chiuso '+Number(ultima[1])+'° su '+Number(ultima[2])+'.';
       if(albo.length)racconto+=' In carriera conta '+albo.length+(albo.length===1?' titolo':' titoli')+
         '; il più recente è del '+esc(albo[0].anno)+'.';
