@@ -1,9 +1,9 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 30 ottobre 2026)
 
-## 30 ottobre 2026 — Radio: numeri del campionato (Claude, solo sul ramo `claude/review-ai-changes-test-ui9gjy`)
+## 30 ottobre 2026 — Radio: numeri del campionato (Claude, su `main` con il «vai» di Gianluca)
 - Idea di Gianluca: con gol, differenza reti, miglior attacco e miglior difesa la Radio ha cose nuove da dire. In `voci-src/copione.py`, funzione `numeri()`: dalla 3ª giornata, dopo la classifica, Beppe e Luigi dicono una o due curiosità vere (miglior attacco, difesa meno battuta, difesa più battuta, capolista senza il miglior attacco, differenza reti migliore). Regole in `voci-src/RADIO-REGOLE.md`.
 - Provato solo il copione in testo, con `voci-src/dati.json` (4ª giornata) e quattro sorteggi diversi: es. «Il miglior attacco è quello di Mariana Coneja: 13 gol fatti in 4 giornate!», «E poi c'è la difesa di WOA: 13 gol presi. Qualcuno chiuda la porta!». Alla 2ª giornata la rubrica non c'è. **Nessun audio generato**: niente chiamate Gemini, `voci-src/prova_*.py` non lanciati.
-- Non è su `main`: cambia la prossima puntata, quindi serve il «vai» di Gianluca.
+- Su `main` col «vai» di Gianluca: entra dalla prossima puntata.
 
 ## 30 ottobre 2026 — Tabellone con più dati (Claude, prova nel Lab)
 - Richiesta di Gianluca: in classifica anche V, N, P, gol fatti, gol subiti e differenza reti. L'ordine della classifica non cambia (Pt, poi Fantapunti) e non c'è nessuna nota sullo spareggio (decisione di Gianluca).
