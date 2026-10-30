@@ -44,3 +44,6 @@ Nessuno dei due è britannico (era così solo con le voci in inglese): niente t�
 
 ## Parole tagliate in fondo (segnalato il 30 ottobre)
 "Mazzata" usciva "mazza": il taglio della coda di rumore (`taglia_coda` in gtrim.py) scambiava la chiusura della "t" (una pausa breve dentro la parola) per la fine della battuta. Ora taglia solo dopo un silenzio lungo (almeno 160 ms) e `rifinisci` tiene anche le vocali finali deboli (soglia più bassa, margine più lungo). Se si sente ancora una parola mozzata, segnalarla: si può aggiungere un punto o una pausa dopo la parola nel copione.
+
+## Nomi che escono storpiati (segnalato il 30 ottobre, puntata 5)
+"Coneja" usciva "cone", "stif dc" "staf dc", "WOA" "UA" (e "vita" "vi"): oltre al taglio finale (già corretto) Gemini legge male i nomi stranieri. Tabella PRON in puntata.py: Conèha, Stìf Dì Ci, Uòa. Se un nome esce ancora storpiato si aggiunge lì. Pausa tra una battuta e l'altra portata da 0,12 a 0,3 secondi, così non restano rumori tra le parole.

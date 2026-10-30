@@ -47,5 +47,5 @@ def rifinisci(pcm: bytes) -> bytes:
     a = int(0.012 * SR); b = int(0.07 * SR)
     x[:a] *= np.linspace(0, 1, a) ** 2
     x[-b:] *= np.linspace(1, 0, b) ** 2
-    x = np.concatenate([x, np.zeros(int(0.12 * SR), dtype=np.float32)])
+    x = np.concatenate([x, np.zeros(int(0.3 * SR), dtype=np.float32)])
     return (np.clip(x, -1, 1) * 32767).astype(np.int16).tobytes()
