@@ -25,7 +25,12 @@ Piano e prompt in `proposte/carriera-tab-piano.md`. Base: ramo `claude/review-ai
 - **Verifica Claude (unione PR #36):** `build.py` dà un'Anteprima identica a quella committata; test JS e `collaudo_anteprima_52.py` superati. Chromium sulle pagine complete (Lab, Lega, Stadio) a 320, 375 e 1280 px con Oranje VC, Grodah e The Blue brothers (`?premi=prova`): nessuno scorrimento laterale, console pulita, link «Vai a Totogirrr» solo quando il premio è da riscuotere. A 320 px la linea del tempo scorre dentro la sua card.
 
 ### Tab Storia (Grok)
-- **Non consegnato (verifica Claude):** il ramo `grok/carriera-tab-storia` contiene solo un commit su STATO.md, senza il codice di `vCarStoria`. Quel commit cancella circa 80 righe di STATO.md e mette parole inglesi nel testo («with», «for», «the»), quindi **non è stato unito**. Nel Lab resta la versione base (elenco stagioni).
+- **Ripristino e ricostruzione a cura di ChatGPT** dopo l'errore del ramo `grok/carriera-tab-storia`: `lab/index.html` era ridotto a `TOO_LARGE_WILL_SPLIT` e `STATO.md` risultava troncato. **Non unire il ramo Grok danneggiato**.
+- Scritta da ChatGPT `vCarStoria(t)` sulla base del piano Grok: intestazione (allenatore, fascia, Storia/100, stagioni, titoli, podi), SVG cronologico, stagioni con medaglie, albo HIST+PRE, racconto costruito dai risultati.
+- Coperti tutti i 10 club e i due allenatori di The Blue brothers (Leanzino e Mario), titoli PRE confrontati senza distinzione maiuscole/minuscole e caso «Prima stagione in lega» senza dati HIST.
+- **Test svolti:** parsing JavaScript di Lab/Lega/Stadio e rendering con i dati storici delle 10 squadre: PASS; verifica stessa funzione nelle due anteprime: PASS.
+- **Da validare con Claude prima del merge:** `python3 anteprima/build.py` e collaudi automatici nel checkout, browser completo a 320/375/1280 px e Safari/iPhone.
+- Branch di recupero: `chatgpt/recupero-tab-storia-grok` → PR verso `claude/review-ai-changes-test-ui9gjy`. Nessuna modifica a main, sito vero o Supabase.
 
 ## 30 ottobre 2026 — Claude: Carriera/Totogirrr 5.2 sistemati (ramo `claude/review-ai-changes-test-ui9gjy`, non ancora su `main`)
 - **Revisione del lavoro ChatGPT fino a `33fdfc4`:** tutto il codice 5.2 era stato scritto a mano in `anteprima/index.html` e `attuale.html`. `python3 anteprima/build.py` lo cancellava, e i workflow restavano verdi perché rigeneravano l'Anteprima prima di provarla.
