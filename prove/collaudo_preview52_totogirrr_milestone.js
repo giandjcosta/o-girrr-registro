@@ -5,7 +5,7 @@ for(const file of base){
  for(const match of html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)){
    if(match[1].trim()&&!match[0].includes('application/json'))new vm.Script(match[1],{filename:file});
  }
- for(const label of ['var _milestones=[2,6,8,10,18,26,34]','_played=Math.max(gioc(),(CL||[])','S.fdem.team!==t||S.fdem.anchor!==_anchor','aGiornata(_anchor,t)','function aGiornata(n,t){if(!CL||!CL.some(','function bolla52(t)','function premioSponsor(t)'])
+ for(const label of ['var _milestones=[2,6,8,10,18,26,34]','_played=Math.max(gioc(),(CL||[])','S.fdem.team!==t||S.fdem.anchor!==_anchor','aGiornata(_anchor,t)','function aGiornata(n,t){if(!CL||ultimaGiornataVerificata()<n)','function ultimaGiornataVerificata()','function bolla52(t)','function premioSponsor(t)'])
    assert(html.includes(label),file+' missing '+label);
  console.log('PASS syntax and milestones',file);
 }
@@ -23,15 +23,20 @@ console.log('PASS Totogirrr 5.2 legato alla Carriera, senza database');
 
 // Calculation may use official calendar even when embedded mock table still reports round 2.
 const c=fs.readFileSync('lab/index.html','utf8');
+const v0=c.indexOf('function ultimaGiornataVerificata(){'),v1=c.indexOf('\nfunction gioc(){',v0);
 const start=c.indexOf('function aGiornata(n,t){'),stop=c.indexOf('/* esito',start);
-assert(start>0&&stop>start,'aGiornata missing');
-const source=c.slice(start,stop);
-const context={CL:[
-{n:2,m:[['A',78,70,'B','2-1'],['C',70,70,'D','1-1']]},
-{n:8,m:[['A',80,70,'B','3-1'],['C',75,65,'D','2-1']]}],
-gioc:()=>2,Math,Object};
+assert(v0>0&&v1>v0&&start>0&&stop>start,'aGiornata/ultimaGiornataVerificata missing');
+const source=c.slice(v0,v1)+'\n'+c.slice(start,stop);
+// 8 giornate complete (5 partite con risultato): A vince sempre, D perde sempre
+const T=['A','B','C','D','E','F','G','H','I','J'],giornata=n=>({n,m:[['A',80,70,'B','3-1'],['C',75,65,'D','2-1'],['E',70,70,'F','1-1'],['G',70,70,'H','1-1'],['I',70,70,'J','1-1']]});
+const context={CL:[1,2,3,4,5,6,7,8].map(giornata).concat([{n:9,m:[['A',0,0,'B','-']]}]),gioc:()=>2,Math,Object,Number};
 vm.createContext(context);vm.runInContext(source,context);
+assert.equal(context.ultimaGiornataVerificata(),8);
 assert.equal(context.aGiornata(8,'A').pos,1);
-assert.equal(context.aGiornata(8,'D').pos,3);
-assert.equal(context.aGiornata(7,'A'),null);
-console.log('PASS official G8 milestone even if embedded table is still G2');
+assert.equal(context.aGiornata(8,'D').pos,10);
+assert.equal(context.aGiornata(9,'A'),null);
+// una giornata incompleta in mezzo blocca le successive
+const ctx2={CL:[giornata(1),{n:2,m:[['A',80,70,'B','3-1']]},giornata(3)],gioc:()=>0,Math,Object,Number};
+vm.createContext(ctx2);vm.runInContext(source,ctx2);
+assert.equal(ctx2.ultimaGiornataVerificata(),1);assert.equal(ctx2.aGiornata(3,'A'),null);
+console.log('PASS official G8 milestone only on complete, consecutive rounds');
