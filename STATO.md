@@ -13,7 +13,8 @@
 - Per il sito vero (dopo il «vai»): `python3 rilascio/tabellone_dati.py girrr/tabellone.html girrr/tabellone.html` e lo stesso per `stadio/girrr/tabellone.html` su `gh-pages`, poi copia in `ufficiale/src/sito/`.
 
 ## Carriera a tab — resoconti
-- **30 ottobre — su `main` del registro con il «vai» di Gianluca:** i 4 tab (Panoramica, Obiettivi, Fiducia, Storia), solo la propria squadra, premi dagli obiettivi veri. Nel tab Storia i nomi degli allenatori restano come sono scritti nei dati («apo», «ser»): richiesta di Gianluca, il titolo della card non li mette più in maiuscolo. **Da fare:** prova di Gianluca nel Lab; decisione Supabase per il riscatto dei premi sul sito vero; poi rilascio 5.2. Rami da non unire: `grok/carriera-tab-storia` (danneggiato).
+- **30 ottobre — su `main` del registro con il «vai» di Gianluca:** i 4 tab (Panoramica, Obiettivi, Fiducia, Storia), solo la propria squadra, premi dagli obiettivi veri. Nel tab Storia i nomi degli allenatori restano come sono scritti nei dati («apo», «ser»): richiesta di Gianluca, il titolo della card non li mette più in maiuscolo. **Da fare:** prova di Gianluca nel Lab; decisione Supabase per il riscatto dei premi sul sito vero; poi rilascio 5.2. Rami da non unire: `grok/carriera-tab-storia` (danneggiato): Gianluca ne ha chiesto la cancellazione, ma dalla sessione di Claude è bloccata (403): va cancellato da GitHub.
+- **30 ottobre — pulizia (richiesta di Gianluca):** cancellate su `main` (`51f60b0`) le vecchie copie `anteprima/totogirrr.html` e `anteprima/totogirrr-premi-5-2.html`, che nessuna pagina, test o workflow collegava più. Il Totogirrr di prova in uso è `anteprima/totogirrr-52.html`.
 Piano e prompt in `proposte/carriera-tab-piano.md`. Base: ramo `claude/review-ai-changes-test-ui9gjy`. Ognuno scrive solo nel suo paragrafo.
 
 ### Tab Panoramica e Fiducia + struttura (Claude)
