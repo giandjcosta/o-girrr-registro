@@ -29,14 +29,14 @@ def main():
     r = chiusa(d)
     if not r: print("giornata="); return
     n, sa = r["n"], r.get("sa")
-    arc = carica(SITO / "girrr/voci/archivio.json", [])
-    if any(re.search(rf"Giornata {n}\b", (e.get("tag") or "") + " " + (e.get("titolo") or "")) for e in arc):
-        print("giornata="); return          # già fatta
     if "--segna" in sys.argv:
         ev = carica(EV, [])
         k = {f"derby:{e['k']}" for e in ev if e.get("tipo") == "derby"}
         ANN.write_text(json.dumps(sorted(k | set(carica(ANN, []))), indent=1), encoding="utf-8")
         print(f"giornata={n}"); return
+    arc = carica(SITO / "girrr/voci/archivio.json", [])
+    if any(re.search(rf"Giornata {n}\b", (e.get("tag") or "") + " " + (e.get("titolo") or "")) for e in arc):
+        print("giornata="); return          # già fatta
     ev = carica(EV, [])
     dati = carica(SITO / "girrr/dati/lab-dati.json")
     cp_ = [c for c in d["cal"].get("cup", []) if c.get("sa") == sa and c.get("m")]
