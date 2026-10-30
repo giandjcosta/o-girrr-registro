@@ -293,7 +293,18 @@ function mockRpc(name,b){
   if(name==='toto_pr_stato'){if(!M.pr)M.pr={n:2,P:[{id:1,creditore:team==='Apo team'?'WOA':'Apo team',debitore:team,importo:150,tasso:1.10,restituito:50,stato:'attivo',attesa_di:null,creato:'2026-10-24T10:00:00Z'},{id:2,creditore:team,debitore:team==='Grodah'?'WOA':'Grodah',importo:75,tasso:1.10,restituito:0,stato:'richiesta',attesa_di:team,creato:'2026-10-28T10:00:00Z'}],V:[{tipo:'trattenuta',importo:-8,nota:'Trattenuta del banco',creato:'2026-10-27T10:00:00Z'}]};return{prestiti:M.pr.P,movimenti:M.pr.V,debito_p:100}}
   if(name==='toto_pr_chiedi'){M.pr.P.push({id:++M.pr.n+1,creditore:b.p_a,debitore:team,importo:b.p_importo,tasso:b.p_tasso,restituito:0,stato:'richiesta',attesa_di:b.p_a,creato:new Date().toISOString()});return{id:1}}
   if(name==='toto_pr_rispondi'){var r=M.pr.P.filter(function(x){return x.id===b.p_id})[0];if(b.p_azione==='rifiuta')r.stato='rifiutato';else if(b.p_azione==='accetta'){r.stato='attivo';r.attesa_di=null;M.conto.crediti-=r.importo;M.pr.V.unshift({tipo:'prestito_dato',importo:-r.importo,nota:'Prestito a '+r.debitore,creato:new Date().toISOString()})}else{r.tasso=b.p_tasso;r.stato='controproposta';r.attesa_di=r.debitore}return{}}
-  if(name==='toto_pr_restituisci'){var r2=M.pr.P.filter(function(x){return x.id===b.p_id})[0];r2.restituito+=b.p_importo;return{restituito:b.p_importo}}
+  if(name==='toto_pr_restituisci'){
+    var r2=M.pr&&M.pr.P.filter(function(x){return x.id===b.p_id})[0],amount=Number(b.p_importo);
+    if(!r2||r2.stato!=='attivo'||r2.debitore!==team)throw Error('Prestito non disponibile');
+    var residuo=Math.round((r2.importo*r2.tasso-r2.restituito)*100)/100;
+    if(!Number.isFinite(amount)||amount<=0||amount>residuo)throw Error('Importo di rimborso non valido');
+    if(amount>M.conto.crediti)throw Error('Fantacrediti insufficienti');
+    r2.restituito=Math.round((r2.restituito+amount)*100)/100;
+    M.conto.crediti=Math.round((M.conto.crediti-amount)*100)/100;
+    if(r2.restituito>=Math.round(r2.importo*r2.tasso*100)/100)r2.stato='saldato';
+    M.pr.V.unshift({tipo:'rimborso',importo:-amount,nota:'Rimborso prestito a '+r2.creditore,creato:new Date().toISOString()});
+    return{restituito:amount}
+  }
   if(name==='toto_sussidio'){var d=50-M.conto.crediti;M.conto.crediti=50;M.conto.debito=Math.round(d*120)/100;M.conto.ultimo_prestito=1;return{crediti:50,dato:d,da_restituire:M.conto.debito}}
   if(name==='toto_gioca'){
     var st=b.p_puntata;if(!(st>=5))throw new Error('Puntata minima: 5 fantacrediti');if(st>M.conto.crediti)throw new Error('Fantacrediti insufficienti');
@@ -313,7 +324,15 @@ function mockRpc(name,b){
   }
 }
 function rpc(name,body){try{var result=mockRpc(name,body),q=preview52State();if(M&&M.conto){q.crediti=M.conto.crediti;preview52Save(q)}return Promise.resolve(JSON.parse(JSON.stringify(result)))}catch(e){return Promise.reject(e)}}
-function toast(t,bad){var d=document.createElement('div');d.className='toast'+(bad?' bad':'');d.textContent=t;document.body.appendChild(d);setTimeout(function(){d.remove()},3200)}
+var TOAST_NODE=null,TOAST_TIMEOUT=null;
+function toast(t,bad){
+  if(TOAST_TIMEOUT!==null){clearTimeout(TOAST_TIMEOUT);TOAST_TIMEOUT=null}
+  if(!TOAST_NODE||!TOAST_NODE.isConnected){TOAST_NODE=document.createElement('div');document.body.appendChild(TOAST_NODE)}
+  TOAST_NODE.className='toast'+(bad?' bad':'');
+  TOAST_NODE.textContent=t;
+  var node=TOAST_NODE;
+  TOAST_TIMEOUT=setTimeout(function(){if(TOAST_NODE===node){node.remove();TOAST_NODE=null;TOAST_TIMEOUT=null}},3200);
+}
 function quando(iso){try{var t=new Intl.DateTimeFormat('it-IT',{weekday:'short',day:'numeric',month:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'Europe/Rome'}).format(new Date(iso));return t.charAt(0).toUpperCase()+t.slice(1)}catch(e){return iso}}
 
 function carica(){
@@ -437,7 +456,7 @@ function vPrestiti(){
   if(att2.length)h+='<div class="card"><b>In attesa dell\'altro</b>'+att2.map(function(x){var io=x.debitore===team;return '<div class="pri">'+(io?'Hai chiesto '+f0(x.importo)+' a <b>'+esc(x.creditore)+'</b>':'<b>'+esc(x.debitore)+'</b> aspetta la tua risposta')+'<small>Tasso '+pPct(x.tasso)+(x.stato==='controproposta'?' (proposto da chi presta)':'')+'</small></div>'}).join('')+'</div>';
   var att3=P.filter(function(x){return x.stato==='attivo'});
   if(att3.length)h+='<div class="card"><b>Prestiti in corso</b>'+att3.map(function(x){var io=x.debitore===team,tot=Math.round(x.importo*x.tasso*100)/100,res=Math.round((tot-x.restituito)*100)/100;
-    return '<div class="pri">'+(io?'Devi a <b>'+esc(x.creditore)+'</b> ancora <b>'+f2(res)+'</b>':'<b>'+esc(x.debitore)+'</b> ti deve ancora <b>'+f2(res)+'</b>')+'<small>Prestati '+f0(x.importo)+' al '+pPct(x.tasso)+', restituiti '+f2(x.restituito)+' su '+f2(tot)+'. Il 25% di ogni vincita di chi deve va in automatico a chi ha prestato.</small>'+(io?'<div class="prr">'+[10,25,50].filter(function(v){return v<res}).concat([res]).map(function(v){return '<button class="go sm no" data-prr="'+x.id+'|'+v+'">Restituisci '+(v===res?'tutto ('+f2(v)+')':v)+'</button>'}).join('')+'</div>':'')+'</div>'}).join('')+'</div>';
+    return '<div class="pri">'+(io?'Devi a <b>'+esc(x.creditore)+'</b> ancora <b>'+f2(res)+'</b>':'<b>'+esc(x.debitore)+'</b> ti deve ancora <b>'+f2(res)+'</b>')+'<small>Prestati '+f0(x.importo)+' al '+pPct(x.tasso)+', restituiti '+f2(x.restituito)+' su '+f2(tot)+'. Il 25% di ogni vincita di chi deve va in automatico a chi ha prestato.</small>'+(io?'<div class="prr">'+[10,25,50].filter(function(v){return v<res}).concat([res]).map(function(v){return '<button class="go sm no" data-prr="'+x.id+'|'+v+'"'+(PAGAMENTI_IN_CORSO[x.id]?' disabled aria-busy="true"':'')+'>'+(PAGAMENTI_IN_CORSO[x.id]?'Restituzione…':'Restituisci '+(v===res?'tutto ('+f2(v)+')':v))+'</button>'}).join('')+'</div>':'')+'</div>'}).join('')+'</div>';
   var M2=PR.movimenti||[];
   h+='<div class="card"><b>Movimenti</b><p style="font-size:12px;color:var(--sub);margin:6px 0">Qui vedi dove sono finiti i fantacrediti che non trovi più: trattenute del banco, prestiti e rimborsi.</p>'+(M2.length?M2.map(function(m){var n=Number(m.importo);return '<div class="mv"><span>'+esc(m.nota||m.tipo)+'<small style="display:block;color:var(--sub);font-size:11px">'+quando(m.creato)+'</small></span><b class="'+(n>=0?'p':'m')+'">'+(n>=0?'+':'−')+f2(Math.abs(n))+'</b></div>'}).join(''):'<div class="vuoto">Ancora nessun movimento.</div>')+'</div>';
   return h;
@@ -464,6 +483,7 @@ function vSlip(){
   return '<div class="slip"><div class="in"><div class="sel">'+sel+'</div><div class="ln"><input id="stake" type="number" inputmode="decimal" min="5" step="1" value="'+st+'"><div class="info">'+(slip.length>1?'Multipla ':'Singola ')+'· Quota <b>'+f2(q)+'</b><br>Vincita <b id="win">'+f2(st*q)+'</b></div><button class="go" id="gioca"'+(busy?' disabled':'')+'>Gioca</button></div><div class="chips"><button data-st="10">10</button><button data-st="25">25</button><button data-st="50">50</button><button data-st="100">100</button><button class="x" id="svuota" style="margin-left:auto">Svuota</button></div></div></div>';
 }
 var LASTHS='',LASTSV='',QS=1,ANIM=true,LASTQ='',SLIPWAS=false,BALPREV=null;
+var PAGAMENTI_IN_CORSO={};
 function render(){
   var a=document.getElementById('app');
   if(!S){if(!M)mockInit();S=mockStato();PREMI={premi:preview52Sponsors(),reputazione:72};}
@@ -497,8 +517,27 @@ document.addEventListener('click',function(e){
    rpc('toto_pr_chiedi',{p_team:team,p_code:code,p_a:a1,p_importo:i1,p_tasso:t1}).then(function(){toast('Richiesta inviata a '+a1);return loadPR()}).catch(function(e){t.disabled=false;toast(e.message,1)});return}
   if(b=t.closest('[data-pr]')){var pp=b.getAttribute('data-pr').split('|'),tx=document.getElementById('pc'+pp[0]);
    rpc('toto_pr_rispondi',{p_team:team,p_code:code,p_id:Number(pp[0]),p_azione:pp[1],p_tasso:pp[1]==='controproponi'&&tx?Number(tx.value):null}).then(function(r){toast(pp[1]==='accetta'?'Prestito accettato':pp[1]==='rifiuta'?'Richiesta rifiutata':'Controproposta inviata');return Promise.all([loadPR(),carica()])}).catch(function(e){toast(e.message,1)});return}
-  if(b=t.closest('[data-prr]')){var q=b.getAttribute('data-prr').split('|');
-   rpc('toto_pr_restituisci',{p_team:team,p_code:code,p_id:Number(q[0]),p_importo:Number(q[1])}).then(function(r){toast('Restituiti '+f2(r.restituito));return Promise.all([loadPR(),carica()])}).catch(function(e){toast(e.message,1)});return}
+  if(b=t.closest('[data-prr]')){
+    var q=b.getAttribute('data-prr').split('|'),loanId=Number(q[0]),amount=Number(q[1]);
+    if(b.disabled||PAGAMENTI_IN_CORSO[loanId])return;
+    PAGAMENTI_IN_CORSO[loanId]=true;
+    [].forEach.call(document.querySelectorAll('[data-prr]'),function(bt){
+      if(Number(bt.getAttribute('data-prr').split('|')[0])===loanId){bt.disabled=true;bt.setAttribute('aria-busy','true');bt.textContent='Restituzione…'}
+    });
+    rpc('toto_pr_restituisci',{p_team:team,p_code:code,p_id:loanId,p_importo:amount})
+      .then(function(r){
+        return Promise.all([
+          rpc('toto_pr_stato',{p_team:team,p_code:code}),
+          rpc('toto_stato',{p_team:team,p_code:code}),
+          rpc('carriera_stato',{p_team:team,p_code:code})
+        ]).then(function(all){
+          PR=all[0];S=all[1];PREMI=all[2];PAGAMENTI_IN_CORSO[loanId]=false;
+          render();toast('Restituiti '+f2(r.restituito)+' fantacrediti');
+        })
+      })
+      .catch(function(e){PAGAMENTI_IN_CORSO[loanId]=false;render();toast(e.message,1)});
+    return
+  }
   if(b=t.closest('[data-tab]')){tab=b.getAttribute('data-tab');render();window.scrollTo(0,0);if(tab==='prestiti')loadPR();if(tab==='prob')probLoad();if(tab==='sfide')duLoad(false);return}
   if(b=t.closest('.q')){
     var id=b.getAttribute('data-p'),m=b.getAttribute('data-m');
