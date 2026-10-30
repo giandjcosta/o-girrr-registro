@@ -1,5 +1,7 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 30 ottobre 2026)
 
+**Regola di Gianluca (30 ottobre, sera):** quando dice di pubblicare la giornata, intende TUTTO insieme: Giornale, tabellone, Totogirrr, radio, e anche i testi dei social (follower, posizione in classifica nelle bio). La radio parte qualche minuto dopo i calcoli, così ha i dati di Lega e Coppa e legge il post della Curva. Giornata 5: radio online (`gh-pages` f5a522f, `puntata-g05.mp3` + archivio). Da fare: automatizzare radio (dopo `dopo-giornata`) e verificare che follower/posizioni nelle bio della Curva si aggiornino da soli.
+
 ## 30 ottobre 2026 — Giornata 5 (Serie A 9): importazione, calcoli, Giornale, tabellone e Radio (Claude, «vai» di Gianluca)
 - **Importazione dagli screenshot di Leghe** (Chrome del PC non raggiungibile): 5 partite lette a mano con `scripts/leghe_importa.py`; per ogni squadra somma dei fantavoti + modificatore difesa = totale Leghe, nomi tutti in rosa. Classifica ricalcolata uguale a quella di Leghe (punti, GF, GS e totali). **Nessuna Champions Cup in questa giornata** (la 3ª di coppa è alla Serie A 10). `gh-pages` `69b6b45`.
 - **Calcoli dopo la giornata:** workflow lanciato a mano (run `41084528510`), tutti i passi riusciti; giornata 5 segnata come fatta in `calcoli/giornate.json`.
