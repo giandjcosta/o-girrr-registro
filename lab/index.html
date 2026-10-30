@@ -819,7 +819,7 @@ function vCarStoria(t){
     antiche.forEach(function(r){anni[String(r[0])]=true});
     var nStagioni=Object.keys(anni).length;
     var h='<div class="card" style="min-width:0;overflow:hidden">'+
-      '<h3>'+esc(m)+'</h3>'+
+      '<h3 style="text-transform:none;letter-spacing:.02em">'+esc(m)+'</h3>'+
       '<div class="row" style="gap:8px;flex-wrap:wrap;margin:7px 0 12px">'+
       '<span class="tag">'+esc(fas)+'</span><span class="tag">Storia: <b class="num">'+valore+'</b> su 100</span></div>'+
       '<div class="row" style="gap:8px;flex-wrap:wrap;justify-content:space-between">'+
