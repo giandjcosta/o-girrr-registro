@@ -27,6 +27,6 @@ for(const file of ['lab/index.html','anteprima/index.html','anteprima/attuale.ht
  }
  assert(html.includes("Chiudi meglio/i.test(sp.testo)?125"),file+': premio alto assente');
  assert(html.includes("?100:/giornate/i.test(sp.testo)?75:50"),file+': livelli sponsor assenti');
- assert(html.includes("50–125 Fantacrediti sponsor"),file+': testo premio assente');
+ assert(html.includes("(50–125 secondo difficoltà)"),file+': testo premio assente');
  console.log('PASS',file,'3 categorie, 7 giornate, 6 posizioni, bonus/malus + premi 50/75/100/125');
 }

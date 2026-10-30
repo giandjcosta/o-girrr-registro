@@ -26,7 +26,7 @@ a{color:var(--hi)}
 .bal{text-align:right;background:rgba(255,255,255,.1);border-radius:12px;padding:6px 12px;border-left:5px solid var(--hi)}
 .bal small{display:block;font-weight:800;font-size:9px;letter-spacing:.22em;color:var(--sub)}
 .bal b{font-weight:900;font-size:22px;line-height:1.1}
-.back{display:inline-block;margin:0 0 10px;font-size:12px;font-weight:800;letter-spacing:.14em;text-decoration:none;color:var(--sub)}
+.back,.tback{display:inline-block;margin:0 0 10px;font-size:12px;font-weight:800;letter-spacing:.14em;text-decoration:none;color:var(--sub)}
 .who{font-size:12px;color:var(--sub);margin-bottom:10px}
 .who button{margin-left:6px}
 nav{display:flex;gap:6px;margin-bottom:14px;position:sticky;top:0;z-index:5;padding:6px 0;background:linear-gradient(var(--bg) 70%,transparent)}
@@ -228,7 +228,9 @@ function f0(n){return Number(n).toLocaleString('it-IT',{maximumFractionDigits:0}
 var LS={};try{LS=JSON.parse(sessionStorage.getItem('orr_52_fg')||'{}')||{}}catch(e){}
 function save(){try{sessionStorage.setItem('orr_52_fg',JSON.stringify(LS))}catch(e){}}
 var DEMO=true;
-var _BACK_=/[?&]skin=stadio(?:&|$)/.test(location.search)?'index.html':'attuale.html';
+/* Anteprima 5.2: la squadra e i premi arrivano dalla Carriera (sessionStorage 'ogirrr52-v2', scritto da premi52() nel Lab/Anteprima); ?da= è la pagina a cui tornare */
+var P52Q=new URLSearchParams(location.search),_DA_=P52Q.get('da')||'';
+var _BACK_=/^(\.\.\/[\w\/-]+\/)?[\w-]+\.html(#[\w-]*)?$/.test(_DA_)?_DA_:/[?&]skin=stadio(?:&|$)/.test(location.search)?'index.html':'attuale.html';
 var teams=[],team=DEMO?'Oranje VC':(LS.team||''),code=DEMO?'demo':(LS.code||''),S=null,tab='partite',slip=[],err='',busy=false;
 var PREMI={premi:[],reputazione:0};
 var MORE={};
@@ -264,19 +266,22 @@ function mockStato(){
   return{ora:new Date().toISOString(),conto:c,sussidio_ok:lib,partite:M.partite,schedine:M.schedine.slice().reverse(),
    stat:mockStat(),colpo:mockColpo(),classifica:[{team:team,crediti:c.crediti,debito:c.debito,ingioco:M.schedine.filter(function(x){return x.stato==='aperta'}).reduce(function(a,x){return a+x.puntata},0)},{team:'stif dc',crediti:500,debito:0,ingioco:0},{team:'Grodah',crediti:500,debito:0,ingioco:0}]};
 }
+var P52K='ogirrr52-v2';
+function p52Tutto(){var q={};try{q=JSON.parse(sessionStorage.getItem(P52K)||'{}')||{}}catch(e){}if(!q.per||typeof q.per!=='object')q.per={};return q}
+function p52Scrivi(q){try{sessionStorage.setItem(P52K,JSON.stringify(q))}catch(e){}}
+/* conto della squadra in uso: saldo, premi già riscossi e movimenti restano per squadra anche quando la cambi */
 function preview52State(){
- var q={crediti:346,claimed:[],day:2,place:5,ledger:[]};
- try{var d=JSON.parse(sessionStorage.getItem('ogirrr52-preview')||'{}');if(d&&typeof d==='object')Object.assign(q,d)}catch(e){}
- if(!Array.isArray(q.claimed))q.claimed=[];if(!Array.isArray(q.ledger))q.ledger=[];
+ var all=p52Tutto(),q=all.per[team]||{};
+ if(typeof q.crediti!=='number')q.crediti=346;if(!Array.isArray(q.claimed))q.claimed=[];
+ if(!Array.isArray(q.ledger)){var a=teams.filter(function(n){return n!==team});q.ledger=[
+  {id:'loan24',tipo:'Prestito ricevuto',nota:'Prestito da '+a[0],importo:150,creato:'2026-10-24T11:00:00Z'},
+  {id:'pay25',tipo:'Rimborso',nota:'Rimborso a '+a[0],importo:-50,creato:'2026-10-25T11:00:00Z'}]}
  return q;
 }
-function preview52Save(q){try{sessionStorage.setItem('ogirrr52-preview',JSON.stringify(q))}catch(e){}}
+function preview52Save(q){var all=p52Tutto();all.team=team;all.per[team]=q;p52Scrivi(all)}
 function preview52Sponsors(){
- var q=preview52State(),s=[
- {obiettivo:'tecnico',sponsor:'Sponsor tecnico',crediti:60,reputazione:1,ok:true},
- {obiettivo:'podio',sponsor:'Sponsor risultati',crediti:100,reputazione:2,ok:q.day>=8&&q.place<=3},
- {obiettivo:'titolo',sponsor:'Sponsor premium',crediti:150,reputazione:3,ok:q.day>=38&&q.place===1}
- ];return s.map(function(x){x.stato=q.claimed.includes(x.obiettivo)?'claimed':x.ok?'pending':'in_corso';return x});
+ var q=preview52State(),pr=((p52Tutto().premi||{})[team])||[];
+ return pr.map(function(x){x=Object.assign({},x);x.stato=q.claimed.indexOf(x.obiettivo)>=0?'claimed':'pending';return x});
 }
 function mockRpc(name,b){
   if(!M)mockInit();
@@ -370,7 +375,7 @@ function premioWidget(){
 }
 function head(){
   var c=S.conto;
-  return '<a class="back" href="'+_BACK_+'">‹ O GIRRR</a><div class="top"><a href="'+_BACK_+'" title="Torna a O Girrr" style="display:block;flex:none"><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/logo-lega.png" alt="O Fant A Girrr" style="display:block"></a><div class="t"><div class="k">O FANT A GIRRR</div><h1><b class="TT"><em class="Tg">T</em><svg viewBox="0 0 900 400" aria-hidden="true"><path fill="currentColor" d="M185.8 85.2H181Q145.4 85.2 121.1 103Q96.9 120.8 85.6 166Q81.9 180.8 83.2 186.6Q84.6 192.4 84.4 193.2Q62.8 193.2 54.4 184.2Q46.1 175.2 51.3 154.4Q58.4 126 78.2 102.6Q98.1 79.2 132.3 64.8Q166.5 50.4 213.7 50.4Q240.1 50.4 269.3 55.2Q272.6 55.8 275.8 56.3C299.8 57.8 329.3 62.4 360.7 67.4C408.7 74.9 461.1 83.2 505 82C565 80 605 68 642 62C668 66 668 94 640 99C600 108 545 122 480 122C417.8 122 363.5 106.2 296 100.6V102Q285.1 101.7 274.5 100Q262.2 98 239.8 93.2L120.4 350H62.8Z"/></svg></b>oto<span>girrr</span></h1></div><div class="bal"><small>FANTACREDITI</small><b>'+f2(c.crediti)+'</b>'+(Number(c.debito)>0?'<small style="color:var(--hi)">DEBITO '+f2(c.debito)+'</small>':'')+'</div></div>'+
+  return '<a class="tback" href="'+_BACK_+'">‹ O GIRRR</a><div class="top"><a href="'+_BACK_+'" title="Torna a O Girrr" style="display:block;flex:none"><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/logo-lega.png" alt="O Fant A Girrr" style="display:block"></a><div class="t"><div class="k">O FANT A GIRRR</div><h1><b class="TT"><em class="Tg">T</em><svg viewBox="0 0 900 400" aria-hidden="true"><path fill="currentColor" d="M185.8 85.2H181Q145.4 85.2 121.1 103Q96.9 120.8 85.6 166Q81.9 180.8 83.2 186.6Q84.6 192.4 84.4 193.2Q62.8 193.2 54.4 184.2Q46.1 175.2 51.3 154.4Q58.4 126 78.2 102.6Q98.1 79.2 132.3 64.8Q166.5 50.4 213.7 50.4Q240.1 50.4 269.3 55.2Q272.6 55.8 275.8 56.3C299.8 57.8 329.3 62.4 360.7 67.4C408.7 74.9 461.1 83.2 505 82C565 80 605 68 642 62C668 66 668 94 640 99C600 108 545 122 480 122C417.8 122 363.5 106.2 296 100.6V102Q285.1 101.7 274.5 100Q262.2 98 239.8 93.2L120.4 350H62.8Z"/></svg></b>oto<span>girrr</span></h1></div><div class="bal"><small>FANTACREDITI</small><b>'+f2(c.crediti)+'</b>'+(Number(c.debito)>0?'<small style="color:var(--hi)">DEBITO '+f2(c.debito)+'</small>':'')+'</div></div>'+
   '<div class="who">Squadra: <b>'+esc(team)+'</b><button class="x" id="out" aria-label="Cambia squadra">Cambia squadra</button></div>'+premioWidget()+
   '<nav><div class="nvi">'+[['partite','Partite'],['vinc','Vincenti'],['mie','Le mie'],['class','Classifica'],['prob','Probabilità'],['sfide','Sfida 1 contro 1'],['prestiti','Prestiti'],['movimenti','Movimenti'],['regole','Regole']].map(function(t){return '<button data-tab="'+t[0]+'" class="'+(tab===t[0]?'on':'')+'">'+t[1]+'</button>'}).join('')+'</div></nav>'+ticker();
 }
@@ -511,7 +516,7 @@ document.addEventListener('click',function(e){
   if(t.id==='enter'){team=document.getElementById('gt').value;code='preview';var q=preview52State();q.team=team;preview52Save(q);M=null;PR=null;slip=[];err='';carica();loadPR();return}
   if(t.id==='riscatta-sponsor'){if(busy)return;busy=true;t.disabled=true;t.textContent='Riscatto…';rpc('carriera_riscatta',{p_team:team,p_code:code,p_obiettivo:t.dataset.obiettivo}).then(function(x){toast('Premio riscattato: +'+f0(x.crediti)+' Fantacrediti');ANIM=true;return carica()}).catch(function(e){busy=false;t.disabled=false;t.textContent='Riscatta';toast(e.message,1)});return}
   if(t.id==='sim'){rpc('demo_simula',{}).then(function(){slip=[];tab='mie';ANIM=true;toast('Partite finite, pagamenti fatti');return carica()});return}
-  if(t.id==='out'){var q=preview52State(),altre=teams.filter(function(n){return n!==team});team=altre[Math.floor(Math.random()*altre.length)]||team;code='preview';q.team=team;q.crediti=346;q.claimed=[];q.ledger=[];preview52Save(q);M=null;PR=null;S=null;slip=[];tab='partite';mockInit();PREMI={premi:preview52Sponsors(),reputazione:72};PR=mockRpc('toto_pr_stato',{});S=mockStato();render();return}
+  if(t.id==='out'){team=teams[(teams.indexOf(team)+1)%teams.length];code='preview';var q=preview52State();preview52Save(q);M=null;PR=null;S=null;slip=[];tab='partite';mockInit();PREMI={premi:preview52Sponsors(),reputazione:72};PR=mockRpc('toto_pr_stato',{});S=mockStato();render();return}
   if(t.id==='pr_sug'){var sg=document.getElementById('pr_t');sg.value=pSug(Number(document.getElementById('pr_i').value));return}
   if(t.id==='pr_send'){var a1=document.getElementById('pr_a').value,i1=Number(document.getElementById('pr_i').value),t1=Number(document.getElementById('pr_t').value);t.disabled=true;
    rpc('toto_pr_chiedi',{p_team:team,p_code:code,p_a:a1,p_importo:i1,p_tasso:t1}).then(function(){toast('Richiesta inviata a '+a1);return loadPR()}).catch(function(e){t.disabled=false;toast(e.message,1)});return}
@@ -677,13 +682,9 @@ function loginDaLink(d){var k=(location.hash||'').replace('#','').trim().toUpper
   d.teams.forEach(function(x){if(hshF(x.name+'|'+k)===d.lock[x.name]){var o={};try{o=JSON.parse(sessionStorage.getItem('orr_52_fg')||'{}')||{}}catch(e){}o.team=x.name;o.code=k;try{sessionStorage.setItem('orr_52_fg',JSON.stringify(o))}catch(e){}ok=x.name}});
   if(ok){try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}return ok}
 teams=['Oranje VC','Apo team','Grodah','WOA','Real Madrink','stif dc','Mariana Coneja','AFA SELECCION','The Blue brothers','Atletico ma non troppo'];
-var ps=preview52State();
-if(!ps.team||teams.indexOf(ps.team)<0){ps.team=teams[Math.floor(Math.random()*teams.length)];preview52Save(ps)}
-team=ps.team;code='preview';
-if(!ps.ledger.length){ps.ledger=[
- {id:'loan24',tipo:'Prestito ricevuto',nota:'Prestito da un avversario',importo:150,creato:'2026-10-24T11:00:00Z'},
- {id:'pay25',tipo:'Rimborso',nota:'Rimborso ad Apo team',importo:-50,creato:'2026-10-25T11:00:00Z'}
- ];preview52Save(ps)}
+var ps=p52Tutto(),qt=P52Q.get('team');
+team=teams.indexOf(qt)>=0?qt:teams.indexOf(ps.team)>=0?ps.team:teams[Math.floor(Math.random()*teams.length)];code='preview';
+preview52Save(preview52State());
 mockInit();
 PREMI={premi:preview52Sponsors(),reputazione:72};
 PR=mockRpc('toto_pr_stato',{p_team:team,p_code:code});

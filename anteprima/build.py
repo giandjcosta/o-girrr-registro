@@ -1,6 +1,7 @@
 """Genera anteprima/index.html a partire dal Lab: stessa logica, ma impaginata come l'app vera (Home con riquadri, niente voti né note del laboratorio).
 Si lancia con: python3 anteprima/build.py (dalla cartella del repo). Va rilanciato ogni volta che cambia lab/index.html."""
 import os, pathlib, re
+RIL0 = bool(os.environ.get("APP_RIL"))
 R = pathlib.Path(__file__).resolve().parent.parent
 s = (R / "lab" / "index.html").read_text(encoding="utf-8")
 import sys; sys.path.insert(0, str(R / "rilascio"))
@@ -57,6 +58,12 @@ sost("var V={spog:vSpog,toto:vToto,home:vHome,", extra + "function vSpog(){retur
 sost("function go(t){", "function go(t){t=route(t);if(t==='home'){location.href='@@HOME@@';return}")
 sost("if(V[hh])cur=hh;", "if(V[hh])cur=route(hh);if(cur==='home'){location.replace('@@HOME@@')}")
 sost("carriera:vCar,", "carriera:vCarr,")
+if RIL0:   # nel sito vero i premi arrivano dal database (carriera_stato), non dal Totogirrr finto dell'anteprima
+    sost("var PREMI52=true,", "var PREMI52=false,")
+else:   # anteprima: Totogirrr è la pagina finta anteprima/totogirrr-52.html, con la squadra della Carriera; niente strumenti di prova a vista
+    sost("function go(t){t=route(t);", "function go(t){var t0=t;t=route(t);if(t==='toto'){location.href=toto52Url(S.cteam||ME,(location.pathname.split('/').pop()||'index.html')+'#'+cur)+(t0==='duello'?'&t=sfide':t0==='prob'?'&t=prob':'');return}")
+    sost("if(cur==='home'){location.replace('@@HOME@@')}", "if(cur==='home'){location.replace('@@HOME@@')}if(cur==='toto'){location.replace(toto52Url(S.cteam||ME,'@@HOME@@'))}")
+    sost("</style>", ".lvprova,[data-sst],[data-nm=\"s-prop\"],[data-nm=\"s-ok\"],[data-nm=\"s-ctr\"],[data-rx=\"nuova\"],[data-nuova]{display:none!important}</style>")
 sost(".seg{display:flex;", ".seg{flex-wrap:wrap;display:flex;") if False else None
 
 # Pagine come nel sito ufficiale: niente testata Anteprima né riga di tab; testata con scudo e titolo, link per tornare alla Home
