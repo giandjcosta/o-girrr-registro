@@ -16,7 +16,12 @@ Piano e prompt in `proposte/carriera-tab-piano.md`. Base: ramo `claude/review-ai
 - Provato in Chromium a 320 e 1280 px su Lab, Lega e Stadio, tutti e 4 i tab e The Blue brothers (due allenatori): nessuno scorrimento laterale, console pulita. Test automatici superati. Non provato: Safari/iPhone.
 
 ### Tab Obiettivi (ChatGPT)
-In attesa.
+- Linea del tempo 2/6/8/10/18/26/34: giornate giocate da `gioc()`/CL, prossima evidenziata e scorrimento interno.
+- Obiettivi stagionali con progressi, stati e scadenze; Champions Cup del presidente e dell'allenatore; premio sponsor con link solo se riscuotibile.
+- Collaudi JavaScript su snapshot del ramo (milestone/Totogirrr e fiducia universale): PASS; verifica equivalente di `collaudo_anteprima_52.py`: PASS.
+- Chromium sul componente isolato a 320/375/1280 px, Oranje VC/Grodah/The Blue brothers: 9 casi PASS, nessun overflow o errore JS; stati premio e link verificati.
+- Non eseguiti `python3 anteprima/build.py` e `git diff --exit-code anteprima/` in checkout locale (DNS GitHub bloccato); blocco generato propagato nelle anteprime e confrontato.
+- Non eseguito browser end-to-end delle tre pagine complete via HTTP, né Safari; serve verifica CI/QA della PR.
 
 ### Tab Storia (Grok)
 In attesa.
