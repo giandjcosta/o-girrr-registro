@@ -1,84 +1,141 @@
 # Carriera a tab: piano di lavoro (Claude, ChatGPT, Grok)
 
-Oggi la Carriera è una pagina sola e lunga. La dividiamo in tab con lo stesso selettore a pillole già usato da Totogirrr (`.seg` + `aria-pressed`). Il selettore della squadra e la bolla del premio restano sopra i tab.
+La Carriera passa da pagina unica a **4 tab** (decisione di Gianluca del 30 ottobre: la Cassa non va sotto Carriera). Sopra i tab restano il selettore della squadra e la bolla del premio sponsor.
 
-| Tab | Contenuto | Chi |
-|---|---|---|
-| **Panoramica** | Fiducia del presidente (arco), riassunto obiettivi (quanti Fatto / In corso), riquadro Reputazione e sponsor | Claude |
-| **Obiettivi** | Obiettivi della stagione con linea del tempo delle scadenze (giornate 2, 6, 8, 10, 18, 26, 34), obiettivi di Coppa, stato del premio sponsor | ChatGPT |
-| **Fiducia** | «Come nasce l'aspettativa», «Come cambia la fiducia con il calendario», «Fiducia in lega», più un grafico della fiducia giornata per giornata | Claude |
-| **Storia** | Carriera dell'allenatore: stagioni passate (posizione su quante squadre), titoli, squadre allenate, grafico delle posizioni | Grok |
-| **Cassa** | La Cassa della lega già esistente (`vCassa`), oggi irraggiungibile nell'Anteprima | Claude |
+| Tab | Contenuto | Chi | Stato |
+|---|---|---|---|
+| **Panoramica** | Fiducia del presidente (arco), riassunto obiettivi (N su 4 raggiunti), Reputazione e sponsor | Claude | fatto |
+| **Obiettivi** | Obiettivi della stagione con linea del tempo delle scadenze, obiettivi di Coppa, premio sponsor | ChatGPT | da fare |
+| **Fiducia** | Come nasce l'aspettativa, Come cambia la fiducia con il calendario, grafico «Fiducia giornata per giornata», Fiducia in lega | Claude | fatto |
+| **Storia** | Carriera dell'allenatore: stagioni, titoli, grafico delle posizioni, racconto | Grok | da fare (c'è una versione base) |
 
-## Ordine
-1. **Claude (passo 0, prima degli altri):** prepara in `lab/index.html` l'impalcatura dei tab con cinque funzioni separate e due **zone riservate** già pronte (vuote) per ChatGPT e Grok. Rigenera l'Anteprima, prova e unisce a `main`.
-2. **ChatGPT e Grok in parallelo**, ognuno sul suo ramo partito dal `main` aggiornato, toccano **solo la propria zona**.
-3. **Claude unisce** i due rami (le zone sono separate, quindi niente conflitti), rigenera, prova tutto a 320 px e aggiorna STATO.md. Poi Gianluca prova nel Lab e dà il «vai».
+## Come si lavora
+1. **Base comune:** il ramo `claude/review-ai-changes-test-ui9gjy` contiene già i tab, le correzioni 5.2 e due **zone riservate**: una per ChatGPT e una per Grok. Si parte da lì, **non** da `main`.
+2. ChatGPT e Grok lavorano **in parallelo**, ognuno sul suo ramo, toccando **solo la propria zona** in `lab/index.html` e **solo il proprio paragrafo** in `STATO.md`. Così le unioni non vanno in conflitto.
+3. Ognuno prova, aggiorna il suo paragrafo in STATO.md e apre una Pull Request **verso `claude/review-ai-changes-test-ui9gjy`**.
+4. Claude unisce le due PR, rigenera l'Anteprima, prova tutto e lo segnala in STATO.md.
+5. Gianluca prova nella preview del Lab. Col suo «vai»: unione a `main` del registro → rilascio 5.2 sul sito vero.
 
-## Contratto delle zone (vale per tutti)
-Dentro `lab/index.html` ci saranno:
+## Contratto delle zone
+In `lab/index.html`:
 
 ```js
 /* === TAB CARRIERA: OBIETTIVI (ChatGPT) === */
-function vCarObiettivi(t){ return '' }
+function vCarObiettivi(t,C){ ... }
 /* === FINE TAB OBIETTIVI === */
 
 /* === TAB CARRIERA: STORIA (Grok) === */
-function vCarStoria(t){ return '' }
+function vCarStoria(t){ ... }
 /* === FINE TAB STORIA === */
 ```
 
-- `t` è il nome della squadra selezionata. La funzione restituisce **una stringa HTML** e non tocca il DOM.
-- Si scrive **solo tra i due commenti della propria zona**. Funzioni di aiuto: nella zona, con un prefisso (`ob_…` per ChatGPT, `st_…` per Grok).
-- Gli eventi si agganciano con `document.addEventListener('click'|'change', …)` dentro la zona, filtrando su attributi propri (`data-ob…`, `data-st…`). Dopo un cambio di stato: `render()`.
-- Stato locale in `S.ob` / `S.st` (oggetti già creati dall'impalcatura).
+- `t` è il nome della squadra selezionata. La funzione **restituisce una stringa HTML** e non tocca il DOM.
+- Si scrive **solo tra i due commenti della propria zona**. Funzioni di aiuto dentro la zona, con prefisso `ob_` (ChatGPT) o `st_` (Grok).
+- Eventi: `document.addEventListener('click'|'change', …)` dentro la zona, filtrando su attributi propri (`data-ob…` o `data-st…`), poi `render()`.
+- Stato locale: `S.ob` (ChatGPT) e `S.st` (Grok), già creati come oggetti vuoti.
+- CSS: stili inline o classi con prefisso `.ob-` / `.st-`, mai regole globali nuove.
+- **Mai modificare a mano** `anteprima/index.html` e `anteprima/attuale.html`: si rigenerano con `python3 anteprima/build.py`. Il workflow «Anteprima Totogirrr 5.2 QA» fallisce se non corrispondono al Lab.
 
 ---
 
-## Prompt per ChatGPT (da incollare così)
+## Prompt per ChatGPT (incollalo così)
 
-> Lavora nel repository `giandjcosta/o-girrr-registro`. Leggi prima `AGENTS.md` e `STATO.md`, poi `proposte/carriera-tab-piano.md`.
->
-> **Compito:** riempi la funzione `vCarObiettivi(t)` in `lab/index.html`, tra i commenti `/* === TAB CARRIERA: OBIETTIVI (ChatGPT) === */` e `/* === FINE TAB OBIETTIVI === */`. Non modificare nient'altro nel file.
->
-> **Contenuto del tab Obiettivi:**
-> 1. Elenco degli obiettivi della stagione della squadra `t`: i tre del presidente e quello dello sponsor. Usa le funzioni esistenti `OB[t]`, `EXP[t]`, `vittObj(t)`, `sponsorDi(t)`, `esito(...)`, `aGiornata(n,t)`, `gioc()`, `GTOT`, con lo stesso calcolo che fa oggi `vCar()` per `e1`, `e2`, `e4`. Per ogni obiettivo: logo (sponsor) o «Pres.», titolo, barra `.pbar`, etichetta di stato (`Fatto` / `Mancato` / `In attesa della classifica alla Nª` / stato in corso).
-> 2. **Linea del tempo** orizzontale delle scadenze: giornate 2, 6, 8, 10, 18, 26, 34. Pallino pieno = giornata giocata (`gioc()` o calendario `CL`), evidenziata la prossima. Sotto ogni scadenza, gli obiettivi che si decidono lì (es. vittorie entro l'8ª, sponsor alla 10ª o a fine stagione). Su 320 px deve scorrere **dentro la sua scatola** (`overflow-x:auto`), mai la pagina.
-> 3. Obiettivi di Coppa: `OB[t].cp` (presidente) e `OB[t].ca` (allenatore), solo testo con stato «In corso».
-> 4. Premio sponsor: riusa `premioSponsor(t)` e `premi52Riscossi(t)` (già nel file) per mostrare «In corso / Da riscuotere / Riscosso» e i crediti. **Non** creare altri premi né importi.
->
-> **Regole:**
-> - Ramo `chatgpt/carriera-tab-obiettivi` partito dal `main` aggiornato. Commit che iniziano con `ChatGPT:`.
-> - **Non modificare a mano** `anteprima/index.html` né `anteprima/attuale.html`: dopo ogni modifica al Lab lancia `python3 anteprima/build.py` e committa i file generati. Il workflow «Anteprima Totogirrr 5.2 QA» fallisce se l'Anteprima non corrisponde al Lab.
-> - Grafica: classi esistenti (`.card`, `.ob`, `.pbar`, `.tag`, `.sm`, `.mut`, `.row`), niente librerie, niente CSS globale nuovo (stili inline o con prefisso `.ob-`).
-> - Testi in italiano da campionato vero, maiuscola iniziale, niente «fantacalcio» e niente disclaimer «simulazione / dati finti».
-> - Niente Supabase, niente `fetch` nuovi.
-> - Prove prima di consegnare: `node prove/collaudo_preview52_totogirrr_milestone.js`, `node prove/collaudo_fiducia_universale52.js`, `python3 prove/collaudo_anteprima_52.py`. Prova nel browser a 320, 375 e 1280 px su `lab/index.html#carriera`, `anteprima/attuale.html#carriera` e `anteprima/index.html#carriera`: nessuno scorrimento laterale, console senza errori.
-> - Non unire a `main`: apri una Pull Request verso `main` e scrivi cosa hai provato e cosa no.
+```
+Lavora nel repository giandjcosta/o-girrr-registro.
+Prima leggi AGENTS.md, STATO.md e proposte/carriera-tab-piano.md.
 
-## Prompt per Grok (da incollare così)
+RAMO
+- Parti dal ramo claude/review-ai-changes-test-ui9gjy (NON da main): git fetch origin && git checkout -b chatgpt/carriera-tab-obiettivi origin/claude/review-ai-changes-test-ui9gjy
+- Ogni commit inizia con "ChatGPT:". Niente push forzati, niente push su main o su altri rami.
 
-> Lavora nel repository `giandjcosta/o-girrr-registro`. Leggi prima `AGENTS.md` e `STATO.md`, poi `proposte/carriera-tab-piano.md`.
->
-> **Compito:** riempi la funzione `vCarStoria(t)` in `lab/index.html`, tra i commenti `/* === TAB CARRIERA: STORIA (Grok) === */` e `/* === FINE TAB STORIA === */`. Non modificare nient'altro nel file.
->
-> **Contenuto del tab Storia (carriera dell'allenatore della squadra `t`):**
-> 1. Intestazione: nome dell'allenatore (`mg(t)`; per «The Blue brothers» `mgrsOf(t)` restituisce due allenatori: mostrali entrambi), fascia attuale (`fascia(t)`) e punteggio storico (`Math.round(histScore(t))` su 100).
-> 2. **Stagione per stagione** da `HIST[allenatore]`: ogni riga è `[stagione, posizione, numero squadre]`. Mostra «2024/25 · 5° su 10», con 🏆 per il 1° posto. Più recente in alto.
-> 3. **Grafico SVG** delle posizioni nelle stagioni (asse verticale rovesciato: 1° in alto), inline, `viewBox` e `width:100%` così si adatta a 320 px. Colori dalle variabili esistenti (`var(--gold)`, `var(--mute)`, `var(--line)`).
-> 4. Titoli: conteggio dei 1° posti in `HIST` più gli anni pre-storici in `PRE` (`[stagione, squadra, allenatore]`) dove compare l'allenatore.
-> 5. Una frase di racconto generata dai dati (es. «Tre podi nelle ultime cinque stagioni, titolo nel 2025/26»), come un giornale sportivo vero.
->
-> **Regole:**
-> - Ramo `grok/carriera-tab-storia` partito dal `main` aggiornato. Commit che iniziano con `Grok:`.
-> - **Non modificare a mano** `anteprima/index.html` né `anteprima/attuale.html`: dopo ogni modifica al Lab lancia `python3 anteprima/build.py` e committa i file generati. Il workflow «Anteprima Totogirrr 5.2 QA» fallisce se l'Anteprima non corrisponde al Lab.
-> - Grafica: classi esistenti (`.card`, `.row`, `.tag`, `.sm`, `.mut`, `.num`), niente librerie, niente CSS globale nuovo (stili inline o con prefisso `.st-`).
-> - Testi in italiano da campionato vero, maiuscola iniziale, niente «fantacalcio» e niente disclaimer. «Derby» con la D maiuscola se compare.
-> - Niente Supabase, niente `fetch` nuovi: tutti i dati sono già nel file.
-> - Prove prima di consegnare: `node prove/collaudo_preview52_totogirrr_milestone.js`, `python3 prove/collaudo_anteprima_52.py`. Prova nel browser a 320, 375 e 1280 px su `lab/index.html#carriera`, `anteprima/attuale.html#carriera` e `anteprima/index.html#carriera`, con almeno tre squadre diverse, tra cui «The Blue brothers»: nessuno scorrimento laterale, console senza errori.
-> - Non unire a `main`: apri una Pull Request verso `main` e scrivi cosa hai provato e cosa no.
+COMPITO: tab «Obiettivi» della Carriera
+Riscrivi solo la funzione vCarObiettivi(t,C) in lab/index.html, tra
+/* === TAB CARRIERA: OBIETTIVI (ChatGPT) === */ e /* === FINE TAB OBIETTIVI === */.
+Non modificare nessun'altra riga del file.
+
+Cosa ricevi:
+- t = squadra selezionata
+- C.o = 4 righe obiettivi [tipo, fonte, titolo, percentuale 0-100, stato]: 0) posizione finale, 1) vittorie entro l'8ª, 2) Coppa (OB[t].cp, stato «Da giocare»), 3) sponsor. tipo = 'P' per il presidente, null per lo sponsor; fonte = "Presidente" o nome dello sponsor
+- C.e1, C.e2, C.e4 = esiti [percentuale, stato] (posizione finale, vittorie entro l'8ª, sponsor)
+- C.sp = sponsorDi(t) {nome, testo, pct, stato, dl (giornata di scadenza), ok}
+- C.wn = vittorie richieste entro l'8ª
+- C.premio = premioSponsor(t) {sponsor, testo, crediti, ok}, C.riscosso = true se già riscosso
+Funzioni utili già nel file: OB[t] (.cp e .ca = obiettivi di Coppa), gioc(), aGiornata(n,t), GTOT, CL, SPIMG, D.img.sp2, esc().
+
+Cosa deve mostrare il tab, nell'ordine:
+1. Card «Linea del tempo»: scadenze alle giornate 2, 6, 8, 10, 18, 26, 34. Pallino pieno = giornata già giocata (gioc() oppure CL con tutti i risultati), pallino vuoto = futura, evidenziata la prossima. Sotto ogni scadenza, i nomi brevi degli obiettivi che si decidono lì: vittorie entro l'8ª → 8; sponsor → C.sp.dl (10 o 34); posizione finale → 34. Su schermi stretti la linea scorre DENTRO la card (overflow-x:auto), mai la pagina.
+2. Card «Obiettivi della stagione»: le righe 0, 1 e 3 di C.o, ognuna con logo (SPIMG[fonte] || D.img.sp2) oppure etichetta «Pres.», titolo, fonte, barra .pbar con la percentuale, etichetta di stato (.tag, classe "o" se Fatto) e scadenza («entro la 8ª», «alla 10ª», «a fine stagione»). Il titolo non deve mai andare a capo parola per parola: a ≤700 px l'etichetta va sotto il titolo (flex-wrap).
+3. Card «Champions Cup»: la riga 2 di C.o (obiettivo del presidente, OB[t].cp) e OB[t].ca (obiettivo dell'allenatore), con lo stato della riga 2.
+4. Card «Premio sponsor»: C.premio.sponsor, C.premio.testo, C.premio.crediti crediti Totogirrr, stato «Riscosso» (C.riscosso) / «Da riscuotere» (C.premio.ok) / «In corso». Se «Da riscuotere», metti un link con lo stesso indirizzo della bolla: toto52Url(t,(/\/lab\//.test(location.pathname)?'../lab/':'')+(location.pathname.split('/').pop()||'index.html')+'#carriera'). Non inventare altri premi o importi.
+
+REGOLE
+- Grafica: classi esistenti (.card, .ob, .pbar, .tag, .row, .grow, .sm, .mut, .num, .btn). Niente librerie, niente fetch nuovi, niente Supabase.
+- Testi in italiano, come un campionato vero, maiuscola iniziale. Mai «fantacalcio», «fantapunti» o disclaimer tipo «simulazione/dati finti». Mai scommesse.
+- Dopo ogni modifica: python3 anteprima/build.py, poi committa anche anteprima/index.html e anteprima/attuale.html generati.
+
+PROVE (obbligatorie, prima della PR)
+- node prove/collaudo_preview52_totogirrr_milestone.js
+- node prove/collaudo_fiducia_universale52.js
+- python3 prove/collaudo_anteprima_52.py
+- python3 anteprima/build.py && git diff --exit-code anteprima/  (deve uscire senza differenze)
+- Nel browser (python3 -m http.server dalla cartella del repo), a 320, 375 e 1280 px, su lab/index.html#carriera, anteprima/attuale.html#carriera e anteprima/index.html#carriera: apri il tab Obiettivi con almeno 3 squadre (Oranje VC, Grodah, The Blue brothers). Nessuno scorrimento laterale della pagina (document.documentElement.scrollWidth ≤ larghezza), console senza errori. Prova anche ?premi=prova#carriera per vedere «Da riscuotere».
+
+STATO.md
+Scrivi SOLO sotto il titolo «### Tab Obiettivi (ChatGPT)», dentro la sezione «## Carriera a tab — resoconti», sostituendo la riga «In attesa.». Max 6 righe: cosa hai fatto, prove eseguite con esito, cosa non hai potuto provare. Non toccare altre parti di STATO.md.
+
+CONSEGNA
+Apri una Pull Request da chatgpt/carriera-tab-obiettivi verso claude/review-ai-changes-test-ui9gjy (NON verso main), titolo «ChatGPT: tab Obiettivi della Carriera», con le prove fatte e quelle non fatte.
+```
+
+## Prompt per Grok (incollalo così)
+
+```
+Lavora nel repository giandjcosta/o-girrr-registro.
+Prima leggi AGENTS.md, STATO.md e proposte/carriera-tab-piano.md.
+
+RAMO
+- Parti dal ramo claude/review-ai-changes-test-ui9gjy (NON da main): git fetch origin && git checkout -b grok/carriera-tab-storia origin/claude/review-ai-changes-test-ui9gjy
+- Ogni commit inizia con "Grok:". Niente push forzati, niente push su main o su altri rami.
+
+COMPITO: tab «Storia» della Carriera
+Riscrivi solo la funzione vCarStoria(t) in lab/index.html, tra
+/* === TAB CARRIERA: STORIA (Grok) === */ e /* === FINE TAB STORIA === */.
+Non modificare nessun'altra riga del file. Oggi c'è una versione base (elenco stagioni): sostituiscila.
+
+Dati già nel file:
+- mgrsOf(t) = elenco allenatori della squadra (di solito uno; «The Blue brothers» ne ha due: Leanzino e Mario, mostrali entrambi)
+- HIST[allenatore] = righe [stagione, posizione, numero squadre], es. ["2024/25", 5, 10]
+- PRE = righe [stagione, squadra vincitrice, allenatore] delle stagioni prima del 2021/22 (null = sconosciuto)
+- fascia(t) → 'Big' | 'Emergente' | 'Outsider'; histScore(t) → punteggio storico 0-100; OB[t].pres = obiettivo di quest'anno
+- esc() per il testo, var(--gold), var(--mute), var(--line), var(--ink) per i colori
+
+Cosa deve mostrare il tab, nell'ordine (per ogni allenatore della squadra):
+1. Card intestazione: nome allenatore, fascia attuale, «Storia: N su 100» (Math.round(histScore(t))), numero di stagioni, titoli e podi.
+2. Card «Posizioni stagione per stagione»: grafico SVG inline con viewBox e style="width:100%;height:auto". Asse verticale rovesciato (1° in alto, ultimo in basso, scala sul numero di squadre di quella stagione), un punto per stagione con etichetta della stagione sotto, 🏆 o punto dorato per il 1° posto, linea che unisce i punti. Deve stare in 320 px senza scorrimento.
+3. Card «Stagioni»: righe dalla più recente: «2024/25 · 5° su 10», con 🏆 per il 1°, 🥈 per il 2° e 🥉 per il 3°.
+4. Card «Albo»: titoli da HIST (posizione 1) più quelli in PRE dove l'allenatore compare (confronto senza maiuscole/minuscole e spazi), con l'anno.
+5. Un paragrafo di racconto generato dai dati, stile giornale sportivo (es. «Tre podi nelle ultime cinque stagioni e il titolo del 2023/24: Leanzino arriva da favorito.»). Niente frasi inventate che non dipendono dai dati.
+Se un allenatore non ha HIST, mostra «Prima stagione in lega» senza errori.
+
+REGOLE
+- Grafica: classi esistenti (.card, .row, .grow, .tag, .sm, .mut, .num). Niente librerie, niente fetch nuovi, niente Supabase.
+- Testi in italiano, come un campionato vero, maiuscola iniziale. Mai «fantacalcio», «fantapunti» o disclaimer. «Derby» con la D maiuscola se compare. Mai scommesse.
+- Dopo ogni modifica: python3 anteprima/build.py, poi committa anche anteprima/index.html e anteprima/attuale.html generati.
+
+PROVE (obbligatorie, prima della PR)
+- node prove/collaudo_preview52_totogirrr_milestone.js
+- python3 prove/collaudo_anteprima_52.py
+- python3 anteprima/build.py && git diff --exit-code anteprima/  (deve uscire senza differenze)
+- Nel browser (python3 -m http.server dalla cartella del repo), a 320, 375 e 1280 px, su lab/index.html#carriera, anteprima/attuale.html#carriera e anteprima/index.html#carriera: tab Storia con TUTTE le 10 squadre (cambia il selettore). Nessuno scorrimento laterale della pagina (document.documentElement.scrollWidth ≤ larghezza), console senza errori.
+
+STATO.md
+Scrivi SOLO sotto il titolo «### Tab Storia (Grok)», dentro la sezione «## Carriera a tab — resoconti», sostituendo la riga «In attesa.». Max 6 righe: cosa hai fatto, prove eseguite con esito, cosa non hai potuto provare. Non toccare altre parti di STATO.md.
+
+CONSEGNA
+Apri una Pull Request da grok/carriera-tab-storia verso claude/review-ai-changes-test-ui9gjy (NON verso main), titolo «Grok: tab Storia della Carriera», con le prove fatte e quelle non fatte.
+```
 
 ## Lavoro di Claude
-- **Passo 0:** impalcatura tab (`S.ctab`, selettore `.seg` sotto la bolla, funzioni `vCarPanoramica`, `vCarFiducia`, `vCarCassa`, zone vuote `vCarObiettivi` e `vCarStoria`), con il contenuto attuale spostato senza cambiarne la logica. La Cassa è raggiungibile dal tab, e `route('cassa')` apre direttamente quel tab.
-- **Fiducia:** aggiunge il grafico «Fiducia giornata per giornata» (da `aGiornata(n,t)` per le giornate giocate e `fidA`).
-- **Unione finale:** unisce i rami ChatGPT e Grok, rigenera, prova tutto e aggiorna `STATO.md`.
+- **Fatto:** impalcatura dei tab, Panoramica, Fiducia (con il grafico «Fiducia giornata per giornata»), correzioni 5.2 (premi veri, Totogirrr legato alla squadra).
+- **Dopo le due PR:** unione, `build.py`, prove (test automatici + browser a 320/375/1280 su Lab, Lega e Stadio), resoconto in STATO.md, poi richiesta del «vai» a Gianluca.
+- **Rilascio 5.2 sul sito vero (dopo il «vai»):** unione a `main` del registro, poi pacchetto con `rilascio/pacchetto.py`; prima `gh-pages`, poi verifica sul sito vero, poi `main` del sito.

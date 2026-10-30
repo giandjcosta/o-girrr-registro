@@ -1,5 +1,18 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 30 ottobre 2026)
 
+## Carriera a tab — resoconti
+Piano e prompt in `proposte/carriera-tab-piano.md`. Base: ramo `claude/review-ai-changes-test-ui9gjy`. Ognuno scrive solo nel suo paragrafo.
+
+### Tab Panoramica e Fiducia + struttura (Claude)
+- Carriera divisa in 4 tab (Panoramica, Obiettivi, Fiducia, Storia; la Cassa resta fuori, decisione di Gianluca). Selettore a pillole sotto la bolla, che va a capo a 320 px. Panoramica: arco Fiducia, «N su 4 raggiunti», Reputazione e sponsor. Fiducia: aspettativa, simulatore, nuovo grafico «Fiducia giornata per giornata» (classifica di ogni giornata giocata dal calendario del sito), Fiducia in lega. Zone vuote pronte per ChatGPT (`vCarObiettivi`) e Grok (`vCarStoria`), con versione provvisoria.
+- Provato in Chromium a 320 e 1280 px su Lab, Lega e Stadio, tutti e 4 i tab e The Blue brothers (due allenatori): nessuno scorrimento laterale, console pulita. Test automatici superati. Non provato: Safari/iPhone.
+
+### Tab Obiettivi (ChatGPT)
+In attesa.
+
+### Tab Storia (Grok)
+In attesa.
+
 ## 30 ottobre 2026 — Claude: Carriera/Totogirrr 5.2 sistemati (ramo `claude/review-ai-changes-test-ui9gjy`, non ancora su `main`)
 - **Revisione del lavoro ChatGPT fino a `33fdfc4`:** tutto il codice 5.2 era stato scritto a mano in `anteprima/index.html` e `attuale.html`. `python3 anteprima/build.py` lo cancellava, e i workflow restavano verdi perché rigeneravano l'Anteprima prima di provarla.
 - **Ora la logica sta nel Lab** (`lab/index.html`) e l'Anteprima è rigenerata con `build.py`:
