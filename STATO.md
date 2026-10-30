@@ -1,5 +1,10 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 30 ottobre 2026)
 
+## 30 ottobre 2026 — Anteprima Carriera/Totogirrr: squadra visitabile
+- Tolta **esclusivamente la seconda card «Milestone e premi»** aggiunta in fondo alla Carriera delle due anteprime (Lega e Stadio). Restano i controlli originali «Come cambia la fiducia con il calendario» e gli obiettivi nativi. La bubble premio e il riquadro reputazione/sponsor rimangono, con importi e stato condizionale, e riutilizzano la giornata/posizione selezionata sopra.
+- Totogirrr `anteprima/totogirrr.html` ora **si apre già su una squadra di esempio estratta casualmente** (scelta persistente per sessione, senza richiesta codice): saldo iniziale 346 FC, partite aperte e concluse, schedine vinte/perse, prestito attivo e richiesta in attesa, movimenti e premio sponsor riscuotibile. Nessun banner «demo», stessa grafica CSS originale ufficiale. La scelta di squadra è locale e non corrisponde a identità reali.
+- **Controlli:** parsificazione JS dei tre documenti eseguita, nessuna chiamata RPC Supabase da Totogirrr anteprima; non eseguita navigazione end-to-end sul sito GitHub Pages. Tutte le modifiche sono solo nel Registro, nessuna pubblicazione su `o-fant-a-girrr`.
+
 ## 30 ottobre 2026 — Correzione grafica e UI della 5.2 (ChatGPT)
 - **Anteprima Totogirrr** rigenerata dal file `girrr/totogirrr.html` di `o-fant-a-girrr/gh-pages` anziché da un layout ricostruito. Verificato che il CSS incorporato è **identico byte per byte** a quello ufficiale e che il titolo SVG nativo è presente. Il logo usa il percorso dell'asset ufficiale.
 - Conservati intestazione, saldo, menù, schede delle partite, schedine, prestiti, classifiche e stile ufficiale; aggiunta solo la tab `Movimenti` con entrate verdi e uscite rosse.
