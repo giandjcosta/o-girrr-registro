@@ -41,3 +41,6 @@ Tutte le storie (allenatori, dirigenza, Curva, post, radio) si raccontano come u
 
 ## Commentatori (deciso il 30 ottobre)
 Nessuno dei due è britannico (era così solo con le voci in inglese): niente tè, niente "come ogni buon britannico". La risposta a "hai guardato i punteggi?" varia (barbecue con gli amici, in studio, divano con la pizza, terrazza, pranzo in famiglia…) e non è sempre negativa.
+
+## Parole tagliate in fondo (segnalato il 30 ottobre)
+"Mazzata" usciva "mazza": il taglio della coda di rumore (`taglia_coda` in gtrim.py) scambiava la chiusura della "t" (una pausa breve dentro la parola) per la fine della battuta. Ora taglia solo dopo un silenzio lungo (almeno 160 ms) e `rifinisci` tiene anche le vocali finali deboli (soglia più bassa, margine più lungo). Se si sente ancora una parola mozzata, segnalarla: si può aggiungere un punto o una pausa dopo la parola nel copione.

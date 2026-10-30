@@ -8,10 +8,23 @@ def taglia_coda(pcm: bytes) -> bytes:
     rms = np.array([np.sqrt(np.mean(x[i * fr:(i + 1) * fr] ** 2)) for i in range(n)])
     fin = int(0.6 / 0.02)            # guardo gli ultimi 0.6 secondi
     zona = rms[-fin:]
-    sil = np.where(zona < 0.01)[0]
-    if len(sil) == 0: return pcm
-    # ultimo silenzio nella zona: tutto quello che segue è lo scoppio
-    ultimo = len(rms) - fin + sil[0]
+    # cerco il primo silenzio LUNGO (almeno 160 ms): le pause brevi dentro la parola
+    # (la chiusura di una "t" in "mazzata") non sono la fine e non vanno tagliate.
+    minimo = 8
+    basso = zona < 0.01
+    inizio = None
+    i = 0
+    while i < len(basso):
+        if basso[i]:
+            j = i
+            while j < len(basso) and basso[j]: j += 1
+            if j - i >= minimo or j == len(basso):
+                inizio = i; break
+            i = j
+        else: i += 1
+    if inizio is None: return pcm
+    # silenzio lungo nella zona: tutto quello che segue è lo scoppio
+    ultimo = len(rms) - fin + inizio
     # se dopo il primo silenzio della zona c'è parlato vero (non una coda corta), non taglio
     resto = rms[ultimo:]
     if np.mean(resto > 0.02) > 0.5 and len(resto) > int(0.45 / 0.02): return pcm
@@ -26,10 +39,10 @@ def rifinisci(pcm: bytes) -> bytes:
     fr = int(0.01 * SR); n = len(x) // fr
     rms = np.array([np.sqrt(np.mean(x[i * fr:(i + 1) * fr] ** 2)) for i in range(n)])
     # inizio: salto i primi frame sotto soglia, tengo 20 ms di margine
-    voce = np.where(rms > 0.008)[0]
+    voce = np.where(rms > 0.004)[0]
     ini = max(0, (voce[0] - 2) * fr) if len(voce) else 0
     # fine: ultimo frame con voce, 60 ms di margine
-    fin = min(len(x), (voce[-1] + 6) * fr) if len(voce) else len(x)
+    fin = min(len(x), (voce[-1] + 10) * fr) if len(voce) else len(x)
     x = x[ini:fin].copy()
     a = int(0.012 * SR); b = int(0.07 * SR)
     x[:a] *= np.linspace(0, 1, a) ** 2
