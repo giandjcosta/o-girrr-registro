@@ -8,6 +8,7 @@
 - Per il sito vero (dopo il «vai»): `python3 rilascio/tabellone_dati.py girrr/tabellone.html girrr/tabellone.html` e lo stesso per `stadio/girrr/tabellone.html` su `gh-pages`, poi copia in `ufficiale/src/sito/`.
 
 ## Carriera a tab — resoconti
+- **30 ottobre — su `main` del registro con il «vai» di Gianluca:** i 4 tab (Panoramica, Obiettivi, Fiducia, Storia), solo la propria squadra, premi dagli obiettivi veri. Nel tab Storia i nomi degli allenatori restano come sono scritti nei dati («apo», «ser»): richiesta di Gianluca, il titolo della card non li mette più in maiuscolo. **Da fare:** prova di Gianluca nel Lab; decisione Supabase per il riscatto dei premi sul sito vero; poi rilascio 5.2. Rami da non unire: `grok/carriera-tab-storia` (danneggiato).
 Piano e prompt in `proposte/carriera-tab-piano.md`. Base: ramo `claude/review-ai-changes-test-ui9gjy`. Ognuno scrive solo nel suo paragrafo.
 
 ### Tab Panoramica e Fiducia + struttura (Claude)
@@ -33,7 +34,7 @@ Piano e prompt in `proposte/carriera-tab-piano.md`. Base: ramo `claude/review-ai
 - Branch di recupero: `chatgpt/recupero-tab-storia-grok` → PR verso `claude/review-ai-changes-test-ui9gjy`. Nessuna modifica a main, sito vero o Supabase.
 - **Verifica Claude (unione `chatgpt/recupero-tab-storia-grok`):** confermato che il ramo `grok/carriera-tab-storia` cancella più di 1.100 righe di `lab/index.html` e più di 150 di STATO.md: **non va unito**. Il ramo di ChatGPT tocca solo la zona Storia. `build.py` dà un'Anteprima identica, test superati. Chromium a 320, 375 e 1280 px, Lega e Stadio, **tutte le 10 squadre** (`?come=`): nessuno scorrimento laterale, console pulita. Due ritocchi di Claude: grafico disegnato a 320 di larghezza (prima 560, a 320 px scritte e coppa erano minuscole) e «senza podi» al posto di «conquistato 0 podi». Non provato: Safari/iPhone.
 
-## 30 ottobre 2026 — Claude: Carriera/Totogirrr 5.2 sistemati (ramo `claude/review-ai-changes-test-ui9gjy`, non ancora su `main`)
+## 30 ottobre 2026 — Claude: Carriera/Totogirrr 5.2 sistemati (su `main` del registro, quindi nel Lab e nell'Anteprima 5.2 online; sito vero non toccato)
 - **Revisione del lavoro ChatGPT fino a `33fdfc4`:** tutto il codice 5.2 era stato scritto a mano in `anteprima/index.html` e `attuale.html`. `python3 anteprima/build.py` lo cancellava, e i workflow restavano verdi perché rigeneravano l'Anteprima prima di provarla.
 - **Ora la logica sta nel Lab** (`lab/index.html`) e l'Anteprima è rigenerata con `build.py`:
   - premi calcolati dagli **obiettivi veri** dello sponsor della squadra (50/75/100/125 crediti Totogirrr quando l'obiettivo è «Fatto»), non più dal selettore ipotetico. Tolti «Sponsor tecnico/risultati/premium», la giornata 38 irraggiungibile e il saldo finto in Carriera;
