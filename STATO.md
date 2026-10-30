@@ -1,5 +1,16 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 30 ottobre 2026)
 
+## 30 ottobre 2026 — Supabase premi Carriera: verifica (Claude, «vai» di Gianluca)
+- **Il backend dei premi esiste già in produzione** (creato il 27 ottobre): schema `career_private` con la tabella `reward_events`, più le funzioni `carriera_stato` e `carriera_riscatta` (chiamabili dal browser col codice squadra, controllato da `toto_chk`), `carriera_registra_server` (solo `service_role`, stagione 2026/27, crediti 0/50/75/100/125, prova `official_github_data_json`) e `carriera_reputazione_pubblica`. **La proposta `proposte/5-2-carriera-premi-schema.sql` è superata e NON va applicata**: creerebbe un secondo registro parallelo (`private.carriera_premi`).
+- Nel database ci sono **7 premi sponsor di campionato in attesa** (registrati a mano il 27 ottobre, nessuno ancora riscosso): Apo team, Grodah, WOA (50), Real Madrink, stif dc, AFA SELECCION, Atletico ma non troppo (75). Verificati contro i risultati veri delle prime 4 giornate: sono giusti. Il Totogirrr del sito vero li mostra già e si possono riscuotere.
+- **Nessuna modifica fatta al database**: non serviva. Anche lo sponsor di Champions Cup (50/75/100, `kind` «sponsor») entra nella funzione così com'è.
+- **Manca la registrazione automatica:** nessun workflow chiama `carriera_registra_server`, e il sito non ha una chiave `service_role` tra i segreti. Per averla serve che Gianluca aggiunga il segreto; poi un workflow dopo ogni giornata calcola i premi e li registra.
+- `anteprima/dati/lab-dati.json` era fermo alla 2ª giornata: copiato da `girrr/dati/lab-dati.json` del sito (4ª). Ora l'Anteprima calcola esattamente gli stessi 7 premi del database.
+
+## 30 ottobre 2026 — Regole del Tabellone (Claude, prova nel Lab)
+- In fondo al pannello della classifica c'è la sezione «Regole», che si apre con un tocco: punti e classifica; gol (primo a 66, poi uno ogni 5, ricavato dai risultati con `calcoli/moviola.py`, uguale in coppa); colonne; Champions Cup (due gironi da cinque, le prime 4 ai quarti alla 11ª, semifinali alla 12ª, finale alla 13ª); Derby e sfide (scudetto, podio e salvezza nelle ultime 10 giornate).
+- Fa parte della patch `rilascio/tabellone_dati.py` (insieme alle colonne nuove); rigenerate `lab/prova-tabellone-lega.html` e `-stadio.html` dal `tabellone.html` di oggi su `gh-pages`. Provato in Chromium a 320 e 1280 px: nessuno scorrimento laterale, console pulita.
+
 ## 30 ottobre 2026 — Radio: numeri del campionato (Claude, su `main` con il «vai» di Gianluca)
 - Idea di Gianluca: con gol, differenza reti, miglior attacco e miglior difesa la Radio ha cose nuove da dire. In `voci-src/copione.py`, funzione `numeri()`: dalla 3ª giornata, dopo la classifica, Beppe e Luigi dicono una o due curiosità vere (miglior attacco, difesa meno battuta, difesa più battuta, capolista senza il miglior attacco, differenza reti migliore). Regole in `voci-src/RADIO-REGOLE.md`.
 - Provato solo il copione in testo, con `voci-src/dati.json` (4ª giornata) e quattro sorteggi diversi: es. «Il miglior attacco è quello di Mariana Coneja: 13 gol fatti in 4 giornate!», «E poi c'è la difesa di WOA: 13 gol presi. Qualcuno chiuda la porta!». Alla 2ª giornata la rubrica non c'è. **Nessun audio generato**: niente chiamate Gemini, `voci-src/prova_*.py` non lanciati.

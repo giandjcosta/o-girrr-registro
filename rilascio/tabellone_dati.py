@@ -1,4 +1,4 @@
-"""Tabellone con più dati: V, N, P, gol fatti, gol subiti e differenza reti accanto a G, Pt e Fantapunti.
+"""Tabellone con più dati: V, N, P, gol fatti, gol subiti e differenza reti accanto a G, Pt e Fantapunti, e le Regole in fondo.
 Sul telefono (sotto 560 px) restano Pt, DR e Fantapunti; G, V, N, P, GF e GS compaiono da 560 px in su.
 L'ordine della classifica non cambia (Pt, poi Fantapunti).
 
@@ -8,6 +8,15 @@ Uso:
 Esempio Lab: python3 rilascio/tabellone_dati.py tabellone.html lab/prova-tabellone-lega.html --lab https://giandjcosta.github.io/o-fant-a-girrr/girrr/
 """
 import sys, pathlib
+
+
+REGOLE = ('<details class="reg"><summary>Regole</summary>'
+  '<h4>Punti e classifica</h4><p>Vittoria 3 punti, pareggio 1, sconfitta 0. In classifica contano prima i punti, poi i Fantapunti totali.</p>'
+  '<h4>I gol</h4><p>Il primo gol arriva a 66 punti, poi uno in più ogni 5 punti: 71 vale due gol, 76 tre e così via. Al punteggio si aggiunge il modificatore della difesa.</p>'
+  '<h4>Le colonne</h4><p>G giocate, V vittorie, N pareggi, P sconfitte, GF gol fatti, GS gol subiti, DR differenza reti, Pt punti. Sul telefono in verticale si vedono DR, Pt e Fantapunti; girando il telefono o da computer si vede tutto.</p>'
+  '<h4>Champions Cup</h4><p>Due gironi da cinque squadre: ogni giornata una squadra per girone riposa. Dieci giornate, otto partite a testa. Le prime quattro di ogni girone vanno ai quarti (11ª giornata), poi semifinali (12ª) e finale (13ª). I gol si contano come in campionato.</p>'
+  '<h4>Derby e sfide</h4><p>«Derby» sopra una partita vuol dire Derby ufficiale: votato dai più o nato da una sfida accettata in conferenza stampa. Nelle ultime dieci giornate compaiono anche «Sfida scudetto» (1ª contro 2ª), «Sfida podio» (3ª contro 4ª) e «Sfida salvezza» (le ultime due).</p>'
+  '</details>')
 
 
 def applica(s, lab_base=None):
@@ -24,6 +33,9 @@ def applica(s, lab_base=None):
     sost("""<td>'+x.g+'</td><td class="pt">'+x.pt+'</td>'""",
          """<td class="w">'+x.g+'</td><td class="w">'+x.v+'</td><td class="w">'+x.nn+'</td><td class="w">'+x.p+'</td><td class="w">'+x.gf+'</td><td class="w">'+x.gs+'</td><td class="dr">'+(x.gf-x.gs>0?'+':x.gf-x.gs<0?'−':'')+Math.abs(x.gf-x.gs)+'</td><td class="pt">'+x.pt+'</td>'""")
     sost("td.fp{", "th.w,td.w{display:none}@media (min-width:560px){th.w,td.w{display:table-cell}}td.dr{font-size:.9em;font-weight:800}td.fp{")
+    # Regole in fondo al pannello della classifica (come le altre pagine: l'ultima parte è sempre Regole)
+    sost('<div class="swap" id="tab"></div></aside>', '<div class="swap" id="tab"></div>' + REGOLE + '</aside>')
+    sost("td.fp{", ".reg{margin-top:20px;padding-top:12px;border-top:1px solid rgba(255,255,255,.15)}.reg summary{cursor:pointer;font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--hi)}.reg h4{margin:14px 0 2px;font-size:13px;font-weight:900;color:var(--hi)}.reg p{margin-top:6px;font-size:14px;line-height:1.55;font-weight:500}td.fp{")
     if lab_base:
         sost('<head>\n', '<head>\n<base href="' + lab_base + '">\n')   # prima di ospite.js, che è il primo script
         sost('<script>window.goatcounter={path:function(){return location.pathname},no_onload:/[?&]demo/.test(location.search)}</script>\n', '')
