@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="it">
 <head>
-<script src="https://giandjcosta.github.io/o-fant-a-girrr/girrr/ospite.js?v=1"></script>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>Totogirrr · Anteprima 5.2</title>
+<title>Totogirrr · O Girrr</title>
 <link rel="icon" type="image/png" href="https://giandjcosta.github.io/o-fant-a-girrr/assets/favicon-64.png">
-<link rel="apple-touch-icon" href="https://giandjcosta.github.io/o-fant-a-girrr/assets/apple-touch-icon.png">
+
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&family=Inter:wght@500;700;800;900&display=swap">
 <style>
 :root{--acc:#d62839;--bg:#1d2a52;--bg2:#2c3f7c;--bg3:#141d3d;--chiaro:#fbf6ec;--hi:#ffd166;--sub:#bfe3ff;--az:#3d93d6;--ok:#4ade80;--ko:#ff6b7a}
@@ -207,15 +207,15 @@ nav button{flex:1 0 auto;white-space:nowrap;padding:10px 13px}
 .prize-corner .go{font-size:12px;padding:9px 13px;flex-shrink:0}
 .prize-corner.claimed{border-color:rgba(74,222,128,.32);background:rgba(74,222,128,.07)}
 </style>
-<link rel="manifest" href="../manifest.webmanifest">
+<script src="../ufficiale/girrr/transizioni.js"></script>
+
 <meta name="theme-color" content="#1d2a52">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="O Girrr">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<script>window.goatcounter={path:function(){return location.pathname},no_onload:/[?&]demo/.test(location.search)}</script>
-<script data-goatcounter="https://djcosta18.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
-<script src="https://giandjcosta.github.io/o-fant-a-girrr/girrr/transizioni.js"></script>
+
+
 </head>
 <body>
 <div class="wrap" id="app"></div>
@@ -225,9 +225,10 @@ var URL_='https://qmjqfgmvimsuxvghetgi.supabase.co',KEY='sb_publishable_qPhimkrF
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function f2(n){return Number(n).toLocaleString('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2})}
 function f0(n){return Number(n).toLocaleString('it-IT',{maximumFractionDigits:0})}
-var LS={};try{LS=JSON.parse(localStorage.getItem('fg')||'{}')||{}}catch(e){}
-function save(){try{localStorage.setItem('fg',JSON.stringify(LS))}catch(e){}}
-var DEMO=true; /* Anteprima isolata, nessuna scrittura reale */
+var LS={};try{LS=JSON.parse(sessionStorage.getItem('orr_52_fg')||'{}')||{}}catch(e){}
+function save(){try{sessionStorage.setItem('orr_52_fg',JSON.stringify(LS))}catch(e){}}
+var DEMO=true;
+var _BACK_=/[?&]skin=stadio(?:&|$)/.test(location.search)?'index.html':'attuale.html';
 var teams=[],team=DEMO?'Oranje VC':(LS.team||''),code=DEMO?'demo':(LS.code||''),S=null,tab='partite',slip=[],err='',busy=false;
 var PREMI={premi:[],reputazione:0};
 var MORE={};
@@ -246,7 +247,13 @@ function sfidaCl(L,n,a,b){if(!L||!L.length||n<=L.length-10)return '';var T={};fu
 var M=null;
 function mockInit(){
   var t=Date.now()+3600e3,mk=function(i,c,tr,a,b,c2,d,e){return{id:'D'+i,comp:'lega',giornata:2,casa:c,trasf:tr,chiude:new Date(t).toISOString(),q1:a,qx:b,q2:c2,qo:d,qu:e,gc:null,gt:null,chiusa:false,extra:{O35:1.3,U35:3.1,O55:2.0,U55:1.7,GG:1.3,NG:3.2,'E:2-1':19,'E:1-1':24,'E:3-1':21,'E:2-0':22,'E:3-2':24,'E:4-1':25}}};
-  M={conto:{team:'Oranje VC',crediti:500,debito:0,ultimo_prestito:null},partite:[mk(1,'The Blue brothers','Mariana Coneja',2.55,6.15,1.83,1.67,2.0),mk(2,'AFA SELECCION','Real Madrink',2.21,6.27,2.05,1.59,2.12),mk(3,'Oranje VC','stif dc',1.59,6.71,3.12,1.54,2.22),mk(4,'Grodah','Atletico ma non troppo',2.05,5.46,2.33,1.99,1.67),mk(5,'WOA','Apo team',2.24,6.25,2.03,1.66,2.02)],schedine:[],n:0};
+  M={conto:{team:team,crediti:preview52State().crediti,debito:0,ultimo_prestito:null},partite:[mk(1,'The Blue brothers','Mariana Coneja',2.55,6.15,1.83,1.67,2.0),mk(2,'AFA SELECCION','Real Madrink',2.21,6.27,2.05,1.59,2.12),mk(3,'Oranje VC','stif dc',1.59,6.71,3.12,1.54,2.22),mk(4,'Grodah','Atletico ma non troppo',2.05,5.46,2.33,1.99,1.67),mk(5,'WOA','Apo team',2.24,6.25,2.03,1.66,2.02)],schedine:[],n:0};
+  var fini=[{id:'C1',comp:'coppa',giornata:2,casa:'Real Madrink',trasf:'Mariana Coneja',gc:2,gt:5,chiusa:true,chiude:new Date(Date.now()-86400000).toISOString(),q1:3.1,qx:5.2,q2:1.85,qo:1.64,qu:2.1,extra:{}},{id:'C2',comp:'coppa',giornata:2,casa:'Apo team',trasf:'stif dc',gc:1,gt:4,chiusa:true,chiude:new Date(Date.now()-86400000).toISOString(),q1:2.5,qx:5.7,q2:2.15,qo:1.75,qu:1.9,extra:{}}];
+  M.partite=fini.concat(M.partite);
+  M.schedine=[
+   {id:100,puntata:20,quota:2.40,stato:'vinta',vincita:48,creata:'2026-10-26T09:00:00Z',sel:[{partita:'C1',mercato:'2',quota:2.40,esito:'v'}]},
+   {id:101,puntata:25,quota:3.10,stato:'persa',vincita:0,creata:'2026-10-27T10:00:00Z',sel:[{partita:'C2',mercato:'1',quota:3.10,esito:'p'}]}
+  ];M.n=101;
   M.partite.push({id:'V-LEGA',comp:'vinc',giornata:0,casa:'Chi vince il campionato',trasf:'',chiude:new Date(t).toISOString(),q1:1,qx:1,q2:1,qo:1,qu:1,gc:null,gt:null,chiusa:false,extra:{'T:Oranje VC':3.66,'T:Mariana Coneja':5.53,'T:Apo team':7.07,'T:Real Madrink':7.15,'T:AFA SELECCION':7.17,'T:WOA':14.33,'T:The Blue brothers':16.83,'T:Grodah':19.32,'T:stif dc':19.91,'T:Atletico ma non troppo':22.88}});
 }
 function mockStat(){var f=M.schedine.filter(function(x){return x.stato!=='aperta'}),v=f.filter(function(x){return x.stato==='vinta'});
@@ -255,21 +262,42 @@ function mockColpo(){var v=M.schedine.filter(function(x){return x.stato==='vinta
 function mockStato(){
   var c=M.conto,lib=c.crediti<50&&!c.ultimo_prestito;
   return{ora:new Date().toISOString(),conto:c,sussidio_ok:lib,partite:M.partite,schedine:M.schedine.slice().reverse(),
-   stat:mockStat(),colpo:mockColpo(),classifica:[{team:'Oranje VC',crediti:c.crediti,debito:c.debito,ingioco:M.schedine.filter(function(x){return x.stato==='aperta'}).reduce(function(a,x){return a+x.puntata},0)},{team:'stif dc',crediti:500,debito:0,ingioco:0},{team:'Grodah',crediti:500,debito:0,ingioco:0}]};
+   stat:mockStat(),colpo:mockColpo(),classifica:[{team:team,crediti:c.crediti,debito:c.debito,ingioco:M.schedine.filter(function(x){return x.stato==='aperta'}).reduce(function(a,x){return a+x.puntata},0)},{team:'stif dc',crediti:500,debito:0,ingioco:0},{team:'Grodah',crediti:500,debito:0,ingioco:0}]};
+}
+function preview52State(){
+ var q={crediti:346,claimed:[],day:2,place:5,ledger:[]};
+ try{var d=JSON.parse(sessionStorage.getItem('ogirrr52-preview')||'{}');if(d&&typeof d==='object')Object.assign(q,d)}catch(e){}
+ if(!Array.isArray(q.claimed))q.claimed=[];if(!Array.isArray(q.ledger))q.ledger=[];
+ return q;
+}
+function preview52Save(q){try{sessionStorage.setItem('ogirrr52-preview',JSON.stringify(q))}catch(e){}}
+function preview52Sponsors(){
+ var q=preview52State(),s=[
+ {obiettivo:'tecnico',sponsor:'Sponsor tecnico',crediti:60,reputazione:1,ok:true},
+ {obiettivo:'podio',sponsor:'Sponsor risultati',crediti:100,reputazione:2,ok:q.day>=8&&q.place<=3},
+ {obiettivo:'titolo',sponsor:'Sponsor premium',crediti:150,reputazione:3,ok:q.day>=38&&q.place===1}
+ ];return s.map(function(x){x.stato=q.claimed.includes(x.obiettivo)?'claimed':x.ok?'pending':'in_corso';return x});
 }
 function mockRpc(name,b){
   if(!M)mockInit();
-  if(name==='carriera_stato')return{premi:[{obiettivo:'sponsor_2026_27',sponsor:'Phönix Automobile',crediti:50,reputazione:1,stato:M.claimed?'claimed':'pending'}],reputazione:1};
-  if(name==='carriera_riscatta'){if(M.claimed)throw Error('Premio già riscattato');M.claimed=true;M.conto.crediti+=50;return{crediti:50,saldo:M.conto.crediti}};
+  if(name==='carriera_stato')return{premi:preview52Sponsors(),reputazione:72};
+  if(name==='carriera_riscatta'){
+ var sp=preview52Sponsors().find(function(x){return x.obiettivo===b.p_obiettivo});
+ if(!sp||sp.stato!=='pending')throw Error('Premio non disponibile');
+ var q=preview52State();q.claimed.push(sp.obiettivo);M.conto.crediti=Math.round((M.conto.crediti+sp.crediti)*100)/100;
+ q.crediti=M.conto.crediti;
+ q.ledger.unshift({id:'sponsor-'+sp.obiettivo,tipo:'Premio sponsor',nota:sp.sponsor,importo:sp.crediti,creato:new Date().toISOString()});preview52Save(q);
+ return{crediti:sp.crediti,saldo:M.conto.crediti};
+ };
   if(name==='toto_stato')return mockStato();
-  if(name==='toto_pr_stato'){if(!M.pr)M.pr={n:1,P:[{id:1,creditore:'Oranje VC',debitore:'Grodah',importo:50,tasso:1.1,restituito:0,stato:'richiesta',attesa_di:'Oranje VC',creato:new Date().toISOString()}],V:[{tipo:'banco',importo:-8,nota:'40% della vincita trattenuto dal banco per il prestito',creato:new Date().toISOString()}]};return{prestiti:M.pr.P,movimenti:M.pr.V,debito_p:0}}
-  if(name==='toto_pr_chiedi'){M.pr.P.push({id:++M.pr.n+1,creditore:b.p_a,debitore:'Oranje VC',importo:b.p_importo,tasso:b.p_tasso,restituito:0,stato:'richiesta',attesa_di:b.p_a,creato:new Date().toISOString()});return{id:1}}
+  if(name==='toto_pr_stato'){if(!M.pr)M.pr={n:2,P:[{id:1,creditore:team==='Apo team'?'WOA':'Apo team',debitore:team,importo:150,tasso:1.10,restituito:50,stato:'attivo',attesa_di:null,creato:'2026-10-24T10:00:00Z'},{id:2,creditore:team,debitore:team==='Grodah'?'WOA':'Grodah',importo:75,tasso:1.10,restituito:0,stato:'richiesta',attesa_di:team,creato:'2026-10-28T10:00:00Z'}],V:[{tipo:'trattenuta',importo:-8,nota:'Trattenuta del banco',creato:'2026-10-27T10:00:00Z'}]};return{prestiti:M.pr.P,movimenti:M.pr.V,debito_p:100}}
+  if(name==='toto_pr_chiedi'){M.pr.P.push({id:++M.pr.n+1,creditore:b.p_a,debitore:team,importo:b.p_importo,tasso:b.p_tasso,restituito:0,stato:'richiesta',attesa_di:b.p_a,creato:new Date().toISOString()});return{id:1}}
   if(name==='toto_pr_rispondi'){var r=M.pr.P.filter(function(x){return x.id===b.p_id})[0];if(b.p_azione==='rifiuta')r.stato='rifiutato';else if(b.p_azione==='accetta'){r.stato='attivo';r.attesa_di=null;M.conto.crediti-=r.importo;M.pr.V.unshift({tipo:'prestito_dato',importo:-r.importo,nota:'Prestito a '+r.debitore,creato:new Date().toISOString()})}else{r.tasso=b.p_tasso;r.stato='controproposta';r.attesa_di=r.debitore}return{}}
   if(name==='toto_pr_restituisci'){var r2=M.pr.P.filter(function(x){return x.id===b.p_id})[0];r2.restituito+=b.p_importo;return{restituito:b.p_importo}}
   if(name==='toto_sussidio'){var d=50-M.conto.crediti;M.conto.crediti=50;M.conto.debito=Math.round(d*120)/100;M.conto.ultimo_prestito=1;return{crediti:50,dato:d,da_restituire:M.conto.debito}}
   if(name==='toto_gioca'){
     var st=b.p_puntata;if(!(st>=5))throw new Error('Puntata minima: 5 fantacrediti');if(st>M.conto.crediti)throw new Error('Fantacrediti insufficienti');
-    var q=1,sel=b.p_sel.map(function(x){var p=M.partite.filter(function(y){return y.id===x.p})[0];if(p.casa==='Oranje VC'&&st>100)throw new Error('Sulla tua partita puntata massima 100');var qq=quotaDi(p,x.m);q*=qq;return{partita:p.id,mercato:x.m,quota:qq,esito:null}});
+    var q=1,sel=b.p_sel.map(function(x){var p=M.partite.filter(function(y){return y.id===x.p})[0];if((p.casa===team||p.trasf===team)&&st>100)throw new Error('Sulla tua partita puntata massima 100');var qq=quotaDi(p,x.m);q*=qq;return{partita:p.id,mercato:x.m,quota:qq,esito:null}});
     q=Math.min(500,Math.round(q*(slipDerby()?1.1:1)*100)/100);M.conto.crediti=Math.round((M.conto.crediti-st)*100)/100;
     M.schedine.push({id:++M.n,puntata:st,quota:q,stato:'aperta',vincita:0,creata:new Date().toISOString(),sel:sel});
     return{id:M.n,quota:q,vincita_possibile:Math.round(st*q*100)/100};
@@ -284,11 +312,7 @@ function mockRpc(name,b){
     return 1;
   }
 }
-function rpc(name,body){
-  if(DEMO){try{return Promise.resolve(JSON.parse(JSON.stringify(mockRpc(name,body))))}catch(e){return Promise.reject(e)}}
-  return fetch(URL_+'/rest/v1/rpc/'+name,{method:'POST',headers:{'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json'},body:JSON.stringify(body)})
-   .then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j&&j.message?j.message:'Errore di rete');return j})});
-}
+function rpc(name,body){try{var result=mockRpc(name,body),q=preview52State();if(M&&M.conto){q.crediti=M.conto.crediti;preview52Save(q)}return Promise.resolve(JSON.parse(JSON.stringify(result)))}catch(e){return Promise.reject(e)}}
 function toast(t,bad){var d=document.createElement('div');d.className='toast'+(bad?' bad':'');d.textContent=t;document.body.appendChild(d);setTimeout(function(){d.remove()},3200)}
 function quando(iso){try{var t=new Intl.DateTimeFormat('it-IT',{weekday:'short',day:'numeric',month:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'Europe/Rome'}).format(new Date(iso));return t.charAt(0).toUpperCase()+t.slice(1)}catch(e){return iso}}
 
@@ -304,11 +328,6 @@ function quotaDi(p,m){var f={'1':p.q1,'X':p.qx,'2':p.q2,'O':p.qo,'U':p.qu}[m],v=
 function slipDerby(){return slip.some(function(x){var p=pm(x.p);return p&&p.derby})}
 function aperta(p){return !p.chiusa&&new Date(p.chiude)>new Date()}
 
-function gate(){
-  var o=teams.map(function(t){return '<option'+(t===team?' selected':'')+'>'+esc(t)+'</option>'}).join('');
-  return '<div class="gate"><a href="index.html" title="Torna a O Girrr"><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/logo-lega.png" alt="O Fant A Girrr"></a><h1><b class="TT"><em class="Tg">T</em><svg viewBox="0 0 900 400" aria-hidden="true"><path fill="currentColor" d="M185.8 85.2H181Q145.4 85.2 121.1 103Q96.9 120.8 85.6 166Q81.9 180.8 83.2 186.6Q84.6 192.4 84.4 193.2Q62.8 193.2 54.4 184.2Q46.1 175.2 51.3 154.4Q58.4 126 78.2 102.6Q98.1 79.2 132.3 64.8Q166.5 50.4 213.7 50.4Q240.1 50.4 269.3 55.2Q272.6 55.8 275.8 56.3C299.8 57.8 329.3 62.4 360.7 67.4C408.7 74.9 461.1 83.2 505 82C565 80 605 68 642 62C668 66 668 94 640 99C600 108 545 122 480 122C417.8 122 363.5 106.2 296 100.6V102Q285.1 101.7 274.5 100Q262.2 98 239.8 93.2L120.4 350H62.8Z"/></svg></b>oto<span>girrr</span></h1><p>Le scommesse della lega, con i fantacrediti: ne hai 500 a testa. Entra con il codice della tua squadra, lo stesso dello Spogliatoio.</p>'+
-  '<select id="gt">'+o+'</select><input id="gc" placeholder="Codice squadra" autocomplete="off" autocapitalize="characters" value="'+esc(code)+'"><button class="go" id="enter">Entra</button><div class="err">'+esc(err)+'</div><p style="margin-top:22px"><a href="index.html">‹ Torna a O Girrr</a></p></div>';
-}
 function ticker(){
   var it=S.partite.filter(function(p){return p.comp!=='vinc'}).map(function(p){return p.chiusa?'<span><b>'+esc(p.casa)+'</b> <i>'+p.gc+'–'+p.gt+'</i> <b>'+esc(p.trasf)+'</b></span>':'<span><b>'+esc(p.casa)+'</b> – <b>'+esc(p.trasf)+'</b> <i>'+f2(p.q1)+' · '+f2(p.qx)+' · '+f2(p.q2)+'</i></span>'}).join('');
   return it?'<div class="tick"><div class="tk">'+it+it+'</div></div>':'';
@@ -326,16 +345,15 @@ function card(x,tag){
   return '<div class="fc"><div class="tg" style="display:flex;justify-content:space-between;gap:6px"><span>'+tag+'</span><span style="letter-spacing:.06em;color:var(--chiaro)">'+(x.p.comp==='coppa'?'COPPA':'CAMPIONATO')+'</span></div><div class="mm">'+esc(x.p.casa)+' – '+esc(x.p.trasf)+'</div><button class="q'+(on?' on':'')+'" data-p="'+x.p.id+'" data-m="'+x.m+'"><small>'+esc(x.n)+'</small><b>'+f2(x.q)+'</b></button></div>';
 }
 function premioWidget(){
- var entries=(PREMI&&PREMI.premi)||[],p=entries.find(function(x){return x.stato==='pending'}),claimed=entries.find(function(x){return x.stato==='claimed'});
- if(!p&&!claimed)return '';
- if(p)return '<aside class="prize-corner" aria-label="Premio sponsor da riscuotere"><div><strong>🎁 Premio sponsor da riscuotere · +'+f0(p.crediti)+' FC</strong><small>'+esc(p.sponsor)+' · Reputazione permanente +'+f0(p.reputazione)+'</small></div><button class="go" id="riscatta-sponsor" data-obiettivo="'+esc(p.obiettivo)+'">Riscatta</button></aside>';
- return '<aside class="prize-corner claimed"><div><strong>✓ Premio sponsor riscattato</strong><small>'+esc(claimed.sponsor)+' · +'+f0(claimed.crediti)+' FC · Reputazione +'+f0(claimed.reputazione)+'</small></div></aside>';
+ var pending=(PREMI.premi||[]).filter(function(x){return x.stato==='pending'});
+ if(!pending.length)return '';
+ return pending.map(function(p){return '<aside class="prize-corner" aria-label="Premio sponsor da riscuotere"><div><strong>🎁 '+esc(p.sponsor)+' · +'+f0(p.crediti)+' FC</strong><small>Premio disponibile · Reputazione +'+f0(p.reputazione)+'</small></div><button class="go" id="riscatta-sponsor" data-obiettivo="'+esc(p.obiettivo)+'">Riscuoti</button></aside>'}).join('');
 }
 function head(){
   var c=S.conto;
-  return (DEMO?'<div class="card" style="border:2px dashed var(--hi);font-size:13px"><b style="color:var(--hi)">PROVA</b> · Anteprima 5.2: nessun Fantacredito reale viene spostato. Puoi provare il pulsante Riscatta. Gioca una schedina, poi premi il pulsante per far finire le partite a caso.<br><button class="go" id="sim" style="margin-top:10px">Fai finire le partite</button></div>':'')+'<a class="back" href="index.html">‹ O GIRRR</a><div class="top"><a href="index.html" title="Torna a O Girrr" style="display:block;flex:none"><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/logo-lega.png" alt="O Fant A Girrr" style="display:block"></a><div class="t"><div class="k">O FANT A GIRRR</div><h1><b class="TT"><em class="Tg">T</em><svg viewBox="0 0 900 400" aria-hidden="true"><path fill="currentColor" d="M185.8 85.2H181Q145.4 85.2 121.1 103Q96.9 120.8 85.6 166Q81.9 180.8 83.2 186.6Q84.6 192.4 84.4 193.2Q62.8 193.2 54.4 184.2Q46.1 175.2 51.3 154.4Q58.4 126 78.2 102.6Q98.1 79.2 132.3 64.8Q166.5 50.4 213.7 50.4Q240.1 50.4 269.3 55.2Q272.6 55.8 275.8 56.3C299.8 57.8 329.3 62.4 360.7 67.4C408.7 74.9 461.1 83.2 505 82C565 80 605 68 642 62C668 66 668 94 640 99C600 108 545 122 480 122C417.8 122 363.5 106.2 296 100.6V102Q285.1 101.7 274.5 100Q262.2 98 239.8 93.2L120.4 350H62.8Z"/></svg></b>oto<span>girrr</span></h1></div><div class="bal"><small>FANTACREDITI</small><b>'+f2(c.crediti)+'</b>'+(Number(c.debito)>0?'<small style="color:var(--hi)">DEBITO '+f2(c.debito)+'</small>':'')+'</div></div>'+
-  '<div class="who">Squadra: <b>'+esc(team)+'</b><button class="x" id="out">Esci</button></div>'+premioWidget()+
-  '<nav><div class="nvi">'+[['partite','Partite'],['vinc','Vincenti'],['mie','Le mie'],['class','Classifica'],['prob','Probabilità'],['sfide','Sfida 1 contro 1'],['prestiti','Prestiti'],['regole','Regole']].map(function(t){return '<button data-tab="'+t[0]+'" class="'+(tab===t[0]?'on':'')+'">'+t[1]+'</button>'}).join('')+'</div></nav>'+ticker();
+  return '<a class="back" href="'+_BACK_+'">‹ O GIRRR</a><div class="top"><a href="'+_BACK_+'" title="Torna a O Girrr" style="display:block;flex:none"><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/logo-lega.png" alt="O Fant A Girrr" style="display:block"></a><div class="t"><div class="k">O FANT A GIRRR</div><h1><b class="TT"><em class="Tg">T</em><svg viewBox="0 0 900 400" aria-hidden="true"><path fill="currentColor" d="M185.8 85.2H181Q145.4 85.2 121.1 103Q96.9 120.8 85.6 166Q81.9 180.8 83.2 186.6Q84.6 192.4 84.4 193.2Q62.8 193.2 54.4 184.2Q46.1 175.2 51.3 154.4Q58.4 126 78.2 102.6Q98.1 79.2 132.3 64.8Q166.5 50.4 213.7 50.4Q240.1 50.4 269.3 55.2Q272.6 55.8 275.8 56.3C299.8 57.8 329.3 62.4 360.7 67.4C408.7 74.9 461.1 83.2 505 82C565 80 605 68 642 62C668 66 668 94 640 99C600 108 545 122 480 122C417.8 122 363.5 106.2 296 100.6V102Q285.1 101.7 274.5 100Q262.2 98 239.8 93.2L120.4 350H62.8Z"/></svg></b>oto<span>girrr</span></h1></div><div class="bal"><small>FANTACREDITI</small><b>'+f2(c.crediti)+'</b>'+(Number(c.debito)>0?'<small style="color:var(--hi)">DEBITO '+f2(c.debito)+'</small>':'')+'</div></div>'+
+  '<div class="who">Squadra: <b>'+esc(team)+'</b><button class="x" id="out" aria-label="Cambia squadra">Cambia squadra</button></div>'+premioWidget()+
+  '<nav><div class="nvi">'+[['partite','Partite'],['vinc','Vincenti'],['mie','Le mie'],['class','Classifica'],['prob','Probabilità'],['sfide','Sfida 1 contro 1'],['prestiti','Prestiti'],['movimenti','Movimenti'],['regole','Regole']].map(function(t){return '<button data-tab="'+t[0]+'" class="'+(tab===t[0]?'on':'')+'">'+t[1]+'</button>'}).join('')+'</div></nav>'+ticker();
 }
 function qbtn(p,m,lab){
   var on=slip.some(function(x){return x.p===p.id&&x.m===m});lab=lab||mlab(m);
@@ -424,6 +442,15 @@ function vPrestiti(){
   h+='<div class="card"><b>Movimenti</b><p style="font-size:12px;color:var(--sub);margin:6px 0">Qui vedi dove sono finiti i fantacrediti che non trovi più: trattenute del banco, prestiti e rimborsi.</p>'+(M2.length?M2.map(function(m){var n=Number(m.importo);return '<div class="mv"><span>'+esc(m.nota||m.tipo)+'<small style="display:block;color:var(--sub);font-size:11px">'+quando(m.creato)+'</small></span><b class="'+(n>=0?'p':'m')+'">'+(n>=0?'+':'−')+f2(Math.abs(n))+'</b></div>'}).join(''):'<div class="vuoto">Ancora nessun movimento.</div>')+'</div>';
   return h;
 }
+function vMovimenti52(){
+ var m=(PR&&PR.movimenti||[]).concat(preview52State().ledger||[]);
+ if(M&&M.schedine)M.schedine.forEach(function(x){
+ m.push({tipo:'Puntata',nota:'Schedina '+x.id,importo:-x.puntata,creato:x.creata});
+ if(x.stato==='vinta')m.push({tipo:'Vincita',nota:'Schedina '+x.id,importo:x.vincita,creato:x.creata});
+ });
+ m.sort(function(a,b){return new Date(b.creato||0)-new Date(a.creato||0)});
+ return '<div class="card"><b>Movimenti</b>'+ (m.length?m.map(function(x){var n=Number(x.importo)||0;return '<div class="mv"><span>'+esc(x.nota||x.tipo)+'<small style="display:block;color:var(--sub);font-size:11px">'+quando(x.creato)+'</small></span><b class="'+(n>=0?'p':'m')+'">'+(n>=0?'+':'−')+f2(Math.abs(n))+'</b></div>'}).join(''):'<div class="vuoto">Nessun movimento.</div>')+'</div>';
+}
 function vRegole(){return vRegole0()+REGDERBY}
 function vRegole0(){
   var su=S.sussidio_ok?'<button class="go" id="suss" style="margin-top:12px">Chiedi il prestito al banco (porta a 50)</button>':'';
@@ -439,8 +466,8 @@ function vSlip(){
 var LASTHS='',LASTSV='',QS=1,ANIM=true,LASTQ='',SLIPWAS=false,BALPREV=null;
 function render(){
   var a=document.getElementById('app');
-  if(!S){a.innerHTML=gate();return}
-  var body=tab==='partite'?vPartite():tab==='vinc'?vVinc():tab==='mie'?vMie():tab==='class'?vClass():tab==='prestiti'?vPrestiti():tab==='prob'?vProbT():tab==='sfide'?vSfideT():vRegole();
+  if(!S){if(!M)mockInit();S=mockStato();PREMI={premi:preview52Sponsors(),reputazione:72};}
+  var body=tab==='partite'?vPartite():tab==='vinc'?vVinc():tab==='mie'?vMie():tab==='class'?vClass():tab==='prestiti'?vPrestiti():tab==='movimenti'?vMovimenti52():tab==='prob'?vProbT():tab==='sfide'?vSfideT():vRegole();
   navPre();var keep=document.getElementById('stake');
   var hs=head(),sv=vSlip(),isNew=!!sv&&!SLIPWAS;SLIPWAS=!!sv;
   var pn=a.querySelector('.pane'),hsK=hs.replace(/class="on"/g,'class=""');
@@ -461,10 +488,10 @@ function upWin(){
 }
 document.addEventListener('click',function(e){
   var t=e.target,b;
-  if(t.id==='enter'){team=document.getElementById('gt').value;code=document.getElementById('gc').value.trim().toUpperCase();LS.team=team;LS.code=code;save();err='';document.querySelector('.err').textContent='Controllo…';carica();return}
+  if(t.id==='enter'){team=document.getElementById('gt').value;code='preview';var q=preview52State();q.team=team;preview52Save(q);M=null;PR=null;slip=[];err='';carica();loadPR();return}
   if(t.id==='riscatta-sponsor'){if(busy)return;busy=true;t.disabled=true;t.textContent='Riscatto…';rpc('carriera_riscatta',{p_team:team,p_code:code,p_obiettivo:t.dataset.obiettivo}).then(function(x){toast('Premio riscattato: +'+f0(x.crediti)+' Fantacrediti');ANIM=true;return carica()}).catch(function(e){busy=false;t.disabled=false;t.textContent='Riscatta';toast(e.message,1)});return}
   if(t.id==='sim'){rpc('demo_simula',{}).then(function(){slip=[];tab='mie';ANIM=true;toast('Partite finite, pagamenti fatti');return carica()});return}
-  if(t.id==='out'){LS.code='';save();code='';S=null;slip=[];render();return}
+  if(t.id==='out'){var q=preview52State(),altre=teams.filter(function(n){return n!==team});team=altre[Math.floor(Math.random()*altre.length)]||team;code='preview';q.team=team;q.crediti=346;q.claimed=[];q.ledger=[];preview52Save(q);M=null;PR=null;S=null;slip=[];tab='partite';mockInit();PREMI={premi:preview52Sponsors(),reputazione:72};PR=mockRpc('toto_pr_stato',{});S=mockStato();render();return}
   if(t.id==='pr_sug'){var sg=document.getElementById('pr_t');sg.value=pSug(Number(document.getElementById('pr_i').value));return}
   if(t.id==='pr_send'){var a1=document.getElementById('pr_a').value,i1=Number(document.getElementById('pr_i').value),t1=Number(document.getElementById('pr_t').value);t.disabled=true;
    rpc('toto_pr_chiedi',{p_team:team,p_code:code,p_a:a1,p_importo:i1,p_tasso:t1}).then(function(){toast('Richiesta inviata a '+a1);return loadPR()}).catch(function(e){t.disabled=false;toast(e.message,1)});return}
@@ -601,21 +628,31 @@ function navBounce(n){
 }
 
 var REGDERBY='<div class="card"><b>Quote Derby</b><p style="margin-top:6px;line-height:1.5">Le partite tra squadre che hanno un Derby ufficiale hanno la quota maggiorata del 15% su ogni esito. Se la tua schedina contiene un Derby la quota finale vale il 10% in più, e se la schedina perde ti torna il 20% della puntata. Valgono dalla giornata successiva alla nascita del Derby: le schedine già giocate non cambiano.</p></div>';
-var _qi=/[?&]t=(prob|sfide)/.exec(location.search);if(_qi){tab=_qi[1]}
+var _qi=/[?&]t=(prob|sfide|prestiti|movimenti)/.exec(location.search);if(_qi){tab=_qi[1]}
 function fmtCd(ms){var s=Math.floor(ms/1000),d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60);return d>0?d+'g '+h+'h':h>0?h+'h '+m+'m':m+'m '+String(s%60).padStart(2,'0')+'s'}
 function tickCd(){document.querySelectorAll('.cd').forEach(function(e){var ms=new Date(e.getAttribute('data-t'))-Date.now();if(ms<=0){if(!e.dataset.done){e.dataset.done=1;e.textContent='0s';if(S&&!busy)carica()}return}e.textContent=fmtCd(ms);e.className='cd'+(ms<3600e3?' hot':ms<86400e3?' warn':'')})}
 setInterval(tickCd,1000);
 window.addEventListener('hashchange',function(){location.reload()});
 function hshF(s){var h=2166136261,i;for(i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return (h>>>0).toString(36)}
 function loginDaLink(d){var k=(location.hash||'').replace('#','').trim().toUpperCase();if(!k||/^(LEGA|COPPA)/.test(k)||!d||!d.lock)return false;var ok=false;
-  d.teams.forEach(function(x){if(hshF(x.name+'|'+k)===d.lock[x.name]){var o={};try{o=JSON.parse(localStorage.getItem('fg')||'{}')||{}}catch(e){}o.team=x.name;o.code=k;try{localStorage.setItem('fg',JSON.stringify(o))}catch(e){}ok=x.name}});
+  d.teams.forEach(function(x){if(hshF(x.name+'|'+k)===d.lock[x.name]){var o={};try{o=JSON.parse(sessionStorage.getItem('orr_52_fg')||'{}')||{}}catch(e){}o.team=x.name;o.code=k;try{sessionStorage.setItem('orr_52_fg',JSON.stringify(o))}catch(e){}ok=x.name}});
   if(ok){try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}return ok}
-fetch('https://giandjcosta.github.io/o-fant-a-girrr/data.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(d){teams=d.teams.map(function(t){return t.name});CAL=(d.cal&&d.cal.lega)||null;
-  var lg=loginDaLink(d);if(lg){try{LS=JSON.parse(localStorage.getItem('fg')||'{}')||{}}catch(e){}team=LS.team;code=LS.code}
-  if(team&&code)carica();else render();
-}).catch(function(){teams=['Oranje VC'];render()});
+teams=['Oranje VC','Apo team','Grodah','WOA','Real Madrink','stif dc','Mariana Coneja','AFA SELECCION','The Blue brothers','Atletico ma non troppo'];
+var ps=preview52State();
+if(!ps.team||teams.indexOf(ps.team)<0){ps.team=teams[Math.floor(Math.random()*teams.length)];preview52Save(ps)}
+team=ps.team;code='preview';
+if(!ps.ledger.length){ps.ledger=[
+ {id:'loan24',tipo:'Prestito ricevuto',nota:'Prestito da un avversario',importo:150,creato:'2026-10-24T11:00:00Z'},
+ {id:'pay25',tipo:'Rimborso',nota:'Rimborso ad Apo team',importo:-50,creato:'2026-10-25T11:00:00Z'}
+ ];preview52Save(ps)}
+mockInit();
+PREMI={premi:preview52Sponsors(),reputazione:72};
+PR=mockRpc('toto_pr_stato',{p_team:team,p_code:code});
+S=mockStato();
+render();
+
 })();
 </script>
-<script src="https://giandjcosta.github.io/o-fant-a-girrr/assets/app.js"></script>
+
 </body>
 </html>
