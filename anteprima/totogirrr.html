@@ -247,7 +247,13 @@ function sfidaCl(L,n,a,b){if(!L||!L.length||n<=L.length-10)return '';var T={};fu
 var M=null;
 function mockInit(){
   var t=Date.now()+3600e3,mk=function(i,c,tr,a,b,c2,d,e){return{id:'D'+i,comp:'lega',giornata:2,casa:c,trasf:tr,chiude:new Date(t).toISOString(),q1:a,qx:b,q2:c2,qo:d,qu:e,gc:null,gt:null,chiusa:false,extra:{O35:1.3,U35:3.1,O55:2.0,U55:1.7,GG:1.3,NG:3.2,'E:2-1':19,'E:1-1':24,'E:3-1':21,'E:2-0':22,'E:3-2':24,'E:4-1':25}}};
-  M={conto:{team:'Oranje VC',crediti:preview52State().crediti,debito:0,ultimo_prestito:null},partite:[mk(1,'The Blue brothers','Mariana Coneja',2.55,6.15,1.83,1.67,2.0),mk(2,'AFA SELECCION','Real Madrink',2.21,6.27,2.05,1.59,2.12),mk(3,'Oranje VC','stif dc',1.59,6.71,3.12,1.54,2.22),mk(4,'Grodah','Atletico ma non troppo',2.05,5.46,2.33,1.99,1.67),mk(5,'WOA','Apo team',2.24,6.25,2.03,1.66,2.02)],schedine:[],n:0};
+  M={conto:{team:team,crediti:preview52State().crediti,debito:0,ultimo_prestito:null},partite:[mk(1,'The Blue brothers','Mariana Coneja',2.55,6.15,1.83,1.67,2.0),mk(2,'AFA SELECCION','Real Madrink',2.21,6.27,2.05,1.59,2.12),mk(3,'Oranje VC','stif dc',1.59,6.71,3.12,1.54,2.22),mk(4,'Grodah','Atletico ma non troppo',2.05,5.46,2.33,1.99,1.67),mk(5,'WOA','Apo team',2.24,6.25,2.03,1.66,2.02)],schedine:[],n:0};
+  var fini=[{id:'C1',comp:'coppa',giornata:2,casa:'Real Madrink',trasf:'Mariana Coneja',gc:2,gt:5,chiusa:true,chiude:new Date(Date.now()-86400000).toISOString(),q1:3.1,qx:5.2,q2:1.85,qo:1.64,qu:2.1,extra:{}},{id:'C2',comp:'coppa',giornata:2,casa:'Apo team',trasf:'stif dc',gc:1,gt:4,chiusa:true,chiude:new Date(Date.now()-86400000).toISOString(),q1:2.5,qx:5.7,q2:2.15,qo:1.75,qu:1.9,extra:{}}];
+  M.partite=fini.concat(M.partite);
+  M.schedine=[
+   {id:100,puntata:20,quota:2.40,stato:'vinta',vincita:48,creata:'2026-10-26T09:00:00Z',sel:[{partita:'C1',mercato:'2',quota:2.40,esito:'v'}]},
+   {id:101,puntata:25,quota:3.10,stato:'persa',vincita:0,creata:'2026-10-27T10:00:00Z',sel:[{partita:'C2',mercato:'1',quota:3.10,esito:'p'}]}
+  ];M.n=101;
   M.partite.push({id:'V-LEGA',comp:'vinc',giornata:0,casa:'Chi vince il campionato',trasf:'',chiude:new Date(t).toISOString(),q1:1,qx:1,q2:1,qo:1,qu:1,gc:null,gt:null,chiusa:false,extra:{'T:Oranje VC':3.66,'T:Mariana Coneja':5.53,'T:Apo team':7.07,'T:Real Madrink':7.15,'T:AFA SELECCION':7.17,'T:WOA':14.33,'T:The Blue brothers':16.83,'T:Grodah':19.32,'T:stif dc':19.91,'T:Atletico ma non troppo':22.88}});
 }
 function mockStat(){var f=M.schedine.filter(function(x){return x.stato!=='aperta'}),v=f.filter(function(x){return x.stato==='vinta'});
@@ -256,10 +262,10 @@ function mockColpo(){var v=M.schedine.filter(function(x){return x.stato==='vinta
 function mockStato(){
   var c=M.conto,lib=c.crediti<50&&!c.ultimo_prestito;
   return{ora:new Date().toISOString(),conto:c,sussidio_ok:lib,partite:M.partite,schedine:M.schedine.slice().reverse(),
-   stat:mockStat(),colpo:mockColpo(),classifica:[{team:'Oranje VC',crediti:c.crediti,debito:c.debito,ingioco:M.schedine.filter(function(x){return x.stato==='aperta'}).reduce(function(a,x){return a+x.puntata},0)},{team:'stif dc',crediti:500,debito:0,ingioco:0},{team:'Grodah',crediti:500,debito:0,ingioco:0}]};
+   stat:mockStat(),colpo:mockColpo(),classifica:[{team:team,crediti:c.crediti,debito:c.debito,ingioco:M.schedine.filter(function(x){return x.stato==='aperta'}).reduce(function(a,x){return a+x.puntata},0)},{team:'stif dc',crediti:500,debito:0,ingioco:0},{team:'Grodah',crediti:500,debito:0,ingioco:0}]};
 }
 function preview52State(){
- var q={crediti:500,claimed:[],day:2,place:5,ledger:[]};
+ var q={crediti:346,claimed:[],day:2,place:5,ledger:[]};
  try{var d=JSON.parse(sessionStorage.getItem('ogirrr52-preview')||'{}');if(d&&typeof d==='object')Object.assign(q,d)}catch(e){}
  if(!Array.isArray(q.claimed))q.claimed=[];if(!Array.isArray(q.ledger))q.ledger=[];
  return q;
@@ -284,14 +290,14 @@ function mockRpc(name,b){
  return{crediti:sp.crediti,saldo:M.conto.crediti};
  };
   if(name==='toto_stato')return mockStato();
-  if(name==='toto_pr_stato'){if(!M.pr)M.pr={n:1,P:[{id:1,creditore:'Oranje VC',debitore:'Grodah',importo:50,tasso:1.1,restituito:0,stato:'richiesta',attesa_di:'Oranje VC',creato:new Date().toISOString()}],V:[{tipo:'banco',importo:-8,nota:'40% della vincita trattenuto dal banco per il prestito',creato:new Date().toISOString()}]};return{prestiti:M.pr.P,movimenti:M.pr.V,debito_p:0}}
-  if(name==='toto_pr_chiedi'){M.pr.P.push({id:++M.pr.n+1,creditore:b.p_a,debitore:'Oranje VC',importo:b.p_importo,tasso:b.p_tasso,restituito:0,stato:'richiesta',attesa_di:b.p_a,creato:new Date().toISOString()});return{id:1}}
+  if(name==='toto_pr_stato'){if(!M.pr)M.pr={n:2,P:[{id:1,creditore:team==='Apo team'?'WOA':'Apo team',debitore:team,importo:150,tasso:1.10,restituito:50,stato:'attivo',attesa_di:null,creato:'2026-10-24T10:00:00Z'},{id:2,creditore:team,debitore:team==='Grodah'?'WOA':'Grodah',importo:75,tasso:1.10,restituito:0,stato:'richiesta',attesa_di:team,creato:'2026-10-28T10:00:00Z'}],V:[{tipo:'trattenuta',importo:-8,nota:'Trattenuta del banco',creato:'2026-10-27T10:00:00Z'}]};return{prestiti:M.pr.P,movimenti:M.pr.V,debito_p:100}}
+  if(name==='toto_pr_chiedi'){M.pr.P.push({id:++M.pr.n+1,creditore:b.p_a,debitore:team,importo:b.p_importo,tasso:b.p_tasso,restituito:0,stato:'richiesta',attesa_di:b.p_a,creato:new Date().toISOString()});return{id:1}}
   if(name==='toto_pr_rispondi'){var r=M.pr.P.filter(function(x){return x.id===b.p_id})[0];if(b.p_azione==='rifiuta')r.stato='rifiutato';else if(b.p_azione==='accetta'){r.stato='attivo';r.attesa_di=null;M.conto.crediti-=r.importo;M.pr.V.unshift({tipo:'prestito_dato',importo:-r.importo,nota:'Prestito a '+r.debitore,creato:new Date().toISOString()})}else{r.tasso=b.p_tasso;r.stato='controproposta';r.attesa_di=r.debitore}return{}}
   if(name==='toto_pr_restituisci'){var r2=M.pr.P.filter(function(x){return x.id===b.p_id})[0];r2.restituito+=b.p_importo;return{restituito:b.p_importo}}
   if(name==='toto_sussidio'){var d=50-M.conto.crediti;M.conto.crediti=50;M.conto.debito=Math.round(d*120)/100;M.conto.ultimo_prestito=1;return{crediti:50,dato:d,da_restituire:M.conto.debito}}
   if(name==='toto_gioca'){
     var st=b.p_puntata;if(!(st>=5))throw new Error('Puntata minima: 5 fantacrediti');if(st>M.conto.crediti)throw new Error('Fantacrediti insufficienti');
-    var q=1,sel=b.p_sel.map(function(x){var p=M.partite.filter(function(y){return y.id===x.p})[0];if(p.casa==='Oranje VC'&&st>100)throw new Error('Sulla tua partita puntata massima 100');var qq=quotaDi(p,x.m);q*=qq;return{partita:p.id,mercato:x.m,quota:qq,esito:null}});
+    var q=1,sel=b.p_sel.map(function(x){var p=M.partite.filter(function(y){return y.id===x.p})[0];if((p.casa===team||p.trasf===team)&&st>100)throw new Error('Sulla tua partita puntata massima 100');var qq=quotaDi(p,x.m);q*=qq;return{partita:p.id,mercato:x.m,quota:qq,esito:null}});
     q=Math.min(500,Math.round(q*(slipDerby()?1.1:1)*100)/100);M.conto.crediti=Math.round((M.conto.crediti-st)*100)/100;
     M.schedine.push({id:++M.n,puntata:st,quota:q,stato:'aperta',vincita:0,creata:new Date().toISOString(),sel:sel});
     return{id:M.n,quota:q,vincita_possibile:Math.round(st*q*100)/100};
@@ -444,7 +450,7 @@ function vPrestiti(){
 function vMovimenti52(){
  var m=(PR&&PR.movimenti||[]).concat(preview52State().ledger||[]);
  if(M&&M.schedine)M.schedine.forEach(function(x){
- if(x.stato==='aperta')m.push({tipo:'Puntata',nota:'Schedina '+x.id,importo:-x.puntata,creato:x.creata});
+ m.push({tipo:'Puntata',nota:'Schedina '+x.id,importo:-x.puntata,creato:x.creata});
  if(x.stato==='vinta')m.push({tipo:'Vincita',nota:'Schedina '+x.id,importo:x.vincita,creato:x.creata});
  });
  m.sort(function(a,b){return new Date(b.creato||0)-new Date(a.creato||0)});
@@ -487,7 +493,7 @@ function upWin(){
 }
 document.addEventListener('click',function(e){
   var t=e.target,b;
-  if(t.id==='enter'){team=document.getElementById('gt').value;code=document.getElementById('gc').value.trim().toUpperCase();LS.team=team;LS.code=code;save();err='';document.querySelector('.err').textContent='Controllo…';carica();return}
+  if(t.id==='enter'){team=document.getElementById('gt').value;code='preview';var q=preview52State();q.team=team;preview52Save(q);M=null;PR=null;slip=[];err='';carica();loadPR();return}
   if(t.id==='riscatta-sponsor'){if(busy)return;busy=true;t.disabled=true;t.textContent='Riscatto…';rpc('carriera_riscatta',{p_team:team,p_code:code,p_obiettivo:t.dataset.obiettivo}).then(function(x){toast('Premio riscattato: +'+f0(x.crediti)+' Fantacrediti');ANIM=true;return carica()}).catch(function(e){busy=false;t.disabled=false;t.textContent='Riscatta';toast(e.message,1)});return}
   if(t.id==='sim'){rpc('demo_simula',{}).then(function(){slip=[];tab='mie';ANIM=true;toast('Partite finite, pagamenti fatti');return carica()});return}
   if(t.id==='out'){LS.code='';save();code='';S=null;slip=[];render();return}
@@ -638,9 +644,10 @@ function loginDaLink(d){var k=(location.hash||'').replace('#','').trim().toUpper
   if(ok){try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}return ok}
 teams=['Oranje VC','Apo team','Grodah','WOA','Real Madrink','stif dc','Mariana Coneja','AFA SELECCION','The Blue brothers','Atletico ma non troppo'];
 var ps=preview52State();
+if(!ps.team||teams.indexOf(ps.team)<0){ps.team=teams[Math.floor(Math.random()*teams.length)];preview52Save(ps)}
+team=ps.team;code='preview';
 if(!ps.ledger.length){ps.ledger=[
- {id:'win24',tipo:'Vincita',nota:'Schedina vincente · G2',importo:80,creato:'2026-10-26T11:00:00Z'},
- {id:'loan24',tipo:'Prestito ricevuto',nota:'Prestito da Apo team',importo:150,creato:'2026-10-24T11:00:00Z'},
+ {id:'loan24',tipo:'Prestito ricevuto',nota:'Prestito da un avversario',importo:150,creato:'2026-10-24T11:00:00Z'},
  {id:'pay25',tipo:'Rimborso',nota:'Rimborso ad Apo team',importo:-50,creato:'2026-10-25T11:00:00Z'}
  ];preview52Save(ps)}
 carica();loadPR();
