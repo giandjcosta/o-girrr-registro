@@ -6,8 +6,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex">
 <title>Totogirrr · O Girrr</title>
-<link rel="icon" type="image/png" href="../favicon-64.png">
-<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="https://giandjcosta.github.io/o-fant-a-girrr/assets/favicon-64.png">
+
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&family=Inter:wght@500;700;800;900&display=swap">
 <style>
 :root{--acc:#d62839;--bg:#1d2a52;--bg2:#2c3f7c;--bg3:#141d3d;--chiaro:#fbf6ec;--hi:#ffd166;--sub:#bfe3ff;--az:#3d93d6;--ok:#4ade80;--ko:#ff6b7a}
@@ -215,7 +215,6 @@ nav button{flex:1 0 auto;white-space:nowrap;padding:10px 13px}
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
 
-
 </head>
 <body>
 <div class="wrap" id="app"></div>
@@ -225,8 +224,8 @@ var URL_='https://qmjqfgmvimsuxvghetgi.supabase.co',KEY='sb_publishable_qPhimkrF
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function f2(n){return Number(n).toLocaleString('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2})}
 function f0(n){return Number(n).toLocaleString('it-IT',{maximumFractionDigits:0})}
-var LS={};try{LS=JSON.parse(localStorage.getItem('fg')||'{}')||{}}catch(e){}
-function save(){try{localStorage.setItem('fg',JSON.stringify(LS))}catch(e){}}
+var LS={};try{LS=JSON.parse(sessionStorage.getItem('orr_52_fg')||'{}')||{}}catch(e){}
+function save(){try{sessionStorage.setItem('orr_52_fg',JSON.stringify(LS))}catch(e){}}
 var DEMO=true;
 var teams=[],team=DEMO?'Oranje VC':(LS.team||''),code=DEMO?'demo':(LS.code||''),S=null,tab='partite',slip=[],err='',busy=false;
 var PREMI={premi:[],reputazione:0};
@@ -246,7 +245,7 @@ function sfidaCl(L,n,a,b){if(!L||!L.length||n<=L.length-10)return '';var T={};fu
 var M=null;
 function mockInit(){
   var t=Date.now()+3600e3,mk=function(i,c,tr,a,b,c2,d,e){return{id:'D'+i,comp:'lega',giornata:2,casa:c,trasf:tr,chiude:new Date(t).toISOString(),q1:a,qx:b,q2:c2,qo:d,qu:e,gc:null,gt:null,chiusa:false,extra:{O35:1.3,U35:3.1,O55:2.0,U55:1.7,GG:1.3,NG:3.2,'E:2-1':19,'E:1-1':24,'E:3-1':21,'E:2-0':22,'E:3-2':24,'E:4-1':25}}};
-  M={conto:{team:'Oranje VC',crediti:500,debito:0,ultimo_prestito:null},partite:[mk(1,'The Blue brothers','Mariana Coneja',2.55,6.15,1.83,1.67,2.0),mk(2,'AFA SELECCION','Real Madrink',2.21,6.27,2.05,1.59,2.12),mk(3,'Oranje VC','stif dc',1.59,6.71,3.12,1.54,2.22),mk(4,'Grodah','Atletico ma non troppo',2.05,5.46,2.33,1.99,1.67),mk(5,'WOA','Apo team',2.24,6.25,2.03,1.66,2.02)],schedine:[],n:0};
+  M={conto:{team:'Oranje VC',crediti:preview52State().crediti,debito:0,ultimo_prestito:null},partite:[mk(1,'The Blue brothers','Mariana Coneja',2.55,6.15,1.83,1.67,2.0),mk(2,'AFA SELECCION','Real Madrink',2.21,6.27,2.05,1.59,2.12),mk(3,'Oranje VC','stif dc',1.59,6.71,3.12,1.54,2.22),mk(4,'Grodah','Atletico ma non troppo',2.05,5.46,2.33,1.99,1.67),mk(5,'WOA','Apo team',2.24,6.25,2.03,1.66,2.02)],schedine:[],n:0};
   M.partite.push({id:'V-LEGA',comp:'vinc',giornata:0,casa:'Chi vince il campionato',trasf:'',chiude:new Date(t).toISOString(),q1:1,qx:1,q2:1,qo:1,qu:1,gc:null,gt:null,chiusa:false,extra:{'T:Oranje VC':3.66,'T:Mariana Coneja':5.53,'T:Apo team':7.07,'T:Real Madrink':7.15,'T:AFA SELECCION':7.17,'T:WOA':14.33,'T:The Blue brothers':16.83,'T:Grodah':19.32,'T:stif dc':19.91,'T:Atletico ma non troppo':22.88}});
 }
 function mockStat(){var f=M.schedine.filter(function(x){return x.stato!=='aperta'}),v=f.filter(function(x){return x.stato==='vinta'});
@@ -257,10 +256,31 @@ function mockStato(){
   return{ora:new Date().toISOString(),conto:c,sussidio_ok:lib,partite:M.partite,schedine:M.schedine.slice().reverse(),
    stat:mockStat(),colpo:mockColpo(),classifica:[{team:'Oranje VC',crediti:c.crediti,debito:c.debito,ingioco:M.schedine.filter(function(x){return x.stato==='aperta'}).reduce(function(a,x){return a+x.puntata},0)},{team:'stif dc',crediti:500,debito:0,ingioco:0},{team:'Grodah',crediti:500,debito:0,ingioco:0}]};
 }
+function preview52State(){
+ var q={crediti:500,claimed:[],day:2,place:5,ledger:[]};
+ try{var d=JSON.parse(sessionStorage.getItem('ogirrr52-preview')||'{}');if(d&&typeof d==='object')Object.assign(q,d)}catch(e){}
+ if(!Array.isArray(q.claimed))q.claimed=[];if(!Array.isArray(q.ledger))q.ledger=[];
+ return q;
+}
+function preview52Save(q){try{sessionStorage.setItem('ogirrr52-preview',JSON.stringify(q))}catch(e){}}
+function preview52Sponsors(){
+ var q=preview52State(),s=[
+ {obiettivo:'tecnico',sponsor:'Sponsor tecnico',crediti:60,reputazione:1,ok:true},
+ {obiettivo:'podio',sponsor:'Sponsor risultati',crediti:100,reputazione:2,ok:q.day>=8&&q.place<=3},
+ {obiettivo:'titolo',sponsor:'Sponsor premium',crediti:150,reputazione:3,ok:q.day>=38&&q.place===1}
+ ];return s.map(function(x){x.stato=q.claimed.includes(x.obiettivo)?'claimed':x.ok?'pending':'in_corso';return x});
+}
 function mockRpc(name,b){
   if(!M)mockInit();
-  if(name==='carriera_stato')return{premi:[{obiettivo:'sponsor_2026_27',sponsor:'Phönix Automobile',crediti:50,reputazione:1,stato:M.claimed?'claimed':'pending'}],reputazione:1};
-  if(name==='carriera_riscatta'){if(M.claimed)throw Error('Premio già riscattato');M.claimed=true;M.conto.crediti+=50;return{crediti:50,saldo:M.conto.crediti}};
+  if(name==='carriera_stato')return{premi:preview52Sponsors(),reputazione:72};
+  if(name==='carriera_riscatta'){
+ var sp=preview52Sponsors().find(function(x){return x.obiettivo===b.p_obiettivo});
+ if(!sp||sp.stato!=='pending')throw Error('Premio non disponibile');
+ var q=preview52State();q.claimed.push(sp.obiettivo);M.conto.crediti=Math.round((M.conto.crediti+sp.crediti)*100)/100;
+ q.crediti=M.conto.crediti;
+ q.ledger.unshift({id:'sponsor-'+sp.obiettivo,tipo:'Premio sponsor',nota:sp.sponsor,importo:sp.crediti,creato:new Date().toISOString()});preview52Save(q);
+ return{crediti:sp.crediti,saldo:M.conto.crediti};
+ };
   if(name==='toto_stato')return mockStato();
   if(name==='toto_pr_stato'){if(!M.pr)M.pr={n:1,P:[{id:1,creditore:'Oranje VC',debitore:'Grodah',importo:50,tasso:1.1,restituito:0,stato:'richiesta',attesa_di:'Oranje VC',creato:new Date().toISOString()}],V:[{tipo:'banco',importo:-8,nota:'40% della vincita trattenuto dal banco per il prestito',creato:new Date().toISOString()}]};return{prestiti:M.pr.P,movimenti:M.pr.V,debito_p:0}}
   if(name==='toto_pr_chiedi'){M.pr.P.push({id:++M.pr.n+1,creditore:b.p_a,debitore:'Oranje VC',importo:b.p_importo,tasso:b.p_tasso,restituito:0,stato:'richiesta',attesa_di:b.p_a,creato:new Date().toISOString()});return{id:1}}
@@ -284,11 +304,7 @@ function mockRpc(name,b){
     return 1;
   }
 }
-function rpc(name,body){
-  if(DEMO){try{return Promise.resolve(JSON.parse(JSON.stringify(mockRpc(name,body))))}catch(e){return Promise.reject(e)}}
-  return fetch(URL_+'/rest/v1/rpc/'+name,{method:'POST',headers:{'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json'},body:JSON.stringify(body)})
-   .then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j&&j.message?j.message:'Errore di rete');return j})});
-}
+function rpc(name,body){try{var result=mockRpc(name,body),q=preview52State();if(M&&M.conto){q.crediti=M.conto.crediti;preview52Save(q)}return Promise.resolve(JSON.parse(JSON.stringify(result)))}catch(e){return Promise.reject(e)}}
 function toast(t,bad){var d=document.createElement('div');d.className='toast'+(bad?' bad':'');d.textContent=t;document.body.appendChild(d);setTimeout(function(){d.remove()},3200)}
 function quando(iso){try{var t=new Intl.DateTimeFormat('it-IT',{weekday:'short',day:'numeric',month:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'Europe/Rome'}).format(new Date(iso));return t.charAt(0).toUpperCase()+t.slice(1)}catch(e){return iso}}
 
@@ -306,7 +322,7 @@ function aperta(p){return !p.chiusa&&new Date(p.chiude)>new Date()}
 
 function gate(){
   var o=teams.map(function(t){return '<option'+(t===team?' selected':'')+'>'+esc(t)+'</option>'}).join('');
-  return '<div class="gate"><a href="attuale.html" title="Torna a O Girrr"><img src="../logo-lega.png" alt="O Fant A Girrr"></a><h1><b class="TT"><em class="Tg">T</em><svg viewBox="0 0 900 400" aria-hidden="true"><path fill="currentColor" d="M185.8 85.2H181Q145.4 85.2 121.1 103Q96.9 120.8 85.6 166Q81.9 180.8 83.2 186.6Q84.6 192.4 84.4 193.2Q62.8 193.2 54.4 184.2Q46.1 175.2 51.3 154.4Q58.4 126 78.2 102.6Q98.1 79.2 132.3 64.8Q166.5 50.4 213.7 50.4Q240.1 50.4 269.3 55.2Q272.6 55.8 275.8 56.3C299.8 57.8 329.3 62.4 360.7 67.4C408.7 74.9 461.1 83.2 505 82C565 80 605 68 642 62C668 66 668 94 640 99C600 108 545 122 480 122C417.8 122 363.5 106.2 296 100.6V102Q285.1 101.7 274.5 100Q262.2 98 239.8 93.2L120.4 350H62.8Z"/></svg></b>oto<span>girrr</span></h1><p>Le scommesse della lega, con i fantacrediti: ne hai 500 a testa. Entra con il codice della tua squadra, lo stesso dello Spogliatoio.</p>'+
+  return '<div class="gate"><a href="attuale.html" title="Torna a O Girrr"><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/logo-lega.png" alt="O Fant A Girrr"></a><h1><b class="TT"><em class="Tg">T</em><svg viewBox="0 0 900 400" aria-hidden="true"><path fill="currentColor" d="M185.8 85.2H181Q145.4 85.2 121.1 103Q96.9 120.8 85.6 166Q81.9 180.8 83.2 186.6Q84.6 192.4 84.4 193.2Q62.8 193.2 54.4 184.2Q46.1 175.2 51.3 154.4Q58.4 126 78.2 102.6Q98.1 79.2 132.3 64.8Q166.5 50.4 213.7 50.4Q240.1 50.4 269.3 55.2Q272.6 55.8 275.8 56.3C299.8 57.8 329.3 62.4 360.7 67.4C408.7 74.9 461.1 83.2 505 82C565 80 605 68 642 62C668 66 668 94 640 99C600 108 545 122 480 122C417.8 122 363.5 106.2 296 100.6V102Q285.1 101.7 274.5 100Q262.2 98 239.8 93.2L120.4 350H62.8Z"/></svg></b>oto<span>girrr</span></h1><p>Le scommesse della lega, con i fantacrediti: ne hai 500 a testa. Entra con il codice della tua squadra, lo stesso dello Spogliatoio.</p>'+
   '<select id="gt">'+o+'</select><input id="gc" placeholder="Codice squadra" autocomplete="off" autocapitalize="characters" value="'+esc(code)+'"><button class="go" id="enter">Entra</button><div class="err">'+esc(err)+'</div><p style="margin-top:22px"><a href="attuale.html">‹ Torna a O Girrr</a></p></div>';
 }
 function ticker(){
@@ -326,14 +342,13 @@ function card(x,tag){
   return '<div class="fc"><div class="tg" style="display:flex;justify-content:space-between;gap:6px"><span>'+tag+'</span><span style="letter-spacing:.06em;color:var(--chiaro)">'+(x.p.comp==='coppa'?'COPPA':'CAMPIONATO')+'</span></div><div class="mm">'+esc(x.p.casa)+' – '+esc(x.p.trasf)+'</div><button class="q'+(on?' on':'')+'" data-p="'+x.p.id+'" data-m="'+x.m+'"><small>'+esc(x.n)+'</small><b>'+f2(x.q)+'</b></button></div>';
 }
 function premioWidget(){
- var entries=(PREMI&&PREMI.premi)||[],p=entries.find(function(x){return x.stato==='pending'}),claimed=entries.find(function(x){return x.stato==='claimed'});
- if(!p&&!claimed)return '';
- if(p)return '<aside class="prize-corner" aria-label="Premio sponsor da riscuotere"><div><strong>🎁 Premio sponsor da riscuotere · +'+f0(p.crediti)+' FC</strong><small>'+esc(p.sponsor)+' · Reputazione permanente +'+f0(p.reputazione)+'</small></div><button class="go" id="riscatta-sponsor" data-obiettivo="'+esc(p.obiettivo)+'">Riscatta</button></aside>';
- return '<aside class="prize-corner claimed"><div><strong>✓ Premio sponsor riscattato</strong><small>'+esc(claimed.sponsor)+' · +'+f0(claimed.crediti)+' FC · Reputazione +'+f0(claimed.reputazione)+'</small></div></aside>';
+ var pending=(PREMI.premi||[]).filter(function(x){return x.stato==='pending'});
+ if(!pending.length)return '';
+ return pending.map(function(p){return '<aside class="prize-corner" aria-label="Premio sponsor da riscuotere"><div><strong>🎁 '+esc(p.sponsor)+' · +'+f0(p.crediti)+' FC</strong><small>Premio disponibile · Reputazione +'+f0(p.reputazione)+'</small></div><button class="go" id="riscatta-sponsor" data-obiettivo="'+esc(p.obiettivo)+'">Riscuoti</button></aside>'}).join('');
 }
 function head(){
   var c=S.conto;
-  return '<a class="back" href="attuale.html">‹ O GIRRR</a><div class="top"><a href="attuale.html" title="Torna a O Girrr" style="display:block;flex:none"><img src="../logo-lega.png" alt="O Fant A Girrr" style="display:block"></a><div class="t"><div class="k">O FANT A GIRRR</div><h1><b class="TT"><em class="Tg">T</em><svg viewBox="0 0 900 400" aria-hidden="true"><path fill="currentColor" d="M185.8 85.2H181Q145.4 85.2 121.1 103Q96.9 120.8 85.6 166Q81.9 180.8 83.2 186.6Q84.6 192.4 84.4 193.2Q62.8 193.2 54.4 184.2Q46.1 175.2 51.3 154.4Q58.4 126 78.2 102.6Q98.1 79.2 132.3 64.8Q166.5 50.4 213.7 50.4Q240.1 50.4 269.3 55.2Q272.6 55.8 275.8 56.3C299.8 57.8 329.3 62.4 360.7 67.4C408.7 74.9 461.1 83.2 505 82C565 80 605 68 642 62C668 66 668 94 640 99C600 108 545 122 480 122C417.8 122 363.5 106.2 296 100.6V102Q285.1 101.7 274.5 100Q262.2 98 239.8 93.2L120.4 350H62.8Z"/></svg></b>oto<span>girrr</span></h1></div><div class="bal"><small>FANTACREDITI</small><b>'+f2(c.crediti)+'</b>'+(Number(c.debito)>0?'<small style="color:var(--hi)">DEBITO '+f2(c.debito)+'</small>':'')+'</div></div>'+
+  return '<a class="back" href="attuale.html">‹ O GIRRR</a><div class="top"><a href="attuale.html" title="Torna a O Girrr" style="display:block;flex:none"><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/logo-lega.png" alt="O Fant A Girrr" style="display:block"></a><div class="t"><div class="k">O FANT A GIRRR</div><h1><b class="TT"><em class="Tg">T</em><svg viewBox="0 0 900 400" aria-hidden="true"><path fill="currentColor" d="M185.8 85.2H181Q145.4 85.2 121.1 103Q96.9 120.8 85.6 166Q81.9 180.8 83.2 186.6Q84.6 192.4 84.4 193.2Q62.8 193.2 54.4 184.2Q46.1 175.2 51.3 154.4Q58.4 126 78.2 102.6Q98.1 79.2 132.3 64.8Q166.5 50.4 213.7 50.4Q240.1 50.4 269.3 55.2Q272.6 55.8 275.8 56.3C299.8 57.8 329.3 62.4 360.7 67.4C408.7 74.9 461.1 83.2 505 82C565 80 605 68 642 62C668 66 668 94 640 99C600 108 545 122 480 122C417.8 122 363.5 106.2 296 100.6V102Q285.1 101.7 274.5 100Q262.2 98 239.8 93.2L120.4 350H62.8Z"/></svg></b>oto<span>girrr</span></h1></div><div class="bal"><small>FANTACREDITI</small><b>'+f2(c.crediti)+'</b>'+(Number(c.debito)>0?'<small style="color:var(--hi)">DEBITO '+f2(c.debito)+'</small>':'')+'</div></div>'+
   '<div class="who">Squadra: <b>'+esc(team)+'</b><button class="x" id="out">Esci</button></div>'+premioWidget()+
   '<nav><div class="nvi">'+[['partite','Partite'],['vinc','Vincenti'],['mie','Le mie'],['class','Classifica'],['prob','Probabilità'],['sfide','Sfida 1 contro 1'],['prestiti','Prestiti'],['movimenti','Movimenti'],['regole','Regole']].map(function(t){return '<button data-tab="'+t[0]+'" class="'+(tab===t[0]?'on':'')+'">'+t[1]+'</button>'}).join('')+'</div></nav>'+ticker();
 }
@@ -424,11 +439,15 @@ function vPrestiti(){
   h+='<div class="card"><b>Movimenti</b><p style="font-size:12px;color:var(--sub);margin:6px 0">Qui vedi dove sono finiti i fantacrediti che non trovi più: trattenute del banco, prestiti e rimborsi.</p>'+(M2.length?M2.map(function(m){var n=Number(m.importo);return '<div class="mv"><span>'+esc(m.nota||m.tipo)+'<small style="display:block;color:var(--sub);font-size:11px">'+quando(m.creato)+'</small></span><b class="'+(n>=0?'p':'m')+'">'+(n>=0?'+':'−')+f2(Math.abs(n))+'</b></div>'}).join(''):'<div class="vuoto">Ancora nessun movimento.</div>')+'</div>';
   return h;
 }
-function vMovimenti52(){var h='<div class="card"><b>Movimenti</b><p style="font-size:12px;color:var(--sub);margin:6px 0">Tutte le entrate e le uscite di fantacrediti.</p>';var all=[];
-if(PR&&PR.movimenti)PR.movimenti.forEach(function(x){all.push({nome:x.nota||x.tipo,importo:Number(x.importo),data:x.creato})});
-if(M&&M.claimed)all.push({nome:'Premio sponsor · Phönix Automobile',importo:50,data:new Date().toISOString()});
-if(M&&M.schedine)M.schedine.forEach(function(x){if(x.stato==='vinta')all.push({nome:'Vincita Totogirrr',importo:Number(x.vincita),data:new Date().toISOString()});else if(x.stato==='persa')all.push({nome:'Schedina persa',importo:-Number(x.puntata),data:new Date().toISOString()})});
-return h+(all.length?all.map(function(x){var n=Number(x.importo);return '<div class="mv"><span>'+esc(x.nome)+'<small style="display:block;color:var(--sub);font-size:11px">'+quando(x.data)+'</small></span><b class="'+(n>=0?'p':'m')+'">'+(n>=0?'+':'−')+f2(Math.abs(n))+'</b></div>'}).join(''):'<div class="vuoto">Ancora nessun movimento.</div>')+'</div>'}
+function vMovimenti52(){
+ var m=(PR&&PR.movimenti||[]).concat(preview52State().ledger||[]);
+ if(M&&M.schedine)M.schedine.forEach(function(x){
+ if(x.stato==='aperta')m.push({tipo:'Puntata',nota:'Schedina '+x.id,importo:-x.puntata,creato:x.creata});
+ if(x.stato==='vinta')m.push({tipo:'Vincita',nota:'Schedina '+x.id,importo:x.vincita,creato:x.creata});
+ });
+ m.sort(function(a,b){return new Date(b.creato||0)-new Date(a.creato||0)});
+ return '<div class="card"><b>Movimenti</b>'+ (m.length?m.map(function(x){var n=Number(x.importo)||0;return '<div class="mv"><span>'+esc(x.nota||x.tipo)+'<small style="display:block;color:var(--sub);font-size:11px">'+quando(x.creato)+'</small></span><b class="'+(n>=0?'p':'m')+'">'+(n>=0?'+':'−')+f2(Math.abs(n))+'</b></div>'}).join(''):'<div class="vuoto">Nessun movimento.</div>')+'</div>';
+}
 function vRegole(){return vRegole0()+REGDERBY}
 function vRegole0(){
   var su=S.sussidio_ok?'<button class="go" id="suss" style="margin-top:12px">Chiedi il prestito al banco (porta a 50)</button>':'';
@@ -613,12 +632,17 @@ setInterval(tickCd,1000);
 window.addEventListener('hashchange',function(){location.reload()});
 function hshF(s){var h=2166136261,i;for(i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return (h>>>0).toString(36)}
 function loginDaLink(d){var k=(location.hash||'').replace('#','').trim().toUpperCase();if(!k||/^(LEGA|COPPA)/.test(k)||!d||!d.lock)return false;var ok=false;
-  d.teams.forEach(function(x){if(hshF(x.name+'|'+k)===d.lock[x.name]){var o={};try{o=JSON.parse(localStorage.getItem('fg')||'{}')||{}}catch(e){}o.team=x.name;o.code=k;try{localStorage.setItem('fg',JSON.stringify(o))}catch(e){}ok=x.name}});
+  d.teams.forEach(function(x){if(hshF(x.name+'|'+k)===d.lock[x.name]){var o={};try{o=JSON.parse(sessionStorage.getItem('orr_52_fg')||'{}')||{}}catch(e){}o.team=x.name;o.code=k;try{sessionStorage.setItem('orr_52_fg',JSON.stringify(o))}catch(e){}ok=x.name}});
   if(ok){try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}return ok}
-Promise.resolve({teams:['Oranje VC','Apo team','Grodah','WOA','Real Madrink','stif dc','Mariana Coneja','AFA SELECCION','The Blue brothers','Atletico ma non troppo'].map(function(name){return{name:name}})}).then(function(d){teams=d.teams.map(function(t){return t.name});CAL=null;
-  var lg=loginDaLink(d);if(lg){try{LS=JSON.parse(localStorage.getItem('fg')||'{}')||{}}catch(e){}team=LS.team;code=LS.code}
-  if(team&&code){carica();loadPR()}else render();
-}).catch(function(){teams=['Oranje VC'];render()});
+teams=['Oranje VC','Apo team','Grodah','WOA','Real Madrink','stif dc','Mariana Coneja','AFA SELECCION','The Blue brothers','Atletico ma non troppo'];
+var ps=preview52State();
+if(!ps.ledger.length){ps.ledger=[
+ {id:'win24',tipo:'Vincita',nota:'Schedina vincente · G2',importo:80,creato:'2026-10-26T11:00:00Z'},
+ {id:'loan24',tipo:'Prestito ricevuto',nota:'Prestito da Apo team',importo:150,creato:'2026-10-24T11:00:00Z'},
+ {id:'pay25',tipo:'Rimborso',nota:'Rimborso ad Apo team',importo:-50,creato:'2026-10-25T11:00:00Z'}
+ ];preview52Save(ps)}
+carica();loadPR();
+
 })();
 </script>
 
