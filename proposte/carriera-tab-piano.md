@@ -1,6 +1,6 @@
 # Carriera a tab: piano di lavoro (Claude, ChatGPT, Grok)
 
-La Carriera passa da pagina unica a **4 tab** (decisione di Gianluca del 30 ottobre: la Cassa non va sotto Carriera). Sopra i tab restano il selettore della squadra e la bolla del premio sponsor.
+La Carriera passa da pagina unica a **4 tab** (decisione di Gianluca del 30 ottobre: la Cassa non va sotto Carriera). Ognuno vede **solo la propria squadra** (decisione di Gianluca): nell'Anteprima e nel sito vero non c'è selettore; il selettore resta solo nel Lab per le prove. Sopra i tab: nome della squadra e bolla del premio sponsor.
 
 | Tab | Contenuto | Chi | Stato |
 |---|---|---|---|
@@ -78,7 +78,7 @@ PROVE (obbligatorie, prima della PR)
 - node prove/collaudo_fiducia_universale52.js
 - python3 prove/collaudo_anteprima_52.py
 - python3 anteprima/build.py && git diff --exit-code anteprima/  (deve uscire senza differenze)
-- Nel browser (python3 -m http.server dalla cartella del repo), a 320, 375 e 1280 px, su lab/index.html#carriera, anteprima/attuale.html#carriera e anteprima/index.html#carriera: apri il tab Obiettivi con almeno 3 squadre (Oranje VC, Grodah, The Blue brothers). Nessuno scorrimento laterale della pagina (document.documentElement.scrollWidth ≤ larghezza), console senza errori. Prova anche ?premi=prova#carriera per vedere «Da riscuotere».
+- Nel browser (python3 -m http.server dalla cartella del repo), a 320, 375 e 1280 px, su lab/index.html#carriera, anteprima/attuale.html#carriera e anteprima/index.html#carriera: apri il tab Obiettivi con almeno 3 squadre (Oranje VC, Grodah, The Blue brothers): nel Lab col selettore, nell'Anteprima aggiungendo ?come=Grodah all'indirizzo (ognuno vede solo la propria squadra, non c'è selettore). Nessuno scorrimento laterale della pagina (document.documentElement.scrollWidth ≤ larghezza), console senza errori. Prova anche ?premi=prova#carriera per vedere «Da riscuotere».
 
 STATO.md
 Scrivi SOLO sotto il titolo «### Tab Obiettivi (ChatGPT)», dentro la sezione «## Carriera a tab — resoconti», sostituendo la riga «In attesa.». Max 6 righe: cosa hai fatto, prove eseguite con esito, cosa non hai potuto provare. Non toccare altre parti di STATO.md.
@@ -126,7 +126,7 @@ PROVE (obbligatorie, prima della PR)
 - node prove/collaudo_preview52_totogirrr_milestone.js
 - python3 prove/collaudo_anteprima_52.py
 - python3 anteprima/build.py && git diff --exit-code anteprima/  (deve uscire senza differenze)
-- Nel browser (python3 -m http.server dalla cartella del repo), a 320, 375 e 1280 px, su lab/index.html#carriera, anteprima/attuale.html#carriera e anteprima/index.html#carriera: tab Storia con TUTTE le 10 squadre (cambia il selettore). Nessuno scorrimento laterale della pagina (document.documentElement.scrollWidth ≤ larghezza), console senza errori.
+- Nel browser (python3 -m http.server dalla cartella del repo), a 320, 375 e 1280 px, su lab/index.html#carriera, anteprima/attuale.html#carriera e anteprima/index.html#carriera: tab Storia con TUTTE le 10 squadre: nel Lab col selettore, nell'Anteprima aggiungendo ?come=NomeSquadra all'indirizzo (ognuno vede solo la propria squadra, non c'è selettore). Nessuno scorrimento laterale della pagina (document.documentElement.scrollWidth ≤ larghezza), console senza errori.
 
 STATO.md
 Scrivi SOLO sotto il titolo «### Tab Storia (Grok)», dentro la sezione «## Carriera a tab — resoconti», sostituendo la riga «In attesa.». Max 6 righe: cosa hai fatto, prove eseguite con esito, cosa non hai potuto provare. Non toccare altre parti di STATO.md.

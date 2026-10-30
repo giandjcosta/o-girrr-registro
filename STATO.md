@@ -5,6 +5,7 @@ Piano e prompt in `proposte/carriera-tab-piano.md`. Base: ramo `claude/review-ai
 
 ### Tab Panoramica e Fiducia + struttura (Claude)
 - Carriera divisa in 4 tab (Panoramica, Obiettivi, Fiducia, Storia; la Cassa resta fuori, decisione di Gianluca). Selettore a pillole sotto la bolla, che va a capo a 320 px. Panoramica: arco Fiducia, «N su 4 raggiunti», Reputazione e sponsor. Fiducia: aspettativa, simulatore, nuovo grafico «Fiducia giornata per giornata» (classifica di ogni giornata giocata dal calendario del sito), Fiducia in lega. Zone vuote pronte per ChatGPT (`vCarObiettivi`) e Grok (`vCarStoria`), con versione provvisoria.
+- **Solo la propria squadra** (decisione di Gianluca): nell'Anteprima e nel rilascio la Carriera mostra solo la squadra entrata col codice (`ME`), senza selettore (`CARSCELTA=false` da `build.py`). Il selettore resta nel Lab; nell'Anteprima si prova un'altra squadra con `?come=Grodah`. I non entrati vedono già «Entra con la tua squadra» (`livepatch`). Aperto: «Fiducia in lega» mostra ancora la classifica fiducia di tutti.
 - Provato in Chromium a 320 e 1280 px su Lab, Lega e Stadio, tutti e 4 i tab e The Blue brothers (due allenatori): nessuno scorrimento laterale, console pulita. Test automatici superati. Non provato: Safari/iPhone.
 
 ### Tab Obiettivi (ChatGPT)
