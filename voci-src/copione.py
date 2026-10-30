@@ -66,7 +66,7 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
     add("B", f"Buongiorno, buonasera e buonanotte a tutti, siete su Radio Girrr, la radio ufficiale della Lega O Fant A Girrr! Oggi siamo qui con {b1}", "urlo")
     add("G", f"e {g1}! Si parte!", "urlo")
     add("B", f"Giornata numero {n}! {g0}, hai già guardato i punteggi?")
-    add("G", pick(["Guardati, riguardati e ho pure fatto una scommessa con me stesso. Ho perso.", "Sì, con una tazza di tè in mano, come ogni buon britannico. E mi sono rovinato la colazione.", "Altro che guardati: li ho imparati a memoria!"]))
+    add("G", pick(["Guardati, riguardati e ho pure fatto una scommessa con me stesso. Ho perso.", "Sì, al barbecue con gli amici: più di un arrosto bruciato, ma i punteggi li ho letti tutti!", "Certo, qui in studio, appena usciti. Che serata!", "Sul divano, con una pizza in mano: giornata perfetta.", "Altro che guardati: li ho imparati a memoria!", "Sì, in terrazza con un bel caffè. Tutto liscio, sono pronto!", "Con la famiglia a pranzo: nessuno ha parlato d'altro."]))
     # --- punteggi estremi: a volte si esalta, a volte si prende in giro
     tono = pick(["esalta", "sfotte"])
     mv, fl, mz = a["mvp"], a["flop"], a["maz"]

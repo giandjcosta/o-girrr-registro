@@ -38,3 +38,6 @@ Promesse e sfide (da conferenze.json): se una squadra ha fatto una promessa in c
 
 ## Voce delle storie
 Tutte le storie (allenatori, dirigenza, Curva, post, radio) si raccontano come un campionato vero: giocatori, gol, squadre e posizioni. Niente crediti, fantapunti o fantamedia, tranne casi estremi (un anno 100 punti e quello dopo 50) o i punti delle partite. Si usano i nomi degli allenatori, non quelli reali.
+
+## Commentatori (deciso il 30 ottobre)
+Nessuno dei due è britannico (era così solo con le voci in inglese): niente tè, niente "come ogni buon britannico". La risposta a "hai guardato i punteggi?" varia (barbecue con gli amici, in studio, divano con la pizza, terrazza, pranzo in famiglia…) e non è sempre negativa.
