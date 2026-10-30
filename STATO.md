@@ -1,4 +1,7 @@
-# Stato del progetto O Girrr (ultimi giorni — aggiornato 29 ottobre 2026)
+# Stato del progetto O Girrr (ultimi giorni — aggiornato 30 ottobre 2026)
+
+## 30 ottobre 2026 — UI Totogirrr dedicata e rifinitura
+- **30 ottobre — rifinitura Anteprima 5.2:** aggiunta `anteprima/totogirrr.html` con grafica dedicata derivata dal CSS del Totogirrr ufficiale, navigazione Partite/Vincite/Prestiti/Premi sponsor/Movimenti/Classifica e movimenti verdi/rossi. Le due anteprime Lega/Stadio portano al Totogirrr dedicato, mentre la bubble premi in Carriera collega direttamente ai premi. La riscossione è isolata in `sessionStorage` e aggiorna lo storico e lo stato della bubble; nessuna API Supabase viene chiamata dalla nuova pagina. Eliminati testi esplicativi della simulazione dai nuovi moduli della UI. **È una release candidate visiva con dati di esempio, non un rilascio production-ready**: browser/Pages non verificati, flussi originali completi di Totogirrr da allineare ancora con il mock. Nessuna modifica a produzione.
 
 ## 29 ottobre 2026 — Anteprima 5.2 integrata (ChatGPT)
 - **29 ottobre — rifinitura UI 5.2 in anteprima:** movimenti positivi verdi e negativi rossi; bubble vetro/trasparente in Carriera mostrata soltanto con premi sponsor simulati disponibili, scompare dopo aver riscosso tutti i premi. Solo simulazione in memoria: al ricaricamento i dati demo si azzerano. Nessuna modifica al sito ufficiale o a Supabase. Verifica browser online ancora da effettuare.
