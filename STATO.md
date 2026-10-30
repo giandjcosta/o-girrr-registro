@@ -1,14 +1,27 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 30 ottobre 2026)
 
+## 30 ottobre 2026 — Tabellone con più dati (Claude, prova nel Lab)
+- Richiesta di Gianluca: in classifica anche V, N, P, gol fatti, gol subiti e differenza reti. L'ordine della classifica non cambia (Pt, poi Fantapunti) e non c'è nessuna nota sullo spareggio (decisione di Gianluca).
+- Sul telefono (<560 px) la classifica mostra DR, Pt e Fantapunti; da 560 px in su anche G, V, N, P, GF, GS. Vale anche per i gironi di Champions Cup (senza Fantapunti, come oggi).
+- Patch unica `rilascio/tabellone_dati.py`: con `--lab` crea le copie di prova (`lab/prova-tabellone-lega.html`, `lab/prova-tabellone-stadio.html`, generate dal `tabellone.html` di `gh-pages`, con `<base>` verso il sito e senza statistiche visite); senza `--lab` è la patch per il sito vero. Link nel Lab (card «Tabellone · Più dati in classifica», solo Lab).
+- Provato in Chromium a 320, 375, 768 e 1280 px, Lega e Stadio, Campionato e Champions Cup: nessuno scorrimento laterale, console pulita; controllato che V+N+P = G per ogni squadra e che i gol fatti della lega pareggino quelli subiti (84 = 84). Non provato: Safari/iPhone.
+- Per il sito vero (dopo il «vai»): `python3 rilascio/tabellone_dati.py girrr/tabellone.html girrr/tabellone.html` e lo stesso per `stadio/girrr/tabellone.html` su `gh-pages`, poi copia in `ufficiale/src/sito/`.
+
 ## Carriera a tab — resoconti
 Piano e prompt in `proposte/carriera-tab-piano.md`. Base: ramo `claude/review-ai-changes-test-ui9gjy`. Ognuno scrive solo nel suo paragrafo.
 
 ### Tab Panoramica e Fiducia + struttura (Claude)
 - Carriera divisa in 4 tab (Panoramica, Obiettivi, Fiducia, Storia; la Cassa resta fuori, decisione di Gianluca). Selettore a pillole sotto la bolla, che va a capo a 320 px. Panoramica: arco Fiducia, «N su 4 raggiunti», Reputazione e sponsor. Fiducia: aspettativa, simulatore, nuovo grafico «Fiducia giornata per giornata» (classifica di ogni giornata giocata dal calendario del sito), Fiducia in lega. Zone vuote pronte per ChatGPT (`vCarObiettivi`) e Grok (`vCarStoria`), con versione provvisoria.
+- **Solo la propria squadra** (decisione di Gianluca): nell'Anteprima e nel rilascio la Carriera mostra solo la squadra entrata col codice (`ME`), senza selettore (`CARSCELTA=false` da `build.py`). Il selettore resta nel Lab; nell'Anteprima si prova un'altra squadra con `?come=Grodah`. I non entrati vedono già «Entra con la tua squadra» (`livepatch`). Aperto: «Fiducia in lega» mostra ancora la classifica fiducia di tutti.
 - Provato in Chromium a 320 e 1280 px su Lab, Lega e Stadio, tutti e 4 i tab e The Blue brothers (due allenatori): nessuno scorrimento laterale, console pulita. Test automatici superati. Non provato: Safari/iPhone.
 
 ### Tab Obiettivi (ChatGPT)
-In attesa.
+- Linea del tempo 2/6/8/10/18/26/34: giornate giocate da `gioc()`/CL, prossima evidenziata e scorrimento interno.
+- Obiettivi stagionali con progressi, stati e scadenze; Champions Cup del presidente e dell'allenatore; premio sponsor con link solo se riscuotibile.
+- Collaudi JavaScript su snapshot del ramo (milestone/Totogirrr e fiducia universale): PASS; verifica equivalente di `collaudo_anteprima_52.py`: PASS.
+- Chromium sul componente isolato a 320/375/1280 px, Oranje VC/Grodah/The Blue brothers: 9 casi PASS, nessun overflow o errore JS; stati premio e link verificati.
+- Non eseguiti `python3 anteprima/build.py` e `git diff --exit-code anteprima/` in checkout locale (DNS GitHub bloccato); blocco generato propagato nelle anteprime e confrontato.
+- Non eseguito browser end-to-end delle tre pagine complete via HTTP, né Safari; serve verifica CI/QA della PR.
 
 ### Tab Storia (Grok)
 In attesa.
