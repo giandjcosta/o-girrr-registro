@@ -230,7 +230,7 @@ function save(){try{sessionStorage.setItem('orr_52_fg',JSON.stringify(LS))}catch
 var DEMO=true;
 /* Anteprima 5.2: la squadra e i premi arrivano dalla Carriera (sessionStorage 'ogirrr52-v2', scritto da premi52() nel Lab/Anteprima); ?da= è la pagina a cui tornare */
 var P52Q=new URLSearchParams(location.search),_DA_=P52Q.get('da')||'';
-var _BACK_=/^(\.\.\/[\w\/-]+\/)?[\w-]+\.html(#[\w-]*)?$/.test(_DA_)?_DA_:/[?&]skin=stadio(?:&|$)/.test(location.search)?'index.html':'attuale.html';
+var _BACK_=/^(\.\.\/[\w\/-]+\/)?[\w-]+\.html(\?[\w=%&.+-]*)?(#[\w-]*)?$/.test(_DA_)?_DA_:/[?&]skin=stadio(?:&|$)/.test(location.search)?'index.html':'attuale.html';
 var teams=[],team=DEMO?'Oranje VC':(LS.team||''),code=DEMO?'demo':(LS.code||''),S=null,tab='partite',slip=[],err='',busy=false;
 var PREMI={premi:[],reputazione:0};
 var MORE={};
