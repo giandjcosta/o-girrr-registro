@@ -1,0 +1,21 @@
+
+.og-today{margin:13px 0 18px!important;padding:19px;border-radius:19px;border:1px solid rgba(255,209,102,.55);background:linear-gradient(135deg,rgba(47,69,127,.97),rgba(20,29,61,.96));color:#fbf6ec;box-shadow:0 12px 26px rgba(0,0,0,.18);font-family:Inter,system-ui,sans-serif;position:relative}
+.og-today *{box-sizing:border-box}
+.og-today h2{font:900 clamp(25px,4vw,36px) Inter,system-ui,sans-serif;margin:0 0 6px}
+.og-today p{margin:0 0 10px;color:#c6d6f1;font-size:13px;line-height:1.5}
+.og-today small{display:block;color:#c6d6f1;font-size:11px;font-weight:700}
+.og-today .og-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.og-today .og-top a,.og-today .og-link{display:inline-block;text-decoration:none;color:#101935!important;background:#ffd166;border-radius:10px;padding:10px 12px;font:900 12px Inter,system-ui,sans-serif}
+.og-today select{margin-top:6px;max-width:100%;width:100%;font:700 13px Inter,system-ui,sans-serif;padding:10px;border-radius:9px;border:1px solid rgba(255,255,255,.3);background:#17244b;color:white}
+.og-today .og-pick{width:200px;max-width:100%}
+.og-today .og-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:13px 0}
+.og-today .og-item{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.17);padding:13px;border-radius:12px;min-width:0}
+.og-today .og-item strong{display:block;font-size:16px;margin-top:5px;line-height:1.25;overflow-wrap:anywhere}
+.og-today .og-links{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+.og-today .og-links a{font-size:12px;font-weight:800;color:#ffd166;text-decoration:none;border-bottom:1px solid currentColor}
+.og-today .og-news{margin:8px 0 0;padding:10px 12px;border-radius:10px;background:rgba(0,0,0,.16);line-height:1.5;font-size:12px}
+.og-today .og-news b{display:block;color:#ffd166;font-size:11px;margin-bottom:3px}
+.og-menu-notif{padding:0 2px;margin:0 0 13px}
+.og-menu-notif .mn{border:1px solid rgba(255,209,102,.5)!important;border-radius:12px!important}
+.og-test-banner{margin:9px auto;color:#ffd166;font:bold 11px Inter,system-ui,sans-serif;text-align:center}
+@media(max-width:620px){.og-today{padding:13px}.og-today .og-grid{grid-template-columns:1fr}.og-today .og-top{display:grid;grid-template-columns:1fr}.og-today .og-pick{width:100%}.og-today .og-item{padding:10px}.og-today .og-item strong{font-size:14px}.og-today .og-links{gap:7px}}
