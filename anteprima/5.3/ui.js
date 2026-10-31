@@ -58,7 +58,7 @@ teamPicker('v53team',function(t){
  if(seen&&seen.day!==now.day)news.push('Nuovi risultati dopo la '+(nm||'ultima')+'ª giornata');
  if(seen&&seen.rank!==now.rank&&rank)news.push('La tua posizione in classifica è cambiata');
  if(seen&&seen.op!==now.op&&now.op)news.push('È cambiato il prossimo avversario');
- var aside=el('v53news');aside.innerHTML=news.length?news.map(function(x){return '<span class="v53-dot" style="display:inline-block;margin-right:6px"></span>'+esc(x)+' &nbsp; '}).join(''):'Risultati, Curva e notizie della Lega, senza messaggi tecnici.';
+ var aside=el('v53news');aside.innerHTML=news.length?news.map(function(x){return '<span class="v53-dot" style="display:inline-block;margin-right:6px"></span>'+esc(x)+' &nbsp; '}).join(''):'Risultati, Curva e notizie della Lega.';
  var b=el('v53read');if(b)b.onclick=function(){set('seen:'+t,now);aside.textContent='Tutto aggiornato per '+t+'.'};
  });
 }

@@ -56,6 +56,7 @@ def main():
     visit("index")
     pg.locator("#v53metrics .v53-metric").first.wait_for(timeout=12000)
     assert pg.locator("#v53metrics .v53-metric").count()==3
+    assert "automazion" not in pg.locator("#v53news").inner_text().lower()
     assert pg.locator(".cards").count()==1
     assert pg.locator("#v53nav a").count()==5
     pg.locator("#v53team").select_option(label="WOA")
@@ -86,6 +87,7 @@ def main():
     pg.screenshot(path=f"anteprima/5.3/qa-screenshot/curva-{skin}-{width}.png",full_page=True)
     visit("notifiche")
     pg.locator("#v53notifications article").first.wait_for(timeout=12000)
+    assert "automazion" not in pg.locator("body").inner_text().lower()
     pg.locator('#v53filters button[data-f="curva"]').click()
     assert "Sondaggio della Curva" in pg.locator("#v53notifications").inner_text()
     pg.locator("#v53markread").click()
