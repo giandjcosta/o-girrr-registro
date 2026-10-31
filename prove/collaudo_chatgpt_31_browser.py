@@ -66,7 +66,26 @@ with sync_playwright() as pw:
       'window.__testBio={calcola:calcola,posiz:posiz,seguaci:seguaci};\n})();\n</script>')
     def curva_mock(route):
       route.fulfill(status=200,content_type='text/html; charset=utf-8',body=source)
-    context.route('**/girrr/curva.html',curva_mock)
+    context.route(re.compile(r'.*/girrr/curva\.html(?:\?.*)?
+    context.route('**/data.json',lambda route:route.fulfill(status=200,content_type='application/json',body=json.dumps(current)))
+    curva=visit(context,'https://giandjcosta.github.io/o-fant-a-girrr/girrr/curva.html','curva-320')
+    curva.wait_for_function('Boolean(window.__testBio)', timeout=15000)
+    result=curva.evaluate("""d=>{
+      var api=window.__testBio,team='Oranje VC';
+      api.calcola(d);
+      var prima={posto:api.posiz(team),follower:api.seguaci(team)};
+      var g=d.cal.lega.find(x=>x.m.some(m=>m[4]==='-'));
+      if(!g)throw Error('Manca il prossimo turno');
+      g.m.forEach(m=>{m[1]=70;m[2]=70;m[4]=m[0]===team?'5-0':m[3]===team?'0-5':'0-0'});
+      api.calcola(d);
+      var dopo={posto:api.posiz(team),follower:api.seguaci(team)};
+      return {prima,dopo,turno:g.n};
+    }""",current)
+    print('Curva calcolo prima/dopo turno simulato:',result)
+    assert result['prima']!=result['dopo'], 'La posizione e i follower sono rimasti invariati'
+    print('PASS bio Curva: classifica e follower ricalcolati dopo turno simulato in browser')
+    browser.close()
+),curva_mock)
     context.route('**/data.json',lambda route:route.fulfill(status=200,content_type='application/json',body=json.dumps(current)))
     curva=visit(context,'https://giandjcosta.github.io/o-fant-a-girrr/girrr/curva.html','curva-320')
     curva.wait_for_function('Boolean(window.__testBio)', timeout=15000)
