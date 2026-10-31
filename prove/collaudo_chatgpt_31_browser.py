@@ -19,7 +19,7 @@ def visit(context, path, name):
     errors=[]
     page.on('pageerror', lambda e: errors.append('JS: '+str(e)))
     page.on('console', lambda msg: errors.append('Console: '+msg.text) if msg.type == 'error' else None)
-    page.goto(BASE+path,wait_until='domcontentloaded',timeout=30000)
+    page.goto(path if path.startswith('https://') else BASE+path,wait_until='domcontentloaded',timeout=30000)
     page.wait_for_timeout(750)
     width(page)
     assert not errors, f"Errori Javascript {path}: {errors}"
@@ -66,9 +66,9 @@ with sync_playwright() as pw:
       'window.__testBio={calcola:calcola,posiz:posiz,seguaci:seguaci};\n})();\n</script>')
     def curva_mock(route):
       route.fulfill(status=200,content_type='text/html; charset=utf-8',body=source)
-    context.route('**/ufficiale/src/sito/girrr/curva.html',curva_mock)
+    context.route('**/girrr/curva.html',curva_mock)
     context.route('**/data.json',lambda route:route.fulfill(status=200,content_type='application/json',body=json.dumps(current)))
-    curva=visit(context,'/ufficiale/src/sito/girrr/curva.html','curva-320')
+    curva=visit(context,'https://giandjcosta.github.io/o-fant-a-girrr/girrr/curva.html','curva-320')
     curva.wait_for_function('Boolean(window.__testBio)', timeout=15000)
     result=curva.evaluate("""d=>{
       var api=window.__testBio,team='Oranje VC';
