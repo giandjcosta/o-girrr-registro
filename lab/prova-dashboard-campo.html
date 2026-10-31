@@ -45,9 +45,9 @@ h2{font-size:clamp(17px,2vw,24px);margin:0 0 8px}
 .stat b{display:block;font-size:clamp(16px,2vw,23px);font-variant-numeric:tabular-nums;white-space:nowrap}
 .stat span{display:block;color:var(--muted);font-size:12px;font-weight:700}
 .comparison{display:grid;grid-template-columns:minmax(0,1fr) 95px minmax(0,1fr);border-top:1px solid var(--line);margin-top:16px;padding-top:13px;gap:5px;align-items:center;text-align:center}
-.comparison b{font-size:20px;white-space:nowrap}.comparison .k{color:var(--muted);font-size:11px;font-weight:900}
-.form{display:flex;gap:5px;justify-content:center;margin-top:8px}
-.form span{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;font-weight:900;font-size:11px;background:#44516d}
+.comparison>div{min-width:0}.comparison b{font-size:20px;white-space:nowrap}.comparison .k{color:var(--muted);font-size:11px;font-weight:900}
+.form{display:flex;gap:3px;justify-content:center;margin-top:8px}
+.form span{flex:0 0 clamp(15px,3.4vw,22px);width:clamp(15px,3.4vw,22px);height:22px;border-radius:6px;display:grid;place-items:center;font-weight:900;font-size:11px;background:#44516d}
 .form .v{background:#247858}.form .n{background:#7c8598}.form .p{background:#ac4b64}
 .side-title{margin-bottom:12px}.fact{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid rgba(255,255,255,.11);padding:11px 0}
 .fact:last-child{border-bottom:none}.fact strong{font-size:17px;text-align:right}.fact span{color:var(--muted)}
@@ -68,15 +68,20 @@ h2{font-size:clamp(17px,2vw,24px);margin:0 0 8px}
 .pitch .smalllabel{font-size:16px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
+/* Centro della giornata: cockpit a griglia, dati verificabili e scala condivisa */
+:root{--bg:#0c1428;--line:#344764;--muted:#a4b4ce;--pitch:#126047;--pitch2:#176c50}
+body{background:radial-gradient(ellipse at 60% 0,#203857 0,transparent 60%),#0c1428}.cockpit{display:grid;grid-template-columns:178px minmax(0,1fr);max-width:1680px;margin:auto;min-height:100vh}.frame{width:100%;max-width:none;padding:28px 30px}.sidebar{background:#0b1425d9;border-right:1px solid #30405b;padding:32px 16px;display:flex;flex-direction:column;gap:45px}.brand{font-size:40px;letter-spacing:-.08em;color:#fff;line-height:1}.brand span{color:var(--accent)}.brand small{display:block;font-size:10px;letter-spacing:.28em;margin-top:10px;color:var(--muted)}.sidebar nav{display:flex;flex-direction:column;gap:12px}.sidebar nav a{font-size:12px;color:#aebed8;display:flex;gap:10px;align-items:center;padding:13px 8px;border-radius:8px;min-height:44px}.sidebar nav a:hover,.sidebar nav a.active{background:#25344c;color:white;box-shadow:inset 3px 0 var(--accent)}.sidebar nav span{font-size:20px;color:var(--accent)}.side-foot{margin-top:auto;font-size:10px;letter-spacing:.08em;color:#b8c7dc}.side-foot small{display:block;margin-top:6px;font-size:11px;letter-spacing:0;color:#7d91af}.mast{margin-bottom:24px}.kicker{color:#9db4d2;letter-spacing:.2em;font-size:10px}h1{font-size:clamp(26px,3vw,40px)}h2{font-size:18px}.sub{font-size:12px}.toolbar{background:#142238;border:1px solid var(--line);border-radius:12px;padding:12px}.board{grid-template-columns:minmax(0,1.7fr) minmax(260px,1fr);gap:16px}.card{background:linear-gradient(125deg,#1b2b43e8,#101d30f5);border-radius:14px;border-color:#364a66;padding:20px;box-shadow:0 12px 30px #050b1630}.match-head{margin-bottom:8px}.phase{font-size:10px;letter-spacing:.13em;margin-bottom:20px}.pitch{border:7px solid #1a3c37;border-radius:8px;box-shadow:0 0 0 1px #4f7169,0 10px 35px #07160f,inset 0 0 40px #001f16}.pitch svg{aspect-ratio:780/490;filter:drop-shadow(0 3px 5px #08291f)}.pitch .side{fill:#102a3c;stroke:#b6dcd4;stroke-width:1}.pitch-footer{display:flex;justify-content:space-between;gap:12px;margin-top:14px;font-size:9px;color:#b8cdbf;letter-spacing:.08em}.pitch-footer span{min-width:0;overflow-wrap:anywhere}.numbers h2{margin-top:7px}.duel-head{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;text-align:center;margin-top:18px;font-size:11px}.duel-head b{overflow-wrap:anywhere}.duel-head span{font-size:8px;color:#7890ad}.duel-row{display:grid;grid-template-columns:1fr 1.6fr 1fr;align-items:center;text-align:center;border-bottom:1px solid #ffffff0c;padding:9px 0}.duel-row strong{font-size:22px;color:#ecf5ff;font-variant-numeric:tabular-nums}.duel-row span{font-size:11px;color:#9db1ce}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.section-head h2{margin-top:6px}.tag{font-size:9px;padding:6px 8px;border:1px solid #435775;border-radius:5px;white-space:nowrap;color:#bed1ea}.gauge-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}.gauge{display:flex;align-items:center;gap:12px;min-width:0}.gauge>div:last-child{min-width:0}.gauge b{display:block;font-size:12px;overflow-wrap:anywhere}.gauge small,.gauge span{display:block;font-size:9px;color:#9db1ce;margin-top:4px}.dial{flex:none;position:relative;width:70px;height:70px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--accent) calc(var(--val)*1%),#3a4b65 0)}.dial::before{content:'';position:absolute;inset:5px;background:#17263c;border-radius:50%}.dial strong{position:relative;font-size:19px}.comparison{margin-top:18px;font-size:11px}.trends{grid-column:1/-1}.chart-grid,.recent-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:16px}.chart-grid>div{min-width:0;background:repeating-linear-gradient(0deg,transparent 0 24px,#8298b312 24px 25px);padding:12px;border-radius:8px;border:1px solid #33455f}.chart-grid b{font-size:12px}.spark{height:140px}.recent{grid-column:1/-1}.recent h3{font-size:13px;color:#a8bfdd}.recent-row{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;padding:10px 0;border-bottom:1px solid #ffffff10;font-size:11px}.recent-row span{overflow-wrap:anywhere}.recent-row small{color:#8a9db6}.info{font-size:11px}.skin button{font-size:11px;min-height:44px}.gamebtn{font-size:11px}.roundname{font-size:13px}html{scroll-behavior:smooth;scroll-padding:20px}
+@media(min-width:1180px){.instruments{grid-column:1/-1}.gauge-grid{grid-template-columns:1fr 1fr}.instruments{display:grid;grid-template-columns:1fr 1.5fr 1.1fr;align-items:center;gap:26px}.instruments .gauge-grid,.instruments .comparison{margin:0}.instruments .comparison{padding-top:0;border-top:0}.club{font-size:17px}.board{align-items:stretch}.match-panel{display:flex;flex-direction:column;justify-content:center}}
+@media(max-width:1100px){.cockpit{grid-template-columns:140px minmax(0,1fr)}.frame{padding:20px}.board{grid-template-columns:1fr 1fr}.match-panel{grid-column:1/-1}.instruments{align-self:stretch}.gauge-grid{grid-template-columns:1fr}.comparison{grid-template-columns:1fr 50px 1fr}}
+@media(max-width:700px){.cockpit{display:block}.sidebar{padding:10px 13px;border-right:0;border-bottom:1px solid #30405b;gap:10px}.brand,.side-foot{display:none}.sidebar nav{flex-direction:row;overflow:auto;gap:6px}.sidebar nav a{flex:none;padding:8px;font-size:10px}.sidebar nav span{font-size:16px}.frame{padding:16px 12px}.board{grid-template-columns:1fr}.instruments,.match-panel,.numbers,.trends,.recent{grid-column:1}.gauge-grid{grid-template-columns:1fr 1fr;gap:10px}.gauge{flex-direction:column;text-align:center}.chart-grid,.recent-grid{grid-template-columns:1fr;gap:10px}.club{font-size:13px}.mast{gap:10px}.card{padding:14px}.skin{width:100%}.skin button{flex:1}.pitch{border-width:4px}.pitch svg{aspect-ratio:780/520}.pitch-footer{font-size:8px}.comparison{grid-template-columns:1fr 55px 1fr}}
 </style></head>
 <body data-skin="stadio">
-<div class="frame">
+<div class="cockpit"><aside class="sidebar"><a class="brand" href="index.html" data-home>O<span>G</span><small>O GIRRR</small></a><nav aria-label="Centro della giornata"><a href="#confronto" class="active"><span>▣</span>Confronto</a><a href="#rendimento"><span>◉</span>Rendimento</a><a href="#andamento"><span>↗</span>Andamento</a><a href="#recenti"><span>≡</span>Risultati recenti</a><a href="index.html" data-home><span>⌂</span>Home</a></nav><div class="side-foot">CAMPIONATO<small>Stagione 2026/27</small></div></aside><main class="frame">
  <div class="mast"><div><a href="index.html">‹ Torna al Lab</a><div class="kicker" style="margin-top:14px">Campo · Centro della giornata</div><h1>Dentro la giornata</h1><p class="sub">Partite, risultati, rendimento e andamento della Lega, aggiornati dal calendario.</p></div>
  <div class="skin" role="group" aria-label="Grafica"><button data-skin-choice="lega" aria-pressed="false">Grafica Lega</button><button data-skin-choice="stadio" aria-pressed="true">Grafica Stadio</button></div></div>
  <div class="toolbar"><div class="round"><button id="prev" aria-label="Giornata precedente">‹</button><span class="roundname" id="roundtitle">Giornata</span><button id="next" aria-label="Giornata successiva">›</button></div><nav id="matches" class="matches" aria-label="Partite della giornata"></nav></div>
  <div class="board" id="board"><div class="loading">Caricamento del calendario…</div></div>
- <p class="info" style="margin-top:16px">Il campo rappresenta le due squadre a confronto; i numeri provengono dai risultati ufficiali della Lega. Le posizioni dei giocatori, il possesso e i tiri non sono mostrati perché il calendario non li registra.</p>
-</div>
+ </main></div>
 <script>
 (function(){
 'use strict';
@@ -84,7 +89,7 @@ var D=null,round=0,game=0;
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]})}
 function nm(s){return esc(s)}
 function played(g){return !!(g&&g.m&&g.m.length&&g.m.every(function(m){return /^\d+-\d+$/.test(String(m[4]))}))}
-function complete(){return (D.cal.lega||[]).filter(played).sort(function(a,b){return a.n-b.n})}
+function complete(){var out=[],teams=D.teams.map(function(t){return t.name}).sort().join('|');(D.cal.lega||[]).slice().sort(function(a,b){return a.n-b.n}).some(function(g){var names=g.m.flatMap(function(m){return [m[0],m[3]]}).sort().join('|');if(g.n!==out.length+1||!played(g)||names!==teams)return true;out.push(g);return false});return out}
 function ranks(maxn){
  var t={},games=complete().filter(function(g){return g.n<=maxn});
  games.forEach(function(g){g.m.forEach(function(m){var a=t[m[0]]||(t[m[0]]={name:m[0],pt:0,gf:0,gs:0,fp:0,v:0,n:0,p:0,h:[]}),b=t[m[3]]||(t[m[3]]={name:m[3],pt:0,gf:0,gs:0,fp:0,v:0,n:0,p:0,h:[]});
@@ -99,9 +104,9 @@ function form(t){return t&&t.h.length?'<div class="form">'+t.h.slice(-5).map(fun
 function fact(label,val){return '<div class="fact"><span>'+esc(label)+'</span><strong>'+esc(val)+'</strong></div>'}
 function mini(t){return t?'<b>'+t.pt+' punti</b>'+form(t):'In corso'}
 function line(x,y,stroke){return '<path d="M'+x+' '+y+'" fill="none" stroke="'+stroke+'" stroke-width="3"/>'}
-function chart(t){if(!t||!t.h.length)return '<p class="info">L’andamento appare dopo la prima giornata giocata.</p>';
+function chart(t,max){if(!t||!t.h.length)return '<p class="info">L’andamento appare dopo la prima giornata giocata.</p>';
 var pts=[0],s=0; t.h.forEach(function(v){s+=v==='v'?3:v==='n'?1:0;pts.push(s)});
-var w=360,h=105,max=Math.max(3,pts[pts.length-1]),v=pts.map(function(p,i){return [12+i*336/Math.max(1,pts.length-1),87-p/max*70]});
+var w=360,h=105,max=max||Math.max(3,pts[pts.length-1]),v=pts.map(function(p,i){return [12+i*336/Math.max(1,pts.length-1),87-p/max*70]});
 return '<svg viewBox="0 0 360 105" role="img" aria-label="Andamento dei punti accumulati"><path d="M12 87 H348" stroke="#8191b0" stroke-opacity=".7" fill="none"/><polyline points="'+v.map(function(x){return x.join(',')}).join(' ')+'" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>'+v.map(function(x){return '<circle cx="'+x[0]+'" cy="'+x[1]+'" r="3.5" fill="#ffd166"/>'}).join('')+'</svg>'}
 function pitch(a,b){
  return '<div class="pitch"><svg viewBox="0 0 780 430" role="img" aria-label="Campo schematico tra '+esc(a)+' e '+esc(b)+'">'+
@@ -113,8 +118,8 @@ function pitch(a,b){
  '<rect class="side away" x="485" y="164" width="220" height="102" rx="18"/>'+
  '<text x="185" y="199" text-anchor="middle" class="smalllabel">CASA</text>'+
  '<text x="595" y="199" text-anchor="middle" class="smalllabel">OSPITE</text>'+
- '<text x="185" y="231" text-anchor="middle" class="centerlabel">'+esc(a.slice(0,14))+'</text>'+
- '<text x="595" y="231" text-anchor="middle" class="centerlabel">'+esc(b.slice(0,14))+'</text>'+
+ '<text x="185" y="231" text-anchor="middle" class="centerlabel">'+esc(a.split(/\s+/).map(function(x){return x[0]}).join('').slice(0,4))+'</text>'+
+ '<text x="595" y="231" text-anchor="middle" class="centerlabel">'+esc(b.split(/\s+/).map(function(x){return x[0]}).join('').slice(0,4))+'</text>'+
  '</svg></div>';
 }
 function render(){
@@ -125,32 +130,29 @@ function render(){
  list.innerHTML=g.m.map(function(m,i){return '<button class="gamebtn" data-match="'+i+'" aria-pressed="'+(i===game)+'">'+nm(m[0])+' – '+nm(m[3])+'<small>'+(m[4]==='-'?'Da giocare':m[4])+'</small></button>'}).join('');
  var m=g.m[game];if(!m)return;var active=played(g),a=m[0],b=m[3],r=m[4]==='-'?'— : —':m[4].replace('-', ' : '),tb=ranks(g.n),ha=tb[a],hb=tb[b];
  var score=m[4]==='-'?'Da giocare':'Risultato';
- var h='<div class="card"><div class="match-head"><span class="club">'+nm(a)+'</span><span class="score">'+esc(r)+'</span><span class="club">'+nm(b)+'</span></div>'+
+ var h='<section class="card match-panel" id="confronto"><div class="match-head"><span class="club">'+nm(a)+'</span><span class="score">'+esc(r)+'</span><span class="club">'+nm(b)+'</span></div>'+
  '<div class="phase">Giornata '+g.n+' · Serie A '+g.sa+' · '+score+'</div>'+
  pitch(a,b)+
- '<p class="pitch-caption">Il terreno di gioco presenta il confronto fra le due squadre.</p>'+
- '<div class="statgrid"><div class="stat"><b>'+stat(ha,'pt')+'</b><span>Punti in classifica</span></div><div class="stat"><b>'+esc(r)+'</b><span>'+score+'</span></div><div class="stat"><b>'+stat(hb,'pt')+'</b><span>Punti in classifica</span></div></div>'+
- '<h2 style="margin-top:20px">Forma recente</h2><div class="comparison"><div>'+nm(a)+form(ha)+'</div><div class="k">ULTIME 5</div><div>'+nm(b)+form(hb)+'</div></div></div>';
- h+='<aside class="card"><div class="side-title"><div class="kicker">Centro di controllo</div><h2>I numeri del confronto</h2><p class="sub">Situazione fino alla giornata '+g.n+'.</p></div>'+
- fact('Posizione · '+a,ha?ha.pos+'ª':'In corso')+
- fact('Posizione · '+b,hb?hb.pos+'ª':'In corso')+
- fact('Gol fatti',stat(ha,'gf')+' / '+stat(hb,'gf'))+
- fact('Gol subiti',stat(ha,'gs')+' / '+stat(hb,'gs'))+
- fact('Vittorie',stat(ha,'v')+' / '+stat(hb,'v'))+
- fact('Pareggi',stat(ha,'n')+' / '+stat(hb,'n'))+
- fact('Sconfitte',stat(ha,'p')+' / '+stat(hb,'p'))+
- '<h2 style="margin-top:20px">Andamento '+nm(a)+'</h2><div class="spark">'+chart(ha)+'</div>'+
- '<p class="info">Sono riportati soltanto risultati delle giornate concluse. Puoi cambiare partita e giornata senza lasciare la pagina.</p></aside>';
- document.getElementById('board').innerHTML=h;
+ '<div class="pitch-footer"><span>CASA · '+nm(a)+'</span><span>'+score.toUpperCase()+'</span><span>OSPITE · '+nm(b)+'</span></div></section>';
+ function ring(t,label){var g=t?t.v+t.n+t.p:0,pct=g?Math.round(t.v/g*100):0;return '<div class="gauge"><div class="dial" style="--val:'+pct+'"><strong>'+(g?pct+'%':'—')+'</strong></div><div><b>'+nm(label)+'</b><small>Vittorie / gare concluse</small><span>'+(g?t.v+' su '+g:'In attesa')+'</span></div></div>'}
+ h+='<aside class="card numbers" id="rendimento"><div class="kicker">Rendimento stagionale</div><h2>I numeri del confronto</h2><p class="sub">Dopo '+complete().filter(function(x){return x.n<=g.n}).length+' giornate complete</p>'+
+ '<div class="duel-head"><b>'+nm(a)+'</b><span>CONFRONTO</span><b>'+nm(b)+'</b></div>'+
+ [['Posizione',ha?ha.pos+'ª':'—',hb?hb.pos+'ª':'—'],['Punti',stat(ha,'pt'),stat(hb,'pt')],['Gol fatti',stat(ha,'gf'),stat(hb,'gf')],['Gol subiti',stat(ha,'gs'),stat(hb,'gs')],['Differenza reti',ha?ha.gf-ha.gs:'—',hb?hb.gf-hb.gs:'—'],['Vittorie',stat(ha,'v'),stat(hb,'v')],['Pareggi',stat(ha,'n'),stat(hb,'n')],['Sconfitte',stat(ha,'p'),stat(hb,'p')]].map(function(x){return '<div class="duel-row"><strong>'+esc(x[1])+'</strong><span>'+x[0]+'</span><strong>'+esc(x[2])+'</strong></div>'}).join('')+'</aside>';
+ var maxPts=Math.max(3,ha?ha.pt:0,hb?hb.pt:0);
+ h+='<section class="card instruments"><div class="section-head"><div><div class="kicker">Continuità</div><h2>Come arrivano alla sfida</h2></div><span class="tag">ULTIME 5</span></div><div class="gauge-grid">'+ring(ha,a)+ring(hb,b)+'</div><div class="comparison"><div>'+nm(a)+form(ha)+'</div><div class="k">FORMA</div><div>'+nm(b)+form(hb)+'</div></div></section>';
+ h+='<section class="card trends" id="andamento"><div class="section-head"><div><div class="kicker">Il cammino</div><h2>Andamento dei punti</h2></div><span class="tag">0 – '+maxPts+' PT</span></div><div class="chart-grid"><div><b>'+nm(a)+'</b><div class="spark">'+chart(ha,maxPts)+'</div></div><div><b>'+nm(b)+'</b><div class="spark">'+chart(hb,maxPts)+'</div></div></div><p class="info">Punti cumulati per giornata · stessa scala per le due squadre.</p></section>';
+ h+='<section class="card recent" id="recenti"><div class="kicker">Archivio del confronto</div><h2>Risultati recenti</h2><div class="recent-grid">'+[a,b].map(function(t){var partite=complete().filter(function(x){return x.n<=g.n}).flatMap(function(x){return x.m.filter(function(m){return m[0]===t||m[3]===t}).map(function(m){return {n:x.n,m:m}})}).slice(-5).reverse();return '<div><h3>'+nm(t)+'</h3>'+partite.map(function(x){return '<div class="recent-row"><small>G'+x.n+'</small><span>'+nm(x.m[0])+' – '+nm(x.m[3])+'</span><b>'+esc(x.m[4])+'</b></div>'}).join('')+'</div>'}).join('')+'</div></section>';
+ document.getElementById('board').innerHTML=h;var u=new URL(location.href);u.searchParams.set('giornata',g.n);u.searchParams.set('partita',game);u.searchParams.set('skin',document.body.dataset.skin);history.replaceState(null,'',u);
 }
 document.addEventListener('click',function(e){
+ var nav=e.target.closest('.sidebar nav a[href^="#"]');if(nav){document.querySelectorAll('.sidebar nav a').forEach(function(x){x.classList.toggle('active',x===nav)})}
  var a=e.target.closest('[data-match]');if(a){game=Number(a.dataset.match);render()}
- var s=e.target.closest('[data-skin-choice]');if(s){document.body.dataset.skin=s.dataset.skinChoice;document.querySelectorAll('[data-skin-choice]').forEach(function(x){x.setAttribute('aria-pressed',String(x===s))});history.replaceState(null,'','?skin='+s.dataset.skinChoice)}
+ var s=e.target.closest('[data-skin-choice]');if(s){document.body.dataset.skin=s.dataset.skinChoice;document.querySelectorAll('[data-skin-choice]').forEach(function(x){x.setAttribute('aria-pressed',String(x===s))});var u=new URL(location.href);u.searchParams.set('skin',s.dataset.skinChoice);history.replaceState(null,'',u)}
 });
 document.getElementById('prev').addEventListener('click',function(){if(round>0){round--;game=0;render()}});
 document.getElementById('next').addEventListener('click',function(){if(round<D.cal.lega.length-1){round++;game=0;render()}});
 var q=new URLSearchParams(location.search),skin=q.get('skin');if(skin==='lega')document.body.dataset.skin='lega';
 document.querySelectorAll('[data-skin-choice]').forEach(function(x){x.setAttribute('aria-pressed',String(x.dataset.skinChoice===document.body.dataset.skin))});
-fetch('https://giandjcosta.github.io/o-fant-a-girrr/data.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw Error(r.status);return r.json()}).then(function(d){D=d;var playedIdx=D.cal.lega.findIndex(function(g){return !played(g)});round=playedIdx<0?D.cal.lega.length-1:Math.max(0,playedIdx-1);render()}).catch(function(){document.getElementById('board').innerHTML='<div class="card">Non è possibile caricare il calendario. Riprova ad aprire la pagina.</div>'});
+fetch('https://giandjcosta.github.io/o-fant-a-girrr/data.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw Error(r.status);return r.json()}).then(function(d){D=d;var playedIdx=D.cal.lega.findIndex(function(g){return !played(g)});round=playedIdx<0?D.cal.lega.length-1:Math.max(0,playedIdx-1);var richiesto=D.cal.lega.findIndex(function(x){return x.n===Number(q.get('giornata'))});if(richiesto>=0)round=richiesto;game=Math.max(0,Math.min(D.cal.lega[round].m.length-1,Number(q.get('partita'))||0));render()}).catch(function(){document.getElementById('board').innerHTML='<div class="card">Non è possibile caricare il calendario. Riprova ad aprire la pagina.</div>'});
 })();
 </script></body></html>

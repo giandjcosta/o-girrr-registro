@@ -129,3 +129,8 @@ if RIL:
 else:
     (R / "anteprima" / "attuale.html").write_text(fin(a, "../ufficiale/girrr/statistiche.html", "../ufficiale/girrr/index.html"), encoding="utf-8")
 print("scritto attuale.html")
+
+# Le sole build di preview aggiungono Home, Tabellone e Campo navigabili.
+if not RIL:
+    from navigazione import genera
+    genera()
