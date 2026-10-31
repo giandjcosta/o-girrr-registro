@@ -6,6 +6,10 @@ on:
       - 'lab/index.html'
       - 'lab/esperienza-2026.*'
       - 'lab/prova-esperienza-*.html'
+      - 'lab/prova-home-integrata-*.html'
+      - 'lab/home-integrata.*'
+      - 'lab/curva-banca-ampliata.js'
+      - 'prove/prova_home_conservata.js'
       - 'anteprima/**'
       - 'prove/collaudo_esperienza_2026_browser.py'
       - '.github/workflows/chatgpt-home-notifiche-qa.yml'
@@ -17,7 +21,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Controlla JavaScript
-        run: node --check lab/esperienza-2026.js
+        run: |
+          node --check lab/esperienza-2026.js
+          node --check lab/home-integrata.js
+          node --check lab/curva-banca-ampliata.js
+          node prove/prova_home_conservata.js
       - name: "Record Albo: pareggi e vittorie"
         run: node prove/prova_record_albo.js
       - name: Rigenera Anteprima dal Lab

@@ -59,7 +59,8 @@ def main():
                 page.goto(f"{BASE}/lab/prova-esperienza-{skin}.html",wait_until="domcontentloaded")
                 page.get_by_text("Prossimo avversario",exact=True).wait_for(timeout=10000)
                 assert "Oggi al Girrr" in page.locator("#content").inner_text()
-                assert "Verifica in corso" in page.locator("#content").inner_text()
+                assert "Verifica in corso" not in page.locator("#content").inner_text()
+                assert "Automazioni e controlli finali completati" not in page.locator("#content").inner_text()
                 assert page.evaluate("document.documentElement.scrollWidth")<=width+1,(skin,width,"home overflow",page.evaluate("document.documentElement.scrollWidth"))
                 page.get_by_role("button",name="Notifiche").click()
                 page.get_by_text("Come apparirebbe una notifica push").wait_for()
@@ -70,8 +71,10 @@ def main():
                 page.locator("#commentText").fill("La partita sarà interessante.")
                 page.get_by_role("button",name="Pubblica").click()
                 assert "La partita sarà interessante." in page.locator("#content").inner_text()
+                assert page.locator(".comments .comment").count() >= 3, "I bot devono commentare anche il sondaggio"
                 page.get_by_role("button",name="La Curva").click()
-                assert page.get_by_text("Il Cronista",exact=False).count()>0
+                assert page.get_by_text("Il Barista",exact=False).count()>0
+                assert page.locator(".thread .comment").count() >= 8, "Servono risposte di più personaggi"
                 page.get_by_role("button",name="Centro partita").click()
                 assert page.get_by_text("Le formazioni della Lega").count()>0
                 page.get_by_role("button",name="Tabellone").click()
@@ -80,6 +83,7 @@ def main():
                 page.locator("#fromRound").select_option("2")
                 page.get_by_role("button",name="Annuario").click()
                 assert page.get_by_text("La stagione, in numeri").count()>0
+                assert page.locator("details").count() >= 4, "L’Annuario deve avere sezioni espandibili"
                 assert page.evaluate("document.documentElement.scrollWidth")<=width+1,(skin,width,"annual overflow",page.evaluate("document.documentElement.scrollWidth"))
                 print("PASS",skin,width,"px: Home, Notifiche, Sondaggio, Curva, Partita, Tabellone, Annuario")
                 page.close()
