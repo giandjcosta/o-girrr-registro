@@ -42,7 +42,7 @@ extra = r"""
 S.cr=S.cr||'ob';
 var vCar0=vCar;
 function vStat(){var ok=false;try{ok=JSON.parse(localStorage.getItem('fg')||'{}').team==='Oranje VC'}catch(e){}return ok?'<a class="card" href="@@STAT@@" style="display:block;margin-top:14px;padding:14px 16px;text-decoration:none;color:inherit"><b>📊 Statistiche</b><br><span style="opacity:.75;font-size:13px">Solo per te: chi entra e dove ›</span></a>':''}
-function vCarr(){return vCar0()}
+function vCarr(){return '<button class="btn o" data-cr="'+(S.cr==='cassa'?'ob':'cassa')+'" style="margin-bottom:12px">'+(S.cr==='cassa'?'‹ Torna alla Carriera':'Apri la Cassa')+'</button>'+(S.cr==='cassa'?vCassa():vCar0())}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-cr]');if(!b)return;S.cr=b.dataset.cr;render()});
 function vSfideDerby(){return where('Girrr Sport','Sfide')+'<h2>Sfide</h2><p class="lead">Sfida un rivale in conferenza stampa: la rivalità sale subito e, se lui accetta, nasce un Derby ufficiale.</p>'+sfidaHub()}
 S.tt=S.tt||'prob';
@@ -62,7 +62,7 @@ sost("var CARSCELTA=true;", "var CARSCELTA=false;")   # Anteprima e sito vero: s
 if RIL0:   # nel sito vero i premi arrivano dal database (carriera_stato), non dal Totogirrr finto dell'anteprima
     sost("var PREMI52=true,", "var PREMI52=false,")
 else:   # anteprima: Totogirrr è la pagina finta anteprima/totogirrr-52.html, con la squadra della Carriera; niente strumenti di prova a vista
-    sost("function go(t){t=route(t);", "function go(t){var t0=t;t=route(t);if(t==='toto'){location.href=toto52Url(S.cteam||ME,(location.pathname.split('/').pop()||'index.html')+'#'+cur)+(t0==='duello'?'&t=sfide':t0==='prob'?'&t=prob':'');return}")
+    sost("function go(t){t=route(t);", "function go(t){var t0=t;if(t==='carriera')S.cr='ob';t=route(t);if(t==='toto'){location.href=toto52Url(S.cteam||ME,(location.pathname.split('/').pop()||'index.html')+'#'+cur)+(t0==='duello'?'&t=sfide':t0==='prob'?'&t=prob':'');return}")
     sost("if(cur==='home'){location.replace('@@HOME@@')}", "if(cur==='home'){location.replace('@@HOME@@')}if(cur==='toto'){location.replace(toto52Url(S.cteam||ME,'@@HOME@@'))}")
     sost("</style>", ".lvprova,[data-sst],[data-nm=\"s-prop\"],[data-nm=\"s-ok\"],[data-nm=\"s-ctr\"],[data-rx=\"nuova\"],[data-nuova]{display:none!important}</style>")
 sost(".seg{display:flex;", ".seg{flex-wrap:wrap;display:flex;") if False else None

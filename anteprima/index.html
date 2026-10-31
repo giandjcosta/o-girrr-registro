@@ -1199,7 +1199,7 @@ function vSpog(){return vBors()}function vToto(){return vProb()}
 S.cr=S.cr||'ob';
 var vCar0=vCar;
 function vStat(){var ok=false;try{ok=JSON.parse(localStorage.getItem('fg')||'{}').team==='Oranje VC'}catch(e){}return ok?'<a class="card" href="../ufficiale/nuovo/girrr/statistiche.html" style="display:block;margin-top:14px;padding:14px 16px;text-decoration:none;color:inherit"><b>📊 Statistiche</b><br><span style="opacity:.75;font-size:13px">Solo per te: chi entra e dove ›</span></a>':''}
-function vCarr(){return vCar0()}
+function vCarr(){return '<button class="btn o" data-cr="'+(S.cr==='cassa'?'ob':'cassa')+'" style="margin-bottom:12px">'+(S.cr==='cassa'?'‹ Torna alla Carriera':'Apri la Cassa')+'</button>'+(S.cr==='cassa'?vCassa():vCar0())}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-cr]');if(!b)return;S.cr=b.dataset.cr;render()});
 function vSfideDerby(){return where('Girrr Sport','Sfide')+'<h2>Sfide</h2><p class="lead">Sfida un rivale in conferenza stampa: la rivalità sale subito e, se lui accetta, nasce un Derby ufficiale.</p>'+sfidaHub()}
 S.tt=S.tt||'prob';
@@ -1236,7 +1236,7 @@ function render(){try{var _t=TABS.filter(function(z){return z[0]===cur})[0];$('#
   var _tb=$('#tabs'),_sl=_tb.scrollLeft;if(_tb.children.length===TABS.length){[].forEach.call(_tb.children,function(b){b.setAttribute('aria-selected',b.dataset.tab===cur)})}else _tb.innerHTML=TABS.map(function(t){return '<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'" aria-label="'+t[1]+'">'+(t[0]==='sport'?'<img class="gsl" src="'+D.img.gs+'" alt="Girrr Sport">':(({home:1,oro:1,spog:1,carriera:1})[t[0]]?'<img src="'+D.img.lega+'" alt="">':'')+t[1])+'</button>'}).join('');
   try{_tb.style.scrollBehavior='auto';_tb.scrollLeft=_sl;var s=$('#tabs [aria-selected=true]');if(s)centra(_tb,s);_tb.style.scrollBehavior='';aggFade(_tb)}catch(e){}
 }
-function go(t){var t0=t;t=route(t);if(t==='toto'){location.href=toto52Url(S.cteam||ME,(location.pathname.split('/').pop()||'index.html')+'#'+cur)+(t0==='duello'?'&t=sfide':t0==='prob'?'&t=prob':'');return}if(t==='home'){location.href='../ufficiale/nuovo/girrr/index.html';return}if(t==='conf'||t==='radio'||t==='giornale'||t==='moviola'){S.sp=t;t='sport'}if(cur==='radio'&&t!=='radio'){radioStop();RA.i=-1}cur=t;try{history.replaceState(null,'','#'+t)}catch(e){}render();window.scrollTo(0,0)}
+function go(t){var t0=t;if(t==='carriera')S.cr='ob';t=route(t);if(t==='toto'){location.href=toto52Url(S.cteam||ME,(location.pathname.split('/').pop()||'index.html')+'#'+cur)+(t0==='duello'?'&t=sfide':t0==='prob'?'&t=prob':'');return}if(t==='home'){location.href='../ufficiale/nuovo/girrr/index.html';return}if(t==='conf'||t==='radio'||t==='giornale'||t==='moviola'){S.sp=t;t='sport'}if(cur==='radio'&&t!=='radio'){radioStop();RA.i=-1}cur=t;try{history.replaceState(null,'','#'+t)}catch(e){}render();window.scrollTo(0,0)}
 document.addEventListener('click',function(e){
   var b=e.target.closest('button,[data-card]');if(!b)return;var d=b.dataset;
   if(d.tab)return go(d.tab);
