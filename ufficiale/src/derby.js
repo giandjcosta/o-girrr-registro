@@ -32,7 +32,7 @@ function render(){
     if(ders.length)h+=ders.map(function(m){var i=info(m[0],m[3]);return '<div class="dd"><div class="k">Derby della giornata</div><div style="font-weight:800;margin:4px 0">'+esc(nome(i.o))+'</div><div class="vs"><b>'+esc(m[0])+'</b><span>contro</span><b>'+esc(m[3])+'</b></div>'+bar(i.riv)+'<div class="nt" style="margin:0">Rivalità: <b>'+word(i.riv)+'</b> · '+i.o.h+' stagioni insieme, '+i.o.z+' nelle zone alte insieme</div>'+rac(i.o)+'</div>'}).join('');
     else h+='<p class="nt">Questa giornata non ha nessun Derby.</p>';
     h+='</div>';
-    var DT=N.riv.filter(function(o){return o.n||info(o.a,o.b).der}).sort(function(x,y){return info(y.a,y.b).riv-info(x.a,x.b).riv});
+    var DT=N.riv.filter(function(o){return info(o.a,o.b).der}).sort(function(x,y){return info(y.a,y.b).riv-info(x.a,x.b).riv});
     h+='<div class="card"><h3>I Derby della Lega</h3><p class="nt" style="margin:0 0 4px">Tocca un Derby per aprirlo: barra della rivalità, numeri e storia.</p>'+DT.map(function(o){var i=info(o.a,o.b);return tendina(esc(nome(o)),esc(o.a)+' contro '+esc(o.b)+' · '+word(i.riv),'<div class="vs"><b>'+esc(o.a)+'</b><span>contro</span><b>'+esc(o.b)+'</b></div>'+bar(i.riv)+'<div class="nt" style="margin:0">Rivalità: <b>'+word(i.riv)+'</b> · '+o.h+' stagioni insieme · '+o.z+' nelle zone alte insieme</div>'+(o.s?'<p style="font-weight:600;font-size:14px;line-height:1.6;margin-top:8px">'+esc(o.s)+'</p>':''))}).join('')+'</div>';
   }else{
     h+='<div class="card"><h3>Giornata '+r.n+'</h3><p class="nt" style="margin:0 0 6px">Le rivalità sono un gradino sotto il Derby: sfide con una storia lunga che gli amici non hanno votato come Derby.</p>';

@@ -15,6 +15,7 @@ jobs:
       - name: Rigenera anteprima da Lab
         run: python3 anteprima/build.py
       - name: L'Anteprima deve essere quella generata dal Lab (niente modifiche a mano)
-        run: git diff --exit-code --stat anteprima/index.html anteprima/attuale.html || { echo "anteprima/index.html o attuale.html non corrispondono a lab/index.html: modifica il Lab e rilancia python3 anteprima/build.py"; exit 1; }
+        run: |
+          git diff --exit-code --stat anteprima/index.html anteprima/attuale.html || { echo "anteprima/index.html o attuale.html non corrispondono a lab/index.html: modifica il Lab e rilancia python3 anteprima/build.py"; exit 1; }
       - name: Verifica codice, milestone e premi sponsor in modalità demo
         run: node prove/collaudo_preview52_totogirrr_milestone.js

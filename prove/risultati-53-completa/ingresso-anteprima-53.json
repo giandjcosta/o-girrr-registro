@@ -1,0 +1,52 @@
+[
+  {
+    "larghezza": 320,
+    "esito": "PASS",
+    "ingresso": "Registro → Anteprima 5.3 → Home → Tabellone → Campo → Albo → Home",
+    "grafiche": [
+      "lega",
+      "stadio"
+    ],
+    "memoria_vecchio_ingresso": "migrata"
+  },
+  {
+    "larghezza": 390,
+    "esito": "PASS",
+    "ingresso": "Registro → Anteprima 5.3 → Home → Tabellone → Campo → Albo → Home",
+    "grafiche": [
+      "lega",
+      "stadio"
+    ],
+    "memoria_vecchio_ingresso": "migrata"
+  },
+  {
+    "larghezza": 768,
+    "esito": "PASS",
+    "ingresso": "Registro → Anteprima 5.3 → Home → Tabellone → Campo → Albo → Home",
+    "grafiche": [
+      "lega",
+      "stadio"
+    ],
+    "memoria_vecchio_ingresso": "migrata"
+  },
+  {
+    "larghezza": 1280,
+    "esito": "PASS",
+    "ingresso": "Registro → Anteprima 5.3 → Home → Tabellone → Campo → Albo → Home",
+    "grafiche": [
+      "lega",
+      "stadio"
+    ],
+    "memoria_vecchio_ingresso": "migrata"
+  },
+  {
+    "larghezza": 1440,
+    "esito": "PASS",
+    "ingresso": "Registro → Anteprima 5.3 → Home → Tabellone → Campo → Albo → Home",
+    "grafiche": [
+      "lega",
+      "stadio"
+    ],
+    "memoria_vecchio_ingresso": "migrata"
+  }
+]

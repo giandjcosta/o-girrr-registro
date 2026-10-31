@@ -1,0 +1,62 @@
+{
+  "giornata": 5,
+  "evento": {
+    "priorita": 100,
+    "tipo": "sorpresa",
+    "squadra": "WOA",
+    "titolo": "CRISI IMPREVISTA",
+    "testo": "WOA, attesa tra le prime 2, è ultima da 2 giornate consecutive. La favorita deve reagire.",
+    "durata": 2,
+    "posizione": 10,
+    "prova": {
+      "giornata": 5,
+      "posizione_precedente": 10,
+      "posizione": 10,
+      "attesa": 2,
+      "serie": 2,
+      "altre_squadre": []
+    },
+    "stagione": "2026/27",
+    "chiave": "zona:2026/27:G5:sorpresa:WOA",
+    "giornata": 5,
+    "canale": "tutti",
+    "canali": [
+      "radio",
+      "girrr_sport",
+      "giornale",
+      "commenti",
+      "pdf"
+    ],
+    "commento": "Alla 5ª giornata: WOA è 10ª. Il prossimo turno dirà se questa svolta avrà seguito."
+  },
+  "impaginazione": [
+    {
+      "pag": 1,
+      "livello": 0,
+      "scala": 1,
+      "margine": "79.6",
+      "ci_sta": true
+    },
+    {
+      "pag": 2,
+      "livello": 0,
+      "scala": 1,
+      "margine": "28.8",
+      "ci_sta": true
+    },
+    {
+      "pag": 3,
+      "livello": 0,
+      "scala": 1,
+      "margine": "133.7",
+      "ci_sta": true
+    },
+    {
+      "pag": 4,
+      "livello": 0,
+      "scala": 1,
+      "margine": "48.9",
+      "ci_sta": true
+    }
+  ]
+}
