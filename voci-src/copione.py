@@ -66,7 +66,7 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
     add("B", f"Buongiorno, buonasera e buonanotte a tutti, siete su Radio Girrr, la radio ufficiale della Lega O Fant A Girrr! Oggi siamo qui con {b1}", "urlo")
     add("G", f"e {g1}! Si parte!", "urlo")
     add("B", f"Giornata numero {n}! {g0}, hai già guardato i punteggi?")
-    add("G", pick(["Guardati, riguardati e ho pure fatto una scommessa con me stesso. Ho perso.", "Sì, al barbecue con gli amici: più di un arrosto bruciato, ma i punteggi li ho letti tutti!", "Certo, qui in studio, appena usciti. Che serata!", "Sul divano, con una pizza in mano: giornata perfetta.", "Altro che guardati: li ho imparati a memoria!", "Sì, in terrazza con un bel caffè. Tutto liscio, sono pronto!", "Con la famiglia a pranzo: nessuno ha parlato d'altro."]))
+    add("G", pick(["Guardati e riguardati. Una giornata da ricordare.", "Sì, al barbecue con gli amici: più di un arrosto bruciato, ma i punteggi li ho letti tutti!", "Certo, qui in studio, appena usciti. Che serata!", "Sul divano, con una pizza in mano: giornata perfetta.", "Altro che guardati: li ho imparati a memoria!", "Sì, in terrazza con un bel caffè. Tutto liscio, sono pronto!", "Con la famiglia a pranzo: nessuno ha parlato d'altro."]))
     # --- punteggi estremi: a volte si esalta, a volte si prende in giro
     tono = pick(["esalta", "sfotte"])
     mv, fl, mz = a["mvp"], a["flop"], a["maz"]
@@ -90,7 +90,7 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
     t1, t2, t3 = T[0], T[1], T[2]
     last = T[-1]
     zona = D.get("zona_classifica")
-    if zona and zona.get("canale") == "radio" and zona.get("testo"):
+    if zona and "radio" in zona.get("canali", [zona.get("canale")]) and zona.get("testo"):
         add("B", zona["testo"], "urlo" if zona.get("tipo") == "vetta" else None)
         add("G", pick(["Questa classifica comincia a raccontare una storia!", "Qui non bastano le parole, ora servono i risultati!",
                          "Vedremo se la prossima giornata confermerà tutto."]))
@@ -106,14 +106,14 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
     gap = t1["pts"] - t2["pts"]
     quarto = T[3]["pts"] if len(T) > 3 else None
     metà = n in (18, 19, 20)
-    if gap >= 9:
+    if not zona and gap >= 9 and n % 4 == 0:
         add("B", f"{t1['t']} ha {gap} punti sul secondo! Secondo i nostri calcoli ha il {pct(P[t1['t']]['s'][-1])} per cento di vincere lo scudetto!", "urlo")
-    elif len(T) > 3 and T[2]["pts"] - T[3]["pts"] >= 9:
+    elif not zona and n % 4 == 0 and len(T) > 3 and T[2]["pts"] - T[3]["pts"] >= 9:
         add("B", f"{t3['t']} ha {T[2]['pts'] - T[3]['pts']} punti sul quarto: il podio sembra già quasi chiuso!")
     elif metà:
         fav = max(P, key=lambda t: P[t]["s"][-1])
         add("B", f"A metà campionato il nostro modello dice che il favorito è {fav}, con il {pct(P[fav]['s'][-1])} per cento di scudetto!")
-    elif last["v"] == 0 and last["g"] >= 3:
+    elif not zona and n % 4 == 0 and last["v"] == 0 and last["g"] >= 3:
         add("G", f"{last['t']} non vince da {last['g']} partite. Il nostro modello la dà ultima nel {pct(P[last['t']]['u'][-1])} per cento dei casi!")
     # --- presidente
     EXP = (regole or {}).get("aspettative") or {"Oranje VC":4,"Apo team":5,"Grodah":3,"WOA":2,"Real Madrink":3,"stif dc":6,"Mariana Coneja":6,"AFA SELECCION":4,"The Blue brothers":7,"Atletico ma non troppo":8}

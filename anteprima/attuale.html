@@ -248,7 +248,7 @@ body::after{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:non
     <div>
       <h1>O Girrr 5.3</h1>
       <p>Anteprima della nuova versione: così apparirà tutto quando andrà in linea.</p>
-      <span class="proto">Anteprima 5.3</span> <a class="back" href="../lab/versione-5-2.html">Archivio 5.2</a>  <a class="back" href="../aggiornamenti.html">Aggiornamenti</a> <a class="back" href="../ufficiale/">Anteprima 5.3</a>
+      <span class="proto">Anteprima 5.3</span> <a class="back" href="../lab/versione-5-2.html">Archivio 5.2</a>  <a class="back" href="../aggiornamenti.html">Aggiornamenti</a> <a class="back" href="../anteprima/home-lega.html">Anteprima 5.3 · Lega</a> <a class="back" href="../anteprima/home-stadio.html">Anteprima 5.3 · Stadio</a>
     </div>
   </div>
   <div class="card proto-only" style="margin:12px 0;padding:15px 16px;border-left:4px solid var(--gold)">
@@ -301,7 +301,7 @@ body::after{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:non
     <p style="margin:7px 0 10px;color:var(--mute)">Prova le tab Rosa, Giornata, Mercato, Svincolati e Borsino nella grafica ufficiale della Lega, con dati dimostrativi.</p>
     <a href="prova-lazy-tabs-lega.html" style="display:inline-block;padding:9px 14px;background:var(--red);color:white;font-weight:800;border-radius:12px;text-decoration:none">Apri la prova Spogliatoio</a>
   </div>
-  <a class="oback" href="../ufficiale/girrr/index.html">‹ O Girrr</a><header class="ohead"><img id="olg" alt=""><div><div class="okick">O FANT A GIRRR · 2026/27</div><h1 id="ot"></h1></div></header><div class="tabs" id="tabs" role="tablist" aria-label="Sezioni del prototipo" style="display:none"></div>
+  <a class="oback" href="home-lega.html">‹ O Girrr</a><header class="ohead"><img id="olg" alt=""><div><div class="okick">O FANT A GIRRR · 2026/27</div><h1 id="ot"></h1></div></header><div class="tabs" id="tabs" role="tablist" aria-label="Sezioni del prototipo" style="display:none"></div>
   <div id="view"></div>
 </div>
 
@@ -339,7 +339,7 @@ document.head.appendChild(st);
 /* il logo della lega riporta alla Home dell'anteprima (stessa grafica) */
 document.addEventListener('click',function(e){var l=e.target.closest&&e.target.closest('#lg,#olg');if(!l)return;var p=location.pathname,d=null;
 if(p.indexOf('/ufficiale/nuovo/girrr/')>=0||p.indexOf('/ufficiale/girrr/')>=0){if(/\/index\.html$|\/girrr\/$/.test(p))return;d='index.html'}
-else if(/\/anteprima\/attuale\.html$/.test(p))d='../ufficiale/girrr/index.html';else if(/\/anteprima\/(index\.html)?$/.test(p))d='../ufficiale/nuovo/girrr/index.html';else if(/\/(stadio\/)?girrr\/app\.html$/.test(p))d='index.html';
+else if(/\/anteprima\/attuale\.html$/.test(p))d='home-lega.html';else if(/\/anteprima\/(index\.html)?$/.test(p))d='home-lega.html';else if(/\/(stadio\/)?girrr\/app\.html$/.test(p))d='index.html';
 if(!d)return;e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();location.href=d},true);
 var _ls=document.createElement('style');_ls.textContent='#lg,#olg{cursor:pointer}';document.head.appendChild(_ls);
 /* la scritta sopra il logo riporta al livello sopra (Home › Albo d'oro › Derby); il logo riporta sempre alla Home */
@@ -350,10 +350,10 @@ var LABPADRE={sfide:'sport'};
 var p=location.pathname,lab=/\/anteprima\//.test(p),uf=/\/ufficiale\/(nuovo\/)?girrr\//.test(p);if(!lab&&!uf)return;
 var cur=lab?'lab':(p.split('/').pop().replace('.html','')||'index');
 if(cur==='index')return;
-var dir=lab?p.slice(0,p.indexOf('/anteprima/')+1)+'ufficiale/'+(/attuale\.html$/.test(p)?'':'nuovo/')+'girrr/':p.slice(0,p.lastIndexOf('/')+1);
+var dir='';
 function agg(){var h=lab?(location.hash||'').slice(1):'',pr=lab?LABPADRE[h]:PADRE[cur],href;
   if(!pr)pr='index';
-  if(lab&&LABPADRE[h])href='#'+pr;else if(pr==='toto'||pr==='totogirrr')href=dir+'totogirrr.html';else href=dir+pr+'.html';
+  if(lab&&LABPADRE[h])href='#'+pr;else if(pr==='toto'||pr==='totogirrr')href='totogirrr-52.html?skin=lega';else href=pr==='index'?'home-lega.html':dir+pr+'.html';
   [].forEach.call(document.querySelectorAll('a.back,a.oback,.oback'),function(a){if(!/^\s*‹/.test(a.textContent))return;a.setAttribute('href',href);a.textContent='‹ '+NOMI[pr]})}
 if(document.body)agg();else document.addEventListener('DOMContentLoaded',agg);
 window.addEventListener('hashchange',agg);setTimeout(agg,600);
@@ -361,7 +361,7 @@ window.addEventListener('hashchange',agg);setTimeout(agg,600);
 /* il logo della lega riporta alla Home dell'anteprima (stessa grafica) */
 document.addEventListener('click',function(e){var l=e.target.closest&&e.target.closest('#lg,#olg');if(!l)return;var p=location.pathname,d=null;
 if(p.indexOf('/ufficiale/nuovo/girrr/')>=0||p.indexOf('/ufficiale/girrr/')>=0){if(/\/index\.html$|\/girrr\/$/.test(p))return;d='index.html'}
-else if(/\/anteprima\/attuale\.html$/.test(p))d='../ufficiale/girrr/index.html';else if(/\/anteprima\/(index\.html)?$/.test(p))d='../ufficiale/nuovo/girrr/index.html';else if(/\/(stadio\/)?girrr\/app\.html$/.test(p))d='index.html';
+else if(/\/anteprima\/attuale\.html$/.test(p))d='home-lega.html';else if(/\/anteprima\/(index\.html)?$/.test(p))d='home-lega.html';else if(/\/(stadio\/)?girrr\/app\.html$/.test(p))d='index.html';
 if(!d)return;e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();location.href=d},true);
 var _ls=document.createElement('style');_ls.textContent='#lg,#olg{cursor:pointer}';document.head.appendChild(_ls);
 /* tendine <details> con la stessa animazione fluida delle Ere */
@@ -1296,7 +1296,7 @@ function render(){try{var _t=TABS.filter(function(z){return z[0]===cur})[0];$('#
   var _tb=$('#tabs'),_sl=_tb.scrollLeft;if(_tb.children.length===TABS.length){[].forEach.call(_tb.children,function(b){b.setAttribute('aria-selected',b.dataset.tab===cur)})}else _tb.innerHTML=TABS.map(function(t){return '<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'">'+t[1]+'</button>'}).join('');
   try{_tb.style.scrollBehavior='auto';_tb.scrollLeft=_sl;var s=$('#tabs [aria-selected=true]');if(s)centra(_tb,s);_tb.style.scrollBehavior='';aggFade(_tb)}catch(e){}
 }
-function go(t){var t0=t;if(t==='carriera')S.cr='ob';t=route(t);if(t==='toto'){location.href=toto52Url(S.cteam||ME,(location.pathname.split('/').pop()||'index.html')+'#'+cur)+(t0==='duello'?'&t=sfide':t0==='prob'?'&t=prob':'');return}if(t==='home'){location.href='../ufficiale/girrr/index.html';return}if(t==='conf'||t==='radio'||t==='giornale'||t==='moviola'){S.sp=t;t='sport'}if(cur==='radio'&&t!=='radio'){radioStop();RA.i=-1}cur=t;try{history.replaceState(null,'','#'+t)}catch(e){}render();window.scrollTo(0,0)}
+function go(t){var t0=t;if(t==='carriera')S.cr='ob';t=route(t);if(t==='toto'){location.href=toto52Url(S.cteam||ME,(location.pathname.split('/').pop()||'index.html')+'#'+cur)+(t0==='duello'?'&t=sfide':t0==='prob'?'&t=prob':'');return}if(t==='home'){location.href='home-lega.html';return}if(t==='conf'||t==='radio'||t==='giornale'||t==='moviola'){S.sp=t;t='sport'}if(cur==='radio'&&t!=='radio'){radioStop();RA.i=-1}cur=t;try{history.replaceState(null,'','#'+t)}catch(e){}render();window.scrollTo(0,0)}
 document.addEventListener('click',function(e){
   var b=e.target.closest('button,[data-card]');if(!b)return;var d=b.dataset;
   if(d.tab)return go(d.tab);
@@ -1616,10 +1616,10 @@ document.addEventListener('click',function(e){
   if(d.lesito){MOCK.esito(ME,D.cal[0].n,d.lesito);return dbLoad(false)}
 },true);
 
-var hh=(location.hash||'').slice(1);if(hh==='conf'||hh==='radio'||hh==='moviola'){S.sp=hh;hh='sport'}if(V[hh])cur=route(hh);if(cur==='home'){location.replace('../ufficiale/girrr/index.html')}if(cur==='toto'){location.replace(toto52Url(S.cteam||ME,'../ufficiale/girrr/index.html'))}
+var hh=(location.hash||'').slice(1);if(hh==='conf'||hh==='radio'||hh==='moviola'){S.sp=hh;hh='sport'}if(V[hh])cur=route(hh);if(cur==='home'){location.replace('home-lega.html')}if(cur==='toto'){location.replace(toto52Url(S.cteam||ME,'home-lega.html'))}
 window.addEventListener('hashchange',function(){var x=(location.hash||'').slice(1);if(x==='moviola'||(V[x]&&x!==cur))go(x)});
 render();
 })();
 </script>
 
-<script src="../ufficiale/girrr/barra.js"></script>
+
