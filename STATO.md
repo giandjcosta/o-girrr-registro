@@ -1,5 +1,11 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 31 ottobre 2026)
 
+## 31 ottobre 2026, notte — Campo: le formazioni dentro il campo (Claude, richiesta di Gianluca, solo Lab/Anteprima)
+- Nel campo del «Campo · Centro della giornata» ora ci sono **le due formazioni vere**: gli 11 titolari schierati per ruolo (portiere, difesa, centrocampo, attacco), la squadra di casa nella metà in alto e l'ospite in basso. Per ognuno: cognome e voto in pagella nel cerchio (verde da 6,5, rosso sotto il 6), ⚽ per ogni gol, 👟 per gli assist, bordo oro per il migliore in campo, ↑ se è entrato dalla panchina al posto di un titolare senza voto. Toccando un giocatore il dettaglio compare sotto il campo (funziona anche col dito).
+- Dati: `formazioni.json` del sito (titolari e panchina per giornata di Serie A) e i voti di `data.json`. Controllato che per le giornate 2–5 la somma dei titolari più il modificatore della difesa dia il totale di ogni squadra: nessun cambio è servito. La giornata 1 non ha formazioni salvate: lì resta il campo con le sigle e la scritta «Per questa giornata le formazioni non sono state salvate»; le giornate da giocare dicono che le formazioni arrivano dopo.
+- Sorgente: `lab/prova-dashboard-campo.html` (rigenera `anteprima/campo.html` e `anteprima/5.5/campo-*.html` con `python3 anteprima/build.py`). Sul telefono il campo è più alto per far stare le file. Si mostra il voto in pagella, non il punteggio.
+- Provato in Chromium (copia locale) a 320, 390, 768 e 1280 px, Lega e Stadio, giornate 1, 2, 5 e 6: nessun errore, nessuno scorrimento laterale, nessun giocatore sovrapposto (a 320 px i nomi lunghi si accorciano con i puntini, il nome intero esce toccando). Non provato: Safari/iPhone.
+
 ## 31 ottobre 2026, sera — Tutto su `main` del registro, Anteprima 5.5 (Claude, «vai» di Gianluca)
 - **Online sul sito vero:** la **5.3** (`gh-pages` `eff5024`). La prossima versione si chiama **5.5**.
 - **Registro `main`:** unito il ramo `claude/coppe-simboli-ere-descrizioni-4jn4ss` (`8c3df4a`: 5.3, numerazione, premi, Radio) e sopra il lavoro di ChatGPT del 31 ottobre, ramo `chatgpt/completamento-53-campo` che contiene le PR #38, #39, #41, #42, #43 (`8fc3836`, ramo di lavoro `claude/anteprima-55`). Le PR di ChatGPT restano aperte su GitHub: il contenuto ora è su `main`.
