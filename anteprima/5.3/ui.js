@@ -100,23 +100,68 @@ var items=[
 tgt.innerHTML=year+items.map(function(item,i){return '<details class="v53-details" '+(i===0?'open':'')+'><summary>'+esc(item[0])+'</summary><div class="v53-detailbody">'+item[1]+'</div></details>'}).join('');
 }
 function optsPoll(){var g=next(),games=(g&&g.m)||[];return {day:g&&g.n||0,opts:games.map(function(m){return m[0]+' – '+m[3]})}}
-var bots=[
-['Il Barista','Da me si discute una sfida alla volta. E si paga il caffè prima del fischio.'],
-['Mister Divano','Io sceglierei quella in cui funziona il 4-3-3. Sulla carta funziona sempre.'],
-['Il Complottista','Prima di votare, voglio sapere chi ha deciso gli accoppiamenti.'],
-['Il Super Tifoso','Voto quella della mia squadra del cuore. Quale? Aspetto la classifica.'],
-['Nonno Cesare','Ai miei tempi bastava una partita alla radio. Ora le posso seguire tutte.'],
-['Lo Statistico Folle','Ho confrontato le ultime giornate. Purtroppo i dati non mi hanno detto chi voterà.'],
-['Il Romantico del Pallone','Ogni sfida è una storia. Io aspetterei l’ultimo minuto prima di giudicare.'],
-['Il Gufo Professionista','Voto con ottimismo. Che potrebbe essere un brutto segno.']
+/* Le voci sono quelle della banca reale curva-banca.js. Tono distinto,
+   variazioni deterministiche per giornata e, se disponibile, vere reazioni CVB. */
+var BOT_FRASI=[
+ ['il_barista','Il Barista',[
+ 'Per {sfida} ho già acceso la macchina del caffè. Il risultato lo discutiamo al bancone.',
+ 'Qui al bar abbiamo un pronostico per ogni partita. E un caffè per ogni pronostico sbagliato.',
+ 'Per la {giornata}ª giornata il tavolo vicino alla TV è già prenotato. Da tutti.']],
+ ['mister_divano','Mister Divano',[
+ 'Io punterei su {sfida}. Se mi date un telecomando vi spiego pure il modulo.',
+ 'La partita da seguire? Quella in cui ascoltano finalmente il mio 4-3-3. Quindi nessuna.',
+ 'A {sfida} suggerisco pressing alto. Mi alzo dal divano solo per il gol.']],
+ ['il_complottista','Il Complottista',[
+ 'Chi ha deciso che {sfida} è la sfida del giorno? Io voglio il verbale.',
+ 'Vi fidate davvero dei sondaggi? Io chiedo il controllo incrociato delle schede.',
+ 'Non dico che il calendario sia sospetto. Dico che lo sto guardando con una lente.']],
+ ['il_super_tifoso','Il Super Tifoso',[
+ 'Per me la partita è {sfida}! Sempre sostenuta, da circa cinque minuti.',
+ 'Io tifo la prima. Quale? Aspetto che esca la nuova classifica.',
+ 'Per la {giornata}ª ci sarò. Sciarpa pronta e pronostico già dimenticato.']],
+ ['nonno_cesare','Nonno Cesare',[
+ 'Ai miei tempi una partita bastava per tutta la domenica. Adesso vorrei vederle tutte.',
+ 'Ho già preparato la radiolina per {sfida}. E sì, funziona ancora.',
+ 'Una volta votavamo al bar con un cenno del capo. Ma mi piace vedere tutta la Curva qui.']],
+ ['statistico_folle','Lo Statistico Folle',[
+ 'La capolista è {capolista}, ma io continuo a calcolare anche le probabilità del caffè.',
+ 'Le percentuali del sondaggio le voglio confrontare con la classifica dopo la {giornata}ª.',
+ 'Ho aperto un foglio di calcolo per decidere fra le partite. Il foglio è ancora indeciso.']],
+ ['il_romantico_del_pallone','Il Romantico del Pallone',[
+ '{sfida}: non conosco il finale, ed è proprio per questo che la seguirei.',
+ 'I sondaggi passano. Il ricordo della partita resta. Basta che sia una bella sfida.',
+ 'In fondo, alla {giornata}ª ci interessa ancora la stessa cosa: il pallone.']],
+ ['gufo_professionista','Il Gufo Professionista',[
+ 'Mi aspetto grandi cose da {sfida}. Ora, dopo questa frase, non posso più guardarla.',
+ 'Voto con fiducia. Ma non è detto che la fiducia sia una buona notizia.',
+ 'Spero vincano tutti. È statisticamente impossibile, ma la gufata è pronta.']],
+ ['telecronista_stanco','Il Telecronista Stanco',[
+ 'Un altro turno e un altro sondaggio. Vi voglio bene, ma mi manca il sonno.',
+ 'A {sfida} ci sarò. Se il microfono regge.',
+ 'La {giornata}ª sarà emozionante. Lo dico con le ultime energie disponibili.']],
+ ['arbitro_in_pensione','L’Arbitro in Pensione',[
+ 'Per {sfida} voglio solo due cose: rispetto del regolamento e un bel fischio finale.',
+ 'Un voto nel sondaggio non equivale a un voto in campo. Lo preciso per regolamento.',
+ 'Chiunque vinca il sondaggio, in partita contano i gol. Come sempre.']]
 ];
+function botComments(p){
+ var top=latest()&&ranks(latest().n)[0],sfida=p.opts[p.day%p.opts.length]||p.opts[0],ctx={sfida:sfida,giornata:p.day,capolista:top?top.team:'da definire'};
+ var list=BOT_FRASI.map(function(b,i){var arr=b[2],choice=(p.day+i*7)%arr.length;return [b[1],arr[choice].replace(/\{(\w+)\}/g,function(_,key){return ctx[key]||''})]});
+ try{var bank=window.CVB;if(bank&&bank.reazioni&&bank.PERS){
+   var ts=Date.now()-24*3600000;
+   var replies=bank.reazioni('p53-sondaggio-'+p.day,ts,Date.now(),teamList,'Quale partita seguiresti alla '+p.day+'ª giornata?').r||[];
+   var names={il_complottista:'Il Complottista',il_super_tifoso:'Il Super Tifoso',mister_divano:'Mister Divano',il_barista:'Il Barista',nonno_cesare:'Nonno Cesare',statistico_folle:'Lo Statistico Folle',il_romantico_del_pallone:'Il Romantico del Pallone',gufo_professionista:'Il Gufo Professionista',tifoso_arrabbiato:'Il Tifoso Arrabbiato',il_mago_cabala:'Il Mago della Cabala'};
+   replies.filter(function(x){return bank.PERS[x.a]}).slice(0,5).forEach(function(x){list.push([names[x.a]||x.a,x.x])});
+ }}catch(e){console.warn('Risposte CVB non disponibili nella prova',e.message)}
+ return list;
+}
 function curva(){
 var host=el('v53poll'),p=optsPoll(),key='poll-'+p.day;
 if(!host)return;
 if(!p.opts.length){host.innerHTML=note('Il sondaggio apparirà quando sarà disponibile il calendario del prossimo turno.');return}
 var voted=get(key+'-vote',null),counts=get(key+'-counts',{}),comments=get(key+'-comments',[]);
 var form='<div class="v53-sub">Prossimo turno · '+p.day+'ª giornata</div><h3>Quale sfida seguirai con più attenzione?</h3><form id="v53vote">'+p.opts.map(function(o,i){return '<label class="v53-poll-option"><input type="radio" name="v53choice" value="'+i+'" '+(voted===i?'checked':'')+'><span>'+esc(o)+'</span><small>'+n(counts[i])+' voti di prova</small></label>'}).join('')+'<button class="v53-btn" type="submit">Vota nel Lab</button></form><p class="v53-muted">Preferenze e commenti si salvano soltanto su questo dispositivo: non sono voti pubblicati nella Curva.</p>';
-host.innerHTML=form+'<div class="v53-chat" id="v53dialog">'+bots.map(function(t,i){return '<div class="v53-comment"><b>'+esc(t[0])+' · bot</b><p>'+esc(t[1])+'</p></div>'}).join('')+'</div><form id="v53comment" class="v53-field"><label for="v53message">Commenta il sondaggio</label><input class="v53-input" id="v53message" maxlength="280" required placeholder="Il tuo commento (solo locale)"><button class="v53-btn" type="submit">Commenta</button></form><div id="v53usercomments"></div>';
+host.innerHTML=form+'<div class="v53-chat" id="v53dialog">'+botComments(p).map(function(t,i){return '<div class="v53-comment"><b>'+esc(t[0])+' · bot</b><p>'+esc(t[1])+'</p></div>'}).join('')+'</div><form id="v53comment" class="v53-field"><label for="v53message">Commenta il sondaggio</label><input class="v53-input" id="v53message" maxlength="280" required placeholder="Il tuo commento (solo locale)"><button class="v53-btn" type="submit">Commenta</button></form><div id="v53usercomments"></div>';
 function redraw(){el('v53usercomments').innerHTML=comments.map(function(c){return '<div class="v53-comment"><b>Il tuo commento · locale</b><p>'+esc(c)+'</p></div>'}).join('')}
 redraw();
 el('v53vote').onsubmit=function(e){e.preventDefault();var v=el('v53vote').querySelector('input:checked');if(!v)return;var i=n(v.value);if(voted!==null)counts[voted]=Math.max(0,n(counts[voted])-1);counts[i]=n(counts[i])+1;voted=i;set(key+'-vote',i);set(key+'-counts',counts);curva()};
