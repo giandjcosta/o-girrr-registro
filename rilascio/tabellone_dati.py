@@ -15,7 +15,7 @@ REGOLE = ('<details class="reg"><summary>Regole</summary>'
   '<h4>I gol</h4><p>Il primo gol arriva a 66 punti, poi uno in più ogni 5 punti: 71 vale due gol, 76 tre e così via. Al punteggio si aggiunge il modificatore della difesa.</p>'
   '<h4>Le colonne</h4><p>G giocate, V vittorie, N pareggi, P sconfitte, GF gol fatti, GS gol subiti, DR differenza reti, Pt punti. Sul telefono in verticale si vedono DR, Pt e Fantapunti; girando il telefono o da computer si vede tutto.</p>'
   '<h4>Champions Cup</h4><p>Due gironi da cinque squadre: ogni giornata una squadra per girone riposa. Dieci giornate, otto partite a testa. Le prime quattro di ogni girone vanno ai quarti (11ª giornata), poi semifinali (12ª) e finale (13ª). I gol si contano come in campionato.</p>'
-  '<h4>Derby e sfide</h4><p>«Derby» sopra una partita vuol dire Derby ufficiale: votato dai più o nato da una sfida accettata in conferenza stampa. Nelle ultime dieci giornate compaiono anche «Sfida scudetto» (1ª contro 2ª), «Sfida podio» (3ª contro 4ª) e «Sfida salvezza» (le ultime due).</p>'
+  '<h4>Derby e sfide</h4><p>«Derby» sopra una partita vuol dire Derby ufficiale: votato dai più o nato da una sfida accettata in conferenza stampa. Nelle ultime dieci giornate compaiono anche «Sfida scudetto» (1ª contro 2ª), «Sfida podio» (3ª contro 4ª) e «Sfida retrocessione» (le ultime due).</p>'
   '</details>')
 
 
