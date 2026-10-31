@@ -566,6 +566,91 @@ PERS.il_romantico_del_pallone.ri.push('Questi risultati sono la memoria che ci p
 PERS.il_barista.ri.push('Il {sc} si discute al banco, non nei corridoi. Ho già messo su il caffè.','Qui al bar nessuno è retrocesso, ma il conto lo pagano tutti.');
 PERS.tifoso_arrabbiato.ri.push('Anche oggi ho qualcosa da ridire. Soprattutto perché avete ragione voi.','Pareggio? Un punto. La mia pressione però è salita di tre.');
 PERS.gufo_professionista.ri.push('Complimenti a {w}. Non guarderò la prossima partita, promesso.','Bel risultato. Io però starei attento al prossimo avversario.');
+/* Estensione solo Lab: nuovi commenti per le personalità già registrate.
+   Sono osservazioni ironiche, non dichiarazioni degli allenatori reali. */
+var COMMENTI_VIVI={
+  il_complottista:[
+    "Ho chiesto il VAR anche al telecomando. Mi ha detto che il risultato resta quello. Mi insospettisce.",
+    "Non ho una prova, ho una lavagna piena di frecce. È già qualcosa.",
+    "Dicono che i numeri non mentano. Io interrogherei anche i numeri."
+  ],
+  il_super_tifoso:[
+    "Io ci credevo dall'inizio. Se trovate un mio post contrario, era un test della tifoseria.",
+    "Avete sentito la Curva? No? Allora urlavo solo io, come sempre.",
+    "Una partita così me la riguardo anche domani. Almeno finché arriva la prossima."
+  ],
+  mister_divano:[
+    "Dal divano il campo sembra sempre più largo. È per questo che vedo passaggi che nessuno fa.",
+    "Io avrei cambiato modulo al minuto zero. A posteriori è sempre più facile.",
+    "La panchina lunga è importante. Lo dico da una panchina molto comoda."
+  ],
+  il_romantico_del_pallone:[
+    "Due squadre, novanta minuti e una storia da raccontare. Anche quando finisce pari.",
+    "Il tabellone ricorda i numeri. Io ricorderò la tensione dell'ultima azione.",
+    "Ci sono punti che valgono una settimana di discussioni. È il bello della Lega."
+  ],
+  statistico_folle:[
+    "Controllo i numeri due volte: il secondo controllo è il primo con meno emozione.",
+    "Questa settimana ho fatto un grafico. Non migliora il risultato, ma mi tranquillizza.",
+    "La media non conosce la pietà. Per fortuna conosce la virgola."
+  ],
+  nonno_cesare:[
+    "Ai miei tempi si guardava la classifica sul giornale. Ora posso controllarla sei volte in un minuto.",
+    "Un pareggio era un pareggio anche quando si giocava con il pallone di cuoio.",
+    "La prossima giornata arriva sempre. Su questo non ho mai sbagliato pronostico."
+  ],
+  tifoso_arrabbiato:[
+    "Non sono arrabbiato con nessuno. Sono arrabbiato in generale, è diverso.",
+    "Si poteva fare meglio! Chi? Tutti. Quando? Sempre.",
+    "Ho promesso di non urlare. Finché non ho visto il tabellone."
+  ],
+  il_barista:[
+    "Sedetevi che il caffè è pronto. Il risultato non lo cambio nemmeno con lo zucchero.",
+    "Al bancone la partita dura tre ore: novanta minuti in campo e il resto a discuterne.",
+    "Chi ha vinto offre da bere. Chi ha pareggiato paga metà conto. Qui almeno funziona."
+  ],
+  gufo_professionista:[
+    "Auguro un grande prossimo turno a tutti. Poi non dite che non vi avevo avvisati.",
+    "Non faccio pronostici. Porto solo una sciarpa che ha una storia complicata.",
+    "Guardo il calendario e cerco di non pensarci troppo. Il calendario mi guarda."
+  ],
+  ing_stadi:[
+    "Il punteggio è interessante. La distanza tra i gradoni però meriterebbe una conferenza.",
+    "Potete discutere della formazione, io intanto misuro la capienza della tribuna.",
+    "Un buon impianto non vince le partite, ma rende molto più comodo commentarle."
+  ],
+  telecronista_stanco:[
+    "Scusate la voce: la giornata è lunga anche quando il risultato è corto.",
+    "Vi darei un commento approfondito, ma il microfono mi ha chiesto ferie.",
+    "L'ultima azione? L'ho vista. Poi ho chiuso gli occhi per un secondo."
+  ],
+  il_mago_cabala:[
+    "I numeri della giornata li ho letti nel fondo del caffè. Era il conto del bar.",
+    "Non voglio influenzare il destino. Ma quel calendario mi sta fissando.",
+    "Ho consultato le carte: dicono di guardare il Tabellone. Sensazionale."
+  ],
+  il_filosofo_del_pallone:[
+    "Si può perdere una partita e vincere una discussione? In Curva succede spesso.",
+    "Il pareggio è la domanda a cui entrambe le squadre hanno dato la stessa risposta.",
+    "La classifica misura il presente. La memoria della Lega è una faccenda più lunga."
+  ],
+  arbitro_in_pensione:[
+    "Fischio finale: il risultato è registrato. I commenti, purtroppo, non finiscono mai.",
+    "Il regolamento è chiaro. Poi arrivano le interpretazioni, e il pranzo si allunga.",
+    "Da pensionato posso finalmente guardare una partita senza cercare il fischietto."
+  ],
+  mamma_di_capitan:[
+    "Io dico sempre di mangiare prima della partita. Nessuno mi ascolta, poi si lamentano.",
+    "A me basta che tornino tutti a casa contenti. So che è chiedere troppo.",
+    "Il capitano avrà pure sbagliato qualcosa. Ma una bella cena non si nega."
+  ],
+  il_tassista:[
+    "In macchina ho ascoltato tre commenti diversi. Sono scesi tutti convinti di aver ragione.",
+    "Il prossimo turno? Ho già acceso il tassametro delle discussioni.",
+    "Mi hanno chiesto chi vincerà. Ho risposto: quello che paga la corsa."
+  ]
+};
+Object.keys(COMMENTI_VIVI).forEach(function(a){if(PERS[a])PERS[a].commenti=COMMENTI_VIVI[a]});
 var AUTORI=Object.keys(PERS);
 /* risposte generiche */
 var RISP=['Confermo.','Firmo.','Verissimo.','Però {sq} ha dei dubbi.','Non è colpa mia, giuro.','Seguiamo con attenzione.','Applauso, ma con riserva.','Su questo non ho nulla da aggiungere. Quindi aggiungo.','Ai posteri.','Questo coro merita un premio. O un esame.','Ho letto e sono ancora qui.','Ma anche no.','Bomba. Poi si vedrà.','Hai detto tutto. Anche troppo.','Lo dicevo anche io. Ma più forte.'];
@@ -976,7 +1061,7 @@ function dedup(a){var s={};return(a||[]).filter(function(y){var k=(y.x||'').toLo
 function reazioni(k,t,ms,SQ,xt){var r=prng('rz'+k),age=(ms-t)/60000;if(age<1)return{ap:0,ril:0,r:[]};
  var fa=2+Math.floor(r()*11),fr=Math.floor(r()*4),pr=Math.pow(Math.min(1,age/360),0.6),out=[];
  var rl=/^p\d/.test(k),nr=rl?5+Math.floor(r()*5):2+Math.floor(r()*5);if(rl&&nr<1)nr=1;var ord=shuffle(r,AUTORI);
- for(var i=0;i<nr;i++){var d=(i===0&&rl?6+r()*40:10+r()*240),tx=xt?risposta(r,xt,null,{sq:(SQ.filter(function(q){return xt.toLowerCase().indexOf(q.toLowerCase())>=0})[0])}):pick(r,RISP).replace('{sq}',pick(r,SQ)),a=ord[i];if(r()<0.05){var cu=comune(r);if(age>=d)out.push({a:cu[0],x:xt?crep(r,xt):pick(r,CREP),ts:t+d*60000});continue}if(age>=d)out.push({a:a,x:natura(tx,k+'z'+i,a),ts:t+d*60000})}
+ for(var i=0;i<nr;i++){var d=(i===0&&rl?6+r()*40:10+r()*240),tx=xt?risposta(r,xt,null,{sq:(SQ.filter(function(q){return xt.toLowerCase().indexOf(q.toLowerCase())>=0})[0])}):pick(r,RISP).replace('{sq}',pick(r,SQ)),a=ord[i];if(r()<0.05){var cu=comune(r);if(age>=d)out.push({a:cu[0],x:xt?crep(r,xt):pick(r,CREP),ts:t+d*60000});continue}if(age>=d)out.push({a:a,x:natura((PERS[a]&&PERS[a].commenti&&rr()<0.68)?pick(rr,PERS[a].commenti):tx,k+'z'+i,a),ts:t+d*60000})}
  /* a volte un personaggio ne chiama un altro nei commenti, e l'altro a volte risponde */
  var nch=rl?(r()<0.8?1+(r()<0.4?1:0):0):(r()<0.2?1:0);
  for(var q=0;q<nch;q++){var A1=ord[nr+q*2],B1=ord[nr+q*2+1];if(!A1||!B1||A1==='ciro_trattativa'||B1==='ciro_trattativa')continue;
