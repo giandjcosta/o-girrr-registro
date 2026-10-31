@@ -29,7 +29,9 @@ Più avanti, da progettare: login unico. Nuovo (richiesta dei giocatori): **Annu
 - **Script** in `calcoli/premi/`: `premi_giornata.js` legge la logica dei premi dal Lab (`lab/index.html`, con i dati veri di `data.json`) e scrive la lista; `registra_premi.py` la registra con `carriera_registra_server` (chiave service_role). Senza `--vai` non scrive niente.
 - **Verifica:** con i dati del sito fino alla giornata 4 dà **esattamente** i 7 premi del 30 ottobre (Apo team 50, Grodah 50, WOA 50, Real Madrink 75, stif dc 75, AFA SELECCION 75, Atletico ma non troppo 75). Con i dati della giornata 5 dà 8 premi (aggiunge The Blue brothers 50, Phönix, 76 punti in una giornata): sono già nel database, quindi la registrazione li segnerebbe «duplicate». Nessuna chiamata al database fatta.
 - **Workflow** `.github/workflows/premi-giornata.yml` (repo `o-fant-a-girrr`, sul ramo di lavoro): **solo a mano**, con l'opzione «vai» (default falso). Va sul `main` del sito per comparire nel pannello Actions: serve il tuo «vai» per l'unione.
-- **Da decidere:** quando farlo partire da solo dopo ogni giornata (oggi no); la chiave dell'obiettivo di Coppa (`sponsor_coppa_2026_27`) è una scelta nostra: nel database non c'è ancora nessun premio di Coppa.
+- **Aggiornato (31 ottobre, su richiesta di Gianluca):** il workflow parte da solo ogni due ore (`50 */2`, dopo «Calcoli dopo la giornata») e registra con «vai». Rami pronti: `claude/premi-giornata` del registro (solo `calcoli/premi/`, da unire a `main`) e `claude/premi-giornata` del sito (solo il workflow, da unire a `main`). Il workflow punta a `REGISTRO_REF: main`: funziona solo dopo le due unioni. Prima di unire il sito, verificare il registro su `main`.
+- ~~Da decidere: quando farlo partire da solo~~ (deciso: ogni due ore).
+- **Vecchio appunto:**  la chiave dell'obiettivo di Coppa (`sponsor_coppa_2026_27`) è una scelta nostra: nel database non c'è ancora nessun premio di Coppa.
 - **Dopo l'unione:** cambiare `REGISTRO_REF` del workflow da `claude/…` a `main` del registro.
 
 ## 31 ottobre 2026 — Totogirrr: scheda Movimenti (Claude, prova nel Lab)
