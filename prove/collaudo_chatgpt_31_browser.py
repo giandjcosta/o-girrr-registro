@@ -17,7 +17,8 @@ def width(p):
 def visit(context, path, name):
     page=context.new_page()
     errors=[]
-    page.on('pageerror', lambda e: errors.append(str(e)))
+    page.on('pageerror', lambda e: errors.append('JS: '+str(e)))
+    page.on('console', lambda msg: errors.append('Console: '+msg.text) if msg.type == 'error' else None)
     page.goto(BASE+path,wait_until='domcontentloaded',timeout=30000)
     page.wait_for_timeout(750)
     width(page)
