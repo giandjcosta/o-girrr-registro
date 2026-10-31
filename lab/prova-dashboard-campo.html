@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Campo · Centro della giornata · Lab O Girrr</title>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#182447;--panel:#23365e;--line:#445a83;--text:#f5f6fb;--muted:#bac9e4;--accent:#d62839;--onaccent:#fff;--pitch:#155b52;--pitch2:#1e7865}
+body[data-skin=stadio]{--bg:#141e3d;--panel:#233b68;--accent:#ffd166;--onaccent:#142449}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 85% 0%,#334e7e 0,var(--bg) 55%,#11192e 100%);color:var(--text);font:500 15px/1.45 Inter,system-ui,sans-serif}
+button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid #a9deff;outline-offset:3px}
+a{color:#ffd166;text-decoration:none;font-weight:800}.frame{max-width:1350px;padding:clamp(12px,3vw,36px);margin:auto}
+.mast{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.kicker{font-size:12px;color:#ffd166;letter-spacing:.18em;font-weight:900;text-transform:uppercase}
+h1{font-size:clamp(27px,4vw,46px);line-height:1.1;letter-spacing:-.025em;margin:6px 0}
+h2{font-size:clamp(17px,2vw,24px);margin:0 0 8px}
+.sub{color:var(--muted);font-size:clamp(13px,1.1vw,15px);margin:8px 0 0}
+.skin{display:flex;gap:6px;padding:5px;border:1px solid var(--line);border-radius:12px}
+.skin button,.gamebtn{border:0;border-radius:10px;color:var(--text);background:transparent;padding:9px 14px;font-weight:800;min-height:42px}
+.skin button[aria-pressed=true],.gamebtn[aria-pressed=true]{background:var(--accent);color:var(--onaccent)}
+.toolbar{display:flex;gap:10px;align-items:center;margin-bottom:16px}
+.round{display:flex;gap:8px;align-items:center}
+.round button{width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:#30476c;color:#fff;font-size:20px;font-weight:900}
+.round button:disabled{opacity:.25;cursor:default}
+.roundname{font-weight:900;white-space:nowrap;font-size:clamp(13px,2vw,16px)}
+.matches{display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin;scroll-snap-type:x proximity;padding:5px;flex:1;min-width:0}
+.gamebtn{flex:none;scroll-snap-align:start;border:1px solid var(--line);text-align:left;line-height:1.3;font-size:13px}
+.gamebtn small{display:block;font-size:11px;font-weight:600;opacity:.8}
+.board{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,.85fr);align-items:start;gap:18px}
+.card{border:1px solid rgba(255,255,255,.18);background:linear-gradient(155deg,rgba(255,255,255,.11),rgba(255,255,255,.035));border-radius:20px;padding:clamp(14px,2vw,22px);min-width:0;box-shadow:0 13px 35px rgba(0,0,0,.17)}
+.match-head{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:12px;text-align:center}
+.club{font-weight:900;font-size:clamp(13px,1.7vw,19px);overflow-wrap:anywhere}
+.match-head .score{background:rgba(255,255,255,.11);border-radius:13px;padding:8px 12px;font-weight:900;font-size:clamp(24px,3vw,38px);white-space:nowrap}
+.phase{text-align:center;color:#c6d8ef;font-size:12px;font-weight:800;letter-spacing:.08em;margin:10px 0 17px}
+.pitch{position:relative;overflow:hidden;border-radius:18px;background:repeating-linear-gradient(90deg,var(--pitch) 0 12.5%,var(--pitch2) 12.5% 25%);border:6px solid #244f54;box-shadow:inset 0 0 32px rgba(0,0,0,.3)}
+.pitch svg{display:block;width:100%;height:auto;aspect-ratio:780/430}
+.pitch svg *{vector-effect:non-scaling-stroke}
+.pitch .centerlabel{font-size:30px;fill:#f8f6f0;font-weight:900}
+.pitch .smalllabel{font-size:17px;fill:#e2fbf3;font-weight:800}
+.pitch .side{fill:rgba(10,21,43,.56);stroke:rgba(255,255,255,.7);stroke-width:2}
+.pitch .side.home{fill:rgba(14,43,79,.78)}
+.pitch .side.away{fill:rgba(15,28,58,.75)}
+.pitch text{font-family:Inter,system-ui,sans-serif}
+.pitch-caption{font-size:12px;color:#c9d7e7;margin:10px 0 0}
+.statgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:13px}
+.stat{background:rgba(255,255,255,.085);border-radius:13px;padding:11px;text-align:center}
+.stat b{display:block;font-size:clamp(16px,2vw,23px);font-variant-numeric:tabular-nums;white-space:nowrap}
+.stat span{display:block;color:var(--muted);font-size:12px;font-weight:700}
+.comparison{display:grid;grid-template-columns:minmax(0,1fr) 95px minmax(0,1fr);border-top:1px solid var(--line);margin-top:16px;padding-top:13px;gap:5px;align-items:center;text-align:center}
+.comparison b{font-size:20px;white-space:nowrap}.comparison .k{color:var(--muted);font-size:11px;font-weight:900}
+.form{display:flex;gap:5px;justify-content:center;margin-top:8px}
+.form span{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;font-weight:900;font-size:11px;background:#44516d}
+.form .v{background:#247858}.form .n{background:#7c8598}.form .p{background:#ac4b64}
+.side-title{margin-bottom:12px}.fact{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid rgba(255,255,255,.11);padding:11px 0}
+.fact:last-child{border-bottom:none}.fact strong{font-size:17px;text-align:right}.fact span{color:var(--muted)}
+.spark{width:100%;height:110px;margin-top:12px}.spark svg{width:100%;height:100%}
+.info{font-size:13px;color:var(--muted);line-height:1.6}
+.loading{padding:35px;text-align:center;color:#cbd7e8}
+@media(max-width:900px){.board{grid-template-columns:1fr}.toolbar{flex-wrap:wrap}.matches{width:100%;flex-basis:100%;order:3}.statgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:440px){
+.frame{padding:13px}.mast{align-items:flex-start}
+.mast .skin{width:100%}.mast .skin button{flex:1}
+.card{padding:12px;border-radius:15px}
+.match-head{gap:4px}.match-head .score{padding:6px 8px}.club{font-size:13px}
+.stat{padding:8px 4px}.stat span{font-size:10px}.stat b{font-size:17px}
+.comparison{grid-template-columns:minmax(0,1fr) 66px minmax(0,1fr)}
+.comparison b{font-size:17px}
+.pitch{border-width:3px}
+.pitch .centerlabel{font-size:24px}
+.pitch .smalllabel{font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
+</style></head>
+<body data-skin="stadio">
+<div class="frame">
+ <div class="mast"><div><a href="index.html">‹ Torna al Lab</a><div class="kicker" style="margin-top:14px">Campo · Centro della giornata</div><h1>Dentro la giornata</h1><p class="sub">Partite, risultati, rendimento e andamento della Lega, aggiornati dal calendario.</p></div>
+ <div class="skin" role="group" aria-label="Grafica"><button data-skin-choice="lega" aria-pressed="false">Grafica Lega</button><button data-skin-choice="stadio" aria-pressed="true">Grafica Stadio</button></div></div>
+ <div class="toolbar"><div class="round"><button id="prev" aria-label="Giornata precedente">‹</button><span class="roundname" id="roundtitle">Giornata</span><button id="next" aria-label="Giornata successiva">›</button></div><nav id="matches" class="matches" aria-label="Partite della giornata"></nav></div>
+ <div class="board" id="board"><div class="loading">Caricamento del calendario…</div></div>
+ <p class="info" style="margin-top:16px">Il campo rappresenta le due squadre a confronto; i numeri provengono dai risultati ufficiali della Lega. Le posizioni dei giocatori, il possesso e i tiri non sono mostrati perché il calendario non li registra.</p>
+</div>
+<script>
+(function(){
+'use strict';
+var D=null,round=0,game=0;
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]})}
+function nm(s){return esc(s)}
+function played(g){return !!(g&&g.m&&g.m.length&&g.m.every(function(m){return /^\d+-\d+$/.test(String(m[4]))}))}
+function complete(){return (D.cal.lega||[]).filter(played).sort(function(a,b){return a.n-b.n})}
+function ranks(maxn){
+ var t={},games=complete().filter(function(g){return g.n<=maxn});
+ games.forEach(function(g){g.m.forEach(function(m){var a=t[m[0]]||(t[m[0]]={name:m[0],pt:0,gf:0,gs:0,fp:0,v:0,n:0,p:0,h:[]}),b=t[m[3]]||(t[m[3]]={name:m[3],pt:0,gf:0,gs:0,fp:0,v:0,n:0,p:0,h:[]});
+ var s=m[4].split('-').map(Number);
+ [[a,s[0],s[1],m[1]],[b,s[1],s[0],m[2]]].forEach(function(x){var z=x[0];z.gf+=x[1];z.gs+=x[2];z.fp+=Number(x[3])||0;z.pt+=x[1]>x[2]?3:x[1]===x[2]?1:0;z[x[1]>x[2]?'v':x[1]===x[2]?'n':'p']++;z.h.push(x[1]>x[2]?'v':x[1]===x[2]?'n':'p')});
+ })});
+ var all=Object.values(t).sort(function(a,b){return b.pt-a.pt||b.fp-a.fp||(b.gf-b.gs)-(a.gf-a.gs)||a.name.localeCompare(b.name)});
+ all.forEach(function(z,i){z.pos=i+1});return t;
+}
+function stat(t,k){return t&&Number.isFinite(t[k])?t[k]:'—'}
+function form(t){return t&&t.h.length?'<div class="form">'+t.h.slice(-5).map(function(x){return '<span class="'+x+'" title="'+(x==='v'?'Vittoria':x==='n'?'Pareggio':'Sconfitta')+'">'+x.toUpperCase()+'</span>'}).join('')+'</div>':'<span class="sub">In attesa</span>'}
+function fact(label,val){return '<div class="fact"><span>'+esc(label)+'</span><strong>'+esc(val)+'</strong></div>'}
+function mini(t){return t?'<b>'+t.pt+' punti</b>'+form(t):'In corso'}
+function line(x,y,stroke){return '<path d="M'+x+' '+y+'" fill="none" stroke="'+stroke+'" stroke-width="3"/>'}
+function chart(t){if(!t||!t.h.length)return '<p class="info">L’andamento appare dopo la prima giornata giocata.</p>';
+var pts=[0],s=0; t.h.forEach(function(v){s+=v==='v'?3:v==='n'?1:0;pts.push(s)});
+var w=360,h=105,max=Math.max(3,pts[pts.length-1]),v=pts.map(function(p,i){return [12+i*336/Math.max(1,pts.length-1),87-p/max*70]});
+return '<svg viewBox="0 0 360 105" role="img" aria-label="Andamento dei punti accumulati"><path d="M12 87 H348" stroke="#8191b0" stroke-opacity=".7" fill="none"/><polyline points="'+v.map(function(x){return x.join(',')}).join(' ')+'" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>'+v.map(function(x){return '<circle cx="'+x[0]+'" cy="'+x[1]+'" r="3.5" fill="#ffd166"/>'}).join('')+'</svg>'}
+function pitch(a,b){
+ return '<div class="pitch"><svg viewBox="0 0 780 430" role="img" aria-label="Campo schematico tra '+esc(a)+' e '+esc(b)+'">'+
+ '<rect x="34" y="31" width="712" height="368" rx="4" fill="none" stroke="#d3f0e5" stroke-width="2.4"/>'+
+ '<path d="M390 31 V399 M34 128H143V302H34 M746 128H637V302H746 M34 168H79V262H34 M746 168H701V262H746" fill="none" stroke="#d3f0e5" stroke-width="2.4"/>'+
+ '<circle cx="390" cy="215" r="72" fill="none" stroke="#d3f0e5" stroke-width="2.4"/>'+
+ '<circle cx="390" cy="215" r="4" fill="#d3f0e5"/>'+
+ '<rect class="side home" x="75" y="164" width="220" height="102" rx="18"/>'+
+ '<rect class="side away" x="485" y="164" width="220" height="102" rx="18"/>'+
+ '<text x="185" y="199" text-anchor="middle" class="smalllabel">CASA</text>'+
+ '<text x="595" y="199" text-anchor="middle" class="smalllabel">OSPITE</text>'+
+ '<text x="185" y="231" text-anchor="middle" class="centerlabel">'+esc(a.slice(0,14))+'</text>'+
+ '<text x="595" y="231" text-anchor="middle" class="centerlabel">'+esc(b.slice(0,14))+'</text>'+
+ '</svg></div>';
+}
+function render(){
+ if(!D)return;var rounds=D.cal.lega||[],g=rounds[round];if(!g)return;
+ document.getElementById('roundtitle').textContent='Giornata '+g.n;
+ document.getElementById('prev').disabled=round===0;document.getElementById('next').disabled=round===rounds.length-1;
+ var list=document.getElementById('matches');
+ list.innerHTML=g.m.map(function(m,i){return '<button class="gamebtn" data-match="'+i+'" aria-pressed="'+(i===game)+'">'+nm(m[0])+' – '+nm(m[3])+'<small>'+(m[4]==='-'?'Da giocare':m[4])+'</small></button>'}).join('');
+ var m=g.m[game];if(!m)return;var active=played(g),a=m[0],b=m[3],r=m[4]==='-'?'— : —':m[4].replace('-', ' : '),tb=ranks(g.n),ha=tb[a],hb=tb[b];
+ var score=m[4]==='-'?'Da giocare':'Risultato';
+ var h='<div class="card"><div class="match-head"><span class="club">'+nm(a)+'</span><span class="score">'+esc(r)+'</span><span class="club">'+nm(b)+'</span></div>'+
+ '<div class="phase">Giornata '+g.n+' · Serie A '+g.sa+' · '+score+'</div>'+
+ pitch(a,b)+
+ '<p class="pitch-caption">Il terreno di gioco presenta il confronto fra le due squadre.</p>'+
+ '<div class="statgrid"><div class="stat"><b>'+stat(ha,'pt')+'</b><span>Punti in classifica</span></div><div class="stat"><b>'+esc(r)+'</b><span>'+score+'</span></div><div class="stat"><b>'+stat(hb,'pt')+'</b><span>Punti in classifica</span></div></div>'+
+ '<h2 style="margin-top:20px">Forma recente</h2><div class="comparison"><div>'+nm(a)+form(ha)+'</div><div class="k">ULTIME 5</div><div>'+nm(b)+form(hb)+'</div></div></div>';
+ h+='<aside class="card"><div class="side-title"><div class="kicker">Centro di controllo</div><h2>I numeri del confronto</h2><p class="sub">Situazione fino alla giornata '+g.n+'.</p></div>'+
+ fact('Posizione · '+a,ha?ha.pos+'ª':'In corso')+
+ fact('Posizione · '+b,hb?hb.pos+'ª':'In corso')+
+ fact('Gol fatti',stat(ha,'gf')+' / '+stat(hb,'gf'))+
+ fact('Gol subiti',stat(ha,'gs')+' / '+stat(hb,'gs'))+
+ fact('Vittorie',stat(ha,'v')+' / '+stat(hb,'v'))+
+ fact('Pareggi',stat(ha,'n')+' / '+stat(hb,'n'))+
+ fact('Sconfitte',stat(ha,'p')+' / '+stat(hb,'p'))+
+ '<h2 style="margin-top:20px">Andamento '+nm(a)+'</h2><div class="spark">'+chart(ha)+'</div>'+
+ '<p class="info">Sono riportati soltanto risultati delle giornate concluse. Puoi cambiare partita e giornata senza lasciare la pagina.</p></aside>';
+ document.getElementById('board').innerHTML=h;
+}
+document.addEventListener('click',function(e){
+ var a=e.target.closest('[data-match]');if(a){game=Number(a.dataset.match);render()}
+ var s=e.target.closest('[data-skin-choice]');if(s){document.body.dataset.skin=s.dataset.skinChoice;document.querySelectorAll('[data-skin-choice]').forEach(function(x){x.setAttribute('aria-pressed',String(x===s))});history.replaceState(null,'','?skin='+s.dataset.skinChoice)}
+});
+document.getElementById('prev').addEventListener('click',function(){if(round>0){round--;game=0;render()}});
+document.getElementById('next').addEventListener('click',function(){if(round<D.cal.lega.length-1){round++;game=0;render()}});
+var q=new URLSearchParams(location.search),skin=q.get('skin');if(skin==='lega')document.body.dataset.skin='lega';
+document.querySelectorAll('[data-skin-choice]').forEach(function(x){x.setAttribute('aria-pressed',String(x.dataset.skinChoice===document.body.dataset.skin))});
+fetch('https://giandjcosta.github.io/o-fant-a-girrr/data.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw Error(r.status);return r.json()}).then(function(d){D=d;var playedIdx=D.cal.lega.findIndex(function(g){return !played(g)});round=playedIdx<0?D.cal.lega.length-1:Math.max(0,playedIdx-1);render()}).catch(function(){document.getElementById('board').innerHTML='<div class="card">Non è possibile caricare il calendario. Riprova ad aprire la pagina.</div>'});
+})();
+</script></body></html>
