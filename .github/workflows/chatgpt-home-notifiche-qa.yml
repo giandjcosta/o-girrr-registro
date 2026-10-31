@@ -18,6 +18,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Controlla JavaScript
         run: node --check lab/esperienza-2026.js
+      - name: Record Albo: pareggi e vittorie
+        run: node prove/prova_record_albo.js
       - name: Rigenera Anteprima dal Lab
         run: python3 anteprima/build.py
       - name: Controlla che le Anteprime siano versionate
