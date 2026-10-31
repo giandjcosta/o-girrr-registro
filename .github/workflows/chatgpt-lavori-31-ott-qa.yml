@@ -35,3 +35,20 @@ jobs:
         run: node prove/collaudo_fiducia_universale52.js
       - name: Prova Moviola in rete simulata
         run: python3 prove/prova_moviola.py
+      - name: Installa Chromium per verifica visiva
+        run: |
+          python3 -m pip install --break-system-packages playwright
+          python3 -m playwright install chromium
+      - name: Avvia il Lab locale
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/lab-server.log 2>&1 &
+          sleep 2
+      - name: Browser 320px, console e Curva in memoria
+        run: python3 prove/collaudo_chatgpt_31_browser.py
+      - name: Screenshot del browser
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chatgpt-31-ottobre-screenshot
+          path: qa_artifacts/*.png
+          if-no-files-found: ignore
