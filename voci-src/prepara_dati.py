@@ -62,6 +62,6 @@ def main():
     (QUI / "conferenze.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     cv = carica(QUI / "curva.json", {})
     if cv.get("giornata") != n:        # il post della Curva vale solo per la giornata per cui è stato messo
-        (QUI / "curva.json").write_text(json.dumps({"_come_si_usa": "Un post vero dalla Curva per la giornata indicata in \"giornata\". Se manca o è di un'altra giornata la radio non ne parla.", "giornata": n, "post": ""}, ensure_ascii=False), encoding="utf-8")
+        (QUI / "curva.json").write_text(json.dumps({"_come_si_usa": "Un post vero dalla Curva per la giornata indicata in \"giornata\". Se manca o è di un'altra giornata la radio non ne parla.", "giornata": n, "post": "", "caso": ""}, ensure_ascii=False), encoding="utf-8")
     print(f"giornata={n}")
 main()

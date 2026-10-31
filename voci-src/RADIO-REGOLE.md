@@ -47,3 +47,7 @@ Nessuno dei due è britannico (era così solo con le voci in inglese): niente t�
 
 ## Nomi che escono storpiati (segnalato il 30 ottobre, puntata 5)
 "Coneja" usciva "cone", "stif dc" "staf dc", "WOA" "UA" (e "vita" "vi"): oltre al taglio finale (già corretto) Gemini legge male i nomi stranieri. Tabella PRON in puntata.py: Conèha, Stìf Dì Ci, Uòa. Se un nome esce ancora storpiato si aggiunge lì. Pausa tra una battuta e l'altra portata da 0,12 a 0,3 secondi, così non restano rumori tra le parole.
+
+## Il caso della giornata
+- In `curva.json`, accanto a `post`, si può mettere `caso`: una notizia vera della giornata (per esempio una squadra che non ha schierato la formazione e protesta). Giulia la racconta dopo la Curva, Beppe commenta, poi Giulia saluta e restituisce la linea. Vale solo per la giornata scritta in `giornata`: `prepara_dati.py` lo svuota quando cambia giornata.
+- Il Derby dalla sola storia parte da 80, come nelle pagine e nel database.
