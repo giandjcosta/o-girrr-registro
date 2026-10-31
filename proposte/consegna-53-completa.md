@@ -2,7 +2,7 @@
 
 ## Provenienza e confini
 
-Ramo `chatgpt/completamento-53-campo`, creato dalla PR #41 (`03a2a9f`). Integra il lavoro della #42 e del ramo `chatgpt/lavori-31-ottobre` con una normale unione **locale sul nuovo ramo**, risolvendo i conflitti nei sorgenti e rigenerando gli output. La PR di consegna punta a `chatgpt/anteprima-53-integrata`. Nessuna modifica ai rami degli altri, nessun force-push, nessuna unione di PR. La #39 resta `dirty`; #41 e #42 restano aperte.
+Ramo `chatgpt/completamento-53-campo`, creato dalla PR #41 (`03a2a9f`). Integra il lavoro della #42 e del ramo `chatgpt/lavori-31-ottobre` con una normale unione **locale sul nuovo ramo**, risolvendo i conflitti nei sorgenti e rigenerando gli output. La [PR #43](https://github.com/giandjcosta/o-girrr-registro/pull/43), bozza non unita, punta a `chatgpt/anteprima-53-integrata`. Nessuna modifica ai rami degli altri, nessun force-push, nessuna unione di PR. La #39 resta `dirty`; #41 e #42 restano aperte.
 
 Il riferimento Campo è **l'immagine allegata da Gianluca in questa chat**: cockpit blu, campo verde con porte in alto e in basso, navigazione laterale, strumenti e KPI. Non è stato consultato il sito nell'immagine, né sono stati copiati suoi asset. La grafica resta da approvare manualmente; i test non costituiscono approvazione estetica.
 
@@ -71,3 +71,5 @@ Le vecchie pagine `lab/prova-*` rimangono prototipi di confronto. Non sono più 
 **Non verificati:** Safari/iPhone fisico, accesso pubblico via CDN, account veri, caricamento del feed reale Curva, push, sincronizzazione multiutente, giornata futura reale e distribuzione in produzione. Nessuna di queste funzioni è dichiarata pronta.
 
 Screenshot PC/telefono e rapporti: `prove/risultati-53-completa/`. Tutti gli screenshot delle altre larghezze sono prodotti dalla QA nei relativi artefatti.
+
+CI nuova, primo tentativo (`41234940046`): importazione anticipata e inutilizzata di Playwright dal modulo fixture, prima del passo di installazione. Dipendenza rimossa; verificare la nuova run separatamente dai PASS locali.

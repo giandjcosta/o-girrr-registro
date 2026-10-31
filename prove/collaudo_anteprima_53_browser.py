@@ -2,7 +2,6 @@
 """Anteprima 5.3: controlla le due grafiche su pagine reali, senza scrivere al sito."""
 import json
 from pathlib import Path
-from playwright.sync_api import sync_playwright
 BASE="http://127.0.0.1:8765/anteprima/5.3/"
 NAMES=["The Blue brothers","Apo team","Grodah","WOA","Real Madrink","stif dc","Mariana Coneja","AFA SELECCION","Oranje VC","Atletico ma non troppo"]
 def fixture():
