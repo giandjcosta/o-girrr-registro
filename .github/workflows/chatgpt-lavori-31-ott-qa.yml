@@ -7,6 +7,16 @@ on:
       - .github/workflows/chatgpt-lavori-31-ott-qa.yml
       - prove/collaudo_chatgpt_31_browser.py
       - anteprima/build.py
+      - lab/index.html
+      - lab/prova-dashboard-campo.html
+      - lab/prova-tabellone-lega.html
+      - lab/prova-tabellone-stadio.html
+      - calcoli/zone_classifica.py
+      - calcoli/post_curva.py
+      - voci-src/prepara_dati.py
+      - voci-src/copione.py
+      - prove/prova_zone_classifica.py
+      - prove/prova_tabellone_campo_browser.py
 permissions:
   contents: write
 jobs:
@@ -37,6 +47,10 @@ jobs:
         run: node prove/collaudo_fiducia_universale52.js
       - name: Prova Moviola in rete simulata
         run: python3 prove/prova_moviola.py
+      - name: Verifica regole di classifica e sintassi Python
+        run: |
+          python3 -m py_compile calcoli/zone_classifica.py calcoli/post_curva.py voci-src/prepara_dati.py voci-src/copione.py
+          python3 prove/prova_zone_classifica.py
       - name: Installa Chromium per verifica visiva
         run: |
           python3 -m pip install --break-system-packages playwright
@@ -47,6 +61,8 @@ jobs:
           sleep 2
       - name: Browser 320px, console e Curva in memoria
         run: python3 prove/collaudo_chatgpt_31_browser.py
+      - name: Browser Tabellone e Campo · telefono tablet PC
+        run: python3 prove/prova_tabellone_campo_browser.py
       - name: Screenshot del browser
         if: always()
         uses: actions/upload-artifact@v4
