@@ -18,11 +18,23 @@ Qui ci sono il Lab, l'Anteprima, le sorgenti delle pagine del sito vero e lo sta
 - Il sito vero resta invariato finché Gianluca non certifica la prova nel Lab e dà il suo «Vai» esplicito. Le modifiche documentali o agli strumenti interni che non cambiano il comportamento del sito non richiedono un prototipo nel Lab.
 - Se il `main` del sito ha file più nuovi del registro (workflow, script della Curva), copiali prima qui: non sovrascriverli con versioni vecchie.
 
-## Regole sui contenuti
-- Storie come un campionato vero (giocatori, gol, squadre, allenatori). Niente riferimenti a fantacalcio, crediti, fantapunti o fantamedia, salvo i punteggi.
-- Niente disclaimer tipo "notizia inventata" o "dati finti".
-- "Derby" sempre con la D maiuscola. Titoli ed etichette con la maiuscola iniziale.
-- I post ufficiali (Girrr Sport, Lega, Giornale) non parlano mai di scommesse.
+## Regole sui contenuti — TRE LIVELLI UFFICIALI (decisione di Gianluca, 31 ottobre 2026)
+
+**Principio vincolante per ogni AI, nuova pagina, testo, bot e statistica: O Girrr è raccontato come un campionato vero, ma usa i dati ufficiali di Leghe Fantacalcio. Realismo nel racconto, precisione nei dati. Non cancellare il lessico Fantacalcio dove indica una metrica reale.**
+
+1. **SPORTIVO — identità del campionato.** Home personale, Tabellone dei risultati, classifica, titoli, rivalità e presentazioni delle partite: usare squadre, allenatori, gol, vittorie, sconfitte, pareggi, punti in classifica, giornata, Campionato, Champions Cup, Derby. Esempio illustrativo: «Squadra A batte Squadra B 3–1 e sale al secondo posto». Non scambiare i **gol** con i **Fantapunti**.
+2. **TECNICO/UFFICIALE — fonte e calcolo, senza ambiguità.** Tabellone di dettaglio, Regole, Statistiche, schede e Annuario: mostrare esplicitamente i **Fantapunti** dei due team, i voti/bonus/malus, eventuale modificatore difensivo, soglie per la conversione in gol, i **punti in classifica** e, quando pertinente, fantacrediti e costo delle rose. «Leghe Fantacalcio» resta il nome corretto del servizio sorgente. Esempio esclusivamente dimostrativo: «Fantapunti 77,5–68; risultato 3–1; 3 punti in classifica alla squadra vincente». La conversione segue sempre il regolamento effettivamente vigente; non inventare criteri.
+3. **EDITORIALE/NARRATIVO — cronaca e vita della Lega.** Giornale, Radio, Curva e bot raccontano come media sportivi: «Tre reti, tre punti e una serata da ricordare», usando solo risultati o fatti verificabili. Possono nominare i Fantapunti quando commentano un voto, uno scarto, una decisione o una controversia tecnica. Personaggi e tifosi possono essere ironici, polemici o provocatori, ma sono opinioni narrative, **non dichiarazioni attribuite come fatti reali agli allenatori**.
+
+**Regole trasversali:**
+- **Non confondere:** gol del risultato ≠ Fantapunti ≠ punti della classifica ≠ fantacrediti; le statistiche e l'Annuario dichiarano chiaramente unità, competizione e giornata. I pareggi restano pareggi.
+- Le etichette *Fantapunti*, *Fantamedia*, *Modificatore*, *Bonus/Malus* restano dove tecnicamente corrette: non fare sostituzioni indiscriminate con «Punteggio» o «Punti».
+- Conservare tutte le informazioni, tab e sottomenu esistenti. Una nuova Home o un Annuario espandibile sono **aggiunte**, non scorciatoie che nascondono dati.
+- Dove mancano dati storici scrivere «Dato non conservato», non ricostruire statistiche non disponibili.
+- Nelle cronache non aggiungere disclaimer superflui che rovinino l'immersione; **nelle anteprime e nei contenuti non verificati** indicare chiaramente lo stato di prova senza far passare esempi come fatti.
+- **Derby** sempre con D maiuscola, regole Derby aggiornate dall'utente senza ripristinare soglie precedenti. Titoli ed etichette con maiuscola iniziale.
+- I post ufficiali (Girrr Sport, Lega, Giornale) non parlano mai di scommesse. La Curva automatica mantiene le personalità e le regole già presenti in `curva-banca.js` e `calcoli/post_curva.py`.
+
 
 ## Regole comuni a tutti i repository di Gianluca
 

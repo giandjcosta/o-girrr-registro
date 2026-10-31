@@ -91,6 +91,7 @@ def fin(t, stat, home):
         t = re.sub(r'<link rel="icon"[^>]*favicon-64[^>]*>', "", t)
         t = re.sub(r'<span class="proto">.*?</span>( <a class="back"[^>]*>[^<]*</a>)+', "", t, count=1, flags=re.S)
         return t
+    t = t.replace('<div class="col">', "<div class=\"ambiente-preview\" role=\"note\" style=\"max-width:900px;margin:0 auto 12px;padding:8px 12px;border:1px solid rgba(255,209,102,.65);border-radius:11px;background:rgba(255,209,102,.12);color:#fff;font:800 11px Inter,system-ui,sans-serif;line-height:1.45\">ANTEPRIMA · Questa grafica è in prova e non è il sito ufficiale. <a href=\"../lab/\" style=\"color:#ffd166\">Laboratorio</a> · <a href=\"https://giandjcosta.github.io/o-fant-a-girrr/girrr/\" style=\"color:#ffd166\">Sito vero</a></div>" + '\n<div class="col">', 1)
     return t + '\n<script src="../ufficiale/girrr/barra.js"></script>\n'
 if RIL:
     out = pathlib.Path(os.environ["APP_OUT_STADIO"])
