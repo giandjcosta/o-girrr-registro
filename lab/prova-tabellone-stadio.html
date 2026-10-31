@@ -105,6 +105,29 @@ tr{animation:in .45s both}
 body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:none;background:repeating-linear-gradient(115deg,rgba(255,255,255,.04) 0 36px,transparent 36px 72px);animation:strisce 9s linear infinite}
 @keyframes strisce{to{transform:translate3d(79.45px,0,0)}}
 @media (prefers-reduced-motion:reduce){body::before{animation:none}}
+
+/* ChatGPT: forma nelle ultime cinque partite */
+@media(max-width:559px){.panel table{table-layout:fixed;font-size:12px}.panel td,.panel th{padding:6px 2px}.panel td.p{width:23px}.panel td.n{overflow-wrap:anywhere;word-break:normal;font-size:11px}.panel td.dr{width:26px}.panel td.pt{width:23px;font-size:13px}.panel td.fp{width:47px;font-size:10px}.panel th{letter-spacing:0;font-size:9px}.panel th:nth-child(2){width:auto}}
+.formadots{display:inline-flex;gap:3px;vertical-align:middle;white-space:nowrap;margin-left:5px}.formadots i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#8e99a8;flex:none}.formadots i.v{background:#55c98a}.formadots i.n{background:#9aa3af}.formadots i.p{background:#ef6474}.formadots i.empty{background:transparent;border:1px solid #8590a4}@media(max-width:559px){.formadots{gap:2px;margin-left:2px}.formadots i{width:5px;height:5px}}
+
+/* ChatGPT: zone classifica (solo Campionato) */
+.panel tr.z-scudetto td{background:rgba(255,209,102,.19)}.panel tr.z-podio td{background:rgba(81,176,229,.14)}.panel tr.z-salvezza td{background:rgba(239,100,116,.13)}.panel tr.z-scudetto td.p{box-shadow:inset 4px 0 0 #ffd166}.panel tr.z-podio td.p{box-shadow:inset 4px 0 0 #63bce9}.panel tr.z-salvezza td.p{box-shadow:inset 4px 0 0 #ef6474}.zoneleg{display:flex;flex-wrap:wrap;gap:7px 12px;margin:10px 0 15px;font-size:11px;font-weight:700;color:var(--sub)}.zoneleg span{display:inline-flex;align-items:center;gap:5px}.zoneleg i{display:inline-block;width:10px;height:10px;border-radius:3px}.zoneleg .sc{background:#ffd166}.zoneleg .po{background:#63bce9}.zoneleg .sa{background:#ef6474}
+
+/* ChatGPT: grafico posizioni */
+.clubgraph{background:none;border:0;padding:2px 0;color:inherit;font:inherit;text-transform:inherit;text-align:left;cursor:pointer;text-decoration:underline;text-decoration-thickness:1px;text-decoration-color:rgba(255,255,255,.3);text-underline-offset:3px;overflow-wrap:anywhere}.clubgraph:hover,.clubgraph:focus-visible{color:var(--hi);text-decoration-color:var(--hi)}.grafpos{padding:12px;margin:12px 0 18px;border:1px solid rgba(255,255,255,.2);border-radius:12px;background:rgba(255,255,255,.07)}.grafpos h4{font-size:14px;margin-bottom:5px}.grafpos svg{display:block;width:100%;max-width:520px;height:auto;margin:auto}.grafpos .hint{font-size:11px;color:var(--sub);line-height:1.4}
+
+/* ChatGPT: media, massimo e minimo solo quando c'è spazio */
+.panel td.med,.panel th.med{display:none}.panel td.med{font-weight:700;font-size:.75em}.panel th.med{font-size:9px;letter-spacing:.03em}@media(min-width:560px){.panel td.med,.panel th.med{display:table-cell}}@media(min-width:560px) and (max-width:900px){.panel table{font-size:12px}.panel th,.panel td{padding:6px 3px}.panel td.n{overflow-wrap:anywhere;font-size:11px}}
+
+/* ChatGPT: prossimo turno sotto la classifica */
+.turnoprossimo{margin:12px 0 18px;padding:12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:12px}.turnoprossimo h4{font-weight:900;color:var(--hi);font-size:13px;margin-bottom:8px}.turnoprossimo .rpartita{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 10px;border-top:1px solid rgba(255,255,255,.13);padding:8px 0;font-weight:700;font-size:12px;overflow-wrap:anywhere}.turnoprossimo .derbytag{border:1px solid var(--hi);border-radius:6px;color:var(--hi);font-size:10px;padding:2px 5px}.turnoprossimo p{color:var(--sub);font-size:12px}
+
+/* ChatGPT: variazione di posizione */
+.movpos{display:block;font-weight:900;font-size:10px;white-space:nowrap}.movpos.su{color:#61da9a}.movpos.giu{color:#ff8795}@media(max-width:559px){.movpos{font-size:8px}.panel td.p{width:26px}}
+
+/* ChatGPT: spazio sufficiente al Tabellone completo su desktop */
+@media(min-width:861px){.grid{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr)}}
+@media(min-width:861px) and (max-width:1240px){.panel table{font-size:12px;table-layout:fixed}.panel td,.panel th{padding:6px 2px}.panel td.n{overflow-wrap:anywhere;font-size:11px}.panel th{letter-spacing:0}}
 </style>
 <link rel="manifest" href="../../manifest.webmanifest">
 <meta name="theme-color" content="#1d2a52">
@@ -184,10 +207,28 @@ function classifica(rounds,cup){
   return Object.keys(sq).map(function(k){return sq[k]}).sort(function(x,y){
     return y.pt-x.pt||y.fp-x.fp||(y.gf-y.gs)-(x.gf-x.gs)||y.gf-x.gf||((ORD.indexOf(x.n)<0?99:ORD.indexOf(x.n))-(ORD.indexOf(y.n)<0?99:ORD.indexOf(y.n)))||(x.n<y.n?-1:1)});
 }
+/* ChatGPT: forma calcolata solo dalle partite disputate, fino alla giornata selezionata */
+function formaUltime(t){var a=[],cup=mode==='coppa';cal().forEach(function(g){if(g.n>sel[mode])return;g.m.forEach(function(m){var casa=m[cup?1:0],fuori=m[cup?4:3],ris=m[cup?5:4];if(ris==='-'||(t!==casa&&t!==fuori))return;var q=ris.split('-').map(Number),gf=t===casa?q[0]:q[1],gs=t===casa?q[1]:q[0];a.push(gf>gs?'v':gf===gs?'n':'p')})});return a.slice(-5)}
+function formaPallini(t){var v=formaUltime(t),tit={v:'Vittoria',n:'Pareggio',p:'Sconfitta'};return '<span class="formadots" role="img" aria-label="Ultimi risultati: '+(v.length?v.map(function(x){return tit[x]}).join(', '):'nessuna partita')+'">'+v.map(function(x){return '<i class="'+x+'" aria-hidden="true"></i>'}).join('')+'</span>'}
+function classeZona(k,total,fp){return !fp?'':k===0?' z-scudetto':k<=2?' z-podio':k>=total-2?' z-salvezza':''}
+/* ChatGPT: classifica giornata per giornata, con asse 1° in alto */
+var plotTeam=null;
+function posizioniSquadra(t){var cup=mode==='coppa',rounds=cal(),v=[];rounds.forEach(function(g){if(g.n>sel[mode]||!played(g,cup))return;var arr=classifica(rounds.filter(function(a){return a.n<=g.n&&played(a,cup)}),cup),z=arr.filter(function(x){return x.n===t})[0];if(!z)return;if(cup)arr=arr.filter(function(x){return x.gir===z.gir});var i=arr.findIndex(function(x){return x.n===t});if(i>=0)v.push({g:g.n,p:i+1,total:arr.length})});return v}
+function graficoSquadra(){if(!plotTeam)return '';var R=posizioniSquadra(plotTeam);if(!R.length)return '<div class="grafpos">Nessuna giornata conclusa per '+esc(plotTeam)+'.</div>';var tot=mode==='coppa'?5:10,W=460,H=174,left=30,right=12,top=18,bottom=25,iw=W-left-right,ih=H-top-bottom;
+function xx(i){return left+(R.length===1?iw/2:iw*i/(R.length-1))}function yy(p){return top+(p-1)*ih/(tot-1)}
+var pts=R.map(function(d,i){return xx(i)+','+yy(d.p)}).join(' '),lines='';[1,Math.ceil(tot/2),tot].forEach(function(p){lines+='<line x1="'+left+'" y1="'+yy(p)+'" x2="'+(W-right)+'" y2="'+yy(p)+'" stroke="rgba(255,255,255,.18)"/><text x="4" y="'+(yy(p)+4)+'" fill="#c6daf4" font-size="11">'+p+'°</text>'});
+var marks=R.map(function(d,i){return '<circle cx="'+xx(i)+'" cy="'+yy(d.p)+'" r="4" fill="#ffd166"/><text x="'+xx(i)+'" y="'+(yy(d.p)-9)+'" text-anchor="middle" font-size="11" fill="#fff">'+d.p+'°</text><text x="'+xx(i)+'" y="'+(H-4)+'" text-anchor="middle" font-size="10" fill="#c6daf4">'+d.g+'</text>'}).join('');return '<div class="grafpos"><h4>'+esc(plotTeam)+' · Posizione per giornata</h4><p class="hint">Il 1° posto è in alto. Giornate completate fino alla selezione attuale.</p><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Andamento: '+R.map(function(d){return 'giornata '+d.g+', '+d.p+'°'}).join('; ')+'">'+lines+'<polyline points="'+pts+'" fill="none" stroke="#ffd166" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'+marks+'</svg></div>'}
+document.getElementById('tab').addEventListener('click',function(e){var z=e.target.closest('[data-plot]');if(!z)return;var v=decodeURIComponent(z.getAttribute('data-plot'));plotTeam=plotTeam===v?null:v;render()});
+/* ChatGPT: media e record dei punteggi di giornata, solo incontri giocati */
+function statistichePunti(t){var v=[],cup=mode==='coppa';cal().forEach(function(g){if(g.n>sel[mode])return;g.m.forEach(function(m){if(m[cup?5:4]==='-')return;if(m[cup?1:0]===t)v.push(+m[cup?2:1]);else if(m[cup?4:3]===t)v.push(+m[cup?3:2])})});var sum=v.reduce(function(a,x){return a+x},0);return {avg:v.length?pt(sum/v.length):'—',max:v.length?pt(Math.max.apply(null,v)):'—',min:v.length?pt(Math.min.apply(null,v)):'—'}}
+/* ChatGPT: prima giornata ancora da completare, niente risultati inventati */
+function prossimoTurno(){if(!D||!D.cal)return '';var cup=mode==='coppa',g=cal().filter(function(x){return x.m.some(function(m){return m[cup?5:4]==='-'})})[0];if(!g)return '<div class="turnoprossimo"><p>Tutte le giornate in calendario sono state disputate.</p></div>';var h='<div class="turnoprossimo"><h4>Prossima giornata · '+g.n+'ª (Serie A '+g.sa+')</h4>';g.m.forEach(function(m){var a=m[cup?1:0],z=m[cup?4:3],tag=derby(a,z);if(m[cup?5:4]!=='-')return;h+='<div class="rpartita"><span>'+esc(cap(a))+' – '+esc(cap(z))+'</span>'+(tag!==null?'<span class="derbytag">Derby'+(tag?' · '+esc(tag):'')+'</span>':'')+'</div>'});return h+'</div>'}
+/* ChatGPT: confronto con la classifica immediatamente precedente */
+function frecciaPos(t,rows,k,fp){var cup=!fp,rounds=cal().filter(function(g){return g.n<=sel[mode]&&played(g,cup)});if(rounds.length<2)return '';var p=classifica(rounds.slice(0,-1),cup),me=rows[k];if(cup)p=p.filter(function(x){return x.gir===me.gir});var old=p.findIndex(function(x){return x.n===t});if(old<0)return '';var dif=old-k;if(!dif)return '';return '<span class="movpos '+(dif>0?'su':'giu')+'" aria-label="'+(dif>0?'Salita di ':'Discesa di ')+Math.abs(dif)+' posizioni">'+(dif>0?'▲ ':'▼ ')+Math.abs(dif)+'</span>'}
 function tabella(rows,fp,titolo,top){
-  var h='<h3>'+titolo+'</h3><table>'+'<tr><th></th><th>Squadra</th><th class="w">G</th><th class="w">V</th><th class="w">N</th><th class="w">P</th><th class="w">GF</th><th class="w">GS</th><th>DR</th><th>Pt</th>'+(fp?'<th>Fantapunti</th>':'')+'</tr>';
-  rows.forEach(function(x,k){h+='<tr class="'+(k<top?'pod':'')+(x.n===ME?' me':'')+'" style="animation-delay:'+(k*35)+'ms"><td class="p">'+(k+1)+'</td><td class="n">'+esc(cap(x.n))+'</td><td class="w">'+x.g+'</td><td class="w">'+x.v+'</td><td class="w">'+x.nn+'</td><td class="w">'+x.p+'</td><td class="w">'+x.gf+'</td><td class="w">'+x.gs+'</td><td class="dr">'+(x.gf-x.gs>0?'+':x.gf-x.gs<0?'−':'')+Math.abs(x.gf-x.gs)+'</td><td class="pt">'+x.pt+'</td>'+(fp?'<td class="fp">'+pt(x.fp)+'</td>':'')+'</tr>'});
-  return h+'</table>';
+  var h='<h3>'+titolo+'</h3><table>'+'<tr><th></th><th>Squadra</th><th class="w">G</th><th class="w">V</th><th class="w">N</th><th class="w">P</th><th class="w">GF</th><th class="w">GS</th><th>DR</th><th>Pt</th>'+(fp?'<th>Fantapunti</th>':'')+'<th class="med">Media</th><th class="med">Max</th><th class="med">Min</th></tr>';
+  rows.forEach(function(x,k){h+='<tr class="'+(k<top?'pod':'')+(x.n===ME?' me':'')+classeZona(k,rows.length,fp)+'" style="animation-delay:'+(k*35)+'ms"><td class="p">'+(k+1)+frecciaPos(x.n,rows,k,fp)+'</td><td class="n">'+'<button class="clubgraph" data-plot="'+encodeURIComponent(x.n)+'" type="button" aria-label="Apri il grafico di '+esc(x.n)+'">'+esc(cap(x.n))+'</button>'+formaPallini(x.n)+'</td><td class="w">'+x.g+'</td><td class="w">'+x.v+'</td><td class="w">'+x.nn+'</td><td class="w">'+x.p+'</td><td class="w">'+x.gf+'</td><td class="w">'+x.gs+'</td><td class="dr">'+(x.gf-x.gs>0?'+':x.gf-x.gs<0?'−':'')+Math.abs(x.gf-x.gs)+'</td><td class="pt">'+x.pt+'</td>'+(fp?'<td class="fp">'+pt(x.fp)+'</td>':'')+'<td class="med">'+statistichePunti(x.n).avg+'</td><td class="med">'+statistichePunti(x.n).max+'</td><td class="med">'+statistichePunti(x.n).min+'</td></tr>'});
+  return h+'</table>'+(fp?'<div class="zoneleg" aria-label="Legenda zone"><span><i class="sc"></i>Scudetto · 1°</span><span><i class="po"></i>Podio · 2°–3°</span><span><i class="sa"></i>Salvezza · ultimi due</span></div>':'')+(fp||titolo==='Girone B'?graficoSquadra()+prossimoTurno():'');
 }
 var ME='';try{ME=(JSON.parse(localStorage.getItem('fg')||'{}')||{}).team||''}catch(e){}
 function lastPlayed(c,cup){var l=0;c.forEach(function(g){if(played(g,cup))l=g.n});return l}
