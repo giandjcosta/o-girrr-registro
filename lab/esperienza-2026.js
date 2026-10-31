@@ -2,7 +2,7 @@
 (function(){
 'use strict';
 var ORIGIN='https://giandjcosta.github.io/o-fant-a-girrr/',D=null,F=null,L=null,error='',loading=true;
-var NAV=[['home','Oggi al Girrr'],['notifiche','Notifiche'],['sondaggio','Sondaggio'],['partita','Centro partita'],['tabellone','Tabellone'],['annuario','Annuario']];
+var NAV=[['home','Oggi al Girrr'],['notifiche','Notifiche'],['sondaggio','Sondaggio'],['curva','La Curva'],['partita','Centro partita'],['tabellone','Tabellone'],['annuario','Annuario']];
 var SECTIONS={partita:'Partite',classifica:'Tabellone',carriera:'Carriera',giornale:'Giornale',radio:'Radio',curva:'Curva',annuario:'Albo d’oro'};
 var LINKS={partita:'girrr/tabellone.html',classifica:'girrr/tabellone.html',carriera:'girrr/app.html#carriera',giornale:'girrr/giornale.html',radio:'girrr/app.html#radio',curva:'girrr/curva.html',annuario:'girrr/albo.html'};
 var S={tab:(location.hash||'#home').slice(1).split('?')[0],team:'Oranje VC',notif:'tutte',match:null,round1:1,round2:1,push:0,settings:{partita:true,classifica:true,carriera:true,giornale:true,radio:true,curva:true},pollSeen:false};
@@ -47,6 +47,30 @@ function head(t,sub,choose){return '<div class="headline"><div><h2>'+t+'</h2><p>
 function annualMini(){var teams=(D.teams||[]).map(function(t){return {n:t.name,total:(t.pl||[]).reduce(function(s,p){return s+(Number(p.c)||0)},0)}}).sort(function(a,b){return b.total-a.total}),h=null;
 rounds().forEach(function(g){g.m.forEach(function(m){if(!played(m,false))return;[0,1].forEach(function(side){var x=Number(m[side?2:1]);if(!Number.isFinite(x))return;if(!h||x>h.val)h={val:x,t:m[side?3:0],g:g.n}})})});
 return '<div class="anno"><span class="tag gold">Annuario · 2026/27</span><b>La stagione, in numeri</b><div class="grid2"><div class="mini"><small>Rosa più cara</small><strong>'+safe(teams[0]&&teams[0].n||'—')+'</strong><span class="tiny">'+nfmt(teams[0]&&teams[0].total||0)+' milioni</span></div><div class="mini"><small>Punteggio più alto</small><strong>'+safe(h&&h.t||'—')+'</strong><span class="tiny">'+(h?nfmt(h.val)+' · '+h.g+'ª':'Non disponibile')+'</span></div></div><div class="annmenu"><a href="#annuario">Apri il riquadro completo ›</a><a href="index.html">Lab · Albo d’oro ›</a></div></div>'}
+
+/* Voci editoriali: solo avvenimenti ricavati dalle partite della Lega */
+function curvaViva(){
+ var playedDays=games(),day=lastDay(),all=day?day.m.filter(function(m){return played(m,false)}):[],last=all[0],big=all.filter(function(m){var k=m[4].split('-').map(Number);return k[0]!==k[1]}).sort(function(a,b){return Math.abs(b[4].split('-').reduce(function(x,y){return Number(x)-Number(y)}))-Math.abs(a[4].split('-').reduce(function(x,y){return Number(x)-Number(y)}))})[0],stand=day?classifica(day.n):[],lead=stand[0],close=all.filter(function(m){var k=m[4].split('-').map(Number);return k[0]===k[1]})[0],next=firstNext();
+ var posts=[
+  {by:'Il Cronista',kind:'Il resoconto',ic:'🗞️',body:day?'La '+day.n+'ª giornata ha '+all.length+' partite con risultato acquisito. '+(last?'Si parte da '+last[0]+' '+last[4]+' '+last[3]+'.':''):'La stagione attende i primi risultati.'},
+  {by:'Il Tattico',kind:'La lavagna',ic:'📋',body:lead?'In testa c’è '+lead.t+' con '+lead.pt+' punti. Il distacco dalle inseguitrici si decide giornata dopo giornata.':'Per parlare di gerarchie bisogna prima giocare.'},
+  {by:'Il Polemico',kind:'La discussione',ic:'📢',body:close?'Pareggio fra '+close[0]+' e '+close[3]+': '+close[4]+'. Un punto a testa. Siete contenti o vi sta stretto?':'Questa volta non ho un pareggio da contestare. Mi rifarò al prossimo turno.'},
+  {by:'Il Cantastorie',kind:'La memoria',ic:'📚',body:big?'Nell’ultima giornata '+big[0]+' ha chiuso '+big[4]+' contro '+big[3]+'. Un risultato da segnare nel diario della Lega.':'I risultati passano, i racconti restano.'},
+  {by:'Il Super Tifoso',kind:'Il tifo',ic:'🥁',body:next?'Guardate il calendario: la '+next.n+'ª sta arrivando. '+next.m[0][0]+' contro '+next.m[0][3]+'. Serve una voce più forte sugli spalti.':'La prossima sfida è già nei pensieri della curva.'},
+  {by:'L’Intervistatore',kind:'La domanda',ic:'🎙️',body:last?'Il risultato '+last[4]+' è sul tabellone. Agli allenatori di '+last[0]+' e '+last[3]+': quale scelta rifareste?':'Una domanda agli allenatori: che stagione volete raccontare?'}
+ ];
+ return head('Le voci della Curva','Una Curva piena di personalità diverse. I post seguono i risultati e invitano alla discussione.')+
+ '<div class="layout"><section class="stack"><div class="card"><div class="between"><h3>La Curva racconta</h3><span class="tag gold">'+(day?day.n+'ª giornata':'Stagione')+'</span></div><div class="events">'+posts.map(function(p){return '<div class="event"><span class="ic">'+p.ic+'</span><span><b>'+safe(p.by)+' <span class="tag">'+safe(p.kind)+'</span></b><p>'+safe(p.body)+'</p><small>Leggi e commenta nella Curva ›</small></span></div>'}).join('')+'</div></div></section>'+
+ '<aside class="stack"><div class="card"><h3>Una voce, un carattere</h3><p>Il Cronista riassume, il Tattico analizza, il Polemico provoca, il Cantastorie conserva la memoria, il Super Tifoso anima gli spalti e l’Intervistatore apre il dialogo.</p><p>Le battute possono essere numerose, ma ogni personaggio deve avere il suo tono e un fatto concreto a cui reagire.</p><a class="action2" href="#sondaggio">Prova un sondaggio con commenti ›</a></div></aside></div>';
+}
+function giornataVerificata(){
+ var g=lastDay(),ok=g&&g.m.every(function(m){return played(m,false)});
+ if(!g)return '';
+ var passes=[['Importazione dei risultati',ok],['Calcoli e classifica controllati',false],['Giornale, Radio e Moviola pubblicati',false],['Automazioni e controlli finali completati',false]];
+ var all=passes.every(function(x){return x[1]});
+ return '<div class="card"><div class="between"><h3>Stato della '+g.n+'ª giornata</h3><span class="tag '+(all?'gold':'')+'">'+(all?'Giornata conclusa':'Verifica in corso')+'</span></div><div class="events">'+passes.map(function(x){return '<div class="event"><span class="ic">'+(x[1]?'✓':'○')+'</span><span><b>'+safe(x[0])+'</b><p>'+(x[1]?'Risultati acquisiti':'In attesa della conferma da automazioni e controlli')+'</p></span></div>'}).join('')+'</div><p class="tiny">Una giornata non è dichiarata conclusa soltanto perché i punteggi sono comparsi. Lo stato definitivo richiede le conferme effettive di ogni processo.</p></div>';
+}
+
 function home(){
 var t=S.team,day=lastDay(),next=firstNext(),m=teamMatch(next,t),last=lastMatch(t),r=day?rankOf(day.n,t):null,items=notifs(),priority=items.filter(function(e){return e.new}),top=priority.concat(items.filter(function(e){return !e.new})).slice(0,3),prev=read(snapshotKey(t),null);
 return head('Oggi al Girrr',prev?'Da dove eri rimasto? Le notizie essenziali per la tua squadra.':'Il tuo punto di partenza: partite, situazione e novità.')+
@@ -56,7 +80,7 @@ return head('Oggi al Girrr',prev?'Da dove eri rimasto? Le notizie essenziali per
 '<div class="card"><div class="between"><h3>Da non perdere</h3><button class="action2" data-mark>Segna come letto</button></div><div class="events">'+top.map(eventHtml).join('')+'</div></div>'+
 '<div class="card"><div class="between"><h3>La voce della Lega</h3><a class="action2" href="#sondaggio">Vota e commenta</a></div><p>Quale sfida del prossimo turno merita più attenzione?</p><div class="grid2"><div class="mini"><small>Discussione</small><strong>Sondaggio della giornata</strong></div><div class="mini"><small>Commenti</small><strong>'+read('comments-'+(next?next.n:0),[]).length+'</strong></div></div></div>'+
 '</section><aside class="stack"><div class="card"><h3>Ultima partita</h3>'+(last?'<span class="score">'+safe(last.m[0])+' '+safe(last.m[4])+' '+safe(last.m[3])+'</span><p>'+last.g.n+'ª giornata · Risultato ufficiale</p>':'<p>Nessun risultato disponibile.</p>')+'<a class="action2" href="#partita">Rivedi la partita ›</a></div>'+
-annualMini()+'<div class="card"><h3>La tua attività</h3><p>Un unico centro per risultati, Carriera, Girrr Sport, Radio e Curva.</p><a class="action2" href="#notifiche">Apri notifiche ›</a></div></aside></div>'}
+giornataVerificata()+annualMini()+'<div class="card"><h3>La tua attività</h3><p>Un unico centro per risultati, Carriera, Girrr Sport, Radio e Curva.</p><a class="action2" href="#notifiche">Apri notifiche ›</a></div></aside></div>'}
 function notifications(){
 var arr=notifs().filter(function(e){return S.notif==='tutte'||e.cat===S.notif}),push=previewPush();
 return head('Notifiche intelligenti','Tutti gli aggiornamenti in un posto solo, con filtri, stato letto e collegamenti alle sezioni.')+
@@ -101,7 +125,7 @@ function fullAnnual(){var d=lastDay(),cl=d?classifica(d.n):[],t=cl[0],m=lastMatc
 '<aside class="stack"><div class="card"><h3>Le stagioni passate</h3><p>Per gli anni precedenti riportiamo soltanto i risultati e i protagonisti già archiviati. Dove mancano informazioni, compare «Dato non conservato».</p><span class="tag">Nessuna ricostruzione arbitraria</span></div><div class="card"><h3>Archivio finale Leghe FC</h3><p>Il 2026/27 si aggiorna durante il campionato. A fine stagione i dati esportati da Leghe FC possono essere salvati come fotografia storica verificata, senza modificare i risultati precedenti.</p></div></aside></div>'}
 function render(){
 nav();if(!D){$('content').innerHTML='<div class="card">'+(loading?'Carico calendario e squadre…':safe(error||'Dati non disponibili'))+'</div>';return}
-$('content').innerHTML=({home:home,notifiche:notifications,sondaggio:poll,partita:matchCenter,tabellone:tableBoard,annuario:fullAnnual}[S.tab]||home)();
+$('content').innerHTML=({home:home,notifiche:notifications,sondaggio:poll,curva:curvaViva,partita:matchCenter,tabellone:tableBoard,annuario:fullAnnual}[S.tab]||home)();
 var compat=$('compat');if(compat){var sw='serviceWorker' in navigator,push='PushManager' in window,perm=('Notification' in window)?Notification.permission:'non disponibile';compat.textContent='Controllo dispositivo: Service worker '+(sw?'disponibile':'non disponibile')+', Push API '+(push?'disponibile':'non disponibile')+', permesso '+perm+'.'}
 }
 function route(t){if(!NAV.some(function(x){return x[0]===t}))t='home';S.tab=t;location.hash=t;render();window.scrollTo({top:0,behavior:'instant'})}

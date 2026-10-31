@@ -45,3 +45,6 @@ select{min-width:120px}
 @media(max-width:760px){.layout{grid-template-columns:minmax(0,1fr)}.headline{flex-wrap:wrap}.person{width:100%}.person select{width:100%}.top .right{display:none}}
 @media(max-width:520px){main{padding:10px 9px 40px}.card{padding:12px}.nav button{padding:8px 9px;font-size:11px}.bracket{grid-template-columns:1fr}.bracket section{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.bracket section h4{grid-column:1/-1;margin:0}.brmatch{min-height:55px;margin:0}.two{grid-template-columns:1fr}.top h1{font-size:23px}.crest{width:42px;height:42px}.top p{font-size:11px}}
 @media(max-width:360px){.card{padding:10px}.grid2{gap:7px}.mini{padding:8px}.action,.action2{padding:8px 9px}.nav{gap:4px}.nav button{padding:7px;font-size:10px}.event{padding:8px}.controls select{min-width:100px;width:100%}.controls label{flex:1;min-width:0}}
+
+/* Stato dei processi e Curva: stessi riquadri su telefono e desktop */
+.events .tag{vertical-align:middle;margin-left:5px}
