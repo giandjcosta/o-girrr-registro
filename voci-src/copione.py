@@ -86,16 +86,18 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
         add("B", f"E la sconfitta più pesante è quella di {mz[0]}, battuta da {mz[3]} con {f(mz[2])} punti di scarto! Una mazzata!")
         if rng.random() < 0.6: add("G", pick(["Ahia!", "Questa ha fatto male anche a noi!", "Altro che mazzata: una cassa di birra in testa!"]), "urlo")
         if rng.random() < 0.5: add("B", pick(STUP), "stupore")
-    # --- classifica: primi tre, e ogni tanto l'ultimo
+    # --- classifica: solo serie rilevanti, non la stessa notizia ogni settimana
     t1, t2, t3 = T[0], T[1], T[2]
-    add("B", f"In classifica comanda {t1['t']} con {t1['pts']} punti! Seguono {t2['t']} e {t3['t']}.")
-    ns = ANNO_SCORSO.get(t1["t"])
-    if ns and ns >= 8: add("G", f"E pensare che l'anno scorso {t1['t']} era {ORD[ns]}. Qui c'è una rinascita!", "urlo")
-    elif t1["t"] in STORIE: add("G", pick(STORIE[t1["t"]]), "commosso" if t1["t"] in ("Oranje VC", "Atletico ma non troppo", "Grodah") else None)
     last = T[-1]
-    if rng.random() < 0.5 or (last["v"] == 0 and last["g"] >= 3):
-        add("B", f"In fondo c'è {last['t']}. Può risalire e sperare di uscire dall'ultima posizione?")
-        add("G", pick(["Io dico di sì. Poi però bisogna scrivere la formazione!", "La speranza è l'ultima a morire. Come l'ultimo in classifica!", "Una vittoria e si cambia musica!"]))
+    zona = D.get("zona_classifica")
+    if zona and zona.get("canale") == "radio" and zona.get("testo"):
+        add("B", zona["testo"], "urlo" if zona.get("tipo") == "vetta" else None)
+        add("G", pick(["Questa classifica comincia a raccontare una storia!", "Qui non bastano le parole, ora servono i risultati!",
+                         "Vedremo se la prossima giornata confermerà tutto."]))
+    elif n == 1:
+        add("B", f"Prima classifica della stagione: {t1['t']} davanti a tutti. Ma la strada è ancora lunga.")
+    # Le storie storiche restano per le altre rubriche; non attribuiamo
+    # una notizia speciale a chi occupa il primo posto da una sola giornata.
     nm = numeri(T, n, rng)
     if nm:
         add("B", rng.choice(["E adesso un po' di numeri!", "Diamo i numeri, in senso buono!", "Due numeri sulla stagione!"]))

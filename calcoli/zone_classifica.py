@@ -98,7 +98,10 @@ def evento(d, aspettative=None):
             candidati.append((65, "podio", team, ss["podio"], testo))
     if not candidati:
         return None
-    candidati.sort(key=lambda z: (-z[0],z[2]))
+    # Ruota il tema dominante ogni quattro giornate: la vetta non soffoca
+    # per tutta la stagione chi resta in fondo o chi lotta per il podio.
+    preferito = ("vetta", "retrocessione", "podio")[((n-3)//4)%3]
+    candidati.sort(key=lambda z: (-(z[0] + (55 if z[1]==preferito else 0)), z[2]))
     prior, tipo, team, durata_, testo = candidati[0]
     # Una storia può essere proposta in una sola sede per giornata;
     # il Giornale qui è il profilo ufficiale della Curva, non il PDF.

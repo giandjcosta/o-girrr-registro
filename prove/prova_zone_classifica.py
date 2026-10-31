@@ -22,14 +22,15 @@ d=calendario(2)
 assert z.evento(d) is None  # leader 2 giornate: niente ritornello
 d=calendario(3)
 attese={"squadre":{squadre[9]:{"attesa":2}}}
-e=z.evento(d,attese)
-assert e["tipo"]=="sorpresa" and e["squadra"]==squadre[9] and e["durata"]==3
+e=z.evento(calendario(2),attese)
+assert e["tipo"]=="sorpresa" and e["squadra"]==squadre[9] and e["durata"]==2
 e=z.evento(d)
 assert e["tipo"]=="vetta" and e["durata"]==3 and e["canale"]=="radio"
 assert z.evento(calendario(4)) is None  # non ripete ogni settimana
 assert z.evento(calendario(5)) is None
 assert z.evento(calendario(6)) is None
-assert z.evento(calendario(7))["durata"]==7
+assert z.evento(calendario(7))["tipo"]=="retrocessione"
+assert z.evento(calendario(11))["tipo"]=="podio"
 # Giornate parziali o non consecutive non producono notizie spurie
 d=calendario(3)
 d["cal"]["lega"][-1]["m"][2][4]="-"

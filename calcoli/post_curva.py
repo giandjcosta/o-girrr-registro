@@ -56,6 +56,8 @@ def m(t):
 
 def post(e):
     t = e["tipo"]
+    if t == "zona_classifica":
+        return [(e["h"], e["titolo"]+"\n"+e["testo"])]
     if t == "sfida":
         fr = f": «{e['frase']}»" if e.get("frase") else "."
         out = [(GS, f"SFIDA LANCIATA\n{m(e['da'])} contro {m(e['a'])}{fr} Sta per nascere un nuovo Derby? #GirrrSport #Derby")]
@@ -173,6 +175,22 @@ def evento_moviola(mv, D):
 
 def main():
     eventi = json.loads(EVENTI.read_text(encoding="utf-8")) if EVENTI.exists() else []
+    # Solo con un data.json esplicitamente passato dal workflow: mai post da
+    # una fetch implicita sul sito, e niente duplicati per la stessa giornata.
+    if DATI and DATI.is_file():
+        try:
+            import zone_classifica
+        except ImportError:
+            from calcoli import zone_classifica
+        prova = json.loads(DATI.read_text(encoding="utf-8"))
+        if len(prova.get("teams") or []) >= 8:
+            aspettative = json.loads((QUI/"aspettative.json").read_text(encoding="utf-8"))
+            z = zone_classifica.evento(prova, aspettative)
+            if z and z["canale"] in ("curva", "giornale"):
+                eventi.append(dict(tipo="zona_classifica", k=z["chiave"],
+                                   h=GS if z["canale"]=="curva" else GIORNALE,
+                                   titolo=z["titolo"], testo=z["testo"],
+                                   giornata=z["giornata"]))
     mv = json.loads(MOVIOLA.read_text(encoding="utf-8")) if MOVIOLA.exists() else None
     if mv and (mv.get("giornate") or {}):
         eventi += evento_moviola(mv, leggi_dati())

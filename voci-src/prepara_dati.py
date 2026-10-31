@@ -44,6 +44,18 @@ def main():
         print("giornata="); return          # la Coppa di questa giornata non è ancora chiusa: aspetto
     # Champions Cup: se ne parla solo se si è giocato nella stessa giornata di Serie A del campionato
     dati["cup"] = [c for c in d["cal"].get("cup", []) if c.get("sa") == sa and c.get("m") and all(m[5] and m[5] != "-" for m in c["m"])][-1:]
+    # Una sola storia notevole quando merita: logica comune con i post Curva.
+    # Import dalla cartella calcoli del progetto, senza servizi a pagamento.
+    try:
+        sys.path.insert(0, str(QUI.parent / "calcoli"))
+        import zone_classifica
+        att = carica(QUI.parent / "calcoli/aspettative.json", {})
+        evento_zona = zone_classifica.evento(d, att)
+    except (ImportError, ValueError, KeyError, TypeError) as e:
+        print("Notizie di classifica non disponibili:", e)
+        evento_zona = None
+    dati["zona_classifica"] = evento_zona if evento_zona and evento_zona["canale"] == "radio" else None
+    dati["cronaca_classifica"] = evento_zona  # anche per la redazione del Giornale
     (QUI / "dati.json").write_text(json.dumps(dati, ensure_ascii=False), encoding="utf-8")
     conf = [e for e in ev if e.get("tipo") == "conferenza" and e.get("giornata") == n]
     squadre = {}
