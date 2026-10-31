@@ -106,6 +106,9 @@ body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:no
 @keyframes strisce{to{transform:translate3d(79.45px,0,0)}}
 @media (prefers-reduced-motion:reduce){body::before{animation:none}}
 
+/* Layout PC: tutta la classifica leggibile; su tablet le sezioni vanno in colonna */
+@media (min-width:861px) and (max-width:1149px){.grid{grid-template-columns:1fr}}
+@media (min-width:1150px){.grid{grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr)}}
 /* Tabellone 31 ottobre: solo fascia laterale, posizioni leggibili da telefono e PC */
 .panel table{width:100%;border-collapse:separate;border-spacing:0;table-layout:auto}
 .panel th{font-size:clamp(12px,1.1vw,15px);letter-spacing:.015em;color:#f1f4fc;font-weight:900;padding:10px 5px;text-transform:none;white-space:nowrap}
