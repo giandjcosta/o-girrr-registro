@@ -1,0 +1,39 @@
+name: ChatGPT Anteprima 5.3 · UI reale
+on:
+  push:
+    branches: [chatgpt/anteprima-53-integrata]
+    paths:
+      - 'anteprima/5.3/**'
+      - 'prove/collaudo_anteprima_53_browser.py'
+      - '.github/workflows/chatgpt-anteprima-53-qa.yml'
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Controlla JavaScript
+        run: node --check anteprima/5.3/ui.js
+      - name: Regressioni originali
+        run: |
+          python3 anteprima/build.py
+          python3 prove/collaudo_anteprima_52.py
+      - name: Installa Chromium
+        run: |
+          python3 -m pip install playwright
+          python3 -m playwright install chromium
+      - name: Avvia server locale
+        run: |
+          python3 -m http.server 8765 >/tmp/qa53-server.log 2>&1 &
+          sleep 2
+      - name: Prova Home, Tabellone, Albo, Curva, Notifiche Lega e Stadio
+        run: python3 prove/collaudo_anteprima_53_browser.py
+      - name: Screenshot per la revisione grafica
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: anteprima-53-screenshot
+          path: anteprima/5.3/qa-screenshot/
+          if-no-files-found: ignore
+          retention-days: 14
