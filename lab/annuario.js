@@ -11,7 +11,7 @@ function calcola(d){
  var acquisti=[];teams.forEach(function(t){t.pl.forEach(function(p){acquisti.push({nome:nome(d,p.id),squadra:t.nome,costo:Number(p.c)||0})})});
  acquisti.sort(function(a,b){return b.costo-a.costo||a.nome.localeCompare(b.nome,'it')});
  var calendario=((d.cal||{}).lega||[]).slice().sort(function(a,b){return a.n-b.n});
- var giocate=calendario.filter(function(g){return g.m&&g.m.length&&g.m.every(function(m){return /^\d+-\d+$/.test(String(m[4]))})});
+ var giocate=[];calendario.some(function(g){if(g.n!==giocate.length+1||!g.m||g.m.length!==teams.length/2||!g.m.every(function(m){return /^\d+-\d+$/.test(String(m[4]))}))return true;var presenti=g.m.flatMap(function(m){return [m[0],m[3]]}).sort().join('|');if(presenti!==teams.map(function(t){return t.nome}).sort().join('|'))return true;giocate.push(g);return false});
  var sa={};giocate.forEach(function(g){sa[String(g.sa)]=true});
  var gol={};Object.keys(d.votes||{}).forEach(function(id){
    var tot=0;Object.keys(d.votes[id]||{}).forEach(function(g){if(!sa[String(g)])return;
@@ -36,7 +36,7 @@ function calcola(d){
  })});
  var serie=Math.max(0,...teams.map(function(t){return t.massima}));
  var completa=calendario.length>=34&&calendario.every(function(g){return g.m&&g.m.length===5&&g.m.every(function(m){return /^\d+-\d+$/.test(String(m[4]))})});
- var classifica=completa?teams.slice().sort(function(a,b){return b.pt-a.pt||(b.gf-b.gs)-(a.gf-a.gs)||b.fp-a.fp}).map(function(t){return t.nome}):null;
+ var classifica=completa?teams.slice().sort(function(a,b){return b.pt-a.pt||b.fp-a.fp||(b.gf-b.gs)-(a.gf-a.gs)||b.gf-a.gf}).map(function(t){return t.nome}):null;
  return {stagione:'2026/27',giornate:giocate.length,acquisto:acquisti[0]||null,cara:teams.slice().sort(function(a,b){return b.costo-a.costo})[0]||null,economica:teams.slice().sort(function(a,b){return a.costo-b.costo})[0]||null,
    capocannoniere:marcatori.length&&marcatori[0].gol>0?marcatori[0]:null,marcatori:teams.map(function(t){return {squadra:t.nome,giocatore:t.marcatore}}),
    migliore:massimo,peggiore:minimo,scarto:scarto,serie:{n:serie,squadre:teams.filter(function(t){return t.massima===serie&&serie>0}).map(function(t){return t.nome})},
@@ -53,19 +53,19 @@ function view(){
    var a=d.acquisto,mc=d.capocannoniere,hi=d.migliore,lo=d.peggiore,sc=d.scarto;
    h+='<div class="card"><h3>2026/27 · '+(d.completa?'Stagione conclusa':'In corso')+'</h3><p class="sm mut" style="margin:8px 0 12px">'+d.giornate+' giornate concluse. Campione, podio e ultimo si assegnano a stagione conclusa.</p>';
    h+=griglia([
-     ['Giocatore più pagato',a?a.nome+' · '+n(a.costo)+' milioni · '+a.squadra:null],
-     ['Rosa più costosa',d.cara?d.cara.nome+' · '+n(d.cara.costo)+' milioni':null],
-     ['Rosa più economica',d.economica?d.economica.nome+' · '+n(d.economica.costo)+' milioni':null],
-     ['Capocannoniere della Lega',mc?mc.nome+' · '+mc.gol+' gol · '+mc.squadra:'In corso'],
-     ['Miglior punteggio di giornata',hi?hi.squadra+' · '+n(hi.valore)+' punti (G'+hi.giornata+')':null],
-     ['Peggior punteggio di giornata',lo?lo.squadra+' · '+n(lo.valore)+' punti (G'+lo.giornata+')':null],
+     ['Giocatore più pagato',a?a.nome+' · '+n(a.costo)+' fantacrediti · '+a.squadra:null],
+     ['Rosa più costosa',d.cara?d.cara.nome+' · '+n(d.cara.costo)+' fantacrediti':null],
+     ['Rosa più economica',d.economica?d.economica.nome+' · '+n(d.economica.costo)+' fantacrediti':null],
+     ['Più gol fra i giocatori in rosa',mc?mc.nome+' · '+mc.gol+' gol · '+mc.squadra:'In corso'],
+     ['Miglior punteggio di giornata',hi?hi.squadra+' · '+n(hi.valore)+' Fantapunti (G'+hi.giornata+')':null],
+     ['Peggior punteggio di giornata',lo?lo.squadra+' · '+n(lo.valore)+' Fantapunti (G'+lo.giornata+')':null],
      ['Vittoria più larga',sc?sc.squadra+' contro '+sc.contro+' · '+sc.risultato+' (G'+sc.giornata+')':null],
      ['Serie di vittorie più lunga',d.serie.n?d.serie.squadre.join(', ')+' · '+d.serie.n+' consecutive':'In corso'],
      ['Campione',d.completa?d.classifica[0]:'In corso'],
      ['Podio',d.completa?d.classifica.slice(0,3).map(function(x,i){return (i+1)+'° '+x}).join(' · '):'In corso'],
      ['Ultimo',d.completa?d.classifica[d.classifica.length-1]:'In corso']
    ]);
-   h+='<details style="margin-top:15px"><summary style="cursor:pointer;font-weight:800">Capocannoniere di ogni squadra</summary><div style="margin-top:10px">'+griglia(d.marcatori.map(function(x){return [x.squadra,x.giocatore?x.giocatore.nome+' · '+x.giocatore.gol+' gol':'Nessun gol registrato']}))+'</div></details></div>';
+   h+='<details style="margin-top:15px"><summary style="cursor:pointer;font-weight:800">Marcatori nelle rose · giornate di Serie A associate</summary><div style="margin-top:10px">'+griglia(d.marcatori.map(function(x){return [x.squadra,x.giocatore?x.giocatore.nome+' · '+x.giocatore.gol+' gol':'Nessun gol registrato']}))+'</div></details></div>';
  }
  var archivio={};stato.archivio.forEach(function(x){if(x&&x.stagione&&x.stagione!=='2026/27')archivio[x.stagione]=x});
  h+='<div class="card"><h3>Stagioni precedenti</h3><div style="display:grid;gap:6px;margin-top:10px">';

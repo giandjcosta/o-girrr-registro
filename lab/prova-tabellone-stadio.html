@@ -167,7 +167,7 @@ body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:no
 }
 @media(min-width:1100px){.panel table{font-size:15px}.panel td{padding:11px 5px}.panel th{font-size:13px}}
 
-.panel table{table-layout:auto}.panel .movpos{display:inline;font-size:9px}.clubgraph{font:inherit;color:inherit;text-align:left;white-space:normal;overflow-wrap:anywhere}.forma{display:flex;gap:3px}.panel .med{display:none}@media(min-width:1100px){.panel .med{display:table-cell}}.grid{grid-template-columns:1fr!important}@media(min-width:1000px){#board{display:grid;grid-template-columns:1fr 1fr;gap:12px}#board>h3,#board>.kick{grid-column:1/-1}.panel td.n{font-size:15px;min-width:165px}}@media(max-width:559px){.panel td.n{font-size:12px;max-width:none}.panel .formadot{width:5px;height:5px}.panel th{font-size:11px}.panel td.p{min-width:32px!important}}
+.panel table{table-layout:auto}.panel .movpos{display:inline;font-size:9px}.clubgraph{font:inherit;color:inherit;text-align:left;white-space:normal;overflow-wrap:anywhere}.forma{display:flex;gap:3px}.panel .med{display:none}@media(min-width:1100px){.panel .med{display:table-cell}}.grid{grid-template-columns:1fr!important}@media(min-width:1000px){#board{display:grid;grid-template-columns:1fr 1fr;gap:12px}#board>h3,#board>.kick{grid-column:1/-1}.panel td.n{font-size:15px;min-width:165px}}@media(max-width:559px){.panel td.n{font-size:12px;max-width:none}.panel .formadot{width:5px;height:5px}.panel th{font-size:12px}.panel td.p{min-width:32px!important}}
 </style>
 <link rel="manifest" href="../../manifest.webmanifest">
 <meta name="theme-color" content="#1d2a52">
@@ -226,7 +226,7 @@ function dk(a,b){return [a,b].map(function(x){return String(x).toLowerCase()}).s
 ((window.NOV&&NOV.riv)||[]).forEach(function(o){RIVM[dk(o.a,o.b)]=o});
 function derby(a,b){var k=dk(a,b),o=RIVM[k];if(DX[k]||!(DV[k]||(o&&o.r>=80)))return null;return DN[k]||(o&&o.n)||''}
 function pt(x){return String(Math.round(x*100)/100).replace('.',',')}
-function played(g,cup){var i=cup?5:4;return g.m.some(function(m){return m[i]!=='-'})}
+function played(g,cup){var i=cup?5:4;return g.m.length>0&&g.m.every(function(m){return /^\d+-\d+$/.test(String(m[i]))})}
 var KO=[{n:11,lab:'Quarti',tit:'Quarti di finale',ic:'Q',k:4},{n:12,lab:'Semi',tit:'Semifinali',ic:'S',k:2},{n:13,lab:'Finale',tit:'Finale',ic:'F',k:1}];
 function nmax(){return mode==='coppa'?cal().length+KO.length:cal().length}
 function koOf(n){return KO.filter(function(x){return x.n===n})[0]}
@@ -273,7 +273,7 @@ function tabella(rows,fp,titolo,top){
 }
 
 var ME='';try{ME=(JSON.parse(localStorage.getItem('fg')||'{}')||{}).team||''}catch(e){}
-function lastPlayed(c,cup){var l=0;c.forEach(function(g){if(played(g,cup))l=g.n});return l}
+function lastPlayed(c,cup){var l=0;c.some(function(g){if(g.n!==l+1||!played(g,cup))return true;l=g.n;return false});return l}
 function render(){
   var cup=mode==='coppa',c=cal(),n=sel[mode],g=c.filter(function(x){return x.n===n})[0],ko=cup?koOf(n):null;
   if(ko)return renderKo(c,ko);

@@ -134,3 +134,6 @@ print("scritto attuale.html")
 if not RIL:
     from navigazione import genera
     genera()
+if not RIL:
+    from build53 import genera53
+    genera53()

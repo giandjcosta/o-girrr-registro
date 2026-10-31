@@ -1,15 +1,15 @@
 /* Cornice Anteprima del Registro: conserva il percorso quando cambia la grafica. */
 (function(){
 'use strict';
-var base=new URL('../',location.href),dir=new URL('anteprima/',base);
+var base=new URL('../',location.href),dir=new URL('anteprima/5.3/',base);
 var frame=document.getElementById('f'),toggle=document.getElementById('tg');
 var la=document.getElementById('la'),ln=document.getElementById('ln');
-function home(m){return new URL('home-'+(m==='n'?'stadio':'lega')+'.html',dir)}
+function home(m){return new URL('index-'+(m==='n'?'stadio':'lega')+'.html',dir)}
 function pulisci(u){var x=new URL(u,location.href);x.searchParams.delete('_t');return x}
 function interno(u){return u.origin===base.origin&&u.pathname.indexOf(base.pathname)===0}
 function modo(u){
  var x=new URL(u,location.href);
- return x.searchParams.get('skin')==='stadio'||/\/ufficiale\/nuovo\//.test(x.pathname)||/\/(home|tabellone)-stadio\.html$/.test(x.pathname)||/\/anteprima\/(index\.html)?$/.test(x.pathname)?'n':'a';
+ return x.searchParams.get('skin')==='stadio'||/\/ufficiale\/nuovo\//.test(x.pathname)||/\/(index|home|tabellone|albo|curva|notifiche|campo)-stadio\.html$/.test(x.pathname)||/\/anteprima\/(index\.html)?$/.test(x.pathname)?'n':'a';
 }
 function conv(u,m){
  var x=pulisci(u),skin=m==='n'?'stadio':'lega',app=m==='n'?'index.html':'attuale.html';
@@ -18,27 +18,23 @@ function conv(u,m){
  var legacy=/^ufficiale\/(nuovo\/)?girrr\//.test(rel);
  var modern=rel.indexOf('anteprima/')===0;
  if(legacy){
-  var dest={ '':'home-'+skin+'.html','index.html':'home-'+skin+'.html',
-   'app.html':app,'albo.html':app,'tabellone.html':'tabellone-'+skin+'.html',
-   'totogirrr.html':'totogirrr-52.html','giornale.html':app,'derby.html':app }[file];
-  if(!dest){
-   x.pathname=base.pathname+'ufficiale/'+(m==='n'?'nuovo/':'')+'girrr/'+file;
-   return x;
+  var dest={'':'index','index.html':'index','albo.html':'albo','tabellone.html':'tabellone','curva.html':'curva','notifiche.html':'notifiche'}[file];
+  if(dest){x.pathname=dir.pathname+dest+'-'+skin+'.html';return x}
+  if(file==='app.html'&&x.hash==='#oro'){x.pathname=dir.pathname+'albo-'+skin+'.html';return x}
+  x.pathname=base.pathname+'ufficiale/'+(m==='n'?'nuovo/':'')+'girrr/'+file;return x;
+ }
+ if(modern){
+  var section=/^(index|home|tabellone|albo|curva|notifiche|campo)-(lega|stadio)\.html$/.exec(file);
+  if(section){x.pathname=dir.pathname+(section[1]==='home'?'index':section[1])+'-'+skin+'.html';if(section[1]==='campo')x.searchParams.set('skin',skin);return x}
+  if(file==='campo.html'){x.pathname=dir.pathname+'campo-'+skin+'.html';x.searchParams.set('skin',skin);return x}
+  if(file==='totogirrr-52.html'){x.pathname=base.pathname+'anteprima/totogirrr-52.html';x.searchParams.set('skin',skin);return x}
+  if(file==='index.html'||file==='attuale.html'||file===''){
+   if(!x.hash)return home(m);
+   if(x.hash==='#oro'){x.pathname=dir.pathname+'albo-'+skin+'.html';return x}
+   x.pathname=base.pathname+'anteprima/'+app;return x;
   }
-  x.pathname=dir.pathname+dest;
-  if(file==='albo.html')x.hash='oro';
-  if(file==='giornale.html')x.hash='sport';
-  if(file==='derby.html')x.hash='derby';
-  if(file==='totogirrr.html')x.searchParams.set('skin',skin);
- }else if(modern){
-  if(/^home-(lega|stadio)\.html$/.test(file))x.pathname=dir.pathname+'home-'+skin+'.html';
-  else if(/^tabellone-(lega|stadio)\.html$/.test(file))x.pathname=dir.pathname+'tabellone-'+skin+'.html';
-  else if(file==='campo.html'||file==='totogirrr-52.html')x.searchParams.set('skin',skin);
-  else if(file==='index.html'||file==='attuale.html'||file===''){
-   x.pathname=dir.pathname+(x.hash?app:'home-'+skin+'.html');
-  }else return home(m);
- }else return home(m);
- return x;
+ }
+ return home(m);
 }
 function fresco(u){var x=new URL(u);x.searchParams.set('_t',Date.now());return x.href}
 function mark(m){toggle.setAttribute('aria-checked',String(m==='n'));la.className=m==='a'?'on':'';ln.className=m==='n'?'on':''}

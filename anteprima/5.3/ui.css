@@ -111,3 +111,10 @@
  .v53-panel{padding:13px}
  .v53-banner{font-size:10px}
 }
+
+/* Collegamenti nativi, senza una seconda barra di sezioni. */
+.v53-utilities{display:flex;justify-content:flex-end;gap:12px;flex-wrap:wrap;margin:8px 0 18px}.v53-utilities a{font-size:12px;font-weight:800;padding:10px 12px;min-height:44px;display:inline-flex;align-items:center;border:1px solid #ffffff30;border-radius:9px;text-decoration:none}.v53-utilities a:hover{background:#ffffff14}.v53-utilities a:focus-visible{outline:3px solid #ffd166;outline-offset:2px}
+.v53-home{padding:18px;border-color:#ffffff35}.v53-home .v53-desc{display:none}.v53-home .v53-h1{font-size:25px!important}.v53-home .v53-metrics{margin:12px 0 6px}.v53-pills button{min-height:44px}.v53-banner{position:static;font-size:10px;min-height:28px}.v53-home .v53-metric.featured{background:#ffffff09;border-color:#ffffff25}
+[data-v53-skin=lega] .v53-btn{background:#d62839;border-color:#d62839;color:#fff}[data-v53-skin=lega] .v53-btn.ghost{background:transparent;color:#fff;border-color:#ffffff40}
+[data-v53-skin=lega] .v53-pill[aria-selected=true]{background:#d62839;border-color:#d62839;color:#fff}
+@media(max-width:640px){.v53-home .v53-metrics{grid-template-columns:1fr}.v53-home .v53-metric.featured{grid-column:auto}.v53-home .v53-metric{padding:10px}.v53-home .v53-metric b{font-size:15px}.v53-live{flex-wrap:wrap}.v53-utilities{justify-content:flex-start}}

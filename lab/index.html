@@ -472,10 +472,12 @@ function vSfide(){
 
 /* ---------- ALBO D'ORO (come nell'app vera) ---------- */
 var STAG=[['2021/22','Serie A','Wakanda','apo'],['2022/23','Serie A','Wakanda','apo'],['2023/24','Serie A','Mugiwara','Leanzino'],['2024/25','Costa Cup','PornHub FC','17peppe17'],['2025/26','Gioberti Cup','WOA','ser'],['2025/26','Coppa Campioni','Grodah','RikyArma']];
-S.oro=S.oro||'storia';
+S.oro=new URLSearchParams(location.search).get('albo')||S.oro||'storia';
 var PRE=[['2016/17',null,'Mario'],['2017/18','Apo Team','apo'],['2018/19','Urba Team','Urba'],['2019/20',null,null],['2020/21',null,null]];
 var LEG={"eras": {"prima": "L'Era dei Titani", "oggi": "L'Era Contemporanea", "vuoto": "Il Grande Silenzio"}, "libro": [{"t": "Capitolo I · L'Era dei Titani", "p": ["Il primo campionato si gioca nella stagione 2016/17, tra gli amici che oggi chiamiamo Padri Fondatori. Non ci sono ancora il nome di oggi, gli albi e le storie; i dati di quegli anni non sono stati conservati e arrivano dai ricordi del gruppo.", "2016/17: vince Mario, trascinato dai gol di Mertens. 2017/18: vince apo, con Icardi e Higuain in attacco. 2018/19: vince Urba, davanti a RikyArma e Filippo, e chiude la sua avventura in lega da campione."]}, {"t": "Capitolo II · Il Grande Silenzio", "p": ["Le stagioni 2019/20 e 2020/21 non hanno un vincitore. Nel 2020 il Covid interrompe il campionato e per due anni non si gioca. Nel trasloco della lega si perdono numeri, classifiche e formazioni; di quel periodo restano solo i ricordi di chi c'era."]}, {"t": "Capitolo III · L'Era Contemporanea", "p": ["La Lega riparte nell'estate del 2021, subito dopo l'Europeo, con il nome O Fant A Girrr e la stagione 2021/22. Al via ci sono otto allenatori, tra vecchi volti e nuovi arrivi. apo vince il primo titolo della nuova era e si ripete nel 2022/23.", "Negli anni seguenti la compagnia cambia a ogni stagione, tra nuovi ingressi e partenze. I titoli vanno a Leanzino con il Mugiwara nel 2023/24, a 17peppe17 con il PornHub FC nel 2024/25 e a ser con la WOA nel 2025/26; la Coppa Campioni 2025/26 va a RikyArma con il Grodah. La storia del nome O Fant A Girrr è raccontata nella scheda La Storia dell'Albo d'oro."]}], "titani": [{"t": "Il primo re", "p": "Nel 2016/17 la compagnia gioca il suo primo campionato e lo vince Mario, con una stagione che ha un nome solo: Mertens, che segna senza fermarsi e porta la squadra fino in cima. È l'anno in cui nasce tutto, e il suo è il primo nome a entrare nell'albo."}, {"t": "Icardi e Higuain", "p": "Nel 2017/18 la corona passa ad Apo, con la forza dei suoi attaccanti: Icardi e Higuain, due dei migliori marcatori della stagione. È il titolo di chi ha saputo costruire un reparto d'attacco da leggenda."}, {"t": "Il titolo di Urba", "p": "Nel 2018/19 sul trono sale Urba, con la sua Urba Team: vince davanti a RikyArma e a Filippo, terzo, e poi lascia la lega da campione. Il suo nome resta nell'albo una volta sola, ma basta a farne una leggenda."}], "nota": "Chi c'era: apo, Mario, Leanzino, RikyArma e ser attraversano tutta l'epoca, insieme a Urba, Filippo e altri che hanno lasciato il segno. Nel 2019/20 il torneo si è interrotto per il Covid; la Lega è passata a O Fant A Girrr nell'estate 2021, con la stagione 2021/22.", "contemporanea": [{"t": "Il ritorno del re", "p": "Nel 2021/22 la Lega rinasce con il nome O Fant A Girrr e il primo trono della nuova era se lo prende apo, con il Wakanda. Il Mugiwara di Leanzino gli resta in scia fino all'ultima giornata, ma non basta. È il titolo di chi aveva già regnato tra i Titani e torna a farlo come se non se ne fosse mai andato."}, {"t": "Il bis del Wakanda", "p": "Nel 2022/23 il Wakanda si ripete e apo resta sul trono, davanti alla WOA di ser. Due titoli di fila: nella storia della Lega non ci è riuscito nessun altro. È la stagione in cui il regno di apo tocca il punto più alto."}, {"t": "Il titolo della discordia", "p": "Nel 2023/24 il titolo si decide all'ultima giornata, tra Leanzino e RikyArma. Al Grodah basta battere la Real Madrink di AndrewTT, che la formazione non l'ha schierata: quell'anno chi restava senza formazione perdeva 3-0 a tavolino, e la regola che oggi la schiera lo stesso e dà una multa non c'era ancora. La storia racconta che il giorno prima Leanzino aveva chiesto a tutti di schierarsi, e alla fine la formazione della Real Madrink va in campo comunque: si disse che a schierarla fosse stato proprio lui, una scelta che si discute ancora oggi. Il Grodah non va oltre il pareggio, il Mugiwara vince e chiude a 57 punti, due più di Sdrogo e Grodah. Sul campo l'ha vinto Leanzino; per mezza lega quello scudetto resta di RikyArma, e c'è chi lo chiama lo scudetto di cartone. Da quella giornata nascono la regola della multa e la rivalità tra i due. E RikyArma, che ogni estate dice di smettere, ogni estate è di nuovo al via."}, {"t": "Dall'ultimo al primo", "p": "Nel 2024/25 la Costa Cup va a 17peppe17, con il PornHub FC, appena un anno dopo aver chiuso ultimo. Dal fondo alla vetta in una sola stagione: prima di lui non l'aveva fatto nessuno. È il titolo di chi non ha avuto paura di ricominciare da capo."}, {"t": "La pazienza di ser", "p": "Nel 2025/26 sul trono sale ser, con la sua WOA: vince la Gioberti Cup con dieci punti sul Grodah, il margine più largo dell'era. C'era dal 2016 e non ha mai cambiato squadra né nome. Il trofeo che aspettava da dieci anni, alla fine, è arrivato."}, {"t": "La Coppa di RikyArma", "p": "Nello stesso anno la Coppa Campioni va a RikyArma, con il Grodah, che in finale batte 4-1 il Mugiwara di Leanzino. Tre stagioni prima aveva chiuso ultimo. È il trofeo di chi ha scalato la classifica un gradino alla volta."}]};
 var OROSEZ=[['storia','La storia della Lega'],['stagioni',LEG.eras.oggi],['prima',LEG.eras.prima],['derby','I Derby'],['annuario','Annuario'],['all','Gli allenatori'],['regole','Regole']];
+if(!OROSEZ.some(function(x){return x[0]===S.oro}))S.oro='storia';
+
 /* ChatGPT: Annuario - record ricavati dal data.json pubblico della stagione in corso. */
 var AN_DATA=null,AN_LOADING=false,AN_ERR=false;
 function annuarioCarica(){
@@ -488,42 +490,20 @@ function annuarioAttuale(d){
  return inizio+'/'+String((inizio+1)%100).padStart(2,'0');
 }
 function annuarioDati(d){
- var squadre=Array.isArray(d.teams)?d.teams:[],roster=[],costi=[];
- squadre.forEach(function(t){var totale=0;(t.pl||[]).forEach(function(p){var v=Number(p.c);if(!Number.isFinite(v))return;totale+=v;roster.push({id:String(p.id),c:v,team:t.name})});costi.push({n:t.name,v:totale})});
- function nr(n){return Number(n).toLocaleString('it-IT',{maximumFractionDigits:2})}
- function best(arr,fn){if(!arr.length)return null;return arr.slice().sort(fn)[0]}
- var carissimo=best(roster,function(a,b){return b.c-a.c}),ricca=best(costi,function(a,b){return b.v-a.v}),economica=best(costi,function(a,b){return a.v-b.v});
- var inLega=new Set(roster.map(function(p){return p.id})),bomber=best(Object.keys(d.ps||{}).filter(function(id){return inLega.has(id)}).map(function(id){return {id:id,g:Number((d.ps[id]||{}).g)||0}}).filter(function(p){return p.g>0}),function(a,b){return b.g-a.g});
- var lista=[],P=d.P||{},cal=(d.cal&&d.cal.lega)||[],pos={};
- squadre.forEach(function(t){pos[t.name]={n:t.name,pt:0,fp:0,gf:0,gs:0};});
- cal.forEach(function(g){(g.m||[]).forEach(function(m){if(m[4]==='-')return;var a=pos[m[0]],z=pos[m[3]],q=String(m[4]).split('-').map(Number);if(!a||!z||q.length!==2||q.some(function(v){return !Number.isFinite(v)}))return;
- a.pt+=q[0]>q[1]?3:q[0]===q[1]?1:0;z.pt+=q[1]>q[0]?3:q[0]===q[1]?1:0;
- a.fp+=Number(m[1])||0;z.fp+=Number(m[2])||0;a.gf+=q[0];a.gs+=q[1];z.gf+=q[1];z.gs+=q[0];
- lista.push({n:m[0],v:Number(m[1]),o:m[3],g:g.n,gf:q[0],gs:q[1]});
- lista.push({n:m[3],v:Number(m[2]),o:m[0],g:g.n,gf:q[1],gs:q[0]});
- })});
- var hi=best(lista,function(a,b){return b.v-a.v}),lo=best(lista,function(a,b){return a.v-b.v}),largo=best(lista.filter(function(x){return x.gf>x.gs}),function(a,b){return (b.gf-b.gs)-(a.gf-a.gs)});
- var perSquadra={};lista.forEach(function(x){(perSquadra[x.n]||(perSquadra[x.n]=[])).push(x)});
- var record={n:0,t:''};Object.keys(perSquadra).forEach(function(t){var k=0;perSquadra[t].sort(function(a,b){return a.g-b.g}).forEach(function(x){k=x.gf>x.gs?k+1:0;if(k>record.n)record={n:k,t:t}})});
- var cl=Object.keys(pos).map(function(t){return pos[t]}).sort(function(a,b){return b.pt-a.pt||b.fp-a.fp||(b.gf-b.gs)-(a.gf-a.gs)||b.gf-a.gf});
- var completo=cal.length>0&&cal.every(function(g){return g.m&&g.m.length&&g.m.every(function(m){return m[4]!=='-'})});
- function ris(x){return x?x.n+' · '+nr(x.v)+' ('+x.g+'ª contro '+x.o+')':'Dato non disponibile'}
- return {
-  anno:annuarioAttuale(d),
-  v:[
-   ['Giocatore più pagato',carissimo?((P[carissimo.id]||{}).n||'Giocatore '+carissimo.id)+' · '+nr(carissimo.c)+' mln':'Dato non disponibile'],
-   ['Rosa più cara',ricca?ricca.n+' · '+nr(ricca.v)+' mln':'Dato non disponibile'],
-   ['Rosa più economica',economica?economica.n+' · '+nr(economica.v)+' mln':'Dato non disponibile'],
-   ['Capocannoniere',bomber?((P[bomber.id]||{}).n||'Giocatore '+bomber.id)+' · '+bomber.g+' gol':'Ancora nessun gol'],
-   ['Miglior punteggio di giornata',ris(hi)],
-   ['Peggior punteggio di giornata',ris(lo)],
-   ['Vittoria più larga',largo?largo.n+' '+largo.gf+'–'+largo.gs+' '+largo.o+' ('+largo.g+'ª)':'Dato non disponibile'],
-   ['Serie di vittorie più lunga',record.n?record.t+' · '+record.n+' consecutive':'Nessuna vittoria'],
-   ['Campione',completo&&cl[0]?cl[0].n:'Da assegnare'],
-   ['Podio',cl.length>2?(completo?'':'Provvisorio: ')+cl.slice(0,3).map(function(x){return x.n}).join(' · '):'Da definire'],
-   ['Ultimo classificato',cl.length?(completo?'':'Provvisorio: ')+cl[cl.length-1].n:'Da definire']
-  ]
- };
+ var x=window.OAnnuario.calcola(d);
+ function valore(k){return x[k]?x[k].nome+' · '+Number(x[k].costo).toLocaleString('it-IT')+' fantacrediti':'Dato non disponibile'}
+ function punti(k){var q=x[k];return q?q.squadra+' · '+q.valore+' Fantapunti (G'+q.giornata+')':'Dato non disponibile'}
+ return {anno:annuarioAttuale(d),v:[
+  ['Giocatore più pagato',x.acquisto?x.acquisto.nome+' · '+x.acquisto.costo+' fantacrediti · '+x.acquisto.squadra:'Dato non disponibile'],
+  ['Rosa più cara',valore('cara')],['Rosa più economica',valore('economica')],
+  ['Più gol fra i giocatori in rosa',x.capocannoniere?x.capocannoniere.nome+' · '+x.capocannoniere.gol+' gol nelle giornate di Serie A associate':'Nessun gol registrato'],
+  ['Miglior punteggio di giornata',punti('migliore')],['Peggior punteggio di giornata',punti('peggiore')],
+  ['Vittoria più larga',x.scarto?x.scarto.squadra+' contro '+x.scarto.contro+' · '+x.scarto.risultato+' (G'+x.scarto.giornata+')':'Dato non disponibile'],
+  ['Serie di vittorie più lunga',x.serie.n?x.serie.squadre.join(', ')+' · '+x.serie.n+' consecutive':'Nessuna vittoria'],
+  ['Campione',x.completa?x.classifica[0]:'Da assegnare'],
+  ['Podio',x.completa?x.classifica.slice(0,3).join(' · '):'Da assegnare'],
+  ['Ultimo classificato',x.completa?x.classifica[x.classifica.length-1]:'Da assegnare']
+ ]};
 }
 function vAnnuario(){
  annuarioCarica();
@@ -546,7 +526,7 @@ function vAnnuario(){
 
 function vOro(){
   var h=where('Home','Albo d\'oro',OROSEZ.filter(function(x){return x[0]===S.oro})[0][1])+'<h2>Albo d\'oro</h2><p class="lead">Nell\'app vera la pagina ha già i trofei, i record e le schede degli allenatori. Qui vedi dove entrerebbero la storia della Lega e i Derby. Dalla Home si arriva con il riquadro 🏆 Albo d\'oro.</p>';
-  h+='<div class="seg" role="group" aria-label="Sezione">'+OROSEZ.map(function(x){return '<button data-oro="'+x[0]+'" aria-pressed="'+(S.oro===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>';
+  h+='<div class="seg oro-scroll" role="group" aria-label="Sezione">'+OROSEZ.map(function(x){return '<button data-oro="'+x[0]+'" aria-pressed="'+(S.oro===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>';
   if(S.oro==='annuario')return h+vAnnuario();
   if(S.oro==='storia')h+='<div class="card"><h3>La storia della Lega</h3>'+LEG.libro.map(function(c){return '<div class="rac"><div class="rt">'+esc(c.t)+'</div>'+c.p.map(function(p){return '<p>'+esc(p)+'</p>'}).join('')+'</div>'}).join('')+'</div>';
   if(S.oro==='stagioni')h+='<div class="card"><h3>'+esc(LEG.eras.oggi)+'</h3><div class="scroll"><table class="tbl"><tr><th>Stagione</th><th>Competizione</th><th>Vincitore</th></tr>'+STAG.map(function(x){return '<tr><td><b>'+x[0]+'</b></td><td>'+x[1]+'</td><td>'+esc(x[2])+' <span class="mut sm">'+esc(x[3])+'</span></td></tr>'}).join('')+'</table></div>'+LEG.contemporanea.map(function(r){return '<div class="rac"><div class="rt">'+esc(r.t)+'</div><p>'+esc(r.p)+'</p></div>'}).join('')+'</div><p class="note">La tabella c\'è già nell\'app; le storie di ogni stagione sono nuove, come quelle dell\'Era dei Titani.</p>';
@@ -1364,7 +1344,7 @@ function morphDom(o,n){
   }
   while(oc.length>nc.length)o.removeChild(o.lastChild);
 }
-function render(){
+function render(){requestAnimationFrame(function(){var r=document.querySelector('.oro-scroll'),a=r&&r.querySelector('[aria-pressed="true"]');if(a)a.scrollIntoView({block:'nearest',inline:'center'})});
   var _vw=$('#view'),_nv=document.createElement('div');_nv.innerHTML=V[cur]()+(cur==='parere'?'':fbBox());
   morphDom(_vw,_nv);
   if(cur==='carriera')animaFiducia(S.cteam,fid(S.cteam));
