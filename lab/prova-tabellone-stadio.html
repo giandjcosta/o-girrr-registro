@@ -124,6 +124,10 @@ body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:no
 
 /* ChatGPT: variazione di posizione */
 .movpos{display:block;font-weight:900;font-size:10px;white-space:nowrap}.movpos.su{color:#61da9a}.movpos.giu{color:#ff8795}@media(max-width:559px){.movpos{font-size:8px}.panel td.p{width:26px}}
+
+/* ChatGPT: spazio sufficiente al Tabellone completo su desktop */
+@media(min-width:861px){.grid{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr)}}
+@media(min-width:861px) and (max-width:1240px){.panel table{font-size:12px;table-layout:fixed}.panel td,.panel th{padding:6px 2px}.panel td.n{overflow-wrap:anywhere;font-size:11px}.panel th{letter-spacing:0}}
 </style>
 <link rel="manifest" href="../../manifest.webmanifest">
 <meta name="theme-color" content="#1d2a52">
