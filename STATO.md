@@ -6,13 +6,15 @@
 ## Lavori aperti al 31 ottobre (ripassati da Claude; divisione proposta a Gianluca)
 Controllato sul sito: scroll infinito della Curva e lazy loading dello Spogliatoio sono già online, non sono più da fare.
 **Servono a Gianluca (nessun assistente può farli):** segreto `GEMINI_API_KEY` per la Radio automatica; segreto `service_role` per i premi automatici; cancellare da GitHub il ramo `grok/carriera-tab-storia`; ascoltare la puntata della 5ª giornata; prove su iPhone/Safari; «vai» per Albo d'oro (titoli divisi, Era Contemporanea) e scheda Movimenti del Totogirrr (ramo `claude/coppe-simboli-ere-descrizioni-4jn4ss`).
-**Da decidere (Gianluca):** «Fiducia in lega» nella Carriera mostra ancora la classifica fiducia di tutte le squadre; quote Derby del database che partono da 70 mentre le pagine usano 80 (serve il «vai» sullo SQL); idee per il Tabellone proposte il 30 ottobre; in una vecchia chat con Leanzino l'albo dei Titani era 2017 Apo Team, 2018 e 2019 Urba Team (senza Mario), diverso da quello online (2016/17 Mario, 2017/18 apo, 2018/19 Urba).
+**Deciso da Gianluca (31 ottobre):** l'albo dei Titani online è giusto (2016/17 Mario, 2017/18 apo, 2018/19 Urba); «Fiducia in lega» con tutte le squadre va bene così; il Derby vale da 80 ovunque (pagine, Radio, quote del database). Nomi dei segreti nel repository del sito: `GEMINI_API_KEY` (Radio) e `SUPABASE_SERVICE_ROLE_KEY` (premi automatici, chiave «secret» di Supabase).
+**Derby a 80 (31 ottobre, Claude):** pagine del sito già a 80 (`o.r>=80`). Radio portata a 80 (`voci-src/derby.py`, prima 50); testo delle Regole nell'Albo del Lab corretto (il sito vero dice ancora «da 50»: si corregge al prossimo rilascio di `app.html`). Database: `derby_aggiorna()` usa ancora `rv >= 70`; la migrazione `derby_soglia_storia_80` (solo 70 → 80) ha chiesto conferma e non è passata. Oggi non cambia nessun Derby: nessuna coppia ha rivalità tra 70 e 80.
+**Giornata 6 — caso Atletico ma non troppo (richiesta di Gianluca):** l'Atletico non ha schierato la formazione: per regolamento gliela schierano d'ufficio e paga una multa, ma il presidente protesta ufficialmente (Curva, WhatsApp, conferenze). A giornata finita va raccontato: Radio (già pronto: campo `caso` in `voci-src/curva.json`, giornata 6, letto da Giulia dopo la Curva), Giornale n° 6 (un trafiletto) e un post o commento di Girrr Sport in Curva. Tono piccante ma da campionato vero; niente scommesse.
 **Per Claude** (toccano workflow, rilasci o database):
-1. Radio: nel copione «Per ora è tutto, restituisco la linea in studio!» arriva prima delle sfide Derby e della Curva, e Giulia parla ancora dopo (`voci-src/copione.py`).
+1. ~~Radio: «restituisco la linea» prima di Derby e Curva~~ fatto il 31 ottobre: il saluto chiude sempre il collegamento di Giulia (ramo `claude/coppe-simboli-ere-descrizioni-4jn4ss`, serve l'unione a `main` perché la Radio automatica lo usi).
 2. Premi automatici: workflow dopo ogni giornata che chiama `carriera_registra_server` (appena c'è il segreto).
 3. `ufficiale/build.py` non gira più con il `gh-pages` di oggi (si ferma su un `assert` e svuota `ufficiale/girrr/`): va aggiornato o tolto dal giro.
 4. Rilascio di Albo d'oro e Movimenti dopo il «vai».
-**Per ChatGPT** (solo Lab e Anteprima, nessun rilascio):
+**Per ChatGPT** (solo Lab e Anteprima, nessun rilascio; prompt completo in `proposte/prompt-chatgpt-31-ottobre.md`):
 1. Pagina Derby: l'elenco mostra anche rivalità con nome sotto la soglia (dall'archivio 5.1).
 2. Anteprima: la Cassa non si raggiunge (`vCarr` ignora `S.cr`).
 3. Anteprima: il Totogirrr usa sempre la grafica Lega, anche dallo Stadio.
@@ -20,7 +22,8 @@ Controllato sul sito: scroll infinito della Curva e lazy loading dello Spogliato
 5. Messaggi di annuncio della 5.1 e della 5.2 (testi, senza scommesse nei post ufficiali).
 6. Colori dei pulsanti dello Stadio in oro dove manca (la Home Lega in rosso è fatta).
 7. Verificare nel browser che follower e posizioni nelle bio della Curva si aggiornino da soli (letto nel codice, mai provato).
-Più avanti, da progettare: login unico.
+Più avanti, da progettare: login unico. Nuovo (richiesta dei giocatori): **Annuario** nell'Albo d'oro con le statistiche di ogni stagione (giocatore più pagato, rosa più cara, capocannoniere, record di giornata…), compito 6 del prompt di ChatGPT.
+**Anteprima dei rami prima dell'unione:** `https://raw.githack.com/giandjcosta/o-girrr-registro/NOME-RAMO/lab/index.html` (vale per qualsiasi file del registro).
 
 ## 31 ottobre 2026 — Totogirrr: scheda Movimenti (Claude, prova nel Lab)
 - Era nell'Anteprima 5.2 (con dati finti) ma non è entrata nel rilascio: sul sito vero c'è solo il riquadro Movimenti in fondo ai Prestiti, e le Regole dicono già «lo vedi sempre sotto Movimenti».

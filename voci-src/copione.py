@@ -170,7 +170,6 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
                     add("G" if i == 0 else "B", fr, None if (v or t in pare) else "sarcasmo")
                 else:
                     add("G" if i == 0 else "B", VERO[(tn, v)].format(t=t, o=o), "sarcasmo" if (tn == 0 and not v) else None)
-            add("S", "Per ora è tutto, restituisco la linea in studio!", "entusiasmo")
     # --- sfide per il derby lanciate in conferenza (stato: accettata / rifiutata / scaduta / attesa)
     for sd in (conf or {}).get("sfide_derby") or []:
         if sd.get("annunciata"): continue   # già annunciata in una puntata: l'annuncio va in onda una volta sola (il Derby si nomina comunque quando si gioca)
@@ -181,7 +180,13 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
     # --- Curva: solo un post vero, se Gianluca ne ha dato uno
     cv = (curva_ or {}).get("post")
     if cv: add("S", f"E dalla Curva: {cv}", "entusiasmo")
-    if cf or cv: add("G", pick(["Grazie Giulia! Questo è calcio!", "Grazie Giulia, collegamento da Oscar!", "Grazie Giulia! Un'altra settimana di parole, vediamo i fatti."]))
+    # --- il caso della giornata: una notizia vera da raccontare (curva.json, "caso"), messa a mano come il post
+    cs = (curva_ or {}).get("caso")
+    if cs:
+        add("S", f"E c'è un caso che fa discutere: {cs}", "sus")
+        add("B", pick(["Regolamento è regolamento! Ma una protesta così non si sentiva da anni!", "Il regolamento parla chiaro, ma qui la polemica è appena cominciata!"]), "sarcasmo")
+    add("S", "Per ora è tutto, restituisco la linea in studio!", "entusiasmo")   # il saluto di Giulia chiude sempre il suo collegamento, dopo Derby, Curva e caso
+    if cf or cv or cs: add("G", pick(["Grazie Giulia! Questo è calcio!", "Grazie Giulia, collegamento da Oscar!", "Grazie Giulia! Un'altra settimana di parole, vediamo i fatti."]))
     # --- coppa: storie vere, nessun giro di parole
     cup = D["cup"][-1] if D.get("cup") else None
     if cup:
