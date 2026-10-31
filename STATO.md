@@ -4,6 +4,14 @@
 **Radio automatica (unita, attiva appena c'è la chiave):** PR #6 del sito (`claude/radio-automatica`, workflow `radio-giornata.yml`): ogni 20 minuti, 70 minuti dopo i calcoli, prepara i dati veri (`voci-src/prepara_dati.py`: classifica, Coppa solo se giocata nella stessa giornata di Serie A, conferenze, promesse, Derby con `girrr/voci/annunciate.json` sul sito), genera con sole voci Gemini e pubblica (`pubblica_puntata.py`). PR #6 unita al `main` (30 ottobre, con il «vai»); il workflow non fa nulla finché manca il segreto `GEMINI_API_KEY` nel repository del sito: Gianluca lo aggiunge lunedì sera (promemoria programmato). Il post della Curva si mette a mano in `curva.json` con `"giornata": N`, altrimenti la radio non ne parla. Social: follower e posizioni nelle bio sono calcolati dalla pagina Curva con classifica e fiducia di `data.json`, quindi si aggiornano da soli (letto nel codice, non provato nel browser).
 
 
+## ChatGPT — Ambienti, giornata, Curva e coerenza editoriale (31 ottobre 2026)
+- **Ambienti separati:** banner esplicito nel Lab e nelle due Anteprime generate. Laboratorio = funzionalità da discutere; Anteprima = rendering integrato in grafica Lega/Stadio; sito ufficiale = solo versioni approvate. Le pagine `lab/prova-esperienza-*.html` sono demo collegate dal Lab, non pagine di produzione.
+- **Giornata:** nell'anteprima `Oggi al Girrr` i risultati acquisiti non equivalgono a giornata conclusa. Lo stato definitivo richiede verifica di importazione, calcoli, Girrr Sport/Radio/Moviola e controlli finali; le conferme automatiche reali sono ancora da collegare ai workflow, quindi il prototipo non dichiara la conclusione senza prova.
+- **Curva viva:** sei voci riconoscibili (Cronista, Tattico, Polemico, Cantastorie, Super Tifoso, Intervistatore), con messaggi ricavati dai risultati disponibili. Non cancellare i personaggi già esistenti: ampliare la varietà editoriale mantenendo alta la partecipazione.
+- **Record:** mantenere i pareggi come pareggi, documentando per ogni record Campionato/Coppa e giornata. Il Derby segue le regole aggiornate dall'utente: non reintrodurre vecchie soglie.
+- **Storia della Lega:** episodi e rivalità fanno parte della memoria; fatti attribuiti a persone reali richiedono riscontri, le opinioni dei personaggi restano esplicitamente commento.
+- **Identità sportiva:** negli elementi rivolti al pubblico proporre «Punteggio» / «Punti di giornata» invece di «Fantapunti», «Allenatore» invece di «Fantallenatore», «Stagione 2026/27» invece di «Fantacalcio 2026/27»; mantenere il marchio esterno «Leghe Fantacalcio» quando è il servizio di origine e spiegare senza tagli le regole dei punteggi.
+
 ## ChatGPT — Home personale, notifiche e nuove esperienze (31 ottobre 2026)
 
 - **Solo prova:** nuovo ramo `chatgpt/home-notifiche-centro-partita` partendo da `chatgpt/tabellone-annuario` (PR #38, non unita). Nessuna scrittura sul sito vero `o-fant-a-girrr` né sul database.
