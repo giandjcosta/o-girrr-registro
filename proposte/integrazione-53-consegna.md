@@ -1,6 +1,6 @@
 # Anteprima 5.3: percorsi integrati e cronache
 
-Ramo `chatgpt/integrazione-ui-campo-cronache`, derivato da `chatgpt/lavori-31-ottobre` (`3fd7e40`). PR verso quel ramo; nessuna unione. La PR #39 verso `claude/coppe-simboli-ere-descrizioni-4jn4ss` resta conflittuale (`mergeable=false`, `dirty`, verificato il 31 ottobre). Nessun tentativo di sovrascrivere o risolvere i lavori altrui.
+Ramo `chatgpt/integrazione-ui-campo-cronache`, derivato da `chatgpt/lavori-31-ottobre` (`3fd7e40`). [PR #42](https://github.com/giandjcosta/o-girrr-registro/pull/42), bozza verso quel ramo; nessuna unione. La PR #39 verso `claude/coppe-simboli-ere-descrizioni-4jn4ss` resta conflittuale (`mergeable=false`, `dirty`, verificato il 31 ottobre). Nessun tentativo di sovrascrivere o risolvere i lavori altrui.
 
 ## Dove provare
 
@@ -56,3 +56,5 @@ Il generatore del sito e le sue Actions sono invariati. `prove/prova_giornale_cr
 - Non verificati: Safari/iPhone fisico, confronto con il mockup mancante, giornata futura reale, accesso squadra reale e pubblicazione. Nessun merge, sito pubblico, database o audio a pagamento.
 
 Screenshot e rapporto dei percorsi: `prove/risultati-53/`. Il workflow nuovo del Registro è di sola lettura del repository e non rigenera commit automaticamente.
+
+Verifica diretta raw.githack: HTTP 403 da questo ambiente, sia in lettura sia nel browser. Non è stato aggirato il blocco. I test dei dieci percorsi descritti sopra sono sul server locale; non certificano accessibilità pubblica, cache CDN o Safari.
