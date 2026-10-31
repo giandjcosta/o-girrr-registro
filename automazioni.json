@@ -1,53 +1,56 @@
 {
- "aggiornato": "2026-10-31T06:42:49Z",
+ "aggiornato": "2026-10-31T18:42:31Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
    "quando": "Ogni 3 giorni alle 11:17 (giorni 1, 4, 7… del mese)",
    "stato": "attiva",
-   "prossimo": "2026-10-31T10:17:00Z",
+   "prossimo": "2026-11-01T10:17:00Z",
    "nota": "Fonte principale Sky Sport (45%), poi Fantacalcio.it e i giornali.",
    "ultimo": {
-    "quando": "2026-10-28T10:18:08Z",
+    "quando": "2026-10-31T10:17:19Z",
     "esito": "riuscito"
    }
   },
   {
    "nome": "Aggiornamento del venerdì (partite giocate e formazioni)",
-   "quando": "Una volta: 30 ottobre alle 17:12",
-   "stato": "conclusa",
+   "quando": "Una volta: 5 novembre alle 17:12",
+   "stato": "attiva",
    "ultimo": {
     "quando": "2026-10-30T16:20:19Z",
     "esito": "riuscito"
-   }
+   },
+   "prossimo": "2026-11-05T16:12:00Z"
   },
   {
    "nome": "Aggiornamento del martedì (partite giocate e formazioni)",
-   "quando": "Una volta: 30 ottobre alle 11:47",
-   "stato": "conclusa",
+   "quando": "Una volta: 3 novembre alle 11:47",
+   "stato": "attiva",
    "ultimo": {
     "quando": "2026-10-30T10:48:23Z",
     "esito": "riuscito"
-   }
+   },
+   "prossimo": "2026-11-03T10:47:00Z"
   },
   {
    "nome": "Risultati di lega e coppa dal PC (Leghe)",
-   "quando": "Una volta: 30 ottobre alle 18:07",
-   "stato": "conclusa",
+   "quando": "Una volta: 3 novembre alle 18:07",
+   "stato": "attiva",
    "nota": "Serve il PC acceso con Chrome.",
    "ultimo": {
     "quando": "2026-10-30T17:09:02Z",
     "esito": "riuscito"
-   }
+   },
+   "prossimo": "2026-11-03T17:07:00Z"
   },
   {
    "nome": "Regista del calendario",
-   "quando": "Una volta: 31 ottobre alle 08:43",
+   "quando": "Una volta: 4 novembre alle 08:43",
    "stato": "attiva",
-   "prossimo": "2026-10-31T07:43:00Z",
+   "prossimo": "2026-11-04T07:43:00Z",
    "ultimo": {
-    "quando": "2026-10-20T20:37:52Z",
-    "esito": "fallito"
+    "quando": "2026-10-31T07:43:21Z",
+    "esito": "riuscito"
    },
    "nota": "Ogni mattina dopo il giornale programma le altre attività sulle date vere della Serie A."
   },
@@ -75,12 +78,13 @@
   },
   {
    "nome": "O Giornale del Girrr (PDF settimanale)",
-   "quando": "Una volta: 30 ottobre alle 18:51",
-   "stato": "conclusa",
+   "quando": "Una volta: 3 novembre alle 18:51",
+   "stato": "attiva",
    "ultimo": {
     "quando": "2026-10-30T17:51:48Z",
     "esito": "riuscito"
-   }
+   },
+   "prossimo": "2026-11-03T17:51:00Z"
   },
   {
    "nome": "Conferma mensile “tutto regolare”",
