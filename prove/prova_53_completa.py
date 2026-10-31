@@ -2,7 +2,7 @@
 """Percorsi e regressioni della 5.3 completa: dati pubblici, RPC isolate, cinque viewport."""
 import json
 from pathlib import Path
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, expect
 from rete_browser import installa,browser
 ROOT='http://127.0.0.1:8765/anteprima/5.3/'
 OUT=Path('qa_artifacts');OUT.mkdir(exist_ok=True)
@@ -45,7 +45,8 @@ with sync_playwright() as pw:
    p.locator('#ritorno-tabellone').click();p.locator('a.back').click()
    p.locator('.cards a.c').filter(has_text="Albo d'oro").click();p.locator('.oro-scroll').wait_for()
    p.locator('[data-oro=annuario]').click();p.locator('.ann-anno').first.wait_for()
-   assert 'Da assegnare' in p.locator('#view').inner_text()
+   # Le stagioni storiche compaiono prima della risposta del calendario corrente.
+   expect(p.locator('#view')).to_contain_text('Da assegnare',timeout=20000)
    assert p.locator('.ann-anno').count()>=10
    assert p.locator('.oro-scroll').evaluate('(e)=>getComputedStyle(e).flexWrap')=='nowrap'
    check('Albo');p.screenshot(path=str(OUT/f'53-albo-{skin}-{w}.png'),full_page=True)
