@@ -1,9 +1,9 @@
 name: ChatGPT - Integrazione Anteprima 5.3
 on:
   push:
-    branches: [chatgpt/integrazione-ui-campo-cronache]
+    branches: [chatgpt/integrazione-ui-campo-cronache, chatgpt/completamento-53-campo]
   pull_request:
-    branches: [chatgpt/lavori-31-ottobre]
+    branches: [chatgpt/lavori-31-ottobre, chatgpt/anteprima-53-integrata]
 permissions:
   contents: read
 jobs:
@@ -18,13 +18,14 @@ jobs:
       - name: Build riproducibile e collaudi
         run: |
           python3 anteprima/build.py
-          git diff --exit-code -- anteprima/
+          git diff --exit-code -- anteprima/ ufficiale/index.html
           python3 prove/collaudo_anteprima_52.py
           node prove/collaudo_preview52_totogirrr_milestone.js
           node prove/collaudo_fiducia_universale52.js
           python3 prove/prova_moviola.py
           python3 prove/prova_zone_classifica.py
           python3 prove/prova_cronache_integrate.py
+          python3 prove/prova_53_casi_limite.py
       - name: Browser
         run: |
           pip install playwright
@@ -33,6 +34,8 @@ jobs:
       - name: Navigazione vera, telefono tablet PC
         run: |
           python3 prove/prova_navigazione_53.py
+          python3 prove/prova_ingresso_anteprima_53.py
+          python3 prove/prova_53_completa.py
           python3 prove/prova_tabellone_campo_browser.py
           python3 prove/prova_giornale_cronaca_pdf.py
       - uses: actions/upload-artifact@v4

@@ -30,7 +30,7 @@ def installa(ctx):
                 name.write_bytes(body);meta.write_text(json.dumps(headers))
             route.fulfill(status=200,headers=headers,body=body)
         except Exception as e:
-            print('ERRORE RISORSA',u,str(e));route.fulfill(status=502,body=str(e))
+            print('ERRORE RISORSA',u[:180],str(e)[:200]);route.fulfill(status=502,body=str(e))
     ctx.route(re.compile(r'https://.*'),handler)
 
 def browser(pw):

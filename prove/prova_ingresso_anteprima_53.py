@@ -28,7 +28,7 @@ with sync_playwright() as pw:
             page.wait_for_timeout(600)
             assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1'),(width,label,'overflow cornice')
             assert frame().locator('html').evaluate('(e)=>e.scrollWidth<=window.innerWidth+1'),(width,label,'overflow pagina')
-            assert not errors,(width,label,errors)
+            assert not errors,(width,label,errors,http)
             assert not http,(width,label,http)
         def skin(m):
             expected='true' if m=='stadio' else 'false'
@@ -57,6 +57,7 @@ with sync_playwright() as pw:
         for grafica in ('lega','stadio'):
             skin(grafica);frame().locator('.oro-scroll').wait_for();check('Albo '+grafica)
             assert frame().locator('.oro-scroll').evaluate('(e)=>getComputedStyle(e).flexWrap')=='nowrap'
+            assert frame().locator('[data-oro=annuario]').get_attribute('aria-pressed')=='true'
         frame().locator('a.oback').click();frame().locator('a.c').filter(has_text='Tabellone').wait_for()
         # Riapertura della cornice: conserva la Home e la grafica correnti.
         page.reload(wait_until='networkidle');frame().locator('a.c').filter(has_text='Tabellone').wait_for();check('Riapertura')
