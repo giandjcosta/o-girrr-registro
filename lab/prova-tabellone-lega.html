@@ -118,6 +118,9 @@ body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:no
 
 /* ChatGPT: media, massimo e minimo solo quando c'è spazio */
 .panel td.med,.panel th.med{display:none}.panel td.med{font-weight:700;font-size:.75em}.panel th.med{font-size:9px;letter-spacing:.03em}@media(min-width:560px){.panel td.med,.panel th.med{display:table-cell}}@media(min-width:560px) and (max-width:900px){.panel table{font-size:12px}.panel th,.panel td{padding:6px 3px}.panel td.n{overflow-wrap:anywhere;font-size:11px}}
+
+/* ChatGPT: prossimo turno sotto la classifica */
+.turnoprossimo{margin:12px 0 18px;padding:12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:12px}.turnoprossimo h4{font-weight:900;color:var(--hi);font-size:13px;margin-bottom:8px}.turnoprossimo .rpartita{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 10px;border-top:1px solid rgba(255,255,255,.13);padding:8px 0;font-weight:700;font-size:12px;overflow-wrap:anywhere}.turnoprossimo .derbytag{border:1px solid var(--hi);border-radius:6px;color:var(--hi);font-size:10px;padding:2px 5px}.turnoprossimo p{color:var(--sub);font-size:12px}
 </style>
 <link rel="manifest" href="../manifest.webmanifest">
 <meta name="theme-color" content="#1d2a52">
@@ -203,10 +206,12 @@ var marks=R.map(function(d,i){return '<circle cx="'+xx(i)+'" cy="'+yy(d.p)+'" r=
 document.getElementById('tab').addEventListener('click',function(e){var z=e.target.closest('[data-plot]');if(!z)return;var v=decodeURIComponent(z.getAttribute('data-plot'));plotTeam=plotTeam===v?null:v;render()});
 /* ChatGPT: media e record dei punteggi di giornata, solo incontri giocati */
 function statistichePunti(t){var v=[],cup=mode==='coppa';cal().forEach(function(g){if(g.n>sel[mode])return;g.m.forEach(function(m){if(m[cup?5:4]==='-')return;if(m[cup?1:0]===t)v.push(+m[cup?2:1]);else if(m[cup?4:3]===t)v.push(+m[cup?3:2])})});var sum=v.reduce(function(a,x){return a+x},0);return {avg:v.length?pt(sum/v.length):'—',max:v.length?pt(Math.max.apply(null,v)):'—',min:v.length?pt(Math.min.apply(null,v)):'—'}}
+/* ChatGPT: prima giornata ancora da completare, niente risultati inventati */
+function prossimoTurno(){if(!D||!D.cal)return '';var cup=mode==='coppa',g=cal().filter(function(x){return x.m.some(function(m){return m[cup?5:4]==='-'})})[0];if(!g)return '<div class="turnoprossimo"><p>Tutte le giornate in calendario sono state disputate.</p></div>';var h='<div class="turnoprossimo"><h4>Prossima giornata · '+g.n+'ª (Serie A '+g.sa+')</h4>';g.m.forEach(function(m){var a=m[cup?1:0],z=m[cup?4:3],tag=derby(a,z);if(m[cup?5:4]!=='-')return;h+='<div class="rpartita"><span>'+esc(cap(a))+' – '+esc(cap(z))+'</span>'+(tag!==null?'<span class="derbytag">Derby'+(tag?' · '+esc(tag):'')+'</span>':'')+'</div>'});return h+'</div>'}
 function tabella(rows,fp,titolo,top){
   var h='<h3>'+titolo+'</h3><table>'+'<tr><th></th><th>Squadra</th><th class="w">G</th><th class="w">V</th><th class="w">N</th><th class="w">P</th><th class="w">GF</th><th class="w">GS</th><th>DR</th><th>Pt</th>'+(fp?'<th>Fantapunti</th>':'')+'<th class="med">Media</th><th class="med">Max</th><th class="med">Min</th></tr>';
   rows.forEach(function(x,k){h+='<tr class="'+(k<top?'pod':'')+(x.n===ME?' me':'')+classeZona(k,rows.length,fp)+'" style="animation-delay:'+(k*35)+'ms"><td class="p">'+(k+1)+'</td><td class="n">'+'<button class="clubgraph" data-plot="'+encodeURIComponent(x.n)+'" type="button" aria-label="Apri il grafico di '+esc(x.n)+'">'+esc(cap(x.n))+'</button>'+formaPallini(x.n)+'</td><td class="w">'+x.g+'</td><td class="w">'+x.v+'</td><td class="w">'+x.nn+'</td><td class="w">'+x.p+'</td><td class="w">'+x.gf+'</td><td class="w">'+x.gs+'</td><td class="dr">'+(x.gf-x.gs>0?'+':x.gf-x.gs<0?'−':'')+Math.abs(x.gf-x.gs)+'</td><td class="pt">'+x.pt+'</td>'+(fp?'<td class="fp">'+pt(x.fp)+'</td>':'')+'<td class="med">'+statistichePunti(x.n).avg+'</td><td class="med">'+statistichePunti(x.n).max+'</td><td class="med">'+statistichePunti(x.n).min+'</td></tr>'});
-  return h+'</table>'+(fp?'<div class="zoneleg" aria-label="Legenda zone"><span><i class="sc"></i>Scudetto · 1°</span><span><i class="po"></i>Podio · 2°–3°</span><span><i class="sa"></i>Salvezza · ultimi due</span></div>':'')+graficoSquadra();
+  return h+'</table>'+(fp?'<div class="zoneleg" aria-label="Legenda zone"><span><i class="sc"></i>Scudetto · 1°</span><span><i class="po"></i>Podio · 2°–3°</span><span><i class="sa"></i>Salvezza · ultimi due</span></div>':'')+graficoSquadra()+(fp||titolo==='Girone B'?prossimoTurno():'');
 }
 var ME='';try{ME=(JSON.parse(localStorage.getItem('fg')||'{}')||{}).team||''}catch(e){}
 function lastPlayed(c,cup){var l=0;c.forEach(function(g){if(played(g,cup))l=g.n});return l}
