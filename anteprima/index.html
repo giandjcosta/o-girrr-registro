@@ -506,8 +506,8 @@ function vAnnuario(){
 function vOro(){
   var h=where('Home','Albo d\'oro',OROSEZ.filter(function(x){return x[0]===S.oro})[0][1])+'<h2>Albo d\'oro</h2><p class="lead">Nell\'app vera la pagina ha già i trofei, i record e le schede degli allenatori. Qui vedi dove entrerebbero la storia della Lega e i Derby. Dalla Home si arriva con il riquadro 🏆 Albo d\'oro.</p>';
   h+='<div class="seg" role="group" aria-label="Sezione">'+OROSEZ.map(function(x){return '<button data-oro="'+x[0]+'" aria-pressed="'+(S.oro===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>';
-  if(S.oro==='derby')return h+vDerby();if(S.oro==='latta')return h+vAlbo();
   if(S.oro==='annuario')return h+vAnnuario();
+  if(S.oro==='derby')return h+vDerby();if(S.oro==='latta')return h+vAlbo();
   if(S.oro==='storia')h+='<div class="card"><h3>La storia della Lega</h3>'+LEG.libro.map(function(c){return '<div class="rac"><div class="rt">'+esc(c.t)+'</div>'+c.p.map(function(p){return '<p>'+esc(p)+'</p>'}).join('')+'</div>'}).join('')+'</div>';
   if(S.oro==='stagioni')h+='<div class="card"><h3>'+esc(LEG.eras.oggi)+'</h3><div class="scroll"><table class="tbl"><tr><th>Stagione</th><th>Competizione</th><th>Vincitore</th></tr>'+STAG.map(function(x){return '<tr><td><b>'+x[0]+'</b></td><td>'+x[1]+'</td><td>'+esc(x[2])+' <span class="mut sm">'+esc(x[3])+'</span></td></tr>'}).join('')+'</table></div>'+LEG.contemporanea.map(function(r){return '<div class="rac"><div class="rt">'+esc(r.t)+'</div><p>'+esc(r.p)+'</p></div>'}).join('')+'</div><p class="note">La tabella c\'è già nell\'app; le storie di ogni stagione sono nuove, come quelle dell\'Era dei Titani.</p>';
   if(S.oro==='prima'){var tt={},tc={};STAG.forEach(function(x){tt[x[3]]=(tt[x[3]]||0)+1;if(x[1]==='Coppa Campioni')tc[x[3]]=(tc[x[3]]||0)+1});PRE.forEach(function(x){if(x[2])tt[x[2]]=(tt[x[2]]||0)+1});
