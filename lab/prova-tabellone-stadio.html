@@ -105,6 +105,43 @@ tr{animation:in .45s both}
 body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:none;background:repeating-linear-gradient(115deg,rgba(255,255,255,.04) 0 36px,transparent 36px 72px);animation:strisce 9s linear infinite}
 @keyframes strisce{to{transform:translate3d(79.45px,0,0)}}
 @media (prefers-reduced-motion:reduce){body::before{animation:none}}
+
+/* Tabellone 31 ottobre: solo fascia laterale, posizioni leggibili da telefono e PC */
+.panel table{width:100%;border-collapse:separate;border-spacing:0;table-layout:auto}
+.panel th{font-size:clamp(12px,1.1vw,15px);letter-spacing:.015em;color:#f1f4fc;font-weight:900;padding:10px 5px;text-transform:none;white-space:nowrap}
+.panel td{font-variant-numeric:tabular-nums;color:#fbf6ec;font-weight:800}
+.panel td.dr,.panel td.fp,.panel td.pt{color:#fbf6ec!important;font-size:clamp(13px,1.25vw,18px);font-weight:850}
+.panel tr.me td{background:rgba(255,255,255,.055)!important}
+.panel tr.me td.n{color:#fbf6ec!important}
+.panel tr.zona td:first-child{box-shadow:inset 5px 0 var(--zona);background:rgba(255,255,255,.035)!important}
+.panel tr.zona td:not(:first-child){background:transparent!important}
+.panel tr.zona-1{--zona:#ffd166}.panel tr.zona-2{--zona:#cbd5e1}.panel tr.zona-3{--zona:#dca17a}
+.panel tr.zona-last{--zona:#ef6476}.panel tr.zona-normal{--zona:transparent}
+.panel tr.zona td.p{background:transparent!important;padding:9px 4px!important;text-align:center;min-width:42px;white-space:nowrap}
+.panel .numpos{font-size:clamp(18px,2vw,25px);font-weight:950;line-height:1;color:#fbf6ec}
+.panel tr.zona-1 .numpos{color:#ffd166}.panel tr.zona-2 .numpos{color:#cbd5e1}
+.panel tr.zona-3 .numpos{color:#dca17a}.panel tr.zona-last .numpos{color:#ff7286}
+.panel .poswrap{display:flex;align-items:center;justify-content:center;gap:3px}
+.panel .varpos{font:900 10px/1 Inter,system-ui,sans-serif;white-space:nowrap}
+.panel .varpos.up{color:#73df9b}.panel .varpos.down{color:#ff7c90}.panel .varpos.flat{color:#b6bfd5}
+.panel .legenda-zona{display:flex;flex-wrap:wrap;gap:10px 16px;margin:14px 0 4px;font-size:clamp(11px,1.05vw,13px);font-weight:750}
+.panel .legenda-zona span{display:inline-flex;align-items:center;gap:5px}
+.panel .legenda-zona i{display:inline-block;width:10px;height:10px;border-radius:3px}
+.panel td.n{overflow-wrap:anywhere;line-height:1.2}
+@media(max-width:559px){
+.panel table{font-size:14px}
+.panel th{font-size:12px;padding:9px 3px;letter-spacing:0}
+.panel td{padding:12px 3px}
+.panel td.n{font-size:13px;max-width:110px}
+.panel td.p{min-width:38px!important}
+.panel .numpos{font-size:20px}
+.panel td.fp{font-size:13px!important}
+.panel td.dr{font-size:13px!important}
+.panel td.pt{font-size:16px!important}
+.panel .varpos{font-size:9px}
+}
+@media(min-width:1100px){.panel table{font-size:15px}.panel td{padding:11px 5px}.panel th{font-size:13px}}
+
 </style>
 <link rel="manifest" href="../../manifest.webmanifest">
 <meta name="theme-color" content="#1d2a52">
@@ -184,10 +221,17 @@ function classifica(rounds,cup){
   return Object.keys(sq).map(function(k){return sq[k]}).sort(function(x,y){
     return y.pt-x.pt||y.fp-x.fp||(y.gf-y.gs)-(x.gf-x.gs)||y.gf-x.gf||((ORD.indexOf(x.n)<0?99:ORD.indexOf(x.n))-(ORD.indexOf(y.n)<0?99:ORD.indexOf(y.n)))||(x.n<y.n?-1:1)});
 }
-function tabella(rows,fp,titolo,top){
-  var h='<h3>'+titolo+'</h3><table>'+'<tr><th></th><th>Squadra</th><th class="w">G</th><th class="w">V</th><th class="w">N</th><th class="w">P</th><th class="w">GF</th><th class="w">GS</th><th>DR</th><th>Pt</th>'+(fp?'<th>Fantapunti</th>':'')+'</tr>';
-  rows.forEach(function(x,k){h+='<tr class="'+(k<top?'pod':'')+(x.n===ME?' me':'')+'" style="animation-delay:'+(k*35)+'ms"><td class="p">'+(k+1)+'</td><td class="n">'+esc(cap(x.n))+'</td><td class="w">'+x.g+'</td><td class="w">'+x.v+'</td><td class="w">'+x.nn+'</td><td class="w">'+x.p+'</td><td class="w">'+x.gf+'</td><td class="w">'+x.gs+'</td><td class="dr">'+(x.gf-x.gs>0?'+':x.gf-x.gs<0?'−':'')+Math.abs(x.gf-x.gs)+'</td><td class="pt">'+x.pt+'</td>'+(fp?'<td class="fp">'+pt(x.fp)+'</td>':'')+'</tr>'});
-  return h+'</table>';
+function tabella(rows,fp,titolo,top,precedente){
+  var h='<h3>'+titolo+'</h3><table><thead><tr><th aria-label="Posizione">Pos.</th><th>Squadra</th><th class="w">G</th><th class="w">V</th><th class="w">N</th><th class="w">P</th><th class="w">GF</th><th class="w">GS</th><th>DR</th><th>Pt</th>'+(fp?'<th>Fantapunti</th>':'')+'</tr></thead><tbody>';
+  rows.forEach(function(x,k){
+    var pos=k+1,zona=fp?(pos===1?'zona-1':pos===2?'zona-2':pos===3?'zona-3':pos===rows.length?'zona-last':'zona-normal'):'zona-normal';
+    var d=precedente&&precedente[x.n]!==undefined?precedente[x.n]-pos:0;
+    var delta=precedente&&precedente[x.n]!==undefined?(d>0?'<small class="varpos up" aria-label="Sale di '+d+' posizioni">▲'+d+'</small>':d<0?'<small class="varpos down" aria-label="Scende di '+Math.abs(d)+' posizioni">▼'+Math.abs(d)+'</small>':''):'';
+    h+='<tr class="zona '+zona+(x.n===ME?' me':'')+'" style="animation-delay:'+(k*35)+'ms"><td class="p"><span class="poswrap"><strong class="numpos">'+pos+'</strong>'+delta+'</span></td><td class="n">'+esc(cap(x.n))+'</td><td class="w">'+x.g+'</td><td class="w">'+x.v+'</td><td class="w">'+x.nn+'</td><td class="w">'+x.p+'</td><td class="w">'+x.gf+'</td><td class="w">'+x.gs+'</td><td class="dr">'+(x.gf-x.gs>0?'+':x.gf-x.gs<0?'−':'')+Math.abs(x.gf-x.gs)+'</td><td class="pt">'+x.pt+'</td>'+(fp?'<td class="fp">'+pt(x.fp)+'</td>':'')+'</tr>'
+  });
+  h+='</tbody></table>';
+  if(fp)h+='<div class="legenda-zona" aria-label="Zone della classifica"><span><i style="background:#ffd166"></i>Scudetto · 1°</span><span><i style="background:#cbd5e1"></i>Podio · 2°</span><span><i style="background:#dca17a"></i>Podio · 3°</span><span><i style="background:#ef6476"></i>Retrocessione · ultimo</span></div>';
+  return h;
 }
 var ME='';try{ME=(JSON.parse(localStorage.getItem('fg')||'{}')||{}).team||''}catch(e){}
 function lastPlayed(c,cup){var l=0;c.forEach(function(g){if(played(g,cup))l=g.n});return l}
@@ -214,8 +258,9 @@ function render(){
   if(cup&&g.rest&&g.rest.length)b+='<div class="rip">Riposano: '+g.rest.map(function(x){return (x[1]===ME?'<b>'+esc(cap(x[1]))+'</b>':esc(cap(x[1])))+' (gir. '+esc(x[0])+')'}).join(' · ')+'</div>';
   var upto=c.filter(function(x){return x.n<=n&&played(x,cup)});
   var cl=classifica(upto.length?upto:[c[0]],cup),t;
+  var precedente=null;if(!cup&&upto.length>1){precedente={};classifica(upto.slice(0,-1),false).forEach(function(x,i){precedente[x.n]=i+1})}
   if(cup){t=tabella(cl.filter(function(x){return x.gir==='A'}),false,'Girone A',2)+tabella(cl.filter(function(x){return x.gir==='B'}),false,'Girone B',2)}
-  else t=tabella(cl,true,'Classifica dopo la '+(upto.length?upto[upto.length-1].n:0)+'ª',3);
+  else t=tabella(cl,true,'Classifica dopo la '+(upto.length?upto[upto.length-1].n:0)+'ª',3,precedente);
   var bd=document.getElementById('board'),tb=document.getElementById('tab');
   bd.classList.add('out');tb.classList.add('out');
   setTimeout(function(){bd.innerHTML=b;tb.innerHTML=t;bd.classList.remove('out');tb.classList.remove('out')},200);
