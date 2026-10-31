@@ -15,7 +15,7 @@ def width(p):
     print('PASS 320px', p.url, size)
 
 def visit(context, path, name):
-    page=context.new_page(viewport={'width':320,'height':740})
+    page=context.new_page()
     errors=[]
     page.on('pageerror', lambda e: errors.append(str(e)))
     page.goto(BASE+path,wait_until='domcontentloaded',timeout=30000)

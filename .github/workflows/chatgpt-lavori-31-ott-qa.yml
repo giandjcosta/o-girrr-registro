@@ -5,6 +5,7 @@ on:
       - chatgpt/lavori-31-ottobre
     paths:
       - .github/workflows/chatgpt-lavori-31-ott-qa.yml
+      - prove/collaudo_chatgpt_31_browser.py
 permissions:
   contents: write
 jobs:
