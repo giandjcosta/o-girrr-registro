@@ -755,7 +755,7 @@ function giorCoppa(t){var R=CC||D.cup||[],x={v:0,pt:0},gg=0;R.forEach(function(r
   r.m.forEach(function(m){if(!m[5]||m[5]==='-'||(m[1]!==t&&m[4]!==t))return;var sc=m[5].split('-').map(Number),a=m[1]===t?sc[0]:sc[1],b=m[1]===t?sc[1]:sc[0];if(a>b){x.v++;x.pt+=3}else if(a===b)x.pt++})});
   x.fine=CC?gg>=CC.length:false;return x}
 function sponsorCoppa(t){var fa=fascia(t),x=giorCoppa(t);
-  var o=fa==='Big'?{nome:'Assicurazioni Leone d\'Oro',testo:'Vinci almeno 5 partite nel girone di Champions Cup',val:x.v,obj:5,u:'vittorie',crediti:100}
+  var o=fa==='Big'?{nome:'Assicurazioni Leone d\'Oro',testo:'Vinci almeno 4 partite nel girone di Champions Cup',val:x.v,obj:4,u:'vittorie',crediti:100}
    :fa==='Emergente'?{nome:'Torrefazione Moka d\'Oro',testo:'Fai almeno 10 punti nel girone di Champions Cup',val:x.pt,obj:10,u:'punti',crediti:75}
    :{nome:'Ferramenta Bortolo',testo:'Vinci almeno 2 partite nel girone di Champions Cup',val:x.v,obj:2,u:'vittorie',crediti:50};
   o.ok=o.val>=o.obj;o.pct=Math.min(100,Math.round(o.val/o.obj*100));o.stato=o.ok?'Fatto':x.fine?'Mancato':o.val+' su '+o.obj+' '+o.u;return o}
