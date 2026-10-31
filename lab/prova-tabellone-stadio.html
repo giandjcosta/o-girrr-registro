@@ -105,6 +105,10 @@ tr{animation:in .45s both}
 body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:none;background:repeating-linear-gradient(115deg,rgba(255,255,255,.04) 0 36px,transparent 36px 72px);animation:strisce 9s linear infinite}
 @keyframes strisce{to{transform:translate3d(79.45px,0,0)}}
 @media (prefers-reduced-motion:reduce){body::before{animation:none}}
+
+/* ChatGPT: forma nelle ultime cinque partite */
+@media(max-width:559px){.panel table{table-layout:fixed;font-size:12px}.panel td,.panel th{padding:6px 2px}.panel td.p{width:23px}.panel td.n{overflow-wrap:anywhere;word-break:normal;font-size:11px}.panel td.dr{width:26px}.panel td.pt{width:23px;font-size:13px}.panel td.fp{width:47px;font-size:10px}.panel th{letter-spacing:0;font-size:9px}.panel th:nth-child(2){width:auto}}
+.formadots{display:inline-flex;gap:3px;vertical-align:middle;white-space:nowrap;margin-left:5px}.formadots i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#8e99a8;flex:none}.formadots i.v{background:#55c98a}.formadots i.n{background:#9aa3af}.formadots i.p{background:#ef6474}.formadots i.empty{background:transparent;border:1px solid #8590a4}@media(max-width:559px){.formadots{gap:2px;margin-left:2px}.formadots i{width:5px;height:5px}}
 </style>
 <link rel="manifest" href="../../manifest.webmanifest">
 <meta name="theme-color" content="#1d2a52">
@@ -184,9 +188,12 @@ function classifica(rounds,cup){
   return Object.keys(sq).map(function(k){return sq[k]}).sort(function(x,y){
     return y.pt-x.pt||y.fp-x.fp||(y.gf-y.gs)-(x.gf-x.gs)||y.gf-x.gf||((ORD.indexOf(x.n)<0?99:ORD.indexOf(x.n))-(ORD.indexOf(y.n)<0?99:ORD.indexOf(y.n)))||(x.n<y.n?-1:1)});
 }
+/* ChatGPT: forma calcolata solo dalle partite disputate, fino alla giornata selezionata */
+function formaUltime(t){var a=[],cup=mode==='coppa';cal().forEach(function(g){if(g.n>sel[mode])return;g.m.forEach(function(m){var casa=m[cup?1:0],fuori=m[cup?4:3],ris=m[cup?5:4];if(ris==='-'||(t!==casa&&t!==fuori))return;var q=ris.split('-').map(Number),gf=t===casa?q[0]:q[1],gs=t===casa?q[1]:q[0];a.push(gf>gs?'v':gf===gs?'n':'p')})});return a.slice(-5)}
+function formaPallini(t){var v=formaUltime(t),tit={v:'Vittoria',n:'Pareggio',p:'Sconfitta'};return '<span class="formadots" role="img" aria-label="Ultimi risultati: '+(v.length?v.map(function(x){return tit[x]}).join(', '):'nessuna partita')+'">'+v.map(function(x){return '<i class="'+x+'" aria-hidden="true"></i>'}).join('')+'</span>'}
 function tabella(rows,fp,titolo,top){
   var h='<h3>'+titolo+'</h3><table>'+'<tr><th></th><th>Squadra</th><th class="w">G</th><th class="w">V</th><th class="w">N</th><th class="w">P</th><th class="w">GF</th><th class="w">GS</th><th>DR</th><th>Pt</th>'+(fp?'<th>Fantapunti</th>':'')+'</tr>';
-  rows.forEach(function(x,k){h+='<tr class="'+(k<top?'pod':'')+(x.n===ME?' me':'')+'" style="animation-delay:'+(k*35)+'ms"><td class="p">'+(k+1)+'</td><td class="n">'+esc(cap(x.n))+'</td><td class="w">'+x.g+'</td><td class="w">'+x.v+'</td><td class="w">'+x.nn+'</td><td class="w">'+x.p+'</td><td class="w">'+x.gf+'</td><td class="w">'+x.gs+'</td><td class="dr">'+(x.gf-x.gs>0?'+':x.gf-x.gs<0?'−':'')+Math.abs(x.gf-x.gs)+'</td><td class="pt">'+x.pt+'</td>'+(fp?'<td class="fp">'+pt(x.fp)+'</td>':'')+'</tr>'});
+  rows.forEach(function(x,k){h+='<tr class="'+(k<top?'pod':'')+(x.n===ME?' me':'')+'" style="animation-delay:'+(k*35)+'ms"><td class="p">'+(k+1)+'</td><td class="n">'+esc(cap(x.n))+formaPallini(x.n)+'</td><td class="w">'+x.g+'</td><td class="w">'+x.v+'</td><td class="w">'+x.nn+'</td><td class="w">'+x.p+'</td><td class="w">'+x.gf+'</td><td class="w">'+x.gs+'</td><td class="dr">'+(x.gf-x.gs>0?'+':x.gf-x.gs<0?'−':'')+Math.abs(x.gf-x.gs)+'</td><td class="pt">'+x.pt+'</td>'+(fp?'<td class="fp">'+pt(x.fp)+'</td>':'')+'</tr>'});
   return h+'</table>';
 }
 var ME='';try{ME=(JSON.parse(localStorage.getItem('fg')||'{}')||{}).team||''}catch(e){}
