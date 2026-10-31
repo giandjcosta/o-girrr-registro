@@ -34,6 +34,12 @@ Più avanti, da progettare: login unico. Nuovo (richiesta dei giocatori): **Annu
 - **Vecchio appunto:**  la chiave dell'obiettivo di Coppa (`sponsor_coppa_2026_27`) è una scelta nostra: nel database non c'è ancora nessun premio di Coppa.
 - **Dopo l'unione:** cambiare `REGISTRO_REF` del workflow da `claude/…` a `main` del registro.
 
+## 31 ottobre 2026 — Premi automatici online sui `main` (Claude, «vai» di Gianluca)
+- **Registro `main`** (665ecb1): `calcoli/premi/` (script dei premi) e la soglia dei Big in Champions Cup portata a **4 vittorie** (lab e anteprima; il sito vero dice ancora 5 finché non c'è il prossimo rilascio di `app.html`, anche nei sorgenti `ufficiale/src/sito/`).
+- **Sito `main`** (aba2406): `.github/workflows/premi-giornata.yml`, ogni giorno alle 22:30 UTC, con «vai» automatico; `REGISTRO_REF: main`.
+- **Da controllare alla prima esecuzione:** Actions → «Premi sponsor della giornata» → controllare che i premi siano già «duplicate» (sono già nel database).
+- **Da fare al prossimo rilascio:** testo e soglia 4 vittorie in `ufficiale/src/sito/*/app.html` e su `gh-pages`.
+
 ## 31 ottobre 2026 — Totogirrr: scheda Movimenti (Claude, prova nel Lab)
 - Era nell'Anteprima 5.2 (con dati finti) ma non è entrata nel rilascio: sul sito vero c'è solo il riquadro Movimenti in fondo ai Prestiti, e le Regole dicono già «lo vedi sempre sotto Movimenti».
 - Nuova scheda **Movimenti** tra Prestiti e Regole: una sola lista, dalla più recente, con puntate e vincite delle schedine (`toto_stato`) e i movimenti del database (`toto_pr_stato`: banco, prestiti, rimborsi, `cashback_derby`, `premio_sponsor`, che `carriera_riscatta` già scrive), più il totale di entrate e uscite. Solo lettura: **nessuna modifica al database** (letta solo la definizione delle funzioni). Il riquadro dentro Prestiti resta.
