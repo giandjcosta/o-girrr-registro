@@ -15,7 +15,7 @@ function calcola(d){
  var sa={};giocate.forEach(function(g){sa[String(g.sa)]=true});
  var gol={};Object.keys(d.votes||{}).forEach(function(id){
    var tot=0;Object.keys(d.votes[id]||{}).forEach(function(g){if(!sa[String(g)])return;
-     ((d.votes[id][g]||{}).b||[]).forEach(function(x){var match=/^(\d+)\s+(gol|rigore segnato)(?:\s|$)/i.exec(String(x));if(match)tot+=Number(match[1])});
+     ((d.votes[id][g]||{}).b||[]).forEach(function(x){var match=/^(\d+)\s+(gol|rigore segnato)$/i.exec(String(x));if(match)tot+=Number(match[1])});
    });gol[id]=tot;
  });
  var marcatori=[];teams.forEach(function(t){var arr=t.pl.map(function(p){return {nome:nome(d,p.id),squadra:t.nome,gol:gol[p.id]||0}}).sort(function(a,b){return b.gol-a.gol||a.nome.localeCompare(b.nome,'it')});t.marcatore=arr[0]&&arr[0].gol>0?arr[0]:null;marcatori=marcatori.concat(arr)});
