@@ -145,7 +145,7 @@ body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:no
 }
 @media(min-width:1100px){.panel table{font-size:15px}.panel td{padding:11px 5px}.panel th{font-size:13px}}
 
-.giornata-nav [hidden]{display:none!important}.giornata-nav{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}.giornata-nav a{display:block;padding:12px;border:1px solid #7888a8;border-radius:10px;color:inherit;text-decoration:none;font-weight:800}.giornata-nav a[aria-current]{border-color:var(--acc)}.panel tr.me td.n{box-shadow:inset 0 -2px var(--acc)}.panel td.n{white-space:normal;overflow:visible;text-overflow:clip}.panel td.fp{white-space:nowrap}@media(min-width:1150px){.wrap{max-width:1420px}.grid{grid-template-columns:minmax(0,.7fr) minmax(0,1.5fr)}.panel th{font-size:14px}.panel td.n{font-size:15px}}@media(max-width:359px){.wrap{padding-left:9px;padding-right:9px}.panel{padding:10px}.panel th:last-child{white-space:normal;overflow-wrap:anywhere;max-width:65px}}
+.giornata-nav [hidden]{display:none!important}.giornata-nav{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}.giornata-nav a{display:block;padding:12px;border:1px solid #7888a8;border-radius:10px;color:inherit;text-decoration:none;font-weight:800}.giornata-nav a[aria-current]{border-color:var(--acc)}.panel tr.me td.n{box-shadow:inset 0 -2px var(--acc)}.panel td.n{white-space:normal;overflow:visible;text-overflow:clip}.panel td.fp{white-space:nowrap}@media(min-width:1150px){.wrap{max-width:1420px}.grid{grid-template-columns:minmax(0,1fr) minmax(0,1.5fr)}.m{gap:10px;padding:14px}.m .t{font-size:16px;overflow-wrap:normal;word-break:normal}.m .sc b{width:44px;height:58px;font-size:40px}.panel th{font-size:14px}.panel td.n{font-size:15px}}@media(max-width:359px){.wrap{padding-left:9px;padding-right:9px}.panel{padding:10px}.panel th:last-child{white-space:normal;overflow-wrap:anywhere;max-width:65px}}
 </style>
 <link rel="manifest" href="https://giandjcosta.github.io/o-fant-a-girrr/manifest.webmanifest">
 <meta name="theme-color" content="#1d2a52">
@@ -168,7 +168,7 @@ body::before{display:none!important}
 h1,h2,.nome,.sh-nome,.hh{font-family:Lobster,'Brush Script MT',cursive!important;font-weight:400!important;text-transform:none!important;letter-spacing:0!important}
 h1{font-size:clamp(30px,6vw,48px)!important}
 .cards{grid-template-columns:1fr 1fr!important;gap:10px!important}.c{min-height:0!important;padding:12px!important}.c .ic{height:64px!important;margin-bottom:8px!important}.c .ic img[src*="albo-alloro"],.c .ic img[src*="carriera-micro"]{height:62px!important;margin-top:0!important}.c .ic img{max-width:100%}.c h2{font-size:19px!important}.c p{display:none!important}.c .go{font-size:11px!important;margin-top:6px}.card,.c,.mn,.lg-leghe{background:linear-gradient(150deg,rgba(255,255,255,.12),rgba(255,255,255,.05))!important}</style>
-</head>
+<style>body[data-mode=lega]{--acc:#ffd166}.sw button[aria-selected=true]{color:#142449}</style></head>
 <body data-mode="lega">
 <div class="wrap">
   <a class="back" href="home-stadio.html">‹ O Girrr</a>
@@ -240,6 +240,7 @@ function tabella(rows,fp,titolo,top,precedente){
 var ME='';try{ME=(JSON.parse(localStorage.getItem('fg')||'{}')||{}).team||''}catch(e){}
 function lastPlayed(c,cup){var l=0;c.forEach(function(g){if(played(g,cup))l=g.n});return l}
 function render(){
+  document.querySelectorAll('.sw button').forEach(function(b){b.setAttribute('aria-selected',String(b.dataset.m===mode))});
   var campoLink=document.getElementById('campo-link');if(campoLink){campoLink.href='campo.html?skin=stadio&giornata='+sel.lega;campoLink.hidden=mode==='coppa'}
   var cup=mode==='coppa',c=cal(),n=sel[mode],g=c.filter(function(x){return x.n===n})[0],ko=cup?koOf(n):null;
   if(ko)return renderKo(c,ko);
@@ -312,7 +313,7 @@ function hshF(s){var h=2166136261,i;for(i=0;i<s.length;i++){h^=s.charCodeAt(i);h
 function loginDaLink(d){var k=(location.hash||'').replace('#','').trim().toUpperCase();if(!k||/^(LEGA|COPPA)/.test(k)||!d||!d.lock)return false;var ok=false;
   d.teams.forEach(function(x){if(hshF(x.name+'|'+k)===d.lock[x.name]){var o={};try{o=JSON.parse(localStorage.getItem('fg')||'{}')||{}}catch(e){}o.team=x.name;o.code=k;try{localStorage.setItem('fg',JSON.stringify(o))}catch(e){}ok=x.name}});
   if(ok){try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}return ok}
-fetch('../../data.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){d=window.CVPUB?CVPUB(d):d;
+fetch('https://giandjcosta.github.io/o-fant-a-girrr/data.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){d=window.CVPUB?CVPUB(d):d;
   D=d;if(loginDaLink(d)){try{ME=(JSON.parse(localStorage.getItem('fg')||'{}')||{}).team||''}catch(e){}}sel.lega=lastPlayed(d.cal.lega,false)||1;
   var lc=lastPlayed(d.cal.cup,true);sel.coppa=lc||1;
   var hm=/^#(lega|coppa)(?:-(\d+))?$/.exec(location.hash||'');
