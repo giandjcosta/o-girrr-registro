@@ -30,7 +30,7 @@ def applica(s, modo, dati_url):
     assert s2 != s, "voti finti"
     s = s2
     # Derby: ufficiale se votato dai più o nato da una sfida accettata; veto dei più lo spegne; altrimenti conta la rivalità storica
-    sost("der=any?inten>=50:o.r>=80,", "der=S.veto&&S.veto[k]?false:(S.vote[k]?true:o.r>=80),")
+    sost("der=!!S.vote[k]||o.r>=80,", "der=S.veto&&S.veto[k]?false:(S.vote[k]?true:o.r>=80),")
     # frasi della sfida dal punto di vista di chi sfida
     sost("SFPAIR[rvKey(ME,'Apo team')]=", "SFPAIR[rvKey('Oranje VC','Apo team')]=")
     sost("function sfF(t){var p=SFPAIR[rvKey(ME,t)];", "function sfF(t,fr){fr=fr||ME;var p=fr==='Oranje VC'?SFPAIR[rvKey(fr,t)]:null;")
