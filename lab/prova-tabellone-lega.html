@@ -114,7 +114,7 @@ body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:no
 .panel tr.z-scudetto td{background:rgba(255,209,102,.19)}.panel tr.z-podio td{background:rgba(81,176,229,.14)}.panel tr.z-salvezza td{background:rgba(239,100,116,.13)}.panel tr.z-scudetto td.p{box-shadow:inset 4px 0 0 #ffd166}.panel tr.z-podio td.p{box-shadow:inset 4px 0 0 #63bce9}.panel tr.z-salvezza td.p{box-shadow:inset 4px 0 0 #ef6474}.zoneleg{display:flex;flex-wrap:wrap;gap:7px 12px;margin:10px 0 15px;font-size:11px;font-weight:700;color:var(--sub)}.zoneleg span{display:inline-flex;align-items:center;gap:5px}.zoneleg i{display:inline-block;width:10px;height:10px;border-radius:3px}.zoneleg .sc{background:#ffd166}.zoneleg .po{background:#63bce9}.zoneleg .sa{background:#ef6474}
 
 /* ChatGPT: grafico posizioni */
-.clubgraph{background:none;border:0;padding:2px 0;color:inherit;font:inherit;text-transform:inherit;text-align:left;cursor:pointer;text-decoration:underline;text-decoration-thickness:1px;text-decoration-color:rgba(255,255,255,.3);text-underline-offset:3px;overflow-wrap:anywhere}.clubgraph:hover,.clubgraph:focus-visible{color:var(--hi);text-decoration-color:var(--hi)}.grafpos{padding:12px;margin:12px 0 18px;border:1px solid rgba(255,255,255,.2);border-radius:12px;background:rgba(255,255,255,.07)}.grafpos h4{font-size:14px;margin-bottom:5px}.grafpos svg{display:block;width:100%;max-width:520px;height:auto;margin:auto}.grafpos .hint{font-size:11px;color:var(--sub);line-height:1.4}
+.clubgraph{background:none;border:0;padding:2px 0;color:inherit;font:inherit;text-transform:inherit;text-align:left;cursor:pointer;text-decoration:none;text-decoration-thickness:1px;text-decoration-color:rgba(255,255,255,.3);text-underline-offset:3px;overflow-wrap:anywhere}.clubgraph:hover,.clubgraph:focus-visible{color:var(--hi);text-decoration:underline;text-decoration-color:var(--hi)}.grafpos{padding:12px;margin:12px 0 18px;border:1px solid rgba(255,255,255,.2);border-radius:12px;background:rgba(255,255,255,.07)}.grafpos h4{font-size:14px;margin-bottom:5px}.grafpos svg{display:block;width:100%;max-width:520px;height:auto;margin:auto}.grafpos .hint{font-size:11px;color:var(--sub);line-height:1.4}
 
 /* ChatGPT: media, massimo e minimo solo quando c'è spazio */
 .panel td.med,.panel th.med{display:none}.panel td.med{font-weight:700;font-size:.75em}.panel th.med{font-size:9px;letter-spacing:.03em}@media(min-width:560px){.panel td.med,.panel th.med{display:table-cell}}@media(min-width:560px) and (max-width:900px){.panel table{font-size:12px}.panel th,.panel td{padding:6px 3px}.panel td.n{overflow-wrap:anywhere;font-size:11px}}
@@ -133,17 +133,19 @@ body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:no
 @media (min-width:1150px){.grid{grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr)}}
 /* Tabellone 31 ottobre: solo fascia laterale, posizioni leggibili da telefono e PC */
 .panel table{width:100%;border-collapse:separate;border-spacing:0;table-layout:auto}
-.panel th{font-size:clamp(12px,1.1vw,15px);letter-spacing:.015em;color:#f1f4fc;font-weight:900;padding:10px 5px;text-transform:none;white-space:nowrap}
+.panel th{font-size:clamp(12px,1.1vw,15px);letter-spacing:.06em;color:var(--sub);font-weight:800;padding:10px 5px;text-transform:none;white-space:nowrap}
 .panel td{font-variant-numeric:tabular-nums;color:#fbf6ec;font-weight:800}
-.panel td.dr,.panel td.fp,.panel td.pt{color:#fbf6ec!important;font-size:clamp(13px,1.25vw,18px);font-weight:850}
-.panel tr.me td{background:rgba(255,255,255,.055)!important}
-.panel tr.me td.n{color:#fbf6ec!important}
-.panel tr.zona td:first-child{box-shadow:inset 5px 0 var(--zona);background:rgba(255,255,255,.035)!important}
+.panel td.dr,.panel td.pt{color:#fbf6ec!important;font-size:clamp(13px,1.25vw,18px);font-weight:800}
+.panel td.fp{color:var(--sub);font-size:clamp(12px,1.1vw,16px);font-weight:600}
+.panel tr.zona td:first-child{box-shadow:inset 5px 0 var(--zona)}
 .panel tr.zona td:not(:first-child){background:transparent!important}
 .panel tr.zona-1{--zona:#ffd166}.panel tr.zona-2{--zona:#cbd5e1}.panel tr.zona-3{--zona:#dca17a}
 .panel tr.zona-last{--zona:#ef6476}.panel tr.zona-normal{--zona:transparent}
-.panel tr.zona td.p{background:transparent!important;padding:9px 4px!important;text-align:center;min-width:42px;white-space:nowrap}
-.panel .numpos{font-size:clamp(18px,2vw,25px);font-weight:950;line-height:1;color:#fbf6ec}
+.panel tr.zona td.p{background:transparent;padding:9px 6px 9px 12px;text-align:center;min-width:46px;white-space:nowrap}
+/* La squadra scelta mantiene la velatura e il nome oro del Tabellone originale. */
+.panel tr.zona.me td{background:rgba(255,209,102,.16)!important;border-bottom-color:rgba(255,209,102,.35)}
+.panel tr.zona.me td.n{color:var(--hi)}
+.panel .numpos{font-size:clamp(16px,1.5vw,20px);font-weight:900;line-height:1;color:#fbf6ec}
 .panel tr.zona-1 .numpos{color:#ffd166}.panel tr.zona-2 .numpos{color:#cbd5e1}
 .panel tr.zona-3 .numpos{color:#dca17a}.panel tr.zona-last .numpos{color:#ff7286}
 .panel .poswrap{display:flex;align-items:center;justify-content:center;gap:3px}
@@ -155,11 +157,11 @@ body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:no
 .panel td.n{overflow-wrap:anywhere;line-height:1.2}
 @media(max-width:559px){
 .panel table{font-size:14px}
-.panel th{font-size:12px;padding:9px 3px;letter-spacing:0}
-.panel td{padding:12px 3px}
+.panel th{font-size:12px;padding:9px 3px;letter-spacing:.02em}
+.panel td{padding:10px 3px}
 .panel td.n{font-size:13px;max-width:110px}
-.panel td.p{min-width:38px!important}
-.panel .numpos{font-size:20px}
+.panel td.p{min-width:46px}
+.panel .numpos{font-size:16px}
 .panel td.fp{font-size:13px!important}
 .panel td.dr{font-size:13px!important}
 .panel td.pt{font-size:16px!important}
@@ -167,7 +169,8 @@ body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:no
 }
 @media(min-width:1100px){.panel table{font-size:15px}.panel td{padding:11px 5px}.panel th{font-size:13px}}
 
-.panel table{table-layout:auto}.panel .movpos{display:inline;font-size:9px}.clubgraph{font:inherit;color:inherit;text-align:left;white-space:normal;overflow-wrap:anywhere}.forma{display:flex;gap:3px}.panel .med{display:none}@media(min-width:1100px){.panel .med{display:table-cell}}.grid{grid-template-columns:1fr!important}@media(min-width:1000px){#board{display:grid;grid-template-columns:1fr 1fr;gap:12px}#board>h3,#board>.kick{grid-column:1/-1}.panel td.n{font-size:15px;min-width:165px}}@media(max-width:559px){.panel td.n{font-size:12px;max-width:none}.panel .formadot{width:5px;height:5px}.panel th{font-size:12px}.panel td.p{min-width:32px!important}}
+.panel table{table-layout:auto}.panel .movpos{display:inline;font-size:9px}.clubgraph{font:inherit;color:inherit;text-align:left;white-space:normal;overflow-wrap:anywhere}.forma{display:flex;gap:3px}.panel .med{display:none}@media(min-width:1100px){.panel .med{display:table-cell}}.grid{grid-template-columns:1fr!important}@media(min-width:1000px){#board{display:grid;grid-template-columns:1fr 1fr;gap:12px}#board>h3,#board>.kick{grid-column:1/-1}.panel td.n{font-size:15px;min-width:165px}}@media(max-width:559px){.panel td.n{font-size:13px;max-width:none}.panel .formadot{width:5px;height:5px}.panel th{font-size:12px}.panel td.p{min-width:46px}}
+@media(max-width:359px){.panel td.n{font-size:12px}}
 </style>
 <link rel="manifest" href="../manifest.webmanifest">
 <meta name="theme-color" content="#1d2a52">
@@ -260,8 +263,8 @@ function frecciaPos(t,rows,k,fp){var cup=!fp,rounds=cal().filter(function(g){ret
 function tabella(rows,fp,titolo,top){
   var h='<h3>'+titolo+'</h3><table><thead><tr><th>Pos.</th><th>Squadra</th><th class="w">G</th><th class="w">V</th><th class="w">N</th><th class="w">P</th><th class="w">GF</th><th class="w">GS</th><th>DR</th><th>Pt</th>'+(fp?'<th>Fantapunti</th>':'')+'<th class="med">Media</th><th class="med">Max</th><th class="med">Min</th></tr></thead><tbody>';
   rows.forEach(function(x,k){var p=k+1,zona=fp?(p===1?'zona-1':p===2?'zona-2':p===3?'zona-3':p===rows.length?'zona-last':'zona-normal'):'zona-normal',st=statistichePunti(x.n);
-  h+='<tr class="zona '+zona+(x.n===ME?' me':'')+'"><td class="p"><span class="poswrap"><strong class="numpos">'+p+'</strong>'+frecciaPos(x.n,rows,k,fp)+'</span></td><td class="n"><button class="clubgraph" data-plot="'+encodeURIComponent(x.n)+'" type="button" aria-label="Apri il grafico di '+esc(x.n)+'">'+esc(cap(x.n))+'</button>'+formaPallini(x.n)+'</td><td class="w">'+x.g+'</td><td class="w">'+x.v+'</td><td class="w">'+x.nn+'</td><td class="w">'+x.p+'</td><td class="w">'+x.gf+'</td><td class="w">'+x.gs+'</td><td class="dr">'+(x.gf-x.gs)+'</td><td class="pt">'+x.pt+'</td>'+(fp?'<td class="fp">'+pt(x.fp)+'</td>':'')+'<td class="med">'+st.avg+'</td><td class="med">'+st.max+'</td><td class="med">'+st.min+'</td></tr>'});
-  return h+'</tbody></table>'+(fp?'<div class="legenda-zona"><span><i style="background:#ffd166"></i>Scudetto</span><span><i style="background:#cbd5e1"></i>Podio</span><span><i style="background:#ef6476"></i>Retrocessione · ultimo</span></div>':'')+(fp||titolo==='Girone B'?graficoSquadra()+prossimoTurno():'');
+  h+='<tr class="zona '+zona+(x.n===ME?' me':'')+'"><td class="p"><span class="poswrap"><strong class="numpos">'+p+'</strong>'+frecciaPos(x.n,rows,k,fp)+'</span></td><td class="n"><button class="clubgraph" data-plot="'+encodeURIComponent(x.n)+'" type="button" aria-label="Apri il grafico di '+esc(x.n)+'">'+esc(cap(x.n))+'</button>'+formaPallini(x.n)+'</td><td class="w">'+x.g+'</td><td class="w">'+x.v+'</td><td class="w">'+x.nn+'</td><td class="w">'+x.p+'</td><td class="w">'+x.gf+'</td><td class="w">'+x.gs+'</td><td class="dr">'+(x.gf>x.gs?'+':'')+(x.gf-x.gs)+'</td><td class="pt">'+x.pt+'</td>'+(fp?'<td class="fp">'+pt(x.fp)+'</td>':'')+'<td class="med">'+st.avg+'</td><td class="med">'+st.max+'</td><td class="med">'+st.min+'</td></tr>'});
+  return h+'</tbody></table>'+(fp?'<div class="legenda-zona"><span><i style="background:#ffd166"></i>Scudetto</span><span><i style="background:#cbd5e1"></i>Podio</span><span><i style="background:#ef6476"></i>Retrocessione</span></div>':'')+(fp||titolo==='Girone B'?graficoSquadra()+prossimoTurno():'');
 }
 
 var ME='';try{ME=(JSON.parse(localStorage.getItem('fg')||'{}')||{}).team||''}catch(e){}

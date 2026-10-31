@@ -1,0 +1,342 @@
+[
+  {
+    "skin": "lega",
+    "larghezza": 320,
+    "esito": "PASS",
+    "grafica": {
+      "intestazioni": [
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)"
+      ],
+      "fantapunti": "rgb(191, 227, 255)",
+      "dimensione": 16,
+      "distanza": 12,
+      "mia": "rgba(255, 209, 102, 0.16)",
+      "nome": "rgb(255, 209, 102)",
+      "altre": [
+        "rgba(0, 0, 0, 0)"
+      ],
+      "legenda": "Scudetto\nPodio\nRetrocessione",
+      "dr": "+9",
+      "overflow": false
+    }
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 320,
+    "esito": "PASS",
+    "grafica": {
+      "intestazioni": [
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)"
+      ],
+      "fantapunti": "rgb(191, 227, 255)",
+      "dimensione": 16,
+      "distanza": 12,
+      "mia": "rgba(255, 209, 102, 0.16)",
+      "nome": "rgb(255, 209, 102)",
+      "altre": [
+        "rgba(0, 0, 0, 0)"
+      ],
+      "legenda": "Scudetto\nPodio\nRetrocessione",
+      "dr": "+9",
+      "overflow": false
+    }
+  },
+  {
+    "skin": "lega",
+    "larghezza": 390,
+    "esito": "PASS",
+    "grafica": {
+      "intestazioni": [
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)"
+      ],
+      "fantapunti": "rgb(191, 227, 255)",
+      "dimensione": 16,
+      "distanza": 12,
+      "mia": "rgba(255, 209, 102, 0.16)",
+      "nome": "rgb(255, 209, 102)",
+      "altre": [
+        "rgba(0, 0, 0, 0)"
+      ],
+      "legenda": "Scudetto\nPodio\nRetrocessione",
+      "dr": "+9",
+      "overflow": false
+    }
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 390,
+    "esito": "PASS",
+    "grafica": {
+      "intestazioni": [
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)"
+      ],
+      "fantapunti": "rgb(191, 227, 255)",
+      "dimensione": 16,
+      "distanza": 12,
+      "mia": "rgba(255, 209, 102, 0.16)",
+      "nome": "rgb(255, 209, 102)",
+      "altre": [
+        "rgba(0, 0, 0, 0)"
+      ],
+      "legenda": "Scudetto\nPodio\nRetrocessione",
+      "dr": "+9",
+      "overflow": false
+    }
+  },
+  {
+    "skin": "lega",
+    "larghezza": 768,
+    "esito": "PASS",
+    "grafica": {
+      "intestazioni": [
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)"
+      ],
+      "fantapunti": "rgb(191, 227, 255)",
+      "dimensione": 16,
+      "distanza": 12,
+      "mia": "rgba(255, 209, 102, 0.16)",
+      "nome": "rgb(255, 209, 102)",
+      "altre": [
+        "rgba(0, 0, 0, 0)"
+      ],
+      "legenda": "Scudetto\nPodio\nRetrocessione",
+      "dr": "+9",
+      "overflow": false
+    }
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 768,
+    "esito": "PASS",
+    "grafica": {
+      "intestazioni": [
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)"
+      ],
+      "fantapunti": "rgb(191, 227, 255)",
+      "dimensione": 16,
+      "distanza": 12,
+      "mia": "rgba(255, 209, 102, 0.16)",
+      "nome": "rgb(255, 209, 102)",
+      "altre": [
+        "rgba(0, 0, 0, 0)"
+      ],
+      "legenda": "Scudetto\nPodio\nRetrocessione",
+      "dr": "+9",
+      "overflow": false
+    }
+  },
+  {
+    "skin": "lega",
+    "larghezza": 1280,
+    "esito": "PASS",
+    "grafica": {
+      "intestazioni": [
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)"
+      ],
+      "fantapunti": "rgb(191, 227, 255)",
+      "dimensione": 19.2,
+      "distanza": 12,
+      "mia": "rgba(255, 209, 102, 0.16)",
+      "nome": "rgb(255, 209, 102)",
+      "altre": [
+        "rgba(0, 0, 0, 0)"
+      ],
+      "legenda": "Scudetto\nPodio\nRetrocessione",
+      "dr": "+9",
+      "overflow": false
+    }
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 1280,
+    "esito": "PASS",
+    "grafica": {
+      "intestazioni": [
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)"
+      ],
+      "fantapunti": "rgb(191, 227, 255)",
+      "dimensione": 19.2,
+      "distanza": 12,
+      "mia": "rgba(255, 209, 102, 0.16)",
+      "nome": "rgb(255, 209, 102)",
+      "altre": [
+        "rgba(0, 0, 0, 0)"
+      ],
+      "legenda": "Scudetto\nPodio\nRetrocessione",
+      "dr": "+9",
+      "overflow": false
+    }
+  },
+  {
+    "skin": "lega",
+    "larghezza": 1440,
+    "esito": "PASS",
+    "grafica": {
+      "intestazioni": [
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)"
+      ],
+      "fantapunti": "rgb(191, 227, 255)",
+      "dimensione": 20,
+      "distanza": 12,
+      "mia": "rgba(255, 209, 102, 0.16)",
+      "nome": "rgb(255, 209, 102)",
+      "altre": [
+        "rgba(0, 0, 0, 0)"
+      ],
+      "legenda": "Scudetto\nPodio\nRetrocessione",
+      "dr": "+9",
+      "overflow": false
+    }
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 1440,
+    "esito": "PASS",
+    "grafica": {
+      "intestazioni": [
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)",
+        "rgb(191, 227, 255)"
+      ],
+      "fantapunti": "rgb(191, 227, 255)",
+      "dimensione": 20,
+      "distanza": 12,
+      "mia": "rgba(255, 209, 102, 0.16)",
+      "nome": "rgb(255, 209, 102)",
+      "altre": [
+        "rgba(0, 0, 0, 0)"
+      ],
+      "legenda": "Scudetto\nPodio\nRetrocessione",
+      "dr": "+9",
+      "overflow": false
+    }
+  }
+]
