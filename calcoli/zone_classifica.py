@@ -75,7 +75,7 @@ def eventi(d, aspettative=None):
                 if not test(x["posizioni"][team]): break
                 count += 1
             return count
-        def add(priorita, tipo, team, titolo, testo, serie=0, altri=None):
+        def add(priorita, tipo, team, titolo, testo, serie=0, altri=None, contesto=None):
             gruppo = "fondo" if tipo in ("sorpresa", "retrocessione") else "podio" if tipo in ("podio", "rivelazione") else tipo
             k = (gruppo, team)
             if n - ultimo.get(k, -100) < 4: return
@@ -83,7 +83,7 @@ def eventi(d, aspettative=None):
                 testo=testo, durata=serie, posizione=pos[team], gruppo=gruppo,
                 prova={"giornata": n, "posizione_precedente": prev[team],
                        "posizione": pos[team], "attesa": expected.get(team, {}).get("attesa"),
-                       "serie": serie, "altre_squadre": altri or []}))
+                       "serie": serie, "altre_squadre": altri or [], **(contesto or {})}))
         for team, posto in pos.items():
             attesa = expected.get(team, {}).get("attesa")
             big = isinstance(attesa, (int, float)) and attesa <= 3
@@ -94,6 +94,21 @@ def eventi(d, aspettative=None):
                 add(100,"sorpresa",team,"CRISI IMPREVISTA",f"{team}, attesa tra le prime {int(attesa)}, è ultima da {fondo} giornate consecutive. La favorita deve reagire.",fondo)
             elif fondo >= 3:
                 add(72,"retrocessione",team,"ZONA RETROCESSIONE",f"{team} resta ultima da {fondo} giornate consecutive. Serve una svolta per lasciare il fondo della classifica.",fondo)
+            # Una rimonta/caduta ampia si misura su tre turni, oltre il solo ultimo posto.
+            # Serve un ulteriore passo nella stessa direzione nell'ultima giornata.
+            if n >= 5:
+                partenza = hist[idx-3]["posizioni"][team]
+                variazione = partenza-posto
+                contesto = {"giornata_inizio": n-3, "posizione_inizio": partenza,
+                            "variazione": variazione}
+                if variazione >= 4 and prev[team] > posto:
+                    add(97,"rimonta",team,"GRANDE RIMONTA",
+                        f"{team} risale dalla {partenza}ª alla {posto}ª posizione in tre giornate: quattro o più posti recuperati. La rimonta prende forma.",
+                        serie=3,contesto=contesto)
+                elif variazione <= -4 and prev[team] < posto and posto >= len(pos)-2:
+                    add(98,"crollo",team,"CROLLO IN CLASSIFICA",
+                        f"{team} scende dalla {partenza}ª alla {posto}ª posizione in tre giornate. La squadra precipita nella parte bassa della classifica.",
+                        serie=3,contesto=contesto)
             if n >= 3 and prev[team] == len(pos) and posto < len(pos):
                 serie = durata(team,lambda p:p==len(pos),idx-1)
                 if serie >= 2:

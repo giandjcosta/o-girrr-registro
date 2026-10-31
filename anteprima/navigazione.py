@@ -63,3 +63,5 @@ def genera():
     c = c.replace('href="index.html">‹ Torna al Lab','id="ritorno-tabellone" href="tabellone-stadio.html">‹ Tabellone')
     c = c.replace('</body>', '''<script>function aggiornaRitorni(){var s=document.body.dataset.skin;document.getElementById('ritorno-tabellone').href='tabellone-'+s+'.html#lega-'+(new URLSearchParams(location.search).get('giornata')||1);document.querySelectorAll('[data-home]').forEach(function(a){a.href='home-'+s+'.html'})}aggiornaRitorni();document.addEventListener('click',function(){setTimeout(aggiornaRitorni,0)})</script></body>''')
     (R/'anteprima/campo.html').write_text(c)
+    # Cornice dell'Anteprima nel Registro, distinta dalle sorgenti congelate del sito.
+    (R/'ufficiale/index.html').write_text((R/'anteprima/sorgenti/involucro.html').read_text())

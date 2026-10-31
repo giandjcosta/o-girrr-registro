@@ -55,3 +55,15 @@ hist[2]['classifica'][0]['pt']=25
 with patch.object(z,'storia',return_value=hist):
     assert z.evento({})['tipo']=='lotta_scudetto'
 print('PASS uscita dal podio e riapertura lotta scudetto')
+
+# Movimenti ampi su tre turni: non basta uscire da ultimo o perdere il podio.
+prima=squadre[:]
+penultima=squadre[:];penultima.insert(5,penultima.pop(9))
+ultima=squadre[:];ultima.insert(4,ultima.pop(9))
+verifica([prima,prima,prima,penultima,ultima],'rimonta')
+penultima=squadre[:];penultima.insert(5,penultima.pop(1))
+ultima=squadre[:];ultima.insert(7,ultima.pop(1))
+verifica([prima,prima,prima,penultima,ultima],'crollo')
+with patch.object(z,'storia',return_value=storia_ordini([prima,prima,prima,penultima,ultima])):
+    ev=z.evento({});assert ev['prova']['posizione_inizio']==2 and ev['prova']['variazione']==-6
+print('PASS grande rimonta e crollo su tre turni, con prova delle posizioni di partenza e arrivo')
