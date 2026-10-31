@@ -34,6 +34,10 @@ Più avanti, da progettare: login unico. Nuovo (richiesta dei giocatori): **Annu
 - **Vecchio appunto:**  la chiave dell'obiettivo di Coppa (`sponsor_coppa_2026_27`) è una scelta nostra: nel database non c'è ancora nessun premio di Coppa.
 - **Dopo l'unione:** cambiare `REGISTRO_REF` del workflow da `claude/…` a `main` del registro.
 
+## 31 ottobre 2026 — Numerazione: la 5.3 è uscita, la prossima è la 5.5 (Gianluca)
+- La versione online è la **5.3** (`gh-pages` `eff5024`, Albo, Totogirrr Movimenti, Champions a 4 vittorie, Regole del Derby). Archivio in `lab/versione-5-3.html`.
+- Da ora la prossima versione si chiama **5.5**: Anteprima e Lab dicono «Anteprima 5.5», i menu puntano all'Archivio 5.3.
+
 ## 31 ottobre 2026 — RILASCIO 5.3 sul sito vero (Claude, «vai» di Gianluca)
 - **Online:** `gh-pages` `eff5024` (sopra `a591b50`). Dentro: Albo d'oro con campionati 🏆 e coppe 🎖️ divisi per tutti gli allenatori; le storie delle sei stagioni dell'Era Contemporanea; Totogirrr con la scheda **Movimenti** (`rilascio/toto_movimenti.py`); Champions Cup: Big a 4 vittorie; Regole del Derby a 80.
 - **Prove:** pagine vere (`giandjcosta.github.io/o-fant-a-girrr`), Lega e Stadio, 320 e 1280 px: nessun errore in console, nessuno scorrimento laterale, Movimenti aperto in demo. Non provato: Safari/iPhone, e la Coppa con una squadra vera (il premio di Coppa non è ancora scattato).
