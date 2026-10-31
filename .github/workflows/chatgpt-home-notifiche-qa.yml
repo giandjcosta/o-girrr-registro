@@ -1,0 +1,38 @@
+name: ChatGPT Home e Notifiche Lab QA
+on:
+  push:
+    branches: [chatgpt/home-notifiche-centro-partita]
+    paths:
+      - 'lab/index.html'
+      - 'lab/esperienza-2026.*'
+      - 'lab/prova-esperienza-*.html'
+      - 'anteprima/**'
+      - 'prove/collaudo_esperienza_2026_browser.py'
+      - '.github/workflows/chatgpt-home-notifiche-qa.yml'
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Controlla JavaScript
+        run: node --check lab/esperienza-2026.js
+      - name: Rigenera Anteprima dal Lab
+        run: python3 anteprima/build.py
+      - name: Controlla che le Anteprime siano versionate
+        run: git diff --exit-code -- anteprima/index.html anteprima/attuale.html
+      - name: Collauda componenti 5.2
+        run: python3 prove/collaudo_anteprima_52.py
+      - name: Collauda Moviola
+        run: python3 prove/prova_moviola.py
+      - name: Installa Chromium
+        run: |
+          python3 -m pip install playwright
+          python3 -m playwright install chromium
+      - name: Avvia server statico
+        run: |
+          python3 -m http.server 8765 >/tmp/esperienza-qa.log 2>&1 &
+          sleep 2
+      - name: Verifica le due grafiche a 320 e 1280 px
+        run: python3 prove/collaudo_esperienza_2026_browser.py
