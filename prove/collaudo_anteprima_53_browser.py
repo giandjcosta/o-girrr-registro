@@ -63,7 +63,7 @@ def main():
     pg.screenshot(path=f"anteprima/5.3/qa-screenshot/home-{skin}-{width}.png",full_page=True)
     visit("tabellone")
     assert pg.locator("#board").count()==1 and pg.locator("#tab").count()==1
-    pg.locator("#v53from option").first.wait_for(timeout=12000)
+    pg.locator("#v53from option").first.wait_for(state="attached",timeout=12000)
     pg.locator('#v53boardtabs button[data-view="center"]').click()
     pg.locator("#v53matchstats .score").first.wait_for()
     assert "Fantapunti" in pg.locator("#v53matchstats").inner_text()
