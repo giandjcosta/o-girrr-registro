@@ -128,6 +128,46 @@ body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:no
 /* ChatGPT: spazio sufficiente al Tabellone completo su desktop */
 @media(min-width:861px){.grid{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr)}}
 @media(min-width:861px) and (max-width:1240px){.panel table{font-size:12px;table-layout:fixed}.panel td,.panel th{padding:6px 2px}.panel td.n{overflow-wrap:anywhere;font-size:11px}.panel th{letter-spacing:0}}
+/* Layout PC: tutta la classifica leggibile; su tablet le sezioni vanno in colonna */
+@media (min-width:861px) and (max-width:1149px){.grid{grid-template-columns:1fr}}
+@media (min-width:1150px){.grid{grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr)}}
+/* Tabellone 31 ottobre: solo fascia laterale, posizioni leggibili da telefono e PC */
+.panel table{width:100%;border-collapse:separate;border-spacing:0;table-layout:auto}
+.panel th{font-size:clamp(12px,1.1vw,15px);letter-spacing:.015em;color:#f1f4fc;font-weight:900;padding:10px 5px;text-transform:none;white-space:nowrap}
+.panel td{font-variant-numeric:tabular-nums;color:#fbf6ec;font-weight:800}
+.panel td.dr,.panel td.fp,.panel td.pt{color:#fbf6ec!important;font-size:clamp(13px,1.25vw,18px);font-weight:850}
+.panel tr.me td{background:rgba(255,255,255,.055)!important}
+.panel tr.me td.n{color:#fbf6ec!important}
+.panel tr.zona td:first-child{box-shadow:inset 5px 0 var(--zona);background:rgba(255,255,255,.035)!important}
+.panel tr.zona td:not(:first-child){background:transparent!important}
+.panel tr.zona-1{--zona:#ffd166}.panel tr.zona-2{--zona:#cbd5e1}.panel tr.zona-3{--zona:#dca17a}
+.panel tr.zona-last{--zona:#ef6476}.panel tr.zona-normal{--zona:transparent}
+.panel tr.zona td.p{background:transparent!important;padding:9px 4px!important;text-align:center;min-width:42px;white-space:nowrap}
+.panel .numpos{font-size:clamp(18px,2vw,25px);font-weight:950;line-height:1;color:#fbf6ec}
+.panel tr.zona-1 .numpos{color:#ffd166}.panel tr.zona-2 .numpos{color:#cbd5e1}
+.panel tr.zona-3 .numpos{color:#dca17a}.panel tr.zona-last .numpos{color:#ff7286}
+.panel .poswrap{display:flex;align-items:center;justify-content:center;gap:3px}
+.panel .varpos{font:900 10px/1 Inter,system-ui,sans-serif;white-space:nowrap}
+.panel .varpos.up{color:#73df9b}.panel .varpos.down{color:#ff7c90}.panel .varpos.flat{color:#b6bfd5}
+.panel .legenda-zona{display:flex;flex-wrap:wrap;gap:10px 16px;margin:14px 0 4px;font-size:clamp(11px,1.05vw,13px);font-weight:750}
+.panel .legenda-zona span{display:inline-flex;align-items:center;gap:5px}
+.panel .legenda-zona i{display:inline-block;width:10px;height:10px;border-radius:3px}
+.panel td.n{overflow-wrap:anywhere;line-height:1.2}
+@media(max-width:559px){
+.panel table{font-size:14px}
+.panel th{font-size:12px;padding:9px 3px;letter-spacing:0}
+.panel td{padding:12px 3px}
+.panel td.n{font-size:13px;max-width:110px}
+.panel td.p{min-width:38px!important}
+.panel .numpos{font-size:20px}
+.panel td.fp{font-size:13px!important}
+.panel td.dr{font-size:13px!important}
+.panel td.pt{font-size:16px!important}
+.panel .varpos{font-size:9px}
+}
+@media(min-width:1100px){.panel table{font-size:15px}.panel td{padding:11px 5px}.panel th{font-size:13px}}
+
+.panel table{table-layout:auto}.panel .movpos{display:inline;font-size:9px}.clubgraph{font:inherit;color:inherit;text-align:left;white-space:normal;overflow-wrap:anywhere}.forma{display:flex;gap:3px}.panel .med{display:none}@media(min-width:1100px){.panel .med{display:table-cell}}.grid{grid-template-columns:1fr!important}@media(min-width:1000px){#board{display:grid;grid-template-columns:1fr 1fr;gap:12px}#board>h3,#board>.kick{grid-column:1/-1}.panel td.n{font-size:15px;min-width:165px}}@media(max-width:559px){.panel td.n{font-size:12px;max-width:none}.panel .formadot{width:5px;height:5px}.panel th{font-size:11px}.panel td.p{min-width:32px!important}}
 </style>
 <link rel="manifest" href="../manifest.webmanifest">
 <meta name="theme-color" content="#1d2a52">
@@ -156,7 +196,7 @@ body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:no
   <div class="gs"><button class="ar" id="prev" aria-label="Giornata precedente">‹</button><div class="chips" id="chips"></div><button class="ar" id="next" aria-label="Giornata successiva">›</button></div>
   <div class="grid">
     <section><div class="swap" id="board"></div></section>
-    <aside class="panel"><div class="swap" id="tab"></div><details class="reg"><summary>Regole</summary><h4>Punti e classifica</h4><p>Vittoria 3 punti, pareggio 1, sconfitta 0. In classifica contano prima i punti, poi i Fantapunti totali.</p><h4>I gol</h4><p>Il primo gol arriva a 66 punti, poi uno in più ogni 5 punti: 71 vale due gol, 76 tre e così via. Al punteggio si aggiunge il modificatore della difesa.</p><h4>Le colonne</h4><p>G giocate, V vittorie, N pareggi, P sconfitte, GF gol fatti, GS gol subiti, DR differenza reti, Pt punti. Sul telefono in verticale si vedono DR, Pt e Fantapunti; girando il telefono o da computer si vede tutto.</p><h4>Champions Cup</h4><p>Due gironi da cinque squadre: ogni giornata una squadra per girone riposa. Dieci giornate, otto partite a testa. Le prime quattro di ogni girone vanno ai quarti (11ª giornata), poi semifinali (12ª) e finale (13ª). I gol si contano come in campionato.</p><h4>Derby e sfide</h4><p>«Derby» sopra una partita vuol dire Derby ufficiale: votato dai più o nato da una sfida accettata in conferenza stampa. Nelle ultime dieci giornate compaiono anche «Sfida scudetto» (1ª contro 2ª), «Sfida podio» (3ª contro 4ª) e «Sfida salvezza» (le ultime due).</p></details></aside>
+    <aside class="panel"><div class="swap" id="tab"></div><details class="reg"><summary>Regole</summary><h4>Punti e classifica</h4><p>Vittoria 3 punti, pareggio 1, sconfitta 0. In classifica contano prima i punti, poi i Fantapunti totali.</p><h4>I gol</h4><p>Il primo gol arriva a 66 punti, poi uno in più ogni 5 punti: 71 vale due gol, 76 tre e così via. Al punteggio si aggiunge il modificatore della difesa.</p><h4>Le colonne</h4><p>G giocate, V vittorie, N pareggi, P sconfitte, GF gol fatti, GS gol subiti, DR differenza reti, Pt punti. Sul telefono in verticale si vedono DR, Pt e Fantapunti; girando il telefono o da computer si vede tutto.</p><h4>Champions Cup</h4><p>Due gironi da cinque squadre: ogni giornata una squadra per girone riposa. Dieci giornate, otto partite a testa. Le prime quattro di ogni girone vanno ai quarti (11ª giornata), poi semifinali (12ª) e finale (13ª). I gol si contano come in campionato.</p><h4>Derby e sfide</h4><p>«Derby» sopra una partita vuol dire Derby ufficiale: votato dai più o nato da una sfida accettata in conferenza stampa. Nelle ultime dieci giornate compaiono anche «Sfida scudetto» (1ª contro 2ª), «Sfida podio» (3ª contro 4ª) e «Sfida retrocessione» (le ultime due).</p></details></aside>
   </div>
   <div class="sp"><span>Gentilmente offerto da</span><div class="lg"><img src="../assets/loghi/sponsor-birra-contropiede.png" alt=""><img src="../assets/loghi/sponsor-pizzeria-fuorigioco.png" alt=""><img src="../assets/loghi/sponsor-bomber-gym-club.png" alt=""><img src="../assets/loghi/sponsor-amaro-del-mister.png" alt=""></div></div>
   <div class="foot" id="foot">O Girrr · I dati arrivano dallo Spogliatoio</div>
@@ -168,11 +208,11 @@ var D=null, mode='lega', sel={lega:1,coppa:1};
 function cap(s){s=String(s);return s.charAt(0).toUpperCase()+s.slice(1)}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 /* Derby ufficiali, con la stessa regola della pagina Derby: votato dai più o nato da una sfida accettata col nome; altrimenti rivalità da 80 in su, se i più non l'hanno bocciato */
-/* Sfide di classifica nelle ultime 10 giornate di campionato, con la classifica prima della giornata: 1ª-2ª scudetto, 3ª-4ª podio, ultime due salvezza */
+/* Sfide di classifica nelle ultime 10 giornate di campionato, con la classifica prima della giornata: 1ª-2ª scudetto, 3ª-4ª podio, ultime due in lotta per evitare l'ultimo posto */
 function sfidaCl(L,n,a,b){if(!L||!L.length||n<=L.length-10)return '';var T={};function r(x){return T[x]||(T[x]={n:x,pt:0,fp:0})}
   L.forEach(function(g){g.m.forEach(function(m){var A=r(m[0]),B=r(m[3]);if(g.n>=n||m[4]==='-')return;var s=m[4].split('-').map(Number);A.pt+=s[0]>s[1]?3:s[0]===s[1]?1:0;B.pt+=s[1]>s[0]?3:s[0]===s[1]?1:0;A.fp+=m[1];B.fp+=m[2]})});
   var C=Object.keys(T).map(function(k){return T[k]}).sort(function(x,y){return y.pt-x.pt||y.fp-x.fp}).map(function(x){return x.n}),N=C.length,p=[C.indexOf(a)+1,C.indexOf(b)+1].sort(function(x,y){return x-y});
-  if(!p[0])return '';if(p[0]===1&&p[1]===2)return 'Sfida scudetto';if(p[0]===3&&p[1]===4)return 'Sfida podio';if(p[0]===N-1&&p[1]===N)return 'Sfida salvezza';return ''}
+  if(!p[0])return '';if(p[0]===1&&p[1]===2)return 'Sfida scudetto';if(p[0]===3&&p[1]===4)return 'Sfida podio';if(p[0]===N-1&&p[1]===N)return 'Sfida retrocessione';return ''}
 var DBU='https://qmjqfgmvimsuxvghetgi.supabase.co',DBK='sb_publishable_qPhimkrF4iUvIad7JPoH8A_i-eOqG7n',DV={},DX={},DN={},RIVM={};
 function dk(a,b){return [a,b].map(function(x){return String(x).toLowerCase()}).sort().join('|')}
 ((window.NOV&&NOV.riv)||[]).forEach(function(o){RIVM[dk(o.a,o.b)]=o});
@@ -218,10 +258,12 @@ function prossimoTurno(){if(!D||!D.cal)return '';var cup=mode==='coppa',g=cal().
 /* ChatGPT: confronto con la classifica immediatamente precedente */
 function frecciaPos(t,rows,k,fp){var cup=!fp,rounds=cal().filter(function(g){return g.n<=sel[mode]&&played(g,cup)});if(rounds.length<2)return '';var p=classifica(rounds.slice(0,-1),cup),me=rows[k];if(cup)p=p.filter(function(x){return x.gir===me.gir});var old=p.findIndex(function(x){return x.n===t});if(old<0)return '';var dif=old-k;if(!dif)return '';return '<span class="movpos '+(dif>0?'su':'giu')+'" aria-label="'+(dif>0?'Salita di ':'Discesa di ')+Math.abs(dif)+' posizioni">'+(dif>0?'▲ ':'▼ ')+Math.abs(dif)+'</span>'}
 function tabella(rows,fp,titolo,top){
-  var h='<h3>'+titolo+'</h3><table>'+'<tr><th></th><th>Squadra</th><th class="w">G</th><th class="w">V</th><th class="w">N</th><th class="w">P</th><th class="w">GF</th><th class="w">GS</th><th>DR</th><th>Pt</th>'+(fp?'<th>Fantapunti</th>':'')+'<th class="med">Media</th><th class="med">Max</th><th class="med">Min</th></tr>';
-  rows.forEach(function(x,k){h+='<tr class="'+(k<top?'pod':'')+(x.n===ME?' me':'')+classeZona(k,rows.length,fp)+'" style="animation-delay:'+(k*35)+'ms"><td class="p">'+(k+1)+frecciaPos(x.n,rows,k,fp)+'</td><td class="n">'+'<button class="clubgraph" data-plot="'+encodeURIComponent(x.n)+'" type="button" aria-label="Apri il grafico di '+esc(x.n)+'">'+esc(cap(x.n))+'</button>'+formaPallini(x.n)+'</td><td class="w">'+x.g+'</td><td class="w">'+x.v+'</td><td class="w">'+x.nn+'</td><td class="w">'+x.p+'</td><td class="w">'+x.gf+'</td><td class="w">'+x.gs+'</td><td class="dr">'+(x.gf-x.gs>0?'+':x.gf-x.gs<0?'−':'')+Math.abs(x.gf-x.gs)+'</td><td class="pt">'+x.pt+'</td>'+(fp?'<td class="fp">'+pt(x.fp)+'</td>':'')+'<td class="med">'+statistichePunti(x.n).avg+'</td><td class="med">'+statistichePunti(x.n).max+'</td><td class="med">'+statistichePunti(x.n).min+'</td></tr>'});
-  return h+'</table>'+(fp?'<div class="zoneleg" aria-label="Legenda zone"><span><i class="sc"></i>Scudetto · 1°</span><span><i class="po"></i>Podio · 2°–3°</span><span><i class="sa"></i>Salvezza · ultimi due</span></div>':'')+(fp||titolo==='Girone B'?graficoSquadra()+prossimoTurno():'');
+  var h='<h3>'+titolo+'</h3><table><thead><tr><th>Pos.</th><th>Squadra</th><th class="w">G</th><th class="w">V</th><th class="w">N</th><th class="w">P</th><th class="w">GF</th><th class="w">GS</th><th>DR</th><th>Pt</th>'+(fp?'<th>Fantapunti</th>':'')+'<th class="med">Media</th><th class="med">Max</th><th class="med">Min</th></tr></thead><tbody>';
+  rows.forEach(function(x,k){var p=k+1,zona=fp?(p===1?'zona-1':p===2?'zona-2':p===3?'zona-3':p===rows.length?'zona-last':'zona-normal'):'zona-normal',st=statistichePunti(x.n);
+  h+='<tr class="zona '+zona+(x.n===ME?' me':'')+'"><td class="p"><span class="poswrap"><strong class="numpos">'+p+'</strong>'+frecciaPos(x.n,rows,k,fp)+'</span></td><td class="n"><button class="clubgraph" data-plot="'+encodeURIComponent(x.n)+'" type="button" aria-label="Apri il grafico di '+esc(x.n)+'">'+esc(cap(x.n))+'</button>'+formaPallini(x.n)+'</td><td class="w">'+x.g+'</td><td class="w">'+x.v+'</td><td class="w">'+x.nn+'</td><td class="w">'+x.p+'</td><td class="w">'+x.gf+'</td><td class="w">'+x.gs+'</td><td class="dr">'+(x.gf-x.gs)+'</td><td class="pt">'+x.pt+'</td>'+(fp?'<td class="fp">'+pt(x.fp)+'</td>':'')+'<td class="med">'+st.avg+'</td><td class="med">'+st.max+'</td><td class="med">'+st.min+'</td></tr>'});
+  return h+'</tbody></table>'+(fp?'<div class="legenda-zona"><span><i style="background:#ffd166"></i>Scudetto</span><span><i style="background:#cbd5e1"></i>Podio</span><span><i style="background:#ef6476"></i>Retrocessione · ultimo</span></div>':'')+(fp||titolo==='Girone B'?graficoSquadra()+prossimoTurno():'');
 }
+
 var ME='';try{ME=(JSON.parse(localStorage.getItem('fg')||'{}')||{}).team||''}catch(e){}
 function lastPlayed(c,cup){var l=0;c.forEach(function(g){if(played(g,cup))l=g.n});return l}
 function render(){
@@ -247,8 +289,9 @@ function render(){
   if(cup&&g.rest&&g.rest.length)b+='<div class="rip">Riposano: '+g.rest.map(function(x){return (x[1]===ME?'<b>'+esc(cap(x[1]))+'</b>':esc(cap(x[1])))+' (gir. '+esc(x[0])+')'}).join(' · ')+'</div>';
   var upto=c.filter(function(x){return x.n<=n&&played(x,cup)});
   var cl=classifica(upto.length?upto:[c[0]],cup),t;
+  var precedente=null;if(!cup&&upto.length>1){precedente={};classifica(upto.slice(0,-1),false).forEach(function(x,i){precedente[x.n]=i+1})}
   if(cup){t=tabella(cl.filter(function(x){return x.gir==='A'}),false,'Girone A',2)+tabella(cl.filter(function(x){return x.gir==='B'}),false,'Girone B',2)}
-  else t=tabella(cl,true,'Classifica dopo la '+(upto.length?upto[upto.length-1].n:0)+'ª',3);
+  else t=tabella(cl,true,'Classifica dopo la '+(upto.length?upto[upto.length-1].n:0)+'ª',3,precedente);
   var bd=document.getElementById('board'),tb=document.getElementById('tab');
   bd.classList.add('out');tb.classList.add('out');
   setTimeout(function(){bd.innerHTML=b;tb.innerHTML=t;bd.classList.remove('out');tb.classList.remove('out')},200);

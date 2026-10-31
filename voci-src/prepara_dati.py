@@ -20,9 +20,10 @@ def carica(p, d=None):
     except Exception: return d
 
 def chiusa(d):
-    lega = d["cal"]["lega"]
-    ch = [r for r in lega if r["m"] and all(m[4] and m[4] != "-" for m in r["m"])]
-    return max(ch, key=lambda r: r["n"]) if ch else None
+    sys.path.insert(0, str(QUI.parent / "calcoli"))
+    from zone_classifica import _giornate
+    ch = _giornate(d)
+    return ch[-1] if ch else None
 
 def main():
     d = carica(SITO / "data.json")
@@ -39,11 +40,24 @@ def main():
         print("giornata="); return          # già fatta
     ev = carica(EV, [])
     dati = carica(SITO / "girrr/dati/lab-dati.json")
+    if not dati or not dati.get("aw") or dati["aw"][-1].get("n") != n:
+        print("Dati dei calcoli non allineati alla giornata chiusa.")
+        print("giornata="); return
     cp_ = [c for c in d["cal"].get("cup", []) if c.get("sa") == sa and c.get("m")]
     if cp_ and not all(m[5] and m[5] != "-" for m in cp_[-1]["m"]):
         print("giornata="); return          # la Coppa di questa giornata non è ancora chiusa: aspetto
     # Champions Cup: se ne parla solo se si è giocato nella stessa giornata di Serie A del campionato
     dati["cup"] = [c for c in d["cal"].get("cup", []) if c.get("sa") == sa and c.get("m") and all(m[5] and m[5] != "-" for m in c["m"])][-1:]
+    # Una sola storia notevole quando merita: logica comune con i post Curva.
+    # Import dalla cartella calcoli del progetto, senza servizi a pagamento.
+    sys.path.insert(0, str(QUI.parent / "calcoli"))
+    import zone_classifica
+    att = carica(QUI.parent / "calcoli/aspettative.json")
+    if not att or not att.get("squadre"):
+        raise RuntimeError("Aspettative pre-stagione non disponibili")
+    evento_zona = zone_classifica.evento(d, att)
+    dati["zona_classifica"] = evento_zona
+    dati["cronaca_classifica"] = evento_zona  # anche per la redazione del Giornale
     (QUI / "dati.json").write_text(json.dumps(dati, ensure_ascii=False), encoding="utf-8")
     conf = [e for e in ev if e.get("tipo") == "conferenza" and e.get("giornata") == n]
     squadre = {}

@@ -1,0 +1,62 @@
+[
+  {
+    "skin": "lega",
+    "larghezza": 320,
+    "percorso": "Lab → Home → Tabellone → Coppa → Campo → Tabellone → Home → Albo → Home",
+    "esito": "PASS"
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 320,
+    "percorso": "Lab → Home → Tabellone → Coppa → Campo → Tabellone → Home → Albo → Home",
+    "esito": "PASS"
+  },
+  {
+    "skin": "lega",
+    "larghezza": 390,
+    "percorso": "Lab → Home → Tabellone → Coppa → Campo → Tabellone → Home → Albo → Home",
+    "esito": "PASS"
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 390,
+    "percorso": "Lab → Home → Tabellone → Coppa → Campo → Tabellone → Home → Albo → Home",
+    "esito": "PASS"
+  },
+  {
+    "skin": "lega",
+    "larghezza": 768,
+    "percorso": "Lab → Home → Tabellone → Coppa → Campo → Tabellone → Home → Albo → Home",
+    "esito": "PASS"
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 768,
+    "percorso": "Lab → Home → Tabellone → Coppa → Campo → Tabellone → Home → Albo → Home",
+    "esito": "PASS"
+  },
+  {
+    "skin": "lega",
+    "larghezza": 1280,
+    "percorso": "Lab → Home → Tabellone → Coppa → Campo → Tabellone → Home → Albo → Home",
+    "esito": "PASS"
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 1280,
+    "percorso": "Lab → Home → Tabellone → Coppa → Campo → Tabellone → Home → Albo → Home",
+    "esito": "PASS"
+  },
+  {
+    "skin": "lega",
+    "larghezza": 1440,
+    "percorso": "Lab → Home → Tabellone → Coppa → Campo → Tabellone → Home → Albo → Home",
+    "esito": "PASS"
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 1440,
+    "percorso": "Lab → Home → Tabellone → Coppa → Campo → Tabellone → Home → Albo → Home",
+    "esito": "PASS"
+  }
+]
