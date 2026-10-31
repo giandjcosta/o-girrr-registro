@@ -33,7 +33,7 @@ def main():
  with sync_playwright() as p:
   browser=p.chromium.launch(headless=True)
   for skin in ["lega","stadio"]:
-   for width in [320,390,1280]:
+   for width in [320,390,768,1280]:
     pg=browser.new_page(viewport={"width":width,"height":900})
     pg.on("pageerror", lambda exc: errs.append(str(exc)))
     def route(r):
@@ -82,7 +82,7 @@ def main():
     pg.locator("#v53message").fill("Questa partita promette spettacolo!")
     pg.locator('#v53comment button').click()
     assert "Questa partita promette spettacolo!" in pg.locator("#v53usercomments").inner_text()
-    assert pg.locator("#v53dialog .v53-comment").count()>=6
+    assert pg.locator("#v53dialog .v53-comment").count()>=10
     pg.screenshot(path=f"anteprima/5.3/qa-screenshot/curva-{skin}-{width}.png",full_page=True)
     visit("notifiche")
     pg.locator("#v53notifications article").first.wait_for(timeout=12000)
