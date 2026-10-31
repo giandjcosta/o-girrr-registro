@@ -1,0 +1,37 @@
+name: ChatGPT - Lavori 31 ottobre QA
+on:
+  push:
+    branches:
+      - chatgpt/lavori-31-ottobre
+    paths:
+      - .github/workflows/chatgpt-lavori-31-ott-qa.yml
+permissions:
+  contents: write
+jobs:
+  anteprima-e-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Rigenera le due anteprime dal Lab
+        run: python3 anteprima/build.py
+      - name: Salva solo le pagine generate sul ramo di lavoro
+        run: |
+          test "$GITHUB_REF" = "refs/heads/chatgpt/lavori-31-ottobre"
+          git add anteprima/index.html anteprima/attuale.html
+          if ! git diff --cached --quiet; then
+            git config user.name "ChatGPT"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "ChatGPT: rigenera le anteprime dopo le modifiche del Lab"
+            git push origin HEAD:chatgpt/lavori-31-ottobre
+          fi
+      - name: Collaudo Anteprima 5.2
+        run: python3 prove/collaudo_anteprima_52.py
+      - name: Collaudo Totogirrr milestone
+        run: node prove/collaudo_preview52_totogirrr_milestone.js
+      - name: Collaudo Fiducia universale
+        run: node prove/collaudo_fiducia_universale52.js
+      - name: Prova Moviola in rete simulata
+        run: python3 prove/prova_moviola.py
