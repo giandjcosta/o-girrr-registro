@@ -3,15 +3,17 @@
 import re
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from rete_browser import browser as avvia_browser, installa
 
 ROOT = "http://127.0.0.1:8765"
 OUT = Path("qa_artifacts")
 OUT.mkdir(exist_ok=True)
 
 with sync_playwright() as pw:
-    browser=pw.chromium.launch(headless=True,args=["--no-sandbox"])
+    browser=avvia_browser(pw)
     for w in (320,768,1280):
         ctx=browser.new_context(viewport={"width":w,"height":850},device_scale_factor=1)
+        installa(ctx)
         ctx.route(re.compile(r"https?://[^/]+\.supabase\.co/.*"),
                   lambda r:r.fulfill(status=200,content_type="application/json",body='{"voti":[],"sfide":[]}'))
         for pth,short in [
@@ -29,6 +31,7 @@ with sync_playwright() as pw:
             if short.startswith("tabellone"):
                 p.locator("#tab table").first.wait_for(timeout=25000)
                 p.locator("#tab .numpos").first.wait_for(timeout=10000)
+                p.wait_for_timeout(300)
                 px=p.locator("#tab th").nth(1).evaluate("(e)=>parseFloat(getComputedStyle(e).fontSize)")
                 assert px>=12, (short,w,"intestazione piccola",px)
                 pos=p.locator("#tab tbody tr").first
