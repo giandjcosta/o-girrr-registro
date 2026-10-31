@@ -5,6 +5,9 @@ di una favorita soltanto se l'ultima posizione è già confermata.
 """
 import re
 
+ORDINE = ["The Blue brothers", "Apo team", "Mariana Coneja", "stif dc", "Real Madrink",
+          "Atletico ma non troppo", "Oranje VC", "AFA SELECCION", "Grodah", "WOA"]
+
 RIS = re.compile(r"^\d+-\d+$")
 
 def _squadre(d):
@@ -18,7 +21,10 @@ def _giornate(d):
         if g.get("n") != prossimo:
             break
         mm = g.get("m") or []
-        if not mm or not all(RIS.fullmatch(str(x[4])) for x in mm):
+        teams = _squadre(d)
+        presenti = [t for x in mm if len(x) == 5 for t in (x[0], x[3])]
+        if (not mm or sorted(presenti) != teams or len(set(presenti)) != len(presenti)
+                or not all(len(x) == 5 and RIS.fullmatch(str(x[4])) for x in mm)):
             break
         validi.append(g)
         prossimo += 1
@@ -43,71 +49,91 @@ def storia(d):
                 x["gf"] += gol
                 x["gs"] += presi
                 x["fp"] += float(totale)
-        ordine = sorted(tab.values(), key=lambda x: (-x["pt"], -x["fp"], -(x["gf"]-x["gs"]), -x["gf"], x["t"]))
+        ordine = sorted(tab.values(), key=lambda x: (-x["pt"], -x["fp"], -(x["gf"]-x["gs"]), -x["gf"], ORDINE.index(x["t"]) if x["t"] in ORDINE else 99, x["t"]))
         out.append({"giornata": g["n"], "posizioni": {x["t"]: i+1 for i, x in enumerate(ordine)},
                     "classifica": [dict(x, pos=i+1) for i, x in enumerate(ordine)]})
     return out
 
-def evento(d, aspettative=None):
-    """Ritorna al massimo una storia significativa nell'ultima giornata.
-    Nessun titolo/podio/ultimo ogni settimana, canale editoriale alternato.
+def eventi(d, aspettative=None):
+    """Riproduce la scelta editoriale: priorità, cooldown di 4 turni per tema/squadra.
+
+    Una storia principale per giornata, disponibile a ogni redazione. I candidati
+    stabili non scelti restano eleggibili: nessun fatto perso per rotazione di canale.
     """
     hist = storia(d)
-    if len(hist) < 2:
-        return None
-    latest = hist[-1]
-    n = latest["giornata"]
-    pos = latest["posizioni"]
     expected = (aspettative or {}).get("squadre") or {}
-    streak = {}
-    for team, posto in pos.items():
-        def durata(test):
-            a=0
-            for x in reversed(hist):
-                if test(x["posizioni"][team]):
-                    a += 1
-                else:
-                    break
-            return a
-        streak[team] = {
-            "vetta": durata(lambda p: p == 1),
-            "podio": durata(lambda p: p <= 3),
-            "ultimo": durata(lambda p: p == len(pos)),
-        }
-    candidati = []
-    for team in sorted(pos):
-        ss = streak[team]
-        attesa = expected.get(team, {}).get("attesa")
-        big = isinstance(attesa, (int, float)) and attesa <= 3
-        ultimo = pos[team] == len(pos)
-        if big and ultimo and ss["ultimo"] >= 2 and (ss["ultimo"] == 2 or (ss["ultimo"]-2)%4 == 0):
-            testo = (f"Clamoroso in fondo alla classifica: {team}, attesa tra le prime {int(attesa)}, "
-                     f"è ultima da {ss['ultimo']} giornate. La squadra deve reagire.")
-            candidati.append((100, "sorpresa", team, ss["ultimo"], testo))
-        if ss["vetta"] >= 3 and (ss["vetta"]-3)%4 == 0:
-            testo = (f"{team} resta al comando da {ss['vetta']} giornate consecutive. "
-                     + ("Non è più soltanto una buona partenza: ora è continuità." if ss["vetta"] == 3 else "La capolista difende la vetta e allunga la sua storia."))
-            candidati.append((85, "vetta", team, ss["vetta"], testo))
-        if ultimo and ss["ultimo"] >= 3 and (ss["ultimo"]-3)%4 == 0:
-            testo = (f"{team} è ancora all'ultimo posto dopo {ss['ultimo']} giornate consecutive. "
-                     "La zona retrocessione è diventata un problema serio.")
-            candidati.append((78, "retrocessione", team, ss["ultimo"], testo))
-        if pos[team] in (2, 3) and ss["podio"] >= 3 and (ss["podio"]-3)%4 == 0:
-            testo = (f"{team} è sul podio da {ss['podio']} giornate consecutive. "
-                     "La corsa ai primi posti ha trovato una protagonista stabile.")
-            candidati.append((65, "podio", team, ss["podio"], testo))
-    if not candidati:
-        return None
-    # Ruota il tema dominante ogni quattro giornate: la vetta non soffoca
-    # per tutta la stagione chi resta in fondo o chi lotta per il podio.
-    preferito = ("vetta", "retrocessione", "podio")[((n-3)//4)%3]
-    candidati.sort(key=lambda z: (-(z[0] + (55 if z[1]==preferito else 0)), z[2]))
-    prior, tipo, team, durata_, testo = candidati[0]
-    # Una storia può essere proposta in una sola sede per giornata;
-    # il Giornale qui è il profilo ufficiale della Curva, non il PDF.
-    canale = ("radio", "curva", "giornale")[n % 3]
-    titoli = {"sorpresa": "CRISI IMPREVISTA", "vetta": "LA VETTA DURA",
-              "retrocessione": "ZONA RETROCESSIONE", "podio": "PODIO CONQUISTATO"}
-    return {"chiave": f"zona:G{n}:{tipo}:{team}", "giornata": n,
-            "squadra": team, "tipo": tipo, "durata": durata_, "posizione": pos[team],
-            "titolo": titoli[tipo], "testo": testo, "canale": canale}
+    scelti, ultimo = [], {}
+    for idx, latest in enumerate(hist):
+        n, pos = latest["giornata"], latest["posizioni"]
+        if n < 2:
+            continue
+        prev = hist[idx-1]["posizioni"]
+        candidati = []
+        def durata(team, test, end=idx):
+            count = 0
+            for x in reversed(hist[:end+1]):
+                if not test(x["posizioni"][team]): break
+                count += 1
+            return count
+        def add(priorita, tipo, team, titolo, testo, serie=0, altri=None):
+            gruppo = "fondo" if tipo in ("sorpresa", "retrocessione") else "podio" if tipo in ("podio", "rivelazione") else tipo
+            k = (gruppo, team)
+            if n - ultimo.get(k, -100) < 4: return
+            candidati.append(dict(priorita=priorita, tipo=tipo, squadra=team, titolo=titolo,
+                testo=testo, durata=serie, posizione=pos[team], gruppo=gruppo,
+                prova={"giornata": n, "posizione_precedente": prev[team],
+                       "posizione": pos[team], "attesa": expected.get(team, {}).get("attesa"),
+                       "serie": serie, "altre_squadre": altri or []}))
+        for team, posto in pos.items():
+            attesa = expected.get(team, {}).get("attesa")
+            big = isinstance(attesa, (int, float)) and attesa <= 3
+            fondo = durata(team, lambda p: p == len(pos))
+            cima = durata(team, lambda p: p == 1)
+            podio = durata(team, lambda p: p <= 3)
+            if big and fondo >= 2:
+                add(100,"sorpresa",team,"CRISI IMPREVISTA",f"{team}, attesa tra le prime {int(attesa)}, è ultima da {fondo} giornate consecutive. La favorita deve reagire.",fondo)
+            elif fondo >= 3:
+                add(72,"retrocessione",team,"ZONA RETROCESSIONE",f"{team} resta ultima da {fondo} giornate consecutive. Serve una svolta per lasciare il fondo della classifica.",fondo)
+            if n >= 3 and prev[team] == len(pos) and posto < len(pos):
+                serie = durata(team,lambda p:p==len(pos),idx-1)
+                if serie >= 2:
+                    add(94,"risalita",team,"LA RISALITA",f"{team} lascia l’ultimo posto dopo {serie} giornate in fondo: ora è {posto}ª. Un primo passo nella risalita.",serie)
+            if n >= 4 and posto == 1 and prev[team] != 1:
+                ex = next(t for t,p in prev.items() if p == 1)
+                if durata(ex,lambda p:p==1,idx-1) >= 2:
+                    add(96,"sorpasso",team,"CAMBIA LA VETTA",f"{team} sale al comando e supera {ex}. La corsa scudetto cambia protagonista.",altri=[ex])
+            elif cima >= 3:
+                add(68,"vetta",team,"LA VETTA DURA",f"{team} resta al comando da {cima} giornate consecutive. La vetta ha trovato continuità.",cima)
+            if posto in (2,3) and podio >= 3:
+                sorpresa = isinstance(attesa,(int,float)) and attesa >= 5
+                add(82 if sorpresa else 62,"rivelazione" if sorpresa else "podio",team,
+                    "LA RIVELAZIONE" if sorpresa else "PODIO CONQUISTATO",
+                    f"{team} è sul podio da {podio} giornate consecutive." +
+                    (f" Partiva con una posizione attesa di {int(attesa)}ª: ora è {posto}ª." if sorpresa else " La corsa ai primi posti trova una protagonista stabile."),podio)
+            if n >= 4 and posto <= 3 < prev[team] and durata(team,lambda p:p>3,idx-1)>=2:
+                add(86,"ingresso_podio",team,"IRRUZIONE SUL PODIO",f"{team} passa dalla {prev[team]}ª alla {posto}ª posizione ed entra sul podio.")
+            if n >= 4 and prev[team] <= 3 < posto and durata(team,lambda p:p<=3,idx-1)>=3:
+                add(85,"uscita_podio",team,"IL PODIO SFUGGE",f"{team} scende dalla {prev[team]}ª alla {posto}ª posizione e lascia il podio dopo una serie di almeno tre giornate.")
+        rows = latest["classifica"]
+        old = hist[idx-1]["classifica"]
+        gap = rows[0]["pt"]-rows[1]["pt"]
+        if n >= 4 and gap <= 3 and old[0]["pt"]-old[1]["pt"] > 3:
+            a,b = rows[:2]
+            add(90,"lotta_scudetto",a["t"],"SCUDETTO RIAPERTO",f"{b['t']} riporta il distacco dalla vetta a {gap} punti. {a['t']} resta davanti, ma la lotta scudetto si riapre.",altri=[b["t"]])
+        if not candidati: continue
+        # A parità di rilevanza favorisce il tema meno recente, senza scavalcare le crisi.
+        candidati.sort(key=lambda c:(-c["priorita"],ultimo.get((c["gruppo"],c["squadra"]),-100),c["squadra"]))
+        ev = candidati[0]
+        ultimo[(ev.pop("gruppo"),ev["squadra"])] = n
+        stagione = (aspettative or {}).get("stagione", "2026/27")
+        ev.update(stagione=stagione, chiave=f"zona:{stagione}:G{n}:{ev['tipo']}:{ev['squadra']}",giornata=n,
+                  canale="tutti",canali=["radio","girrr_sport","giornale","commenti","pdf"])
+        ev["commento"] = f"Alla {n}ª giornata: {ev['squadra']} è {ev['posizione']}ª. Il prossimo turno dirà se questa svolta avrà seguito."
+        scelti.append(ev)
+    return scelti
+
+
+def evento(d, aspettative=None):
+    hist = storia(d)
+    if not hist: return None
+    return next((e for e in reversed(eventi(d,aspettative)) if e["giornata"]==hist[-1]["giornata"]),None)
