@@ -34,6 +34,13 @@ Più avanti, da progettare: login unico. Nuovo (richiesta dei giocatori): **Annu
 - **Vecchio appunto:**  la chiave dell'obiettivo di Coppa (`sponsor_coppa_2026_27`) è una scelta nostra: nel database non c'è ancora nessun premio di Coppa.
 - **Dopo l'unione:** cambiare `REGISTRO_REF` del workflow da `claude/…` a `main` del registro.
 
+## 31 ottobre 2026 — RILASCIO 5.3 sul sito vero (Claude, «vai» di Gianluca)
+- **Online:** `gh-pages` `eff5024` (sopra `a591b50`). Dentro: Albo d'oro con campionati 🏆 e coppe 🎖️ divisi per tutti gli allenatori; le storie delle sei stagioni dell'Era Contemporanea; Totogirrr con la scheda **Movimenti** (`rilascio/toto_movimenti.py`); Champions Cup: Big a 4 vittorie; Regole del Derby a 80.
+- **Prove:** pagine vere (`giandjcosta.github.io/o-fant-a-girrr`), Lega e Stadio, 320 e 1280 px: nessun errore in console, nessuno scorrimento laterale, Movimenti aperto in demo. Non provato: Safari/iPhone, e la Coppa con una squadra vera (il premio di Coppa non è ancora scattato).
+- **Sorgenti:** `ufficiale/src/sito/` aggiornato con `app.html` di Lega e Stadio; Albo ed `ufficiale/src/novita.js` erano già a posto.
+- **Per tornare indietro:** `git revert eff5024` su `gh-pages`.
+- **Restano:** `ufficiale/build.py` non gira più con il `gh-pages` di oggi (vedi lavori Claude sopra).
+
 ## 31 ottobre 2026 — Premi automatici online sui `main` (Claude, «vai» di Gianluca)
 - **Registro `main`** (665ecb1): `calcoli/premi/` (script dei premi) e la soglia dei Big in Champions Cup portata a **4 vittorie** (lab e anteprima; il sito vero dice ancora 5 finché non c'è il prossimo rilascio di `app.html`, anche nei sorgenti `ufficiale/src/sito/`).
 - **Sito `main`** (aba2406): `.github/workflows/premi-giornata.yml`, ogni giorno alle 22:30 UTC, con «vai» automatico; `REGISTRO_REF: main`.
