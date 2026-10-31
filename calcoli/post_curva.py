@@ -181,9 +181,9 @@ def main():
         try:
             import zone_classifica
         except ImportError:
-            from calcoli import zone_classifica
+            zone_classifica = None  # test Moviola in cartella temporanea: nessuna nuova dipendenza
         prova = json.loads(DATI.read_text(encoding="utf-8"))
-        if len(prova.get("teams") or []) >= 8:
+        if zone_classifica is not None and len(prova.get("teams") or []) >= 8:
             aspettative = json.loads((QUI/"aspettative.json").read_text(encoding="utf-8"))
             z = zone_classifica.evento(prova, aspettative)
             if z and z["canale"] in ("curva", "giornale"):
