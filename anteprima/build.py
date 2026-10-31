@@ -118,6 +118,7 @@ body::after{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:non
 .seg button[aria-pressed=true]{background:var(--red)!important;color:#fff!important}
 .tabs button{padding:9px 14px;font-size:13px}
 </style>"""
+s_plain = s_plain.replace('src="annuario.js"', 'src="../lab/annuario.js"')
 s_plain = s_plain.replace('src="voci/', 'src="../lab/voci/').replace("fetch('voci/", "fetch('../lab/voci/")
 a = s_plain.replace("</style>", "</style>" + skin, 1)
 a = a.replace("<title>O Girrr · Anteprima 5.3</title>", "<title>O Girrr · Anteprima 5.3 (grafica attuale)</title>")
