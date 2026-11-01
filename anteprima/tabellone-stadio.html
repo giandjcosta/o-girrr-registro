@@ -205,6 +205,9 @@ h1{font-size:clamp(30px,6vw,48px)!important}
 .panel td.n .clubgraph{flex:1 1 auto;min-width:0;overflow-wrap:normal!important;word-break:normal;white-space:normal;line-height:1.15}
 .panel td.n .formadots{flex:none;margin-left:auto!important}
 @media(max-width:559px){.panel .poswrap{grid-template-columns:1.15em 1.45em;column-gap:2px}.panel td.p{padding-left:8px!important;padding-right:2px!important;min-width:0!important}.panel td.n .nomecella{gap:6px}.panel td.n .clubgraph{font-size:12px;letter-spacing:-.01em}.panel td.n .nomecella.lungo .clubgraph{font-size:11px;letter-spacing:-.02em}.panel td.n .formadots{gap:2px}.panel td.n .formadots i{width:5px;height:5px}.panel th.thfp{font-size:9.5px!important;letter-spacing:0!important;padding-left:2px!important;padding-right:4px!important}.panel td.fp{padding-right:4px!important}}
+
+/* Claude, 1° novembre: su PC la scritta «Serie A · Giornata» e i riposi occupano tutta la riga, così le partite partono allineate nelle due colonne */
+#board>.nota,#board>.rip{grid-column:1/-1}
 </style>
 <style>body[data-mode=lega]{--acc:#ffd166}.sw button[aria-selected=true]{color:#142449}</style></head>
 <body data-mode="lega">

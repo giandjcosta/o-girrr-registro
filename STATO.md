@@ -60,6 +60,9 @@
 - **Screenshot e rapporti:** `prove/risultati-campo-contenuti/`, Campo raggiunto da Home → Tabellone → Campo in entrambe le skin a 390/1280/1440. Non certificati Safari/iPhone fisico, CDN/cache pubblica o nuova CI sull'ultimo commit. Restano validi i limiti locali e di produzione già documentati. Nessun merge, rilascio, audio, pubblicazione di post o modifica a Supabase/sito pubblico; PR #43 resta bozza.
 
 
+## 1° novembre 2026 — Tabellone: risultati allineati su PC (Claude, segnalazione di Gianluca, solo Lab/Anteprima)
+- Su PC (da 1000 px) i risultati della prova stanno su due colonne (aggiunta di ChatGPT; il sito vero ha una colonna sola): la scritta «Serie A · Giornata N» occupava la prima cella e la prima partita finiva in alto a destra, con le righe sfalsate. Ora la scritta (e «Riposano» in Champions Cup) occupa tutta la riga: partite allineate nelle due colonne (misurato scarto 0 px a 1000, 1280 e 1440 px, Lega e Stadio, Campionato e Champions Cup). File `lab/prova-tabellone-lega.html` e `-stadio.html`.
+
 ## 1° novembre 2026 — Legenda del Campo chiusa, schede dell'Albo alle misure del sito (Claude, richiesta di Gianluca, solo Lab/Anteprima)
 - **Campo:** la legenda («Come leggere il campo» di ChatGPT) ora è una tendina chiusa «▸ Legenda» sotto il campo, con la freccina come «Regole» nel Tabellone; si apre con un tocco.
 - **Albo d'oro, schede (Annuario, I Derby…):** il 31 ottobre ChatGPT le aveva ingrandite (riga con 10–14 px di bordo, pulsanti alti 44 px), così la scheda rossa sembrava più piccola della riga. Tornate alle misure del sito vero (bordo 4 px, pulsanti come `.seg button`), con lo scorrimento di lato mantenuto e la barra di scorrimento nascosta. Misurato: riga 42 px, scheda 32 px, 5 px sopra e sotto, a 320, 390 e 1280 px, Lega e Stadio. File: `lab/index.html` (rigenera Anteprime e `anteprima/5.5/albo-*.html`).
