@@ -276,8 +276,23 @@ render();
 /* Tabellone: approfondimenti in fondo, sotto partite e classifica; due impaginazioni da confrontare (?vista=a classifica prima, ?vista=b affiancate su PC) */
 function vista(){var q='a';try{q=new URLSearchParams(location.search).get('vista')==='b'?'b':'a'}catch(e){}document.body.classList.add('vista-'+q);
  var v=el('v53board'),g=document.querySelector('.grid');if(v&&g&&g.parentNode)g.parentNode.insertBefore(v,g.nextSibling)}
+/* Fluidità: tendine che scorrono, cambio di pagina con dissolvenza dove il browser non ha le transizioni native. Niente animazioni con «riduci movimento». */
+var CALMO=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+function tendine(){if(CALMO||!Element.prototype.animate)return;
+ document.addEventListener('click',function(e){var s=e.target.closest&&e.target.closest('summary');if(!s||e.defaultPrevented)return;var d=s.parentElement;if(!d||d.tagName!=='DETAILS'||d.dataset.anima==='1')return;
+  e.preventDefault();d.dataset.anima='1';var cs=getComputedStyle(d),chiusa=s.offsetHeight+parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom)+parseFloat(cs.borderTopWidth)+parseFloat(cs.borderBottomWidth),h0=d.offsetHeight,opz={duration:300,easing:'cubic-bezier(.22,.61,.36,1)'};
+  d.style.overflow='hidden';
+  if(d.open){var a=d.animate({height:[h0+'px',chiusa+'px']},{duration:opz.duration,easing:opz.easing,fill:'forwards'});a.onfinish=function(){d.open=false;a.cancel();d.style.overflow='';d.dataset.anima=''}}
+  else{d.open=true;var h1=d.offsetHeight,b=d.animate({height:[h0+'px',h1+'px']},opz);[].forEach.call(d.children,function(c){if(c!==s)c.animate({opacity:[0,1]},{duration:320,easing:'ease-out'})});b.onfinish=function(){d.style.overflow='';d.dataset.anima=''}}
+ },true)}
+function passaggi(){if(CALMO||'startViewTransition' in document)return;
+ document.documentElement.classList.add('v55-entra');
+ document.addEventListener('click',function(e){var l=e.target.closest&&e.target.closest('a[href]');if(!l||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||l.target==='_blank')return;
+  var u;try{u=new URL(l.href,location.href)}catch(x){return}if(u.origin!==location.origin||(u.pathname===location.pathname&&u.hash))return;
+  e.preventDefault();document.documentElement.classList.add('v55-esce');setTimeout(function(){location.href=u.href},170)});
+ window.addEventListener('pageshow',function(){document.documentElement.classList.remove('v55-esce')})}
 function init(){
-ospite();nav();redirect();if(mode==='board')vista();
+tendine();passaggi();ospite();nav();redirect();if(mode==='board')vista();
 if(mode==='albo')document.addEventListener('click',function(e){var b=e.target.closest('[data-oro]');if(!b)return;var u=new URL(location.href);u.searchParams.set('albo',b.dataset.oro);history.replaceState(null,'',u)});
 if(mode==='home')load(home);
 if(mode==='board')load(board);

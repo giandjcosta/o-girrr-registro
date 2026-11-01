@@ -86,6 +86,13 @@
 - **Screenshot e rapporti:** `prove/risultati-campo-contenuti/`, Campo raggiunto da Home → Tabellone → Campo in entrambe le skin a 390/1280/1440. Non certificati Safari/iPhone fisico, CDN/cache pubblica o nuova CI sull'ultimo commit. Restano validi i limiti locali e di produzione già documentati. Nessun merge, rilascio, audio, pubblicazione di post o modifica a Supabase/sito pubblico; PR #43 resta bozza.
 
 
+## 1° novembre 2026 — Fluidità delle pagine 5.5 (Claude, regola di Gianluca: cambi di pagina e aperture sempre fluidi, niente di scattante)
+- Prima: nelle pagine 5.5 il cambio di pagina scattava (lo script `transizioni.js` del sito viene tolto da `build53.py`) e le tendine (`<details>`: Legenda del Campo, Regole del Tabellone, Annuario, riepilogo della Home di ChatGPT) si aprivano di colpo.
+- Ora (`anteprima/5.5/ui.js` e `ui.css`, quindi tutte le pagine 5.5 compresi Tabellone e Campo): **tendine** che scorrono in 0,3 s in apertura e chiusura (misurato, senza scatti finali); **cambio di pagina** con le transizioni native del browser (`@view-transition`, Chrome e Safari recenti) e, dove non ci sono, dissolvenza in uscita/entrata; **contenuti che cambiano** (partita del Campo, grafico delle posizioni, approfondimenti, notifiche, riquadri della Home, classifica) entrano con una dissolvenza leggera come nel sito. Con «riduci movimento» attivo nel telefono, nessuna animazione.
+- I menu a tendina nativi (scelta della squadra, delle giornate) li disegna il telefono/browser e non si possono animare; per averli fluidi servirebbe un menu fatto a mano.
+- **Regola per tutti:** ogni pagina nuova deve avere cambi di pagina e aperture fluidi.
+- Collaudo (Chromium, 65 pagine): nessun problema.
+
 ## 1° novembre 2026 — Tabellone: bande rosse, approfondimenti in fondo, due impaginazioni da scegliere (Claude, richiesta di Gianluca, solo Lab/Anteprima)
 - Bande laterali delle partite **rosse** anche in grafica Stadio (colore ufficiale della Lega; prima erano oro).
 - «Dentro la partita» (approfondimenti) spostato **in fondo**, sotto partite e classifica (`anteprima/5.5/ui.js`, funzione `vista()`).

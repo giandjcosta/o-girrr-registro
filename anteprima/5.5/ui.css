@@ -172,3 +172,14 @@ body[data-v53=board] #v53board{margin-top:22px}
  body.vista-b[data-v53=board][data-v53-skin=stadio] .panel tr.zona td.fp{border-radius:0 12px 12px 0}
  body.vista-b[data-v53=board] .panel .med,body.vista-b[data-v53=board] .panel td.med,body.vista-b[data-v53=board] .panel th.med{display:none!important}
 }
+
+/* Claude, 1° novembre: fluidità. Cambio di pagina con le transizioni native del browser; contenuti che cambiano entrano con una dissolvenza leggera. Niente animazioni con «riduci movimento». */
+@media (prefers-reduced-motion: no-preference){
+ @view-transition{navigation:auto}
+ ::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;animation-timing-function:cubic-bezier(.22,.61,.36,1)}
+ html.v55-entra body{animation:v55in .38s cubic-bezier(.22,.61,.36,1) both}
+ html.v55-esce body{opacity:0;transition:opacity .17s ease}
+ @keyframes v55in{from{opacity:0}to{opacity:1}}
+ @keyframes v55su{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+ .grafpos,#v53boardcontent>*,.v53-notifcard,#xi-det:not(:empty),body[data-v53=campo] #board>.card,body[data-v53=board] .panel table tbody,.v53-metric{animation:v55su .42s cubic-bezier(.22,.61,.36,1) both}
+}
