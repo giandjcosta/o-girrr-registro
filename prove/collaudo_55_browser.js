@@ -19,13 +19,14 @@ const PAGINE = [
     if (!(await p.locator('.panel tr.zona-1').count())) return 'classifica senza fasce';
     const x = await p.evaluate(() => [...new Set([...document.querySelectorAll('.panel td.n .formadots')].map(e => Math.round(e.getBoundingClientRect().left)))].length);
     if (x !== 1) return 'pallini non allineati (' + x + ' colonne)';
-    // risultati: con due colonne (PC) le partite di ogni riga partono alla stessa altezza
-    const sc = await p.evaluate(() => { const m = [...document.querySelectorAll('#board>.m')].map(e => e.getBoundingClientRect()); const c = {}; m.forEach(r => { const k = r.left < innerWidth / 2 ? 's' : 'd'; (c[k] = c[k] || []).push(r.top) }); if (!c.s || !c.d) return 0; let d = 0; for (let i = 0; i < Math.min(c.s.length, c.d.length); i++) d = Math.max(d, Math.abs(c.s[i] - c.d[i])); return d });
-    return sc <= 3 ? '' : 'partite sfalsate tra le due colonne (' + Math.round(sc) + ' px)';
+    await p.click('.v55-schede button[data-sez=risultati]'); await p.waitForTimeout(600);
+    // risultati su PC: cinque partite tre a sinistra e due a destra, le due di destra con lo stesso spazio sopra e sotto
+    const sc = await p.evaluate(() => { const m = [...document.querySelectorAll('#board>.m')].filter(e => e.offsetParent).map(e => e.getBoundingClientRect()); if (m.length !== 5) return ''; const s = m.filter(r => r.left < innerWidth / 2), d = m.filter(r => r.left >= innerWidth / 2); if (!d.length) return ''; if (s.length !== 3 || d.length !== 2) return 'colonne ' + s.length + '+' + d.length; const sopra = d[0].top - s[0].top, sotto = s[2].bottom - d[1].bottom; return Math.abs(sopra - sotto) <= 3 ? '' : 'spazio sopra ' + Math.round(sopra) + ' px e sotto ' + Math.round(sotto) + ' px' });
+    return sc ? 'partite su PC non disposte 3 + 2: ' + sc : '';
   }],
   ['tabellone-stadio', 'anteprima/5.5/tabellone-stadio.html', async p => (await p.locator('#campo-link').count()) ? '' : 'manca il link al Campo'],
   // Versione C: tre schede alte uguali in Campionato e Coppa, freccia accanto a «Campo», azzurre in coppa; fase finale a tabellone di tennis
-  ['tabellone-c', 'anteprima/5.5/tabellone-lega.html?vista=c', async p => {
+  ['tabellone-c', 'anteprima/5.5/tabellone-lega.html', async p => {
     const misura = () => p.evaluate(() => [...document.querySelectorAll('.v55-schede>button,.v55-schede>a')].filter(e => e.offsetParent).map(e => { const r = e.getBoundingClientRect(); return [Math.round(r.height), Math.round(r.width), Math.round(r.top)] }));
     const lega = await misura();
     if (lega.length !== 3 || new Set(lega.map(x => x[0] + '|' + x[2])).size !== 1) return 'schede del Campionato non su una riga o di altezza diversa: ' + JSON.stringify(lega);

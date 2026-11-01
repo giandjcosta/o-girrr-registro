@@ -1,5 +1,14 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
 
+## 1 novembre (notte, 2) — Claude: Tabellone C definitivo, cinque partite 3 + 2 su PC, regola delle novità per versione
+
+- **Gianluca conferma la versione C.** Tolte A e B da `ui.js`/`ui.css`: il Tabellone 5.5 apre sempre le schede Classifica · Risultati · Campo, senza `?vista=c`. `lab/confronto-tabellone.html` ora mostra la C in Lega e Stadio.
+- **Cinque partite su PC senza spazi vuoti** (da 900 px): tre a sinistra e due a destra, centrate in altezza con lo stesso spazio sopra e sotto (funzione `cinque()` in `ui.js`). Sul telefono resta una colonna; in Coppa (quattro partite) resta la griglia due per due.
+- **Nuova regola in `AGENTS.md`:** dalla 5.6 ogni versione ha la sua pagina `lab/novita-X-Y.html` come `novita-5-5.html`, con le novità integrate anche nell'Anteprima; transizioni sempre fluide.
+- Vetrina 5.5 aggiornata. Versione dei file `v=55m`.
+- **Prove:** build riproducibile, `collaudo_anteprima_52.py`, `prova_moviola.py`, `prova_moviola_gol.py`, `collaudo_55_browser.js chromium` 80 pagine, 0 problemi (il controllo del Tabellone ora apre Risultati e verifica il 3 + 2 con spazio uguale sopra e sotto). Foto Lega/Stadio a 320/768/1280 senza scorrimento laterale. Non provati Safari e iPhone vero. Sito vero e database non toccati.
+- **Instagram:** i post automatici si vedranno dopo (Gianluca).
+
 ## 1 novembre (notte) — Claude: grafiche Lega/Stadio su tutta la 5.5 e Spogliatoio con la grafica Stadio
 
 - **ChatGPT ha finito i token: il lavoro sulle grafiche l'ha fatto Claude** (prompt `proposte/prompt-chatgpt-grafiche-55.md`), con le correzioni di Gianluca arrivate durante il lavoro. Regola aggiornata in `AGENTS.md`.

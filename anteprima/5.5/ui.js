@@ -277,7 +277,7 @@ el('v53markread').onclick=function(){var gen=items.filter(function(x){return !x.
 render();
 }
 /* Initial DOM integration: no existing Tabellone/Albo/Curva components are replaced. */
-/* Tabellone: approfondimenti in fondo, sotto partite e classifica; due impaginazioni da confrontare (?vista=a classifica prima, ?vista=b affiancate su PC) */
+/* Tabellone: versione C scelta da Gianluca (1° novembre): schede Classifica · Risultati · Campo, approfondimenti in fondo */
 function sigla(t){var w=String(t).replace(/^the\s+/i,'').split(/\s+/);return (w[0]||'').slice(0,3).toUpperCase()}
 function schede(){var nav=document.querySelector('.giornata-nav'),panel=document.querySelector('.grid>aside.panel'),board=document.querySelector('.grid>section');if(!nav||!panel||!board)return;
  var campo=el('campo-link'),q=new URLSearchParams(location.search),sez=q.get('sezione')==='risultati'?'risultati':'classifica';
@@ -323,7 +323,11 @@ function tabelloneKo(){var bd=el('board');if(!bd||!bd.parentNode||el('v55ko'))re
  box.addEventListener('pointercancel',function(){x0=null});
  var ruota=0;box.addEventListener('wheel',function(e){if(Math.abs(e.deltaX)<=Math.abs(e.deltaY))return;e.preventDefault();var t=Date.now();if(t-ruota<700||Math.abs(e.deltaX)<20)return;ruota=t;passo(e.deltaX>0?1:-1)},{passive:false});
  aggiorna()}
-function vista(){var q='a';try{var vv=new URLSearchParams(location.search).get('vista');q=vv==='b'||vv==='c'?vv:'a'}catch(e){}document.body.classList.add('vista-'+q);if(q==='c')setTimeout(schede,0);setTimeout(tabelloneKo,0);
+/* Claude, 1° novembre: cinque partite su PC senza buchi. Tre a sinistra e due a destra, centrate in altezza (stesso spazio sopra e sotto). */
+function cinque(){var bd=el('board');if(!bd)return;
+ function sistema(){var ms=[].slice.call(bd.querySelectorAll(':scope>.m:not(.ko)'));var si=ms.length===5;bd.classList.toggle('v55-cinque',si);ms.forEach(function(m,i){if(si)m.dataset.v55p=String(i+1);else delete m.dataset.v55p})}
+ sistema();if(window.MutationObserver)new MutationObserver(sistema).observe(bd,{childList:true})}
+function vista(){document.body.classList.add('vista-c');setTimeout(schede,0);setTimeout(tabelloneKo,0);cinque();
  var v=el('v53board'),g=document.querySelector('.grid');if(v&&g&&g.parentNode)g.parentNode.insertBefore(v,g.nextSibling)}
 /* Fluidità: tendine che scorrono, cambio di pagina con dissolvenza dove il browser non ha le transizioni native. Niente animazioni con «riduci movimento». */
 var CALMO=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;

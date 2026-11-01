@@ -18,6 +18,11 @@ Qui ci sono il Lab, l'Anteprima, le sorgenti delle pagine del sito vero e lo sta
 - Il sito vero resta invariato finché Gianluca non certifica la prova nel Lab e dà il suo «Vai» esplicito. Le modifiche documentali o agli strumenti interni che non cambiano il comportamento del sito non richiedono un prototipo nel Lab.
 - Se il `main` del sito ha file più nuovi del registro (workflow, script della Curva), copiali prima qui: non sovrascriverli con versioni vecchie.
 
+## Ogni nuova versione (dalla 5.6 in poi, decisione di Gianluca, 1° novembre 2026)
+- Oltre a `STATO.md`, al registro delle modifiche e alle prove nel Lab, ogni versione ha la sua **pagina delle novità** `lab/novita-X-Y.html`, fatta come `lab/novita-5-5.html`: una scheda per novità, con foto, «Dove» e i bottoni per aprirla in Lega e Stadio. Collegala dal Lab.
+- Le novità sono **integrate anche nell'Anteprima** (`anteprima/`), così Gianluca vede come si muove tutto insieme, non solo la scheda singola.
+- Transizioni sempre fluide (vedi «Mentre lavori»).
+
 ## Regole grafiche — Lega e Stadio (decisione di Gianluca, 1° novembre 2026)
 Le due grafiche devono essere davvero diverse, e ognuna uguale su tutte le pagine, menu, sottomenu, schede e riquadri:
 - **Lega** (grafica «normale», più statica): riquadri grandi dritti come le partite del Tabellone, banda laterale dritta (8 px, rossa) e angoli appena arrotondati (4 px a sinistra, 14 px a destra). Pillole, schede e cerchi delle giornate restano tondi: la Lega non va resa tutta squadrata (Gianluca, 1° novembre).

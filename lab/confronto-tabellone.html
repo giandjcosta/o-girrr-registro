@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
-<title>Tabellone a confronto · Lab O Girrr</title>
+<title>Tabellone versione C · Lab O Girrr</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#fbf6ec;--sub:#bfe3ff;--gold:#ffd166;--line:rgba(255,255,255,.16)}
@@ -26,24 +26,20 @@ h1{font:900 clamp(28px,5vw,44px)/1.05 Inter;margin:10px 0 6px}
 </style></head>
 <body><div class="w">
 <nav class="top"><a href="./">Laboratorio</a><a href="novita-5-5.html">Novità 5.5</a><a href="confronto-classifica.html">Classifica a confronto</a></nav>
-<h1>Tabellone a confronto</h1>
-<p class="lead">Due impaginazioni del Tabellone con i dati veri. In tutte e due gli approfondimenti stanno in fondo e sul telefono la classifica è la prima cosa che si vede. Cambia il PC: in <b>A</b> la classifica viene prima a tutta larghezza e le partite sotto; in <b>B</b> classifica grande a sinistra e partite in colonna a destra, come fa il sito del Brasileirão. In <b>C</b> partite e classifica sono separate in schede, come fanno quasi tutte le leghe ufficiali.</p>
+<h1>Tabellone · versione C</h1>
+<p class="lead">Gianluca ha scelto la <b>C</b> (1° novembre): schede Classifica · Risultati · Campo, uguali in Campionato e Champions Cup (azzurre in coppa). Su PC le cinque partite stanno tre a sinistra e due a destra, centrate. Quarti, Semifinali e Finale scorrono come un tabellone di tennis. Le versioni A e B sono state tolte.</p>
 <div class="ctrl">
  <div class="seg" id="largh"><button data-w="390" aria-pressed="false">Telefono</button><button data-w="1280" aria-pressed="true">PC</button></div>
- <div class="seg" id="grafica"><button data-s="lega" aria-pressed="true">Grafica Lega</button><button data-s="stadio" aria-pressed="false">Grafica Stadio</button></div>
 </div>
-<section class="blocco"><div class="etichetta"><b>A · Classifica prima</b><span>Classifica, poi partite, poi approfondimenti.</span><a id="la" target="_blank" rel="noopener">Apri a tutta pagina ›</a></div><div class="cornice" id="ca"><iframe id="fa" title="Versione A"></iframe></div></section>
-<section class="blocco"><div class="etichetta"><b>B · Affiancate su PC (come il Brasileirão)</b><span>Classifica grande a sinistra, partite in colonna a destra; approfondimenti sotto.</span><a id="lb" target="_blank" rel="noopener">Apri a tutta pagina ›</a></div><div class="cornice" id="cb"><iframe id="fb" title="Versione B"></iframe></div></section>
-<section class="blocco"><div class="etichetta"><b>C · A schede, come la Serie A</b><span>Schede Classifica · Risultati · Campo; in cima alla classifica la striscia dei risultati.</span><a id="lc" target="_blank" rel="noopener">Apri a tutta pagina ›</a></div><div class="cornice" id="cc"><iframe id="fc" title="Versione C"></iframe></div></section>
+<section class="blocco"><div class="etichetta"><b>Grafica Lega</b><span>Riquadri grandi dritti con la banda rossa.</span><a id="llega" target="_blank" rel="noopener">Apri a tutta pagina ›</a></div><div class="cornice" id="clega"><iframe id="flega" title="Tabellone Lega"></iframe></div></section>
+<section class="blocco"><div class="etichetta"><b>Grafica Stadio</b><span>Riquadri tondi con la banda curva, più oro.</span><a id="lstadio" target="_blank" rel="noopener">Apri a tutta pagina ›</a></div><div class="cornice" id="cstadio"><iframe id="fstadio" title="Tabellone Stadio"></iframe></div></section>
 </div>
 <script>
-(function(){'use strict';var W=1280,SK='lega';
-function vai(){var max=document.querySelector('.w').clientWidth-32;['a','b','c'].forEach(function(v){var u='../anteprima/5.5/tabellone-'+SK+'.html?vista='+v,f=document.getElementById('f'+v);document.getElementById('c'+v).style.width=Math.min(W,max)+'px';
- /* su schermi più stretti della versione PC, la cornice si rimpicciolisce mantenendo la pagina a 1280 px */
+(function(){'use strict';var W=1280;
+function vai(){var max=document.querySelector('.w').clientWidth-32;['lega','stadio'].forEach(function(v){var u='../anteprima/5.5/tabellone-'+v+'.html',f=document.getElementById('f'+v);document.getElementById('c'+v).style.width=Math.min(W,max)+'px';
  var sc=Math.min(1,max/W);f.style.width=W+'px';f.style.transform='scale('+sc+')';f.style.transformOrigin='0 0';f.parentNode.style.height=(900*sc)+'px';
  if(f.dataset.u!==u){f.dataset.u=u;f.src=u}document.getElementById('l'+v).href=u})}
-function scelta(id,attr,cb){document.getElementById(id).addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;this.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});cb(b.dataset[attr])})}
-scelta('largh','w',function(v){W=Number(v);vai()});scelta('grafica','s',function(v){SK=v;vai()});
+document.getElementById('largh').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;this.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});W=Number(b.dataset.w);vai()});
 window.addEventListener('resize',vai);
 if(window.innerWidth<700){W=390;document.querySelectorAll('#largh button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.w==='390'))})}
 vai();
