@@ -9,6 +9,8 @@ OLD='https://raw.githack.com/giandjcosta/o-girrr-registro/chatgpt/anteprima-53-i
 def converti(s,skin):
     base=SITO+('girrr/' if skin=='lega' else 'stadio/girrr/')
     s=s.replace(OLD,'')
+    # Curva 5.5: banca dei personaggi ampliata del Lab (frasi della PR 40, attive dal 2 novembre 2026)
+    s=re.sub(r'src="[^"]*curva-banca\.js[^"]*"','src="https://giandjcosta.github.io/o-girrr-registro/lab/curva-banca-ampliata.js?v=20261101"',s)
     # Un solo foglio condiviso: evita la copia vecchia conservata nei template.
     s=re.sub(r'<link\b[^>]*href="ui\.css[^\"]*"[^>]*>','',s)
     s=re.sub(r'<base\b[^>]*>','',s)
