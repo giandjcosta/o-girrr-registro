@@ -31,7 +31,7 @@ with tempfile.TemporaryDirectory() as tmp:
         shutil.copy(R/'calcoli'/nome,cal/nome)
     (cal/'aspettative.json').write_text(json.dumps(att))
     (root/'eventi.json').write_text('[]');(root/'moviola.json').write_text('{}');(root/'data.json').write_text(json.dumps(d))
-    args=[sys.executable,str(cal/'post_curva.py'),str(root/'eventi.json'),str(root/'post.json'),str(root/'moviola.json'),str(root/'data.json')]
+    args=[sys.executable,str(cal/'post_curva.py'),str(root/'eventi.json'),str(root/'post.json'),str(root/'moviola.json'),str(root/'data.json'),'--cronache-classifica']
     subprocess.run(args,check=True)
     posts=json.loads((root/'post.json').read_text());assert len(posts)==3
     assert [p['h'] for p in posts]==['girrr_sport','giornale_girrr','giornale_girrr']
@@ -44,7 +44,7 @@ with tempfile.TemporaryDirectory() as tmp:
 sys.path.insert(0,str(R/'voci-src'))
 spec=importlib.util.spec_from_file_location('copione',R/'voci-src/copione.py')
 c=importlib.util.module_from_spec(spec);spec.loader.exec_module(c)
-radio=json.loads((R/'voci-src/dati.json').read_text());radio['zona_classifica']=e
+radio=json.loads((R/'voci-src/dati.json').read_text());radio['zona_classifica']=e;radio['cronache_classifica_attive']=True
 for seed in (0,1,7,13):
     battute=c.build(radio,random.Random(seed),[])
     testi=[x[1] for x in battute]
@@ -64,7 +64,7 @@ with tempfile.TemporaryDirectory() as tmp:
     (site/'data.json').write_text(json.dumps(dati));(root/'eventi.json').write_text('[]')
     snapshot={'aw':[{'n':3}],'cup':[]}
     (site/'girrr/dati/lab-dati.json').write_text(json.dumps(snapshot))
-    args=[sys.executable,str(v/'prepara_dati.py'),str(site),str(root/'eventi.json')]
+    args=[sys.executable,str(v/'prepara_dati.py'),str(site),str(root/'eventi.json'),'--cronache-classifica']
     ret=subprocess.check_output(args,text=True);assert 'giornata=3' in ret
     pronto=json.loads((v/'dati.json').read_text());assert pronto['zona_classifica']['giornata']==3
     assert pronto['zona_classifica']==pronto['cronaca_classifica']
