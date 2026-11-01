@@ -34,8 +34,10 @@ with sync_playwright() as pw:
             assert p.locator('#tab tbody tr').count()==10
             assert p.locator('#tab .zona-1 .numpos').evaluate('(e)=>getComputedStyle(e).color')=='rgb(255, 209, 102)'
             assert p.locator('#tab .zona-last .numpos').evaluate('(e)=>getComputedStyle(e).color')=='rgb(255, 114, 134)'
-            for selector in ('.dr','.pt','.fp'):
+            for selector in ('.dr','.pt'):
                 assert p.locator('#tab tbody '+selector).first.evaluate('(e)=>getComputedStyle(e).color')=='rgb(251, 246, 236)'
+            # Fantapunti azzurri, come nella grafica originale richiesta da Gianluca.
+            assert p.locator('#tab tbody .fp').first.evaluate('(e)=>getComputedStyle(e).color')=='rgb(191, 227, 255)'
             th=p.locator('#tab th.w').first
             assert th.is_visible()==(w>=560)
             p.screenshot(path=str(OUT/f'integrato-tabellone-{skin}-{w}.png'),full_page=True)
