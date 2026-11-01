@@ -1,5 +1,5 @@
 """Costruzione della 5.5 dalle pagine conservate, dal Lab e dal Tabellone completo."""
-import re, json, sys
+import re, json, sys, ast
 from pathlib import Path
 from urllib.parse import urljoin
 R=Path(__file__).resolve().parent.parent
@@ -30,7 +30,7 @@ def converti(s,skin):
     s=re.sub(r"fetch\('([^']+)'",lambda m:"fetch('"+urljoin(base,m[1])+"'" if not m[1].startswith(('http','#','data:')) else m[0],s)
     s=s.replace('<head>','<head><script src="../preview-guard.js"></script>',1)
     # Native return links are handled locally before the original page listeners.
-    s=s.replace('</head>','<link rel="stylesheet" href="ui.css?v=53e"><script src="ui.js?v=53d" defer></script></head>',1)
+    s=s.replace('</head>','<link rel="stylesheet" href="ui.css?v=55h"><script src="home55.js?v=55h" defer></script><script src="ui.js?v=55h" defer></script></head>',1)
     # Drop the old tail script; the single deferred script sees currentScript at execution.
     s=re.sub(r'<script src="ui.js\?v=53c"></script>','',s)
     s=re.sub(r"\.src='(?:\.\./)+'\+", ".src='"+SITO+"'+", s)
@@ -50,6 +50,10 @@ def genera53():
         return x
     firma=json.dumps(numero_js([{'n':g['n'],'m':g['m']} for g in _giornate(dati)]),ensure_ascii=False,separators=(',',':'))
     (out/'cronache.json').write_text(json.dumps({'firma':firma,'eventi':eventi(dati,att),'aggiornato':dati.get('updated')},ensure_ascii=False,indent=2))
+    lab=(R/'lab/index.html').read_text()
+    mgr=ast.literal_eval(re.search(r'var MGR=(\{[^\n]+\});function mg',lab)[1])
+    hist=json.loads(re.search(r'var HIST=(\{[^\n]+\});',lab)[1])
+    (out/'allenatori.json').write_text(json.dumps({'fonte':'lab/index.html: MGR e HIST','squadre':{k:['Leanzino','Mario'] if k=='The Blue brothers' else [v] for k,v in mgr.items()},'allenatori':hist},ensure_ascii=False,indent=2)+'\n')
     for skin in ('lega','stadio'):
         for page in ('index','curva','notifiche'):
             s=converti((templates/f'{page}-{skin}.html').read_text(),skin)
@@ -62,7 +66,7 @@ def genera53():
         (out/f'tabellone-{skin}.html').write_text(t)
         # L'Albo completo proviene dalla stessa build del Lab: tutte le tab e i record conservati.
         a=(R/('anteprima/attuale.html' if skin=='lega' else 'anteprima/index.html')).read_text()
-        a=a.replace('<!doctype html>',f'<!doctype html><html lang="it"><head><base href="../"><script src="preview-guard.js"></script><link rel="stylesheet" href="5.5/ui.css?v=53e"><script src="5.5/ui.js?v=53d" defer></script>',1)
+        a=a.replace('<!doctype html>',f'<!doctype html><html lang="it"><head><base href="../"><script src="preview-guard.js"></script><link rel="stylesheet" href="5.5/ui.css?v=55h"><script src="5.5/ui.js?v=55h" defer></script>',1)
         a=a.replace('<div class="col">',f'</head><body data-v53="albo" data-v53-skin="{skin}"><div class="col">',1)
         a+='</body></html>'
         a=a.replace('home-'+skin+'.html','5.5/index-'+skin+'.html')
@@ -70,8 +74,18 @@ def genera53():
         a=a.replace("var hh=(location.hash||'').slice(1);","var hh=(location.hash||'#oro').slice(1);")
         (out/f'albo-{skin}.html').write_text(a)
         c=(R/'anteprima/campo.html').read_text()
+        c=c.replace('</head>','<link rel="stylesheet" href="ui.css?v=55h"><script src="ui.js?v=55h" defer></script></head>',1)
         c=c.replace('<body data-skin="stadio">',f'<body data-skin="{skin}" data-v53="campo" data-v53-skin="{skin}">')
         c=c.replace('home-'+skin+'.html','index-'+skin+'.html')
         c=c.replace("'home-'+s+'.html'","'index-'+s+'.html'")
         c=c.replace('href="tabellone-stadio.html"',f'href="tabellone-{skin}.html"')
         (out/f'campo-{skin}.html').write_text(c)
+        # I link salvati prima della 5.5 devono aprire la stessa Home integrata.
+        # I template storici restano conservati in sorgenti/, senza una seconda UI attiva.
+        destinazione=f'5.5/index-{skin}.html'
+        (R/f'anteprima/home-{skin}.html').write_text(f'''<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>O Girrr · Home {skin.title()}</title>
+<script>location.replace({json.dumps(destinazione)}+location.search+location.hash)</script>
+</head><body><a href="{destinazione}">Apri la Home O Girrr · Grafica {skin.title()}</a></body></html>
+''')

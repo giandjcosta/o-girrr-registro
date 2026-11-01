@@ -3,7 +3,7 @@
 'use strict';
 var root=new URL('./',document.currentScript.src).href;
 var mode=document.body.dataset.v53||'',skin=document.body.dataset.v53Skin||'lega',dataUrl='https://giandjcosta.github.io/o-fant-a-girrr/data.json';
-var k='og:53:',teamList=[],D=null,CRON=null;
+var k='og:53:',teamList=[],D=null,CRON=null,HIST55={};
 function el(id){return document.getElementById(id)}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function notizia(){if(!CRON||!D)return null;var g=completeRounds(false),firma=JSON.stringify(g.map(function(x){return {n:x.n,m:x.m}}));if(firma!==CRON.firma)return null;return (CRON.eventi||[]).find(function(e){return e.giornata===(latest()||{}).n})||null}
@@ -26,7 +26,7 @@ function rpcN(n,b){return fetch(SB+'/rest/v1/rpc/'+n,{method:'POST',headers:{api
 function sitoUrl(pag){return 'https://giandjcosta.github.io/o-fant-a-girrr/'+(skin==='stadio'?'stadio/girrr/':'girrr/')+pag}
 function quando(t){var d=(Date.now()-new Date(t).getTime())/36e5;if(!(d>=0))return '';if(d<1)return 'Poco fa';if(d<24)return Math.round(d)+' ore fa';var g=Math.round(d/24);return g===1?'Ieri':g+' giorni fa'}
 function personali(st){return (st&&st.eventi||[]).map(function(e){return {key:e.chiave,type:e.tipo,ic:e.ic,title:e.titolo,detail:e.testo,when:e.quando,nuova:!!e.nuova,personale:true,
- link:e.tipo==='curva'?href('curva'):e.tipo==='derby'?sitoUrl('app.html#sport'):sitoUrl('totogirrr.html')}})}
+ link:e.tipo==='curva'?href('curva'):e.tipo==='derby'?new URL('../'+(skin==='lega'?'attuale.html':'index.html')+'#sport',root).href:new URL('../totogirrr-52.html?skin='+skin+'&t='+(String(e.chiave).startsWith('prest-')?'prestiti':'movimenti'),root).href}})}
 function note(t){return '<div class="v53-empty">'+esc(t)+'</div>'}
 function matchPlayed(m,cup){return Array.isArray(m)&&/^\d+-\d+$/.test(String(m[cup?5:4]))}
 function games(cup){return ((D&&D.cal&&(cup?D.cal.cup:D.cal.lega))||[]).slice()}
@@ -35,22 +35,35 @@ function latest(){var g=completeRounds(false);return g[g.length-1]||null}
 function next(){return games(false).find(function(g){return g.m&&g.m.some(function(m){return !matchPlayed(m,false)})})||null}
 function mFor(g,t){return g&&g.m&&g.m.find(function(m){return m[0]===t||m[3]===t})}
 function allFinished(){var out=[];completeRounds(false).forEach(function(g){(g.m||[]).forEach(function(m,i){if(matchPlayed(m,false))out.push({g:g,m:m,id:g.n+'-'+i})})});return out.reverse()}
-function ranks(until){var map={};(D.teams||[]).forEach(function(t){map[t.name]={team:t.name,pt:0,fp:0,gf:0,gs:0,g:0}});
+function ranks(until){var map={};(D.teams||[]).forEach(function(t){map[t.name]={team:t.name,pt:0,fp:0,gf:0,gs:0,g:0,v:0,nn:0,p:0}});
 completeRounds(false).filter(function(g){return g.n<=until}).forEach(function(g){(g.m||[]).forEach(function(m){if(!matchPlayed(m,false))return;
 var a=map[m[0]],b=map[m[3]],r=String(m[4]).split('-').map(Number);if(!a||!b||!Number.isFinite(r[0])||!Number.isFinite(r[1]))return;
-a.g++;b.g++;a.pt+=r[0]>r[1]?3:r[0]===r[1]?1:0;b.pt+=r[0]<r[1]?3:r[0]===r[1]?1:0;
+a.g++;b.g++;if(r[0]>r[1]){a.v++;b.p++}else if(r[0]<r[1]){b.v++;a.p++}else{a.nn++;b.nn++}a.pt+=r[0]>r[1]?3:r[0]===r[1]?1:0;b.pt+=r[0]<r[1]?3:r[0]===r[1]?1:0;
 a.fp+=n(m[1]);b.fp+=n(m[2]);a.gf+=r[0];a.gs+=r[1];b.gf+=r[1];b.gs+=r[0]})});
-return Object.values(map).sort(function(a,b){return b.pt-a.pt||b.fp-a.fp||b.gf-b.gs-(a.gf-a.gs)||a.team.localeCompare(b.team)})}
+return Object.values(map).sort(function(a,b){return b.pt-a.pt||b.fp-a.fp||b.gf-b.gs-(a.gf-a.gs)||b.gf-a.gf||['The Blue brothers','Apo team','Mariana Coneja','stif dc','Real Madrink','Atletico ma non troppo','Oranje VC','AFA SELECCION','Grodah','WOA'].indexOf(a.team)-['The Blue brothers','Apo team','Mariana Coneja','stif dc','Real Madrink','Atletico ma non troppo','Oranje VC','AFA SELECCION','Grodah','WOA'].indexOf(b.team)})}
 function href(which){return root+which+'-'+skin+'.html'}
 function nav(){
  var old=el('v53nav');if(old)old.remove();
- var where=document.querySelector('.ohead,.hero,header.top,header');if(!where)return;
- var page=mode==='home'?'index':mode==='board'?'tabellone':mode==='notifications'?'notifiche':mode;
- var utilities=document.createElement('div');utilities.className='v53 v53-utilities';utilities.setAttribute('aria-label','Collegamenti della Lega');
- utilities.innerHTML=(!document.querySelector('a.back,a.oback')&&mode!=='home'?'<a href="'+href('index')+'">‹ Home</a>':'')+
-  (mode!=='notifications'?'<a href="'+href('notifiche')+'">Notifiche</a>':'')+
-  '<a href="'+root+page+'-'+(skin==='lega'?'stadio':'lega')+'.html">Grafica '+(skin==='lega'?'Stadio':'Lega')+'</a>';
- where.insertAdjacentElement('afterend',utilities);
+ var where=document.querySelector('.ohead,.hero,.mast,header.top,header');if(!where)return;
+ var names={home:'Home',board:'Tabellone',campo:'Campo',albo:"Albo d’oro",curva:'Curva',notifications:'Notifiche'};
+ var parent=mode==='campo'?'tabellone':'index',prev=null;
+ try{var ref=new URL(document.referrer),base=new URL(root);if(ref.origin===base.origin&&ref.pathname.startsWith(base.pathname)&&/\/(index|tabellone|campo|albo|curva|notifiche)-(lega|stadio)\.html$/.test(ref.pathname)&&ref.href!==location.href)prev=ref}catch(e){}
+ var utilities=document.createElement('nav');utilities.className='v53 v53-utilities v55-header';utilities.setAttribute('aria-label','Navigazione della Lega');
+ function update(){
+  if(mode==='campo'){skin=document.body.dataset.skin||skin;document.body.dataset.v53Skin=skin;}
+  var target=prev?prev.href:href(parent),label=prev?prev.pathname.split('/').pop().split('-')[0]:parent;
+  var labels={index:'Home',tabellone:'Tabellone',campo:'Campo',albo:"Albo d’oro",curva:'Curva',notifiche:'Notifiche'};
+  var page=mode==='home'?'index':mode==='board'?'tabellone':mode==='notifications'?'notifiche':mode;
+  function skinTarget(){var u=new URL(page+'-'+(skin==='lega'?'stadio':'lega')+'.html',root);u.search=location.search;if(mode==='campo'||u.searchParams.has('skin'))u.searchParams.set('skin',skin==='lega'?'stadio':'lega');if(/^#(lega|coppa)(-\d+)?$/.test(location.hash))u.hash=location.hash;return u.href;}
+  utilities.innerHTML='<a class="v55-home-logo" href="'+href('index')+'" aria-label="Home O Girrr"><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/loghi/logo-lega-o-fant-a-girrr.png" alt="O Girrr"></a>'+
+   '<a class="v55-return" href="'+esc(target)+'" aria-label="Torna a '+esc(labels[label]||'Home')+'">‹ '+esc(labels[label]||'Home')+'</a>'+
+   (mode!=='notifications'?'<a class="v55-notifications-link" href="'+href('notifiche')+'" aria-label="Notifiche">Notifiche <b class="v55-notify-count" hidden></b></a>':'')+
+   '<a class="v55-skin-link" href="'+esc(skinTarget())+'">Grafica '+(skin==='lega'?'Stadio':'Lega')+'</a>';
+  var swap=utilities.querySelector('.v55-skin-link');['pointerenter','pointerdown','focus','click'].forEach(function(event){swap.addEventListener(event,function(){swap.href=skinTarget()})});
+  var back=utilities.querySelector('.v55-return');if(prev)back.onclick=function(e){if(history.length>1){e.preventDefault();history.back()}};
+ }
+ update();where.insertAdjacentElement('beforebegin',utilities);document.body.classList.add('v55-has-header');
+ if(mode==='campo')new MutationObserver(update).observe(document.body,{attributes:true,attributeFilter:['data-skin']});
 }
 function redirect(){
 document.addEventListener('click',function(e){
@@ -61,27 +74,40 @@ document.addEventListener('click',function(e){
 },true);
 if(mode==='curva')document.addEventListener('submit',function(e){if(!e.target.closest('.v53')){e.preventDefault();e.stopImmediatePropagation()}},true);
 }
-function load(cb){fetch(dataUrl,{cache:'no-store'}).then(function(r){if(!r.ok)throw Error('Dati temporaneamente indisponibili');return r.json()}).then(function(v){if(!v||!v.cal||!v.teams)throw Error('Formato dati non riconosciuto');D=window.CVPUB?window.CVPUB(v):v;teamList=v.teams.map(function(t){return t.name});fetch(root+'cronache.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}).then(function(cr){CRON=cr;cb()})}).catch(function(e){var ids=mode==='home'?['v53metrics','v53news']:mode==='notifications'?['v53notifications']:mode==='board'?['v53boardcontent']:mode==='albo'?['v53annual']:['v53poll'];ids.forEach(function(id){if(el(id))el(id).innerHTML=note('I dati della stagione non sono raggiungibili. La navigazione e le sezioni originali restano disponibili.')});console.warn('5.5 dati non caricati:',e.message)})}
+function load(cb){fetch(dataUrl,{cache:'no-store'}).then(function(r){if(!r.ok)throw Error('Dati temporaneamente indisponibili');return r.json()}).then(function(v){if(!v||!v.cal||!v.teams)throw Error('Formato dati non riconosciuto');D=window.CVPUB?window.CVPUB(v):v;teamList=v.teams.map(function(t){return t.name});Promise.all([fetch(root+'cronache.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}),mode==='home'?fetch(root+'allenatori.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():{}}).catch(function(){return {}}):Promise.resolve({})]).then(function(x){CRON=x[0];HIST55=x[1];cb()})}).catch(function(e){var ids=mode==='home'?['v53metrics','v53news']:mode==='notifications'?['v53notifications']:mode==='board'?['v53boardcontent']:mode==='albo'?['v53annual']:['v53poll'];ids.forEach(function(id){if(el(id))el(id).innerHTML=note('I dati della stagione non sono raggiungibili. La navigazione e le sezioni originali restano disponibili.')});console.warn('5.5 dati non caricati:',e.message)})}
 function teamPicker(id,cb){
  var s=el(id);if(!s)return;var io=chi(),t=get('team',io&&teamList.indexOf(io.team)>=0?io.team:teamList[0]);if(teamList.indexOf(t)<0)t=teamList[0];s.innerHTML=teamList.map(function(x){return '<option value="'+esc(x)+'">'+esc(x)+'</option>'}).join('');s.value=t;s.addEventListener('change',function(){set('team',s.value);cb(s.value)});cb(t)
 }
 function home(){
-teamPicker('v53team',function(t){
- var day=latest(),nm=day&&day.n,prev=nm&&nm>1?ranks(nm-1):[],cls=nm?ranks(nm):[],rank=cls.findIndex(function(x){return x.team===t})+1,prevRank=prev.findIndex(function(x){return x.team===t})+1;
- var nextDay=next(),op=mFor(nextDay,t),res=allFinished().find(function(x){return x.m[0]===t||x.m[3]===t});
- var txt='';
- txt+='<div class="v53-metric featured"><small>La tua squadra</small><b>'+esc(t)+'</b><em>'+(rank?rank+'ª posizione': 'Classifica in attesa')+(rank&&prevRank&&prevRank!==rank?' · '+(prevRank>rank?'↑ '+(prevRank-rank):'↓ '+(rank-prevRank))+' posizione/i':'')+'</em></div>';
- txt+='<div class="v53-metric"><small>Prossima giornata</small><b>'+esc(op?(op[0]===t?op[3]:op[0]):'Da definire')+'</b><em>'+(op?nextDay.n+'ª giornata':'Calendario in aggiornamento')+'</em></div>';
- txt+='<div class="v53-metric"><small>Ultimo risultato</small><b>'+esc(res?res.m[0]+' '+res.m[4]+' '+res.m[3]:'—')+'</b><em>'+(res?'Fantapunti '+dec(res.m[1])+'–'+dec(res.m[2]):'Nessuna partita conclusa')+'</em></div>';
- el('v53metrics').innerHTML=txt;
- var z=notizia(),seen=get('seen:'+t,null),news=[],now={day:nm||0,rank:rank||0,op:op&&(op[0]===t?op[3]:op[0])||'',score:res&&res.m[4]||'',notizia:z?z.chiave||z.titolo:''};
- if(seen&&seen.day!==now.day)news.push('Nuovi risultati dopo la '+(nm||'ultima')+'ª giornata');
- if(seen&&seen.rank!==now.rank&&rank)news.push('La tua posizione in classifica è cambiata');
- if(seen&&seen.op!==now.op&&now.op)news.push('È cambiato il prossimo avversario');
- if(z&&!(seen&&seen.notizia===now.notizia))news.unshift(z.titolo+': '+z.testo);var aside=el('v53news');
- function scrivi(){aside.innerHTML=news.length?news.map(function(x){return '<span class="v53-riga"><span class="v53-dot" title="Da leggere" aria-label="Da leggere"></span><span>'+esc(x)+'</span></span>'}).join(''):'Nessuna novità da leggere per '+esc(t)+'.'}
- scrivi();var me=chi();if(me&&me.team===t)rpcN('notifiche_stato',{p_team:me.team,p_code:me.code}).then(function(st){var n=(st.eventi||[]).filter(function(e){return e.nuova}).length;if(n){news.unshift(n===1?'1 notifica nuova per te nelle Notifiche':n+' notifiche nuove per te nelle Notifiche');scrivi()}}).catch(function(){});
- var b=el('v53read');if(b)b.onclick=function(){set('seen:'+t,now);news=[];scrivi()};
+ var generation=0;
+ var live=el('v53news').parentElement;live.classList.add('v55-notice');
+ var header=document.createElement('div');header.className='v55-notice-head';
+ header.innerHTML='<h3><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg> Notifiche <span id="v55unread" aria-live="polite"></span></h3><a href="'+href('notifiche')+'">Tutte ›</a>';
+ live.prepend(header);document.querySelector('.v53-home').prepend(live);
+ teamPicker('v53team',function(t){
+ var version=++generation,day=latest(),nm=day&&day.n,cls=nm?ranks(nm):[],sets=completeRounds(false).map(function(g){return {n:g.n,table:ranks(g.n)}});
+ var box=el('v53metrics');box.classList.add('v55-unified');
+ box.innerHTML=window.OGHome55.render({team:t,table:cls,sets:sets,rounds:completeRounds(false),cupRounds:completeRounds(true),cupLink:href('tabellone')+'#coppa',coachLink:href('albo')+'?albo=all',calendar:games(false).sort(function(a,b){return a.n-b.n}),archivio:HIST55,
+  dayLink:function(n){return href('tabellone')+'#lega-'+n},boardLink:href('tabellone'),careerLink:function(team){return new URL('../'+(skin==='lega'?'attuale.html':'index.html'),root).href+'?come='+encodeURIComponent(team)+'#carriera'}});
+ var z=notizia(),items=[],me=chi(),personal=[],busy=!!(chi()&&chi().team===t);
+ if(z)items.push({key:z.chiave,title:z.titolo,detail:z.testo,link:href('tabellone')+'#lega-'+nm});
+ if(day)items.push({key:'result-'+nm,title:'Risultati della '+nm+'ª giornata',detail:'Risultati, classifica e dettagli delle partite.',link:href('tabellone')+'#lega-'+nm});
+ var nx=next();if(nx)items.push({key:'poll-'+nx.n,title:'La Curva prepara la '+nx.n+'ª',detail:'Apri il sondaggio e scegli la sfida da seguire.',link:href('curva')});
+ function unread(x){return x.personale?x.nuova:!get('read-'+x.key,false)}
+ function draw(){
+  var all=personal.concat(items),fresh=all.filter(unread),chosen=fresh.slice(0,2),total=fresh.length;
+  el('v55unread').textContent=total?total+' da leggere':'Tutto letto';
+  document.querySelectorAll('.v55-notify-count').forEach(function(x){x.hidden=!total;x.textContent=total;x.parentElement.title=total+' notifiche da leggere'});
+  el('v53news').innerHTML=chosen.length?chosen.map(function(x){return '<a class="v55-news-link" href="'+esc(x.link)+'"><span class="v53-dot" aria-hidden="true"></span><span><b>'+esc(x.title)+'</b><small>'+esc(x.detail)+'</small></span><span aria-hidden="true">›</span></a>'}).join(''):'<a class="v55-news-link" href="'+href('notifiche')+'">Nessuna nuova notifica. Apri il centro notifiche ›</a>';
+  var b=el('v53read');b.hidden=!total;b.disabled=busy;
+ }
+ draw();
+ if(me&&me.team===t)rpcN('notifiche_stato',{p_team:me.team,p_code:me.code}).then(function(st){if(version!==generation)return;busy=false;personal=personali(st);if(Array.isArray(st.chiavi))st.chiavi.forEach(function(k){set('read-'+k,true)});draw()}).catch(function(){if(version===generation){busy=false;draw();el('v55unread').textContent='Novità della Lega';}});
+ el('v53read').onclick=function(){
+  if(busy)return;items.forEach(function(x){set('read-'+x.key,true)});
+  var old=personal.map(function(x){return x.nuova});personal.forEach(function(x){x.nuova=false});
+  if(me&&me.team===t){busy=true;draw();rpcN('notifiche_segna_lette',{p_team:me.team,p_code:me.code,p_chiavi:items.map(function(x){return x.key}).slice(0,100)}).then(function(){if(version!==generation)return;busy=false;draw()}).catch(function(){if(version!==generation)return;busy=false;personal.forEach(function(x,i){x.nuova=old[i]});draw();el('v55unread').textContent='Lettura non salvata. Riprova.'})}else draw();
+ };
  });
 }
 function board(){

@@ -1,7 +1,7 @@
 name: ChatGPT - Integrazione Anteprima 5.5
 on:
   push:
-    branches: [main, chatgpt/cronache-55-complete, chatgpt/verifica-55-claude, chatgpt/integrazione-ui-campo-cronache, chatgpt/completamento-53-campo]
+    branches: [main, chatgpt/home-notifiche-navigazione-55, chatgpt/cronache-55-complete, chatgpt/verifica-55-claude, chatgpt/integrazione-ui-campo-cronache, chatgpt/completamento-53-campo]
   pull_request:
     branches: [main, chatgpt/lavori-31-ottobre, chatgpt/anteprima-53-integrata]
 permissions:
@@ -44,6 +44,7 @@ jobs:
           python3 prove/prova_giornale_cronaca_pdf.py
           python3 prove/prova_cronache_lab_browser.py
           python3 prove/prova_home_unica55.py
+          python3 prove/prova_home_notifiche55.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
