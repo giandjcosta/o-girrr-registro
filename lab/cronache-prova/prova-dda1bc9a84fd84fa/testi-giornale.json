@@ -1,0 +1,17 @@
+{
+  "titolone": "Il punto della classifica",
+  "classifiche": "Il commento della redazione.\n\nCrisi imprevista. WOA, attesa tra le prime 2, è ultima da 2 giornate consecutive. La favorita deve reagire.",
+  "_cronache_classifica": [
+    "zona:2026/27:G5:sorpresa:WOA"
+  ],
+  "_prove_cronaca": [
+    {
+      "giornata": 5,
+      "posizione_precedente": 10,
+      "posizione": 10,
+      "attesa": 2,
+      "serie": 2,
+      "altre_squadre": []
+    }
+  ]
+}

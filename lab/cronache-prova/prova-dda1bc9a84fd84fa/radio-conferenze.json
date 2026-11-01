@@ -1,0 +1,8 @@
+{
+ "_come_si_usa": "Generato da prepara_dati.py (dati veri dal database del sito).",
+ "demo": false,
+ "giornata": 5,
+ "partite": [],
+ "squadre": {},
+ "sfide_derby": []
+}
