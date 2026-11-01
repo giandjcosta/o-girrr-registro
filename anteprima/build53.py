@@ -9,8 +9,10 @@ OLD='https://raw.githack.com/giandjcosta/o-girrr-registro/chatgpt/anteprima-53-i
 def converti(s,skin):
     base=SITO+('girrr/' if skin=='lega' else 'stadio/girrr/')
     s=s.replace(OLD,'')
+    # Un solo foglio condiviso: evita la copia vecchia conservata nei template.
+    s=re.sub(r'<link\b[^>]*href="ui\.css[^\"]*"[^>]*>','',s)
     s=re.sub(r'<base\b[^>]*>','',s)
-    s=re.sub(r'<script>\/\* Anteprima 5\.3: protezione.*?</script>','',s,flags=re.S)
+    s=re.sub(r'<script>\/\* Anteprima 5\.[35]: protezione.*?</script>','',s,flags=re.S)
     s=re.sub(r'<script[^>]*src="[^"]*(?:ospite|transizioni|barra|grafica|auth-ingresso|goatcounter|app)\.js[^\"]*"[^>]*></script>','',s)
     local={'index.html':'index-'+skin+'.html','tabellone.html':'tabellone-'+skin+'.html',
            'albo.html':'albo-'+skin+'.html','curva.html':'curva-'+skin+'.html',
@@ -26,7 +28,7 @@ def converti(s,skin):
     s=re.sub(r"fetch\('([^']+)'",lambda m:"fetch('"+urljoin(base,m[1])+"'" if not m[1].startswith(('http','#','data:')) else m[0],s)
     s=s.replace('<head>','<head><script src="../preview-guard.js"></script>',1)
     # Native return links are handled locally before the original page listeners.
-    s=s.replace('</head>','<link rel="stylesheet" href="ui.css?v=53d"><script src="ui.js?v=53d" defer></script></head>',1)
+    s=s.replace('</head>','<link rel="stylesheet" href="ui.css?v=53e"><script src="ui.js?v=53d" defer></script></head>',1)
     # Drop the old tail script; the single deferred script sees currentScript at execution.
     s=re.sub(r'<script src="ui.js\?v=53c"></script>','',s)
     s=re.sub(r"\.src='(?:\.\./)+'\+", ".src='"+SITO+"'+", s)
@@ -58,7 +60,7 @@ def genera53():
         (out/f'tabellone-{skin}.html').write_text(t)
         # L'Albo completo proviene dalla stessa build del Lab: tutte le tab e i record conservati.
         a=(R/('anteprima/attuale.html' if skin=='lega' else 'anteprima/index.html')).read_text()
-        a=a.replace('<!doctype html>',f'<!doctype html><html lang="it"><head><base href="../"><script src="preview-guard.js"></script><link rel="stylesheet" href="5.5/ui.css?v=53d"><script src="5.5/ui.js?v=53d" defer></script>',1)
+        a=a.replace('<!doctype html>',f'<!doctype html><html lang="it"><head><base href="../"><script src="preview-guard.js"></script><link rel="stylesheet" href="5.5/ui.css?v=53e"><script src="5.5/ui.js?v=53d" defer></script>',1)
         a=a.replace('<div class="col">',f'</head><body data-v53="albo" data-v53-skin="{skin}"><div class="col">',1)
         a+='</body></html>'
         a=a.replace('home-'+skin+'.html','5.5/index-'+skin+'.html')

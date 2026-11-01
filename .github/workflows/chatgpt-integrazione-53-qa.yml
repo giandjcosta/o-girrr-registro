@@ -33,6 +33,7 @@ jobs:
           python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/anteprima-server.log 2>&1 &
       - name: Navigazione vera, telefono tablet PC
         run: |
+          python3 prove/prova_campo_contenuti.py
           python3 prove/prova_navigazione_53.py
           python3 prove/prova_ingresso_anteprima_53.py
           python3 prove/prova_53_completa.py
