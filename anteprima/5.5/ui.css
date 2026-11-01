@@ -154,3 +154,5 @@
 .v53-select,.v53 select,[data-v53] select{background-color:#1d2a52!important;color:#fbf6ec!important;font-family:Inter,system-ui,sans-serif!important;font-style:normal!important}
 .v53-select option,.v53 select option,[data-v53] select option,[data-v53] select optgroup{background-color:#1d2a52!important;color:#fbf6ec!important;font-family:Inter,system-ui,sans-serif!important;font-weight:600}
 [data-v53-skin=stadio] .v53-select{border-color:rgba(255,209,102,.45)}
+/* Le schede restano compatte sul PC; sul telefono la superficie di tocco è 44 px. */
+@media(pointer:coarse),(max-width:800px){[data-v53=albo] .seg.oro-scroll button{min-height:44px!important}}

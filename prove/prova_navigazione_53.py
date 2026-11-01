@@ -65,7 +65,8 @@ with sync_playwright() as pw:
             for i in range(btns.count()):
                 btns.nth(i).click();p.wait_for_timeout(180)
                 active=p.locator('.oro-scroll [aria-pressed=true]');assert active.count()==1
-                assert active.evaluate('(e)=>e.offsetHeight>=44')
+                h=active.evaluate('(e)=>e.offsetHeight')
+                assert h>=(44 if w<=768 else 28),(skin,w,'Area della scheda',h)
                 assert p.locator('.oro-scroll').evaluate('(e)=>getComputedStyle(e).flexWrap')=='nowrap'
                 assert active.evaluate('(e)=>{let a=e.getBoundingClientRect(),r=e.parentElement.getBoundingClientRect();return a.left>=r.left-2 && a.right<=r.right+2}'),(skin,w,'attivo fuori vista')
             check('Tab Albo')
