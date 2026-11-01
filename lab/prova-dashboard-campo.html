@@ -42,16 +42,20 @@ h2{font-size:clamp(17px,2vw,24px);margin:0 0 8px}
 .pitch.conxi svg{aspect-ratio:auto!important;height:auto}
 .pitch .xi{position:absolute;inset:6px;pointer-events:none}
 .pitch .pl{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;width:15%;max-width:96px;pointer-events:auto;cursor:default}
-.pitch .pl b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;font:900 12px/1 Inter,system-ui,sans-serif;color:#fff;background:#5d6f92;border:3px solid var(--accent);box-shadow:0 2px 6px rgba(0,0,0,.35)}
+.pitch .pl b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;font:900 12px/1 Inter,system-ui,sans-serif;color:#fff;background:#5d6f92;border:3px solid var(--casa);box-shadow:0 2px 6px rgba(0,0,0,.35);position:relative}
+/* Bordo = squadra, uguale nelle due grafiche: casa azzurro, ospite bianco (il rosso sparirebbe sui voti bassi). Il migliore in campo ha la stella, mai un bordo oro. */
+body{--casa:#63bce9}
 .pitch .pl.away b{border-color:#f5f6fb}
 .pitch .pl b.ok{background:#25915c}.pitch .pl b.ko{background:#b8394a}.pitch .pl b.sv{background:#3b4660;color:#cfd8ea;font-size:10px}
 .pitch .pl:focus-visible{outline:2px solid #ffd166;outline-offset:2px;border-radius:8px}
 #xi-det{min-height:1.3em;font-weight:800;color:#f5f6fb}
-.pitch .pl.top b{box-shadow:0 0 0 2px #ffd166,0 2px 6px rgba(0,0,0,.35)}
+.pitch .pl.top b::after{content:'★';position:absolute;top:-9px;right:-10px;font-size:14px;line-height:1;color:#ffd166;text-shadow:0 1px 2px rgba(0,0,0,.8)}
+.leg-casa,.leg-osp{display:inline-block;width:11px;height:11px;border-radius:50%;border:3px solid var(--casa);vertical-align:-1px;margin:0 3px 0 1px}.leg-osp{border-color:#f5f6fb}.leg-star{color:#ffd166}
 .pitch .pl span{margin-top:3px;max-width:100%;padding:1px 5px;border-radius:6px;background:rgba(8,20,40,.72);color:#f5f6fb;font:800 10.5px/1.25 Inter,system-ui,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pitch .pl i{font-style:normal;font-size:10px;line-height:1;margin-top:1px;white-space:nowrap}
-.pitch .squadra{position:absolute;left:7%;font:900 10px/1 Inter,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#eafff6;opacity:.85;pointer-events:none}
-.pitch .squadra.casa{top:1.2%}.pitch .squadra.ospite{bottom:1.2%}
+.pitch .pl i{position:absolute;top:100%;left:50%;transform:translateX(-50%);font-style:normal;font-size:10px;line-height:1;margin-top:1px;white-space:nowrap}
+/* le icone non cambiano l'altezza: tutti i cerchi di un reparto restano sulla stessa linea */
+.pitch .squadra{position:absolute;left:7%;max-width:27%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:900 10px/1 Inter,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#eafff6;opacity:.85;pointer-events:none}
+.pitch .squadra.casa{top:4.2%}.pitch .squadra.ospite{bottom:4.2%}
 .panchina{margin:10px 0 0;font-size:12px;color:#c9d7e7}.panchina b{color:#f5f6fb}
 @media(max-width:700px){.pitch.conxi{border-width:3px}.pitch .xi{inset:3px}.pitch .pl b{width:26px;height:26px;font-size:11px;border-width:2px}.pitch .pl span{font-size:9px;padding:1px 3px}.pitch .pl i{font-size:9px}.pitch .squadra{font-size:9px}}
 .pitch-caption{font-size:12px;color:#c9d7e7;margin:10px 0 0}
@@ -162,7 +166,7 @@ function undici(t,sa){
 function chip(g,lato,x,y,w){
  var cl=g.v==null?'sv':g.v>=6.5?'ok':g.v<6?'ko':'',v=g.v==null?'s.v.':String(g.v).replace('.',',');
  var ic=(g.gol?Array(g.gol+1).join('⚽'):'')+(g.ass?(g.ass>1?g.ass+'×':'')+'👟':'')+(g.dentro?'↑':'');
- var tit=g.n+(g.dentro?' (entrato per '+g.dentro+')':'')+' · voto '+v+(g.gol?' · '+g.gol+(g.gol>1?' gol':' gol'):'')+(g.ass?' · '+g.ass+(g.ass>1?' assist':' assist'):'')+(g.top?' · migliore in campo':'');
+ var tit=g.n+(g.dentro?' (entrato per '+g.dentro+')':'')+' · voto '+v+(g.gol?' · '+g.gol+(g.gol>1?' gol':' gol'):'')+(g.ass?' · '+g.ass+(g.ass>1?' assist':' assist'):'')+(g.top?' · ★ migliore in campo':'');
  return '<div class="pl '+lato+(g.top?' top':'')+'" role="button" tabindex="0" data-det="'+esc(tit)+'" style="left:'+x.toFixed(2)+'%;top:'+y.toFixed(2)+'%;width:'+w.toFixed(1)+'%" title="'+esc(tit)+'" aria-label="'+esc(tit)+'"><b class="'+cl+'">'+esc(v)+'</b><span>'+esc(g.n)+'</span>'+(ic?'<i>'+ic+'</i>':'')+'</div>'}
 function schiera(xi,lato,H){
  var file={P:[],D:[],C:[],A:[]};xi.forEach(function(g){(file[g.r]||file.C).push(g)});
@@ -189,7 +193,7 @@ function render(){
  var h='<section class="card match-panel" id="confronto"><div class="match-head"><span class="club">'+nm(a)+'</span><span class="score">'+esc(r)+'</span><span class="club">'+nm(b)+'</span></div>'+
  '<div class="phase">Giornata '+g.n+' · Serie A '+g.sa+' · '+score+'</div>'+
  pitch(a,b,g)+
- '<div class="pitch-footer"><span>CASA · '+nm(a)+'</span><span>'+score.toUpperCase()+'</span><span>OSPITE · '+nm(b)+'</span></div>'+(undici(a,String(g.sa))?'<p class="panchina">Voto in pagella nel cerchio: <b>verde</b> da 6,5 in su, <b>rosso</b> sotto il 6. ⚽ gol · 👟 assist · ↑ entrato dalla panchina · bordo oro: migliore in campo. Tocca un giocatore per i dettagli.</p><p class="panchina" id="xi-det" aria-live="polite"></p>':(active?'<p class="panchina">Per questa giornata le formazioni non sono state salvate.</p>':'<p class="panchina">Le formazioni compaiono quando la giornata è stata giocata.</p>'))+'</section>';
+ '<div class="pitch-footer"><span>CASA · '+nm(a)+'</span><span>'+score.toUpperCase()+'</span><span>OSPITE · '+nm(b)+'</span></div>'+(undici(a,String(g.sa))?'<p class="panchina">Voto in pagella nel cerchio: <b>verde</b> da 6,5 in su, <b>rosso</b> sotto il 6. Bordo: <i class="leg-casa"></i>casa, <i class="leg-osp"></i>ospite. <span class="leg-star">★</span> migliore in campo · ⚽ gol · 👟 assist · ↑ entrato dalla panchina. Tocca un giocatore per i dettagli.</p><p class="panchina" id="xi-det" aria-live="polite"></p>':(active?'<p class="panchina">Per questa giornata le formazioni non sono state salvate.</p>':'<p class="panchina">Le formazioni compaiono quando la giornata è stata giocata.</p>'))+'</section>';
  function ring(t,label){var g=t?t.v+t.n+t.p:0,pct=g?Math.round(t.v/g*100):0;return '<div class="gauge"><div class="dial" style="--val:'+pct+'"><strong>'+(g?pct+'%':'—')+'</strong></div><div><b>'+nm(label)+'</b><small>Vittorie / gare concluse</small><span>'+(g?t.v+' su '+g:'In attesa')+'</span></div></div>'}
  h+='<aside class="card numbers" id="rendimento"><div class="kicker">Rendimento stagionale</div><h2>I numeri del confronto</h2><p class="sub">Dopo '+complete().filter(function(x){return x.n<=g.n}).length+' giornate complete</p>'+
  '<div class="duel-head"><b>'+nm(a)+'</b><span>CONFRONTO</span><b>'+nm(b)+'</b></div>'+

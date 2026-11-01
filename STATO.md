@@ -1,5 +1,10 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 31 ottobre 2026)
 
+## 1° novembre 2026 — Campo: bordi, stella del migliore in campo, linee dritte (Claude, richiesta di Gianluca, solo Lab/Anteprima)
+- Prima il bordo della squadra di casa era il colore della grafica (rosso in Lega, oro in Stadio) e il migliore in campo aveva un secondo bordo oro: in Stadio non si distinguevano. Ora, uguale nelle due grafiche: bordo **azzurro** = casa, **bianco** = ospite (il rosso spariva sui cerchi dei voti bassi); il migliore in campo ha una **stella oro ★** sul cerchio. Legenda sotto il campo aggiornata con i due bordi e la stella.
+- **Linee dritte:** le icone ⚽/👟 sotto il nome allungavano il riquadro e spostavano in alto quei giocatori; ora sono fuori dal calcolo dell'altezza e tutti i cerchi di un reparto sono sulla stessa linea (misurato: scarto 0 px a 320, 390 e 1280 px, giornate 2, 4 e 5). Nome della squadra nel campo spostato sotto la linea di fondo e accorciato con i puntini se tocca l'area.
+- File: `lab/prova-dashboard-campo.html` (rigenera `anteprima/campo.html` e `anteprima/5.5/campo-*.html`); foto e testo del Campo aggiornati nella pagina Novità 5.5. Nessun errore, nessuno scorrimento laterale, nessun giocatore sovrapposto. Non provato: Safari/iPhone.
+
 ## 1° novembre 2026 — Tabellone: pallini e posizioni allineati (Claude, richiesta di Gianluca, solo Lab/Anteprima)
 - Pallini della forma tutti sulla stessa verticale, a destra del nome e più staccati (12 px su PC, 6 px su telefono). Numero della posizione allineato a destra in una colonna fissa e freccia ▲/▼ subito accanto in una seconda colonna: anche chi non ha freccia (es. il 9°) resta in fila.
 - Telefono: nomi a 12 px (11 px sopra i 16 caratteri), intestazione «Fantapunti» più piccola per lasciare spazio ai nomi. Da 390 px in su tutti i nomi stanno su una riga, compreso «Atletico ma non troppo»; a 360 px va a capo solo lui; a 320 px (iPhone SE) vanno ancora a capo i nomi più lunghi, su due righe, con i pallini sempre allineati.
