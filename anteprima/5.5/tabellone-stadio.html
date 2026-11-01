@@ -146,7 +146,7 @@ body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:no
 .panel tr.zona.zona-last td:nth-child(n){background:rgba(239,100,118,.19)!important;border-bottom-color:rgba(239,100,118,.3)}.panel tr.zona-normal{--zona:transparent}
 .panel tr.zona td.p{background:transparent;padding:9px 6px 9px 12px;text-align:center;min-width:46px;white-space:nowrap}
 /* La squadra scelta mantiene la velatura e il nome oro del Tabellone originale. */
-.panel tr.zona.me td:nth-child(n){background:rgba(255,209,102,.16)!important;border-bottom-color:rgba(255,209,102,.35)}
+
 .panel tr.zona.me td.n{color:var(--hi)}
 .panel .numpos{font-size:clamp(16px,1.5vw,20px);font-weight:900;line-height:1;color:#fbf6ec}
 .panel tr.zona-1 .numpos{color:#ffd166}.panel tr.zona-2 .numpos{color:#cbd5e1}
@@ -208,6 +208,28 @@ h1{font-size:clamp(30px,6vw,48px)!important}
 
 /* Claude, 1° novembre: su PC la scritta «Serie A · Giornata» e i riposi occupano tutta la riga, così le partite partono allineate nelle due colonne */
 #board>.nota,#board>.rip{grid-column:1/-1}
+
+/* Claude, 1° novembre — Grafica Stadio: classifica a righe arrotondate (scelta di Gianluca; la Lega resta squadrata).
+   Ogni squadra è un riquadro con gli angoli tondi; un piccolo spazio stacca il podio dal resto e un altro stacca la retrocessione. */
+.panel table{border-collapse:separate!important;border-spacing:0 5px!important}
+.panel tr.zona td,.panel tr.zona td:nth-child(n){background:rgba(255,255,255,.07)!important;border-bottom:0!important;background-clip:padding-box!important}
+.panel tr.zona td:first-child{border-radius:12px 0 0 12px}
+.panel tr.zona td:last-child{border-radius:0 12px 12px 0}
+@media(max-width:1099px){.panel tr.zona td.fp{border-radius:0 12px 12px 0}}
+.panel tr.zona.zona-1 td:nth-child(n),.panel tr.zona.zona-2 td:nth-child(n),.panel tr.zona.zona-3 td:nth-child(n){background:rgba(99,188,233,.2)!important}
+.panel tr.zona.zona-last td:nth-child(n){background:rgba(239,100,118,.22)!important}
+
+.panel tr.zona td,.panel tr.zona td:nth-child(n),.panel tr.zona.zona-1 td:nth-child(n),.panel tr.zona.zona-2 td:nth-child(n),.panel tr.zona.zona-3 td:nth-child(n),.panel tr.zona.zona-last td:nth-child(n),.panel tr.zona.me td:nth-child(n){background-clip:padding-box!important}
+.panel tr.zona.zona-3 td{border-bottom:9px solid transparent!important}
+.panel tr.zona.zona-last td{border-top:9px solid transparent!important}
+.panel tr.zona td.p{padding-top:10px!important;padding-bottom:10px!important}
+.panel .numpos{font-size:clamp(18px,1.7vw,23px)!important}
+.panel td.pt{font-size:clamp(15px,1.4vw,20px)!important;font-weight:900!important}
+
+/* Claude, 1° novembre (richiesta di Gianluca): riquadro oro solo per il primo posto; l'ultimo resta rosso anche se è la tua squadra (che si riconosce dal nome in oro) */
+.panel tr.zona.zona-1{--zona:#ffd166}
+.panel tr.zona.zona-1 td:nth-child(n){background:rgba(255,209,102,.17)!important;border-bottom-color:rgba(255,209,102,.3)}
+.panel tr.zona.me td.n,.panel tr.zona.me td.n .clubgraph{color:#ffd166!important}
 </style>
 <style>body[data-mode=lega]{--acc:#ffd166}.sw button[aria-selected=true]{color:#142449}</style><link rel="stylesheet" href="ui.css?v=55h"><script src="home55.js?v=55h" defer></script><script src="ui.js?v=55h" defer></script></head>
 <body data-mode="lega" data-v53="board" data-v53-skin="stadio">
@@ -290,9 +312,9 @@ function prossimoTurno(){if(!D||!D.cal)return '';var cup=mode==='coppa',g=cal().
 function frecciaPos(t,rows,k,fp){var cup=!fp,rounds=cal().filter(function(g){return g.n<=sel[mode]&&played(g,cup)});if(rounds.length<2)return '';var p=classifica(rounds.slice(0,-1),cup),me=rows[k];if(cup)p=p.filter(function(x){return x.gir===me.gir});var old=p.findIndex(function(x){return x.n===t});if(old<0)return '';var dif=old-k;if(!dif)return '';return '<span class="movpos '+(dif>0?'su':'giu')+'" aria-label="'+(dif>0?'Salita di ':'Discesa di ')+Math.abs(dif)+' posizioni">'+(dif>0?'▲ ':'▼ ')+Math.abs(dif)+'</span>'}
 function tabella(rows,fp,titolo,top){
   var h='<h3>'+titolo+'</h3><table><thead><tr><th>Pos.</th><th>Squadra</th><th class="w">G</th><th class="w">V</th><th class="w">N</th><th class="w">P</th><th class="w">GF</th><th class="w">GS</th><th>DR</th><th>Pt</th>'+(fp?'<th class="thfp">Fantapunti</th>':'')+'<th class="med">Media</th><th class="med">Max</th><th class="med">Min</th></tr></thead><tbody>';
-  rows.forEach(function(x,k){var p=k+1,zona=fp?(p===1?'zona-1':p===2?'zona-2':p===3?'zona-3':p===rows.length?'zona-last':'zona-normal'):'zona-normal',st=statistichePunti(x.n);
+  rows.forEach(function(x,k){var p=k+1,zona=fp?(p===1?'zona-1':p===2?'zona-2':p===3?'zona-3':p===rows.length?'zona-last':'zona-normal'):(p===rows.length&&rows.length>1?'zona-last':'zona-normal'),st=statistichePunti(x.n);
   h+='<tr class="zona '+zona+(x.n===ME?' me':'')+'"><td class="p"><span class="poswrap"><strong class="numpos">'+p+'</strong>'+frecciaPos(x.n,rows,k,fp)+'</span></td><td class="n"><span class="nomecella'+(x.n.length>16?' lungo':'')+'"><button class="clubgraph" data-plot="'+encodeURIComponent(x.n)+'" type="button" aria-label="Apri il grafico di '+esc(x.n)+'">'+esc(cap(x.n))+'</button>'+formaPallini(x.n)+'</span></td><td class="w">'+x.g+'</td><td class="w">'+x.v+'</td><td class="w">'+x.nn+'</td><td class="w">'+x.p+'</td><td class="w">'+x.gf+'</td><td class="w">'+x.gs+'</td><td class="dr">'+(x.gf>x.gs?'+':'')+(x.gf-x.gs)+'</td><td class="pt">'+x.pt+'</td>'+(fp?'<td class="fp">'+pt(x.fp)+'</td>':'')+'<td class="med">'+st.avg+'</td><td class="med">'+st.max+'</td><td class="med">'+st.min+'</td></tr>'});
-  return h+'</tbody></table>'+(fp?'<div class="legenda-zona"><span><i style="background:rgba(99,188,233,.75)"></i>Podio</span><span><i style="background:rgba(239,100,118,.8)"></i>Retrocessione</span></div>':'')+(fp||titolo==='Girone B'?graficoSquadra()+prossimoTurno():'');
+  return h+'</tbody></table>'+(fp?'<div class="legenda-zona"><span><i style="background:rgba(255,209,102,.85)"></i>Primo posto</span><span><i style="background:rgba(99,188,233,.75)"></i>Podio</span><span><i style="background:rgba(239,100,118,.8)"></i>Retrocessione</span></div>':(titolo==='Girone B'?'<div class="legenda-zona"><span><i style="background:rgba(239,100,118,.8)"></i>Ultima del girone: eliminata</span></div>':''))+(fp||titolo==='Girone B'?graficoSquadra()+prossimoTurno():'');
 }
 
 var ME='';try{ME=(JSON.parse(localStorage.getItem('fg')||'{}')||{}).team||''}catch(e){}

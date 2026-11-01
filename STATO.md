@@ -79,6 +79,13 @@
 - **Screenshot e rapporti:** `prove/risultati-campo-contenuti/`, Campo raggiunto da Home → Tabellone → Campo in entrambe le skin a 390/1280/1440. Non certificati Safari/iPhone fisico, CDN/cache pubblica o nuova CI sull'ultimo commit. Restano validi i limiti locali e di produzione già documentati. Nessun merge, rilascio, audio, pubblicazione di post o modifica a Supabase/sito pubblico; PR #43 resta bozza.
 
 
+## 1° novembre 2026 — Tabellone: Stadio a righe arrotondate, oro solo al primo, eliminata in coppa (Claude, scelte di Gianluca, solo Lab/Anteprima)
+- **Grafica Lega** (quella «normale»): resta la classifica squadrata. **Grafica Stadio** (quella in corsivo): righe con gli angoli arrotondati (5 px tra una squadra e l'altra), un piccolo spazio in più dopo il podio e prima della retrocessione, numeri della posizione e dei punti più grandi. File `lab/prova-tabellone-stadio.html`.
+- In tutte e due: **riquadro oro solo al primo posto**, 2° e 3° azzurri, **ultimo sempre rosso** anche se è la tua squadra (che ora si riconosce dal nome in oro, senza sfondo oro che copriva le fasce). Legenda: Primo posto · Podio · Retrocessione.
+- **Champions Cup:** in ogni girone l'ultima (eliminata, passano le prime 4) è nella fascia rossa; legenda «Ultima del girone: eliminata».
+- Pallini della forma: misurati, tutti della stessa misura e alla stessa altezza (scarto 0); l'impressione di disallineamento veniva dalle foto rimpicciolite.
+- Collaudo `prove/collaudo_55_browser.js` (Chromium, 65 pagine): nessun problema.
+
 ## 1° novembre 2026 — Classifica a confronto (Claude, richiesta di Gianluca, solo Lab)
 - Gianluca ha autorizzato i push su `gh-pages`, ma vuole pubblicare **tutto insieme con la 5.5**: riquadri ospite (`ospite.js` Lega/Stadio) e correzione dei post automatici della Curva (`curva.html` Lega/Stadio) restano pronti per quel rilascio, non pubblicati.
 - Nuova pagina `lab/confronto-classifica.html`: sopra il Tabellone dell'Anteprima 5.5 vero (in una cornice, aperto sulla classifica), sotto la stessa classifica nello stile del post Instagram (righe staccate e arrotondate, numeri grandi, podio azzurro, ultimo rosso, squadra entrata in oro, pallini e frecce). Pulsanti Telefono/PC e Grafica Lega/Stadio (in Stadio righe più compatte e titolo in Lobster). Dati veri da `data.json`. Provata a 320, 390 e 1280 px: nessuno scorrimento laterale, nessun errore. In attesa della scelta di Gianluca.
