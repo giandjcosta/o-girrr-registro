@@ -21,6 +21,7 @@ Qui ci sono il Lab, l'Anteprima, le sorgenti delle pagine del sito vero e lo sta
 ## Regole sui contenuti
 - Storie come un campionato vero (giocatori, gol, squadre, allenatori). Niente riferimenti a fantacalcio, crediti, fantapunti o fantamedia, salvo i punteggi.
 - Niente disclaimer tipo "notizia inventata" o "dati finti".
+- Le frasi iniziano con la maiuscola, anche dopo un punto. Nelle legende usare etichette con iniziale maiuscola e separare chiaramente i significati.
 - "Derby" sempre con la D maiuscola. Titoli ed etichette con la maiuscola iniziale.
 - I post ufficiali (Girrr Sport, Lega, Giornale) non parlano mai di scommesse.
 

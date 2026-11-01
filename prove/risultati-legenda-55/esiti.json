@@ -1,0 +1,92 @@
+[
+  {
+    "skin": "lega",
+    "larghezza": 320,
+    "esito": "PASS",
+    "percorso": "Home → Tabellone → Campo",
+    "voci": "Tre gruppi leggibili, nessun overflow",
+    "JS": [],
+    "HTTP": []
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 320,
+    "esito": "PASS",
+    "percorso": "Home → Tabellone → Campo",
+    "voci": "Tre gruppi leggibili, nessun overflow",
+    "JS": [],
+    "HTTP": []
+  },
+  {
+    "skin": "lega",
+    "larghezza": 390,
+    "esito": "PASS",
+    "percorso": "Home → Tabellone → Campo",
+    "voci": "Tre gruppi leggibili, nessun overflow",
+    "JS": [],
+    "HTTP": []
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 390,
+    "esito": "PASS",
+    "percorso": "Home → Tabellone → Campo",
+    "voci": "Tre gruppi leggibili, nessun overflow",
+    "JS": [],
+    "HTTP": []
+  },
+  {
+    "skin": "lega",
+    "larghezza": 768,
+    "esito": "PASS",
+    "percorso": "Home → Tabellone → Campo",
+    "voci": "Tre gruppi leggibili, nessun overflow",
+    "JS": [],
+    "HTTP": []
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 768,
+    "esito": "PASS",
+    "percorso": "Home → Tabellone → Campo",
+    "voci": "Tre gruppi leggibili, nessun overflow",
+    "JS": [],
+    "HTTP": []
+  },
+  {
+    "skin": "lega",
+    "larghezza": 1280,
+    "esito": "PASS",
+    "percorso": "Home → Tabellone → Campo",
+    "voci": "Tre gruppi leggibili, nessun overflow",
+    "JS": [],
+    "HTTP": []
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 1280,
+    "esito": "PASS",
+    "percorso": "Home → Tabellone → Campo",
+    "voci": "Tre gruppi leggibili, nessun overflow",
+    "JS": [],
+    "HTTP": []
+  },
+  {
+    "skin": "lega",
+    "larghezza": 1440,
+    "esito": "PASS",
+    "percorso": "Home → Tabellone → Campo",
+    "voci": "Tre gruppi leggibili, nessun overflow",
+    "JS": [],
+    "HTTP": []
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 1440,
+    "esito": "PASS",
+    "percorso": "Home → Tabellone → Campo",
+    "voci": "Tre gruppi leggibili, nessun overflow",
+    "JS": [],
+    "HTTP": []
+  }
+]

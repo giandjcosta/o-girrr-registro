@@ -1,0 +1,44 @@
+{
+  "prove/collaudo_anteprima_52.py": {
+    "exit": 0,
+    "coda": [
+      "PASS lab/index.html",
+      "PASS anteprima/index.html",
+      "PASS anteprima/attuale.html"
+    ]
+  },
+  "prove/prova_moviola.py": {
+    "exit": 0,
+    "coda": [
+      "OK   giornata 5 (stadio/girrr): Giornale, Radio 5 minuti dopo, Moviola 5 minuti dopo la Radio",
+      "OK   giornata 5 (stadio/girrr): la Curva non fa più il vecchio post gs:mov",
+      "OK   giornata 1: Moviola 10 minuti dopo il Giornale",
+      "OK   solo la Moviola ha un orario (p_quando)",
+      "OK   curva.html (girrr): il post rimanda alla tab Moviola",
+      "OK   curva.html (stadio/girrr): il post rimanda alla tab Moviola",
+      "",
+      "Tutto a posto."
+    ]
+  },
+  "prove/prova_zone_classifica.py": {
+    "exit": 0,
+    "coda": [
+      "PASS cronache: giornate complete, crisi, rivelazione, sorpasso, risalita, podio, cooldown, chiavi e canali",
+      "PASS uscita dal podio e riapertura lotta scudetto",
+      "PASS grande rimonta e crollo su tre turni, con prova delle posizioni di partenza e arrivo"
+    ]
+  },
+  "prove/prova_cronache_integrate.py": {
+    "exit": 1,
+    "coda": [
+      "PASS cronache: giornate complete, crisi, rivelazione, sorpasso, risalita, podio, cooldown, chiavi e canali",
+      "PASS uscita dal podio e riapertura lotta scudetto",
+      "PASS grande rimonta e crollo su tre turni, con prova delle posizioni di partenza e arrivo",
+      "Traceback (most recent call last):",
+      "  File \"/workspace/o-girrr-revisione-55/prove/prova_cronache_integrate.py\", line 36, in <module>",
+      "    posts=json.loads((root/'post.json').read_text());assert len(posts)==3",
+      "                                                            ^^^^^^^^^^^^^",
+      "AssertionError"
+    ]
+  }
+}
