@@ -220,10 +220,10 @@ svg text{fill:var(--mute);font-family:var(--fb)}
 .mvbtn::before{content:'';width:0;height:0;border-left:11px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent}
 .mvq{display:flex;flex-direction:column;gap:4px;text-align:center;padding:22px 14px}.mvq b{font-size:16px}.rac p+p{margin-top:9px}
 /* Albo d'oro: una sola fila navigabile anche su PC, non una griglia a più righe */
-.seg.oro-scroll{display:flex;flex-flow:row nowrap;justify-content:flex-start;gap:8px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:rgba(255,209,102,.6) transparent;padding:8px 10px 11px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;max-width:100%}
-.seg.oro-scroll button{flex:0 0 auto;white-space:nowrap;min-width:max-content;scroll-snap-align:start;font-size:clamp(13px,1.1vw,16px);padding:11px 15px;min-height:44px}
+.seg.oro-scroll{display:flex;flex-flow:row nowrap;justify-content:flex-start;gap:4px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:none;padding:4px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;max-width:100%}.seg.oro-scroll::-webkit-scrollbar{display:none}
+.seg.oro-scroll button{flex:1 0 auto;white-space:nowrap;min-width:max-content;scroll-snap-align:start}
 .seg.oro-scroll button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-@media(min-width:1024px){.seg.oro-scroll{gap:10px;padding:10px 12px 14px}.seg.oro-scroll button{padding:12px 18px}}
+@media(min-width:1024px){}
 
 </style>
 
