@@ -9,7 +9,7 @@ cooldown e chiave stagionale verificabile; nessuna rotazione obbligatoria dei ca
 
 - [Lab → Cronache di prova](https://giandjcosta.github.io/o-girrr-registro/lab/cronache-prova/).
 - [Anteprima 5.5](https://giandjcosta.github.io/o-girrr-registro/anteprima/5.5/).
-- [PR #44](https://github.com/giandjcosta/o-girrr-registro/pull/44).
+- [PR #45](https://github.com/giandjcosta/o-girrr-registro/pull/45).
 
 Il dossier contiene un'edizione locale costruita dai dati pubblici della G5:
 crisi di WOA, ultima per due giornate e attesa seconda. Gli input del Giornale
@@ -82,5 +82,5 @@ Nessun post inviato, database scritto o audio generato durante questa consegna.
   l'approvazione estetica di Gianluca.
 
 Screenshot del dossier, PDF e rapporti: `prove/risultati-cronache-55/`.
-Screenshot delle due grafiche/legenda e rapporti precedenti nella stessa PR:
+Screenshot delle due grafiche/legenda e rapporti precedenti nella precedente PR #44:
 `prove/risultati-verifica-55/` e `prove/risultati-legenda-55/`.

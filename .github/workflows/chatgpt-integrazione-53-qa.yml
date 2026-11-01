@@ -1,7 +1,7 @@
 name: ChatGPT - Integrazione Anteprima 5.5
 on:
   push:
-    branches: [main, chatgpt/verifica-55-claude, chatgpt/integrazione-ui-campo-cronache, chatgpt/completamento-53-campo]
+    branches: [main, chatgpt/cronache-55-complete, chatgpt/verifica-55-claude, chatgpt/integrazione-ui-campo-cronache, chatgpt/completamento-53-campo]
   pull_request:
     branches: [main, chatgpt/lavori-31-ottobre, chatgpt/anteprima-53-integrata]
 permissions:
