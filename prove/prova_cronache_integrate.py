@@ -49,6 +49,7 @@ for seed in (0,1,7,13):
     battute=c.build(radio,random.Random(seed),[])
     testi=[x[1] for x in battute]
     assert testi.count(e['testo'])==1
+    assert any('Fantapunti' in x for x in testi), 'Punteggi tecnici distinti dai punti in classifica'
     saluto=next(i for i,x in enumerate(battute) if x[0]=='S' and 'restituisco la linea' in x[1])
     assert not any(x[0]=='S' for x in battute[saluto+1:]),'Giulia parla dopo il saluto'
     assert not any('punti sul secondo!' in x or 'punti sul quarto:' in x for x in testi)

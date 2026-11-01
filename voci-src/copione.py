@@ -55,6 +55,7 @@ def numeri(T, n, rng):
 def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
     cronache_attive = D.get("cronache_classifica_attive") is True
     zona = D.get("zona_classifica") if cronache_attive else None
+    unita_punteggio = 'Fantapunti' if cronache_attive else 'punti'
     nomi = nomi or {}
     b1 = nomi.get('B', 'Beppe Rovesciata'); g1 = nomi.get('G', 'Luigi Fischietti'); g0 = g1.split()[0]; b0 = b1.split()[0]
     a = D["aw"][-1]; T = D["tab"]; P = D["prob"]; n = a["n"]
@@ -73,19 +74,19 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
     tono = pick(["esalta", "sfotte"])
     mv, fl, mz = a["mvp"], a["flop"], a["maz"]
     if tono == "esalta":
-        add("B", f"Il re della giornata è {mv[0]}! {f(mv[1])} punti! Che prestazione!", "urlo")
-        add("G", f"{f(mv[1])} punti! {curva(mv[0])}")
+        add("B", f"Il re della giornata è {mv[0]}! {f(mv[1])} {unita_punteggio}! Che prestazione!", "urlo")
+        add("G", f"{f(mv[1])} {unita_punteggio}! {curva(mv[0])}")
     else:
-        add("B", f"Il re della giornata è {mv[0]}, con {f(mv[1])} punti.")
+        add("B", f"Il re della giornata è {mv[0]}, con {f(mv[1])} {unita_punteggio}.")
         add("G", f"Bravi, eh. Però il vero esame è la prossima settimana. {curva(mv[0])}", "sarcasmo")
     if rng.random() < 0.6:
-        add("B", f"Dall'altra parte, il flop: {fl[0]} si ferma a {f(fl[1])} punti.")
+        add("B", f"Dall'altra parte, il flop: {fl[0]} si ferma a {f(fl[1])} {unita_punteggio}.")
         add("G", pick([f"Coraggio, {fl[0]}! Si cade, ci si rialza!", f"{f(fl[1])}. Non infierisco. {curva(fl[0])}", "Qui ci vuole un abbraccio. Sottovoce, eh."]), "sus" if rng.random() < 0.4 else None)
         r_ = rng.random()
         if r_ < 0.4: add("B", pick(RIDE), "ride")
         elif r_ < 0.7: add("G", pick(SOSP), "sospiro")
     if mz[2] >= 8:
-        add("B", f"E la sconfitta più pesante è quella di {mz[0]}, battuta da {mz[3]} con {f(mz[2])} punti di scarto! Una mazzata!")
+        add("B", f"E la sconfitta più pesante è quella di {mz[0]}, battuta da {mz[3]} con {f(mz[2])} {unita_punteggio} di scarto! Una mazzata!")
         if rng.random() < 0.6: add("G", pick(["Ahia!", "Questa ha fatto male anche a noi!", "Altro che mazzata: una cassa di birra in testa!"]), "urlo")
         if rng.random() < 0.5: add("B", pick(STUP), "stupore")
     if cronache_attive:
