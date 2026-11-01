@@ -1,5 +1,12 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
 
+## 1 novembre — ChatGPT: riepilogo a tendina e squadra personale
+
+- **INTEGRATO nella Home 5.5:** Oggi al Girrr può essere chiuso interamente. Da chiuso mostra squadra, posizione e punti; notifiche e link restano visibili. La scelta aperto/chiuso viene ricordata sul browser anche dopo ricarica e cambio skin. I pannelli interni restano espandibili. Comandi nativi utilizzabili da tastiera.
+- **Prova e sito reale:** nel Registro il selettore è indicato «Squadra in prova» e consente di confrontare tutti i club. Fuori dal Registro la Home usa soltanto la squadra con cui si entra, ignorando un club diverso rimasto nella prova. Nessun selettore di altri club. Senza accesso non attribuisce una squadra all'utente. `?riepilogo=personale` permette di provare lo stesso comportamento nel Registro. Riguarda il riepilogo personale della Home; risultati e classifiche pubbliche restano quelli della Lega.
+- **PASS locale:** Home Lega/Stadio a 320/390/768/1280/1440, tendina chiusa dopo reload, riapertura con tastiera, notifiche sempre visibili; prova del futuro percorso fuori dal Registro con/senza accesso e selezione precedente di un altro club. Conservate notifiche personali e ospite. Build e JavaScript validi; screenshot chiusi in `prove/risultati-home-notifiche55/`.
+- Restrizione dell'interfaccia personale: non cambia l'autorizzazione delle RPC esistenti e non rende privato il calendario pubblico. Nessuna modifica o pubblicazione sul sito ufficiale e nessun intervento sul database. Verifiche GitHub della nuova modifica da seguire nella PR.
+
 ## 1 novembre — ChatGPT: Home integrata dai riferimenti di Gianluca, avvisi subito apribili
 
 - **INTEGRATO nelle due vere Home 5.5**, [PR #48](https://github.com/giandjcosta/o-girrr-registro/pull/48): notifiche all'inizio di Oggi al Girrr con contatore, due avvisi apribili e accesso al centro notifiche; un solo riepilogo della squadra al posto delle tre sottoschede. Posizione e andamento a cerchi, ultimi risultati con avversari, mini classifica intorno alla squadra. Sotto, pannelli espandibili per prossime tre sfide, rendimento degli allenatori, posizioni stagionali e competizioni esistenti. Menu e tutte le altre card/sezioni conservati.

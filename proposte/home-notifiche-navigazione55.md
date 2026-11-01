@@ -78,3 +78,22 @@ Per il rilascio sul sito vanno portati i componenti Home/barra nelle sorgenti
 definitive e adattati i link della preview; il build 5.5 non pubblica questi
 file nel sito ufficiale. La pubblicazione su `o-fant-a-girrr` resta in attesa
 del Via di Gianluca.
+
+## Aggiunta richiesta da Gianluca: tendina e propria squadra
+
+Oggi al Girrr è un unico pannello richiudibile; le notifiche restano fuori
+dalla tendina. Da chiuso resta un riepilogo con nome, posizione e punti.
+Il browser ricorda la scelta, condivisa fra Lega e Stadio.
+
+Il Registro conserva il selettore di tutte le squadre per la prova, etichettato
+«Squadra in prova». Sul percorso del sito reale il selettore offre solo la
+squadra d’accesso, ignorando il club selezionato prima nella prova. Senza
+accesso il riepilogo personale invita a entrare e non sceglie un club al posto
+dell’utente. `?riepilogo=personale` simula questo comportamento nel Registro.
+La distinzione dipende dalla pagina visitata, non dall'URL del JavaScript.
+La modalità personale ignora qualunque tentativo di cambiare il selettore.
+
+La logica è provata su percorsi locali che rappresentano il futuro sito:
+nessun file o database di produzione è stato cambiato. Le autorizzazioni
+delle notifiche rimangono nelle RPC già esistenti; calendario e classifica
+sono informazioni pubbliche della Lega.
