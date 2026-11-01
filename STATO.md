@@ -3,6 +3,15 @@
 
 
 
+
+## 1 novembre — ChatGPT: legenda Campo più comprensibile e iniziali maiuscole
+
+- Richiesta di Gianluca: frasi con la maiuscola dopo il punto; etichette della legenda con iniziale maiuscola. Regola registrata in `AGENTS.md`; corretti anche i dettagli del giocatore (Voto, Gol, Assist, Migliore in campo, Entrato al posto di).
+- Il paragrafo unico è sostituito da «Come leggere il campo», con tre gruppi: **Voto in pagella**, **Squadra**, **Simboli del giocatore**. Esempi visivi per verde (da 6,5), neutro (da 6 a meno di 6,5), rosso (sotto 6) e senza voto; cerchi separati per bordo azzurro casa/bianco ospite; un simbolo e una spiegazione per riga. Le tre colonne desktop diventano sezioni verticali sul telefono. Restano invariati voti, soglie e significato dei simboli.
+- Build rigenerata dal Lab e riproducibile. Dieci percorsi reali Home → Tabellone → Campo, Lega/Stadio × 320/390/768/1280/1440: legenda senza tagli/overflow, nessun errore JS/console/HTTP, 22 giocatori della giornata selezionata e dettagli ancora apribili. Test `prova_campo_contenuti.py` nelle due skin PASS, compresi tastiera, caso 10 + 11 e tema Curva. Screenshot e rapporti in `prove/risultati-legenda-55/`.
+- Aggiornamento nella PR #44, non unita. Safari/iPhone fisico non verificato; nessun deploy, post, audio o intervento sul database.
+
+
 ## 1 novembre — Chiarimento di Gianluca: i dieci nomi della G4 sono corretti
 
 - Gianluca conferma che The Blue brothers aveva molti infortuni: i dieci giocatori della quarta giornata sono la formazione effettivamente disponibile, non un'anomalia da ricostruire.
