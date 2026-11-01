@@ -293,3 +293,10 @@ html.v55-pronto body>*{transition:opacity .5s cubic-bezier(.22,.61,.36,1)}
 @media (prefers-reduced-motion: reduce){html.v55-pronto body>*{transition:none}}
 /* Campo: la grafica è quella della pagina da cui si arriva, niente scelta Lega/Stadio */
 body[data-v53=campo] .mast .skin{display:none!important}
+/* Campo: niente doppioni (resta il link «indietro» della barra in alto e il suo scudo); fila delle partite che scorre col dito, le frecce cambiano giornata */
+body[data-v53=campo] #ritorno-tabellone,body[data-v53=campo] .campo-logo{display:none!important}
+body[data-v53=campo] #matches{overflow-x:auto!important;overflow-y:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-behavior:smooth;scroll-padding-inline:5px;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent)}
+body[data-v53=campo] #matches::-webkit-scrollbar{display:none}
+body[data-v53=campo] #matches.v55-fine{-webkit-mask-image:none;mask-image:none}
+body[data-v53=campo] #matches>.gamebtn{scroll-snap-align:start}
+@media (prefers-reduced-motion: reduce){body[data-v53=campo] #matches{scroll-behavior:auto}}

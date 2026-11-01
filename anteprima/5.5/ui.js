@@ -54,6 +54,8 @@ function nav(){
  function update(){
   if(mode==='campo'){skin=document.body.dataset.skin||skin;document.body.dataset.v53Skin=skin;}
   var target=prev?prev.href:href(parent),label=prev?prev.pathname.split('/').pop().split('-')[0]:parent;
+  /* Campo: un solo «indietro», che torna al Tabellone sulla stessa giornata (anche in coppa) */
+  var rt=mode==='campo'&&el('ritorno-tabellone');if(rt&&(!prev||/\/tabellone-/.test(prev.pathname))){target=rt.href;label='tabellone'}
   var labels={index:'Home',tabellone:'Tabellone',campo:'Campo',albo:"Albo d’oro",curva:'Curva',notifiche:'Notifiche'};
   var page=mode==='home'?'index':mode==='board'?'tabellone':mode==='notifications'?'notifiche':mode;
   function skinTarget(){var u=new URL(page+'-'+(skin==='lega'?'stadio':'lega')+'.html',root);u.search=location.search;if(mode==='campo'||u.searchParams.has('skin'))u.searchParams.set('skin',skin==='lega'?'stadio':'lega');if(/^#(lega|coppa)(-\d+)?$/.test(location.hash))u.hash=location.hash;return u.href;}
@@ -345,11 +347,16 @@ function passaggi(){if(CALMO||'startViewTransition' in document)return;
   e.preventDefault();document.documentElement.classList.add('v55-esce');setTimeout(function(){location.href=u.href},170)});
  window.addEventListener('pageshow',function(){document.documentElement.classList.remove('v55-esce')})}
 /* Claude, 1° novembre: Tabellone e Campo entrano tutti insieme, in dissolvenza, solo quando sono pronti (niente pezzi che compaiono uno alla volta). */
+/* Campo: la partita scelta resta in vista quando si cambia giornata; la sfumatura a destra sparisce in fondo alla fila */
+function partiteCampo(){var m=el('matches');if(!m)return;
+ function fine(){m.classList.toggle('v55-fine',m.scrollLeft+m.clientWidth>=m.scrollWidth-4)}
+ function scelta(){var b=m.querySelector('[aria-pressed=true]');if(b&&m.scrollWidth>m.clientWidth){var x=b.offsetLeft-m.offsetLeft-5;m.scrollTo({left:Math.max(0,x),behavior:CALMO?'auto':'smooth'})}setTimeout(fine,350)}
+ m.addEventListener('scroll',fine,{passive:true});if(window.MutationObserver)new MutationObserver(scelta).observe(m,{childList:true});scelta()}
 function pronto(sel){var h=document.documentElement;if(!h.classList.contains('v55-attesa'))return;var fatto=false;
  function via(){if(fatto)return;fatto=true;clearInterval(t);h.classList.add('v55-pronto');requestAnimationFrame(function(){requestAnimationFrame(function(){h.classList.remove('v55-attesa')})})}
  var t=setInterval(function(){if(document.querySelector(sel))setTimeout(via,80)},50);setTimeout(via,2500)}
 function init(){
-tendine();passaggi();ospite();nav();redirect();if(mode==='campo')pronto('#board .card');if(mode==='board')pronto('#tab table');if(mode==='board')vista();
+tendine();passaggi();ospite();nav();redirect();if(mode==='campo')pronto('#board .card');if(mode==='campo')setTimeout(partiteCampo,0);if(mode==='board')pronto('#tab table');if(mode==='board')vista();
 if(mode==='albo')document.addEventListener('click',function(e){var b=e.target.closest('[data-oro]');if(!b)return;var u=new URL(location.href);u.searchParams.set('albo',b.dataset.oro);history.replaceState(null,'',u)});
 if(mode==='home')load(home);
 if(mode==='board')load(board);

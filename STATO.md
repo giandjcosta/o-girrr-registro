@@ -1,5 +1,11 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
 
+## 1 novembre (notte, 4) — Claude: Campo sul telefono senza doppioni, partite scorrevoli col dito
+
+- Tolti i doppioni del Campo: resta un solo «indietro» (quello della barra in alto) che torna al Tabellone sulla stessa giornata, anche in coppa (`#coppa-N`), e un solo scudo.
+- Fila delle partite: scorre col dito (provato con tocchi veri simulati: 339 px, la giornata non cambia e la pagina non si sposta di lato), aggancio morbido a ogni partita, sfumatura a destra finché ci sono altre partite. Le frecce cambiano giornata e la partita scelta viene portata in vista.
+- Versione dei file `v=55o`. Collaudo Chromium 80 pagine, 0 problemi. Non provati Safari e iPhone vero.
+
 ## 1 novembre (notte, 3) — Claude: Campo senza scelta della grafica, entrata morbida di Campo e Tabellone
 
 - **Campo 5.5:** tolta la scelta «Grafica Lega / Grafica Stadio» (la grafica è quella della pagina da cui si arriva; resta il link della barra in alto come in tutte le pagine).
