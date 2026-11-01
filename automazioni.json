@@ -1,14 +1,14 @@
 {
- "aggiornato": "2026-11-01T06:42:39Z",
+ "aggiornato": "2026-11-01T18:42:46Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
    "quando": "Ogni 3 giorni alle 11:17 (giorni 1, 4, 7… del mese)",
    "stato": "attiva",
-   "prossimo": "2026-11-01T10:17:00Z",
+   "prossimo": "2026-11-04T10:17:00Z",
    "nota": "Fonte principale Sky Sport (45%), poi Fantacalcio.it e i giornali.",
    "ultimo": {
-    "quando": "2026-10-31T10:17:19Z",
+    "quando": "2026-11-01T10:17:57Z",
     "esito": "riuscito"
    }
   },
@@ -90,7 +90,11 @@
    "nome": "Conferma mensile “tutto regolare”",
    "quando": "Il primo di ogni mese alle 09:03",
    "stato": "attiva",
-   "prossimo": "2026-11-01T08:03:00Z"
+   "prossimo": "2026-12-01T08:03:00Z",
+   "ultimo": {
+    "quando": "2026-11-01T08:03:34Z",
+    "esito": "riuscito"
+   }
   },
   {
    "nome": "Taratura quote Totogirrr dopo la 4ª giornata",
