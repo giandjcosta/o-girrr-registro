@@ -34,6 +34,8 @@ with sync_playwright() as pw:
             expected='true' if m=='stadio' else 'false'
             if page.locator('#tg').get_attribute('aria-checked')!=expected:page.locator('#tg').click()
             page.wait_for_function('(v)=>document.getElementById("tg").getAttribute("aria-checked")===v',arg=expected)
+        frame().locator('.v55-summary').wait_for()
+        frame().locator('#v53news a').first.wait_for()
         frame().locator('a.c').filter(has_text='Tabellone').click()
         frame().locator('#tab .numpos').first.wait_for()
         for grafica in ('lega','stadio'):

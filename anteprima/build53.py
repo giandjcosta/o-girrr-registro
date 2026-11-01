@@ -80,3 +80,12 @@ def genera53():
         c=c.replace("'home-'+s+'.html'","'index-'+s+'.html'")
         c=c.replace('href="tabellone-stadio.html"',f'href="tabellone-{skin}.html"')
         (out/f'campo-{skin}.html').write_text(c)
+        # I link salvati prima della 5.5 devono aprire la stessa Home integrata.
+        # I template storici restano conservati in sorgenti/, senza una seconda UI attiva.
+        destinazione=f'5.5/index-{skin}.html'
+        (R/f'anteprima/home-{skin}.html').write_text(f'''<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>O Girrr · Home {skin.title()}</title>
+<script>location.replace({json.dumps(destinazione)}+location.search+location.hash)</script>
+</head><body><a href="{destinazione}">Apri la Home O Girrr · Grafica {skin.title()}</a></body></html>
+''')

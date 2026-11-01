@@ -25,10 +25,13 @@ with sync_playwright() as pw:
                 assert not risposte,(skin,w,nome,risposte)
             p.goto(ROOT+'/lab/index.html',wait_until='networkidle')
             p.get_by_role('link',name='Anteprima 5.5 · '+skin.title(),exact=True).click()
-            p.wait_for_url('**/home-'+skin+'.html');check('Home dal Lab')
+            p.wait_for_url('**/5.5/index-'+skin+'.html');p.locator('.v55-summary').wait_for();check('Home dal Lab')
+            # I vecchi segnalibri arrivano alla Home corrente senza perdere la query.
+            p.goto(ROOT+'/anteprima/home-'+skin+'.html?da=segnalibro',wait_until='networkidle')
+            p.wait_for_url('**/5.5/index-'+skin+'.html?da=segnalibro');p.locator('.v55-summary').wait_for()
             # Anche il vecchio ingresso dell’app deve arrivare alla stessa Home aggiornata.
             app='attuale.html' if skin=='lega' else 'index.html'
-            p.goto(ROOT+'/anteprima/'+app,wait_until='networkidle');p.wait_for_url('**/home-'+skin+'.html')
+            p.goto(ROOT+'/anteprima/'+app,wait_until='networkidle');p.wait_for_url('**/5.5/index-'+skin+'.html');p.locator('.v55-summary').wait_for()
             p.locator('a.c').filter(has_text='Tabellone').click()
             p.wait_for_url('**/tabellone-'+skin+'.html');p.locator('#tab .numpos').first.wait_for();check('Tabellone')
             assert p.locator('#tab tbody tr').count()==10
@@ -59,7 +62,7 @@ with sync_playwright() as pw:
             p.get_by_role('button',name='Grafica '+skin.title(),exact=True).click()
             p.screenshot(path=str(OUT/f'integrato-campo-{skin}-{w}.png'),full_page=True)
             p.locator('#ritorno-tabellone').click();p.wait_for_url('**/tabellone-'+skin+'.html#lega-*');check('Ritorno Tabellone')
-            p.locator('a.back').click();p.wait_for_url('**/home-'+skin+'.html')
+            p.locator('a.back').click();p.wait_for_url('**/5.5/index-'+skin+'.html')
             p.locator('a.c').filter(has_text="Albo d'oro").click();p.locator('.oro-scroll').wait_for();check('Albo dalla Home')
             btns=p.locator('.oro-scroll button');assert btns.count()>=8
             for i in range(btns.count()):
@@ -70,7 +73,7 @@ with sync_playwright() as pw:
                 assert p.locator('.oro-scroll').evaluate('(e)=>getComputedStyle(e).flexWrap')=='nowrap'
                 assert active.evaluate('(e)=>{let a=e.getBoundingClientRect(),r=e.parentElement.getBoundingClientRect();return a.left>=r.left-2 && a.right<=r.right+2}'),(skin,w,'attivo fuori vista')
             check('Tab Albo')
-            p.locator('a.oback').click();p.wait_for_url('**/home-'+skin+'.html');check('Ritorno Home')
+            p.locator('a.oback').click();p.wait_for_url('**/5.5/index-'+skin+'.html');check('Ritorno Home')
             esiti.append({'skin':skin,'larghezza':w,'percorso':'Lab → Home → Tabellone → Coppa → Campo → Tabellone → Home → Albo → Home','esito':'PASS'})
             print('PASS percorso reale',skin,w,flush=True);c.close()
     b.close()

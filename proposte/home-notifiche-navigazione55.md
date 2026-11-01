@@ -27,6 +27,11 @@ il bilancio del club nella stagione corrente.
 aggiornato a mano. `home55.js` costruisce il componente da dati pubblici;
 `ui.js` conserva la selezione squadra, collega gli avvisi e gestisce la barra.
 Il cambio di skin dalla barra conserva query, giornata, partita e scheda Albo.
+Anche il Lab e i vecchi URL `anteprima/home-*.html` aprono la stessa Home 5.5;
+le copie storiche delle Home restano nei template. Un test segue entrambi gli
+ingressi e verifica il riepilogo nuovo. Corretto così il percorso che visitava
+ancora la vecchia Home e il vecchio Albo. Le schede dell’Albo hanno area di
+tocco di almeno 44 px su telefono/tablet; su desktop restano compatte.
 
 ## Notifiche e confini
 
@@ -65,8 +70,9 @@ non risultano nei dati delle squadre esaminati e non sono state inventate.
   cerca il vecchio indicatore di reputazione e `#riscatta-sponsor` nel Lab e nelle
   vecchie app. Il Lab su cui fallisce non è stato modificato da questa Home.
   Non sono stati ripristinati componenti superati né disattivato il workflow.
-- La base del Registro è stata aggiornata durante il lavoro a `cd76d54`:
-  conservati sfondo pieno/Inter dei menu e i controlli di Claude. La nuova CI
+- La base del Registro è stata aggiornata durante il lavoro a `adbada2`:
+  conservati sfondo pieno/Inter dei menu, controlli e banca personaggi di Claude
+  (nuove frasi attive dal 2 novembre). La nuova CI
   sull'ultimo codice va letta nella PR #48. Safari su iPhone fisico e login con
   credenziali reali non verificati.
 
