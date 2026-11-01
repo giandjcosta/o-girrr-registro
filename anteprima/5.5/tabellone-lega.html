@@ -197,6 +197,9 @@ body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:no
 .panel td.n .clubgraph{flex:1 1 auto;min-width:0;overflow-wrap:normal!important;word-break:normal;white-space:normal;line-height:1.15}
 .panel td.n .formadots{flex:none;margin-left:auto!important}
 @media(max-width:559px){.panel .poswrap{grid-template-columns:1.15em 1.45em;column-gap:2px}.panel td.p{padding-left:8px!important;padding-right:2px!important;min-width:0!important}.panel td.n .nomecella{gap:6px}.panel td.n .clubgraph{font-size:12px;letter-spacing:-.01em}.panel td.n .nomecella.lungo .clubgraph{font-size:11px;letter-spacing:-.02em}.panel td.n .formadots{gap:2px}.panel td.n .formadots i{width:5px;height:5px}.panel th.thfp{font-size:9.5px!important;letter-spacing:0!important;padding-left:2px!important;padding-right:4px!important}.panel td.fp{padding-right:4px!important}}
+
+/* Claude, 1° novembre: su PC la scritta «Serie A · Giornata» e i riposi occupano tutta la riga, così le partite partono allineate nelle due colonne */
+#board>.nota,#board>.rip{grid-column:1/-1}
 </style>
 <link rel="stylesheet" href="ui.css?v=53e"><script src="ui.js?v=53d" defer></script></head>
 <body data-mode="lega" data-v53="board" data-v53-skin="lega">
@@ -264,7 +267,7 @@ function formaUltime(t){var a=[],cup=mode==='coppa';cal().forEach(function(g){if
 function formaPallini(t){var v=formaUltime(t),tit={v:'Vittoria',n:'Pareggio',p:'Sconfitta'};return '<span class="formadots" role="img" aria-label="Ultimi risultati: '+(v.length?v.map(function(x){return tit[x]}).join(', '):'nessuna partita')+'">'+v.map(function(x){return '<i class="'+x+'" aria-hidden="true"></i>'}).join('')+'</span>'}
 function classeZona(k,total,fp){return !fp?'':k===0?' z-scudetto':k<=2?' z-podio':k>=total-2?' z-salvezza':''}
 /* ChatGPT: classifica giornata per giornata, con asse 1° in alto */
-var plotTeam=null;
+var plotTeam=null;try{plotTeam=(JSON.parse(localStorage.getItem('fg')||'{}')||{}).team||null}catch(e){}
 function posizioniSquadra(t){var cup=mode==='coppa',rounds=cal(),v=[];rounds.forEach(function(g){if(g.n>sel[mode]||!played(g,cup))return;var arr=classifica(rounds.filter(function(a){return a.n<=g.n&&played(a,cup)}),cup),z=arr.filter(function(x){return x.n===t})[0];if(!z)return;if(cup)arr=arr.filter(function(x){return x.gir===z.gir});var i=arr.findIndex(function(x){return x.n===t});if(i>=0)v.push({g:g.n,p:i+1,total:arr.length})});return v}
 function graficoSquadra(){if(!plotTeam)return '';var R=posizioniSquadra(plotTeam);if(!R.length)return '<div class="grafpos">Nessuna giornata conclusa per '+esc(plotTeam)+'.</div>';var tot=mode==='coppa'?5:10,W=460,H=174,left=30,right=12,top=18,bottom=25,iw=W-left-right,ih=H-top-bottom;
 function xx(i){return left+(R.length===1?iw/2:iw*i/(R.length-1))}function yy(p){return top+(p-1)*ih/(tot-1)}
