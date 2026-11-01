@@ -168,8 +168,9 @@ body[data-v53=board] .grid>aside.panel{order:-1}
 body[data-v53=board] .grid>aside.panel,body[data-v53=board] .grid>section{width:100%;max-width:none!important;min-width:0}
 body[data-v53=board] #v53board{margin-top:22px}
 @media(min-width:1100px){
- body.vista-b[data-v53=board] .grid{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr)!important;align-items:start;gap:20px}
- body.vista-b[data-v53=board] .grid>aside.panel{order:0}
+ /* come il Brasileirão (CBF): classifica grande a sinistra, partite in colonna a destra */
+ body.vista-b[data-v53=board] .grid{display:grid!important;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr)!important;align-items:start;gap:20px}
+ body.vista-b[data-v53=board] .grid>aside.panel{order:-1}
  body.vista-b[data-v53=board] #board{display:block!important}
  body.vista-b[data-v53=board] #board>.nota{margin-bottom:12px}
  body.vista-b[data-v53=board][data-v53-skin=stadio] .panel tr.zona td.fp{border-radius:0 12px 12px 0}
