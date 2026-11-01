@@ -1,4 +1,4 @@
-/* O Girrr 5.5 — preview conservativa, nessuna scrittura al database */
+/* O Girrr 5.5 — nell'Anteprima nessuna scrittura al database; sul sito vero (SITO55) sondaggio della Curva e notifiche usano il database */
 (function(){
 'use strict';
 var root=new URL('./',document.currentScript.src).href;
@@ -43,33 +43,38 @@ var a=map[m[0]],b=map[m[3]],r=String(m[4]).split('-').map(Number);if(!a||!b||!Nu
 a.g++;b.g++;if(r[0]>r[1]){a.v++;b.p++}else if(r[0]<r[1]){b.v++;a.p++}else{a.nn++;b.nn++}a.pt+=r[0]>r[1]?3:r[0]===r[1]?1:0;b.pt+=r[0]<r[1]?3:r[0]===r[1]?1:0;
 a.fp+=n(m[1]);b.fp+=n(m[2]);a.gf+=r[0];a.gs+=r[1];b.gf+=r[1];b.gs+=r[0]})});
 return Object.values(map).sort(function(a,b){return b.pt-a.pt||b.fp-a.fp||b.gf-b.gs-(a.gf-a.gs)||b.gf-a.gf||['The Blue brothers','Apo team','Mariana Coneja','stif dc','Real Madrink','Atletico ma non troppo','Oranje VC','AFA SELECCION','Grodah','WOA'].indexOf(a.team)-['The Blue brothers','Apo team','Mariana Coneja','stif dc','Real Madrink','Atletico ma non troppo','Oranje VC','AFA SELECCION','Grodah','WOA'].indexOf(b.team)})}
-function href(which){return root+which+'-'+skin+'.html'}
+function href(which){return window.OG55?OG55.pagina(which,skin,root):root+which+'-'+skin+'.html'}
+var SITO55=!!(window.OG55&&OG55.sito);
+function albo(q){return href('albo')+q+(SITO55?'#oro':'')}
 function nav(){
  var old=el('v53nav');if(old)old.remove();
  var where=document.querySelector('.ohead,.hero,.mast,header.top,header');if(!where)return;
  var names={home:'Home',board:'Tabellone',campo:'Campo',albo:"Albo d’oro",curva:'Curva',notifications:'Notifiche'};
  var parent=mode==='campo'?'tabellone':'index',prev=null;
- try{var ref=new URL(document.referrer),base=new URL(root);if(ref.origin===base.origin&&ref.pathname.startsWith(base.pathname)&&/\/(index|tabellone|campo|albo|curva|notifiche)-(lega|stadio)\.html$/.test(ref.pathname)&&ref.href!==location.href)prev=ref}catch(e){}
+ try{var ref=new URL(document.referrer),base=new URL(root);if(ref.origin===base.origin&&ref.pathname.startsWith(base.pathname)&&(window.OG55?!!OG55.nome(ref.pathname):/\/(index|tabellone|campo|albo|curva|notifiche)-(lega|stadio)\.html$/.test(ref.pathname))&&ref.href!==location.href)prev=ref}catch(e){}
  var utilities=document.createElement('nav');utilities.className='v53 v53-utilities v55-header';utilities.setAttribute('aria-label','Navigazione della Lega');
  function update(){
   if(mode==='campo'){skin=document.body.dataset.skin||skin;document.body.dataset.v53Skin=skin;}
-  var target=prev?prev.href:href(parent),label=prev?prev.pathname.split('/').pop().split('-')[0]:parent;
+  var target=prev?prev.href:href(parent),label=prev?((window.OG55&&OG55.nome(prev.pathname))||prev.pathname.split('/').pop().split('-')[0]):parent;if(label==='albo')label='albo';
   /* Campo: un solo «indietro», che torna al Tabellone sulla stessa giornata (anche in coppa) */
-  var rt=mode==='campo'&&el('ritorno-tabellone');if(rt&&(!prev||/\/tabellone-/.test(prev.pathname))){target=rt.href;label='tabellone'}
+  var rt=mode==='campo'&&el('ritorno-tabellone');if(rt&&(!prev||/\/tabellone[-.]/.test(prev.pathname))){target=rt.href;label='tabellone'}
   var labels={index:'Home',tabellone:'Tabellone',campo:'Campo',albo:"Albo d’oro",curva:'Curva',notifiche:'Notifiche'};
   var page=mode==='home'?'index':mode==='board'?'tabellone':mode==='notifications'?'notifiche':mode;
-  function skinTarget(){var u=new URL(page+'-'+(skin==='lega'?'stadio':'lega')+'.html',root);u.search=location.search;if(mode==='campo'||u.searchParams.has('skin'))u.searchParams.set('skin',skin==='lega'?'stadio':'lega');if(/^#(lega|coppa)(-\d+)?$/.test(location.hash))u.hash=location.hash;return u.href;}
+  function skinTarget(){var altra=skin==='lega'?'stadio':'lega',u=new URL(window.OG55?OG55.pagina(page,altra,root):page+'-'+altra+'.html',root);if(SITO55&&mode==='albo'){u.hash=location.hash;u.search=location.search;return u.href}u.search=location.search;if(mode==='campo'||u.searchParams.has('skin'))u.searchParams.set('skin',skin==='lega'?'stadio':'lega');if(/^#(lega|coppa)(-\d+)?$/.test(location.hash))u.hash=location.hash;return u.href;}
   utilities.innerHTML='<a class="v55-home-logo" href="'+href('index')+'" aria-label="Home O Girrr"><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/loghi/logo-lega-o-fant-a-girrr.png" alt="O Girrr"></a>'+
    '<a class="v55-return" href="'+esc(target)+'" aria-label="Torna a '+esc(labels[label]||'Home')+'">‹ '+esc(labels[label]||'Home')+'</a>'+
    (mode!=='notifications'?'<a class="v55-notifications-link" href="'+href('notifiche')+'" aria-label="Notifiche">Notifiche <b class="v55-notify-count" hidden></b></a>':'')+
    '<a class="v55-skin-link" href="'+esc(skinTarget())+'">Grafica '+(skin==='lega'?'Stadio':'Lega')+'</a>';
   var swap=utilities.querySelector('.v55-skin-link');['pointerenter','pointerdown','focus','click'].forEach(function(event){swap.addEventListener(event,function(){swap.href=skinTarget()})});
+  /* la scelta resta anche per le pagine del sito che la leggono (orr_gv: a = Lega, n = Stadio) */
+  swap.addEventListener('click',function(){try{localStorage.setItem('orr_gv',skin==='lega'?'n':'a')}catch(e){}});
   var back=utilities.querySelector('.v55-return');if(prev)back.onclick=function(e){if(history.length>1){e.preventDefault();history.back()}};
  }
  update();where.insertAdjacentElement('beforebegin',utilities);document.body.classList.add('v55-has-header');
  if(mode==='campo')new MutationObserver(update).observe(document.body,{attributes:true,attributeFilter:['data-skin']});
 }
 function redirect(){
+if(SITO55)return; /* sul sito vero i link e le azioni della Curva funzionano davvero */
 document.addEventListener('click',function(e){
  var a=e.target.closest&&e.target.closest('a[href]');
  if(a&&a.closest('.v53'))return;
@@ -78,7 +83,7 @@ document.addEventListener('click',function(e){
 },true);
 if(mode==='curva')document.addEventListener('submit',function(e){if(!e.target.closest('.v53')){e.preventDefault();e.stopImmediatePropagation()}},true);
 }
-function load(cb){fetch(dataUrl,{cache:'no-store'}).then(function(r){if(!r.ok)throw Error('Dati temporaneamente indisponibili');return r.json()}).then(function(v){if(!v||!v.cal||!v.teams)throw Error('Formato dati non riconosciuto');D=window.CVPUB?window.CVPUB(v):v;teamList=v.teams.map(function(t){return t.name});Promise.all([fetch(root+'cronache.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}),mode==='home'?fetch(root+'allenatori.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():{}}).catch(function(){return {}}):Promise.resolve({})]).then(function(x){CRON=x[0];HIST55=x[1];cb()})}).catch(function(e){var ids=mode==='home'?['v53metrics','v53news']:mode==='notifications'?['v53notifications']:mode==='board'?['v53boardcontent']:mode==='albo'?['v53annual']:['v53poll'];ids.forEach(function(id){if(el(id))el(id).innerHTML=note('I dati della stagione non sono raggiungibili. La navigazione e le sezioni originali restano disponibili.')});console.warn('5.5 dati non caricati:',e.message)})}
+function load(cb){fetch(dataUrl,{cache:'no-store'}).then(function(r){if(!r.ok)throw Error('Dati temporaneamente indisponibili');return r.json()}).then(function(v){if(!v||!v.cal||!v.teams)throw Error('Formato dati non riconosciuto');D=window.CVPUB?window.CVPUB(v):v;teamList=v.teams.map(function(t){return t.name});Promise.all([fetch(SITO55?OG55.dir('lega')+'dati/cronache.json':root+'cronache.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}),mode==='home'?fetch(root+'allenatori.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():{}}).catch(function(){return {}}):Promise.resolve({})]).then(function(x){CRON=x[0];HIST55=x[1];cb()})}).catch(function(e){var ids=mode==='home'?['v53metrics','v53news']:mode==='notifications'?['v53notifications']:mode==='board'?['v53boardcontent']:mode==='albo'?['v53annual']:['v53poll'];ids.forEach(function(id){if(el(id))el(id).innerHTML=note('I dati della stagione non sono raggiungibili. La navigazione e le sezioni originali restano disponibili.')});console.warn('5.5 dati non caricati:',e.message)})}
 function teamPicker(id,cb){
  var s=el(id);if(!s)return;
  var io=chi(),registro=/\/o-girrr-registro\//.test(location.pathname)||(/^(localhost|127\.0\.0\.1)$/.test(location.hostname)&&/\/anteprima\/5\.5\//.test(location.pathname));
@@ -110,8 +115,8 @@ function home(){
  teamPicker('v53team',function(t){
  var version=++generation,day=latest(),nm=day&&day.n,cls=nm?ranks(nm):[],sets=completeRounds(false).map(function(g){return {n:g.n,table:ranks(g.n)}});
  var box=el('v53metrics');box.classList.add('v55-unified');
- box.innerHTML=t?window.OGHome55.render({team:t,table:cls,sets:sets,rounds:completeRounds(false),cupRounds:completeRounds(true),cupLink:href('tabellone')+'#coppa',coachLink:href('albo')+'?albo=all',calendar:games(false).sort(function(a,b){return a.n-b.n}),archivio:HIST55,
-  dayLink:function(n){return href('tabellone')+'#lega-'+n},boardLink:href('tabellone'),careerLink:function(team){return new URL('../'+(skin==='lega'?'attuale.html':'index.html'),root).href+'?come='+encodeURIComponent(team)+'#carriera'}}):note('Entra con la tua squadra per vedere il tuo riepilogo personale.');
+ box.innerHTML=t?window.OGHome55.render({team:t,table:cls,sets:sets,rounds:completeRounds(false),cupRounds:completeRounds(true),cupLink:href('tabellone')+'#coppa',coachLink:albo('?albo=all'),calendar:games(false).sort(function(a,b){return a.n-b.n}),archivio:HIST55,
+  dayLink:function(n){return href('tabellone')+'#lega-'+n},boardLink:href('tabellone'),careerLink:function(team){return SITO55?href('app')+'#carriera':new URL('../'+(skin==='lega'?'attuale.html':'index.html'),root).href+'?come='+encodeURIComponent(team)+'#carriera'}}):note('Entra con la tua squadra per vedere il tuo riepilogo personale.');
  var ownrow=cls.find(function(r){return r.team===t});compact.textContent=t?t+(ownrow?' · '+(cls.indexOf(ownrow)+1)+'ª · '+ownrow.pt+' punti':''):'Il riepilogo della tua squadra';
  var z=notizia(),items=[],me=chi(),personal=[],busy=!!(chi()&&chi().team===t);
  if(z)items.push({key:z.chiave,title:z.titolo,detail:z.testo,link:href('tabellone')+'?sezione=classifica&cronaca='+encodeURIComponent(z.chiave)+'#lega-'+nm});
@@ -246,14 +251,28 @@ function curva(){
 var host=el('v53poll'),p=optsPoll(),key='poll-'+p.day;
 if(!host)return;
 if(!p.opts.length){host.innerHTML=note('Il sondaggio apparirà quando sarà disponibile il calendario del prossimo turno.');return}
-var voted=get(key+'-vote',null),counts=get(key+'-counts',{}),comments=get(key+'-comments',[]);
-var form='<div class="v53-sub">Giornata · '+p.day+'ª giornata</div><h3>Quale sfida seguirai con più attenzione?</h3><form id="v53vote">'+p.opts.map(function(o,i){return '<label class="v53-poll-option"><input type="radio" name="v53choice" value="'+i+'" '+(voted===i?'checked':'')+'><span>'+esc(o)+'</span><small>'+n(counts[i])+' voti di prova</small></label>'}).join('')+'<button class="v53-btn" type="submit">Vota nel Lab</button></form><p class="v53-muted">Preferenze e commenti si salvano soltanto su questo dispositivo: non sono voti pubblicati nella Curva.</p>';
-host.innerHTML=form+'<div class="v53-chat" id="v53dialog">'+botComments(p).map(function(t,i){return '<div class="v53-comment"><b>'+esc(t[0])+' · bot</b><p>'+esc(t[1])+'</p></div>'}).join('')+'</div><form id="v53comment" class="v53-field"><label for="v53message">Commenta il sondaggio</label><input class="v53-input" id="v53message" maxlength="280" required placeholder="Il tuo commento (solo locale)"><button class="v53-btn" type="submit">Commenta</button></form><div id="v53usercomments"></div>';
-function redraw(){el('v53usercomments').innerHTML=comments.map(function(c){return '<div class="v53-comment"><b>Il tuo commento · locale</b><p>'+esc(c)+'</p></div>'}).join('')}
-redraw();
-el('v53vote').onsubmit=function(e){e.preventDefault();var v=el('v53vote').querySelector('input:checked');if(!v)return;var i=n(v.value);if(voted!==null)counts[voted]=Math.max(0,n(counts[voted])-1);counts[i]=n(counts[i])+1;voted=i;set(key+'-vote',i);set(key+'-counts',counts);curva()};
-if(window.OGDest55)window.OGDest55.poll();
-el('v53comment').onsubmit=function(e){e.preventDefault();var t=el('v53message').value.trim();if(!t)return;comments.push(t.slice(0,280));set(key+'-comments',comments);el('v53message').value='';redraw()};
+/* Sul sito vero voti e commenti stanno nel database (una scelta per squadra e giornata, si può cambiare); nell'Anteprima restano su questo dispositivo. */
+var reale=SITO55,io=chi(),voted=get(key+'-vote',null),counts=get(key+'-counts',{}),comments=get(key+'-comments',[]),stato=null,msg='';
+function conta(i){if(!reale)return n(counts[i]);var v=(stato&&stato.voti||[]).find(function(x){return x.scelta===p.opts[i]});return v?n(v.n):0}
+function tot(){var t=0;p.opts.forEach(function(o,i){t+=conta(i)});return t}
+function disegna(){
+ var puo=!reale||!!io,t=tot();
+ var form='<div class="v53-sub">Giornata · '+p.day+'ª giornata</div><h3>Quale sfida seguirai con più attenzione?</h3><form id="v53vote">'+p.opts.map(function(o,i){var c=conta(i),pc=t?Math.round(c*100/t):0;return '<label class="v53-poll-option"><input type="radio" name="v53choice" value="'+i+'" '+(voted===i?'checked':'')+(puo?'':' disabled')+'><span>'+esc(o)+'</span><small>'+c+(c===1?' voto':' voti')+(t?' · '+pc+'%':'')+'</small></label>'}).join('')+(puo?'<button class="v53-btn" type="submit">'+(voted!==null?'Cambia voto':'Vota')+'</button>':'')+'</form>'
+  +(reale?(io?'<p class="v53-muted">Voti come '+esc(io.team)+'. Una scelta per squadra, si può cambiare fino alla giornata.</p>':'<p class="v53-muted">Entra con la tua squadra per votare e commentare.</p>'):'<p class="v53-muted">Preferenze e commenti si salvano soltanto su questo dispositivo: non sono voti pubblicati nella Curva.</p>')
+  +(msg?'<p class="v53-muted" role="status">'+esc(msg)+'</p>':'');
+ var veri=reale?(stato&&stato.commenti||[]).map(function(c){return '<div class="v53-comment"><b>'+esc(c.team)+'</b><p>'+esc(c.testo)+'</p></div>'}).join(''):comments.map(function(c){return '<div class="v53-comment"><b>Il tuo commento · locale</b><p>'+esc(c)+'</p></div>'}).join('');
+ host.innerHTML=form+'<div class="v53-chat" id="v53dialog">'+botComments(p).map(function(t){return '<div class="v53-comment"><b>'+esc(t[0])+' · bot</b><p>'+esc(t[1])+'</p></div>'}).join('')+'</div>'
+  +(puo?'<form id="v53comment" class="v53-field"><label for="v53message">Commenta il sondaggio</label><input class="v53-input" id="v53message" maxlength="280" required placeholder="'+(reale?'Il tuo commento':'Il tuo commento (solo locale)')+'"><button class="v53-btn" type="submit">Commenta</button></form>':'')+'<div id="v53usercomments">'+veri+'</div>';
+ var fv=el('v53vote');if(fv)fv.onsubmit=function(e){e.preventDefault();var v=fv.querySelector('input:checked');if(!v)return;var i=n(v.value);
+  if(!reale){if(voted!==null)counts[voted]=Math.max(0,n(counts[voted])-1);counts[i]=n(counts[i])+1;voted=i;set(key+'-vote',i);set(key+'-counts',counts);disegna();return}
+  rpcN('sondaggio_vota',{p_team:io.team,p_code:io.code,p_giornata:p.day,p_scelta:p.opts[i]}).then(function(r){stato=r;voted=i;set(key+'-vote',i);msg='Voto registrato.';disegna()}).catch(function(x){msg='Voto non registrato: '+x.message;disegna()})};
+ var fc=el('v53comment');if(fc)fc.onsubmit=function(e){e.preventDefault();var t=el('v53message').value.trim();if(!t)return;
+  if(!reale){comments.push(t.slice(0,280));set(key+'-comments',comments);disegna();return}
+  rpcN('sondaggio_commenta',{p_team:io.team,p_code:io.code,p_giornata:p.day,p_testo:t.slice(0,280)}).then(function(r){stato=r;msg='';disegna()}).catch(function(x){msg='Commento non pubblicato: '+x.message;disegna()})};
+ if(window.OGDest55)window.OGDest55.poll();
+}
+disegna();
+if(reale)rpcN('sondaggio_stato',{p_giornata:p.day}).then(function(r){stato=r;disegna()}).catch(function(){msg='Risultati del sondaggio non raggiungibili, riprova più tardi.';disegna()});
 }
 function notifications(){
 var to=el('v53notifications');if(!to)return;
@@ -262,7 +281,7 @@ if(g){items.push({key:'result-'+g.n,type:'partita',ic:'⚽',title:'Risultati del
 if(g){var rs=ranks(g.n);if(rs.length)items.push({key:'ranking-'+g.n,type:'classifica',ic:'🏆',title:'Classifica aggiornata',detail:'Posizioni e punti dopo la '+g.n+'ª giornata completa.',link:href('tabellone')+'?sezione=classifica#lega-'+g.n})}
 if(nx){items.push({key:'next-'+nx.n,type:'partita',ic:'📅',title:'Prossimo turno',detail:'La '+nx.n+'ª giornata è in calendario. Guarda gli incontri.',link:href('tabellone')+'?sezione=risultati#lega-'+nx.n})}
 if(nx){items.push({key:'poll-'+nx.n,type:'curva',ic:'💬',title:'Sondaggio della Curva',detail:'Scegli la sfida più interessante del prossimo turno e commenta.',link:href('curva')+'?sondaggio='+nx.n+'#v53poll'})}
-items.push({key:'annuario',type:'albo',ic:'📖',title:'Annuario 2026/27',detail:'Podio provvisorio, rose e record verificabili in un solo posto.',link:href('albo')+'?albo=annuario&stagione=2026%2F27'});
+items.push({key:'annuario',type:'albo',ic:'📖',title:'Annuario 2026/27',detail:'Podio provvisorio, rose e record verificabili in un solo posto.',link:albo('?albo=annuario&stagione=2026%2F27')});
 var z=notizia();if(z)items.unshift({key:z.chiave,type:'classifica',ic:'↗',title:z.titolo,detail:z.testo,link:href('tabellone')+'?sezione=classifica&cronaca='+encodeURIComponent(z.chiave)+'#lega-'+z.giornata});var filters=el('v53filters'),chosen='tutte';
 var me=chi(),chiaviLette=null,stato=el('v53notifstato');
 function letta(x){return x.personale?!x.nuova:chiaviLette?chiaviLette.indexOf(x.key)>=0||!!get('read-'+x.key,false):!!get('read-'+x.key,false)}
@@ -361,7 +380,7 @@ if(mode==='albo')document.addEventListener('click',function(e){var b=e.target.cl
 if(mode==='home')load(home);
 if(mode==='board')load(board);
 if(mode==='albo'&&el('v53annual'))load(annual);
-if(mode==='curva'){var poll=el('v53poll');if(poll)poll.insertAdjacentHTML('beforebegin','<p class="v53 v53-muted">Anteprima locale: sondaggi, commenti e personaggi sono prove sul dispositivo. Nessun intervento viene pubblicato nella Curva.</p>');load(curva)}
+if(mode==='curva'){var poll=el('v53poll');if(poll&&!SITO55)poll.insertAdjacentHTML('beforebegin','<p class="v53 v53-muted">Anteprima locale: sondaggi, commenti e personaggi sono prove sul dispositivo. Nessun intervento viene pubblicato nella Curva.</p>');load(curva)}
 if(mode==='notifications')load(notifications);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();

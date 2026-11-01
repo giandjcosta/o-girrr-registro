@@ -300,3 +300,5 @@ body[data-v53=campo] #matches::-webkit-scrollbar{display:none}
 body[data-v53=campo] #matches.v55-fine{-webkit-mask-image:none;mask-image:none}
 body[data-v53=campo] #matches>.gamebtn{scroll-snap-align:start}
 @media (prefers-reduced-motion: reduce){body[data-v53=campo] #matches{scroll-behavior:auto}}
+/* Sito vero: un solo comando per cambiare grafica (quello della barra in alto), niente doppione dell'interruttore della Home */
+body.v55-has-header #gsw{display:none!important}
