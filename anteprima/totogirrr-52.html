@@ -217,11 +217,12 @@ nav button{flex:1 0 auto;white-space:nowrap;padding:10px 13px}
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
 
-</head>
+<link rel="stylesheet" href="5.5/ui.css?v=55j"><script src="preview-guard.js"></script><script src="5.5/destinazioni55.js?v=55j" defer></script></head>
 <body>
 <div class="wrap" id="app"></div>
 <script>
 (function(){
+if(/^(prest-\d+-[\w]+|mov-\d+)$/.test(new URLSearchParams(location.search).get('notifica')||''))return;
 /* Anteprima: nessuna connessione al database Supabase di produzione. */
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function f2(n){return Number(n).toLocaleString('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2})}

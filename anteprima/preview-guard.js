@@ -13,7 +13,16 @@ function letturaLocale(u){
 }
 // Unica eccezione (vai di Gianluca, 1° novembre): le notifiche personali usano il database vero; toccano solo lo stato «letto» della squadra.
 var PASSA={notifiche_stato:1,notifiche_segna_lette:1};
-function passa(u){try{return PASSA[new URL(u,location.href).pathname.split('/').pop()]===1}catch(e){return false}}
+function passa(u){try{
+ var name=new URL(u,location.href).pathname.split('/').pop();
+ if(PASSA[name]===1)return true;
+ // Solo lettura del coro citato: le altre RPC rimangono bloccate.
+ if(name==='curva_feed'&&/^(risp-\d+|app-[pr]\d+-\d+)$/.test(new URLSearchParams(location.search).get('notifica')||'')){
+  var me=JSON.parse(localStorage.getItem('fg')||'null');
+  return !!(me&&me.team&&me.code&&sessionStorage.getItem('ospite')!=='1'&&!new URLSearchParams(location.search).has('ospite'));
+ }
+ return false;
+}catch(e){return false}}
 window.fetch=function(resource,options){var u=path(resource);if(db(u)&&!passa(u))return Promise.resolve(letturaLocale(u));return nativeFetch(resource,options)};
 var open=XMLHttpRequest.prototype.open;
 XMLHttpRequest.prototype.open=function(method,u){if(db(u))throw new Error('Richiesta al database bloccata nella preview');return open.apply(this,arguments)};

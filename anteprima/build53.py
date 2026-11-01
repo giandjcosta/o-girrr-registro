@@ -30,11 +30,17 @@ def converti(s,skin):
     s=re.sub(r"fetch\('([^']+)'",lambda m:"fetch('"+urljoin(base,m[1])+"'" if not m[1].startswith(('http','#','data:')) else m[0],s)
     s=s.replace('<head>','<head><script src="../preview-guard.js"></script>',1)
     # Native return links are handled locally before the original page listeners.
-    s=s.replace('</head>','<link rel="stylesheet" href="ui.css?v=55i"><script src="home55.js?v=55i" defer></script><script src="ui.js?v=55i" defer></script></head>',1)
+    s=s.replace('</head>','<link rel="stylesheet" href="ui.css?v=55j"><script src="home55.js?v=55j" defer></script><script src="destinazioni55.js?v=55j" defer></script><script src="ui.js?v=55j" defer></script></head>',1)
     # Drop the old tail script; the single deferred script sees currentScript at execution.
     s=re.sub(r'<script src="ui.js\?v=53c"></script>','',s)
     s=re.sub(r"\.src='(?:\.\./)+'\+", ".src='"+SITO+"'+", s)
     s=re.sub(r"'(?:\.\./)+assets/", "'"+SITO+"assets/", s)
+    if 'function postHTML(p)' in s:
+        hook="var sel={e:undefined,h:null},aimg=null;"
+        assert hook in s
+        s=s.replace(hook,(R/'anteprima/sorgenti/53/curva-destinazioni.js').read_text()+'\n'+hook,1)
+        s=s.replace('caricaImg();osserva();',"caricaImg();osserva();if(new URLSearchParams(location.search).has('notifica'))setTimeout(function(){document.dispatchEvent(new Event('og:curva-render'))},0);",1)
+        s=s.replace("return '<div class=\"rp\">'+AV(ra", "return '<div class=\"rp\"'+(r.real?' data-risposta=\"'+esc(r.id)+'\"':'')+'>'+AV(ra",1)
     return s.replace('sponsor-wegwezen.png','sponsor-wegwezen-reizen.png')
 
 def genera53():
@@ -66,7 +72,7 @@ def genera53():
         (out/f'tabellone-{skin}.html').write_text(t)
         # L'Albo completo proviene dalla stessa build del Lab: tutte le tab e i record conservati.
         a=(R/('anteprima/attuale.html' if skin=='lega' else 'anteprima/index.html')).read_text()
-        a=a.replace('<!doctype html>',f'<!doctype html><html lang="it"><head><base href="../"><script src="preview-guard.js"></script><link rel="stylesheet" href="5.5/ui.css?v=55i"><script src="5.5/ui.js?v=55i" defer></script>',1)
+        a=a.replace('<!doctype html>',f'<!doctype html><html lang="it"><head><base href="../"><script src="preview-guard.js"></script><link rel="stylesheet" href="5.5/ui.css?v=55j"><script src="5.5/destinazioni55.js?v=55j" defer></script><script src="5.5/ui.js?v=55j" defer></script>',1)
         a=a.replace('<div class="col">',f'</head><body data-v53="albo" data-v53-skin="{skin}"><div class="col">',1)
         a+='</body></html>'
         a=a.replace('home-'+skin+'.html','5.5/index-'+skin+'.html')
@@ -74,7 +80,7 @@ def genera53():
         a=a.replace("var hh=(location.hash||'').slice(1);","var hh=(location.hash||'#oro').slice(1);")
         (out/f'albo-{skin}.html').write_text(a)
         c=(R/'anteprima/campo.html').read_text()
-        c=c.replace('</head>','<link rel="stylesheet" href="ui.css?v=55i"><script src="ui.js?v=55i" defer></script></head>',1)
+        c=c.replace('</head>','<link rel="stylesheet" href="ui.css?v=55j"><script src="destinazioni55.js?v=55j" defer></script><script src="ui.js?v=55j" defer></script></head>',1)
         c=c.replace('<body data-skin="stadio">',f'<body data-skin="{skin}" data-v53="campo" data-v53-skin="{skin}">')
         c=c.replace('home-'+skin+'.html','index-'+skin+'.html')
         c=c.replace("'home-'+s+'.html'","'index-'+s+'.html'")
@@ -89,3 +95,9 @@ def genera53():
 <script>location.replace({json.dumps(destinazione)}+location.search+location.hash)</script>
 </head><body><a href="{destinazione}">Apri la Home O Girrr · Grafica {skin.title()}</a></body></html>
 ''')
+
+    # I dettagli personali aprono la sezione nativa senza avviare nuove scritture.
+    for app in ('attuale.html','index.html'):
+        p=R/'anteprima'/app
+        a=p.read_text().replace('<!doctype html>','<!doctype html><link rel="stylesheet" href="5.5/ui.css?v=55j"><script src="preview-guard.js"></script><script src="5.5/destinazioni55.js?v=55j" defer></script>',1)
+        p.write_text(a)
