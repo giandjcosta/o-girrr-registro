@@ -18,7 +18,10 @@ const PAGINE = [
   ['tabellone-lega', 'anteprima/5.5/tabellone-lega.html', async p => {
     if (!(await p.locator('.panel tr.zona-1').count())) return 'classifica senza fasce';
     const x = await p.evaluate(() => [...new Set([...document.querySelectorAll('.panel td.n .formadots')].map(e => Math.round(e.getBoundingClientRect().left)))].length);
-    return x === 1 ? '' : 'pallini non allineati (' + x + ' colonne)';
+    if (x !== 1) return 'pallini non allineati (' + x + ' colonne)';
+    // risultati: con due colonne (PC) le partite di ogni riga partono alla stessa altezza
+    const sc = await p.evaluate(() => { const m = [...document.querySelectorAll('#board>.m')].map(e => e.getBoundingClientRect()); const c = {}; m.forEach(r => { const k = r.left < innerWidth / 2 ? 's' : 'd'; (c[k] = c[k] || []).push(r.top) }); if (!c.s || !c.d) return 0; let d = 0; for (let i = 0; i < Math.min(c.s.length, c.d.length); i++) d = Math.max(d, Math.abs(c.s[i] - c.d[i])); return d });
+    return sc <= 3 ? '' : 'partite sfalsate tra le due colonne (' + Math.round(sc) + ' px)';
   }],
   ['tabellone-stadio', 'anteprima/5.5/tabellone-stadio.html', async p => (await p.locator('#campo-link').count()) ? '' : 'manca il link al Campo'],
   ['campo-lega', 'anteprima/5.5/campo-lega.html?skin=lega&giornata=5&partita=3', async p => {

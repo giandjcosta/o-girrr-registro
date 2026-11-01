@@ -68,6 +68,11 @@
 - **Screenshot e rapporti:** `prove/risultati-campo-contenuti/`, Campo raggiunto da Home → Tabellone → Campo in entrambe le skin a 390/1280/1440. Non certificati Safari/iPhone fisico, CDN/cache pubblica o nuova CI sull'ultimo commit. Restano validi i limiti locali e di produzione già documentati. Nessun merge, rilascio, audio, pubblicazione di post o modifica a Supabase/sito pubblico; PR #43 resta bozza.
 
 
+## 1° novembre 2026 — Collaudo 5.5 su telefono, tablet e PC con Chromium e WebKit (Claude, richiesta di Gianluca)
+- Nuova prova `prove/collaudo_55_browser.js` e workflow `.github/workflows/claude-collaudo-55.yml` (parte a ogni modifica di `anteprima/`, `lab/` o della prova, e a mano). 13 pagine (Home Lega/Stadio, Notifiche, Tabellone Lega/Stadio, Campo Lega/Stadio, Albo/Annuario, Albo Stadio, Curva, Carriera, Totogirrr Stadio, Novità 5.5) a 320, 390, 768, 1280 e 1440 px, con Chromium e **WebKit (Safari)**: errori JavaScript, file mancanti, scorrimento laterale e controlli propri (fasce e pallini allineati, partite allineate su PC, 22 giocatori in campo, reparti dritti, legenda chiusa che si apre, grafico con i numeri, schede dell'Albo compatte, sondaggio, Carriera, vetrina). Foto di ogni pagina come artifact della run (14 giorni).
+- WebKit qui nella sessione non c'è (e non va installato con «playwright install»), quindi gira su GitHub. Prima run [41318374982](https://github.com/giandjcosta/o-girrr-registro/actions/runs/41318374982): **130 su 130 senza problemi**, Anteprima rigenerata uguale a quella salvata.
+- Resta non provato: un iPhone vero (WebKit è lo stesso motore di Safari, ma non è il telefono).
+
 ## 1° novembre 2026 — Tabellone: risultati allineati su PC (Claude, segnalazione di Gianluca, solo Lab/Anteprima)
 - Su PC (da 1000 px) i risultati della prova stanno su due colonne (aggiunta di ChatGPT; il sito vero ha una colonna sola): la scritta «Serie A · Giornata N» occupava la prima cella e la prima partita finiva in alto a destra, con le righe sfalsate. Ora la scritta (e «Riposano» in Champions Cup) occupa tutta la riga: partite allineate nelle due colonne (misurato scarto 0 px a 1000, 1280 e 1440 px, Lega e Stadio, Campionato e Champions Cup). File `lab/prova-tabellone-lega.html` e `-stadio.html`.
 
