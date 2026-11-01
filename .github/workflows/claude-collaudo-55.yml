@@ -1,0 +1,39 @@
+name: Claude - Collaudo 5.5 telefono e PC (Chromium e WebKit)
+on:
+  push:
+    paths:
+      - 'anteprima/**'
+      - 'lab/**'
+      - 'prove/collaudo_55_browser.js'
+      - '.github/workflows/claude-collaudo-55.yml'
+  workflow_dispatch:
+jobs:
+  collaudo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Anteprima rigenerata uguale a quella salvata
+        run: |
+          python3 anteprima/build.py
+          git diff --stat --exit-code -- anteprima/ ':!anteprima/5.5/cronache.json'
+      - name: Playwright con Chromium e WebKit
+        run: |
+          npm install --no-save playwright@1.63.0
+          npx playwright install --with-deps chromium webkit
+      - name: Serve il registro
+        run: |
+          python3 -m http.server 8765 > /tmp/http.log 2>&1 &
+          sleep 2
+      - name: Tutte le pagine 5.5 a 320, 390, 768, 1280 e 1440 px
+        run: node prove/collaudo_55_browser.js chromium,webkit
+      - name: Foto delle pagine
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: collaudo-55-foto
+          path: prove/risultati-55-browser/
+          retention-days: 14
