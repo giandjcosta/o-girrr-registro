@@ -1,4 +1,4 @@
-/* Isolamento della preview: nessuna richiesta viene inoltrata al database reale. */
+/* Isolamento della preview: nessuna richiesta viene inoltrata al database reale, salvo le notifiche personali. */
 (function(){
 'use strict';
 var nativeFetch=window.fetch.bind(window);
@@ -11,7 +11,10 @@ function letturaLocale(u){
  if(Object.prototype.hasOwnProperty.call(reads,name))return new Response(JSON.stringify(reads[name]),{status:200,headers:{'Content-Type':'application/json'}});
  return new Response(JSON.stringify({message:'Operazione non disponibile nell’anteprima locale'}),{status:403,headers:{'Content-Type':'application/json'}});
 }
-window.fetch=function(resource,options){var u=path(resource);if(db(u))return Promise.resolve(letturaLocale(u));return nativeFetch(resource,options)};
+// Unica eccezione (vai di Gianluca, 1° novembre): le notifiche personali usano il database vero; toccano solo lo stato «letto» della squadra.
+var PASSA={notifiche_stato:1,notifiche_segna_lette:1};
+function passa(u){try{return PASSA[new URL(u,location.href).pathname.split('/').pop()]===1}catch(e){return false}}
+window.fetch=function(resource,options){var u=path(resource);if(db(u)&&!passa(u))return Promise.resolve(letturaLocale(u));return nativeFetch(resource,options)};
 var open=XMLHttpRequest.prototype.open;
 XMLHttpRequest.prototype.open=function(method,u){if(db(u))throw new Error('Richiesta al database bloccata nella preview');return open.apply(this,arguments)};
 var beacon=navigator.sendBeacon&&navigator.sendBeacon.bind(navigator);
