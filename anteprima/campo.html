@@ -173,7 +173,7 @@ function campoSvg(H,a,b){
 }
 // Formazione della giornata: titolari per ruolo, voto, gol, assist, ingressi dalla panchina.
 function undici(t,sa){
- var fm=F&&F[sa]&&F[sa][t];if(!fm||!fm.tit||fm.tit.length<11)return null;
+ var fm=F&&F[sa]&&F[sa][t];if(!fm||!fm.tit||!fm.tit.length||fm.tit.length>11)return null;
  function voto(id){var x=D.votes&&D.votes[id]&&D.votes[id][sa];return x||null}
  function gioc(id,dentro){var p=D.P[id]||{},x=voto(id),b=(x&&x.b)||[],gol=0,ass=0,top=false;
   b.forEach(function(s){var n;if((n=/^(\d+) (gol|rigore segnato|rigori segnati)$/.exec(s)))gol+=+n[1];else if((n=/^(\d+) assist$/.exec(s)))ass+=+n[1];else if(s==='migliore in campo')top=true});

@@ -60,6 +60,13 @@ with sync_playwright() as pw:
         giocatori.last.press('Space')
         expect(p.locator('#xi-det')).to_have_text(giocatori.last.get_attribute('data-det'))
 
+        # Una squadra può aver schierato dieci uomini: nessuno va aggiunto o nascosto.
+        formazioni[sa][g['m'][0][0]]['tit'].pop()
+        p.reload()
+        expect(p.locator('.pl.home')).to_have_count(10)
+        expect(p.locator('.pl.away')).to_have_count(11)
+        assert 'Giocatore di prova 0-10' not in p.locator('.pitch').inner_text()
+
         # I pannelli aggiunti alla Curva devono seguire anche il cambio chiaro/scuro.
         p.goto(ROOT + f'curva-{skin}.html')
         p.locator('#v53poll h3').wait_for()

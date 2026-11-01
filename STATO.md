@@ -2,6 +2,15 @@
 
 
 
+
+## 1 novembre — Chiarimento di Gianluca: i dieci nomi della G4 sono corretti
+
+- Gianluca conferma che The Blue brothers aveva molti infortuni: i dieci giocatori della quarta giornata sono la formazione effettivamente disponibile, non un'anomalia da ricostruire.
+- Corretto nel Lab e nella 5.5 il controllo che scartava le formazioni con meno di undici titolari: ora mostra i dieci nomi registrati e gli undici dell'avversario. Nessun giocatore aggiunto e nessuna modifica ai dati. Prova controllata nelle due skin: 10 casa + 11 ospite, senza undicesimo fittizio; resta il caso precedente 11 + 11 e tastiera.
+- Per «cronache non completamente integrate» si intendono solo le nuove storie di classifica (vetta/podio/crisi/fondo): il motore di selezione è presente e la preview dispone dell'export, mentre i collegamenti a post/commenti, dati/copione Radio e generazione PDF non sono tutti nel flusso integrato da Claude. Il test di preparazione dei testi fallisce già prima di qualsiasi pubblicazione. Non implica un problema nei risultati delle partite.
+- Modifiche nella PR #44, sempre in bozza; nessun merge, post, audio o pubblicazione.
+
+
 ## 1 novembre — ChatGPT: versione 5.5 e verifica del lavoro integrato da Claude
 
 - **Numerazione corrente: 5.5**, come richiesto da Gianluca. Non si riparte dalle vecchie pagine 5.3: base `4a07208`, già su `main` del Registro e `claude/campo-unione-chatgpt`. Nuovo ramo di revisione `chatgpt/verifica-55-claude`, [PR #44 in bozza](https://github.com/giandjcosta/o-girrr-registro/pull/44) verso il `main` del Registro; nessun ramo di Claude o `main` modificato. Il selettore `anteprima/5.5/index.html` mostrava ancora 5.3: corretto qui insieme al vecchio collegamento nella scheda di Aggiornamenti. Le sezioni precedenti sono cronologia, non lo stato corrente.
@@ -10,7 +19,7 @@
 - **Difetto riprodotto e corretto qui:** i giocatori avevano ruolo pulsante e tabulazione ma Invio non apriva il dettaglio. Aggiunto supporto a Invio e Spazio con focus visibile. Fixture isolate anche per il file formazioni e prova con 22 giocatori; PASS nelle due skin.
 - **QA locale:** build riproducibile, dieci percorsi fino al Campo (320/390/768/1280/1440, entrambe le skin), corrispondenza nomi/voti e clic senza overflow/JS/HTTP. Anche collaudo Anteprima, Moviola e zone PASS. Report e screenshot reali in `prove/risultati-verifica-55/`. Le URL pubbliche `anteprima/5.5/index.html` e `campo-stadio.html` rispondono HTTP 200; le correzioni di questo ramo non sono ancora su quelle URL.
 - **FALLIMENTO APERTO:** `prove/prova_cronache_integrate.py` fallisce su `len(posts)==3`: Claude ha escluso i collegamenti in `post_curva.py` e Radio. Non è un errore del solo rendering e non dichiariamo tutta la pipeline integrata. I tre livelli editoriali esplicitamente richiesti da Gianluca in questa chat restano vincolanti anche se `AGENTS.md` su questa base conserva la formulazione precedente.
-- **Limiti dei dati:** G1 senza formazioni; per G4/Serie A 8, The Blue brothers ha soltanto dieci titolari salvati e il Campo ripiega senza formazione. Nessuna ricostruzione arbitraria. Sostituzioni future del client da verificare con il regolamento effettivo. Safari/iPhone fisico, nuova CI e giornata futura restano non verificati. La QA ereditata non si attiva sui push `main`/Claude: filtri ancora sui vecchi rami ChatGPT; non equivale a un collaudo automatico dell'ultima integrazione.
+- **Limiti dei dati:** G1 senza formazioni; i dieci titolari di The Blue brothers in G4/Serie A 8 sono corretti per gli infortuni, come confermato da Gianluca; dopo il chiarimento il Campo li mostra. Nessuna ricostruzione arbitraria. Sostituzioni future del client da verificare con il regolamento effettivo. Safari/iPhone fisico, nuova CI e giornata futura restano non verificati. La QA ereditata non si attiva sui push `main`/Claude: filtri ancora sui vecchi rami ChatGPT; non equivale a un collaudo automatico dell'ultima integrazione.
 - **Confini:** nessun merge, force-push, invio di post, audio, deploy del sito reale o modifica al database. La versione corrente da rivedere è 5.5; la PR #43 descrive il lavoro preparatorio già confluito nella base, non una nuova 5.3 da pubblicare.
 
 

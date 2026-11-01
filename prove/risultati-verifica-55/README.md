@@ -9,6 +9,6 @@ Base verificata: `4a0720883998b354292b1103077479a3c525058a`, presente sia su `ma
 
 Sul ramo di revisione sono corretti il selettore ancora etichettato 5.3, il vecchio link nelle Notizie del Registro e i comandi Invio/Spazio sui giocatori. `prova_campo_contenuti.py` ora isola anche `formazioni.json` con fixture e prova 22 giocatori, Invio e Spazio; entrambe le skin PASS. Build riproducibile.
 
-Le formazioni pubbliche esistono per G2–G5. Il record G4 / Serie A 8 dei Blue brothers ha dieci nomi, non undici: il Campo attuale attiva il ripiego senza formazione per quella partita. Nessun dato è stato ricostruito o scritto. La sostituzione automatica dello stesso ruolo è una stima della logica del client, non una posizione reale sul terreno.
+Le formazioni pubbliche esistono per G2–G5. Gianluca conferma che i dieci nomi dei Blue brothers in G4 / Serie A 8 sono corretti: la squadra aveva molti infortuni. Il controllo che nascondeva quella formazione è stato corretto: sono mostrati dieci giocatori e gli undici avversari, senza ricostruzioni o dati scritti. La prova controllata 10 + 11 si aggiunge a quella 11 + 11. La sostituzione automatica dello stesso ruolo è una stima della logica del client, non una posizione reale sul terreno.
 
 Non verificati Safari/iPhone fisico e una futura giornata reale. Le nuove modifiche sono solo sul ramo `chatgpt/verifica-55-claude`: nessun merge, pubblicazione, audio o scrittura a Supabase.
