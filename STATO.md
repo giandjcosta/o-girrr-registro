@@ -53,6 +53,10 @@
 - **Screenshot e rapporti:** `prove/risultati-campo-contenuti/`, Campo raggiunto da Home → Tabellone → Campo in entrambe le skin a 390/1280/1440. Non certificati Safari/iPhone fisico, CDN/cache pubblica o nuova CI sull'ultimo commit. Restano validi i limiti locali e di produzione già documentati. Nessun merge, rilascio, audio, pubblicazione di post o modifica a Supabase/sito pubblico; PR #43 resta bozza.
 
 
+## 1° novembre 2026 — Pagina Novità 5.5 aggiornata (Claude, richiesta di Gianluca)
+- Rifatte tutte le foto di `lab/novita-5-5/` dalla versione di oggi (Home con i puntini nuovi e «N notifiche nuove», Notifiche personali, Tabellone con fasce e pallini allineati, Campo con legenda, grafico, Annuario, Derby, Curva, Carriera, Totogirrr). Foto Notifiche e Home fatte da «Apo team» con le sue notifiche vere lette dal database (scelte senza parolacce) servite alla pagina in locale: nessuna scrittura nel database.
+- Nuova scheda «Andamento dei punti» (foto `grafico.jpg`, pulsanti verso `#andamento`); testi di Home, Notifiche e Campo aggiornati. Provata a 320, 390 e 1280 px: 40 link, nessun errore, nessuno scorrimento laterale.
+
 ## 1° novembre 2026 — Campo: grafico pronto per tutta la stagione (Claude, domanda di Gianluca)
 - Il Campo si aggiorna da solo: a ogni apertura legge `data.json` e `formazioni.json` del sito (senza cache) e ricalcola numeri del confronto, forma, percentuali, formazioni e grafico.
 - Grafico: scala «tonda» che cresce con i punti (0–10, 0–15, 0–20, 0–30, 0–40, 0–60…), tacche 0/metà/massimo, sopra l'asse la scritta «Punti» (non più «Pt») staccata dal grafico; con tante giornate etichette e numeri si diradano (circa ogni 6ª giornata, sempre l'ultima) e i pallini si rimpiccioliscono. Provato con stagioni simulate di 12, 20 e 34 giornate a 320, 390 e 1280 px: nessuna scritta sovrapposta, nessuno scorrimento laterale, nessun errore.
