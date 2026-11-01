@@ -20,9 +20,9 @@ Qui ci sono il Lab, l'Anteprima, le sorgenti delle pagine del sito vero e lo sta
 
 ## Regole grafiche — Lega e Stadio (decisione di Gianluca, 1° novembre 2026)
 Le due grafiche devono essere davvero diverse, e ognuna uguale su tutte le pagine, menu, sottomenu, schede e riquadri:
-- **Lega** (grafica «normale», più statica): riquadri dritti come le partite del Tabellone, banda laterale dritta (8 px, rossa) e angoli appena arrotondati (4 px a sinistra, 14 px a destra); schede e pillole squadrate.
+- **Lega** (grafica «normale», più statica): riquadri grandi dritti come le partite del Tabellone, banda laterale dritta (8 px, rossa) e angoli appena arrotondati (4 px a sinistra, 14 px a destra). Pillole, schede e cerchi delle giornate restano tondi: la Lega non va resa tutta squadrata (Gianluca, 1° novembre).
 - **Stadio** (grafica col corsivo Lobster): riquadri arrotondati (12 px) con la banda laterale curva, come le righe della classifica Stadio; schede e pillole tonde.
-- Colori ufficiali in tutte e due: il rosso della Lega (#d62839) è l'accento (interruttori, bande delle partite, scheda attiva del Tabellone); l'oro (#ffd166) solo dove è oro anche sul sito vero (giornata selezionata, schede dell'Albo nello Stadio, primo posto). Prima di cambiare un colore, confrontalo con la pagina vera.
+- Colori: nella **Lega** l'accento è il rosso (#d62839): interruttori, bande, scheda attiva. Nello **Stadio** più oro che rosso (Gianluca, 1° novembre): bande, scheda attiva, interruttore e pillole selezionate in oro (#ffd166). **Regola fissa in tutte e due le grafiche:** Campionato rosso e Champions Cup azzurra (interruttore Campionato/Champions Cup, scheda attiva del Tabellone, bande delle partite); rossi anche retrocessione ed eliminate. Prima di cambiare un colore, confrontalo con la pagina vera.
 
 ## Regole sui contenuti — tre livelli di scrittura (decisione di Gianluca, 1° novembre 2026)
 O Girrr si racconta come un campionato vero, ma i dati sono quelli ufficiali di Leghe Fantacalcio. Realismo nel racconto, precisione nei dati.

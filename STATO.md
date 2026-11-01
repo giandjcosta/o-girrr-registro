@@ -1,5 +1,17 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
 
+## 1 novembre (notte) — Claude: grafiche Lega/Stadio su tutta la 5.5 e Spogliatoio con la grafica Stadio
+
+- **ChatGPT ha finito i token: il lavoro sulle grafiche l'ha fatto Claude** (prompt `proposte/prompt-chatgpt-grafiche-55.md`), con le correzioni di Gianluca arrivate durante il lavoro. Regola aggiornata in `AGENTS.md`.
+- **Lega:** riquadri grandi dritti con la banda rossa dritta di 8 px (angoli 4/14 px) in Home, Notifiche, Tabellone, Campo, Albo/Carriera. Pillole, schede, cerchi delle giornate e frecce **restano tondi** (Gianluca: «non tutto squadrato»).
+- **Stadio:** riquadri tondi (12 px) con la banda che segue la curva; **più oro che rosso**: bande dei riquadri, pillole e scelte attive in oro, Campo con accento oro.
+- **Regola fissa in tutte e due:** Campionato rosso e Champions Cup azzurra (interruttore, scheda attiva del Tabellone, bande delle partite); rossi retrocessione ed eliminate. Giornata selezionata come sul sito vero (rossa nella Lega, oro nello Stadio).
+- **Curva e Totogirrr hanno la loro grafica e non si toccano:** esclusi dalle regole (confronto automatico: Curva identica a prima; Totogirrr ripristinato).
+- Tutto in poche regole comuni in fondo a `anteprima/5.5/ui.css` (variabili `--g-card`, `--g-box`, `--g-tab`, `--g-acc`). Versione dei file `v=55l`.
+- **Spogliatoio** (prova: `lab/prova-spogliatoio-55.html`, generata da `rilascio/spogliatoio55.py` partendo da `index.html` di `gh-pages`; la vecchia `lab/prova-spogliatoio-reale.html` è superata): «Stile O Girrr» diviso in **Lega** (titoli Inter, riquadri dritti con banda rossa, predefinita) e **Stadio** (Lobster e vetro, riquadri tondi con banda oro, scheda attiva oro). Le sei grafiche non sono più in fila: un bottone «Grafica: …» apre un menu (si chiude dopo la scelta, toccando fuori o con Esc; dissolvenza, niente animazione con «riduci movimento»). Corretto anche un difetto del sito vero: le voci della tendina della squadra su PC erano bianche su bianco. Al rilascio: `python3 rilascio/spogliatoio55.py index.html --sito index.html` sulla copia di `gh-pages`.
+- Vetrina Novità 5.5: Tabellone apre la versione C con le novità elencate; nuova scheda Spogliatoio.
+- **Prove:** build riproducibile, `collaudo_anteprima_52.py`, `prova_moviola.py`, `prova_moviola_gol.py`, `collaudo_55_browser.js chromium` 80 pagine, 0 problemi (nuovo controllo `spogliatoio`). Foto Lega/Stadio a 320/390/768/1280 senza scorrimento laterale né errori. Colori del Tabellone confrontati col sito vero. Non provati: Safari (gira nel workflow) e iPhone vero. Sito vero e database non toccati.
+
 ## 1 novembre (notte) — Claude: Tabellone C con le richieste di Gianluca (Campo anche in Coppa, tabellone tennistico)
 
 - **Scelta di Gianluca:** preferisce la versione C (schede Classifica · Risultati · Campo) e chiede di andare avanti così. A e B restano per ora nel confronto (`lab/confronto-tabellone.html`): si tolgono da `ui.js`/`ui.css` quando la scelta è definitiva.

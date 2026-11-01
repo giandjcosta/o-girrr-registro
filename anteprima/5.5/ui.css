@@ -260,3 +260,25 @@ body[data-v53-skin=stadio] .v55-ko-coppia::after{border-radius:0 12px 12px 0}
 body[data-v53-skin=stadio] .v55-ko-sig{left:16px}
 body[data-v53-skin=stadio] .v55-ko-col.attiva .v55-ko-m{padding-left:54px}
 .v55-ko-col[data-c=f] .v55-ko-corpo{align-items:center}.v55-ko-col[data-c=f] .v55-ko-m{width:100%;max-width:640px}
+
+/* Claude, 1° novembre — Regola grafica di Gianluca: Lega e Stadio davvero diverse, ognuna uguale su tutte le pagine.
+   Lega: riquadri grandi dritti come le partite del Tabellone (banda rossa dritta di 8 px, angoli 4 px a sinistra e 14 px a destra); pillole, schede e cerchi delle giornate restano tondi (Gianluca: «non tutto squadrato»).
+   Stadio: riquadri arrotondati (12 px) con la banda che segue la curva, come le righe della classifica Stadio; schede e pillole tonde.
+   Curva e Totogirrr hanno la loro grafica e restano fuori. Rosso #d62839 come accento in tutte e due; l'oro resta solo dove è oro sul sito vero (giornata selezionata, schede dell'Albo, primo posto). */
+body[data-v53-skin=lega],body[data-v53=campo][data-skin=lega]{--g-card:4px 14px 14px 4px;--g-box:10px;--g-tab:999px;--g-tabbox:999px;--g-band:8px;--g-acc:#d62839;--g-onacc:#fbf6ec}
+body[data-v53-skin=stadio],body[data-v53=campo][data-skin=stadio]{--g-card:12px;--g-box:12px;--g-tab:999px;--g-tabbox:999px;--g-band:8px;--g-acc:#ffd166;--g-onacc:#1d2a52}
+/* Riquadri principali: banda rossa a sinistra */
+body[data-v53-skin]:not([data-v53=curva]) :is(.v53-home,.v53-panel,.v53-notifcard,.v55-cronaca,.v55-record,#v53board,.turnoprossimo,.lg-leghe,a.st,a.c,a.mn,.cvw,.card,.v53-comment,.ban2,.qt){border-radius:var(--g-card)!important;border-left:var(--g-band) solid var(--g-acc)!important}
+body[data-v53-skin]:not([data-v53=curva]) .m{border-radius:var(--g-card)!important}
+body[data-v53-skin]:not([data-v53=curva]) .v53-notifcard a.v55-notiflink{border-radius:var(--g-card)}
+/* Riquadri interni e campi: stessi angoli, senza banda */
+body[data-v53-skin]:not([data-v53=curva]) :is(.v53-box,.v55-striscia,.v55-st-m,.v53-poll-option,.v53-input,.v53-select,.gamebtn,.toolbar,.rac,.sqb,.sp,.box,.chart-grid>div,.tag){border-radius:var(--g-box)!important}
+/* Schede, interruttori e pillole */
+body[data-v53-skin]:not([data-v53=curva]) :is(.v55-schede,.sw,.seg,.skin,.v53-filters){border-radius:var(--g-tabbox)!important}
+body[data-v53-skin]:not([data-v53=curva]) :is(.v55-schede>button,.v55-schede>a,.sw i,.seg button,.skin button,.chips button,.ar,.v53-pill,.v53-btn,.btn,.lnk,.go,.sidebar nav a,#prev,#next){border-radius:var(--g-tab)!important}
+/* Campo: il menu laterale attivo ha la banda rossa come i riquadri */
+body[data-v53=campo] .sidebar nav a.active,body[data-v53=campo] .sidebar nav a:hover{box-shadow:inset 4px 0 var(--g-acc)!important}
+body[data-v53=campo][data-skin=stadio] .sidebar nav a.active{box-shadow:none!important;background:#ffd166!important;color:#1d2a52!important}
+/* Stadio più oro che rosso, ma i colori delle competizioni sono fissi in tutte e due le grafiche: Campionato rosso, Champions Cup azzurra
+   (interruttore, scheda attiva del Tabellone, bande delle partite). */
+body[data-v53-skin=stadio] .v53-pill[aria-selected=true],body[data-v53-skin=stadio] .v53-pill.active{color:#1d2a52}

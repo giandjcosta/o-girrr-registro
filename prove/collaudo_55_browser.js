@@ -42,6 +42,13 @@ const PAGINE = [
     const f = await p.evaluate(() => document.getElementById('v55ko').dataset.fase === 'f' && document.querySelector('.v55-ko-col[data-c=q]').getBoundingClientRect().width < 2);
     return f ? '' : 'in Finale le colonne precedenti non si chiudono';
   }],
+  ['spogliatoio', 'lab/prova-spogliatoio-55.html', async p => {
+    await p.click('.skin-menu summary'); await p.waitForTimeout(300);
+    if ((await p.locator('.skin-menu .skin button').count()) !== 6) return 'il menu non elenca le sei grafiche';
+    await p.click('.skin button[data-skin=stadio]'); await p.waitForTimeout(400);
+    const ok = await p.evaluate(() => document.documentElement.dataset.skin === 'stadio' && !document.querySelector('.skin-menu').open);
+    return ok ? '' : 'la grafica Stadio non si applica o il menu resta aperto';
+  }],
   ['campo-coppa', 'anteprima/5.5/campo-lega.html?skin=lega&coppa=1&giornata=2', async p => (await p.locator('.pitch .pl').count()) === 22 && /Champions Cup · Girone/.test(await p.textContent('.phase')) ? '' : 'Campo della Coppa senza formazioni o senza girone'],
   ['campo-lega', 'anteprima/5.5/campo-lega.html?skin=lega&giornata=5&partita=3', async p => {
     if ((await p.locator('.pitch .pl').count()) !== 22) return 'formazioni incomplete';
