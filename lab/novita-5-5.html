@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Novità 5.5 · O Girrr</title>
+<style>
+:root{--bg:#0d1630;--bg2:#13204a;--card:#172654;--line:#2c3f73;--text:#f5f6fb;--muted:#b6c3e0;--red:#d62839;--gold:#ffd166;--green:#2fae6b}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:radial-gradient(ellipse at 70% -10%,#25407c 0,transparent 55%),var(--bg);color:var(--text);font:16px/1.5 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:inherit}
+.w{max-width:1120px;margin:0 auto;padding:0 16px}
+.top{display:flex;flex-wrap:wrap;gap:8px;padding:14px 0}
+.top a{font-size:13px;font-weight:800;text-decoration:none;padding:6px 11px;border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+.top a:hover{color:var(--text);border-color:var(--muted)}
+header.hero{padding:18px 0 8px}
+.kick{font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+h1{font-size:clamp(32px,7vw,56px);line-height:1.02;margin:8px 0 12px;letter-spacing:-.02em}
+h1 span{color:var(--red)}
+.lead{max-width:720px;color:var(--muted);font-size:17px;margin:0 0 18px}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px;font-size:13px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:999px;white-space:nowrap}
+.chip.nuovo{background:var(--red);color:#fff}
+.chip.meglio{background:#2a4a8f;color:#dbe6ff}
+.chip.attesa{background:#5a4613;color:var(--gold)}
+.chip.online{background:#164a35;color:#9ff0c6}
+.shot-pc{display:block;margin:0 0 34px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.shot-pc img{display:block;width:100%;height:auto}
+.indice{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px}
+.indice a{font-size:14px;font-weight:800;text-decoration:none;padding:8px 13px;border-radius:10px;background:var(--bg2);border:1px solid var(--line)}
+h2.sez{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:38px 0 14px;border-top:1px solid var(--line);padding-top:22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(310px,100%),1fr));gap:18px}
+.card{display:flex;flex-direction:column;background:linear-gradient(160deg,var(--card),#111d42);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.phone{position:relative;margin:18px auto 0;width:min(78%,250px);aspect-ratio:390/780;border-radius:26px;border:7px solid #070d1f;background:#070d1f;overflow:hidden;box-shadow:0 16px 36px rgba(0,0,0,.5)}
+.phone img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card h3{margin:2px 0 0;font-size:21px;line-height:1.2}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.card ul{margin:0;padding-left:18px;color:var(--muted);font-size:14.5px}
+.card li{margin:2px 0}
+.dove{font-size:13px;color:#d9e3f7;background:rgba(255,255,255,.05);border-radius:8px;padding:7px 10px}
+.dove b{color:var(--gold)}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:6px}
+.btn{flex:1 1 120px;text-align:center;text-decoration:none;font-weight:900;font-size:14px;padding:11px 12px;border-radius:11px;background:var(--red);color:#fff}
+.btn.st{background:var(--gold);color:#1a1405}
+.btn:focus-visible,.indice a:focus-visible,.top a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.box{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+.box h3{margin:0 0 8px;font-size:19px}
+.box ul{margin:0;padding-left:18px;color:var(--muted)}
+.box li{margin:5px 0}
+.box b{color:var(--text)}
+.due{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(290px,100%),1fr));gap:18px}
+footer{color:var(--muted);font-size:13px;padding:34px 0 40px}
+@media(max-width:420px){.lead{font-size:16px}.card h3{font-size:19px}.phone{width:82%}}
+</style></head>
+<body>
+<div class="w">
+<nav class="top" aria-label="Registro"><a href="../">Registro</a><a href="./">Laboratorio</a><a href="../ufficiale/">Anteprima 5.5</a><a href="versione-5-3.html">Archivio 5.3</a></nav>
+
+<header class="hero">
+<div class="kick">O Fant A Girrr · Anteprima</div>
+<h1>Le novità della <span>5.5</span></h1>
+<p class="lead">Tutto quello che arriva dopo la 5.3, in un posto solo. Ogni scheda si apre nella grafica Lega o Stadio, con i dati veri della Lega. Qui niente viene scritto nel database: voti, commenti e notifiche restano sul tuo telefono.</p>
+<div class="legend"><span class="chip nuovo">Nuovo</span><span class="chip meglio">Migliorato</span><span class="chip online">Già online</span><span class="chip attesa">Aspetta il tuo sì</span></div>
+</header>
+
+<a class="shot-pc" href="../anteprima/5.5/campo-lega.html?skin=lega&amp;giornata=5&amp;partita=3" aria-label="Apri il Campo"><img src="novita-5-5/campo-pc.jpg" alt="Il Campo su computer: la partita Atletico ma non troppo – AFA SELECCION con le due formazioni in campo" width="1280" height="800"></a>
+
+<nav class="indice" aria-label="Indice">
+<a href="#home">Home</a><a href="#notifiche">Notifiche</a><a href="#tabellone">Tabellone</a><a href="#confronta">Dentro la partita</a><a href="#campo">Campo</a><a href="#annuario">Annuario</a><a href="#derby">Derby</a><a href="#curva">Curva</a><a href="#carriera">Carriera</a><a href="#totogirrr">Totogirrr</a><a href="#decidere">Da decidere</a>
+</nav>
+
+<h2 class="sez">La giornata</h2>
+<div class="grid">
+
+<article class="card" id="home">
+<div class="phone"><img src="novita-5-5/home.jpg" alt="Home con il riquadro Oggi al Girrr" loading="lazy"></div>
+<div class="body"><span class="chip nuovo" style="align-self:flex-start">Nuovo</span>
+<h3>Oggi al Girrr</h3>
+<p>In cima alla Home, prima di tutto il resto: scegli la tua squadra e vedi subito com'è andata.</p>
+<ul><li>La tua posizione e cosa è cambiato in classifica</li><li>Il prossimo avversario e l'ultimo risultato</li><li>La notizia della giornata (per esempio la crisi di una favorita)</li></ul>
+<div class="dove">Dove: <b>Home</b>, subito sotto il titolo. Tutte le card di prima restano.</div>
+<div class="btns"><a class="btn" href="../anteprima/5.5/index-lega.html">Apri · Lega</a><a class="btn st" href="../anteprima/5.5/index-stadio.html">Apri · Stadio</a></div></div>
+</article>
+
+<article class="card" id="notifiche">
+<div class="phone"><img src="novita-5-5/notifiche.jpg" alt="Pagina Notifiche" loading="lazy"></div>
+<div class="body"><span class="chip nuovo" style="align-self:flex-start">Nuovo</span>
+<h3>Notifiche</h3>
+<p>Una pagina sola con le novità che ti riguardano, divise per tipo: Partite, Classifica, Curva, Albo.</p>
+<ul><li>Ogni notifica porta alla sezione giusta</li><li>«Segna tutte come lette»</li><li>Per ora restano sul telefono: niente avvisi push</li></ul>
+<div class="dove">Dove: <b>Home → Notifiche</b> (anche il pulsante in alto in ogni pagina).</div>
+<div class="btns"><a class="btn" href="../anteprima/5.5/notifiche-lega.html">Apri · Lega</a><a class="btn st" href="../anteprima/5.5/notifiche-stadio.html">Apri · Stadio</a></div></div>
+</article>
+
+<article class="card" id="tabellone">
+<div class="phone"><img src="novita-5-5/tabellone.jpg" alt="Classifica del Tabellone con le fasce colorate" loading="lazy"></div>
+<div class="body"><span class="chip meglio" style="align-self:flex-start">Migliorato</span>
+<h3>Tabellone</h3>
+<p>La classifica racconta di più, senza perdere niente di quello che c'era.</p>
+<ul><li>Fascia laterale per scudetto, podio e retrocessione; posizione oro, argento, bronzo</li><li>Frecce ▲▼: quante posizioni guadagnate o perse</li><li>Ultime cinque partite a pallini</li><li>Tocca una squadra: il grafico delle sue posizioni</li><li>Media, massimo e minimo dei punteggi; prossimo turno con i Derby</li></ul>
+<div class="dove">Dove: <b>Home → Tabellone</b>.</div>
+<div class="btns"><a class="btn" href="../anteprima/5.5/tabellone-lega.html">Apri · Lega</a><a class="btn st" href="../anteprima/5.5/tabellone-stadio.html">Apri · Stadio</a></div></div>
+</article>
+
+<article class="card" id="confronta">
+<div class="phone"><img src="novita-5-5/confronta.jpg" alt="Dentro la partita: confronto tra due giornate" loading="lazy"></div>
+<div class="body"><span class="chip nuovo" style="align-self:flex-start">Nuovo</span>
+<h3>Dentro la partita</h3>
+<p>Sotto il Tabellone, due approfondimenti.</p>
+<ul><li><b>Confronta le giornate</b>: scegli due giornate e vedi chi è salito e chi è sceso</li><li><b>Centro partita</b>: risultato, punteggi e punti in classifica di ogni sfida, separati</li></ul>
+<div class="dove">Dove: <b>Tabellone</b>, in fondo, riquadro «Dentro la partita».</div>
+<div class="btns"><a class="btn" href="../anteprima/5.5/tabellone-lega.html">Apri · Lega</a><a class="btn st" href="../anteprima/5.5/tabellone-stadio.html">Apri · Stadio</a></div></div>
+</article>
+
+<article class="card" id="campo">
+<div class="phone"><img src="novita-5-5/campo.jpg" alt="Il Campo con le due formazioni" loading="lazy"></div>
+<div class="body"><span class="chip nuovo" style="align-self:flex-start">Nuovo</span>
+<h3>Campo · Centro della giornata</h3>
+<p>Ogni partita su un campo da calcio, con le due formazioni vere schierate per modulo.</p>
+<ul><li>Nel cerchio il voto in pagella: verde da 6,5, rosso sotto il 6</li><li>⚽ gol, 👟 assist, bordo oro al migliore in campo</li><li>Tocca un giocatore per il dettaglio</li><li>Intorno: forma, numeri del confronto e andamento dei punti</li></ul>
+<div class="dove">Dove: <b>Tabellone → «Campo · Centro della giornata ›»</b>. Formazioni dalla 2ª giornata.</div>
+<div class="btns"><a class="btn" href="../anteprima/5.5/campo-lega.html?skin=lega">Apri · Lega</a><a class="btn st" href="../anteprima/5.5/campo-stadio.html?skin=stadio">Apri · Stadio</a></div></div>
+</article>
+
+</div>
+
+<h2 class="sez">Storia e vita della Lega</h2>
+<div class="grid">
+
+<article class="card" id="annuario">
+<div class="phone"><img src="novita-5-5/annuario.jpg" alt="Annuario nell'Albo d'oro" loading="lazy"></div>
+<div class="body"><span class="chip nuovo" style="align-self:flex-start">Nuovo</span>
+<h3>Annuario</h3>
+<p>Una scheda per stagione con i primati: giocatore più pagato, rosa più cara e più economica, capocannoniere, record di giornata, vittoria più larga, serie più lunga.</p>
+<ul><li>La stagione in corso si aggiorna da sola</li><li>Campione e podio restano «da assegnare» fino alla fine</li><li>Per gli anni passati: «Dato non conservato», niente numeri inventati</li></ul>
+<div class="dove">Dove: <b>Albo d'oro → Annuario</b>.</div>
+<div class="btns"><a class="btn" href="../anteprima/5.5/albo-lega.html">Apri · Lega</a><a class="btn st" href="../anteprima/5.5/albo-stadio.html">Apri · Stadio</a></div></div>
+</article>
+
+<article class="card" id="derby">
+<div class="phone"><img src="novita-5-5/derby.jpg" alt="I Derby della Lega nell'Albo d'oro" loading="lazy"></div>
+<div class="body"><span class="chip meglio" style="align-self:flex-start">Migliorato</span>
+<h3>I Derby della Lega</h3>
+<p>Nell'elenco dei Derby restano solo quelli veri: rivalità da 80 in su, Derby votati o nati da una sfida accettata. Le altre rivalità hanno la loro pagina.</p>
+<ul><li>Corretta anche la storia di 17peppe17: 3 punti sul secondo, non 34</li></ul>
+<div class="dove">Dove: <b>Albo d'oro → I Derby</b>.</div>
+<div class="btns"><a class="btn" href="../anteprima/5.5/albo-lega.html">Apri · Lega</a><a class="btn st" href="../anteprima/5.5/albo-stadio.html">Apri · Stadio</a></div></div>
+</article>
+
+<article class="card" id="curva">
+<div class="phone"><img src="novita-5-5/curva.jpg" alt="Il sondaggio della giornata nella Curva" loading="lazy"></div>
+<div class="body"><span class="chip nuovo" style="align-self:flex-start">Nuovo</span>
+<h3>Il sondaggio della Curva</h3>
+<p>Ogni giornata una domanda («Quale sfida seguirai con più attenzione?»), da votare e commentare. I personaggi della Curva rispondono con il loro carattere.</p>
+<ul><li>Nella prova voti e commenti restano sul tuo telefono</li><li>Nella prova i post veri della Curva non si caricano (compare un avviso): è voluto, così non si scrive niente per sbaglio</li></ul>
+<div class="dove">Dove: <b>Home → Curva</b>, in cima al feed.</div>
+<div class="btns"><a class="btn" href="../anteprima/5.5/curva-lega.html">Apri · Lega</a><a class="btn st" href="../anteprima/5.5/curva-stadio.html">Apri · Stadio</a></div></div>
+</article>
+
+<article class="card" id="carriera">
+<div class="phone"><img src="novita-5-5/carriera.jpg" alt="Carriera da allenatore di Grodah" loading="lazy"></div>
+<div class="body"><span class="chip online" style="align-self:flex-start">Già online · ritoccata</span>
+<h3>Carriera</h3>
+<p>La Carriera a tab è online dalla 5.2 (Panoramica, Obiettivi, Fiducia, Storia, Regole). Nella 5.5 si apre anche la <b>Cassa</b> dalla Carriera, e si torna indietro senza perdere la squadra.</p>
+<ul><li>Bolla «Premio sponsor da riscuotere» quando c'è un premio</li><li>Nella prova si vede la Carriera di Grodah: per un'altra squadra cambia <b>come=</b> nell'indirizzo</li></ul>
+<div class="dove">Dove: <b>Home → Carriera</b>.</div>
+<div class="btns"><a class="btn" href="../anteprima/attuale.html?come=Grodah#carriera">Apri · Lega</a><a class="btn st" href="../anteprima/index.html?come=Grodah#carriera">Apri · Stadio</a></div></div>
+</article>
+
+<article class="card" id="totogirrr">
+<div class="phone"><img src="novita-5-5/totogirrr.jpg" alt="Totogirrr in grafica Stadio" loading="lazy"></div>
+<div class="body"><span class="chip meglio" style="align-self:flex-start">Migliorato</span>
+<h3>Totogirrr in grafica Stadio</h3>
+<p>Aperto dallo Stadio, il Totogirrr ora ha i colori dello Stadio (oro e blu notte) invece di quelli della Lega. La scheda Movimenti è già online dalla 5.3.</p>
+<div class="dove">Dove: <b>Home → Totogirrr</b>.</div>
+<div class="btns"><a class="btn" href="../anteprima/totogirrr-52.html?skin=lega">Apri · Lega</a><a class="btn st" href="../anteprima/totogirrr-52.html?skin=stadio">Apri · Stadio</a></div></div>
+</article>
+
+</div>
+
+<h2 class="sez" id="decidere">Pronte, ma aspettano il tuo sì</h2>
+<div class="due">
+<div class="box"><span class="chip attesa">Aspetta il tuo sì</span>
+<h3 style="margin-top:10px">Le storie della classifica</h3>
+<ul><li>Il sito riconosce da solo le storie della giornata: una favorita in crisi, un sorpasso in vetta, una risalita, chi resta ultimo.</li><li>Nella prova si vedono già in <b>Oggi al Girrr</b> e nelle <b>Notifiche</b>.</li><li>Se dici sì: post automatico di Girrr Sport e del Giornale in Curva, trafiletto nel Giornale e la Radio che ne parla al posto della classifica dei primi tre ogni settimana.</li></ul></div>
+<div class="box"><span class="chip attesa">Aspetta il tuo sì</span>
+<h3 style="margin-top:10px">Regole sui testi</h3>
+<ul><li>ChatGPT propone «tre livelli»: racconto da campionato vero, ma <b>Fantapunti</b> e <b>fantacrediti</b> ammessi dove sono il dato tecnico (Tabellone, Annuario, Regole) e anche nei testi di Giornale e Radio.</li><li>Oggi la regola è: niente fantapunti né crediti, salvo i punteggi.</li></ul></div>
+</div>
+
+<h2 class="sez">Come provarla</h2>
+<div class="box"><ul>
+<li>Ogni pagina ha in alto <b>«Grafica Lega / Grafica Stadio»</b> per cambiare stile senza perdere il punto.</li>
+<li>I dati sono quelli veri del sito (classifica, risultati, voti). Nella prova non si scrive niente nel database.</li>
+<li>Da telefono le pagine sono pensate a partire da 320 px di larghezza.</li>
+</ul></div>
+
+<footer>O Girrr · Laboratorio · Anteprima 5.5 · Online resta la 5.3 finché non dai il «vai».</footer>
+</div>
+</body></html>
