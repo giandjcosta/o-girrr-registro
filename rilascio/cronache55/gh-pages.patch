@@ -1,0 +1,329 @@
+diff --git a/scripts/pdf_giornale.py b/scripts/pdf_giornale.py
+--- a/scripts/pdf_giornale.py
++++ b/scripts/pdf_giornale.py
+@@ -443,6 +443,10 @@
+ 
+ 
+ def costruisci(t, tema="classico"):
++    # Cronache 5.5: arricchisce una copia prima della normale impaginazione.
++    from giornale_classifica import integra
++    attese = json.loads(Path(__file__).with_name("aspettative.json").read_text(encoding="utf-8"))
++    t = integra(t, D, attese)
+     t = maiuscole(t)
+     cal = D["cal"]
+     gioc = [x for x in cal["lega"] if giocata(x)]
+diff --git a/scripts/pdf_settimana.py b/scripts/pdf_settimana.py
+--- a/scripts/pdf_settimana.py
++++ b/scripts/pdf_settimana.py
+@@ -30,7 +30,14 @@
+ 
+ 
+ def giocata(g):
+-    return any(m[-1] != "-" for m in g["m"])
++    # Cronache 5.5: medesima giornata interamente chiusa di Curva e Radio.
++    from zone_classifica import _giornate, RIS
++    chiuse = _giornate(D)
++    if any(g is x for x in D['cal']['lega']):
++        return any(g is x for x in chiuse)
++    sa = chiuse[-1].get('sa') if chiuse else None
++    return bool(sa is not None and g.get('sa') is not None and g['sa'] <= sa
++                and g.get('m') and all(RIS.fullmatch(str(m[-1])) for m in g['m']))
+ 
+ 
+ def premi(partite):
+diff --git a/scripts/zone_classifica.py b/scripts/zone_classifica.py
+--- /dev/null
++++ b/scripts/zone_classifica.py
+@@ -0,0 +1,154 @@
++"""Lettura della storia di classifica per Curva, Giornale e Radio.
++Solo dati delle giornate COMPLETE, nessuna chiamata di rete o scrittura.
++Eventi selettivi: 3 giornate consecutive, poi ogni 4; sorpresa negativa
++di una favorita soltanto se l'ultima posizione è già confermata.
++"""
++import re
++
++ORDINE = ["The Blue brothers", "Apo team", "Mariana Coneja", "stif dc", "Real Madrink",
++          "Atletico ma non troppo", "Oranje VC", "AFA SELECCION", "Grodah", "WOA"]
++
++RIS = re.compile(r"^\d+-\d+$")
++
++def _squadre(d):
++    a = d.get("teams") or []
++    return sorted({x["name"] if isinstance(x, dict) else x for x in a})
++
++def _giornate(d):
++    calendario = sorted((d.get("cal") or {}).get("lega") or [], key=lambda g: g["n"])
++    validi, prossimo = [], 1
++    for g in calendario:
++        if g.get("n") != prossimo:
++            break
++        mm = g.get("m") or []
++        teams = _squadre(d)
++        presenti = [t for x in mm if len(x) == 5 for t in (x[0], x[3])]
++        if (not mm or sorted(presenti) != teams or len(set(presenti)) != len(presenti)
++                or not all(len(x) == 5 and RIS.fullmatch(str(x[4])) for x in mm)):
++            break
++        validi.append(g)
++        prossimo += 1
++    return validi
++
++def storia(d):
++    """Per ogni giornata: classifica e posizioni (ordine Pt, totale, DR, GF)."""
++    squadre = _squadre(d)
++    if len(squadre) < 2:
++        return []
++    tab = {t: {"t": t, "pt": 0, "fp": 0.0, "gf": 0, "gs": 0} for t in squadre}
++    out = []
++    for g in _giornate(d):
++        for m in g["m"]:
++            casa, pc, pf, ospite, ris = m
++            if casa not in tab or ospite not in tab:
++                return out
++            a, b = map(int, ris.split("-"))
++            for t, gol, presi, totale in ((casa, a, b, pc), (ospite, b, a, pf)):
++                x = tab[t]
++                x["pt"] += 3 if gol > presi else 1 if gol == presi else 0
++                x["gf"] += gol
++                x["gs"] += presi
++                x["fp"] += float(totale)
++        ordine = sorted(tab.values(), key=lambda x: (-x["pt"], -x["fp"], -(x["gf"]-x["gs"]), -x["gf"], ORDINE.index(x["t"]) if x["t"] in ORDINE else 99, x["t"]))
++        out.append({"giornata": g["n"], "posizioni": {x["t"]: i+1 for i, x in enumerate(ordine)},
++                    "classifica": [dict(x, pos=i+1) for i, x in enumerate(ordine)]})
++    return out
++
++def eventi(d, aspettative=None):
++    """Riproduce la scelta editoriale: priorità, cooldown di 4 turni per tema/squadra.
++
++    Una storia principale per giornata, disponibile a ogni redazione. I candidati
++    stabili non scelti restano eleggibili: nessun fatto perso per rotazione di canale.
++    """
++    hist = storia(d)
++    expected = (aspettative or {}).get("squadre") or {}
++    scelti, ultimo = [], {}
++    for idx, latest in enumerate(hist):
++        n, pos = latest["giornata"], latest["posizioni"]
++        if n < 2:
++            continue
++        prev = hist[idx-1]["posizioni"]
++        candidati = []
++        def durata(team, test, end=idx):
++            count = 0
++            for x in reversed(hist[:end+1]):
++                if not test(x["posizioni"][team]): break
++                count += 1
++            return count
++        def add(priorita, tipo, team, titolo, testo, serie=0, altri=None, contesto=None):
++            gruppo = "fondo" if tipo in ("sorpresa", "retrocessione") else "podio" if tipo in ("podio", "rivelazione") else tipo
++            k = (gruppo, team)
++            if n - ultimo.get(k, -100) < 4: return
++            candidati.append(dict(priorita=priorita, tipo=tipo, squadra=team, titolo=titolo,
++                testo=testo, durata=serie, posizione=pos[team], gruppo=gruppo,
++                prova={"giornata": n, "posizione_precedente": prev[team],
++                       "posizione": pos[team], "attesa": expected.get(team, {}).get("attesa"),
++                       "serie": serie, "altre_squadre": altri or [], **(contesto or {})}))
++        for team, posto in pos.items():
++            attesa = expected.get(team, {}).get("attesa")
++            big = isinstance(attesa, (int, float)) and attesa <= 3
++            fondo = durata(team, lambda p: p == len(pos))
++            cima = durata(team, lambda p: p == 1)
++            podio = durata(team, lambda p: p <= 3)
++            if big and fondo >= 2:
++                add(100,"sorpresa",team,"CRISI IMPREVISTA",f"{team}, attesa tra le prime {int(attesa)}, è ultima da {fondo} giornate consecutive. La favorita deve reagire.",fondo)
++            elif fondo >= 3:
++                add(72,"retrocessione",team,"ZONA RETROCESSIONE",f"{team} resta ultima da {fondo} giornate consecutive. Serve una svolta per lasciare il fondo della classifica.",fondo)
++            # Una rimonta/caduta ampia si misura su tre turni, oltre il solo ultimo posto.
++            # Serve un ulteriore passo nella stessa direzione nell'ultima giornata.
++            if n >= 5:
++                partenza = hist[idx-3]["posizioni"][team]
++                variazione = partenza-posto
++                contesto = {"giornata_inizio": n-3, "posizione_inizio": partenza,
++                            "variazione": variazione}
++                if variazione >= 4 and prev[team] > posto:
++                    add(97,"rimonta",team,"GRANDE RIMONTA",
++                        f"{team} risale dalla {partenza}ª alla {posto}ª posizione in tre giornate: quattro o più posti recuperati. La rimonta prende forma.",
++                        serie=3,contesto=contesto)
++                elif variazione <= -4 and prev[team] < posto and posto >= len(pos)-2:
++                    add(98,"crollo",team,"CROLLO IN CLASSIFICA",
++                        f"{team} scende dalla {partenza}ª alla {posto}ª posizione in tre giornate. La squadra precipita nella parte bassa della classifica.",
++                        serie=3,contesto=contesto)
++            if n >= 3 and prev[team] == len(pos) and posto < len(pos):
++                serie = durata(team,lambda p:p==len(pos),idx-1)
++                if serie >= 2:
++                    add(94,"risalita",team,"LA RISALITA",f"{team} lascia l’ultimo posto dopo {serie} giornate in fondo: ora è {posto}ª. Un primo passo nella risalita.",serie)
++            if n >= 4 and posto == 1 and prev[team] != 1:
++                ex = next(t for t,p in prev.items() if p == 1)
++                if durata(ex,lambda p:p==1,idx-1) >= 2:
++                    add(96,"sorpasso",team,"CAMBIA LA VETTA",f"{team} sale al comando e supera {ex}. La corsa scudetto cambia protagonista.",altri=[ex])
++            elif cima >= 3:
++                add(68,"vetta",team,"LA VETTA DURA",f"{team} resta al comando da {cima} giornate consecutive. La vetta ha trovato continuità.",cima)
++            if posto in (2,3) and podio >= 3:
++                sorpresa = isinstance(attesa,(int,float)) and attesa >= 5
++                add(82 if sorpresa else 62,"rivelazione" if sorpresa else "podio",team,
++                    "LA RIVELAZIONE" if sorpresa else "PODIO CONQUISTATO",
++                    f"{team} è sul podio da {podio} giornate consecutive." +
++                    (f" Partiva con una posizione attesa di {int(attesa)}ª: ora è {posto}ª." if sorpresa else " La corsa ai primi posti trova una protagonista stabile."),podio)
++            if n >= 4 and posto <= 3 < prev[team] and durata(team,lambda p:p>3,idx-1)>=2:
++                add(86,"ingresso_podio",team,"IRRUZIONE SUL PODIO",f"{team} passa dalla {prev[team]}ª alla {posto}ª posizione ed entra sul podio.")
++            if n >= 4 and prev[team] <= 3 < posto and durata(team,lambda p:p<=3,idx-1)>=3:
++                add(85,"uscita_podio",team,"IL PODIO SFUGGE",f"{team} scende dalla {prev[team]}ª alla {posto}ª posizione e lascia il podio dopo una serie di almeno tre giornate.")
++        rows = latest["classifica"]
++        old = hist[idx-1]["classifica"]
++        gap = rows[0]["pt"]-rows[1]["pt"]
++        if n >= 4 and gap <= 3 and old[0]["pt"]-old[1]["pt"] > 3:
++            a,b = rows[:2]
++            add(90,"lotta_scudetto",a["t"],"SCUDETTO RIAPERTO",f"{b['t']} riporta il distacco dalla vetta a {gap} punti. {a['t']} resta davanti, ma la lotta scudetto si riapre.",altri=[b["t"]])
++        if not candidati: continue
++        # A parità di rilevanza favorisce il tema meno recente, senza scavalcare le crisi.
++        candidati.sort(key=lambda c:(-c["priorita"],ultimo.get((c["gruppo"],c["squadra"]),-100),c["squadra"]))
++        ev = candidati[0]
++        ultimo[(ev.pop("gruppo"),ev["squadra"])] = n
++        stagione = (aspettative or {}).get("stagione", "2026/27")
++        ev.update(stagione=stagione, chiave=f"zona:{stagione}:G{n}:{ev['tipo']}:{ev['squadra']}",giornata=n,
++                  canale="tutti",canali=["radio","girrr_sport","giornale","commenti","pdf"])
++        ev["commento"] = f"Alla {n}ª giornata: {ev['squadra']} è {ev['posizione']}ª. Il prossimo turno dirà se questa svolta avrà seguito."
++        scelti.append(ev)
++    return scelti
++
++
++def evento(d, aspettative=None):
++    hist = storia(d)
++    if not hist: return None
++    return next((e for e in reversed(eventi(d,aspettative)) if e["giornata"]==hist[-1]["giornata"]),None)
+diff --git a/scripts/aspettative.json b/scripts/aspettative.json
+--- /dev/null
++++ b/scripts/aspettative.json
+@@ -0,0 +1,87 @@
++{
++ "stagione": "2026/27",
++ "nota": "Aspettative del presidente a inizio stagione 2026/27, calcolate dal Laboratorio (storia dell'allenatore, forza della rosa, ambizioni). Restano fisse per tutta la stagione.",
++ "giornate_totali": 34,
++ "squadre": {
++  "The Blue brothers": {
++   "attesa": 2,
++   "obiettivo": "Chiudere tra le prime due",
++   "obiettivo_allenatore": "Stare tra le prime due",
++   "coppa": "Tornare in finale di Champions Cup",
++   "forza_rosa": 99,
++   "storia": 53
++  },
++  "Apo team": {
++   "attesa": 3,
++   "obiettivo": "Tornare sul podio dopo gli ultimi anni",
++   "obiettivo_allenatore": "Rifarmi dagli ultimi anni: tornare tra le prime tre",
++   "coppa": "Vincere la Champions Cup",
++   "forza_rosa": 100,
++   "storia": 46
++  },
++  "AFA SELECCION": {
++   "attesa": 3,
++   "obiettivo": "Chiudere sul podio",
++   "obiettivo_allenatore": "Puntare al podio",
++   "coppa": "Arrivare in finale di Champions Cup",
++   "forza_rosa": 88,
++   "storia": 65
++  },
++  "Oranje VC": {
++   "attesa": 4,
++   "obiettivo": "Chiudere tra le prime 4",
++   "obiettivo_allenatore": "Entrare tra le prime 4",
++   "coppa": "Arrivare in finale di Champions Cup",
++   "forza_rosa": 94,
++   "storia": 50
++  },
++  "Real Madrink": {
++   "attesa": 5,
++   "obiettivo": "Entrare nella metà alta",
++   "obiettivo_allenatore": "Stare nella metà alta",
++   "coppa": "Passare il girone di Champions Cup",
++   "forza_rosa": 86,
++   "storia": 59
++  },
++  "Grodah": {
++   "attesa": 5,
++   "obiettivo": "Entrare nella metà alta",
++   "obiettivo_allenatore": "Stare nella metà alta",
++   "coppa": "Difendere la Champions Cup",
++   "forza_rosa": 84,
++   "storia": 60
++  },
++  "WOA": {
++   "attesa": 2,
++   "obiettivo": "Ripetersi: difendere il titolo",
++   "obiettivo_allenatore": "Ripetermi",
++   "coppa": "Passare il girone di Champions Cup",
++   "forza_rosa": 81,
++   "storia": 64
++  },
++  "Mariana Coneja": {
++   "attesa": 5,
++   "obiettivo": "Puntare alla parte alta",
++   "obiettivo_allenatore": "Stare nella parte alta",
++   "coppa": "Non chiudere ultimi nel girone di Champions Cup",
++   "forza_rosa": 77,
++   "storia": 55
++  },
++  "stif dc": {
++   "attesa": 5,
++   "obiettivo": "Puntare alla parte alta",
++   "obiettivo_allenatore": "Stare nella parte alta",
++   "coppa": "Non chiudere ultimi nel girone di Champions Cup",
++   "forza_rosa": 66,
++   "storia": 69
++  },
++  "Atletico ma non troppo": {
++   "attesa": 6,
++   "obiettivo": "Salire gradualmente verso l'alto",
++   "obiettivo_allenatore": "Salire un passo alla volta",
++   "coppa": "Non chiudere ultimi nel girone di Champions Cup",
++   "forza_rosa": 65,
++   "storia": 55
++  }
++ }
++}
+\ No newline at end of file
+diff --git a/scripts/giornale_classifica.py b/scripts/giornale_classifica.py
+--- /dev/null
++++ b/scripts/giornale_classifica.py
+@@ -0,0 +1,42 @@
++#!/usr/bin/env python3
++"""Arricchisce una COPIA di testi.json per scripts/pdf_giornale.py (gh-pages).
++
++Il generatore esistente legge `classifiche` nella seconda pagina: nessuna patch
++al sito è necessaria. Non modifica mai il file sorgente, né invia contenuti.
++"""
++import argparse
++import copy
++import json
++from pathlib import Path
++from zone_classifica import evento
++
++
++def integra(testi, dati, aspettative=None):
++    t = copy.deepcopy(testi)
++    e = evento(dati, aspettative)
++    if not e:
++        return t
++    # Doppio passaggio sulla stessa copia: una sola inclusione; il corpo resta verificabile.
++    precedenti = t.get('_cronache_classifica', [])
++    if e['chiave'] in precedenti:
++        return t
++    testo = e['titolo'].capitalize() + '. ' + e['testo']
++    t['classifiche'] = '\n\n'.join(x for x in (t.get('classifiche', ''), testo) if x)
++    t['_cronache_classifica'] = precedenti + [e['chiave']]
++    t['_prove_cronaca'] = [e['prova']]
++    return t
++
++
++def main():
++    p = argparse.ArgumentParser(description=__doc__)
++    p.add_argument('testi',type=Path)
++    p.add_argument('dati',type=Path)
++    p.add_argument('uscita',type=Path)
++    p.add_argument('--aspettative',type=Path,default=Path(__file__).with_name('aspettative.json'))
++    a = p.parse_args()
++    if a.uscita.resolve() in (a.testi.resolve(),a.dati.resolve(),a.aspettative.resolve()):
++        p.error('L’uscita deve essere una nuova copia, distinta dalle sorgenti.')
++    a.uscita.write_text(json.dumps(integra(json.loads(a.testi.read_text()),json.loads(a.dati.read_text()),json.loads(a.aspettative.read_text())),ensure_ascii=False,indent=2))
++
++if __name__=='__main__':
++    main()
