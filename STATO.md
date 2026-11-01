@@ -1,5 +1,12 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
 
+## 1 novembre — ChatGPT: cronache incluse nel futuro rilascio, pubblicazione in attesa del «Vai»
+
+- Chiarimento di Gianluca: integrare tutto nella prova e predisporre il passaggio al sito principale insieme alla 5.5; il suo «Vai» autorizzerà la pubblicazione, non un nuovo giro di sviluppo dei collegamenti.
+- **PREPARATO:** `rilascio/cronache55.py` produce undici file e le patch per `main`/`gh-pages`, esclusivamente in una cartella separata. Le copie consegnate in `rilascio/cronache55/` hanno già il flag nei chiamanti Curva e Radio, l'inclusione automatica nel normale `costruisci` del PDF e la gestione coerente dei turni parziali. Non sono workflow attivi del Registro e non sono stati applicati al sito.
+- **PASS:** patch applicabili sulle copie dei sorgenti pubblici aggiornati; esecuzione delle sole righe di preparazione estratte dai workflow, tre testi social e dati Radio con la stessa chiave; generatore PDF che aggiunge da solo la notizia, una volta, anche con giornata successiva parziale. Nessun adattatore esterno necessario per questo collegamento. Input preservati e rifiuto di sorgenti modificati nel frattempo.
+- Il blocco riguarda solo l'uscita sul sito: la Radio ufficiale legge già il Registro, quindi il suo attuale chiamante deve restare invariato fino al rilascio. Nessun audio, post, database o ramo del sito modificato; niente `ufficiale/build.py` né vecchio `rilascio/pacchetto.py`. [Procedura aggiornata](rilascio/LEGGIMI.md).
+
 ## 1 novembre — ChatGPT: cronache di prova completate, collaudo GitHub superato
 
 - Gianluca richiede di completare il passaggio rimasto fuori e unire nel repository di prova. Consegna nella [PR #45](https://github.com/giandjcosta/o-girrr-registro/pull/45), base `main` del solo Registro, aggiornata a `cdea774` di Claude. La PR #44 era già stata unita da Claude: preservati anche i successivi ritocchi al grafico Campo e alle notifiche. Nessun merge delle vecchie PR preparatorie che reintrodurrebbero basi precedenti al lavoro di Claude.

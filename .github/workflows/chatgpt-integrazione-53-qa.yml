@@ -27,6 +27,7 @@ jobs:
           python3 prove/prova_cronache_integrate.py
           python3 prove/prova_cronache_compatibilita.py
           python3 prove/prova_cronache_pacchetto.py
+          python3 prove/prova_rilascio_cronache55.py
           python3 prove/prova_53_casi_limite.py
       - name: Browser
         run: |

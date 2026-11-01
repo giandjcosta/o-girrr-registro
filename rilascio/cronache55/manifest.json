@@ -1,0 +1,75 @@
+{
+  "modalita": "preparazione_locale",
+  "applicato": false,
+  "push": false,
+  "invii": false,
+  "audio": false,
+  "file": [
+    {
+      "ramo": "main",
+      "percorso": ".github/workflows/dopo-giornata.yml",
+      "prima_sha256": "74d9799c5e13c0516fc35c7f02b9395534ad0340a6915c5f0e94d771677229f7",
+      "dopo_sha256": "0ae471f39f8236ec70e0b11e2c9ff4b2ec3a8984e1514b3674faa3f498d8da17"
+    },
+    {
+      "ramo": "main",
+      "percorso": ".github/workflows/radio-giornata.yml",
+      "prima_sha256": "25f5e3ee4d3167d13ddba75b12fab7b61233fcb3862ff8f4d1c02f20916ffa08",
+      "dopo_sha256": "7ba6cabc2e900dd3e074b9a8b3a3e81d6da90163ebe4504aedbb2baea1a6407e"
+    },
+    {
+      "ramo": "main",
+      "percorso": "calcoli/post_curva.py",
+      "prima_sha256": "6478578c1ca7011c4e5e218c8d7f40dd3859480114ad8a583d563a627aae1904",
+      "dopo_sha256": "30e9e37773d6ad01f93057a64cd4d314aeed0578f8140102139a7e99e693ec1b"
+    },
+    {
+      "ramo": "gh-pages",
+      "percorso": "scripts/pdf_giornale.py",
+      "prima_sha256": "2b0b8dcdfa64ee9233044d475a00bc31f04758cca8cbdb49ccf9b05e14d4f029",
+      "dopo_sha256": "bddc3603be7587ad8fe546652387c0478d5ab85727e7d8d1de142fcfdb035188"
+    },
+    {
+      "ramo": "gh-pages",
+      "percorso": "scripts/pdf_settimana.py",
+      "prima_sha256": "3f4ea24bc60f3fbbd2f31f21a13bc5a27761670a2b026e209d15d6b9e8821c5d",
+      "dopo_sha256": "ed9b323958342e05831bd35d3eeea2e29de6a436c8f5638dd8fb58aa0a91dae6"
+    },
+    {
+      "ramo": "main",
+      "percorso": "calcoli/zone_classifica.py",
+      "prima_sha256": null,
+      "dopo_sha256": "ceb7baf3b93a3806d15acb02e7c1670d5bc78990dd9b97a0b65ff6d4710a7849"
+    },
+    {
+      "ramo": "gh-pages",
+      "percorso": "scripts/zone_classifica.py",
+      "prima_sha256": null,
+      "dopo_sha256": "ceb7baf3b93a3806d15acb02e7c1670d5bc78990dd9b97a0b65ff6d4710a7849"
+    },
+    {
+      "ramo": "main",
+      "percorso": "calcoli/aspettative.json",
+      "prima_sha256": null,
+      "dopo_sha256": "d750af73f0d4eaba893243e2b1b1e58cca567d97b1af30c2a8e5da9ec912a732"
+    },
+    {
+      "ramo": "gh-pages",
+      "percorso": "scripts/aspettative.json",
+      "prima_sha256": null,
+      "dopo_sha256": "d750af73f0d4eaba893243e2b1b1e58cca567d97b1af30c2a8e5da9ec912a732"
+    },
+    {
+      "ramo": "main",
+      "percorso": "calcoli/giornale_classifica.py",
+      "prima_sha256": null,
+      "dopo_sha256": "ad3b252d5dca70168509a8d192d540978f6b59c8bf488a240354031abdd716eb"
+    },
+    {
+      "ramo": "gh-pages",
+      "percorso": "scripts/giornale_classifica.py",
+      "prima_sha256": null,
+      "dopo_sha256": "ad3b252d5dca70168509a8d192d540978f6b59c8bf488a240354031abdd716eb"
+    }
+  ]
+}

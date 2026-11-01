@@ -1,4 +1,37 @@
-# Rilascio della 5.0
+# Preparazione delle cronache 5.5
+
+Le cronache sono già abilitate nelle copie del futuro rilascio contenute in
+`rilascio/cronache55/`: chiamante Curva, chiamante Radio e costruzione del PDF.
+Non occorre tornare a sviluppare quei collegamenti dopo l'approvazione.
+Il sito principale continua a usare i suoi file attuali fino al «Vai» di Gianluca.
+
+`python3 rilascio/cronache55.py COPIA_MAIN_AGGIORNATA COPIA_GH_PAGES_AGGIORNATA USCITA_SEPARATA`
+prepara undici file e due patch, senza applicarli, fare commit/push o eseguire
+workflow e generatori vocali. Le copie qui consegnate derivano dai sorgenti
+pubblici letti il 1 novembre. Il manifest contiene gli hash prima/dopo.
+Se il post della Curva o i collegamenti attesi nei sorgenti sono cambiati,
+la preparazione si ferma: integrare gli aggiornamenti, senza sovrascriverli.
+
+- `main.patch`: aggiunge il flag ai preparatori chiamati da `dopo-giornata.yml`
+  e `radio-giornata.yml` e include i moduli delle cronache. Nessuna modifica
+  a `curva-subito.yml`: queste storie nascono dalla chiusura della giornata.
+- `gh-pages.patch`: il normale `costruisci` del Giornale integra il trafiletto
+  prima dell'impaginazione; le giornate parziali restano escluse. Include i
+  tre moduli di supporto accanto al generatore. Non cambia `aggiorna-dati.yml`.
+- La Radio usa i sorgenti già integrati nel Registro. Il flag nel futuro workflow
+  la attiverà al rilascio, preservando fino ad allora il comportamento ufficiale.
+
+Prova: `python3 prove/prova_rilascio_cronache55.py`. Applica le patch soltanto
+a copie temporanee, estrae ed esegue le sole righe di preparazione e verifica
+la chiave comune dei testi; il PDF include da solo la notizia anche con una
+gara finita nel turno successivo. Nessun publisher, audio o database invocato.
+
+Le due patch vanno incluse nel rilascio complessivo della 5.5 e ricontrollate sulle
+versioni aggiornate del sito **prima del push autorizzato**. Il pacchetto storico
+5.0 descritto sotto non è il comando di costruzione della 5.5 e non va eseguito
+per questa preparazione (richiama `ufficiale/build.py`).
+
+# Rilascio storico della 5.0
 
 Tutto si prepara qui, senza toccare il sito vero.
 
