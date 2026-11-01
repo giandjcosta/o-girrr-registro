@@ -129,3 +129,9 @@
 [data-v53=curva] .v53-btn{background:var(--v53-accent);border-color:var(--v53-accent);color:var(--v53-onaccent)}
 [data-v53=curva] .v53-poll-option input{accent-color:var(--v53-accent)}
 [data-v53=curva] .v53-utilities a{border-color:var(--v53-line)}
+
+/* Home: una notizia per riga, il puntino oro vuol dire «da leggere» */
+#v53news{display:flex;flex-direction:column;gap:5px;flex:1 1 220px;min-width:0}
+.v53-riga{display:flex;align-items:baseline;gap:7px}.v53-riga .v53-dot{position:relative;top:-1px}
+.v53-quando{display:block;font-size:10px;color:var(--v53-muted);margin-top:2px}
+#v53notifstato{font-size:12px;color:var(--v53-muted);margin:6px 0 10px}
