@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
 
+## 1 novembre (notte, 5) — Claude: Carriera, grafico della fiducia leggibile
+
+- Richiesta di Gianluca (foto del sito vero, Carriera → Fiducia): «non c'è numero, non si capisce quando succede».
+- **Nel Lab** (`lab/index.html`, `vCarFiduciaGiornate`): scala 0–100 con fasce di colore ed etichette «Esonero»/«Fiducia piena», linea tratteggiata del 50, valore su ogni punto e giornata sotto; frase che spiega cosa conta (posizione rispetto all'attesa e bilancio vittorie/sconfitte); tendina «Giornata per giornata» con risultato (V/N/P, punteggio, avversario), posizione e variazione della fiducia (▲/▼). Stessi calcoli di prima, nessun numero inventato.
+- «Come cambia la fiducia con il calendario» diventa «E se… prova la fiducia», con spiegazione e «Alla Nª giornata la posizione pesa per il X%» al posto di «peso del calendario ×0,25».
+- Anteprima rigenerata; vetrina 5.5 con la nuova scheda. Sul sito vero arriverà con il rilascio 5.5 (`app.html`).
+- **Prove:** foto Lega/Stadio a 390 e 1280 senza scorrimento laterale né errori; collaudo Chromium. Non provati Safari e iPhone vero.
+
 ## 1 novembre (notte, 4) — Claude: Campo sul telefono senza doppioni, partite scorrevoli col dito
 
 - Tolti i doppioni del Campo: resta un solo «indietro» (quello della barra in alto) che torna al Tabellone sulla stessa giornata, anche in coppa (`#coppa-N`), e un solo scudo.
