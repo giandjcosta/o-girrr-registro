@@ -7,6 +7,7 @@ cooldown e chiave stagionale verificabile; nessuna rotazione obbligatoria dei ca
 
 ## Revisione navigabile
 
+- [Novità 5.5 → Le storie della classifica](https://giandjcosta.github.io/o-girrr-registro/lab/novita-5-5.html#decidere).
 - [Lab → Cronache di prova](https://giandjcosta.github.io/o-girrr-registro/lab/cronache-prova/).
 - [Anteprima 5.5](https://giandjcosta.github.io/o-girrr-registro/anteprima/5.5/).
 - [PR #45](https://github.com/giandjcosta/o-girrr-registro/pull/45).
@@ -84,3 +85,5 @@ Nessun post inviato, database scritto o audio generato durante questa consegna.
 Screenshot del dossier, PDF e rapporti: `prove/risultati-cronache-55/`.
 Screenshot delle due grafiche/legenda e rapporti precedenti nella precedente PR #44:
 `prove/risultati-verifica-55/` e `prove/risultati-legenda-55/`.
+
+QA GitHub completa sul codice `acee944`: [PASS run 41311117383](https://github.com/giandjcosta/o-girrr-registro/actions/runs/41311117383). L’ultimo commit aggiorna soltanto testi/collegamento della pagina Novità e documentazione/rapporti; il nuovo percorso è stato provato manualmente alle cinque larghezze.
