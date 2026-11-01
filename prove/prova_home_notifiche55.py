@@ -48,7 +48,7 @@ with sync_playwright() as pw:
     p.locator('.v55-more').filter(has=p.locator('summary').filter(has_text='La storia dei tuoi allenatori')).screenshot(path=str(OUT/f'storico-home55-{skin}-{w}.png'))
    if w in (390,1440):
     p.locator('#v55dashboard>summary').click()
-    assert not p.locator('#v55dashboard').evaluate('(e)=>e.open')
+    p.wait_for_function("!document.getElementById('v55dashboard').open")
     assert p.locator('.v55-summary').is_hidden() and p.locator('#v53news').is_visible()
     p.reload(wait_until='networkidle');p.locator('#v55compact').wait_for()
     assert not p.locator('#v55dashboard').evaluate('(e)=>e.open'),'Ricorda il riepilogo chiuso'

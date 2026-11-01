@@ -102,8 +102,9 @@ with sync_playwright() as pw:
   report.append({'skin':skin,'larghezza':390,'esito':'PASS','personali':[e['chiave'] for e in EVENTS],'RPC':'solo letture simulate'})
   p.goto(ROOT+'/anteprima/'+('attuale.html' if skin=='lega' else 'index.html')+'?notifica=sfida-66&skin='+skin+'#sport',wait_until='networkidle')
   p.locator('[data-v55-destinazione="sfida-66"]').wait_for()
-  p.locator('#tabs [data-tab=oro]').click()
-  assert p.locator('#view').is_visible() and p.locator('#v55record').count()==0
+  p.locator('.v55-record-nav a').last.click()
+  p.locator('#v53notifications article').first.wait_for()
+  assert p.locator('#v55record').count()==0
   print('PASS sette contenuti personali specifici',skin,flush=True);c.close()
  # Archivio e contenuto assente: mai ricadere sulla pagina generale.
  for missing in (False,True):

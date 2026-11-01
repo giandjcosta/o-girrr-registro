@@ -161,3 +161,28 @@
 /* Avvisi compatti: l'intera scheda è un solo collegamento. */
 #v53notifications{max-width:880px;margin:0 auto}.v53-notifcard{display:block;padding:0;margin:6px 0;border-radius:10px}.v53-notifcard a.v55-notiflink{display:flex;align-items:center;gap:10px;min-height:60px;width:100%;padding:9px 12px;color:var(--v53-ink);text-decoration:none;border-radius:inherit}.v55-notiftext{flex:1;min-width:0}.v55-notiftext>b{display:block;line-height:1.35}.v55-notifdetail{display:block;font-size:12px;line-height:1.4;color:var(--v53-muted);margin-top:2px}.v55-notifarrow{font-size:23px;color:var(--v53-caption)}.v55-notiflink:hover{background:var(--v53-soft)}.v55-notiflink:focus-visible{outline:2px solid var(--v53-caption);outline-offset:2px}.v55-notice .v55-news-link{width:100%}.v55-destinazione{scroll-margin-top:85px;outline:2px solid var(--v53-caption);outline-offset:4px}.v55-cronaca{padding:14px;border:1px solid var(--v53-line);border-radius:12px;background:var(--v53-soft);margin-bottom:18px}.v55-cronaca h3{margin:6px 0;font-size:18px;letter-spacing:0}.v55-cronaca p{font-size:14px;line-height:1.5}.v55-record{max-width:880px;margin:18px auto!important;padding:20px!important;overflow-wrap:anywhere}.v55-record-mode #view{display:none}.v55-record-nav{display:flex;gap:14px;align-items:center;margin-bottom:24px}.v55-record-nav a{min-height:44px;display:flex;align-items:center;font-weight:800}.v55-record-text{font-size:17px;line-height:1.6;margin:16px 0}.v55-record dl>div{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--v53-line);padding:12px 0;font-size:13px}.v55-record dd{margin:0;text-align:right}.v55-curva-target-mode #vista{display:none}.v55-curva-target{padding:24px 16px;line-height:1.6}.v55-curva-target a{display:inline-flex;min-height:44px;align-items:center}.v55-record [role=status]{margin:20px 0}@media(max-width:420px){.v53-notifcard a.v55-notiflink{padding:8px 10px;gap:8px}.v55-notifdetail{font-size:11px}.v55-record{margin:12px!important;padding:16px!important}.v55-record-text{font-size:15px}}
 .v55-notice-head h3{flex:1;min-width:0;flex-wrap:wrap;gap:5px}.v55-notice-head>a{min-width:40px;justify-content:center}.v55-notice-head #v53read{margin:0!important;align-self:center;max-width:70px;min-height:44px;padding:6px 9px!important;font-size:10px!important;line-height:1.25}.v55-notice{padding-bottom:10px}.v55-notice #v53news{grid-column:1/-1}@media(max-width:420px){.v55-notice-head{gap:7px}.v55-notice-head h3{font-size:11px}.v55-notice-head h3 span{font-size:9px}.v55-notice-head #v53read{max-width:54px}}
+
+/* Claude, 1° novembre: impaginazione del Tabellone. A: classifica prima, poi partite, poi approfondimenti. B: su PC partite a sinistra e classifica a destra. Sul telefono la classifica è sempre la prima. */
+body[data-v53=board] .grid{display:flex!important;flex-direction:column;gap:18px}
+body[data-v53=board] .grid>aside.panel{order:-1}
+body[data-v53=board] .grid>aside.panel,body[data-v53=board] .grid>section{width:100%;max-width:none!important;min-width:0}
+body[data-v53=board] #v53board{margin-top:22px}
+@media(min-width:1100px){
+ body.vista-b[data-v53=board] .grid{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr)!important;align-items:start;gap:20px}
+ body.vista-b[data-v53=board] .grid>aside.panel{order:0}
+ body.vista-b[data-v53=board] #board{display:block!important}
+ body.vista-b[data-v53=board] #board>.nota{margin-bottom:12px}
+ body.vista-b[data-v53=board][data-v53-skin=stadio] .panel tr.zona td.fp{border-radius:0 12px 12px 0}
+ body.vista-b[data-v53=board] .panel .med,body.vista-b[data-v53=board] .panel td.med,body.vista-b[data-v53=board] .panel th.med{display:none!important}
+}
+
+/* Claude, 1° novembre: fluidità. Cambio di pagina con le transizioni native del browser; contenuti che cambiano entrano con una dissolvenza leggera. Niente animazioni con «riduci movimento». */
+@media (prefers-reduced-motion: no-preference){
+ @view-transition{navigation:auto}
+ ::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;animation-timing-function:cubic-bezier(.22,.61,.36,1)}
+ html.v55-entra body{animation:v55in .38s cubic-bezier(.22,.61,.36,1) both}
+ html.v55-esce body{opacity:0;transition:opacity .17s ease}
+ @keyframes v55in{from{opacity:0}to{opacity:1}}
+ @keyframes v55su{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+ .grafpos,#v53boardcontent>*,.v53-notifcard,#xi-det:not(:empty),body[data-v53=campo] #board>.card,body[data-v53=board] .panel table tbody,.v53-metric{animation:v55su .42s cubic-bezier(.22,.61,.36,1) both}
+}
