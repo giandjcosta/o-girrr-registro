@@ -1,5 +1,10 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 31 ottobre 2026)
 
+## 1° novembre 2026 — Tabellone: fasce del podio e dell'ultimo posto (Claude, richiesta di Gianluca, solo Lab/Anteprima)
+- In classifica le prime tre righe hanno una fascia **azzurra trasparente** su tutta la riga (con la barretta laterale azzurra) e l'ultima una fascia **rossa trasparente**; i numeri della posizione restano oro, argento, bronzo e rosso. Legenda: «Podio» e «Retrocessione». La squadra scelta tiene la sua velatura oro.
+- File: `lab/prova-tabellone-lega.html` e `-stadio.html` (rigenerano `anteprima/tabellone-*.html` e `anteprima/5.5/tabellone-*.html`). Provato in Chromium a 320, 390 e 1280 px, Lega e Stadio: nessun errore, nessuno scorrimento laterale. Aggiornata anche la foto nella pagina Novità 5.5.
+- Per il sito vero (dopo il «vai") la stessa regola va messa in `rilascio/tabellone_dati.py`.
+
 ## 1° novembre 2026 — Pagina «Novità 5.5» nel Lab (Claude, richiesta di Gianluca)
 - Nuova pagina vetrina `lab/novita-5-5.html` (https://giandjcosta.github.io/o-girrr-registro/lab/novita-5-5.html), link «Novità 5.5» in cima al Lab. Per ogni novità: foto da telefono, cosa fa, dove si trova nel menu e pulsanti «Apri · Lega / Apri · Stadio». Schede: Oggi al Girrr (Home), Notifiche, Tabellone, Dentro la partita (Confronta le giornate, Centro partita), Campo con le formazioni, Annuario, I Derby, sondaggio della Curva, Carriera (con la Cassa), Totogirrr in grafica Stadio; più «Pronte, ma aspettano il tuo sì» (storie della classifica in Curva/Giornale/Radio, regole sui testi).
 - Foto in `lab/novita-5-5/*.jpg`, fatte in Chromium a 390 px (il Campo anche a 1280). Se le pagine cambiano, vanno rifatte.
