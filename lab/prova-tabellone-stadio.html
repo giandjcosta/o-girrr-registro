@@ -267,7 +267,7 @@ function formaUltime(t){var a=[],cup=mode==='coppa';cal().forEach(function(g){if
 function formaPallini(t){var v=formaUltime(t),tit={v:'Vittoria',n:'Pareggio',p:'Sconfitta'};return '<span class="formadots" role="img" aria-label="Ultimi risultati: '+(v.length?v.map(function(x){return tit[x]}).join(', '):'nessuna partita')+'">'+v.map(function(x){return '<i class="'+x+'" aria-hidden="true"></i>'}).join('')+'</span>'}
 function classeZona(k,total,fp){return !fp?'':k===0?' z-scudetto':k<=2?' z-podio':k>=total-2?' z-salvezza':''}
 /* ChatGPT: classifica giornata per giornata, con asse 1° in alto */
-var plotTeam=null;
+var plotTeam=null;try{plotTeam=(JSON.parse(localStorage.getItem('fg')||'{}')||{}).team||null}catch(e){}
 function posizioniSquadra(t){var cup=mode==='coppa',rounds=cal(),v=[];rounds.forEach(function(g){if(g.n>sel[mode]||!played(g,cup))return;var arr=classifica(rounds.filter(function(a){return a.n<=g.n&&played(a,cup)}),cup),z=arr.filter(function(x){return x.n===t})[0];if(!z)return;if(cup)arr=arr.filter(function(x){return x.gir===z.gir});var i=arr.findIndex(function(x){return x.n===t});if(i>=0)v.push({g:g.n,p:i+1,total:arr.length})});return v}
 function graficoSquadra(){if(!plotTeam)return '';var R=posizioniSquadra(plotTeam);if(!R.length)return '<div class="grafpos">Nessuna giornata conclusa per '+esc(plotTeam)+'.</div>';var tot=mode==='coppa'?5:10,W=460,H=174,left=30,right=12,top=18,bottom=25,iw=W-left-right,ih=H-top-bottom;
 function xx(i){return left+(R.length===1?iw/2:iw*i/(R.length-1))}function yy(p){return top+(p-1)*ih/(tot-1)}

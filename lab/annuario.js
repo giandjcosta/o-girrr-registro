@@ -42,7 +42,9 @@ function calcola(d){
    migliore:massimo,peggiore:minimo,scarto:scarto,serie:{n:serie,squadre:teams.filter(function(t){return t.massima===serie&&serie>0}).map(function(t){return t.nome})},
    completa:completa,classifica:classifica};
 }
-function campo(t,v){return '<div style="min-width:0;border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:12px"><span class="mut sm" style="display:block">'+esc(t)+'</span><b style="display:block;margin-top:6px;overflow-wrap:anywhere">'+esc(v||'In corso')+'</b></div>'}
+function mia(){try{return (JSON.parse(localStorage.getItem('fg')||'{}')||{}).team||''}catch(e){return ''}}
+function tocca(v){var m=mia();return !!(m&&v&&String(v).split(/ · | contro |, /).indexOf(m)>=0)}
+function campo(t,v){var io=tocca(v)||(!!mia()&&t===mia());return '<div style="min-width:0;border:'+(io?'2px solid #ffd166;background:rgba(255,209,102,.1)':'1px solid rgba(255,255,255,.18)')+';border-radius:12px;padding:12px"><span class="mut sm" style="display:block">'+esc(t)+(io?' · <b style="color:#ffd166">La tua squadra</b>':'')+'</span><b style="display:block;margin-top:6px;overflow-wrap:anywhere">'+esc(v||'In corso')+'</b></div>'}
 function griglia(arr){return '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:8px">'+arr.map(function(x){return campo(x[0],x[1])}).join('')+'</div>'}
 function view(){
  var h='<p class="lead">Ogni stagione lascia i suoi record. I numeri della stagione in corso si aggiornano dai risultati e dalle rose della Lega.</p>';
@@ -65,7 +67,7 @@ function view(){
      ['Podio',d.completa?d.classifica.slice(0,3).map(function(x,i){return (i+1)+'° '+x}).join(' · '):'In corso'],
      ['Ultimo',d.completa?d.classifica[d.classifica.length-1]:'In corso']
    ]);
-   h+='<details style="margin-top:15px"><summary style="cursor:pointer;font-weight:800">Marcatori nelle rose · giornate di Serie A associate</summary><div style="margin-top:10px">'+griglia(d.marcatori.map(function(x){return [x.squadra,x.giocatore?x.giocatore.nome+' · '+x.giocatore.gol+' gol':'Nessun gol registrato']}))+'</div></details></div>';
+   h+='<details style="margin-top:15px"><summary style="cursor:pointer;font-weight:800">Marcatori nelle rose · giornate di Serie A associate</summary><div style="margin-top:10px">'+griglia(d.marcatori.map(function(x){return [x.squadra,(x.giocatore?x.giocatore.nome+' · '+x.giocatore.gol+' gol':'Nessun gol registrato')]}))+'</div></details></div>';
  }
  var archivio={};stato.archivio.forEach(function(x){if(x&&x.stagione&&x.stagione!=='2026/27')archivio[x.stagione]=x});
  h+='<div class="card"><h3>Stagioni precedenti</h3><div style="display:grid;gap:6px;margin-top:10px">';

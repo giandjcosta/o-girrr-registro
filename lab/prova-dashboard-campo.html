@@ -64,6 +64,7 @@ body{--casa:#63bce9}
 .spark{height:auto!important}.spark svg.andamento{display:block;height:auto;aspect-ratio:360/160}
 .andamento circle{fill:#fbf6ec;stroke:var(--accent);stroke-width:2.5}
 .andamento .ax{font:700 13px Inter,system-ui,sans-serif;fill:#b9c7e2}.andamento .ax.lab{font-size:11px;letter-spacing:.06em}.andamento .val{font:900 14px Inter,system-ui,sans-serif;fill:#fbf6ec;paint-order:stroke;stroke:#1d2a52;stroke-width:3px}
+.gamebtn.mia{border-color:#ffd166!important;box-shadow:inset 0 0 0 1px #ffd166}.gamebtn .tua{display:block;font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#ffd166;margin-bottom:2px}.gamebtn[aria-pressed=true] .tua{color:inherit}.mia-nome{color:#ffd166}
 .pitch-caption{font-size:12px;color:#c9d7e7;margin:10px 0 0}
 .statgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:13px}
 .stat{background:rgba(255,255,255,.085);border-radius:13px;padding:11px;text-align:center}
@@ -162,10 +163,10 @@ body[data-skin=stadio] .mast::after{content:'';position:absolute;left:0;right:0;
 <script>
 (function(){
 'use strict';
-var D=null,F=null,round=0,game=0,TEL=window.matchMedia("(max-width:700px)");
+var D=null,F=null,round=0,game=0,MIA=(function(){try{return (JSON.parse(localStorage.getItem('fg')||'{}')||{}).team||''}catch(e){return ''}})(),TEL=window.matchMedia("(max-width:700px)");
 var ORD=["The Blue brothers","Apo team","Mariana Coneja","stif dc","Real Madrink","Atletico ma non troppo","Oranje VC","AFA SELECCION","Grodah","WOA"];
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]})}
-function nm(s){return esc(s)}
+function nm(s){return s&&s===MIA?'<span class="mia-nome">'+esc(s)+'</span>':esc(s)}
 function played(g){return !!(g&&g.m&&g.m.length&&g.m.every(function(m){return /^\d+-\d+$/.test(String(m[4]))}))}
 function complete(){var out=[],teams=D.teams.map(function(t){return t.name}).sort().join('|');(D.cal.lega||[]).slice().sort(function(a,b){return a.n-b.n}).some(function(g){var names=g.m.flatMap(function(m){return [m[0],m[3]]}).sort().join('|');if(g.n!==out.length+1||!played(g)||names!==teams)return true;out.push(g);return false});return out}
 function ranks(maxn){
@@ -240,7 +241,7 @@ function render(){
  document.getElementById('roundtitle').textContent='Giornata '+g.n;
  document.getElementById('prev').disabled=round===0;document.getElementById('next').disabled=round===rounds.length-1;
  var list=document.getElementById('matches');
- list.innerHTML=g.m.map(function(m,i){return '<button class="gamebtn" data-match="'+i+'" aria-pressed="'+(i===game)+'">'+nm(m[0])+' – '+nm(m[3])+'<small>'+(m[4]==='-'?'Da giocare':m[4])+'</small></button>'}).join('');
+ list.innerHTML=g.m.map(function(m,i){var io=MIA&&(m[0]===MIA||m[3]===MIA);return '<button class="gamebtn'+(io?' mia':'')+'" data-match="'+i+'" aria-pressed="'+(i===game)+'">'+(io?'<span class="tua">La tua partita</span>':'')+nm(m[0])+' – '+nm(m[3])+'<small>'+(m[4]==='-'?'Da giocare':m[4])+'</small></button>'}).join('');
  var m=g.m[game];if(!m)return;var active=played(g),a=m[0],b=m[3],r=m[4]==='-'?'— : —':m[4].replace('-', ' : '),tb=ranks(g.n),ha=tb[a],hb=tb[b];
  var score=m[4]==='-'?'Da giocare':'Risultato';
  var h='<section class="card match-panel" id="confronto"><div class="match-head"><span class="club">'+nm(a)+'</span><span class="score">'+esc(r)+'</span><span class="club">'+nm(b)+'</span></div>'+
@@ -268,10 +269,11 @@ document.addEventListener('click',function(e){
  var s=e.target.closest('[data-skin-choice]');if(s){document.body.dataset.skin=s.dataset.skinChoice;document.querySelectorAll('[data-skin-choice]').forEach(function(x){x.setAttribute('aria-pressed',String(x===s))});var u=new URL(location.href);u.searchParams.set('skin',s.dataset.skinChoice);u.pathname=u.pathname.replace(/campo-(lega|stadio)\.html$/,'campo-'+s.dataset.skinChoice+'.html');history.replaceState(null,'',u);if(window.parent!==window)window.parent.postMessage({orrGrafica:s.dataset.skinChoice==='stadio'?'n':'a'},location.origin)}
 });
 (TEL.addEventListener?TEL.addEventListener('change',function(){render()}):TEL.addListener(function(){render()}));
-document.getElementById('prev').addEventListener('click',function(){if(round>0){round--;game=0;render()}});
-document.getElementById('next').addEventListener('click',function(){if(round<D.cal.lega.length-1){round++;game=0;render()}});
+function partitaMia(r){var g=D.cal.lega[r];if(!MIA||!g)return 0;var i=g.m.findIndex(function(m){return m[0]===MIA||m[3]===MIA});return i<0?0:i}
+document.getElementById('prev').addEventListener('click',function(){if(round>0){round--;game=partitaMia(round);render()}});
+document.getElementById('next').addEventListener('click',function(){if(round<D.cal.lega.length-1){round++;game=partitaMia(round);render()}});
 var q=new URLSearchParams(location.search),skin=q.get('skin');if(skin==='lega')document.body.dataset.skin='lega';
 document.querySelectorAll('[data-skin-choice]').forEach(function(x){x.setAttribute('aria-pressed',String(x.dataset.skinChoice===document.body.dataset.skin))});
-Promise.all([fetch('https://giandjcosta.github.io/o-fant-a-girrr/data.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw Error(r.status);return r.json()}),fetch('https://giandjcosta.github.io/o-fant-a-girrr/formazioni.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).catch(function(){return null})]).then(function(x){var d=x[0];F=x[1];D=d;var playedIdx=D.cal.lega.findIndex(function(g){return !played(g)});round=playedIdx<0?D.cal.lega.length-1:Math.max(0,playedIdx-1);var richiesto=D.cal.lega.findIndex(function(x){return x.n===Number(q.get('giornata'))});if(richiesto>=0)round=richiesto;game=Math.max(0,Math.min(D.cal.lega[round].m.length-1,Number(q.get('partita'))||0));render()}).catch(function(){document.getElementById('board').innerHTML='<div class="card">Non è possibile caricare il calendario. Riprova ad aprire la pagina.</div>'});
+Promise.all([fetch('https://giandjcosta.github.io/o-fant-a-girrr/data.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw Error(r.status);return r.json()}),fetch('https://giandjcosta.github.io/o-fant-a-girrr/formazioni.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).catch(function(){return null})]).then(function(x){var d=x[0];F=x[1];D=d;var playedIdx=D.cal.lega.findIndex(function(g){return !played(g)});round=playedIdx<0?D.cal.lega.length-1:Math.max(0,playedIdx-1);var richiesto=D.cal.lega.findIndex(function(x){return x.n===Number(q.get('giornata'))});if(richiesto>=0)round=richiesto;game=q.has('partita')?Math.max(0,Math.min(D.cal.lega[round].m.length-1,Number(q.get('partita'))||0)):partitaMia(round);render()}).catch(function(){document.getElementById('board').innerHTML='<div class="card">Non è possibile caricare il calendario. Riprova ad aprire la pagina.</div>'});
 })();
 </script></body></html>

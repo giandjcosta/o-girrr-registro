@@ -512,6 +512,8 @@ function annuarioDati(d){
   ['Ultimo classificato',x.completa?x.classifica[x.classifica.length-1]:'Da assegnare']
  ]};
 }
+/* La squadra entrata col codice è evidenziata anche nell'Annuario (non per gli ospiti). */
+function annMia(v){var m=(typeof FG!=='undefined')?((typeof LVQ!=='undefined'&&LVQ.get('come'))||FG.team||''):ME;if(!m||!v)return false;return String(v).split(/ · | contro |, |\d+° /).map(function(x){return x.trim()}).indexOf(m)>=0}
 function vAnnuario(){
  annuarioCarica();
  var storico={};STAG.filter(function(x){return x[1]!=='Coppa Campioni'}).forEach(function(x){storico[x[0]]=x[2]});
@@ -519,14 +521,14 @@ function vAnnuario(){
  var anni=Object.keys(storico),att=AN_DATA?annuarioDati(AN_DATA):null;
  if(att&&anni.indexOf(att.anno)<0)anni.push(att.anno);else if(!att&&anni.indexOf('2026/27')<0)anni.push('2026/27');
  anni.sort().reverse();
- var style='<style>.ann-anno{border:1px solid var(--line);background:var(--glass2);border-radius:13px;margin:0 0 9px;overflow:hidden}.ann-anno summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px;font-weight:900}.ann-anno summary::-webkit-details-marker{display:none}.ann-anno summary span:last-child{font-size:11px;color:var(--mute);font-weight:700}.ann-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;padding:1px;background:var(--line)}.ann-cell{padding:11px;background:var(--bg2);min-width:0;overflow-wrap:anywhere}.ann-cell small{display:block;color:var(--mute);font-size:10px;line-height:1.35;margin-bottom:4px}.ann-cell b{display:block;font-size:12px;line-height:1.5}@media(max-width:400px){.ann-grid{grid-template-columns:1fr}}</style>';
+ var style='<style>.ann-anno{border:1px solid var(--line);background:var(--glass2);border-radius:13px;margin:0 0 9px;overflow:hidden}.ann-anno summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px;font-weight:900}.ann-anno summary::-webkit-details-marker{display:none}.ann-anno summary span:last-child{font-size:11px;color:var(--mute);font-weight:700}.ann-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;padding:1px;background:var(--line)}.ann-cell.ann-mia{box-shadow:inset 0 0 0 2px #ffd166;background:rgba(255,209,102,.1)}.ann-tua{color:#ffd166;font-weight:900}.ann-cell{padding:11px;background:var(--bg2);min-width:0;overflow-wrap:anywhere}.ann-cell small{display:block;color:var(--mute);font-size:10px;line-height:1.35;margin-bottom:4px}.ann-cell b{display:block;font-size:12px;line-height:1.5}@media(max-width:400px){.ann-grid{grid-template-columns:1fr}}</style>';
  var h=style+'<div class="card"><h3>Annuario delle stagioni</h3><p class="sm mut" style="margin-bottom:12px">Ogni stagione conserva i suoi primati. Le statistiche non archiviate negli anni passati non vengono ricostruite per ipotesi.</p>';
  anni.forEach(function(a){var corrente=att&&a===att.anno,p=corrente?att.v:null,tit=corrente?'Stagione in corso':(storico[a]||'Dato non conservato');
  if(!att&&a==='2026/27')tit=AN_ERR?'Dati non disponibili':'Caricamento dati';
  var camp=storico[a],v=p||[
   ['Giocatore più pagato','Dato non conservato'],['Rosa più cara','Dato non conservato'],['Rosa più economica','Dato non conservato'],['Capocannoniere','Dato non conservato'],['Miglior punteggio di giornata','Dato non conservato'],['Peggior punteggio di giornata','Dato non conservato'],['Vittoria più larga','Dato non conservato'],['Serie di vittorie più lunga','Dato non conservato'],['Campione',camp||'Dato non conservato'],['Podio','Dato non conservato'],['Ultimo classificato','Dato non conservato']
  ];
- h+='<details class="ann-anno"'+(corrente?' open':'')+'><summary><span>'+esc(a)+'</span><span>'+esc(tit)+'</span></summary><div class="ann-grid">'+v.map(function(x){return '<div class="ann-cell"><small>'+esc(x[0])+'</small><b>'+esc(x[1])+'</b></div>'}).join('')+'</div></details>';
+ h+='<details class="ann-anno"'+(corrente?' open':'')+'><summary><span>'+esc(a)+'</span><span>'+esc(tit)+'</span></summary><div class="ann-grid">'+v.map(function(x){var io=annMia(x[1]);return '<div class="ann-cell'+(io?' ann-mia':'')+'"><small>'+esc(x[0])+(io?' · <span class="ann-tua">La tua squadra</span>':'')+'</small><b>'+esc(x[1])+'</b></div>'}).join('')+'</div></details>';
  });
  return h+'</div>';
 }

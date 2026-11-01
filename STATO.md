@@ -53,6 +53,14 @@
 - **Screenshot e rapporti:** `prove/risultati-campo-contenuti/`, Campo raggiunto da Home → Tabellone → Campo in entrambe le skin a 390/1280/1440. Non certificati Safari/iPhone fisico, CDN/cache pubblica o nuova CI sull'ultimo commit. Restano validi i limiti locali e di produzione già documentati. Nessun merge, rilascio, audio, pubblicazione di post o modifica a Supabase/sito pubblico; PR #43 resta bozza.
 
 
+## 1° novembre 2026 — La tua squadra in evidenza anche nelle parti nuove della 5.5 (Claude, richiesta di Gianluca, solo Lab/Anteprima)
+- Regola di Gianluca: la pagina Novità è uguale per tutti, ma quando entri con la tua squadra ogni pagina la evidenzia (come già Tabellone, rose e le altre pagine del sito; quello resta). Squadra letta come sul sito: `localStorage` `fg`.
+- **Campo:** apre la partita della tua squadra (anche cambiando giornata con ‹ ›; se l'indirizzo ha `partita=` vale quello); nella lista delle partite la tua ha il bordo oro e «La tua partita»; il nome della tua squadra è in oro nell'intestazione, sotto il campo e nei numeri del confronto.
+- **Tabellone:** il grafico delle posizioni parte già aperto sulla tua squadra; la riga della tua squadra tiene la velatura oro anche sopra la fascia azzurra del podio o rossa dell'ultimo posto (verificato).
+- **Annuario** (`vAnnuario` in `lab/index.html`): i record che riguardano la tua squadra hanno bordo oro e «La tua squadra». Da ospite niente evidenza (nell'Anteprima Oranje VC è solo la squadra di prova). Nel Lab, dove la squadra è sempre Oranje VC, si vede su Oranje VC. Stessa evidenza preparata anche in `lab/annuario.js`.
+- Notifiche e Home lo facevano già (squadra entrata e notifiche personali).
+- Provato in Chromium con WOA, Atletico ma non troppo, Grodah, Apo team, AFA SELECCION e da ospite, a 320, 390 e 1280 px: nessun errore, nessuno scorrimento laterale. Non provato: Safari/iPhone.
+
 ## 1° novembre 2026 — Pagina Novità 5.5 aggiornata (Claude, richiesta di Gianluca)
 - Rifatte tutte le foto di `lab/novita-5-5/` dalla versione di oggi (Home con i puntini nuovi e «N notifiche nuove», Notifiche personali, Tabellone con fasce e pallini allineati, Campo con legenda, grafico, Annuario, Derby, Curva, Carriera, Totogirrr). Foto Notifiche e Home fatte da «Apo team» con le sue notifiche vere lette dal database (scelte senza parolacce) servite alla pagina in locale: nessuna scrittura nel database.
 - Nuova scheda «Andamento dei punti» (foto `grafico.jpg`, pulsanti verso `#andamento`); testi di Home, Notifiche e Campo aggiornati. Provata a 320, 390 e 1280 px: 40 link, nessun errore, nessuno scorrimento laterale.
