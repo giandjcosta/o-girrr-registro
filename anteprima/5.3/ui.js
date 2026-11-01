@@ -1,47 +1,52 @@
 /* O Girrr 5.3 — preview conservativa, nessuna scrittura al database */
 (function(){
 'use strict';
-var root='https://raw.githack.com/giandjcosta/o-girrr-registro/chatgpt/anteprima-53-integrata/anteprima/5.3/';
+var root=new URL('./',document.currentScript.src).href;
 var mode=document.body.dataset.v53||'',skin=document.body.dataset.v53Skin||'lega',dataUrl='https://giandjcosta.github.io/o-fant-a-girrr/data.json';
-var k='og:53:',teamList=[],D=null;
+var k='og:53:',teamList=[],D=null,CRON=null;
 function el(id){return document.getElementById(id)}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function notizia(){if(!CRON||!D)return null;var g=completeRounds(false),firma=JSON.stringify(g.map(function(x){return {n:x.n,m:x.m}}));if(firma!==CRON.firma)return null;return (CRON.eventi||[]).find(function(e){return e.giornata===(latest()||{}).n})||null}
 function n(v){return Number(v)||0}
 function dec(x){return Number.isFinite(Number(x))?Number(x).toLocaleString('it-IT',{maximumFractionDigits:2}):'—'}
 function get(key,def){try{var x=localStorage.getItem(k+key);return x?JSON.parse(x):def}catch(e){return def}}
 function set(key,x){try{localStorage.setItem(k+key,JSON.stringify(x))}catch(e){}}
 function mark(t){return '<span class="v53-kicker">'+esc(t)+'</span>'}
 function note(t){return '<div class="v53-empty">'+esc(t)+'</div>'}
-function matchPlayed(m,cup){return Array.isArray(m)&&m[cup?5:4]&&m[cup?5:4]!=='-'}
+function matchPlayed(m,cup){return Array.isArray(m)&&/^\d+-\d+$/.test(String(m[cup?5:4]))}
 function games(cup){return ((D&&D.cal&&(cup?D.cal.cup:D.cal.lega))||[]).slice()}
-function completeRounds(cup){return games(cup).filter(function(g){return g.m&&g.m.length&&g.m.every(function(m){return matchPlayed(m,cup)})})}
+function completeRounds(cup){var out=[];games(cup).sort(function(a,b){return a.n-b.n}).some(function(g){var mm=g.m||[];if(g.n!==out.length+1||!mm.length||!mm.every(function(m){return matchPlayed(m,cup)}))return true;if(!cup){var names=mm.flatMap(function(m){return [m[0],m[3]]}).sort().join('|');if(names!==(D.teams||[]).map(function(t){return t.name}).sort().join('|'))return true}out.push(g);return false});return out}
 function latest(){var g=completeRounds(false);return g[g.length-1]||null}
 function next(){return games(false).find(function(g){return g.m&&g.m.some(function(m){return !matchPlayed(m,false)})})||null}
 function mFor(g,t){return g&&g.m&&g.m.find(function(m){return m[0]===t||m[3]===t})}
-function allFinished(){var out=[];games(false).forEach(function(g){(g.m||[]).forEach(function(m,i){if(matchPlayed(m,false))out.push({g:g,m:m,id:g.n+'-'+i})})});return out.reverse()}
+function allFinished(){var out=[];completeRounds(false).forEach(function(g){(g.m||[]).forEach(function(m,i){if(matchPlayed(m,false))out.push({g:g,m:m,id:g.n+'-'+i})})});return out.reverse()}
 function ranks(until){var map={};(D.teams||[]).forEach(function(t){map[t.name]={team:t.name,pt:0,fp:0,gf:0,gs:0,g:0}});
-games(false).filter(function(g){return g.n<=until}).forEach(function(g){(g.m||[]).forEach(function(m){if(!matchPlayed(m,false))return;
+completeRounds(false).filter(function(g){return g.n<=until}).forEach(function(g){(g.m||[]).forEach(function(m){if(!matchPlayed(m,false))return;
 var a=map[m[0]],b=map[m[3]],r=String(m[4]).split('-').map(Number);if(!a||!b||!Number.isFinite(r[0])||!Number.isFinite(r[1]))return;
 a.g++;b.g++;a.pt+=r[0]>r[1]?3:r[0]===r[1]?1:0;b.pt+=r[0]<r[1]?3:r[0]===r[1]?1:0;
 a.fp+=n(m[1]);b.fp+=n(m[2]);a.gf+=r[0];a.gs+=r[1];b.gf+=r[1];b.gs+=r[0]})});
 return Object.values(map).sort(function(a,b){return b.pt-a.pt||b.fp-a.fp||b.gf-b.gs-(a.gf-a.gs)||a.team.localeCompare(b.team)})}
 function href(which){return root+which+'-'+skin+'.html'}
 function nav(){
-var names=[['index','⌂','Home'],['tabellone','▤','Tabellone'],['albo','★','Albo d’oro'],['curva','♬','Curva'],['notifiche','◉','Notifiche']];
-var current=mode==='home'?'index':mode;
-var h='<nav class="v53 v53-menu" aria-label="Navigazione Anteprima 5.3">'+names.map(function(x){return '<a href="'+href(x[0])+'" '+(current===x[0]?'aria-current="page"':'')+'>'+x[1]+' '+esc(x[2])+'</a>'}).join('')+'</nav>';
-var target=el('v53nav');if(target)target.innerHTML=h;
+ var old=el('v53nav');if(old)old.remove();
+ var where=document.querySelector('.ohead,.hero,header.top,header');if(!where)return;
+ var page=mode==='home'?'index':mode==='board'?'tabellone':mode==='notifications'?'notifiche':mode;
+ var utilities=document.createElement('div');utilities.className='v53 v53-utilities';utilities.setAttribute('aria-label','Collegamenti della Lega');
+ utilities.innerHTML=(!document.querySelector('a.back,a.oback')&&mode!=='home'?'<a href="'+href('index')+'">‹ Home</a>':'')+
+  (mode!=='notifications'?'<a href="'+href('notifiche')+'">Notifiche</a>':'')+
+  '<a href="'+root+page+'-'+(skin==='lega'?'stadio':'lega')+'.html">Grafica '+(skin==='lega'?'Stadio':'Lega')+'</a>';
+ where.insertAdjacentElement('afterend',utilities);
 }
 function redirect(){
 document.addEventListener('click',function(e){
  var a=e.target.closest&&e.target.closest('a[href]');
  if(a&&a.closest('.v53'))return;
  if(a){var val=(a.getAttribute('href')||'').split('#')[0].split('?')[0],end=val.split('/').pop();if(['index.html','tabellone.html','albo.html','curva.html'].includes(end)&&!val.startsWith('https:')&&!val.startsWith('http:')){e.preventDefault();e.stopImmediatePropagation();location.href=root+end.replace('.html','')+'-'+skin+'.html';return}}
- if(mode==='curva'&&e.target.closest&&e.target.closest('button:not(.v53 button),textarea:not(.v53 textarea),input:not(.v53 input)')){e.preventDefault();e.stopImmediatePropagation();}
+ if(mode==='curva'&&e.target.closest&&e.target.closest('#go,#ad-go,[data-a=invia],[data-a=vota],[data-a=del],[data-a=delr],[data-a=salvaav],[data-a=addel],[data-a=ap],[data-a=ril],[data-seg]')){e.preventDefault();e.stopImmediatePropagation();}
 },true);
 if(mode==='curva')document.addEventListener('submit',function(e){if(!e.target.closest('.v53')){e.preventDefault();e.stopImmediatePropagation()}},true);
 }
-function load(cb){fetch(dataUrl,{cache:'no-store'}).then(function(r){if(!r.ok)throw Error('Dati temporaneamente indisponibili');return r.json()}).then(function(v){if(!v||!v.cal||!v.teams)throw Error('Formato dati non riconosciuto');D=v;teamList=v.teams.map(function(t){return t.name});cb()}).catch(function(e){var ids=mode==='home'?['v53metrics','v53news']:mode==='notifications'?['v53notifications']:mode==='board'?['v53boardcontent']:mode==='albo'?['v53annual']:['v53poll'];ids.forEach(function(id){if(el(id))el(id).innerHTML=note('I dati della stagione non sono raggiungibili. La navigazione e le sezioni originali restano disponibili.')});console.warn('5.3 dati non caricati:',e.message)})}
+function load(cb){fetch(dataUrl,{cache:'no-store'}).then(function(r){if(!r.ok)throw Error('Dati temporaneamente indisponibili');return r.json()}).then(function(v){if(!v||!v.cal||!v.teams)throw Error('Formato dati non riconosciuto');D=window.CVPUB?window.CVPUB(v):v;teamList=v.teams.map(function(t){return t.name});fetch(root+'cronache.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}).then(function(cr){CRON=cr;cb()})}).catch(function(e){var ids=mode==='home'?['v53metrics','v53news']:mode==='notifications'?['v53notifications']:mode==='board'?['v53boardcontent']:mode==='albo'?['v53annual']:['v53poll'];ids.forEach(function(id){if(el(id))el(id).innerHTML=note('I dati della stagione non sono raggiungibili. La navigazione e le sezioni originali restano disponibili.')});console.warn('5.3 dati non caricati:',e.message)})}
 function teamPicker(id,cb){
  var s=el(id);if(!s)return;var t=get('team',teamList[0]);if(teamList.indexOf(t)<0)t=teamList[0];s.innerHTML=teamList.map(function(x){return '<option value="'+esc(x)+'">'+esc(x)+'</option>'}).join('');s.value=t;s.addEventListener('change',function(){set('team',s.value);cb(s.value)});cb(t)
 }
@@ -58,7 +63,7 @@ teamPicker('v53team',function(t){
  if(seen&&seen.day!==now.day)news.push('Nuovi risultati dopo la '+(nm||'ultima')+'ª giornata');
  if(seen&&seen.rank!==now.rank&&rank)news.push('La tua posizione in classifica è cambiata');
  if(seen&&seen.op!==now.op&&now.op)news.push('È cambiato il prossimo avversario');
- var aside=el('v53news');aside.innerHTML=news.length?news.map(function(x){return '<span class="v53-dot" style="display:inline-block;margin-right:6px"></span>'+esc(x)+' &nbsp; '}).join(''):'Risultati, Curva e notizie della Lega.';
+ var z=notizia();if(z)news.unshift(z.titolo+': '+z.testo);var aside=el('v53news');aside.innerHTML=news.length?news.map(function(x){return '<span class="v53-dot" style="display:inline-block;margin-right:6px"></span>'+esc(x)+' &nbsp; '}).join(''):'Risultati, Curva e notizie della Lega.';
  var b=el('v53read');if(b)b.onclick=function(){set('seen:'+t,now);aside.textContent='Tutto aggiornato per '+t+'.'};
  });
 }
@@ -71,7 +76,7 @@ buttons.addEventListener('click',function(e){var b=e.target.closest('button[data
 function compare(){
  var opts=rounds.map(function(g){return '<option value="'+g.n+'">'+g.n+'ª giornata</option>'}).join('');
  if(rounds.length<2){holder.innerHTML=note('Servono due giornate complete per confrontare i movimenti in classifica.');return}
- holder.innerHTML='<div class="v53-field"><label for="v53from">Dalla</label><select class="v53-select" id="v53from">'+opts+'</select><label for="v53to">Alla</label><select class="v53-select" id="v53to">'+opts+'</select></div><div id="v53delta" class="v53-row"></div><p class="v53-muted">Confronto aggiuntivo: il Tabellone originale sopra rimane completo e invariato.</p>';
+ holder.innerHTML='<div class="v53-field"><label for="v53from">Dalla</label><select class="v53-select" id="v53from">'+opts+'</select><label for="v53to">Alla</label><select class="v53-select" id="v53to">'+opts+'</select></div><div id="v53delta" class="v53-row"></div><p class="v53-muted">Movimenti della classifica tra le due giornate selezionate.</p>';
  var a=el('v53from'),b=el('v53to');a.value=String(rounds[Math.max(0,rounds.length-3)].n);b.value=String(rounds[rounds.length-1].n);
  function update(){var x=ranks(n(a.value)),y=ranks(n(b.value));el('v53delta').innerHTML=y.map(function(t,i){var p=x.findIndex(function(v){return v.team===t.team})+1,d=p-(i+1);return '<div class="v53-box"><small>'+(i+1)+'º posto · '+esc(t.team)+'</small><strong>'+(d>0?'↑ '+d+' posizioni':d<0?'↓ '+(-d)+' posizioni':'= stessa posizione')+'</strong><small>'+t.pt+' punti · '+dec(t.fp)+' Fantapunti · DR '+(t.gf-t.gs)+'</small></div>'}).join('')}
  a.onchange=update;b.onchange=update;update();
@@ -79,7 +84,7 @@ function compare(){
 function matchCenter(){
 var matches=allFinished();if(!matches.length){holder.innerHTML=note('Il centro partita si aprirà dopo il primo incontro concluso.');return}
  holder.innerHTML='<div class="v53-field"><label for="v53match">Scegli la partita</label><select class="v53-select" id="v53match" style="flex:1;min-width:160px">'+matches.slice(0,70).map(function(x){return '<option value="'+esc(x.id)+'">'+x.g.n+'ª · '+esc(x.m[0]+' '+x.m[4]+' '+x.m[3])+'</option>'}).join('')+'</select></div><div id="v53matchstats"></div>';
- var select=el('v53match');function draw(){var x=matches.find(function(v){return v.id===select.value})||matches[0],m=x.m;el('v53matchstats').innerHTML='<div class="v53-row"><div class="v53-box"><span class="v53-mini-title">RISULTATO UFFICIALE</span><div class="score">'+esc(m[0]+' '+m[4]+' '+m[3])+'</div><small>Campionato · '+x.g.n+'ª giornata</small></div><div class="v53-box"><span class="v53-mini-title">DATI LEGHE FANTACALCIO</span><div class="score">'+dec(m[1])+' <em>–</em> '+dec(m[2])+'</div><small>Fantapunti · Non confondere con i gol</small></div></div><p class="v53-muted">Centro partita post-giornata: risultato, Fantapunti e collegamento alle formazioni reali dello Spogliatoio; nessun dato live inventato.</p>'}select.onchange=draw;draw()
+ var select=el('v53match');function draw(){var x=matches.find(function(v){return v.id===select.value})||matches[0],m=x.m,gol=m[4].split('-').map(Number),assegnati=gol[0]===gol[1]?[1,1]:gol[0]>gol[1]?[3,0]:[0,3];el('v53matchstats').innerHTML='<div class="v53-row"><div class="v53-box"><span class="v53-mini-title">RISULTATO UFFICIALE</span><div class="score">'+esc(m[0]+' '+m[4]+' '+m[3])+'</div><small>Campionato · '+x.g.n+'ª giornata</small></div><div class="v53-box"><span class="v53-mini-title">DATI LEGHE FANTACALCIO</span><div class="score">'+dec(m[1])+' <em>–</em> '+dec(m[2])+'</div><small>Fantapunti · Fonte Leghe Fantacalcio</small></div></div><p class="v53-muted">Punti in classifica assegnati nel turno: '+esc(m[0])+' '+assegnati[0]+' · '+esc(m[3])+' '+assegnati[1]+'.</p>'}select.onchange=draw;draw()
 }
 switchTo('compare');
 }
@@ -124,7 +129,7 @@ var BOT_FRASI=[
  'Ho già preparato la radiolina per {sfida}. E sì, funziona ancora.',
  'Una volta votavamo al bar con un cenno del capo. Ma mi piace vedere tutta la Curva qui.']],
  ['statistico_folle','Lo Statistico Folle',[
- 'La capolista è {capolista}, ma io continuo a calcolare anche le probabilità del caffè.',
+ 'Per {sfida} confronto risultati e forma recente. Anche il caffè può aspettare.',
  'Le percentuali del sondaggio le voglio confrontare con la classifica dopo la {giornata}ª.',
  'Ho aperto un foglio di calcolo per decidere fra le partite. Il foglio è ancora indeciso.']],
  ['il_romantico_del_pallone','Il Romantico del Pallone',[
@@ -147,6 +152,20 @@ var BOT_FRASI=[
 function botComments(p){
  var top=latest()&&ranks(latest().n)[0],sfida=p.opts[p.day%p.opts.length]||p.opts[0],ctx={sfida:sfida,giornata:p.day,capolista:top?top.team:'da definire'};
  var list=BOT_FRASI.map(function(b,i){var arr=b[2],choice=(p.day+i*7)%arr.length;return [b[1],arr[choice].replace(/\{(\w+)\}/g,function(_,key){return ctx[key]||''})]});
+ var day=latest(),mm=day&&day.m||[];
+ var commenti=['Al bancone oggi si parla di questo risultato. Il prossimo caffè lo offrono i vincitori.',
+ 'Dal divano ho visto il risultato. Per la prossima partita ho già pronto un altro modulo.',
+ 'Il risultato è registrato. Sul resto pretendo il verbale, come sempre.',
+ 'La sciarpa resta al collo: oggi si canta, domani si torna in campo.',
+ 'Una giornata non fa una stagione, ragazzi. Il campo chiederà altre risposte.',
+ 'Gol e punti raccontano due numeri diversi: io li tengo entrambi nel taccuino.',
+ 'Resta una partita da ricordare. Il pallone sa sempre cambiare il racconto.',
+ 'Non dico niente sulla prossima. Ho già fatto abbastanza danni con i miei auguri.',
+ 'Ho ancora il risultato davanti. Ora lasciatemi riposare la voce.',
+ 'Risultato agli atti. Le opinioni al bar, il regolamento resta quello.'];
+ list=list.map(function(x,i){if(!mm.length||(i+p.day)%3!==0)return x;var m=mm[(i+p.day)%mm.length],q=m[4].split('-').map(Number),f=q[0]===q[1]?m[0]+' e '+m[3]+' hanno pareggiato '+m[4]+'.':(q[0]>q[1]?m[0]+' ha battuto '+m[3]:m[3]+' ha battuto '+m[0])+' '+(q[0]>q[1]?m[4]:q[1]+'-'+q[0])+'.';return [x[0],f+' '+commenti[i]]});
+ var zona=notizia();if(zona)list[5]=['Lo Statistico Folle',zona.testo+' Questa sì che è una serie da studiare.'];
+
  try{var bank=window.CVB;if(bank&&bank.reazioni&&bank.PERS){
    var ts=Date.now()-24*3600000;
    var replies=bank.reazioni('p53-sondaggio-'+p.day,ts,Date.now(),teamList,'Quale partita seguiresti alla '+p.day+'ª giornata?').r||[];
@@ -171,11 +190,11 @@ function notifications(){
 var to=el('v53notifications');if(!to)return;
 var g=latest(),nx=next(),items=[];
 if(g){items.push({key:'result-'+g.n,type:'partita',ic:'⚽',title:'Risultati della '+g.n+'ª giornata',detail:'Sono disponibili i risultati delle '+g.m.length+' partite di campionato.',link:href('tabellone')})}
-if(g){var rs=ranks(g.n);if(rs.length)items.push({key:'ranking-'+g.n,type:'classifica',ic:'🏆',title:'Classifica aggiornata',detail:rs[0].team+' guida il campionato con '+rs[0].pt+' punti.',link:href('tabellone')})}
+if(g){var rs=ranks(g.n);if(rs.length)items.push({key:'ranking-'+g.n,type:'classifica',ic:'🏆',title:'Classifica aggiornata',detail:'Posizioni e punti dopo la '+g.n+'ª giornata completa.',link:href('tabellone')})}
 if(nx){items.push({key:'next-'+nx.n,type:'partita',ic:'📅',title:'Prossimo turno',detail:'La '+nx.n+'ª giornata è in calendario. Guarda gli incontri.',link:href('tabellone')})}
 if(nx){items.push({key:'poll-'+nx.n,type:'curva',ic:'💬',title:'Sondaggio della Curva',detail:'Scegli la sfida più interessante del prossimo turno e commenta.',link:href('curva')})}
 items.push({key:'annuario',type:'albo',ic:'📖',title:'Annuario 2026/27',detail:'Podio provvisorio, rose e record verificabili in un solo posto.',link:href('albo')});
-var filters=el('v53filters'),chosen='tutte';
+var z=notizia();if(z)items.unshift({key:z.chiave,type:'classifica',ic:'↗',title:z.titolo,detail:z.testo,link:href('tabellone')});var filters=el('v53filters'),chosen='tutte';
 filters.innerHTML=[['tutte','Tutte'],['partita','Partite'],['classifica','Classifica'],['curva','Curva'],['albo','Albo']].map(function(x){return '<button class="v53-pill" data-f="'+x[0]+'" aria-selected="'+(chosen===x[0])+'">'+x[1]+'</button>'}).join('');
 function render(){
 var arr=items.filter(function(x){return chosen==='tutte'||x.type===chosen});to.innerHTML=arr.map(function(x){return '<article class="v53-notifcard" data-read="'+(!!get('read-'+x.key,false))+'"><span class="v53-ic">'+x.ic+'</span><div><b>'+esc(x.title)+'</b><p>'+esc(x.detail)+'</p><a href="'+x.link+'">Apri sezione ›</a></div></article>'}).join('')||note('Nessuna notifica per questo filtro.');
@@ -188,10 +207,11 @@ render();
 /* Initial DOM integration: no existing Tabellone/Albo/Curva components are replaced. */
 function init(){
 nav();redirect();
+if(mode==='albo')document.addEventListener('click',function(e){var b=e.target.closest('[data-oro]');if(!b)return;var u=new URL(location.href);u.searchParams.set('albo',b.dataset.oro);history.replaceState(null,'',u)});
 if(mode==='home')load(home);
 if(mode==='board')load(board);
-if(mode==='albo')load(annual);
-if(mode==='curva')load(curva);
+if(mode==='albo'&&el('v53annual'))load(annual);
+if(mode==='curva'){var poll=el('v53poll');if(poll)poll.insertAdjacentHTML('beforebegin','<p class="v53 v53-muted">Anteprima locale: sondaggi, commenti e personaggi sono prove sul dispositivo. Nessun intervento viene pubblicato nella Curva.</p>');load(curva)}
 if(mode==='notifications')load(notifications);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
