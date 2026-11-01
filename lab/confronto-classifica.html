@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Classifica a confronto · Lab O Girrr</title>
+<link href="https://fonts.googleapis.com/css2?family=Lobster&family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#1d2a52;--ink:#fbf6ec;--sub:#bfe3ff;--gold:#ffd166;--red:#d62839;--line:rgba(255,255,255,.16)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--ink);font:500 15px/1.45 Inter,system-ui,sans-serif;background:repeating-linear-gradient(115deg,rgba(255,255,255,.04) 0 36px,transparent 36px 72px),radial-gradient(1200px 700px at 80% -10%,#2c3f7c 0,#1d2a52 55%,#141d3d 100%)}
+html{background:#141d3d}
+.w{max-width:1180px;margin:0 auto;padding:18px 16px 50px}
+.top{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.top a{color:var(--sub);font-size:13px;font-weight:800;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 11px}
+h1{font:900 clamp(28px,5vw,44px)/1.05 Inter;margin:10px 0 6px}
+.lead{color:var(--sub);margin:0 0 16px;max-width:760px}
+.ctrl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 22px}
+.seg{display:inline-flex;gap:4px;padding:4px;border-radius:12px;background:rgba(255,255,255,.07);border:1px solid var(--line)}
+.seg button{font:800 13px Inter;color:var(--ink);background:none;border:0;border-radius:9px;padding:8px 14px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--gold);color:#1d2a52}
+.blocco{margin:0 0 34px}
+.etichetta{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 0 10px}
+.etichetta b{font:900 13px Inter;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.etichetta span{color:var(--sub);font-size:13px}
+.cornice{margin:0 auto;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#141d3d;transition:width .3s}
+.cornice iframe{display:block;width:100%;height:760px;border:0;background:#1d2a52}
+.nuova{padding:18px 16px 22px;background:transparent}
+/* Classifica nello stile del post: righe staccate, numeri grandi, podio azzurro, ultimo rosso */
+.cl-titolo{display:flex;align-items:center;gap:14px;margin:0 0 6px}
+.cl-titolo h2{margin:0;font:900 26px/1.1 Inter}
+.cl-k{font:800 11px Inter;letter-spacing:.3em;color:var(--gold)}
+.striscia{height:7px;width:180px;border-radius:2px;transform:skewX(-45deg);margin:10px 0 16px 6px;background:linear-gradient(90deg,#d62839 0 80%,#ffd166 80% calc(80% + 8px),transparent calc(80% + 8px))}
+.cl-h,.cl-r{display:grid;align-items:center;gap:0 10px;padding:0 14px}
+.cl-h{font:700 12px Inter;color:var(--sub);padding-bottom:6px}
+.cl-r{min-height:56px;margin:0 0 7px;border-radius:12px;background:rgba(255,255,255,.07);box-shadow:inset 5px 0 transparent}
+.cl-r.podio{background:rgba(99,188,233,.2);box-shadow:inset 5px 0 #63bce9}
+.cl-r.ultimo{background:rgba(239,100,118,.22);box-shadow:inset 5px 0 #ef6476}
+.cl-r.mia{background:rgba(255,209,102,.18)!important;box-shadow:inset 5px 0 #ffd166!important}
+.cl-r .pos{display:flex;align-items:center;gap:4px;font:900 26px Inter}
+.cl-r .pos i{font:900 10px Inter;font-style:normal}
+.su{color:#73df9b}.giu{color:#ff7c90}
+.p1{color:#ffd166}.p2{color:#cbd5e1}.p3{color:#dca17a}.pu{color:#ff7286}
+.cl-r .sq{min-width:0;display:flex;align-items:center;gap:10px}
+.cl-r .sq b{font:800 17px Inter;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.dots{display:inline-flex;gap:3px;flex:none;margin-left:auto}.dots i{width:7px;height:7px;border-radius:50%;background:#9aa3af}.dots i.v{background:#55c98a}.dots i.p{background:#ef6474}
+.n{text-align:right;font:800 16px Inter;font-variant-numeric:tabular-nums}
+.pt{font:900 24px Inter}.fp{color:var(--sub);font-weight:700}
+.cl-h .n{font:700 12px Inter}
+.leg{display:flex;gap:14px;flex-wrap:wrap;font:700 12px Inter;color:var(--sub);margin-top:10px}.leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+/* colonne: telefono Pos, Squadra, DR, Pt, Fantapunti; da 640 px tutte */
+.cl-h,.cl-r{grid-template-columns:50px minmax(0,1fr) 36px 34px 56px;gap:0 6px}
+.cl-r .sq{flex-direction:column;align-items:flex-start;gap:5px}.cl-r .sq b{white-space:normal;line-height:1.15;font-size:15px}.cl-r .sq .dots{margin-left:0}
+.cl-r{padding-top:8px;padding-bottom:8px}
+.cl-h .lg,.cl-r .lg{display:none}
+@container (min-width:640px){.cl-h,.cl-r{grid-template-columns:62px minmax(0,1fr) repeat(6,40px) 48px 46px 80px;gap:0 10px}.cl-h .lg,.cl-r .lg{display:block}.cl-r .sq{flex-direction:row;align-items:center;gap:10px}.cl-r .sq b{white-space:nowrap;font-size:17px}.cl-r .sq .dots{margin-left:auto}.cl-r{padding-top:0;padding-bottom:0}}
+.box{container-type:inline-size}
+/* Stadio: righe più compatte, titolo in Lobster, accento oro */
+.stadio .cl-titolo h2{font:400 34px/1.1 Lobster,cursive}
+.stadio .cl-r{min-height:48px;border-radius:9px}
+.stadio .cl-r .sq b{font-size:15px}
+.stadio .cl-r .pos{font-size:22px}
+@media(max-width:420px){.cl-r .sq b{font-size:13.5px}.cl-r .pos{font-size:22px}.cl-h,.cl-r{padding:0 10px}}
+.nota{color:var(--sub);font-size:13px;margin-top:8px}
+</style></head>
+<body>
+<div class="w">
+<nav class="top"><a href="./">Laboratorio</a><a href="novita-5-5.html">Novità 5.5</a><a href="../anteprima/5.5/tabellone-lega.html">Tabellone 5.5</a></nav>
+<h1>Classifica a confronto</h1>
+<p class="lead">Sopra la classifica com'è oggi nel Tabellone dell'Anteprima 5.5, sotto la stessa classifica nello stile del post Instagram. Stessi dati veri, stessa larghezza: scegli telefono o PC e la grafica.</p>
+<div class="ctrl">
+ <div class="seg" id="largh"><button data-w="390" aria-pressed="true">Telefono</button><button data-w="1100" aria-pressed="false">PC</button></div>
+ <div class="seg" id="grafica"><button data-s="lega" aria-pressed="true">Grafica Lega</button><button data-s="stadio" aria-pressed="false">Grafica Stadio</button></div>
+</div>
+<section class="blocco"><div class="etichetta"><b>1 · Com'è ora</b><span>Il Tabellone dell'Anteprima 5.5, aperto sulla classifica (si può scorrere e toccare come quello vero).</span></div>
+ <div class="cornice" id="c1"><iframe id="ora" title="Tabellone com'è ora"></iframe></div></section>
+<section class="blocco"><div class="etichetta"><b>2 · Stile del post</b><span>Righe staccate, numeri grandi, podio azzurro e ultimo rosso; tutte le colonne da tablet in su.</span></div>
+ <div class="cornice nuova box" id="c2"><div id="nuova">Caricamento della classifica…</div></div></section>
+<p class="nota">Su questa pagina la prova «com'è ora» è il Tabellone vero; lo stile nuovo è disegnato qui con gli stessi dati di <code>data.json</code>. Se vi piace, si porta nel Tabellone di tutte e due le grafiche.</p>
+</div>
+<script>
+(function(){'use strict';
+var W=390,SK='lega',D=null,MIA='';try{MIA=(JSON.parse(localStorage.getItem('fg')||'{}')||{}).team||''}catch(e){}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function giocata(g){return g.m.every(function(m){return /^\d+-\d+$/.test(m[4])})}
+function classifica(rounds){var T={};D.teams.forEach(function(t){T[t.name]={n:t.name,g:0,v:0,nn:0,p:0,gf:0,gs:0,pt:0,fp:0,h:[]}});
+ rounds.forEach(function(g){g.m.forEach(function(m){var s=m[4].split('-').map(Number);[[m[0],s[0],s[1],m[1]],[m[3],s[1],s[0],m[2]]].forEach(function(x){var t=T[x[0]];if(!t)return;t.g++;t.gf+=x[1];t.gs+=x[2];t.fp+=Number(x[3])||0;if(x[1]>x[2]){t.v++;t.pt+=3;t.h.push('v')}else if(x[1]===x[2]){t.nn++;t.pt+=1;t.h.push('n')}else{t.p++;t.h.push('p')}})})});
+ return Object.keys(T).map(function(k){return T[k]}).sort(function(a,b){return b.pt-a.pt||b.fp-a.fp})}
+function fp(x){return String(Math.round(x*10)/10).replace('.',',')}
+function disegna(){if(!D)return;var R=D.cal.lega.filter(giocata),cl=classifica(R),prima=R.length>1?classifica(R.slice(0,-1)).map(function(t){return t.n}):[];
+ var h='<div class="'+(SK==='stadio'?'stadio':'')+'"><div class="cl-titolo"><div><div class="cl-k">CLASSIFICA</div><h2>Dopo la '+R.length+'ª giornata</h2></div></div><div class="striscia"></div>'+
+ '<div class="cl-h"><span>Pos.</span><span>Squadra</span><span class="n lg">G</span><span class="n lg">V</span><span class="n lg">N</span><span class="n lg">P</span><span class="n lg">GF</span><span class="n lg">GS</span><span class="n">DR</span><span class="n">Pt</span><span class="n">Fantapunti</span></div>';
+ cl.forEach(function(t,i){var pc=i<3?'p'+(i+1):i===cl.length-1?'pu':'',cls=i<3?'podio':i===cl.length-1?'ultimo':'',d=prima.length?prima.indexOf(t.n)-i:0,dr=t.gf-t.gs;
+  h+='<div class="cl-r '+cls+(t.n===MIA?' mia':'')+'"><span class="pos"><span class="'+pc+'">'+(i+1)+'</span>'+(d?'<i class="'+(d>0?'su':'giu')+'">'+(d>0?'▲':'▼')+Math.abs(d)+'</i>':'')+'</span>'+
+  '<span class="sq"><b>'+esc(t.n)+'</b><span class="dots">'+t.h.slice(-5).map(function(x){return '<i class="'+x+'"></i>'}).join('')+'</span></span>'+
+  '<span class="n lg">'+t.g+'</span><span class="n lg">'+t.v+'</span><span class="n lg">'+t.nn+'</span><span class="n lg">'+t.p+'</span><span class="n lg">'+t.gf+'</span><span class="n lg">'+t.gs+'</span>'+
+  '<span class="n">'+(dr>0?'+'+dr:dr)+'</span><span class="n pt">'+t.pt+'</span><span class="n fp">'+fp(t.fp)+'</span></div>'});
+ h+='<div class="leg"><span><i style="background:rgba(99,188,233,.75)"></i>Podio</span><span><i style="background:rgba(239,100,118,.8)"></i>Retrocessione</span></div></div>';
+ document.getElementById('nuova').innerHTML=h}
+function cornici(){['c1','c2'].forEach(function(id){document.getElementById(id).style.width=Math.min(W,document.querySelector('.w').clientWidth-32)+'px'});
+ var f=document.getElementById('ora'),src='../anteprima/5.5/tabellone-'+SK+'.html';if(f.dataset.src!==src){f.dataset.src=src;f.src=src}}
+document.getElementById('ora').addEventListener('load',function(){var f=this;function va(){try{var d=f.contentDocument,t=d&&d.querySelector('.panel table');if(t){f.contentWindow.scrollTo(0,t.getBoundingClientRect().top+f.contentWindow.scrollY-70);return true}}catch(e){}return false}
+ var n=0,iv=setInterval(function(){if(va()||++n>40)clearInterval(iv)},250)});
+function scelta(id,attr,cb){document.getElementById(id).addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;this.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});cb(b.dataset[attr])})}
+scelta('largh','w',function(v){W=Number(v);cornici()});scelta('grafica','s',function(v){SK=v;cornici();disegna()});
+window.addEventListener('resize',cornici);cornici();
+fetch('https://giandjcosta.github.io/o-fant-a-girrr/data.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){D=d;disegna()}).catch(function(){document.getElementById('nuova').textContent='Dati non disponibili: ricarica la pagina.'});
+})();
+</script></body></html>
