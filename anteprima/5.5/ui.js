@@ -47,10 +47,12 @@ function nav(){
   var target=prev?prev.href:href(parent),label=prev?prev.pathname.split('/').pop().split('-')[0]:parent;
   var labels={index:'Home',tabellone:'Tabellone',campo:'Campo',albo:"Albo d’oro",curva:'Curva',notifiche:'Notifiche'};
   var page=mode==='home'?'index':mode==='board'?'tabellone':mode==='notifications'?'notifiche':mode;
+  function skinTarget(){var u=new URL(page+'-'+(skin==='lega'?'stadio':'lega')+'.html',root);u.search=location.search;if(mode==='campo'||u.searchParams.has('skin'))u.searchParams.set('skin',skin==='lega'?'stadio':'lega');if(/^#(lega|coppa)(-\d+)?$/.test(location.hash))u.hash=location.hash;return u.href;}
   utilities.innerHTML='<a class="v55-home-logo" href="'+href('index')+'" aria-label="Home O Girrr"><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/loghi/logo-lega-o-fant-a-girrr.png" alt="O Girrr"></a>'+
    '<a class="v55-return" href="'+esc(target)+'" aria-label="Torna a '+esc(labels[label]||'Home')+'">‹ '+esc(labels[label]||'Home')+'</a>'+
    (mode!=='notifications'?'<a class="v55-notifications-link" href="'+href('notifiche')+'" aria-label="Notifiche">Notifiche <b class="v55-notify-count" hidden></b></a>':'')+
-   '<a class="v55-skin-link" href="'+root+page+'-'+(skin==='lega'?'stadio':'lega')+'.html">Grafica '+(skin==='lega'?'Stadio':'Lega')+'</a>';
+   '<a class="v55-skin-link" href="'+esc(skinTarget())+'">Grafica '+(skin==='lega'?'Stadio':'Lega')+'</a>';
+  var swap=utilities.querySelector('.v55-skin-link');['pointerenter','pointerdown','focus','click'].forEach(function(event){swap.addEventListener(event,function(){swap.href=skinTarget()})});
   var back=utilities.querySelector('.v55-return');if(prev)back.onclick=function(e){if(history.length>1){e.preventDefault();history.back()}};
  }
  update();where.insertAdjacentElement('beforebegin',utilities);document.body.classList.add('v55-has-header');
