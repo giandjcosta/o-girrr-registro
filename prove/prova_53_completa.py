@@ -23,7 +23,8 @@ with sync_playwright() as pw:
     assert not bad,(skin,w,section,bad[:5])
     assert not db,(skin,w,section,'richieste al database',db)
    p.goto(ROOT+'index-'+skin+'.html',wait_until='networkidle')
-   p.locator('#v53metrics .v53-metric').first.wait_for();assert p.locator('.cards').count()==1
+   p.locator('#v53metrics .v55-summary').wait_for();assert p.locator('.cards').count()==1
+   assert p.locator('#v53metrics .v53-metric').count()==0
    assert p.locator('.v53-menu').count()==0
    check('Home');p.screenshot(path=str(OUT/f'53-home-{skin}-{w}.png'),full_page=True)
    p.locator('.cards a.c').filter(has_text='Tabellone').click();p.locator('#tab .numpos').first.wait_for()

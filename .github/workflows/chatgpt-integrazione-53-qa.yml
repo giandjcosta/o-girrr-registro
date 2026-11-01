@@ -44,6 +44,7 @@ jobs:
           python3 prove/prova_giornale_cronaca_pdf.py
           python3 prove/prova_cronache_lab_browser.py
           python3 prove/prova_home_unica55.py
+          python3 prove/prova_home_notifiche55.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:

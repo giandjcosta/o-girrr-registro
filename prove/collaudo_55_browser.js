@@ -12,8 +12,8 @@ const SCHERMI = [['SE', 320, 640], ['iPhone', 390, 844], ['tablet', 768, 1024], 
 
 // Ogni pagina: indirizzo, controlli specifici (devono restituire '' se va bene, altrimenti il problema)
 const PAGINE = [
-  ['home-lega', 'anteprima/5.5/index-lega.html', async p => (await p.locator('#v53metrics .v53-metric').count()) >= 3 ? '' : 'Oggi al Girrr senza riquadri'],
-  ['home-stadio', 'anteprima/5.5/index-stadio.html', async p => (await p.locator('#v53metrics .v53-metric').count()) >= 3 ? '' : 'Oggi al Girrr senza riquadri'],
+  ['home-lega', 'anteprima/5.5/index-lega.html', async p => (await p.locator('#v53metrics .v55-summary').count()) === 1 && (await p.locator('#v53news a').count()) > 0 ? '' : 'Riepilogo unico o collegamenti delle notifiche mancanti'],
+  ['home-stadio', 'anteprima/5.5/index-stadio.html', async p => (await p.locator('#v53metrics .v55-summary').count()) === 1 && (await p.locator('#v53news a').count()) > 0 ? '' : 'Riepilogo unico o collegamenti delle notifiche mancanti'],
   ['notifiche', 'anteprima/5.5/notifiche-lega.html', async p => (await p.locator('.v53-notifcard').count()) > 0 ? '' : 'nessuna notifica'],
   ['tabellone-lega', 'anteprima/5.5/tabellone-lega.html', async p => {
     if (!(await p.locator('.panel tr.zona-1').count())) return 'classifica senza fasce';
