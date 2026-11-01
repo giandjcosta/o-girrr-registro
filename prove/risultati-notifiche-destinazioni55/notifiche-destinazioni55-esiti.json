@@ -1,0 +1,162 @@
+[
+  {
+    "skin": "lega",
+    "larghezza": 320,
+    "esito": "PASS",
+    "destinazioni": [
+      "risultati G5",
+      "classifica G5",
+      "calendario G6",
+      "cronaca WOA",
+      "sondaggio G6",
+      "Annuario 2026/27"
+    ]
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 320,
+    "esito": "PASS",
+    "destinazioni": [
+      "risultati G5",
+      "classifica G5",
+      "calendario G6",
+      "cronaca WOA",
+      "sondaggio G6",
+      "Annuario 2026/27"
+    ]
+  },
+  {
+    "skin": "lega",
+    "larghezza": 390,
+    "esito": "PASS",
+    "destinazioni": [
+      "risultati G5",
+      "classifica G5",
+      "calendario G6",
+      "cronaca WOA",
+      "sondaggio G6",
+      "Annuario 2026/27"
+    ]
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 390,
+    "esito": "PASS",
+    "destinazioni": [
+      "risultati G5",
+      "classifica G5",
+      "calendario G6",
+      "cronaca WOA",
+      "sondaggio G6",
+      "Annuario 2026/27"
+    ]
+  },
+  {
+    "skin": "lega",
+    "larghezza": 768,
+    "esito": "PASS",
+    "destinazioni": [
+      "risultati G5",
+      "classifica G5",
+      "calendario G6",
+      "cronaca WOA",
+      "sondaggio G6",
+      "Annuario 2026/27"
+    ]
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 768,
+    "esito": "PASS",
+    "destinazioni": [
+      "risultati G5",
+      "classifica G5",
+      "calendario G6",
+      "cronaca WOA",
+      "sondaggio G6",
+      "Annuario 2026/27"
+    ]
+  },
+  {
+    "skin": "lega",
+    "larghezza": 1280,
+    "esito": "PASS",
+    "destinazioni": [
+      "risultati G5",
+      "classifica G5",
+      "calendario G6",
+      "cronaca WOA",
+      "sondaggio G6",
+      "Annuario 2026/27"
+    ]
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 1280,
+    "esito": "PASS",
+    "destinazioni": [
+      "risultati G5",
+      "classifica G5",
+      "calendario G6",
+      "cronaca WOA",
+      "sondaggio G6",
+      "Annuario 2026/27"
+    ]
+  },
+  {
+    "skin": "lega",
+    "larghezza": 1440,
+    "esito": "PASS",
+    "destinazioni": [
+      "risultati G5",
+      "classifica G5",
+      "calendario G6",
+      "cronaca WOA",
+      "sondaggio G6",
+      "Annuario 2026/27"
+    ]
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 1440,
+    "esito": "PASS",
+    "destinazioni": [
+      "risultati G5",
+      "classifica G5",
+      "calendario G6",
+      "cronaca WOA",
+      "sondaggio G6",
+      "Annuario 2026/27"
+    ]
+  },
+  {
+    "skin": "lega",
+    "larghezza": 390,
+    "esito": "PASS",
+    "personali": [
+      "risp-901",
+      "app-p17-2",
+      "app-r902-1",
+      "prest-44-richiesta",
+      "mov-55",
+      "sfida-66",
+      "sfida-r-67"
+    ],
+    "RPC": "solo letture simulate"
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 390,
+    "esito": "PASS",
+    "personali": [
+      "risp-901",
+      "app-p17-2",
+      "app-r902-1",
+      "prest-44-richiesta",
+      "mov-55",
+      "sfida-66",
+      "sfida-r-67"
+    ],
+    "RPC": "solo letture simulate"
+  }
+]

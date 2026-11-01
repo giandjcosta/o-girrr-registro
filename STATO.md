@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
 
+## 1 novembre — ChatGPT: notifiche compatte, scheda intera cliccabile e destinazioni precise
+
+- Schede del centro notifiche più compatte, larghezza desktop limitata a 880 px. Un solo link copre tutta la scheda, compresi icona e spazi liberi; apertura da tastiera. Compattata anche la testata degli avvisi della Home, conservando il pulsante Segna lette.
+- Risultati e prossimo turno aprono la giornata menzionata; classifica apre la tabella; la cronaca apre il testo preciso; sondaggio apre la giornata richiesta; Annuario apre ed espande la stagione 2026/27. Attesa del render definitivo del Tabellone per non perdere il punto di arrivo.
+- Le risposte/applausi aprono il coro e la risposta specifici nella Curva, cercando anche in archivio. Per prestiti, movimenti e sfide si apre nella pagina pertinente la vista del singolo evento restituito dalla lettura autenticata degli avvisi: nessuna operazione sul conto o risposta alla sfida, nessun dato del Totogirrr simulato mostrato come reale. Le informazioni sono quelle conservate nell'avviso; non si aggiungono tassi o stati non restituiti dal server. Contenuto assente/inaccessibile esplicito, senza rimandare silenziosamente alla pagina generale.
+- Verificate in transazione READ ONLY e ROLLBACK le definizioni delle RPC: alcune funzioni chiamate «stato» scrivono durante la lettura (toto_chk, derby_scadi); non vengono abilitate. Aggiunta alla guardia solo curva_feed, soltanto per il collegamento personale e con credenziali presenti. Le normali pagine rimangono isolate. Nessuna modifica a funzioni, tabelle o dati Supabase.
+- **PASS locale:** sei destinazioni pubbliche × due skin × 320/390/768/1280/1440, sette tipi di avviso personale nelle due skin, archivio e coro assente; tutti con RPC intercettate e nessuna scrittura. Riprova finale Home e navigazione personale in corso al momento della consegna; nuova CI generale non ancora certificata. Restano i limiti e il vecchio Fiducia 5.2 rosso descritti sotto. Il sito ufficiale non è stato modificato.
+
 ## 1 novembre — ChatGPT: riepilogo a tendina e squadra personale
 
 - **INTEGRATO nella Home 5.5:** Oggi al Girrr può essere chiuso interamente. Da chiuso mostra squadra, posizione e punti; notifiche e link restano visibili. La scelta aperto/chiuso viene ricordata sul browser anche dopo ricarica e cambio skin. I pannelli interni restano espandibili. Comandi nativi utilizzabili da tastiera.
