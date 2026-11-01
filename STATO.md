@@ -1,5 +1,10 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 31 ottobre 2026)
 
+## 1° novembre 2026 — Tabellone: pallini e posizioni allineati (Claude, richiesta di Gianluca, solo Lab/Anteprima)
+- Pallini della forma tutti sulla stessa verticale, a destra del nome e più staccati (12 px su PC, 6 px su telefono). Numero della posizione allineato a destra in una colonna fissa e freccia ▲/▼ subito accanto in una seconda colonna: anche chi non ha freccia (es. il 9°) resta in fila.
+- Telefono: nomi a 12 px (11 px sopra i 16 caratteri), intestazione «Fantapunti» più piccola per lasciare spazio ai nomi. Da 390 px in su tutti i nomi stanno su una riga, compreso «Atletico ma non troppo»; a 360 px va a capo solo lui; a 320 px (iPhone SE) vanno ancora a capo i nomi più lunghi, su due righe, con i pallini sempre allineati.
+- File: `lab/prova-tabellone-lega.html` e `-stadio.html` (rigenerati `anteprima/tabellone-*.html` e `anteprima/5.5/tabellone-*.html`), foto aggiornata nella pagina Novità 5.5. Misurato in Chromium a 320, 360, 390, 430 e 1280 px: stessa x per tutti i pallini e per tutti i numeri, nessuno scorrimento laterale, nessun errore. Non provato: Safari/iPhone.
+
 ## 1° novembre 2026 — Tabellone: fasce del podio e dell'ultimo posto (Claude, richiesta di Gianluca, solo Lab/Anteprima)
 - In classifica le prime tre righe hanno una fascia **azzurra trasparente** su tutta la riga (con la barretta laterale azzurra) e l'ultima una fascia **rossa trasparente**; i numeri della posizione restano oro, argento, bronzo e rosso. Legenda: «Podio» e «Retrocessione». La squadra scelta tiene la sua velatura oro.
 - File: `lab/prova-tabellone-lega.html` e `-stadio.html` (rigenerano `anteprima/tabellone-*.html` e `anteprima/5.5/tabellone-*.html`). Provato in Chromium a 320, 390 e 1280 px, Lega e Stadio: nessun errore, nessuno scorrimento laterale. Aggiornata anche la foto nella pagina Novità 5.5.
