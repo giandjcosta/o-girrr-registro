@@ -65,6 +65,9 @@ const PAGINE = [
           await p.goto(BASE + url, {waitUntil: 'networkidle', timeout: 45000});
           await p.waitForTimeout(700);
           if (controllo) nota = await controllo(p);
+          // menu a tendina: l'elenco aperto deve avere uno sfondo pieno (su PC è bianco se il menu è trasparente)
+          const menu = await p.evaluate(() => [...document.querySelectorAll('select')].filter(x => x.offsetParent).some(x => { const o = x.options[0]; if (!o) return false; const bg = getComputedStyle(o).backgroundColor, sb = getComputedStyle(x).backgroundColor; return (bg === 'rgba(0, 0, 0, 0)' || bg === 'transparent') && /rgba\(.*, 0\.?\d*\)$/.test(sb) && !/, 1\)$/.test(sb) }));
+          if (menu) nota = (nota ? nota + '; ' : '') + 'menu a tendina illeggibile su PC';
           const ov = await p.evaluate(() => document.documentElement.scrollWidth - innerWidth);
           if (ov > 1) nota = (nota ? nota + '; ' : '') + 'scorre di lato di ' + ov + ' px';
           await p.screenshot({path: path.join(OUT, `${nome}-${sch}-${chiave}.jpg`), type: 'jpeg', quality: 55});
