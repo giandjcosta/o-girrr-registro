@@ -1,0 +1,142 @@
+[
+  {
+    "skin": "lega",
+    "larghezza": 320,
+    "esito": "PASS",
+    "sezioni": [
+      "Home",
+      "Tabellone",
+      "Campo",
+      "Albo",
+      "Curva",
+      "Notifiche"
+    ],
+    "database": "0 richieste"
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 320,
+    "esito": "PASS",
+    "sezioni": [
+      "Home",
+      "Tabellone",
+      "Campo",
+      "Albo",
+      "Curva",
+      "Notifiche"
+    ],
+    "database": "0 richieste"
+  },
+  {
+    "skin": "lega",
+    "larghezza": 390,
+    "esito": "PASS",
+    "sezioni": [
+      "Home",
+      "Tabellone",
+      "Campo",
+      "Albo",
+      "Curva",
+      "Notifiche"
+    ],
+    "database": "0 richieste"
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 390,
+    "esito": "PASS",
+    "sezioni": [
+      "Home",
+      "Tabellone",
+      "Campo",
+      "Albo",
+      "Curva",
+      "Notifiche"
+    ],
+    "database": "0 richieste"
+  },
+  {
+    "skin": "lega",
+    "larghezza": 768,
+    "esito": "PASS",
+    "sezioni": [
+      "Home",
+      "Tabellone",
+      "Campo",
+      "Albo",
+      "Curva",
+      "Notifiche"
+    ],
+    "database": "0 richieste"
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 768,
+    "esito": "PASS",
+    "sezioni": [
+      "Home",
+      "Tabellone",
+      "Campo",
+      "Albo",
+      "Curva",
+      "Notifiche"
+    ],
+    "database": "0 richieste"
+  },
+  {
+    "skin": "lega",
+    "larghezza": 1280,
+    "esito": "PASS",
+    "sezioni": [
+      "Home",
+      "Tabellone",
+      "Campo",
+      "Albo",
+      "Curva",
+      "Notifiche"
+    ],
+    "database": "0 richieste"
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 1280,
+    "esito": "PASS",
+    "sezioni": [
+      "Home",
+      "Tabellone",
+      "Campo",
+      "Albo",
+      "Curva",
+      "Notifiche"
+    ],
+    "database": "0 richieste"
+  },
+  {
+    "skin": "lega",
+    "larghezza": 1440,
+    "esito": "PASS",
+    "sezioni": [
+      "Home",
+      "Tabellone",
+      "Campo",
+      "Albo",
+      "Curva",
+      "Notifiche"
+    ],
+    "database": "0 richieste"
+  },
+  {
+    "skin": "stadio",
+    "larghezza": 1440,
+    "esito": "PASS",
+    "sezioni": [
+      "Home",
+      "Tabellone",
+      "Campo",
+      "Albo",
+      "Curva",
+      "Notifiche"
+    ],
+    "database": "0 richieste"
+  }
+]
