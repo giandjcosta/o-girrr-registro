@@ -18,6 +18,12 @@ Qui ci sono il Lab, l'Anteprima, le sorgenti delle pagine del sito vero e lo sta
 - Il sito vero resta invariato finché Gianluca non certifica la prova nel Lab e dà il suo «Vai» esplicito. Le modifiche documentali o agli strumenti interni che non cambiano il comportamento del sito non richiedono un prototipo nel Lab.
 - Se il `main` del sito ha file più nuovi del registro (workflow, script della Curva), copiali prima qui: non sovrascriverli con versioni vecchie.
 
+## Regole grafiche — Lega e Stadio (decisione di Gianluca, 1° novembre 2026)
+Le due grafiche devono essere davvero diverse, e ognuna uguale su tutte le pagine, menu, sottomenu, schede e riquadri:
+- **Lega** (grafica «normale», più statica): riquadri dritti come le partite del Tabellone, banda laterale dritta (8 px, rossa) e angoli appena arrotondati (4 px a sinistra, 14 px a destra); schede e pillole squadrate.
+- **Stadio** (grafica col corsivo Lobster): riquadri arrotondati (12 px) con la banda laterale curva, come le righe della classifica Stadio; schede e pillole tonde.
+- Colori ufficiali in tutte e due: il rosso della Lega (#d62839) è l'accento (interruttori, bande delle partite, scheda attiva del Tabellone); l'oro (#ffd166) solo dove è oro anche sul sito vero (giornata selezionata, schede dell'Albo nello Stadio, primo posto). Prima di cambiare un colore, confrontalo con la pagina vera.
+
 ## Regole sui contenuti — tre livelli di scrittura (decisione di Gianluca, 1° novembre 2026)
 O Girrr si racconta come un campionato vero, ma i dati sono quelli ufficiali di Leghe Fantacalcio. Realismo nel racconto, precisione nei dati.
 1. **Sportivo** (Home, risultati, classifica, titoli, rivalità, presentazioni delle partite): squadre, allenatori, gol, vittorie, pareggi, sconfitte, punti in classifica, giornata, Campionato, Champions Cup, Derby.

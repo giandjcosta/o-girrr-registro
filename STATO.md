@@ -1,5 +1,11 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
 
+## 1 novembre (sera) — Claude: regola grafica Lega/Stadio e divisione del lavoro
+
+- **Nuova regola in `AGENTS.md`** (decisione di Gianluca): Lega = riquadri dritti con banda rossa dritta di 8 px e angoli 4/14 px, schede e pillole squadrate; Stadio = riquadri tondi (12 px) con banda curva, schede e pillole tonde. Ognuna uguale su tutte le pagine, menu, sottomenu e schede. Rosso #d62839 come accento; oro solo dove è oro sul sito vero.
+- **Divisione del lavoro:** ChatGPT applica la regola a tutte le pagine 5.5 e al Lab (prompt in `proposte/prompt-chatgpt-grafiche-55.md`, ramo `chatgpt/grafiche-lega-stadio-55`, PR senza unirla). Claude, nella prossima chat (prompt in `proposte/prompt-prossima-chat-claude.md`), controlla e unisce la PR, applica la scelta A/B/C del Tabellone e prepara il rilascio 5.5 completo (ospite, Curva con risposte e rilanci, banca dei personaggi ampliata).
+- Sito vero e database non toccati.
+
 ## 1 novembre — ChatGPT: notifiche compatte, scheda intera cliccabile e destinazioni precise
 
 - Schede del centro notifiche più compatte, larghezza desktop limitata a 880 px. Un solo link copre tutta la scheda, compresi icona e spazi liberi; apertura da tastiera. Compattata anche la testata degli avvisi della Home, conservando il pulsante Segna lette.
