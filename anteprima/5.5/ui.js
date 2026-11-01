@@ -76,19 +76,39 @@ if(mode==='curva')document.addEventListener('submit',function(e){if(!e.target.cl
 }
 function load(cb){fetch(dataUrl,{cache:'no-store'}).then(function(r){if(!r.ok)throw Error('Dati temporaneamente indisponibili');return r.json()}).then(function(v){if(!v||!v.cal||!v.teams)throw Error('Formato dati non riconosciuto');D=window.CVPUB?window.CVPUB(v):v;teamList=v.teams.map(function(t){return t.name});Promise.all([fetch(root+'cronache.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}),mode==='home'?fetch(root+'allenatori.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():{}}).catch(function(){return {}}):Promise.resolve({})]).then(function(x){CRON=x[0];HIST55=x[1];cb()})}).catch(function(e){var ids=mode==='home'?['v53metrics','v53news']:mode==='notifications'?['v53notifications']:mode==='board'?['v53boardcontent']:mode==='albo'?['v53annual']:['v53poll'];ids.forEach(function(id){if(el(id))el(id).innerHTML=note('I dati della stagione non sono raggiungibili. La navigazione e le sezioni originali restano disponibili.')});console.warn('5.5 dati non caricati:',e.message)})}
 function teamPicker(id,cb){
- var s=el(id);if(!s)return;var io=chi(),t=get('team',io&&teamList.indexOf(io.team)>=0?io.team:teamList[0]);if(teamList.indexOf(t)<0)t=teamList[0];s.innerHTML=teamList.map(function(x){return '<option value="'+esc(x)+'">'+esc(x)+'</option>'}).join('');s.value=t;s.addEventListener('change',function(){set('team',s.value);cb(s.value)});cb(t)
+ var s=el(id);if(!s)return;
+ var io=chi(),registro=/\/o-girrr-registro\//.test(location.pathname)||(/^(localhost|127\.0\.0\.1)$/.test(location.hostname)&&/\/anteprima\/5\.5\//.test(location.pathname));
+ var prova=registro&&new URLSearchParams(location.search).get('riepilogo')!=='personale';
+ var mia=io&&teamList.indexOf(io.team)>=0?io.team:null,choices=prova?teamList:mia?[mia]:[];
+ var t=prova?get('team',mia||teamList[0]):mia;if(choices.indexOf(t)<0)t=choices[0]||null;
+ s.innerHTML=choices.length?choices.map(function(x){return '<option value="'+esc(x)+'">'+esc(x)+'</option>'}).join(''):'<option value="">Entra con la tua squadra</option>';
+ s.value=t||'';s.disabled=!prova;
+ var label=document.querySelector('label[for="'+id+'"]');if(label)label.textContent=prova?'Squadra in prova':'La mia squadra';
+ s.closest('.v53-team').classList.toggle('v55-ownteam',!prova);
+ s.addEventListener('change',function(){if(!prova){s.value=mia||'';return}if(choices.indexOf(s.value)<0)return;set('team',s.value);cb(s.value)});cb(t)
 }
 function home(){
  var generation=0;
  var live=el('v53news').parentElement;live.classList.add('v55-notice');
  var header=document.createElement('div');header.className='v55-notice-head';
  header.innerHTML='<h3><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg> Notifiche <span id="v55unread" aria-live="polite"></span></h3><a href="'+href('notifiche')+'">Tutte ›</a>';
- live.prepend(header);document.querySelector('.v53-home').prepend(live);
+ var panel=document.querySelector('.v53-home');live.prepend(header);panel.prepend(live);
+ var dashboard=document.createElement('details');dashboard.id='v55dashboard';dashboard.className='v55-dashboard';dashboard.open=get('home-open',true)!==false;
+ var summary=document.createElement('summary'),heading=document.querySelector('.v53-homehead');
+ summary.append(heading.firstElementChild);
+ var compact=document.createElement('span');compact.id='v55compact';compact.className='v55-compact';summary.firstElementChild.append(compact);
+ summary.insertAdjacentHTML('beforeend','<span class="v55-disclosure-label"></span><span class="v55-chevron" aria-hidden="true">⌄</span>');
+ var body=document.createElement('div');body.className='v55-dashboard-body';
+ Array.from(panel.children).forEach(function(child){if(child!==live)body.append(child)});
+ dashboard.append(summary,body);panel.append(dashboard);
+ function stato(){summary.querySelector('.v55-disclosure-label').textContent=dashboard.open?'Chiudi riepilogo':'Apri riepilogo'}
+ stato();dashboard.addEventListener('toggle',function(){stato();set('home-open',dashboard.open)});
  teamPicker('v53team',function(t){
  var version=++generation,day=latest(),nm=day&&day.n,cls=nm?ranks(nm):[],sets=completeRounds(false).map(function(g){return {n:g.n,table:ranks(g.n)}});
  var box=el('v53metrics');box.classList.add('v55-unified');
- box.innerHTML=window.OGHome55.render({team:t,table:cls,sets:sets,rounds:completeRounds(false),cupRounds:completeRounds(true),cupLink:href('tabellone')+'#coppa',coachLink:href('albo')+'?albo=all',calendar:games(false).sort(function(a,b){return a.n-b.n}),archivio:HIST55,
-  dayLink:function(n){return href('tabellone')+'#lega-'+n},boardLink:href('tabellone'),careerLink:function(team){return new URL('../'+(skin==='lega'?'attuale.html':'index.html'),root).href+'?come='+encodeURIComponent(team)+'#carriera'}});
+ box.innerHTML=t?window.OGHome55.render({team:t,table:cls,sets:sets,rounds:completeRounds(false),cupRounds:completeRounds(true),cupLink:href('tabellone')+'#coppa',coachLink:href('albo')+'?albo=all',calendar:games(false).sort(function(a,b){return a.n-b.n}),archivio:HIST55,
+  dayLink:function(n){return href('tabellone')+'#lega-'+n},boardLink:href('tabellone'),careerLink:function(team){return new URL('../'+(skin==='lega'?'attuale.html':'index.html'),root).href+'?come='+encodeURIComponent(team)+'#carriera'}}):note('Entra con la tua squadra per vedere il tuo riepilogo personale.');
+ var ownrow=cls.find(function(r){return r.team===t});compact.textContent=t?t+(ownrow?' · '+(cls.indexOf(ownrow)+1)+'ª · '+ownrow.pt+' punti':''):'Il riepilogo della tua squadra';
  var z=notizia(),items=[],me=chi(),personal=[],busy=!!(chi()&&chi().team===t);
  if(z)items.push({key:z.chiave,title:z.titolo,detail:z.testo,link:href('tabellone')+'#lega-'+nm});
  if(day)items.push({key:'result-'+nm,title:'Risultati della '+nm+'ª giornata',detail:'Risultati, classifica e dettagli delle partite.',link:href('tabellone')+'#lega-'+nm});
