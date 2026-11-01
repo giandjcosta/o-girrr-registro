@@ -344,8 +344,12 @@ function passaggi(){if(CALMO||'startViewTransition' in document)return;
   var u;try{u=new URL(l.href,location.href)}catch(x){return}if(u.origin!==location.origin||(u.pathname===location.pathname&&u.hash))return;
   e.preventDefault();document.documentElement.classList.add('v55-esce');setTimeout(function(){location.href=u.href},170)});
  window.addEventListener('pageshow',function(){document.documentElement.classList.remove('v55-esce')})}
+/* Claude, 1° novembre: Tabellone e Campo entrano tutti insieme, in dissolvenza, solo quando sono pronti (niente pezzi che compaiono uno alla volta). */
+function pronto(sel){var h=document.documentElement;if(!h.classList.contains('v55-attesa'))return;var fatto=false;
+ function via(){if(fatto)return;fatto=true;clearInterval(t);h.classList.add('v55-pronto');requestAnimationFrame(function(){requestAnimationFrame(function(){h.classList.remove('v55-attesa')})})}
+ var t=setInterval(function(){if(document.querySelector(sel))setTimeout(via,80)},50);setTimeout(via,2500)}
 function init(){
-tendine();passaggi();ospite();nav();redirect();if(mode==='board')vista();
+tendine();passaggi();ospite();nav();redirect();if(mode==='campo')pronto('#board .card');if(mode==='board')pronto('#tab table');if(mode==='board')vista();
 if(mode==='albo')document.addEventListener('click',function(e){var b=e.target.closest('[data-oro]');if(!b)return;var u=new URL(location.href);u.searchParams.set('albo',b.dataset.oro);history.replaceState(null,'',u)});
 if(mode==='home')load(home);
 if(mode==='board')load(board);

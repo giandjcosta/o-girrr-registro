@@ -287,3 +287,9 @@ body[data-v53-skin=stadio] .v53-pill[aria-selected=true],body[data-v53-skin=stad
  body[data-v53=board] #board.v55-cinque>.m[data-v55p="5"]{grid-column:2;grid-row:5/span 2}
  body[data-v53=board] #board.v55-cinque>.rip{grid-row:8}
 }
+/* Claude, 1° novembre: entrata morbida di Tabellone e Campo (lo sfondo resta, il contenuto arriva tutto insieme) */
+html.v55-attesa body>*{opacity:0}
+html.v55-pronto body>*{transition:opacity .5s cubic-bezier(.22,.61,.36,1)}
+@media (prefers-reduced-motion: reduce){html.v55-pronto body>*{transition:none}}
+/* Campo: la grafica è quella della pagina da cui si arriva, niente scelta Lega/Stadio */
+body[data-v53=campo] .mast .skin{display:none!important}

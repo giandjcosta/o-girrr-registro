@@ -1,5 +1,11 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
 
+## 1 novembre (notte, 3) — Claude: Campo senza scelta della grafica, entrata morbida di Campo e Tabellone
+
+- **Campo 5.5:** tolta la scelta «Grafica Lega / Grafica Stadio» (la grafica è quella della pagina da cui si arriva; resta il link della barra in alto come in tutte le pagine).
+- **Passaggio Tabellone ↔ Campo più fluido:** prima comparivano «Caricamento…», poi la barra in alto che spingeva giù tutto, poi i riquadri di colpo. Ora la pagina resta trasparente (lo sfondo resta) finché il contenuto è pronto e poi entra tutta insieme in dissolvenza di 0,5 s (`pronto()` in `ui.js`, classe `v55-attesa` messa in testa da `build53.py`; sicurezza: dopo 2,5–3 s si mostra comunque). Con «riduci movimento» appare senza animazione. Misurato: contenuto pronto a ~0,34 s dal tocco, opacità 0 → 1 in 0,5 s, nessun salto della pagina.
+- Versione dei file `v=55n`. **Prove:** build riproducibile, `collaudo_55_browser.js chromium` 80 pagine, 0 problemi; foto Campo Lega/Stadio a 320 e 1280. Non provati Safari e iPhone vero. Sito vero e database non toccati.
+
 ## 1 novembre (notte, 2) — Claude: Tabellone C definitivo, cinque partite 3 + 2 su PC, regola delle novità per versione
 
 - **Gianluca conferma la versione C.** Tolte A e B da `ui.js`/`ui.css`: il Tabellone 5.5 apre sempre le schede Classifica · Risultati · Campo, senza `?vista=c`. `lab/confronto-tabellone.html` ora mostra la C in Lega e Stadio.
