@@ -40,6 +40,13 @@ function fresco(u){var x=new URL(u);x.searchParams.set('_t',Date.now());return x
 function mark(m){toggle.setAttribute('aria-checked',String(m==='n'));la.className=m==='a'?'on':'';ln.className=m==='n'?'on':''}
 function scrivi(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 function attuale(){try{var u=frame.contentWindow.location.href;return u!=='about:blank'?u:null}catch(e){return null}}
+function ricorda(){
+ var u=attuale();if(!u)return;var clean=pulisci(u);
+ if(interno(clean)){scrivi('orr_gv',modo(clean));scrivi('orr_gu',clean.href)}
+}
+// La nuova pagina può essere già navigabile mentre immagini/font non hanno
+// ancora emesso load. Al ricaricamento salva l'URL effettivo, non quello precedente.
+window.addEventListener('pagehide',ricorda);
 function carica(u,m){mark(m);scrivi('orr_gv',m);frame.classList.add('out');frame.src=fresco(u)}
 function cambia(m){var u=attuale();carica(u?conv(u,m):home(m),m)}
 toggle.addEventListener('click',function(){cambia(toggle.getAttribute('aria-checked')==='true'?'a':'n')});

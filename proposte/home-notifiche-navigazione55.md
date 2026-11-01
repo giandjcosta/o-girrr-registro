@@ -30,7 +30,9 @@ Il cambio di skin dalla barra conserva query, giornata, partita e scheda Albo.
 Anche il Lab e i vecchi URL `anteprima/home-*.html` aprono la stessa Home 5.5;
 le copie storiche delle Home restano nei template. Un test segue entrambi gli
 ingressi e verifica il riepilogo nuovo. Corretto così il percorso che visitava
-ancora la vecchia Home e il vecchio Albo. Le schede dell’Albo hanno area di
+ancora la vecchia Home e il vecchio Albo. La cornice salva l’URL corrente
+al ricaricamento anche quando immagini/font non hanno ancora emesso load,
+evitando di riaprire la pagina precedente. Le schede dell’Albo hanno area di
 tocco di almeno 44 px su telefono/tablet; su desktop restano compatte.
 
 ## Notifiche e confini
