@@ -1,0 +1,33 @@
+{
+  "giornata": 5,
+  "impaginazione": [
+    {
+      "pag": 1,
+      "livello": 0,
+      "scala": 1,
+      "margine": "79.6",
+      "ci_sta": true
+    },
+    {
+      "pag": 2,
+      "livello": 0,
+      "scala": 1,
+      "margine": "28.8",
+      "ci_sta": true
+    },
+    {
+      "pag": 3,
+      "livello": 0,
+      "scala": 1,
+      "margine": "133.7",
+      "ci_sta": true
+    },
+    {
+      "pag": 4,
+      "livello": 0,
+      "scala": 1,
+      "margine": "48.9",
+      "ci_sta": true
+    }
+  ]
+}

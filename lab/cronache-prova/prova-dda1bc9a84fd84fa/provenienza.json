@@ -1,0 +1,16 @@
+{
+  "sito": "https://giandjcosta.github.io/o-fant-a-girrr/",
+  "dati": [
+    "data.json",
+    "girrr/dati/lab-dati.json"
+  ],
+  "sorgenti_pdf": "https://github.com/giandjcosta/o-fant-a-girrr/tree/gh-pages/scripts",
+  "sha256_sorgenti_pdf": {
+    "toto_quote.py": "043c6044d5502c91d71738f44042332f7ba771bdd53b64abceabaa62e4a87359",
+    "pdf_giornale.py": "2b0b8dcdfa64ee9233044d475a00bc31f04758cca8cbdb49ccf9b05e14d4f029",
+    "pdf_settimana.py": "3f4ea24bc60f3fbbd2f31f21a13bc5a27761670a2b026e209d15d6b9e8821c5d"
+  },
+  "giornata": 5,
+  "firma_input": "dda1bc9a84fd84fa16ba2a78dc842c1c216f31b11f5c70510e38207215f575c8",
+  "nota": "Letture pubbliche. Edizione di prova con titoli redazionali minimi; non un giornale pubblicato."
+}

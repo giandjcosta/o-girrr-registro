@@ -1,0 +1,27 @@
+[
+  {
+    "larghezza": 320,
+    "percorso": "Lab → Cronache → Dossier → PDF",
+    "esito": "PASS"
+  },
+  {
+    "larghezza": 390,
+    "percorso": "Lab → Cronache → Dossier → PDF",
+    "esito": "PASS"
+  },
+  {
+    "larghezza": 768,
+    "percorso": "Lab → Cronache → Dossier → PDF",
+    "esito": "PASS"
+  },
+  {
+    "larghezza": 1280,
+    "percorso": "Lab → Cronache → Dossier → PDF",
+    "esito": "PASS"
+  },
+  {
+    "larghezza": 1440,
+    "percorso": "Lab → Cronache → Dossier → PDF",
+    "esito": "PASS"
+  }
+]
