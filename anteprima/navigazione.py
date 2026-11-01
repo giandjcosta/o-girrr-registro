@@ -48,8 +48,7 @@ def genera():
   var campoLink=document.getElementById('campo-link');if(campoLink){{campoLink.href='campo.html?skin={skin}&giornata='+sel.lega;campoLink.hidden=mode==='coppa'}}''')
         t = t.replace('</style>', '''.giornata-nav [hidden]{display:none!important}.giornata-nav{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}.giornata-nav a{display:block;padding:12px;border:1px solid #7888a8;border-radius:10px;color:inherit;text-decoration:none;font-weight:800}.giornata-nav a[aria-current]{border-color:var(--acc)}.panel td.n{white-space:normal;overflow:visible;text-overflow:clip}.panel td.fp{white-space:nowrap}@media(min-width:1150px){.wrap{max-width:1420px}.grid{grid-template-columns:minmax(0,1fr) minmax(0,1.5fr)}.m{gap:10px;padding:14px}.m .t{font-size:16px;overflow-wrap:normal;word-break:normal}.m .sc b{width:44px;height:58px;font-size:40px}.panel th{font-size:14px}.panel td.n{font-size:15px}}@media(max-width:359px){.wrap{padding-left:9px;padding-right:9px}.panel{padding:10px}.panel th:last-child{white-space:normal;overflow-wrap:anywhere;max-width:65px}}
 </style>''',1)
-        if skin=='stadio':
-            t = t.replace('</head>', '<style>body[data-mode=lega]{--acc:#ffd166}.sw button[aria-selected=true]{color:#142449}</style></head>')
+        # Stadio: accento rosso come il Tabellone ufficiale (niente oro sull'interruttore Campionato e sulle bande)
         (R/'anteprima'/tab).write_text(t)
         a = (R/'anteprima'/app).read_text()
         a = a.replace('../ufficiale/nuovo/girrr/index.html',home).replace('../ufficiale/girrr/index.html',home)
