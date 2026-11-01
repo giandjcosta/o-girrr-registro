@@ -46,6 +46,16 @@ with sync_playwright() as pw:
    if w in (390,1280,1440):
     p.locator('.v53-home').screenshot(path=str(OUT/f'home-notifiche55-{skin}-{w}.png'))
     p.locator('.v55-more').filter(has=p.locator('summary').filter(has_text='La storia dei tuoi allenatori')).screenshot(path=str(OUT/f'storico-home55-{skin}-{w}.png'))
+   if w in (390,1440):
+    p.locator('#v55dashboard>summary').click()
+    assert not p.locator('#v55dashboard').evaluate('(e)=>e.open')
+    assert p.locator('.v55-summary').is_hidden() and p.locator('#v53news').is_visible()
+    p.reload(wait_until='networkidle');p.locator('#v55compact').wait_for()
+    assert not p.locator('#v55dashboard').evaluate('(e)=>e.open'),'Ricorda il riepilogo chiuso'
+    assert 'Oranje VC' in p.locator('#v55compact').inner_text()
+    p.locator('.v53-home').screenshot(path=str(OUT/f'home-richiusa55-{skin}-{w}.png'))
+    p.locator('#v55dashboard>summary').focus();p.locator('#v55dashboard>summary').press('Enter')
+    assert p.locator('.v55-summary').is_visible()
    p.locator('#v53news a').first.click();p.wait_for_url('**/tabellone-'+skin+'.html#lega-5')
    assert p.locator('.v55-return').is_visible()
    p.locator('.v55-return').click();p.wait_for_url('**/index-'+skin+'.html')
@@ -109,6 +119,32 @@ with sync_playwright() as pw:
    assert p.locator('#v53notifstato').inner_text().startswith('Modalità ospite:')
    assert not db,('Ospite con credenziali salvate: nessuna RPC',skin,w,db)
    c.close()
+ # Percorso fuori dal Registro: nessun selettore di altri club per la futura Home.
+ from urllib.parse import urlparse
+ for skin in ('lega','stadio'):
+  for accesso in (False,True):
+   c=b.new_context(viewport={'width':390,'height':950});installa(c)
+   c.route('https://giandjcosta.github.io/o-fant-a-girrr/data.json',lambda r:r.fulfill(status=200,content_type='application/json',body=FIX))
+   c.add_init_script("localStorage.setItem('og:53:team',JSON.stringify('AFA SELECCION'))"+ (";localStorage.setItem('fg',JSON.stringify({team:'Oranje VC',code:'CODICE_DI_PROVA'}))" if accesso else ''))
+   def futuro(route):
+    name=Path(urlparse(route.request.url).path).name
+    f=R/'anteprima/5.5'/name
+    if name=='preview-guard.js':f=R/'anteprima'/name
+    assert f.is_file(),name
+    route.fulfill(path=str(f))
+   c.route(ROOT+'/sito-futuro/**',futuro)
+   p=c.new_page();p.goto(ROOT+'/sito-futuro/girrr/index-'+skin+'.html',wait_until='networkidle')
+   p.locator('#v55dashboard').wait_for();s=p.locator('#v53team')
+   assert s.is_disabled() and s.locator('option').count()==1
+   if accesso:
+    assert s.input_value()=='Oranje VC','Ignora una squadra diversa rimasta nella prova'
+    assert p.locator('.v55-near .v55-me th').inner_text()=='Oranje VC'
+    s.evaluate("e=>{e.add(new Option('AFA SELECCION','AFA SELECCION'));e.value='AFA SELECCION';e.dispatchEvent(new Event('change'))}")
+    assert s.input_value()=='Oranje VC'
+   else:
+    assert p.locator('.v55-summary').count()==0
+    assert 'Entra con la tua squadra' in p.locator('#v53metrics').inner_text()
+   c.close()
  b.close()
 (OUT/'home-notifiche55-esiti.json').write_text(json.dumps(esiti,ensure_ascii=False,indent=2)+'\n')
-print('PASS Home integrata × due skin × cinque larghezze; grafici, notifiche collegate, navigazione, errore, isolamento squadra e ospite con credenziali salvate')
+print('PASS Home integrata × due skin × cinque larghezze; tendina persistente e tastiera, sola squadra personale, prova anonima, notifiche, navigazione e ospite')
