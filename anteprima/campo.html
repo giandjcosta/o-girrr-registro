@@ -182,19 +182,21 @@ function form(t){return t&&t.h.length?'<div class="form">'+t.h.slice(-5).map(fun
 function fact(label,val){return '<div class="fact"><span>'+esc(label)+'</span><strong>'+esc(val)+'</strong></div>'}
 function mini(t){return t?'<b>'+t.pt+' punti</b>'+form(t):'In corso'}
 function line(x,y,stroke){return '<path d="M'+x+' '+y+'" fill="none" stroke="'+stroke+'" stroke-width="3"/>'}
+function scalaTonda(m){var p=m<=10?5:m<=30?5:m<=60?10:20;return Math.max(10,Math.ceil(m/p)*p)}
 function chart(t,max){if(!t||!t.h.length)return '<p class="info">L’andamento appare dopo la prima giornata giocata.</p>';
 var pts=[0],s=0; t.h.forEach(function(v){s+=v==='v'?3:v==='n'?1:0;pts.push(s)});
 // Asse dei punti a sinistra (0, metà, massimo), giornate sotto e punteggio sopra ogni pallino.
-max=max||Math.max(3,pts[pts.length-1]);var X0=40,X1=346,Y0=128,Y1=30,n=pts.length-1;
+max=max||scalaTonda(pts[pts.length-1]);var X0=40,X1=346,Y0=128,Y1=30,n=pts.length-1,passo=Math.max(1,Math.ceil(n/6));
+function mostra(i){return i===n||i%passo===0&&n-i>=passo/2}
 function x(i){return X0+i*(X1-X0)/Math.max(1,n)}function y(p){return Y0-p/max*(Y0-Y1)}
-var tacche=[0,Math.round(max/2),max].filter(function(v,k,a){return a.indexOf(v)===k});
+var tacche=[0,max/2%1?Math.round(max/2):max/2,max].filter(function(v,k,a){return a.indexOf(v)===k});
 var v=pts.map(function(p,i){return [x(i),y(p)]}),lin=v.map(function(q){return q[0].toFixed(1)+','+q[1].toFixed(1)}).join(' ');
 return '<svg class="andamento" viewBox="0 0 360 160" role="img" aria-label="Punti in classifica dopo ogni giornata: '+pts.slice(1).join(', ')+'">'+
  tacche.map(function(tv){return '<path d="M'+X0+' '+y(tv).toFixed(1)+'H'+X1+'" stroke="#8191b0" stroke-opacity="'+(tv?'.28':'.7')+'" stroke-dasharray="'+(tv?'3 4':'0')+'"/><text x="'+(X0-8)+'" y="'+(y(tv)+4).toFixed(1)+'" text-anchor="end" class="ax">'+tv+'</text>'}).join('')+
  '<text x="'+(X0-8)+'" y="16" text-anchor="end" class="ax lab">Pt</text>'+
  '<polygon points="'+X0+','+Y0+' '+lin+' '+x(n).toFixed(1)+','+Y0+'" fill="var(--accent)" opacity=".13"/>'+
  '<polyline points="'+lin+'" fill="none" stroke="var(--accent)" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>'+
- v.map(function(q,i){return '<circle cx="'+q[0].toFixed(1)+'" cy="'+q[1].toFixed(1)+'" r="4.5"/>'+(i?'<text x="'+q[0].toFixed(1)+'" y="'+(q[1]-10).toFixed(1)+'" text-anchor="middle" class="val">'+pts[i]+'</text>':'')+'<text x="'+q[0].toFixed(1)+'" y="152" text-anchor="middle" class="ax">'+(i?i+'ª':'Inizio')+'</text>'}).join('')+'</svg>'}
+ v.map(function(q,i){return '<circle cx="'+q[0].toFixed(1)+'" cy="'+q[1].toFixed(1)+'" r="'+(n>12?3:4.5)+'"/>'+(i&&mostra(i)?'<text x="'+q[0].toFixed(1)+'" y="'+(q[1]-10).toFixed(1)+'" text-anchor="middle" class="val">'+pts[i]+'</text>':'')+(i===0||mostra(i)?'<text x="'+q[0].toFixed(1)+'" y="152" text-anchor="'+(i===0?'start':'middle')+'" class="ax">'+(i?i+'ª':'Inizio')+'</text>':'')}).join('')+'</svg>'}
 function campoSvg(H,a,b){
  var m=H/2,y1=24,y2=H-24;
  return '<svg viewBox="0 0 780 '+H+'" role="img" aria-label="Il campo: '+esc(a)+' contro '+esc(b)+'">'+
@@ -249,7 +251,7 @@ function render(){
  h+='<aside class="card numbers" id="rendimento"><div class="kicker">Rendimento stagionale</div><h2>I numeri del confronto</h2><p class="sub">Dopo '+complete().filter(function(x){return x.n<=g.n}).length+' giornate complete</p>'+
  '<div class="duel-head"><b>'+nm(a)+'</b><span>CONFRONTO</span><b>'+nm(b)+'</b></div>'+
  [['Posizione',ha?ha.pos+'ª':'—',hb?hb.pos+'ª':'—'],['Punti',stat(ha,'pt'),stat(hb,'pt')],['Gol fatti',stat(ha,'gf'),stat(hb,'gf')],['Gol subiti',stat(ha,'gs'),stat(hb,'gs')],['Differenza reti',ha?ha.gf-ha.gs:'—',hb?hb.gf-hb.gs:'—'],['Vittorie',stat(ha,'v'),stat(hb,'v')],['Pareggi',stat(ha,'n'),stat(hb,'n')],['Sconfitte',stat(ha,'p'),stat(hb,'p')]].map(function(x){return '<div class="duel-row"><strong>'+esc(x[1])+'</strong><span>'+x[0]+'</span><strong>'+esc(x[2])+'</strong></div>'}).join('')+'</aside>';
- var maxPts=Math.max(3,ha?ha.pt:0,hb?hb.pt:0);
+ var maxPts=scalaTonda(Math.max(3,ha?ha.pt:0,hb?hb.pt:0));
  h+='<section class="card instruments"><div class="section-head"><div><div class="kicker">Continuità</div><h2>Come arrivano alla sfida</h2></div><span class="tag">ULTIME 5</span></div><div class="gauge-grid">'+ring(ha,a)+ring(hb,b)+'</div><div class="comparison"><div>'+nm(a)+form(ha)+'</div><div class="k">FORMA</div><div>'+nm(b)+form(hb)+'</div></div></section>';
  h+='<section class="card trends" id="andamento"><div class="section-head"><div><div class="kicker">Il cammino</div><h2>Andamento dei punti</h2></div><span class="tag">Scala 0–'+maxPts+' punti</span></div><div class="chart-grid"><div><b>'+nm(a)+'</b><div class="spark">'+chart(ha,maxPts)+'</div></div><div><b>'+nm(b)+'</b><div class="spark">'+chart(hb,maxPts)+'</div></div></div><p class="info">Punti in classifica dopo ogni giornata (3 la vittoria, 1 il pareggio) · Stessa scala per le due squadre.</p></section>';
  h+='<section class="card recent" id="recenti"><details><summary>Risultati recenti · Apri l’archivio del confronto</summary><div class="recent-grid">'+[a,b].map(function(t){var partite=complete().filter(function(x){return x.n<=g.n}).flatMap(function(x){return x.m.filter(function(m){return m[0]===t||m[3]===t}).map(function(m){return {n:x.n,m:m}})}).slice(-5).reverse();return '<div><h3>'+nm(t)+'</h3>'+partite.map(function(x){return '<div class="recent-row"><small>G'+x.n+'</small><span>'+nm(x.m[0])+' – '+nm(x.m[3])+'</span><b>'+esc(x.m[4])+'</b></div>'}).join('')+'</div>'}).join('')+'</div></details></section>';
