@@ -45,7 +45,7 @@ def genera():
         t = t.replace('<div class="sw" role="tablist">',f'<nav class="giornata-nav" aria-label="Giornata"><a aria-current="page" href="{tab}">Risultati e classifica</a><a id="campo-link" href="campo.html?skin={skin}">Campo · Centro della giornata ›</a></nav><div class="sw" role="tablist">')
         t = t.replace('function render(){',f'''function render(){{
   document.querySelectorAll('.sw button').forEach(function(b){{b.setAttribute('aria-selected',String(b.dataset.m===mode))}});
-  var campoLink=document.getElementById('campo-link');if(campoLink){{campoLink.href='campo.html?skin={skin}&giornata='+sel.lega;campoLink.hidden=mode==='coppa'}}''')
+  var campoLink=document.getElementById('campo-link');if(campoLink){{campoLink.href=mode==='coppa'?'campo.html?skin={skin}&coppa=1&giornata='+Math.min(sel.coppa,D?D.cal.cup.length:10):'campo.html?skin={skin}&giornata='+sel.lega;campoLink.hidden=false}}''')
         t = t.replace('</style>', '''.giornata-nav [hidden]{display:none!important}.giornata-nav{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}.giornata-nav a{display:block;padding:12px;border:1px solid #7888a8;border-radius:10px;color:inherit;text-decoration:none;font-weight:800}.giornata-nav a[aria-current]{border-color:var(--acc)}.panel td.n{white-space:normal;overflow:visible;text-overflow:clip}.panel td.fp{white-space:nowrap}@media(min-width:1150px){.wrap{max-width:1420px}.grid{grid-template-columns:minmax(0,1fr) minmax(0,1.5fr)}.m{gap:10px;padding:14px}.m .t{font-size:16px;overflow-wrap:normal;word-break:normal}.m .sc b{width:44px;height:58px;font-size:40px}.panel th{font-size:14px}.panel td.n{font-size:15px}}@media(max-width:359px){.wrap{padding-left:9px;padding-right:9px}.panel{padding:10px}.panel th:last-child{white-space:normal;overflow-wrap:anywhere;max-width:65px}}
 </style>''',1)
         # Stadio: accento rosso come il Tabellone ufficiale (niente oro sull'interruttore Campionato e sulle bande)
@@ -60,7 +60,7 @@ def genera():
         (R/'anteprima'/app).write_text(a)
     c = (R/'lab/prova-dashboard-campo.html').read_text()
     c = c.replace('href="index.html">‹ Torna al Lab','id="ritorno-tabellone" href="tabellone-stadio.html">‹ Tabellone')
-    c = c.replace('</body>', '''<script>function aggiornaRitorni(){var s=document.body.dataset.skin;document.getElementById('ritorno-tabellone').href='tabellone-'+s+'.html#lega-'+(new URLSearchParams(location.search).get('giornata')||1);document.querySelectorAll('[data-home]').forEach(function(a){a.href='home-'+s+'.html'})}aggiornaRitorni();document.addEventListener('click',function(){setTimeout(aggiornaRitorni,0)})</script></body>''')
+    c = c.replace('</body>', '''<script>function aggiornaRitorni(){var s=document.body.dataset.skin;var q=new URLSearchParams(location.search);document.getElementById('ritorno-tabellone').href='tabellone-'+s+'.html#'+(q.get('coppa')==='1'?'coppa-':'lega-')+(q.get('giornata')||1);document.querySelectorAll('[data-home]').forEach(function(a){a.href='home-'+s+'.html'})}aggiornaRitorni();document.addEventListener('click',function(){setTimeout(aggiornaRitorni,0)})</script></body>''')
     (R/'anteprima/campo.html').write_text(c)
     # Cornice dell'Anteprima nel Registro, distinta dalle sorgenti congelate del sito.
     (R/'ufficiale/index.html').write_text((R/'anteprima/sorgenti/involucro.html').read_text())

@@ -285,7 +285,7 @@ function schede(){var nav=document.querySelector('.giornata-nav'),panel=document
  [['classifica','Classifica'],['risultati','Risultati']].forEach(function(x){var b=document.createElement('button');b.type='button';b.dataset.sez=x[0];b.textContent=x[1];b.setAttribute('role','tab');nav.appendChild(b)});
  if(campo){campo.textContent='Campo';campo.removeAttribute('aria-current');nav.appendChild(campo)}
  var striscia=document.createElement('button');striscia.type='button';striscia.className='v55-striscia';striscia.setAttribute('aria-label','Risultati della giornata: apri i Risultati');panel.insertBefore(striscia,panel.firstChild);
- function riempi(){var ms=[].slice.call(document.querySelectorAll('#board>.m'));striscia.hidden=!ms.length;striscia.innerHTML='<span class="v55-st-tit">'+esc(((document.querySelector('#board>.nota')||{}).textContent||'Risultati'))+'</span>'+ms.map(function(m){var t=m.querySelectorAll('.t span'),sc=m.querySelectorAll('.sc b');return '<span class="v55-st-m"><b>'+esc(sigla(t[0]?t[0].textContent:''))+'</b><i>'+esc(sc[0]?sc[0].textContent:'–')+'–'+esc(sc[1]?sc[1].textContent:'–')+'</i><b>'+esc(sigla(t[1]?t[1].textContent:''))+'</b></span>'}).join('')+'<span class="v55-st-vai">Risultati ›</span>'}
+ function riempi(){var ms=[].slice.call(document.querySelectorAll('#board>.m:not(.ko)'));striscia.hidden=!ms.length;striscia.innerHTML='<span class="v55-st-tit">'+esc(((document.querySelector('#board>.nota')||{}).textContent||'Risultati'))+'</span>'+ms.map(function(m){var t=m.querySelectorAll('.t span'),sc=m.querySelectorAll('.sc b');return '<span class="v55-st-m"><b>'+esc(sigla(t[0]?t[0].textContent:''))+'</b><i>'+esc(sc[0]?sc[0].textContent:'–')+'–'+esc(sc[1]?sc[1].textContent:'–')+'</i><b>'+esc(sigla(t[1]?t[1].textContent:''))+'</b></span>'}).join('')+'<span class="v55-st-vai">Risultati ›</span>'}
  riempi();var bd=el('board');if(bd&&window.MutationObserver)new MutationObserver(riempi).observe(bd,{childList:true});
  function mostra(s,ani){sez=s;nav.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-selected',String(b.dataset.sez===s))});panel.hidden=s!=='classifica';board.hidden=s!=='risultati';
   var v=s==='classifica'?panel:board;if(ani&&!CALMO&&v.animate)v.animate({opacity:[0,1],transform:['translateY(6px)','none']},{duration:320,easing:'cubic-bezier(.22,.61,.36,1)'});
@@ -293,7 +293,37 @@ function schede(){var nav=document.querySelector('.giornata-nav'),panel=document
  nav.addEventListener('click',function(e){var b=e.target.closest('button[data-sez]');if(b)mostra(b.dataset.sez,true)});
  striscia.addEventListener('click',function(){mostra('risultati',true);nav.scrollIntoView({behavior:CALMO?'auto':'smooth',block:'start'})});
  mostra(sez,false)}
-function vista(){var q='a';try{var vv=new URLSearchParams(location.search).get('vista');q=vv==='b'||vv==='c'?vv:'a'}catch(e){}document.body.classList.add('vista-'+q);if(q==='c')setTimeout(schede,0);
+/* Claude, 1° novembre: fase finale della Champions Cup come un tabellone di tennis. Quarti → Semifinali → Finale da sinistra a destra:
+   scegliendo una fase il tabellone scorre verso destra, le colonne già giocate si chiudono e le partite rimaste si allargano.
+   Si cambia fase anche scorrendo col dito (o col trackpad) sul tabellone. Le squadre restano «Da definire» finché il calendario non le contiene. */
+var KOF=[{n:11,c:'q',tit:'Quarti di finale',sig:'Q',k:4},{n:12,c:'s',tit:'Semifinali',sig:'S',k:2},{n:13,c:'f',tit:'Finale',sig:'F',k:1}];
+function koPartita(f,i){var g=D&&D.cal&&(D.cal.cup||[]).filter(function(x){return x.n===f.n})[0],m=g&&g.m&&g.m[i],prev=KOF[KOF.indexOf(f)-1];
+ var a=m?m[1]:(prev?'Vincente '+prev.sig+(2*i+1):'Da definire'),b=m?m[4]:(prev?'Vincente '+prev.sig+(2*i+2):'Da definire'),ris=m&&/^\d+-\d+$/.test(String(m[5]))?String(m[5]).split('-'):null;
+ function riga(t,x,y){var w=ris&&+x>+y;return '<div class="v55-ko-r'+(w?' w':'')+(m?'':' vuota')+'"><span>'+esc(t)+'</span><b>'+(ris?esc(x):'–')+'</b></div>'}
+ return '<div class="v55-ko-m"><span class="v55-ko-sig">'+f.sig+(f.k>1?i+1:'')+'</span>'+riga(a,ris&&ris[0],ris&&ris[1])+riga(b,ris&&ris[1],ris&&ris[0])+'</div>'}
+function koColonna(f){var h='<div class="v55-ko-col" data-c="'+f.c+'" data-n="'+f.n+'"><div class="v55-ko-tit">'+f.tit+'</div><div class="v55-ko-corpo">';
+ if(f.k===1)h+=koPartita(f,0);else for(var i=0;i<f.k;i+=2)h+='<div class="v55-ko-coppia">'+koPartita(f,i)+koPartita(f,i+1)+'</div>';return h+'</div></div>'}
+function tabelloneKo(){var bd=el('board');if(!bd||!bd.parentNode||el('v55ko'))return;
+ var box=document.createElement('div');box.id='v55ko';box.className='v55-ko';box.hidden=true;box.setAttribute('role','region');box.setAttribute('aria-label','Tabellone della fase finale');
+ box.innerHTML='<div class="v55-ko-gr">'+KOF.map(koColonna).join('')+'</div><p class="v55-ko-aiuto">Scorri verso destra per andare verso la Finale.</p>';bd.parentNode.insertBefore(box,bd);
+ function chip(n){return document.querySelector('#chips button[data-n="'+n+'"]')}
+ var era=false;
+ function aggiorna(){var k=bd.querySelectorAll('.m.ko').length,f=KOF.filter(function(x){return x.k===k})[0];
+  if(!f){box.hidden=true;bd.classList.remove('v55-ko-attivo');era=false;return}
+  /* aggiorna solo le partite cambiate: la cornice resta e la fase scorre con la transizione */
+  KOF.forEach(function(x){var c=box.querySelector('.v55-ko-col[data-c="'+x.c+'"]'),nuovo=koColonna(x),t=document.createElement('div');t.innerHTML=nuovo;var corpo=t.querySelector('.v55-ko-corpo').innerHTML,cc=c.querySelector('.v55-ko-corpo');if(cc.innerHTML!==corpo)cc.innerHTML=corpo;
+   var prima=KOF.indexOf(x)<KOF.indexOf(f);c.setAttribute('aria-hidden',String(prima));c.classList.toggle('attiva',x===f)});
+  bd.classList.add('v55-ko-attivo');box.hidden=false;void box.offsetWidth;box.dataset.fase=f.c;
+  if(!era){var rb=document.querySelector('.v55-schede button[data-sez=risultati]');if(rb&&rb.getAttribute('aria-selected')!=='true')rb.click()}era=true}
+ new MutationObserver(aggiorna).observe(bd,{childList:true});
+ function passo(d){var cur=KOF.filter(function(x){return x.c===box.dataset.fase})[0],i=KOF.indexOf(cur)+d,b=KOF[i]&&chip(KOF[i].n);if(b)b.click()}
+ box.addEventListener('click',function(e){var c=e.target.closest('.v55-ko-col');if(!c||c.dataset.c===box.dataset.fase)return;var b=chip(c.dataset.n);if(b)b.click()});
+ var x0=null,y0=0;box.addEventListener('pointerdown',function(e){x0=e.clientX;y0=e.clientY});
+ box.addEventListener('pointerup',function(e){if(x0===null)return;var dx=e.clientX-x0,dy=e.clientY-y0;x0=null;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.3)passo(dx<0?1:-1)});
+ box.addEventListener('pointercancel',function(){x0=null});
+ var ruota=0;box.addEventListener('wheel',function(e){if(Math.abs(e.deltaX)<=Math.abs(e.deltaY))return;e.preventDefault();var t=Date.now();if(t-ruota<700||Math.abs(e.deltaX)<20)return;ruota=t;passo(e.deltaX>0?1:-1)},{passive:false});
+ aggiorna()}
+function vista(){var q='a';try{var vv=new URLSearchParams(location.search).get('vista');q=vv==='b'||vv==='c'?vv:'a'}catch(e){}document.body.classList.add('vista-'+q);if(q==='c')setTimeout(schede,0);setTimeout(tabelloneKo,0);
  var v=el('v53board'),g=document.querySelector('.grid');if(v&&g&&g.parentNode)g.parentNode.insertBefore(v,g.nextSibling)}
 /* Fluidità: tendine che scorrono, cambio di pagina con dissolvenza dove il browser non ha le transizioni native. Niente animazioni con «riduci movimento». */
 var CALMO=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;

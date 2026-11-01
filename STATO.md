@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
 
+## 1 novembre (notte) — Claude: Tabellone C con le richieste di Gianluca (Campo anche in Coppa, tabellone tennistico)
+
+- **Scelta di Gianluca:** preferisce la versione C (schede Classifica · Risultati · Campo) e chiede di andare avanti così. A e B restano per ora nel confronto (`lab/confronto-tabellone.html`): si tolgono da `ui.js`/`ui.css` quando la scelta è definitiva.
+- **Schede:** freccia accanto a «Campo» (prima andava sotto); tre schede alte 44 px e larghe uguali, identiche in Campionato e Champions Cup, su una sola riga anche a 320 px; in Coppa la scheda attiva è azzurra (#3d93d6).
+- **Campo anche in Coppa:** il link Campo resta visibile in Champions Cup e apre `campo-*.html?coppa=1&giornata=N` (sorgente `lab/prova-dashboard-campo.html`): partite della giornata di coppa, formazioni vere della giornata di Serie A corrispondente, posizione nel girone, forma e andamento calcolati solo sulle partite di coppa, colore e logo della Champions Cup. «‹ Tabellone» torna alla stessa giornata di coppa.
+- **Fase finale a tabellone di tennis** (`tabelloneKo()` in `ui.js`): Quarti → Semifinali → Finale da sinistra a destra, con le linee che uniscono le partite. Scegliendo Semi o Finale il tabellone scorre verso destra, le colonne già giocate si chiudono e le partite rimaste si allargano (transizione di 0,65 s, niente animazioni con «riduci movimento»). Si cambia fase anche scorrendo col dito o col trackpad, o toccando la colonna successiva. Sul telefono si intravede la fase dopo. Entrando nella fase finale si apre la scheda Risultati. Le squadre restano «Da definire» (in semifinale e finale «Vincente Q1…»): **gli accoppiamenti dei quarti non sono scritti nel regolamento, vanno chiesti a Gianluca**; quando il calendario conterrà le giornate 11–13 il tabellone mostrerà squadre e risultati.
+- **Prove:** build riproducibile, `collaudo_anteprima_52.py`, `prova_moviola.py`, `prova_moviola_gol.py`, `collaudo_55_browser.js chromium` con due controlli nuovi (`tabellone-c`, `campo-coppa`). Foto Lega e Stadio a 320/390/768/1280 senza scorrimento laterale né errori in console. WebKit gira nel workflow su GitHub; iPhone vero non provato. Sito vero e database non toccati.
+
 ## 1 novembre (sera) — Claude: regola grafica Lega/Stadio e divisione del lavoro
 
 - **Nuova regola in `AGENTS.md`** (decisione di Gianluca): Lega = riquadri dritti con banda rossa dritta di 8 px e angoli 4/14 px, schede e pillole squadrate; Stadio = riquadri tondi (12 px) con banda curva, schede e pillole tonde. Ognuna uguale su tutte le pagine, menu, sottomenu e schede. Rosso #d62839 come accento; oro solo dove è oro sul sito vero.

@@ -292,7 +292,7 @@ var ME='';try{ME=(JSON.parse(localStorage.getItem('fg')||'{}')||{}).team||''}cat
 function lastPlayed(c,cup){var l=0;c.some(function(g){if(g.n!==l+1||!played(g,cup))return true;l=g.n;return false});return l}
 function render(){
   document.querySelectorAll('.sw button').forEach(function(b){b.setAttribute('aria-selected',String(b.dataset.m===mode))});
-  var campoLink=document.getElementById('campo-link');if(campoLink){campoLink.href='campo.html?skin=lega&giornata='+sel.lega;campoLink.hidden=mode==='coppa'}
+  var campoLink=document.getElementById('campo-link');if(campoLink){campoLink.href=mode==='coppa'?'campo.html?skin=lega&coppa=1&giornata='+Math.min(sel.coppa,D?D.cal.cup.length:10):'campo.html?skin=lega&giornata='+sel.lega;campoLink.hidden=false}
   var cup=mode==='coppa',c=cal(),n=sel[mode],g=c.filter(function(x){return x.n===n})[0],ko=cup?koOf(n):null;
   if(ko)return renderKo(c,ko);
   if(!g)return;

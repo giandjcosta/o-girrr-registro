@@ -195,7 +195,7 @@ body[data-v53=board] #v53board{margin-top:22px}
 /* Claude, 1° novembre — versione C del Tabellone: schede Classifica · Risultati · Campo e striscia dei risultati in cima alla classifica */
 .v55-schede{display:flex!important;gap:6px;padding:4px;margin:16px 0!important;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);overflow-x:auto;scrollbar-width:none}
 .v55-schede::-webkit-scrollbar{display:none}
-.v55-schede>button,.v55-schede>a{flex:1 0 auto;display:grid!important;place-items:center;min-height:44px;padding:8px 16px!important;border:0!important;border-radius:10px!important;background:transparent;color:inherit;font:800 14px Inter,system-ui,sans-serif;letter-spacing:.02em;text-decoration:none;cursor:pointer;transition:background-color .25s ease,color .25s ease}
+.v55-schede>button,.v55-schede>a{flex:1 1 0;min-width:max-content;display:flex!important;align-items:center;justify-content:center;gap:2px;height:44px;min-height:44px;padding:8px 16px!important;border:0!important;border-radius:10px!important;background:transparent;color:inherit;font:800 14px Inter,system-ui,sans-serif;letter-spacing:.02em;text-decoration:none;cursor:pointer;transition:background-color .25s ease,color .25s ease}
 .v55-schede>button[aria-selected=true]{background:#d62839;color:#fbf6ec}
 .v55-schede>a::after{content:'\00a0›'}.v55-schede>button,.v55-schede>a{white-space:nowrap}
 .v55-striscia{display:flex;align-items:center;gap:8px;width:100%;margin:0 0 14px;padding:8px 10px;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.06);color:inherit;font:700 13px Inter,system-ui,sans-serif;overflow-x:auto;scrollbar-width:none;cursor:pointer;text-align:left}
@@ -205,3 +205,58 @@ body[data-v53=board] #v53board{margin-top:22px}
 .v55-st-m b{font-weight:900;letter-spacing:.04em}.v55-st-m i{font-style:normal;font-weight:900;color:#ffd166;font-variant-numeric:tabular-nums}
 .v55-st-vai{flex:none;margin-left:auto;padding-left:6px;color:#ffd166;font-weight:800}
 body.vista-c[data-v53=board] .grid>aside.panel[hidden],body.vista-c[data-v53=board] .grid>section[hidden]{display:none!important}
+
+/* Claude, 1° novembre: schede uguali in Campionato e Champions Cup (altezza 44 px, tre schede larghe uguali), freccia accanto a «Campo», azzurre in coppa */
+.v55-schede>a[hidden]{display:none!important}
+body[data-mode=coppa] .v55-schede>button[aria-selected=true]{background:#3d93d6;color:#fff}
+/* Fase finale della Champions Cup: tabellone di tennis da sinistra (Quarti) a destra (Finale) */
+#board.v55-ko-attivo>.m.ko{display:none!important}
+.v55-ko{overflow:hidden;--cols:minmax(0,1.25fr) minmax(0,1fr) minmax(0,.8fr);--h:470px;margin:0 0 14px;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.v55-ko[data-fase=s]{--cols:minmax(0,0fr) minmax(0,1.35fr) minmax(0,1fr);--h:340px}
+.v55-ko[data-fase=f]{--cols:minmax(0,0fr) minmax(0,0fr) minmax(0,1fr);--h:230px}
+.v55-ko-gr{display:grid;grid-template-columns:var(--cols);height:var(--h);transition:grid-template-columns .65s cubic-bezier(.22,.61,.36,1),height .65s cubic-bezier(.22,.61,.36,1)}
+.v55-ko-col{min-width:0;display:flex;flex-direction:column;overflow:hidden;padding:0 0 0 20px;cursor:pointer;transition:opacity .45s ease}
+.v55-ko-col[data-c=q]{padding-left:0}
+.v55-ko-col.attiva{cursor:default}
+.v55-ko-col[aria-hidden=true]{opacity:0;pointer-events:none}
+.v55-ko-tit{flex:none;height:28px;font:800 11px/28px Inter,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#bfe3ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v55-ko-col.attiva .v55-ko-tit{color:#fff}
+.v55-ko-corpo{flex:1;display:flex;flex-direction:column;justify-content:space-around;min-height:0}
+.v55-ko-coppia{position:relative;flex:1;display:flex;flex-direction:column;justify-content:space-around;padding-right:20px}
+.v55-ko-col[data-c=s] .v55-ko-coppia{padding-right:20px}
+/* linee del tabellone: la coppia si unisce a destra e prosegue verso la partita successiva */
+.v55-ko-coppia::after{content:'';position:absolute;right:0;top:25%;bottom:25%;width:20px;border:2px solid rgba(191,227,255,.45);border-left:0;border-radius:0 4px 4px 0}
+.v55-ko-col[data-c=s] .v55-ko-m::before,.v55-ko-col[data-c=f] .v55-ko-m::before{content:'';position:absolute;left:-20px;top:50%;width:20px;border-top:2px solid rgba(191,227,255,.45)}
+.v55-ko-m{position:relative;display:grid;gap:2px;padding:9px 12px 9px 46px;border:1px solid rgba(255,255,255,.16);border-left:8px solid #3d93d6;border-radius:4px 14px 14px 4px;background:rgba(18,48,92,.72);font:700 13px/1.25 Inter,system-ui,sans-serif;transition:padding .5s cubic-bezier(.22,.61,.36,1),font-size .5s cubic-bezier(.22,.61,.36,1),background-color .4s ease}
+.v55-ko-sig{position:absolute;left:10px;top:50%;transform:translateY(-50%);font:900 12px Inter,system-ui,sans-serif;letter-spacing:.06em;color:#bfe3ff}
+.v55-ko-r{display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0}
+.v55-ko-r span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.v55-ko-r b{flex:none;font-weight:900;font-variant-numeric:tabular-nums;color:#ffd166}
+.v55-ko-r.vuota span{color:#bfd0ea;font-weight:600}
+.v55-ko-r.w span{color:#fff;font-weight:900}
+.v55-ko-col.attiva .v55-ko-m{font-size:15px;padding:13px 16px 13px 50px;background:rgba(31,74,133,.9)}
+.v55-ko[data-fase=f] .v55-ko-col.attiva .v55-ko-m{font-size:19px;padding:20px 22px 20px 58px}
+.v55-ko[data-fase=f] .v55-ko-col.attiva .v55-ko-m::before{display:none}
+.v55-ko-aiuto{margin:8px 0 0;font-size:12px;color:#bfe3ff}
+.v55-ko[data-fase=f] .v55-ko-aiuto{visibility:hidden}
+body[data-v53-skin=stadio] .v55-ko-m{border-left-width:1px;border-radius:12px;box-shadow:inset 8px 0 0 #3d93d6}
+body[data-v53-skin=stadio] .v55-ko-coppia::after{border-radius:0 12px 12px 0}
+/* telefono: la colonna della fase scelta occupa quasi tutto, la successiva si intravede a destra */
+@media(max-width:700px){
+ .v55-ko{--cols:minmax(0,1fr) minmax(0,.42fr) minmax(0,0fr);--h:440px}
+ .v55-ko[data-fase=s]{--cols:minmax(0,0fr) minmax(0,1fr) minmax(0,.42fr);--h:300px}
+ .v55-ko[data-fase=f]{--cols:minmax(0,0fr) minmax(0,0fr) minmax(0,1fr);--h:210px}
+ .v55-ko-col[data-c=f]:not(.attiva) .v55-ko-m,.v55-ko-col:not(.attiva) .v55-ko-m{padding-left:12px}
+ .v55-ko-col:not(.attiva) .v55-ko-r{display:none}
+ .v55-ko-col:not(.attiva) .v55-ko-sig{position:static;transform:none;display:block;text-align:center}
+ .v55-ko-col:not(.attiva) .v55-ko-m{padding:12px 4px;border-left-width:4px}
+ .v55-ko-col.attiva .v55-ko-m{font-size:14px;padding:12px 12px 12px 44px}
+ .v55-ko[data-fase=f] .v55-ko-col.attiva .v55-ko-m{font-size:17px;padding:18px 16px 18px 50px}
+}
+@media (prefers-reduced-motion: reduce){.v55-ko-gr,.v55-ko-col,.v55-ko-m{transition:none!important}}
+.v55-schede{flex-wrap:nowrap!important}
+@media(max-width:420px){.v55-schede{gap:3px}.v55-schede>button,.v55-schede>a{padding:8px 9px!important;font-size:13px}}
+.v55-ko[data-fase=f] .v55-ko-col[data-c=f]{padding-left:0}
+body[data-v53-skin=stadio] .v55-ko-sig{left:16px}
+body[data-v53-skin=stadio] .v55-ko-col.attiva .v55-ko-m{padding-left:54px}
+.v55-ko-col[data-c=f] .v55-ko-corpo{align-items:center}.v55-ko-col[data-c=f] .v55-ko-m{width:100%;max-width:640px}

@@ -24,6 +24,25 @@ const PAGINE = [
     return sc <= 3 ? '' : 'partite sfalsate tra le due colonne (' + Math.round(sc) + ' px)';
   }],
   ['tabellone-stadio', 'anteprima/5.5/tabellone-stadio.html', async p => (await p.locator('#campo-link').count()) ? '' : 'manca il link al Campo'],
+  // Versione C: tre schede alte uguali in Campionato e Coppa, freccia accanto a «Campo», azzurre in coppa; fase finale a tabellone di tennis
+  ['tabellone-c', 'anteprima/5.5/tabellone-lega.html?vista=c', async p => {
+    const misura = () => p.evaluate(() => [...document.querySelectorAll('.v55-schede>button,.v55-schede>a')].filter(e => e.offsetParent).map(e => { const r = e.getBoundingClientRect(); return [Math.round(r.height), Math.round(r.width), Math.round(r.top)] }));
+    const lega = await misura();
+    if (lega.length !== 3 || new Set(lega.map(x => x[0] + '|' + x[2])).size !== 1) return 'schede del Campionato non su una riga o di altezza diversa: ' + JSON.stringify(lega);
+    await p.click('.sw button[data-m=coppa]'); await p.waitForTimeout(500);
+    const coppa = await misura();
+    if (JSON.stringify(coppa.map(x => x.slice(0, 2))) !== JSON.stringify(lega.map(x => x.slice(0, 2))) || new Set(coppa.map(x => x[2])).size !== 1) return 'schede della Coppa diverse dal Campionato: ' + JSON.stringify(coppa);
+    if (!/coppa=1/.test(await p.getAttribute('#campo-link', 'href'))) return 'Campo non porta alla Coppa';
+    const sel = await p.evaluate(() => getComputedStyle(document.querySelector('.v55-schede>button[aria-selected=true]')).backgroundColor);
+    if (sel !== 'rgb(61, 147, 214)') return 'scheda attiva della Coppa non azzurra: ' + sel;
+    await p.click('#chips button[data-n="11"]'); await p.waitForTimeout(900);
+    const q = await p.evaluate(() => { const b = document.getElementById('v55ko'); return b && !b.hidden && b.dataset.fase === 'q' && b.querySelectorAll('.v55-ko-col[data-c=q] .v55-ko-m').length === 4 });
+    if (!q) return 'tabellone dei quarti assente';
+    await p.click('#chips button[data-n="13"]'); await p.waitForTimeout(1200);
+    const f = await p.evaluate(() => document.getElementById('v55ko').dataset.fase === 'f' && document.querySelector('.v55-ko-col[data-c=q]').getBoundingClientRect().width < 2);
+    return f ? '' : 'in Finale le colonne precedenti non si chiudono';
+  }],
+  ['campo-coppa', 'anteprima/5.5/campo-lega.html?skin=lega&coppa=1&giornata=2', async p => (await p.locator('.pitch .pl').count()) === 22 && /Champions Cup · Girone/.test(await p.textContent('.phase')) ? '' : 'Campo della Coppa senza formazioni o senza girone'],
   ['campo-lega', 'anteprima/5.5/campo-lega.html?skin=lega&giornata=5&partita=3', async p => {
     if ((await p.locator('.pitch .pl').count()) !== 22) return 'formazioni incomplete';
     const det = p.locator('details.campo-legend');
