@@ -56,7 +56,7 @@ with sync_playwright() as pw:
     p.locator('.v53-home').screenshot(path=str(OUT/f'home-richiusa55-{skin}-{w}.png'))
     p.locator('#v55dashboard>summary').focus();p.locator('#v55dashboard>summary').press('Enter')
     assert p.locator('.v55-summary').is_visible()
-   p.locator('#v53news a').first.click();p.wait_for_url('**/tabellone-'+skin+'.html#lega-5')
+   p.locator('#v53news a').first.click();p.wait_for_url('**/tabellone-'+skin+'.html?**#lega-5')
    assert p.locator('.v55-return').is_visible()
    p.locator('.v55-return').click();p.wait_for_url('**/index-'+skin+'.html')
    p.locator('.cards a.c').filter(has_text='Tabellone').click();p.locator('#campo-link').click()
@@ -90,7 +90,7 @@ with sync_playwright() as pw:
   assert not any(x[0]=='notifiche_segna_lette' for x in calls),'Nessuna lettura automatica'
   if tipo=='normale':
    assert 'Risposta di prova' in p.locator('#v53news').inner_text()
-   links=p.locator('#v53news a');assert links.first.get_attribute('href').endswith('/curva-lega.html')
+   links=p.locator('#v53news a');assert links.first.get_attribute('href').split('?')[0].endswith('/curva-lega.html')
    assert 't=prestiti' in links.nth(1).get_attribute('href') and 'o-fant-a-girrr' not in links.nth(1).get_attribute('href')
    p.locator('#v53read').click();p.wait_for_timeout(100)
    assert sum(x[0]=='notifiche_segna_lette' for x in calls)==1
