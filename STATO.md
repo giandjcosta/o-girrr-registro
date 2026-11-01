@@ -86,6 +86,13 @@
 - **Screenshot e rapporti:** `prove/risultati-campo-contenuti/`, Campo raggiunto da Home → Tabellone → Campo in entrambe le skin a 390/1280/1440. Non certificati Safari/iPhone fisico, CDN/cache pubblica o nuova CI sull'ultimo commit. Restano validi i limiti locali e di produzione già documentati. Nessun merge, rilascio, audio, pubblicazione di post o modifica a Supabase/sito pubblico; PR #43 resta bozza.
 
 
+## 1° novembre 2026 — Tabellone: bande rosse, approfondimenti in fondo, due impaginazioni da scegliere (Claude, richiesta di Gianluca, solo Lab/Anteprima)
+- Bande laterali delle partite **rosse** anche in grafica Stadio (colore ufficiale della Lega; prima erano oro).
+- «Dentro la partita» (approfondimenti) spostato **in fondo**, sotto partite e classifica (`anteprima/5.5/ui.js`, funzione `vista()`).
+- **Sul telefono** la classifica è sempre la prima cosa. **Su PC** due versioni da confrontare: `?vista=a` (predefinita) classifica prima a tutta larghezza, poi partite su due colonne, poi approfondimenti; `?vista=b` partite a sinistra e classifica a destra come prima (Media/Max/Min nascoste per stare nello spazio), approfondimenti sotto. Stili in `anteprima/5.5/ui.css`.
+- Pagina `lab/confronto-tabellone.html`: le due versioni una sotto l'altra, pulsanti Telefono/PC e Lega/Stadio, link «Apri a tutta pagina». In attesa della scelta di Gianluca.
+- Collaudo (Chromium, 65 pagine): nessun problema.
+
 ## 1° novembre 2026 — Tabellone: Stadio a righe arrotondate, oro solo al primo, eliminata in coppa (Claude, scelte di Gianluca, solo Lab/Anteprima)
 - **Grafica Lega** (quella «normale»): resta la classifica squadrata. **Grafica Stadio** (quella in corsivo): righe con gli angoli arrotondati (5 px tra una squadra e l'altra), un piccolo spazio in più dopo il podio e prima della retrocessione, numeri della posizione e dei punti più grandi. File `lab/prova-tabellone-stadio.html`.
 - In tutte e due: **riquadro oro solo al primo posto**, 2° e 3° azzurri, **ultimo sempre rosso** anche se è la tua squadra (che ora si riconosce dal nome in oro, senza sfondo oro che copriva le fasce). Legenda: Primo posto · Podio · Retrocessione.

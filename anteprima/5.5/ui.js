@@ -273,8 +273,11 @@ el('v53markread').onclick=function(){var gen=items.filter(function(x){return !x.
 render();
 }
 /* Initial DOM integration: no existing Tabellone/Albo/Curva components are replaced. */
+/* Tabellone: approfondimenti in fondo, sotto partite e classifica; due impaginazioni da confrontare (?vista=a classifica prima, ?vista=b affiancate su PC) */
+function vista(){var q='a';try{q=new URLSearchParams(location.search).get('vista')==='b'?'b':'a'}catch(e){}document.body.classList.add('vista-'+q);
+ var v=el('v53board'),g=document.querySelector('.grid');if(v&&g&&g.parentNode)g.parentNode.insertBefore(v,g.nextSibling)}
 function init(){
-ospite();nav();redirect();
+ospite();nav();redirect();if(mode==='board')vista();
 if(mode==='albo')document.addEventListener('click',function(e){var b=e.target.closest('[data-oro]');if(!b)return;var u=new URL(location.href);u.searchParams.set('albo',b.dataset.oro);history.replaceState(null,'',u)});
 if(mode==='home')load(home);
 if(mode==='board')load(board);
