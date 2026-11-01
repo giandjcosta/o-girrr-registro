@@ -1,0 +1,205 @@
+{
+  "percorsi_completi": [
+    {
+      "skin": "lega",
+      "larghezza": 320,
+      "esito": "PASS",
+      "sezioni": [
+        "Home",
+        "Tabellone",
+        "Campo",
+        "Albo",
+        "Curva",
+        "Notifiche"
+      ],
+      "database": "0 richieste"
+    },
+    {
+      "skin": "stadio",
+      "larghezza": 320,
+      "esito": "PASS",
+      "sezioni": [
+        "Home",
+        "Tabellone",
+        "Campo",
+        "Albo",
+        "Curva",
+        "Notifiche"
+      ],
+      "database": "0 richieste"
+    },
+    {
+      "skin": "lega",
+      "larghezza": 390,
+      "esito": "PASS",
+      "sezioni": [
+        "Home",
+        "Tabellone",
+        "Campo",
+        "Albo",
+        "Curva",
+        "Notifiche"
+      ],
+      "database": "0 richieste"
+    },
+    {
+      "skin": "stadio",
+      "larghezza": 390,
+      "esito": "PASS",
+      "sezioni": [
+        "Home",
+        "Tabellone",
+        "Campo",
+        "Albo",
+        "Curva",
+        "Notifiche"
+      ],
+      "database": "0 richieste"
+    },
+    {
+      "skin": "lega",
+      "larghezza": 768,
+      "esito": "PASS",
+      "sezioni": [
+        "Home",
+        "Tabellone",
+        "Campo",
+        "Albo",
+        "Curva",
+        "Notifiche"
+      ],
+      "database": "0 richieste"
+    },
+    {
+      "skin": "stadio",
+      "larghezza": 768,
+      "esito": "PASS",
+      "sezioni": [
+        "Home",
+        "Tabellone",
+        "Campo",
+        "Albo",
+        "Curva",
+        "Notifiche"
+      ],
+      "database": "0 richieste"
+    },
+    {
+      "skin": "lega",
+      "larghezza": 1280,
+      "esito": "PASS",
+      "sezioni": [
+        "Home",
+        "Tabellone",
+        "Campo",
+        "Albo",
+        "Curva",
+        "Notifiche"
+      ],
+      "database": "0 richieste"
+    },
+    {
+      "skin": "stadio",
+      "larghezza": 1280,
+      "esito": "PASS",
+      "sezioni": [
+        "Home",
+        "Tabellone",
+        "Campo",
+        "Albo",
+        "Curva",
+        "Notifiche"
+      ],
+      "database": "0 richieste"
+    },
+    {
+      "skin": "lega",
+      "larghezza": 1440,
+      "esito": "PASS",
+      "sezioni": [
+        "Home",
+        "Tabellone",
+        "Campo",
+        "Albo",
+        "Curva",
+        "Notifiche"
+      ],
+      "database": "0 richieste"
+    },
+    {
+      "skin": "stadio",
+      "larghezza": 1440,
+      "esito": "PASS",
+      "sezioni": [
+        "Home",
+        "Tabellone",
+        "Campo",
+        "Albo",
+        "Curva",
+        "Notifiche"
+      ],
+      "database": "0 richieste"
+    }
+  ],
+  "ingresso_registro": [
+    {
+      "larghezza": 320,
+      "esito": "PASS",
+      "ingresso": "Registro → Anteprima 5.3 → Home → Tabellone → Campo → Albo → Home",
+      "grafiche": [
+        "lega",
+        "stadio"
+      ],
+      "memoria_vecchio_ingresso": "migrata"
+    },
+    {
+      "larghezza": 390,
+      "esito": "PASS",
+      "ingresso": "Registro → Anteprima 5.3 → Home → Tabellone → Campo → Albo → Home",
+      "grafiche": [
+        "lega",
+        "stadio"
+      ],
+      "memoria_vecchio_ingresso": "migrata"
+    },
+    {
+      "larghezza": 768,
+      "esito": "PASS",
+      "ingresso": "Registro → Anteprima 5.3 → Home → Tabellone → Campo → Albo → Home",
+      "grafiche": [
+        "lega",
+        "stadio"
+      ],
+      "memoria_vecchio_ingresso": "migrata"
+    },
+    {
+      "larghezza": 1280,
+      "esito": "PASS",
+      "ingresso": "Registro → Anteprima 5.3 → Home → Tabellone → Campo → Albo → Home",
+      "grafiche": [
+        "lega",
+        "stadio"
+      ],
+      "memoria_vecchio_ingresso": "migrata"
+    },
+    {
+      "larghezza": 1440,
+      "esito": "PASS",
+      "ingresso": "Registro → Anteprima 5.3 → Home → Tabellone → Campo → Albo → Home",
+      "grafiche": [
+        "lega",
+        "stadio"
+      ],
+      "memoria_vecchio_ingresso": "migrata"
+    }
+  ],
+  "casi_campo": [
+    "PASS Campo lega zero, attesa, turno parziale, cambio partita, skin e Curva chiara/scura",
+    "PASS Campo stadio zero, attesa, turno parziale, cambio partita, skin e Curva chiara/scura"
+  ],
+  "build": "PASS riproducibile",
+  "safari_iphone_fisico": "Non verificato",
+  "cdn": "Non verificata",
+  "ci_ultimo_commit": "Da verificare",
+  "nomi_lunghi": "PASS nome completo nel campo a 390 px"
+}

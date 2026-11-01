@@ -76,3 +76,12 @@ CI nuova, primo tentativo (`41234940046`): importazione anticipata e inutilizzat
 
 
 Revisione grafica del Tabellone dopo gli screenshot di Gianluca: dieci verifiche specifiche di colori, dimensioni, spaziatura, selezione squadra e navigazione superate. Screenshot aggiornati e rapporto in `prove/risultati-tabellone-feedback/`; le immagini di classifica nella precedente galleria documentano la versione prima di questo feedback.
+
+
+## Correzione 1 novembre: Campo con contenuti e identità dell'app
+
+Il campo contiene il confronto della partita: nomi completi, monogrammi, risultato, Fantapunti, posizione/punti e accesso al rendimento. Le gare future non mostrano gli zeri tecnici come risultati; la classifica non avanza sui turni parziali. Non sono disponibili stemmi o formazioni nei dati pubblici: nessuna posizione di giocatore ricostruita.
+
+Ripresi dalle pagine originali scudo, sfondi, font e fascia Stadio; eliminate le superfici blu elettrico e il marchio OG aggiunti nella precedente prova. I componenti nuovi della Curva seguono il suo tema chiaro/scuro. Un solo CSS condiviso, versione `53e`, con build riproducibile. I test funzionali non sostituiscono l'approvazione grafica di Gianluca.
+
+Nuovi screenshot da menu e risultati: `prove/risultati-campo-contenuti/`. PASS locali: dieci percorsi completi, cinque ingressi nella cornice, quindici prove Lab e test `prove/prova_campo_contenuti.py` (zero, attesa, giornata parziale, cambio partita, font e tema Curva). Nuove Actions da verificare; Safari/iPhone fisico e CDN rimangono non certificati. Nessuna pubblicazione.

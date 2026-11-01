@@ -1,4 +1,15 @@
-# Stato del progetto O Girrr (ultimi giorni — aggiornato 31 ottobre 2026)
+# Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
+
+
+## 1 novembre — ChatGPT: contenuti dentro il Campo e ritorno all'identità dell'app
+
+- **INTEGRATO nella navigazione 5.3:** il campo non è più uno sfondo con due sigle. Al suo interno compaiono due schede con nomi completi e monogrammi dei club, posizione/punti, risultato, Fantapunti distinti dai gol e collegamento al confronto del rendimento. Dati e URL si aggiornano cambiando partita/giornata. Risultato centrale rimosso dall'intestazione esterna per evitare doppioni.
+- **Dati verificabili:** le gare future mostrano trattini anche se il calendario conserva zeri tecnici; uno 0–0 e Fantapunti zero di una gara conclusa restano zero. Una gara terminata in un turno parziale può mostrare il suo risultato, ma la classifica resta ferma all'ultima giornata interamente conclusa. L'indicazione temporale è dentro il campo. Il JSON pubblico non contiene stemmi dei club né formazioni/coordinate: si usano monogrammi, senza inventare stemmi ufficiali, uomini in campo, tiri o possesso.
+- **Identità corretta dopo il feedback:** scudo autentico O Fant A Girrr al posto del marchio OG inventato; colori/sfondi delle pagine native, Inter e strisce per Lega, Lobster e fascia nell'intestazione per Stadio. Pannelli trasparenti della stessa famiglia delle card originali. Il mockup esterno guida la disposizione, non sostituisce il marchio e lo stile. I pannelli aggiunti alla Curva seguono il suo tema chiaro/scuro, compresi testi e controlli. Fondo HTML blu esplicito anche nelle schermate lunghe. È una correzione da sottoporre a revisione grafica, non un'approvazione estetica automatica.
+- **Build:** rigenerate le due app e tutte le pagine 5.3; build riproducibile. Rimosso il caricamento doppio del CSS condiviso ereditato dai template; versione CSS aggiornata a `53e`.
+- **QA locale PASS:** dieci percorsi completi Lega/Stadio a 320/390/768/1280/1440, cinque ingressi dal Registro/cambio skin, quindici prove Lab/Tabellone/Campo/Albo a 320/768/1280, collaudi Anteprima/milestone/fiducia, Moviola e zone. Nessun overflow/errore JS/console/404 nei percorsi completi; nessuna richiesta al database. Nuovo `prove/prova_campo_contenuti.py` verifica zero, attesa, turno parziale, cambio partita, caratteri delle skin e tema Curva chiaro/scuro; aggiunto alla QA CI.
+- **Screenshot e rapporti:** `prove/risultati-campo-contenuti/`, Campo raggiunto da Home → Tabellone → Campo in entrambe le skin a 390/1280/1440. Non certificati Safari/iPhone fisico, CDN/cache pubblica o nuova CI sull'ultimo commit. Restano validi i limiti locali e di produzione già documentati. Nessun merge, rilascio, audio, pubblicazione di post o modifica a Supabase/sito pubblico; PR #43 resta bozza.
+
 
 ## 31 ottobre — ChatGPT: Tabellone avvicinato alla grafica originale, feedback con screenshot
 
