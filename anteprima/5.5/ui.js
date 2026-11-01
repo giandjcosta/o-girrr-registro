@@ -14,7 +14,14 @@ function set(key,x){try{localStorage.setItem(k+key,JSON.stringify(x))}catch(e){}
 function mark(t){return '<span class="v53-kicker">'+esc(t)+'</span>'}
 /* Notifiche personali su Supabase (funzioni notifiche_stato e notifiche_segna_lette, chiave pubblica come nelle pagine del sito). */
 var SB='https://qmjqfgmvimsuxvghetgi.supabase.co',SBK='sb_publishable_qPhimkrF4iUvIad7JPoH8A_i-eOqG7n';
-function chi(){try{var o=JSON.parse(localStorage.getItem('fg')||'{}');return o&&o.team&&o.code?o:null}catch(e){return null}}
+/* Modalità ospite come sul sito (?ospite=1, vale per tutta la visita): sola lettura, niente parti personali. */
+var OSP=(function(){try{if(/[?&]ospite\b/.test(location.search))sessionStorage.setItem('ospite','1');return sessionStorage.getItem('ospite')==='1'}catch(e){return /[?&]ospite\b/.test(location.search)}})();
+function ospite(){if(!OSP)return;document.documentElement.classList.add('v53-ospite');
+ var st=document.createElement('style');st.textContent='a[href$="o-fant-a-girrr/index.html"],a[href*="totogirrr"],.lg-leghe,#mst,.c.bet{display:none!important}.osp{position:sticky;top:0;z-index:9998;background:#ffd166;color:#1d2a52;font:800 12px/1.3 Inter,system-ui,sans-serif;letter-spacing:.14em;text-align:center;padding:7px 10px;text-transform:uppercase}'+
+  (skin==='stadio'?'@media(min-width:821px){body .cards{grid-template-columns:repeat(4,minmax(0,1fr))!important}}@media(max-width:820px){body .cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}}':'@media(min-width:560px){body .cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}}');
+ document.head.appendChild(st);var b=document.createElement('div');b.className='osp';b.textContent='Modalità ospite · Sola lettura';
+ var v=document.querySelector('.v53-banner');if(v&&v.parentNode)v.parentNode.insertBefore(b,v.nextSibling);else document.body.insertBefore(b,document.body.firstChild)}
+function chi(){if(OSP)return null;try{var o=JSON.parse(localStorage.getItem('fg')||'{}');return o&&o.team&&o.code?o:null}catch(e){return null}}
 function rpcN(n,b){return fetch(SB+'/rest/v1/rpc/'+n,{method:'POST',headers:{apikey:SBK,Authorization:'Bearer '+SBK,'Content-Type':'application/json'},body:JSON.stringify(b)}).then(function(r){return r.json().then(function(j){if(!r.ok)throw Error(j&&j.message||('Errore '+r.status));return j})})}
 function sitoUrl(pag){return 'https://giandjcosta.github.io/o-fant-a-girrr/'+(skin==='stadio'?'stadio/girrr/':'girrr/')+pag}
 function quando(t){var d=(Date.now()-new Date(t).getTime())/36e5;if(!(d>=0))return '';if(d<1)return 'Poco fa';if(d<24)return Math.round(d)+' ore fa';var g=Math.round(d/24);return g===1?'Ieri':g+' giorni fa'}
@@ -233,7 +240,7 @@ items.push({key:'annuario',type:'albo',ic:'📖',title:'Annuario 2026/27',detail
 var z=notizia();if(z)items.unshift({key:z.chiave,type:'classifica',ic:'↗',title:z.titolo,detail:z.testo,link:href('tabellone')});var filters=el('v53filters'),chosen='tutte';
 var me=chi(),chiaviLette=null,stato=el('v53notifstato');
 function letta(x){return x.personale?!x.nuova:chiaviLette?chiaviLette.indexOf(x.key)>=0||!!get('read-'+x.key,false):!!get('read-'+x.key,false)}
-if(stato)stato.textContent=me?'Notifiche di '+me.team+': risposte, applausi, sfide, prestiti e Totogirrr, uguali su telefono e computer.':'Entra con la tua squadra sul sito per vedere anche le notifiche personali (risposte, sfide, prestiti).';
+if(stato)stato.textContent=OSP?'Modalità ospite: qui trovi le novità della Lega. Le notifiche personali sono per chi entra con la propria squadra.':me?'Notifiche di '+me.team+': risposte, applausi, sfide, prestiti e Totogirrr, uguali su telefono e computer.':'Entra con la tua squadra sul sito per vedere anche le notifiche personali (risposte, sfide, prestiti).';
 if(me)rpcN('notifiche_stato',{p_team:me.team,p_code:me.code}).then(function(st){chiaviLette=st.chiavi||[];items=personali(st).concat(items);render()}).catch(function(e){if(stato)stato.textContent='Notifiche personali non disponibili: '+e.message});
 filters.innerHTML=[['tutte','Tutte'],['partita','Partite'],['classifica','Classifica'],['curva','Curva'],['derby','Derby'],['totogirrr','Totogirrr'],['albo','Albo']].map(function(x){return '<button class="v53-pill" data-f="'+x[0]+'" aria-selected="'+(chosen===x[0])+'">'+x[1]+'</button>'}).join('');
 function render(){
@@ -247,7 +254,7 @@ render();
 }
 /* Initial DOM integration: no existing Tabellone/Albo/Curva components are replaced. */
 function init(){
-nav();redirect();
+ospite();nav();redirect();
 if(mode==='albo')document.addEventListener('click',function(e){var b=e.target.closest('[data-oro]');if(!b)return;var u=new URL(location.href);u.searchParams.set('albo',b.dataset.oro);history.replaceState(null,'',u)});
 if(mode==='home')load(home);
 if(mode==='board')load(board);

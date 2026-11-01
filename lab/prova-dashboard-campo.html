@@ -164,7 +164,7 @@ body[data-skin=stadio] .mast::after{content:'';position:absolute;left:0;right:0;
 <script>
 (function(){
 'use strict';
-var D=null,F=null,round=0,game=0,MIA=(function(){try{return (JSON.parse(localStorage.getItem('fg')||'{}')||{}).team||''}catch(e){return ''}})(),TEL=window.matchMedia("(max-width:700px)");
+var D=null,F=null,round=0,game=0,MIA=(function(){try{if(/[?&]ospite\b/.test(location.search))sessionStorage.setItem('ospite','1');if(sessionStorage.getItem('ospite')==='1')return '';return (JSON.parse(localStorage.getItem('fg')||'{}')||{}).team||''}catch(e){return ''}})(),TEL=window.matchMedia("(max-width:700px)");
 var ORD=["The Blue brothers","Apo team","Mariana Coneja","stif dc","Real Madrink","Atletico ma non troppo","Oranje VC","AFA SELECCION","Grodah","WOA"];
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]})}
 function nm(s){return s&&s===MIA?'<span class="mia-nome">'+esc(s)+'</span>':esc(s)}

@@ -92,6 +92,23 @@ with sync_playwright() as pw:
    assert 'Risposta di prova' not in p.locator('#v53news').inner_text()
    assert len(calls)==1
   c.close()
+ # La modalità ospite di Claude prevale anche su credenziali già salvate.
+ for skin in ('lega','stadio'):
+  for w in (390,1440):
+   c=b.new_context(viewport={'width':w,'height':950});installa(c)
+   c.add_init_script("localStorage.setItem('fg',JSON.stringify({team:'Oranje VC',code:'CODICE_DI_PROVA'}))")
+   p=c.new_page();db=[]
+   p.on('request',lambda r:db.append(r.url) if '.supabase.co/' in r.url else None)
+   p.goto(ROOT+'/anteprima/5.5/index-'+skin+'.html?ospite=1',wait_until='networkidle')
+   p.locator('.v55-summary').wait_for()
+   assert p.locator('html').get_attribute('class').find('v53-ospite')>=0
+   assert p.locator('a.c').filter(has_text='Totogirrr').is_hidden()
+   assert p.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
+   p.locator('#v53read').click()
+   p.locator('.v55-notifications-link').click();p.locator('#v53notifstato').wait_for()
+   assert p.locator('#v53notifstato').inner_text().startswith('Modalità ospite:')
+   assert not db,('Ospite con credenziali salvate: nessuna RPC',skin,w,db)
+   c.close()
  b.close()
 (OUT/'home-notifiche55-esiti.json').write_text(json.dumps(esiti,ensure_ascii=False,indent=2)+'\n')
-print('PASS Home integrata × due skin × cinque larghezze; grafici, notifiche collegate, navigazione, errore e isolamento squadra')
+print('PASS Home integrata × due skin × cinque larghezze; grafici, notifiche collegate, navigazione, errore, isolamento squadra e ospite con credenziali salvate')

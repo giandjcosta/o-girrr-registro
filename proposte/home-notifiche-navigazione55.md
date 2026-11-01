@@ -45,6 +45,10 @@ Un cambio squadra invalida la risposta precedente e non invia le credenziali
 dell'allenatore alla squadra selezionata. I link a prestiti, movimenti e sfide
 restano nelle pagine di prova. Il codice d'ingresso non finisce nelle URL.
 
+Preservata anche la modalità ospite di Claude (`29d0e0b`): nelle due skin
+a 390/1440 px, anche con credenziali salvate, Home e centro notifiche non
+invocano RPC personali. Il cambio pagina mantiene la modalità ospite.
+
 Le RPC sono state **simulate nei test**, con risposte coerenti al contratto
 esistente. Nessuna chiamata di scrittura reale, post o audio durante il lavoro.
 Non si dichiarano push o nuove automazioni backend.
@@ -80,4 +84,7 @@ non risultano nei dati delle squadre esaminati e non sono state inventate.
 
 Screenshot e rapporti: `prove/risultati-home-notifiche55/`.
 PR: https://github.com/giandjcosta/o-girrr-registro/pull/48.
-La pubblicazione su `o-fant-a-girrr` resta in attesa del Via di Gianluca.
+Per il rilascio sul sito vanno portati i componenti Home/barra nelle sorgenti
+definitive e adattati i link della preview; il build 5.5 non pubblica questi
+file nel sito ufficiale. La pubblicazione su `o-fant-a-girrr` resta in attesa
+del Via di Gianluca.
