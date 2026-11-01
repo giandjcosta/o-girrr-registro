@@ -44,7 +44,7 @@
 
 ## 1° novembre 2026 — Campo: grafico pronto per tutta la stagione (Claude, domanda di Gianluca)
 - Il Campo si aggiorna da solo: a ogni apertura legge `data.json` e `formazioni.json` del sito (senza cache) e ricalcola numeri del confronto, forma, percentuali, formazioni e grafico.
-- Grafico: scala «tonda» che cresce con i punti (0–10, 0–15, 0–20, 0–30, 0–40, 0–60…), tacche 0/metà/massimo; con tante giornate etichette e numeri si diradano (circa ogni 6ª giornata, sempre l'ultima) e i pallini si rimpiccioliscono. Provato con stagioni simulate di 12, 20 e 34 giornate a 320, 390 e 1280 px: nessuna scritta sovrapposta, nessuno scorrimento laterale, nessun errore.
+- Grafico: scala «tonda» che cresce con i punti (0–10, 0–15, 0–20, 0–30, 0–40, 0–60…), tacche 0/metà/massimo, sopra l'asse la scritta «Punti» (non più «Pt») staccata dal grafico; con tante giornate etichette e numeri si diradano (circa ogni 6ª giornata, sempre l'ultima) e i pallini si rimpiccioliscono. Provato con stagioni simulate di 12, 20 e 34 giornate a 320, 390 e 1280 px: nessuna scritta sovrapposta, nessuno scorrimento laterale, nessun errore.
 
 ## 1° novembre 2026 — Campo: grafico dei punti leggibile, maiuscole, unita la revisione di ChatGPT (Claude, richiesta di Gianluca, solo Lab/Anteprima)
 - **Unito** il ramo `chatgpt/verifica-55-claude` (PR #44, partito dal `main` giusto): legenda del Campo in tre colonne («Come leggere il campo»), maiuscole nei dettagli del giocatore, formazioni anche con dieci giocatori (confermate da Gianluca), dettagli apribili da tastiera, regola nuova in `AGENTS.md` sulle maiuscole nelle legende. Nessun conflitto.
