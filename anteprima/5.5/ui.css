@@ -187,3 +187,21 @@ body[data-v53=board] #v53board{margin-top:22px}
  @keyframes v55su{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
  .grafpos,#v53boardcontent>*,.v53-notifcard,#xi-det:not(:empty),body[data-v53=campo] #board>.card,body[data-v53=board] .panel table tbody,.v53-metric{animation:v55su .42s cubic-bezier(.22,.61,.36,1) both}
 }
+
+/* Claude, 1° novembre: freccia «Apri riepilogo» disegnata e centrata, ruota piano */
+.v55-chevron{display:inline-grid!important;place-items:center;width:32px;height:32px;flex:none;border-radius:50%;border:1.5px solid rgba(255,209,102,.55);color:var(--v53-caption);font-size:0!important;line-height:0;align-self:center;transition:transform .3s cubic-bezier(.22,.61,.36,1)!important}
+.v55-chevron svg{width:16px;height:16px;display:block}
+@media (prefers-reduced-motion: reduce){.v55-chevron{transition:none!important}}
+/* Claude, 1° novembre — versione C del Tabellone: schede Classifica · Risultati · Campo e striscia dei risultati in cima alla classifica */
+.v55-schede{display:flex!important;gap:6px;padding:4px;margin:16px 0!important;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);overflow-x:auto;scrollbar-width:none}
+.v55-schede::-webkit-scrollbar{display:none}
+.v55-schede>button,.v55-schede>a{flex:1 0 auto;display:grid!important;place-items:center;min-height:44px;padding:8px 16px!important;border:0!important;border-radius:10px!important;background:transparent;color:inherit;font:800 14px Inter,system-ui,sans-serif;letter-spacing:.02em;text-decoration:none;cursor:pointer;transition:background-color .25s ease,color .25s ease}
+.v55-schede>button[aria-selected=true]{background:#d62839;color:#fbf6ec}
+.v55-schede>a::after{content:'\00a0›'}.v55-schede>button,.v55-schede>a{white-space:nowrap}
+.v55-striscia{display:flex;align-items:center;gap:8px;width:100%;margin:0 0 14px;padding:8px 10px;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.06);color:inherit;font:700 13px Inter,system-ui,sans-serif;overflow-x:auto;scrollbar-width:none;cursor:pointer;text-align:left}
+.v55-striscia::-webkit-scrollbar{display:none}
+.v55-st-tit{flex:none;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#bfe3ff;margin-right:4px}
+.v55-st-m{flex:none;display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:8px;background:rgba(0,0,0,.18)}
+.v55-st-m b{font-weight:900;letter-spacing:.04em}.v55-st-m i{font-style:normal;font-weight:900;color:#ffd166;font-variant-numeric:tabular-nums}
+.v55-st-vai{flex:none;margin-left:auto;padding-left:6px;color:#ffd166;font-weight:800}
+body.vista-c[data-v53=board] .grid>aside.panel[hidden],body.vista-c[data-v53=board] .grid>section[hidden]{display:none!important}

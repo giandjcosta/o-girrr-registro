@@ -99,7 +99,7 @@ function home(){
  var summary=document.createElement('summary'),heading=document.querySelector('.v53-homehead');
  summary.append(heading.firstElementChild);
  var compact=document.createElement('span');compact.id='v55compact';compact.className='v55-compact';summary.firstElementChild.append(compact);
- summary.insertAdjacentHTML('beforeend','<span class="v55-disclosure-label"></span><span class="v55-chevron" aria-hidden="true">⌄</span>');
+ summary.insertAdjacentHTML('beforeend','<span class="v55-disclosure-label"></span><span class="v55-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>');
  var body=document.createElement('div');body.className='v55-dashboard-body';
  Array.from(panel.children).forEach(function(child){if(child!==live)body.append(child)});
  dashboard.append(summary,body);panel.append(dashboard);
@@ -278,7 +278,22 @@ render();
 }
 /* Initial DOM integration: no existing Tabellone/Albo/Curva components are replaced. */
 /* Tabellone: approfondimenti in fondo, sotto partite e classifica; due impaginazioni da confrontare (?vista=a classifica prima, ?vista=b affiancate su PC) */
-function vista(){var q='a';try{q=new URLSearchParams(location.search).get('vista')==='b'?'b':'a'}catch(e){}document.body.classList.add('vista-'+q);
+function sigla(t){var w=String(t).replace(/^the\s+/i,'').split(/\s+/);return (w[0]||'').slice(0,3).toUpperCase()}
+function schede(){var nav=document.querySelector('.giornata-nav'),panel=document.querySelector('.grid>aside.panel'),board=document.querySelector('.grid>section');if(!nav||!panel||!board)return;
+ var campo=el('campo-link'),q=new URLSearchParams(location.search),sez=q.get('sezione')==='risultati'?'risultati':'classifica';
+ nav.innerHTML='';nav.className='giornata-nav v55-schede';nav.setAttribute('role','tablist');nav.setAttribute('aria-label','Sezioni del Tabellone');
+ [['classifica','Classifica'],['risultati','Risultati']].forEach(function(x){var b=document.createElement('button');b.type='button';b.dataset.sez=x[0];b.textContent=x[1];b.setAttribute('role','tab');nav.appendChild(b)});
+ if(campo){campo.textContent='Campo';campo.removeAttribute('aria-current');nav.appendChild(campo)}
+ var striscia=document.createElement('button');striscia.type='button';striscia.className='v55-striscia';striscia.setAttribute('aria-label','Risultati della giornata: apri i Risultati');panel.insertBefore(striscia,panel.firstChild);
+ function riempi(){var ms=[].slice.call(document.querySelectorAll('#board>.m'));striscia.hidden=!ms.length;striscia.innerHTML='<span class="v55-st-tit">'+esc(((document.querySelector('#board>.nota')||{}).textContent||'Risultati'))+'</span>'+ms.map(function(m){var t=m.querySelectorAll('.t span'),sc=m.querySelectorAll('.sc b');return '<span class="v55-st-m"><b>'+esc(sigla(t[0]?t[0].textContent:''))+'</b><i>'+esc(sc[0]?sc[0].textContent:'–')+'–'+esc(sc[1]?sc[1].textContent:'–')+'</i><b>'+esc(sigla(t[1]?t[1].textContent:''))+'</b></span>'}).join('')+'<span class="v55-st-vai">Risultati ›</span>'}
+ riempi();var bd=el('board');if(bd&&window.MutationObserver)new MutationObserver(riempi).observe(bd,{childList:true});
+ function mostra(s,ani){sez=s;nav.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-selected',String(b.dataset.sez===s))});panel.hidden=s!=='classifica';board.hidden=s!=='risultati';
+  var v=s==='classifica'?panel:board;if(ani&&!CALMO&&v.animate)v.animate({opacity:[0,1],transform:['translateY(6px)','none']},{duration:320,easing:'cubic-bezier(.22,.61,.36,1)'});
+  try{var u=new URL(location.href);u.searchParams.set('sezione',s);history.replaceState(null,'',u)}catch(e){}}
+ nav.addEventListener('click',function(e){var b=e.target.closest('button[data-sez]');if(b)mostra(b.dataset.sez,true)});
+ striscia.addEventListener('click',function(){mostra('risultati',true);nav.scrollIntoView({behavior:CALMO?'auto':'smooth',block:'start'})});
+ mostra(sez,false)}
+function vista(){var q='a';try{var vv=new URLSearchParams(location.search).get('vista');q=vv==='b'||vv==='c'?vv:'a'}catch(e){}document.body.classList.add('vista-'+q);if(q==='c')setTimeout(schede,0);
  var v=el('v53board'),g=document.querySelector('.grid');if(v&&g&&g.parentNode)g.parentNode.insertBefore(v,g.nextSibling)}
 /* Fluidità: tendine che scorrono, cambio di pagina con dissolvenza dove il browser non ha le transizioni native. Niente animazioni con «riduci movimento». */
 var CALMO=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
