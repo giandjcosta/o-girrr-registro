@@ -67,20 +67,10 @@ non risultano nei dati delle squadre esaminati e non sono state inventate.
   le dieci combinazioni; Campo con 22 e con 10 + 11 giocatori, tastiera e Curva
   chiara/scura. Build riproducibile, collaudi statici/milestone/fiducia/Annuario
   e preparazione rilascio cronache.
-- PASS GitHub sul codice `8543d6a`: collaudo 5.5 di Claude con Chromium e WebKit,
-  [run 41322147988](https://github.com/giandjcosta/o-girrr-registro/actions/runs/41322147988).
-  Aggiornati solo i due controlli Home, che ora verificano il componente unico
-  e i link delle notifiche; il controllo dei menu aggiunto poi da Claude è conservato.
-- **FALLIMENTO distinto e già noto:** Fiducia 5.2 Browser QA,
-  [run 41322147931](https://github.com/giandjcosta/o-girrr-registro/actions/runs/41322147931),
-  cerca il vecchio indicatore di reputazione e `#riscatta-sponsor` nel Lab e nelle
-  vecchie app. Il Lab su cui fallisce non è stato modificato da questa Home.
-  Non sono stati ripristinati componenti superati né disattivato il workflow.
-- La base del Registro è stata aggiornata durante il lavoro a `adbada2`:
-  conservati sfondo pieno/Inter dei menu, controlli e banca personaggi di Claude
-  (nuove frasi attive dal 2 novembre). La nuova CI
-  sull'ultimo codice va letta nella PR #48. Safari su iPhone fisico e login con
-  credenziali reali non verificati.
+- PASS GitHub sul codice `0ff2caf`: [integrazione completa, cronache e PDF](https://github.com/giandjcosta/o-girrr-registro/actions/runs/41324996777) e [collaudo Claude Chromium + WebKit](https://github.com/giandjcosta/o-girrr-registro/actions/runs/41324992391), oltre a QA Anteprima 5.2, milestone Totogirrr e Fiducia universale. Il commit successivo aggiorna solo documentazione e rapporti.
+- **FALLIMENTO distinto e già noto:** [Fiducia 5.2 Browser QA](https://github.com/giandjcosta/o-girrr-registro/actions/runs/41324992405), indicatore di reputazione e `#riscatta-sponsor` mancanti nel Lab e nelle vecchie app. Verificati i log dell’ultima esecuzione: sono gli stessi errori, non una regressione della Home. Nessun workflow disattivato.
+- Incorporate le modifiche concorrenti di Claude fino a `29d0e0b`: menu, banca personaggi, ospite e interazioni della Curva. Safari su iPhone fisico e accesso con credenziali reali non verificati.
+- Verifica remota raw.githack non completata: HTTP 403 dal runtime. Per la consegna si usano i link GitHub Pages del Registro.
 
 Screenshot e rapporti: `prove/risultati-home-notifiche55/`.
 PR: https://github.com/giandjcosta/o-girrr-registro/pull/48.
