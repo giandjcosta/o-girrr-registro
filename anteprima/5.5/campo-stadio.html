@@ -43,6 +43,7 @@ h2{font-size:clamp(17px,2vw,24px);margin:0 0 8px}
 .pitch text{font-family:Inter,system-ui,sans-serif}
 .pitch.conxi svg{aspect-ratio:auto!important;height:auto}
 .pitch .xi{position:absolute;inset:6px;pointer-events:none}
+.pitch .pl:focus-visible{outline:2px solid #bfe3ff;outline-offset:3px;border-radius:6px}
 .pitch .pl{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;width:15%;max-width:96px;pointer-events:auto;cursor:default}
 .pitch .pl b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;font:900 12px/1 Inter,system-ui,sans-serif;color:#fff;background:#5d6f92;border:3px solid var(--casa);box-shadow:0 2px 6px rgba(0,0,0,.35);position:relative}
 /* Bordo = squadra, uguale nelle due grafiche: casa azzurro, ospite bianco (il rosso sparirebbe sui voti bassi). Il migliore in campo ha la stella, mai un bordo oro. */
@@ -223,6 +224,10 @@ function render(){
  h+='<section class="card recent" id="recenti"><details><summary>Risultati recenti · Apri l’archivio del confronto</summary><div class="recent-grid">'+[a,b].map(function(t){var partite=complete().filter(function(x){return x.n<=g.n}).flatMap(function(x){return x.m.filter(function(m){return m[0]===t||m[3]===t}).map(function(m){return {n:x.n,m:m}})}).slice(-5).reverse();return '<div><h3>'+nm(t)+'</h3>'+partite.map(function(x){return '<div class="recent-row"><small>G'+x.n+'</small><span>'+nm(x.m[0])+' – '+nm(x.m[3])+'</span><b>'+esc(x.m[4])+'</b></div>'}).join('')+'</div>'}).join('')+'</div></details></section>';
  document.getElementById('board').innerHTML=h;var u=new URL(location.href);u.searchParams.set('giornata',g.n);u.searchParams.set('partita',game);u.searchParams.set('skin',document.body.dataset.skin);history.replaceState(null,'',u);
 }
+document.addEventListener('keydown',function(e){
+ var pl=e.target.closest('.pl[data-det]');
+ if(pl&&(e.key==='Enter'||e.key===' ')){e.preventDefault();pl.click()}
+});
 document.addEventListener('click',function(e){
  var nav=e.target.closest('.sidebar nav a[href^="#"]');if(nav){document.querySelectorAll('.sidebar nav a').forEach(function(x){x.classList.toggle('active',x===nav)})}
  var pl=e.target.closest('[data-det]');if(pl){var dd=document.getElementById('xi-det');if(dd)dd.textContent=pl.dataset.det;return}

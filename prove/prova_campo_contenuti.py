@@ -20,6 +20,9 @@ with sync_playwright() as pw:
         installa(c)
         c.route('https://giandjcosta.github.io/o-fant-a-girrr/data.json',
                 lambda r: r.fulfill(json=dati))
+        formazioni = {}
+        c.route('https://giandjcosta.github.io/o-fant-a-girrr/formazioni.json',
+                lambda r: r.fulfill(json=formazioni))
         p = c.new_page()
         p.goto(ROOT + f'campo-{skin}.html?giornata=4&partita=0')
         # Il campo con le formazioni (giornata senza formazioni nella fixture: campo con le sigle).
@@ -34,6 +37,28 @@ with sync_playwright() as pw:
         expect(p.locator('.match-head .score')).to_have_text('— : —')
         assert 'partita=4' in p.url or p.locator('#matches button').last.get_attribute('aria-pressed') == 'true'
         assert not p.evaluate('document.documentElement.scrollWidth>innerWidth+1')
+
+        # Formazioni controllate: verifica che tastiera e clic aprano gli stessi dettagli.
+        g = dati['cal']['lega'][3]
+        sa = str(g['sa'])
+        formazioni[sa] = {}
+        for lato, squadra in enumerate((g['m'][0][0], g['m'][0][3])):
+            tit = []
+            for i, ruolo in enumerate('PDDDCCCCAAA'):
+                pid = 90000 + lato * 100 + i
+                tit.append(pid)
+                dati['P'][str(pid)] = {'n': f'Giocatore di prova {lato}-{i}', 'r': ruolo}
+                dati['votes'][str(pid)] = {sa: {'v': 6, 'f': 6, 'b': []}}
+            formazioni[sa][squadra] = {'tit': tit, 'pan': []}
+        p.goto(ROOT + f'campo-{skin}.html?giornata=4&partita=0')
+        expect(p.locator('.pl')).to_have_count(22)
+        giocatori = p.locator('.pl')
+        giocatori.first.focus()
+        giocatori.first.press('Enter')
+        expect(p.locator('#xi-det')).to_have_text(giocatori.first.get_attribute('data-det'))
+        giocatori.last.focus()
+        giocatori.last.press('Space')
+        expect(p.locator('#xi-det')).to_have_text(giocatori.last.get_attribute('data-det'))
 
         # I pannelli aggiunti alla Curva devono seguire anche il cambio chiaro/scuro.
         p.goto(ROOT + f'curva-{skin}.html')
