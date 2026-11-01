@@ -97,3 +97,5 @@ La logica è provata su percorsi locali che rappresentano il futuro sito:
 nessun file o database di produzione è stato cambiato. Le autorizzazioni
 delle notifiche rimangono nelle RPC già esistenti; calendario e classifica
 sono informazioni pubbliche della Lega.
+
+La nuova tendina e la modalità personale sono nella [PR #49](https://github.com/giandjcosta/o-girrr-registro/pull/49). Sul codice `2b41ddf`: [suite completa PASS](https://github.com/giandjcosta/o-girrr-registro/actions/runs/41326855787), [Chromium e WebKit PASS](https://github.com/giandjcosta/o-girrr-registro/actions/runs/41326818415). Anche le tre QA statiche PASS; [Fiducia 5.2 Browser QA resta rosso](https://github.com/giandjcosta/o-girrr-registro/actions/runs/41326818416) per i problemi precedenti. La modalità personale nella Home vera del Registro è stata verificata nelle due skin con credenziali simulate, una scelta precedente diversa e ricarica della tendina chiusa. Nessuna scrittura reale.
