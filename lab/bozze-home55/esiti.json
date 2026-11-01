@@ -1,0 +1,142 @@
+[
+  {
+    "bozza": "a",
+    "skin": "lega",
+    "larghezza": 320,
+    "esito": "PASS",
+    "database": "Nessuna richiesta"
+  },
+  {
+    "bozza": "b",
+    "skin": "lega",
+    "larghezza": 320,
+    "esito": "PASS",
+    "database": "Nessuna richiesta"
+  },
+  {
+    "bozza": "a",
+    "skin": "stadio",
+    "larghezza": 320,
+    "esito": "PASS",
+    "database": "Nessuna richiesta"
+  },
+  {
+    "bozza": "b",
+    "skin": "stadio",
+    "larghezza": 320,
+    "esito": "PASS",
+    "database": "Nessuna richiesta"
+  },
+  {
+    "bozza": "a",
+    "skin": "lega",
+    "larghezza": 390,
+    "esito": "PASS",
+    "database": "Nessuna richiesta"
+  },
+  {
+    "bozza": "b",
+    "skin": "lega",
+    "larghezza": 390,
+    "esito": "PASS",
+    "database": "Nessuna richiesta"
+  },
+  {
+    "bozza": "a",
+    "skin": "stadio",
+    "larghezza": 390,
+    "esito": "PASS",
+    "database": "Nessuna richiesta"
+  },
+  {
+    "bozza": "b",
+    "skin": "stadio",
+    "larghezza": 390,
+    "esito": "PASS",
+    "database": "Nessuna richiesta"
+  },
+  {
+    "bozza": "a",
+    "skin": "lega",
+    "larghezza": 768,
+    "esito": "PASS",
+    "database": "Nessuna richiesta"
+  },
+  {
+    "bozza": "b",
+    "skin": "lega",
+    "larghezza": 768,
+    "esito": "PASS",
+    "database": "Nessuna richiesta"
+  },
+  {
+    "bozza": "a",
+    "skin": "stadio",
+    "larghezza": 768,
+    "esito": "PASS",
+    "database": "Nessuna richiesta"
+  },
+  {
+    "bozza": "b",
+    "skin": "stadio",
+    "larghezza": 768,
+    "esito": "PASS",
+    "database": "Nessuna richiesta"
+  },
+  {
+    "bozza": "a",
+    "skin": "lega",
+    "larghezza": 1280,
+    "esito": "PASS",
+    "database": "Nessuna richiesta"
+  },
+  {
+    "bozza": "b",
+    "skin": "lega",
+    "larghezza": 1280,
+    "esito": "PASS",
+    "database": "Nessuna richiesta"
+  },
+  {
+    "bozza": "a",
+    "skin": "stadio",
+    "larghezza": 1280,
+    "esito": "PASS",
+    "database": "Nessuna richiesta"
+  },
+  {
+    "bozza": "b",
+    "skin": "stadio",
+    "larghezza": 1280,
+    "esito": "PASS",
+    "database": "Nessuna richiesta"
+  },
+  {
+    "bozza": "a",
+    "skin": "lega",
+    "larghezza": 1440,
+    "esito": "PASS",
+    "database": "Nessuna richiesta"
+  },
+  {
+    "bozza": "b",
+    "skin": "lega",
+    "larghezza": 1440,
+    "esito": "PASS",
+    "database": "Nessuna richiesta"
+  },
+  {
+    "bozza": "a",
+    "skin": "stadio",
+    "larghezza": 1440,
+    "esito": "PASS",
+    "database": "Nessuna richiesta"
+  },
+  {
+    "bozza": "b",
+    "skin": "stadio",
+    "larghezza": 1440,
+    "esito": "PASS",
+    "database": "Nessuna richiesta"
+  }
+]

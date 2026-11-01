@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
 
+## 1 novembre — ChatGPT: due bozze per «Oggi al Girrr» in un unico riquadro
+
+- Gianluca chiede di raccogliere le tre schede interne in una sola bolla con un elemento grafico e di vedere proposte prima della scelta. **PROTOTIPI su richiesta, non sostituiscono la Home integrata:** [Confronta A/B](https://giandjcosta.github.io/o-girrr-registro/lab/prova-home-unica55.html), con scelta di Lega/Stadio e squadra. Accesso anche dalla nuova scheda del Lab; nessun nuovo tab dell'app.
+- **A · La classifica:** posizione, variazione e punti raccolti con linea delle posizioni nelle ultime cinque giornate; sotto, ultimo risultato e prossima sfida su due colonne. **B · La forma:** ultima partita con risultato centrale, posizione/punti compatti e istogramma dei punti ottenuti nelle ultime cinque gare (3 vittoria, 1 pareggio, 0 sconfitta). Entrambe hanno un solo contenitore esterno, semplici separatori e le notizie della Lega; niente tre sottoschede bordate.
+- Colori, sfondi e caratteri della Lega/Stadio; lo Stadio mantiene il titolo Lobster. Dati da calendario pubblico, senza possesso/tiri/indici inventati. Nella A risultato e Fantapunti sono orientati alla squadra scelta; nella B ordine ufficiale casa/ospite con nomi visibili. I punti del grafico aprono il Tabellone della giornata relativa. Le bozze non leggono credenziali e non invocano il database.
+- **PASS Chromium:** due proposte × due skin × 320/390/768/1280/1440; grafici confrontati con la storia della classifica, switch bozza/skin, tutte le squadre a 320 px, link, zero overflow/errori/404 o richieste al database. Screenshot telefono/PC e rapporto nella [galleria](lab/bozze-home55/). Safari/iPhone fisico e approvazione estetica non verificati.
+- Riferimenti cercati e verificati: panoramica squadra FotMob e Data Hub Football Manager (manuale ufficiale e immagini della comunità), collegati nelle bozze. Nessun asset grafico di terzi copiato. Dopo la scelta occorre portare la soluzione nella Home vera della 5.5, conservando menu e notifiche personali di Claude.
+
 ## 1 novembre — ChatGPT: cronache incluse nel futuro rilascio, pubblicazione in attesa del «Vai»
 
 - Chiarimento di Gianluca: integrare tutto nella prova e predisporre il passaggio al sito principale insieme alla 5.5; il suo «Vai» autorizzerà la pubblicazione, non un nuovo giro di sviluppo dei collegamenti.
