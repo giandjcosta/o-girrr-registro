@@ -22,7 +22,7 @@ const bDati = labHtml.indexOf('</script>', iDati);
 const coda = '\nrender();\n})();\n</script>';
 const k = labHtml.lastIndexOf(coda);
 if (k < 0) throw new Error('Fine dello script del Lab non trovata: il Lab è cambiato, va aggiornato questo script');
-const esposizione = '\nwindow.__P={teams:function(){return D.teams},fascia:fascia,sponsorDi:sponsorDi,premi52:premi52,premioSponsor:premioSponsor,premioSponsorCoppa:premioSponsorCoppa,mg:mg,get CL(){return CL}};\nrender();\n})();\n</script>';
+const esposizione = '\nwindow.__P={teams:function(){return D.teams},fascia:fascia,sponsorDi:sponsorDi,premi52:premi52,premioSponsor:premioSponsor,premioSponsorCoppa:premioSponsorCoppa,malus52:malus52,mg:mg,get CL(){return CL}};\nrender();\n})();\n</script>';
 const html = labHtml.slice(0, aDati) + dati + labHtml.slice(bDati, k) + esposizione + labHtml.slice(k + coda.length);
 
 (async () => {
@@ -44,13 +44,15 @@ const html = labHtml.slice(0, aDati) + dati + labHtml.slice(bDati, k) + esposizi
     await p.goto(`http://localhost:${PORTA}/lab/index.html`, { waitUntil: 'domcontentloaded', timeout: 30000 });
     await p.waitForFunction(() => window.__P && window.__P.CL, null, { timeout: 30000 });
 
-    const righe = await p.evaluate(() => window.__P.teams().map(t => ({
+    const righe = await p.evaluate(() => { const M = window.__P.malus52(); return window.__P.teams().map(t => ({
       team: t,
       manager: window.__P.mg(t),
       fascia: window.__P.fascia(t),
       // premi52 applica il filtro "raggiunto" e registra in sessionStorage della pagina di test: va bene, la pagina è monouso
       premi: window.__P.premi52(t),
-    })));
+      // obiettivi di sponsor mancati: −1 di reputazione per sempre, senza crediti (Gianluca, 2 novembre)
+      malus: M[t] || [],
+    })); });
 
     const premi = [];
     for (const r of righe) {
@@ -64,11 +66,14 @@ const html = labHtml.slice(0, aDati) + dati + labHtml.slice(bDati, k) + esposizi
           reputation: pr.reputazione,
         });
       }
+      for (const m of r.malus) {
+        premi.push({ team: r.team, manager: r.manager, objective: m.obiettivo, sponsor: m.sponsor, credits: 0, reputation: -1 });
+      }
     }
     fs.mkdirSync(path.dirname(outFile), { recursive: true });
     fs.writeFileSync(outFile, JSON.stringify({ premi, squadre: righe.length }, null, 1), 'utf8');
-    console.log(`premi raggiunti: ${premi.length} su ${righe.length} squadre`);
-    for (const x of premi) console.log(`  ${x.team} · ${x.sponsor} · ${x.credits} crediti (${x.objective})`);
+    console.log(`premi e malus: ${premi.length} su ${righe.length} squadre`);
+    for (const x of premi) console.log(`  ${x.team} · ${x.sponsor} · ${x.reputation < 0 ? 'malus −1 reputazione' : x.credits + ' crediti'} (${x.objective})`);
   } finally {
     await br.close();
     server.close();

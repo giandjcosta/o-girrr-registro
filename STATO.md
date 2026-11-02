@@ -1,4 +1,12 @@
-# Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
+# Stato del progetto O Girrr (ultimi giorni — aggiornato 2 novembre 2026)
+
+## 2 novembre (8) — Claude: **ONLINE** infortuni nello Spogliatoio, Carriera con reputazione 0-100, doppioni, PC, Curva («vai» di Gianluca)
+
+- **Reputazione da 0 a 100%** (schema approvato da Gianluca): partenza 50; posizione da +20 (primo) a −20 (ultimo), un po' per ogni posto (+20, +16, +11, +7, +2, −2, −7, −11, −16, −20), durante la stagione quella di oggi; obiettivi del presidente +10 raggiunto / −10 mancato fino a fine stagione (ognuno con i suoi); sponsor +1 / −1 per sempre e premi in crediti del Totogirrr. Con tutti gli obiettivi del presidente e il primo posto: 100%. Calcolo nella pagina (`repCalcolo`, `rilascio/carriera56/carriera.py`), testi in Regole aggiornati.
+- **Database** (migrazione `carriera_reputazione_56`, testo e ritorno indietro in `sql/carriera-reputazione-56.sql`): `reward_events` accetta il malus −1 (stato `malus`, 0 crediti, solo sponsor, non riscattabile); `carriera_registra_server` accetta `p_rep` −1. Provato con inserimenti annullati: malus valido accettato, malus con crediti rifiutato; gli 8 premi esistenti intatti.
+- **Workflow dei premi** (legge `lab/index.html` e `calcoli/premi/` dal `main` del registro): `malus52()` nel Lab, `premi_giornata.js` aggiunge i malus degli sponsor mancati, `registra_premi.py` li controlla e li registra. Prova a secco con i dati veri: gli stessi 8 premi già registrati, nessun malus per ora.
+- **Online:** `gh-pages` **`f3691fd`** (prima `e485848`): Spogliatoio (`index.html`, infortuni), `girrr/app.html` e `stadio/girrr/app.html` (Carriera), `girrr/v55/ui.css` e `ui.js`, file comuni `v=55r7` in tutte le pagine 5.5, `scripts/aggiorna_dati.py` e `scripts/ind_storico.json`. **Per tornare indietro:** `git revert f3691fd` su `gh-pages` (lo storico degli indisponibili in `data.json` resta, è innocuo). Sorgenti `ufficiale/src/sito/` allineate. Lanciato a mano «Aggiorna statistiche e voti» per scrivere subito le «I».
+- **Prove:** copia del sito su `/o-fant-a-girrr/` e poi sito vero: 14 pagine × 320/390/768/1280, nessun errore, nessun 404, nessuno scorrimento laterale, un solo «indietro»; Carriera con reputazione (Oranje VC 6° → 48%), 2 loghi, colonna 1180 px su PC, titoli Lega in Inter e Stadio in Lobster. Collaudo Anteprima 80 pagine 0 problemi, `prove/prova_infortuni_spogliatoio.py` PASS. Non provati: Safari/iPhone, il PC Windows di Gianluca (riquadro vuoto), il primo malus vero (dopo la 10ª giornata della lega).
 
 ## 2 novembre (7) — Claude: Carriera, doppioni, Girrr Sport su PC, Curva (Anteprima `v=55w`, sito non toccato)
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Registra nel database i premi sponsor raggiunti (funzione carriera_registra_server).
+"""Registra nel database i premi sponsor raggiunti e i malus degli sponsor mancati (funzione carriera_registra_server).
 
 Legge il JSON scritto da premi_giornata.js e, per ogni premio, chiama la funzione del database con la chiave
 service_role. Il database accetta solo crediti 0/50/75/100/125, solo la stagione 2026/27 e non registra due volte
@@ -20,6 +20,7 @@ import urllib.request
 PROGETTO = "https://qmjqfgmvimsuxvghetgi.supabase.co"
 STAGIONE = "2026/27"
 CREDITI_VALIDI = (0, 50, 75, 100, 125)
+REPUTAZIONE_VALIDA = (-1, 1, 2, 3)   # −1: obiettivo di sponsor mancato (senza crediti)
 
 
 def ultima_giornata_chiusa(data):
@@ -46,6 +47,8 @@ def costruisci(premi, data, oggi):
     for p in premi:
         if p["credits"] not in CREDITI_VALIDI:
             raise SystemExit(f"Crediti non validi per {p['team']}: {p['credits']}")
+        if p["reputation"] not in REPUTAZIONE_VALIDA or (p["reputation"] < 0 and p["credits"] != 0):
+            raise SystemExit(f"Reputazione non valida per {p['team']}: {p['reputation']} ({p['credits']} crediti)")
         righe.append({
             "p_season": STAGIONE,
             "p_manager": p["manager"],
@@ -83,7 +86,7 @@ def main():
 
     print(f"Premi da registrare: {len(righe)} (giornata verificata: {righe[0]['p_proof']['verified_through'] if righe else '-'})")
     for r in righe:
-        print(f"  {r['p_team']} · {r['p_manager']} · {r['p_objective']} · {r['p_credits']} crediti")
+        print(f"  {r['p_team']} · {r['p_manager']} · {r['p_objective']} · " + ("malus −1 reputazione" if r["p_rep"] < 0 else f"{r['p_credits']} crediti"))
 
     if "--vai" not in sys.argv:
         print("\nPROVA: non ho scritto niente. Con --vai registro questi premi nel database.")
