@@ -1,5 +1,12 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
 
+## 2 novembre — Claude: Home con la testata di prima (online)
+
+- Richiesta di Gianluca (foto dal telefono): nella Home la parte alta deve restare com'era, con il logo grande e l'interruttore Lega/Stadio da premere, e senza «‹ Home» quando si è già nella Home. Le notifiche vanno bene dentro «Oggi al Girrr».
+- `ui.js`: nella Home la barra 5.5 non viene più messa (`nav()` esce subito con `mode==='home'`); così tornano da sole la testata del sito, il logo grande e l'interruttore di `grafica.js`. Nelle altre pagine la barra resta (‹ Home, Notifiche, Grafica …).
+- **Online:** `gh-pages` **`42f271a`** (prima `f8a450d`), con `girrr/v55/ui.js` e la versione dei file portata a `v=55r2` in tutte le pagine 5.5. Per tornare indietro: `git revert 42f271a`. Anteprima con `v=55p`. Sorgenti `ufficiale/src/sito/` allineate.
+- **Prove:** copia del sito e poi sito vero: Home Lega e Stadio con interruttore visibile, senza barra né «‹ Home»; 14 pagine × 4 larghezze senza errori. Non provato su iPhone vero.
+
 ## 1 novembre (notte, 6) — Claude: **VERSIONE 5.5 ONLINE** sul sito vero («vai» di Gianluca)
 
 - **Online:** `gh-pages` **`1d1ed39`** (prima `44cf85d`) e `main` **`3b0e344`** (prima `1b1d3a0`). **Per tornare indietro:** `git revert 1d1ed39` su `gh-pages` e `git revert 3b0e344` su `main` del sito (il database resta compatibile: gli oggetti nuovi non sono usati dalle pagine 5.3).
