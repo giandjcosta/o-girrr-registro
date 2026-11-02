@@ -1,5 +1,10 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
 
+## 2 novembre (4) — Claude: «Tira per aggiornare» dritto (pronto, in attesa del «vai»)
+
+- Gianluca (foto del Campo): la pillola «Rilascia per aggiornare» girava tutta su sé stessa. Ora resta dritta e gira solo la freccina ↻ (`tiraGiu()` in `ui.js`). Anteprima `v=55t`.
+- Copia di `gh-pages` pronta (`441f312`, `v=55r5`), provata: 14 pagine × 4 larghezze, 0 problemi; pillola dritta con tocchi simulati. **Pubblicazione bloccata dal controllo di sicurezza**: serve un nuovo «vai».
+
 ## 2 novembre (3) — Claude: Home con i riquadri di prima e Stadio più oro (online)
 
 - Gianluca: i riquadri della Home (Spogliatoio, Girrr Sport, Tabellone, Totogirrr, Albo, Carriera, Curva, Notifiche) devono restare come prima del rilascio 5.5; la Home «grosso modo come prima, con qualche miglioramento grafico» da scegliere insieme.
