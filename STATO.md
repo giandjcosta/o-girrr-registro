@@ -1,10 +1,10 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
 
-## 2 novembre (4) — Claude: «Tira per aggiornare» dritto (pronto, in attesa del «vai»)
+## 2 novembre (4) — Claude: «Tira per aggiornare» dritto e trasparente, simboli del Campo visibili (online)
 
 - Gianluca (foto del Campo): la pillola «Rilascia per aggiornare» girava tutta su sé stessa. Ora resta dritta e gira solo la freccina ↻ (`tiraGiu()` in `ui.js`). Anteprima `v=55t`.
 - Campo: nella scheda attiva in alto (Confronto, Rendimento…) il simbolo spariva nello Stadio (oro su oro): ora prende il colore della scritta. Pillola «Tira per aggiornare» trasparente con sfocatura, non copre più la pagina. Anteprima `v=55u`.
-- Copia di `gh-pages` pronta (`441f312` e il commit successivo, `v=55r5`), provata: 14 pagine × 4 larghezze, 0 problemi; pillola dritta con tocchi simulati. **Pubblicazione bloccata dal controllo di sicurezza**: serve un nuovo «vai».
+- Copia di `gh-pages` pronta (`441f312` e il commit successivo, `v=55r5`), provata: 14 pagine × 4 larghezze, 0 problemi; pillola dritta con tocchi simulati. **Online** con il «vai» di Gianluca: `gh-pages` `f6d234b` (prima `983481d`). Per tornare indietro: `git revert f6d234b 441f312`.
 
 ## 2 novembre (3) — Claude: Home con i riquadri di prima e Stadio più oro (online)
 
