@@ -1,5 +1,20 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
 
+## 2 novembre (7) — Claude: Carriera, doppioni, Girrr Sport su PC, Curva (Anteprima `v=55w`, sito non toccato)
+
+Richieste di Gianluca (foto del sito vero):
+- **Doppio «indietro»** (Tabellone, Albo, Carriera, Girrr Sport, Lega e Stadio): c'erano «‹ O Girrr» della pagina e «‹ Home» della barra 5.5. `ui.js`: con la barra in alto il vecchio link «‹ …» della pagina si nasconde. Controllate tutte le pagine a 320/390/1280: resta un solo «indietro» (nel Campo il «‹» rimasto è la freccia della giornata).
+- **Riquadro vuoto in Carriera → Regole** (non riprodotto in Chromium senza scheda video): era «Premi e reputazione» con dissolvenza e sfocatura dello sfondo insieme, che Chrome a volte disegna senza contenuto. Durante l'entrata niente sfocatura (`.fx-in`). Da riverificare sul PC di Gianluca.
+- **Loghi degli sponsor** in Panoramica → Reputazione e sponsor (stessi loghi di Obiettivi; logo generico per gli sponsor di Champions Cup che non ne hanno uno).
+- **Arco della fiducia animato**: al massimo una volta ogni 5 minuti (`localStorage` `orr_fid_anim`) l'arco si colora da 0 e il numero scorre come un tabellone (scatto di 80 ms per numero, 0,7-1,5 s in tutto); parte quando la pagina è visibile e continua se la pagina si ridisegna. Con «riduci movimento» niente animazione.
+- **Titoli della Lega in Inter** in Albo, Carriera e Girrr Sport: la pagina chiedeva Lobster senza caricarlo e Windows mostrava un corsivo tipo Comic Sans (succedeva già prima del rilascio 5.5). Lo Stadio resta in Lobster.
+- **PC** (da 1100 px): Albo, Carriera e Girrr Sport larghi fino a 1180 px invece di 620, riquadri su due colonne (titoli, schede e menu a tutta riga; riquadro unico a tutta riga; numeri precedenti del Giornale su due colonne). Telefono invariato.
+- **Curva → Chi seguire**: più spazio fra nome e pulsante, a capo equilibrato; da 1200 px Curva larga 1240 px con colonna laterale di 330 px; tra 1060 e 1199 px il pulsante va sotto il nome.
+- **File:** `rilascio/carriera56/carriera.py` (Carriera, da applicare a `lab/index.html`, già fatto, e al rilascio a `girrr/app.html` e `stadio/girrr/app.html` di `gh-pages`: provato su copie, si applica pulito); `anteprima/5.5/ui.css` e `ui.js` (da copiare in `girrr/v55/` con la nuova versione dei file). Anteprima `v=55w`.
+- **Prove:** collaudo Anteprima Chromium 80 pagine, 0 problemi; doppioni, larghezze 320/390/1100/1280/1440 senza scorrimento laterale, sequenza dei numeri dell'arco (0, 3, 5 … 52, non riparte alla ricarica), loghi caricati. Non provati: Safari/iPhone, il PC Windows di Gianluca.
+- **Da decidere con Gianluca:** reputazione con bonus e malus degli obiettivi (oggi solo +2 presidente e +1 sponsor, niente malus, numero senza tetto) e premi degli sponsor in fantacrediti o crediti Totogirrr; servirebbe anche il database (`carriera_stato`).
+- Altre pagine da ottimizzare per PC (Home, Notifiche, Curva centrale): da controllare una per una.
+
 ## 2 novembre (6) — Claude: infortuni in «Chi scambiare» e «Mercato Scambi» (prova nel Lab, sito non toccato)
 
 - Gianluca: Lautaro Martinez ha «P» (in panchina) invece di «I» (infortunato) nelle sue giornate; gli infortuni non sembrano contare.
