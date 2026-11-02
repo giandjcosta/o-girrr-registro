@@ -1,5 +1,17 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
 
+## 2 novembre (2) — Claude: Curva, barre in alto, notifiche, aggiornare tirando giù (online)
+
+Richieste di Gianluca (foto della Curva dal telefono), tutte in `anteprima/5.5/ui.js` e `ui.css`:
+- **Curva senza barra 5.5 in alto** (ha la sua testata e la Home in basso a destra).
+- **Sondaggio della giornata come un post** della Curva (logo O Girrr, «Sondaggio della Nª giornata», barre e percentuali come i sondaggi delle squadre), **sotto «Cosa succede in curva?»** e solo in «Per te» (`posizionaSondaggio()`: il riquadro viene tenuto da parte e rimesso dopo ogni ridisegno della Curva). Dopo il voto la scheda sparisce e resta il post con il conteggio («Votazione aperta» e «Si chiude ven 06/11 alle 20:45»). **Si vota solo prima della prima partita** della giornata di Serie A collegata (orari da `data.json`: `sa`, poi `fx`; l'anno lo dà la stagione); poi il post dice «Concluso» e non si vota più. Il post chiuso della giornata precedente resta se ha voti. Commenti dentro il post, chiusi all'inizio, «Commenti (N)» per aprirli e «Chiudi i commenti» per chiuderli. La chiusura all'orario è nella pagina; il database accetta ancora voti (da aggiungere al server se serve).
+- **Coro con le risposte aperte:** in fondo alle risposte c'è «Chiudi i commenti», che chiude e riporta al coro.
+- **Notifiche:** si arriva al punto preciso senza il riquadro colorato.
+- **Barra in alto delle altre pagine** (Tabellone, Campo, Notifiche, Albo): solo il logo per la Home e «‹ pagina precedente». Cambio grafica solo nella Home.
+- **«Aggiorna»** (pulsante dell'app aggiunta alla Home del telefono, `assets/app.js`) visibile solo nella Home. Nelle altre pagine (tranne la Curva, che ha il suo) **si aggiorna tirando giù**: parte solo se la pagina è già in cima quando si appoggia il dito, serve un tiro di 160 px («Tira per aggiornare» → «Rilascia per aggiornare»), movimenti di lato ignorati.
+- **Online:** `gh-pages` **`064a207`** (prima `42f271a`), file comuni `v=55r3`. Per tornare indietro: `git revert 064a207`. Anteprima `v=55q`.
+- **Prove:** Anteprima e copia del sito e poi sito vero: posizione del sondaggio, voto (nell'Anteprima) e post, apri/chiudi commenti, «Chiudi i commenti» sotto le risposte, barra del Campo, tiro corto (non aggiorna) e lungo (aggiorna) con tocchi simulati; 14 pagine × 4 larghezze senza errori; collaudo Anteprima 80 pagine, 0 problemi. Non provati: iPhone vero (tiro giù e app dalla Home).
+
 ## 2 novembre — Claude: Home con la testata di prima (online)
 
 - Richiesta di Gianluca (foto dal telefono): nella Home la parte alta deve restare com'era, con il logo grande e l'interruttore Lega/Stadio da premere, e senza «‹ Home» quando si è già nella Home. Le notifiche vanno bene dentro «Oggi al Girrr».
