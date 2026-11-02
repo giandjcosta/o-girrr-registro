@@ -1,5 +1,11 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 2 novembre 2026)
 
+## 2 novembre (10) — Claude: punti del 2022/23 «Dato non conservato» nell'Albo d'oro (prova nel Lab, sito non toccato)
+
+- Gianluca chiede se il 2022/23 c'è nell'Albo d'oro e nell'Albo di Latta: sì, c'era già (Stagioni con la classifica delle sei squadre, titolo di apo contato, latta con Grodah ultimo e il 2022/23 nella latta di sempre). Mancano solo i punti finali di quell'anno, che la pagina mostrava come «–».
+- `rilascio/albo56/punti.py` (per `girrr/albo.html` e `stadio/girrr/albo.html`): classifica di una stagione senza punti senza la colonna di trattini e con «Punti finali: dato non conservato.»; nella scheda dell'allenatore («Il percorso») «Dato non conservato» al posto del trattino.
+- Prova: `lab/prova-albo-lega.html` e `lab/prova-albo-stadio.html` (Stagioni → 2022/23; Allenatori → RikyArma), a 320 e 1280 senza errori né scorrimento laterale. **Serve il «vai»** per `gh-pages`. Se Gianluca ritrova i punti del 2022/23, si aggiungono ai dati e la colonna torna.
+
 ## 2 novembre (9) — Claude: **ONLINE** Moviola in ordine, un solo logo in alto, Albo d'oro («vai» di Gianluca)
 
 - **Moviola su PC** (Gianluca, foto del sito vero): con le due colonne il primo episodio saliva accanto all'introduzione, sopra la scelta della giornata (griglia «dense»). `ui.css`: l'ordine resta quello della pagina; un riquadro da solo fra elementi che non sono riquadri (introduzione, scelta della giornata) prende tutta la riga. Controllate tutte le schede di Girrr Sport e Carriera. **Questo errore è online dal rilascio `f3691fd`.**
