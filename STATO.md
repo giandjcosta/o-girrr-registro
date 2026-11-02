@@ -1,5 +1,12 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
 
+## 2 novembre (3) — Claude: Home con i riquadri di prima (pronta, **non ancora online**)
+
+- Gianluca: i riquadri della Home (Spogliatoio, Girrr Sport, Tabellone, Totogirrr, Albo, Carriera, Curva, Notifiche) devono restare come prima del rilascio 5.5; la Home «grosso modo come prima, con qualche miglioramento grafico» da scegliere insieme.
+- `ui.css`: le regole grafiche nuove (banda, angoli, pillole) non valgono più nella Home (`:not([data-v53=home])`); restano solo su «Oggi al Girrr» (nello Stadio angoli 12 px e banda oro). Riquadri tornati 1 px e 18 px come prima.
+- Totogirrr nello Stadio: la scritta andava a capo sopra il titolo (succedeva **già prima** del rilascio 5.5: riquadri a due colonne larghi ~170 px). Ora resta su una riga e si rimpicciolisce.
+- Anteprima `v=55r`. **Copia di `gh-pages` pronta** (ramo locale `claude/home-riquadri-gh`, `ui.css` e `v=55r4`), provata: 14 pagine × 4 larghezze, 0 problemi. **Pubblicazione bloccata dal controllo di sicurezza della sessione** (pubblicazione in produzione): serve il permesso di Gianluca.
+
 ## 2 novembre (2) — Claude: Curva, barre in alto, notifiche, aggiornare tirando giù (online)
 
 Richieste di Gianluca (foto della Curva dal telefono), tutte in `anteprima/5.5/ui.js` e `ui.css`:
