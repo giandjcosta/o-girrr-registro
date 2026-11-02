@@ -1,5 +1,5 @@
 {
- "aggiornato": "2026-11-02T06:43:47Z",
+ "aggiornato": "2026-11-02T18:42:59Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
@@ -190,9 +190,12 @@
   {
    "nome": "Promemoria GEMINI_API_KEY sito",
    "quando": "Una volta: 2 novembre alle 19:00",
-   "stato": "attiva",
-   "prossimo": "2026-11-02T18:00:00Z",
-   "nota": "Promemoria per aggiungere il segreto GEMINI_API_KEY e attivare la radio automatica."
+   "stato": "conclusa",
+   "nota": "Promemoria per aggiungere il segreto GEMINI_API_KEY e attivare la radio automatica.",
+   "ultimo": {
+    "quando": "2026-11-02T18:02:41Z",
+    "esito": "riuscito"
+   }
   }
  ]
 }
