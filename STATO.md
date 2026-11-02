@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
 
+## 2 novembre (5) — Claude: prima apertura più veloce (pronta, in attesa del «vai»)
+
+- Gianluca: alla prima apertura dopo un aggiornamento la pagina resta bianca 3-4 secondi, poi è subito pronta.
+- Cause: foglio dei caratteri di Google (altro server) e fogli/script in testa che bloccano il disegno; in Tabellone e Campo anche l'attesa dei dati (fino a 3 s).
+- `rilascio/velocita55.py` (rilanciabile) sulle pagine 5.5 di Lega e Stadio: colore di sfondo subito (non nella Curva, che ha il tema chiaro/scuro), `preconnect` ai server dei caratteri, foglio dei caratteri non bloccante (`media="print"` → `all` al caricamento, con `noscript`), attesa massima di Tabellone e Campo 1,5 s (anche in `ui.js`, `build53.py` e `rilascio55.py`).
+- **Misura** (telefono simulato, rete lenta 300 ms / ~1,6 Mbit/s, memoria vuota, mediana di 3): Tabellone 3,4 s → 1,9 s; Campo Stadio da oltre 20 s senza nulla a 1,9 s; Home invariata (1,3 s) ma con lo sfondo subito. Caratteri Inter e Lobster caricati regolarmente; 14 pagine × 4 larghezze senza errori.
+- Copia di `gh-pages` pronta (ramo locale `claude/prima-apertura-gh`, `v=55r6`); sorgenti `ufficiale/src/sito/` già allineate alla copia. Anteprima `v=55v`.
+
 ## 2 novembre (4) — Claude: «Tira per aggiornare» dritto e trasparente, simboli del Campo visibili (online)
 
 - Gianluca (foto del Campo): la pillola «Rilascia per aggiornare» girava tutta su sé stessa. Ora resta dritta e gira solo la freccina ↻ (`tiraGiu()` in `ui.js`). Anteprima `v=55t`.

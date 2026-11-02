@@ -29,7 +29,7 @@ DIR = {'lega': 'girrr', 'stadio': 'stadio/girrr'}
 V55 = {'lega': 'v55/', 'stadio': '../../girrr/v55/'}
 PAGINE = {'index': 'index.html', 'tabellone': 'tabellone.html', 'campo': 'campo.html', 'curva': 'curva.html',
           'notifiche': 'notifiche.html', 'albo': 'app.html#oro'}
-ATTESA = '<script>document.documentElement.classList.add("v55-attesa");setTimeout(function(){document.documentElement.classList.remove("v55-attesa")},3000)</script>'
+ATTESA = '<script>document.documentElement.classList.add("v55-attesa");setTimeout(function(){document.documentElement.classList.remove("v55-attesa")},1500)</script>'
 
 
 def asset_head(skin, home=False):
