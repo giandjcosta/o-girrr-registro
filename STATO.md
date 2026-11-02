@@ -1,5 +1,15 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 1 novembre 2026)
 
+## 2 novembre (6) — Claude: infortuni in «Chi scambiare» e «Mercato Scambi» (prova nel Lab, sito non toccato)
+
+- Gianluca: Lautaro Martinez ha «P» (in panchina) invece di «I» (infortunato) nelle sue giornate; gli infortuni non sembrano contare.
+- **Causa:** `scripts/aggiorna_dati.py` (su `gh-pages` del sito) scrive le presenze solo come T, S o P: chi non gioca perché infortunato o squalificato finisce in «P». Nei dati di oggi 140 «P» sono in realtà assenze (giornate 6-10, ricostruite dalla storia di `data.json`: elenco degli indisponibili nell'ultima versione prima del calcio d'inizio). Giornate 1-5: dato non conservato (la storia parte dal 7 ottobre).
+- **Effetti:** Chi scambiare contava ogni giornata da infortunato come una panchina (+16) e l'infortunio di oggi sempre +10, anche se rientra tra due settimane: Lautaro 59% «Osserva». Mercato Scambi calcolava la quota di partite giocate su tutte le partite della squadra, quindi le giornate da infortunato pesavano come esclusioni.
+- **Correzione** (`rilascio/infortuni56/`): `spogliatoio.py` modifica lo Spogliatoio (le giornate «I» non contano; infortunio di oggi pesato sul rientro previsto: niente fino a 14 giorni, poi fino a +30 da 60 giorni o fine stagione; squalifica 0; Mercato Scambi sulle partite in cui era disponibile; testi della spiegazione aggiornati). `aggiorna_dati.py` tiene in `data.json` la foto degli indisponibili (`ind`) fino al calcio d'inizio e scrive «I» al posto di «P», anche sulle giornate già scritte; `ind_storico.json` è lo storico delle giornate 6-10 da mettere in `scripts/`.
+- **Risultato con i dati veri:** Lautaro 59% → 3% «Tieni»; 37 giudizi cambiano nella lega (es. Yildiz 77% → 3%, Holm 97% → 30%, Svilar 66% → 3%).
+- **Prova nel Lab:** `lab/prova-spogliatoio-infortuni.html` (dati veri del sito, storico applicato come farà lo script), collegata dal Lab. Prova automatica `python3 prove/prova_infortuni_spogliatoio.py` PASS (script, pagina a 320 px, nessun errore).
+- **Per il rilascio (serve il «vai»):** su `gh-pages` `python3 rilascio/infortuni56/spogliatoio.py index.html index.html`, copiare `aggiorna_dati.py` e `ind_storico.json` in `scripts/`, poi aggiornare `ufficiale/src/sito/spogliatoio-index.html`. Non provati: Safari/iPhone vero.
+
 ## 2 novembre (5) — Claude: prima apertura più veloce (online)
 
 - Gianluca: alla prima apertura dopo un aggiornamento la pagina resta bianca 3-4 secondi, poi è subito pronta.
