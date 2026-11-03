@@ -1,10 +1,10 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 2 novembre 2026)
 
-## 2 novembre (10) — Claude: punti del 2022/23 «Dato non conservato» nell'Albo d'oro (prova nel Lab, sito non toccato)
+## 2 novembre (10) — Claude: **ONLINE** punti del 2022/23 «Dato non conservato» nell'Albo d'oro («vai» di Gianluca, 3 novembre)
 
 - Gianluca chiede se il 2022/23 c'è nell'Albo d'oro e nell'Albo di Latta: sì, c'era già (Stagioni con la classifica delle sei squadre, titolo di apo contato, latta con Grodah ultimo e il 2022/23 nella latta di sempre). Mancano solo i punti finali di quell'anno, che la pagina mostrava come «–».
 - `rilascio/albo56/punti.py` (per `girrr/albo.html` e `stadio/girrr/albo.html`): classifica di una stagione senza punti senza la colonna di trattini e con «Punti finali: dato non conservato.»; nella scheda dell'allenatore («Il percorso») «Dato non conservato» al posto del trattino.
-- Prova: `lab/prova-albo-lega.html` e `lab/prova-albo-stadio.html` (Stagioni → 2022/23; Allenatori → RikyArma), a 320 e 1280 senza errori né scorrimento laterale. **Serve il «vai»** per `gh-pages`. Se Gianluca ritrova i punti del 2022/23, si aggiungono ai dati e la colonna torna.
+- Prova: `lab/prova-albo-lega.html` e `lab/prova-albo-stadio.html` (Stagioni → 2022/23; Allenatori → RikyArma), a 320 e 1280 senza errori né scorrimento laterale. **Online:** `gh-pages` **`3135e60`** (prima `94b5cb7`), `girrr/albo.html` e `stadio/girrr/albo.html`; per tornare indietro `git revert 3135e60`. Provato su copia e sito vero, Lega e Stadio × 320/390/768/1280: classifica 2022/23 senza colonna di trattini con la nota, «Dato non conservato» nella scheda di RikyArma, nessun errore né scorrimento laterale. Sorgenti allineate. Se Gianluca ritrova i punti del 2022/23, si aggiungono ai dati e la colonna torna.
 
 ## 2 novembre (9) — Claude: **ONLINE** Moviola in ordine, un solo logo in alto, Albo d'oro («vai» di Gianluca)
 
