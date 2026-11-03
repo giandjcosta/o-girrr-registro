@@ -283,5 +283,5 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
         add("G", "Ciro, come sempre, sicurissimo! Al cento per cento.")
     # --- chiusura
     add("B", "Per Radio Girrr, la radio ufficiale della Lega, è tutto! Mettete la formazione, vi vogliamo bene!", "urlo")
-    add("G", "Ci sentiamo mercoledì prossimo! Ciao a tutti!", "urlo")
+    add("G", "Ci sentiamo la prossima volta! Ciao a tutti!", "urlo")   # non più «mercoledì prossimo» (Gianluca, 3 novembre)
     return L

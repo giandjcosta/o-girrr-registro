@@ -58,5 +58,8 @@ Nessuno dei due è britannico (era così solo con le voci in inglese): niente t�
 - **Conferenze:** il confronto con il campo usa il risultato della partita (vittoria, pareggio, sconfitta), non i Fantapunti; per i pareggi ci sono frasi apposta.
 - **Champions Cup:** tutte le partite, girone per girone («Nel girone A…», «Nell'altro girone, il girone B…»), non solo le due con più scarto.
 - **Fruscio da televisore** (puntata 6, dopo «Si parte!»): uno scoppio di rumore di 100-300 ms dopo una pausa breve, che il taglio della coda non vedeva. `gtrim.py` (`_scoppio_breve`) lo riconosce dallo spettro piatto e lo taglia; provato sulle 57 battute della puntata 6: cambia solo quella.
+- **Chiusura:** «Ci sentiamo la prossima volta!», non più «mercoledì prossimo» (3 novembre).
 - **Il caso della giornata** dice sempre chi protesta (per esempio «il presidente dell'Oranje VC»).
 - Per rifare la puntata di una giornata già uscita: workflow «Radio della giornata» con `subito` = 1 e `rifai` = 1 (la nuova sostituisce la vecchia; se Gemini non risponde resta quella di prima).
+
+- La puntata 6 non si rifà (Gianluca, 3 novembre): le correzioni valgono dalla prossima puntata. L'ultimo tentativo si è fermato da solo per la quota di Gemini finita (100 richieste al giorno per modello) e non ha pubblicato niente.
