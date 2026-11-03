@@ -6,7 +6,7 @@
 - **Calcoli dopo la giornata** lanciati a mano subito dopo (fiducia, probabilità, Borsino, Moviola, cronache, post Curva della rimonta della Grodah, promessa tradita di apo; Moviola in Curva alle 13:40 UTC).
 - **Giornale n° 6** (`gh-pages` `b8d64cb`): testi secondo i tre livelli di scrittura (niente fantapunti nei racconti, solo premi e statistiche), cronaca di classifica di `calcoli/giornale_classifica.py` nella pagina 2, 4 pagine controllate rasterizzate; tabellone Lega 06 e Coppa 03, indice e copertina.
 - **Radio:** lanciata a mano dopo le 08:52 (i cron di GitHub ritardano anche di ore).
-- **Da sistemare (serve il «vai» di Gianluca, è database):** il workflow «Premi sponsor della giornata» fallisce dal 2 novembre con `permission denied for function carriera_registra_server` (401): probabilmente la migrazione `carriera_reputazione_56` ha ricreato la funzione e ha perso il permesso per la chiave di servizio. 8 premi della 5ª giornata in attesa di registrazione.
+- **Premi sponsor** (verificato con il «vai» di Gianluca): il workflow fallisce dal 31 ottobre perché il segreto GitHub `SUPABASE_SERVICE_ROLE_KEY` non è la chiave service_role (il database risponde come anon: 42501 su `carriera_registra_server`, che ha già EXECUTE per service_role). Database non toccato: gli 8 premi sono già tutti registrati (27 e 30 ottobre). Da fare: Gianluca rimette la chiave service_role nel segreto, poi si rilancia il workflow.
 - Sul PC di Gianluca: per il Giornale servono `playwright` (con Chromium), `pymupdf` al posto di `pdftoppm` per le copertine, `tzdata` per l'importazione, e `PYTHONUTF8=1` per gli script dei calcoli.
 
 
