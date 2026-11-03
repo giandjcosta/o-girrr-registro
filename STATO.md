@@ -1,4 +1,14 @@
-# Stato del progetto O Girrr (ultimi giorni — aggiornato 2 novembre 2026)
+# Stato del progetto O Girrr (ultimi giorni — aggiornato 3 novembre 2026)
+
+## 3 novembre (1) — Claude: **ONLINE** 6ª giornata di campionato (Serie A 10) e 3ª di Champions Cup
+
+- **Importazione** da Leghe (Chrome di Gianluca): 5 partite di campionato con formazioni, 4 di Coppa; totali e modificatori verificati, classifica uguale a quella di Leghe. The Blue brothers e Real Madrink hanno giocato **in 10** (nessun cambio valido in panchina): `scripts/leghe_importa.py` ora accetta meno di 11 giocatori solo se il totale di Leghe torna al decimo (avviso invece di blocco). `gh-pages` `c2f7737` (script) e `09f9939` (dati); `calcTs["10"]` = 06:42 UTC, uscita alle 08:42 ora italiana.
+- **Calcoli dopo la giornata** lanciati a mano subito dopo (fiducia, probabilità, Borsino, Moviola, cronache, post Curva della rimonta della Grodah, promessa tradita di apo; Moviola in Curva alle 13:40 UTC).
+- **Giornale n° 6** (`gh-pages` `b8d64cb`): testi secondo i tre livelli di scrittura (niente fantapunti nei racconti, solo premi e statistiche), cronaca di classifica di `calcoli/giornale_classifica.py` nella pagina 2, 4 pagine controllate rasterizzate; tabellone Lega 06 e Coppa 03, indice e copertina.
+- **Radio:** lanciata a mano dopo le 08:52 (i cron di GitHub ritardano anche di ore).
+- **Da sistemare (serve il «vai» di Gianluca, è database):** il workflow «Premi sponsor della giornata» fallisce dal 2 novembre con `permission denied for function carriera_registra_server` (401): probabilmente la migrazione `carriera_reputazione_56` ha ricreato la funzione e ha perso il permesso per la chiave di servizio. 8 premi della 5ª giornata in attesa di registrazione.
+- Sul PC di Gianluca: per il Giornale servono `playwright` (con Chromium), `pymupdf` al posto di `pdftoppm` per le copertine, `tzdata` per l'importazione, e `PYTHONUTF8=1` per gli script dei calcoli.
+
 
 ## 2 novembre (10) — Claude: **ONLINE** punti del 2022/23 «Dato non conservato» nell'Albo d'oro («vai» di Gianluca, 3 novembre)
 
