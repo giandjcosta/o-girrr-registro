@@ -22,14 +22,38 @@ def taglia_coda(pcm: bytes) -> bytes:
                 inizio = i; break
             i = j
         else: i += 1
-    if inizio is None: return pcm
+    if inizio is None: return _scoppio_breve(pcm, x, rms, fr)
     # silenzio lungo nella zona: tutto quello che segue è lo scoppio
     ultimo = len(rms) - fin + inizio
     # se dopo il primo silenzio della zona c'è parlato vero (non una coda corta), non taglio
     resto = rms[ultimo:]
     if np.mean(resto > 0.02) > 0.5 and len(resto) > int(0.45 / 0.02): return pcm
     fine = max(int(0.1 * SR), ultimo * fr)
-    return pcm[: fine * 2]
+    return _scoppio_breve(pcm[: fine * 2], x[: fine], rms[: fine // fr], fr)
+
+def _scoppio_breve(pcm, x, rms, fr):
+    """Il fruscio "da televisore senza canale" (puntata 6, dopo «Si parte!»): dopo una pausa breve (almeno 60 ms, troppo corta
+    per il taglio sopra) arriva uno scoppio di rumore a banda larga di 100-300 ms, poi più niente. Si riconosce dallo spettro
+    piatto (la voce ha l'energia concentrata in poche frequenze): si taglia dalla pausa in poi."""
+    fin = min(len(rms), int(0.6 / 0.02))
+    zona = rms[-fin:]
+    i = len(zona) - 1
+    while i >= 0 and zona[i] < 0.02: i -= 1          # coda già silenziosa
+    if i < 0: return pcm
+    j = i
+    while j >= 0 and zona[j] >= 0.01: j -= 1          # lo scoppio, all'indietro fino alla pausa
+    durata = i - j
+    if j < 3 or not (2 <= durata <= 15): return pcm   # 40-300 ms, e prima ci deve essere qualcosa
+    k = j
+    while k >= 0 and zona[k] < 0.01: k -= 1
+    if j - k < 3: return pcm                          # pausa prima dello scoppio di almeno 60 ms
+    a = (len(rms) - fin + j + 1) * fr; b = (len(rms) - fin + i + 1) * fr
+    w = x[a:b]
+    S = np.abs(np.fft.rfft(w * np.hanning(len(w)))) + 1e-9
+    piatto = np.exp(np.mean(np.log(S))) / np.mean(S)
+    if piatto < 0.4: return pcm                       # è voce, non rumore
+    taglio = (len(rms) - fin + k + 2) * fr            # 20 ms dopo la fine della voce
+    return pcm[: max(int(0.1 * SR), taglio) * 2]
 
 def rifinisci(pcm: bytes) -> bytes:
     """Transizione morbida tra una voce e l'altra: via il rumore in testa, dissolvenze brevi, un respiro di silenzio in coda."""

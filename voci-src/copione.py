@@ -52,6 +52,30 @@ def numeri(T, n, rng):
     for r in T: r.pop("_dr", None)
     rng.shuffle(fatti)
     return [b for f_ in fatti[:2] for b in f_]
+# --- risultati della giornata (Gianluca, puntata 6): si dicono i risultati delle partite, «Mariana Coneja ha vinto quattro a zero».
+# I Fantapunti solo in due casi: una vittoria con tanti Fantapunti di scarto, o una vittoria decisa da pochissimi Fantapunti.
+SCARTO_GRANDE = 15      # da qui in su si dice lo scarto in Fantapunti
+SCARTO_PICCOLO = 2      # vittoria di un gol decisa da al massimo 2 Fantapunti
+def risultati(partite, n, add, pick, rng):
+    def num(g): return NUM[g] if g < len(NUM) else str(g)
+    gioc = [m for m in partite if m[4] and m[4] != "-"]
+    if not gioc: return
+    add("B", pick([f"Partiamo dai risultati della {ORD.get(n, str(n) + 'ª')} giornata!", "Ecco i risultati, partita per partita!", "Andiamo con i risultati!"]), "urlo")
+    for i, (x, px, py, y, r) in enumerate(gioc):
+        gx, gy = (int(z) for z in r.split("-"))
+        voce = "G" if i % 2 == 0 else "B"
+        if gx == gy:
+            add(voce, f"{x} e {y} pareggiano {num(gx)} a {num(gy)}.")
+            continue
+        w, l, gw, gl, pw, pl = (x, y, gx, gy, px, py) if gx > gy else (y, x, gy, gx, py, px)
+        scarto = round(abs(pw - pl), 1)
+        if scarto >= SCARTO_GRANDE:
+            add(voce, f"{w} ha vinto {num(gw)} a {num(gl)} contro {l}, con {f(scarto)} Fantapunti di scarto! Una mazzata!", "urlo")
+            add("G" if voce == "B" else "B", pick(["Ahia!", "Questa ha fatto male anche a noi!", "Altro che mazzata: una cassa di birra in testa!"]), "urlo")
+        elif gw - gl == 1 and scarto <= SCARTO_PICCOLO:
+            add(voce, f"{w} ha vinto {num(gw)} a {num(gl)} contro {l}, e l'ha decisa per appena {f(scarto)} Fantapunt{'o' if scarto == 1 else 'i'}!", "stupore")
+        else:
+            add(voce, f"{w} ha vinto {num(gw)} a {num(gl)} contro {l}{'!' if gw - gl >= 3 else '.'}", "urlo" if gw - gl >= 3 else None)
 def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
     cronache_attive = D.get("cronache_classifica_attive") is True
     zona = D.get("zona_classifica") if cronache_attive else None
@@ -66,29 +90,33 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
     L = []
     def add(k, t, st=None): L.append((k, " ".join(t.split()), st))
     # --- apertura alla Caressa e Bergomi: la frase passa da una voce all'altra
-    add("B", f"Buongiorno, buonasera e buonanotte a tutti, siete su Radio Girrr, la radio ufficiale della Lega O Fant A Girrr! Oggi siamo qui con {b1}", "urlo")
-    add("G", f"{'E' if cronache_attive else 'e'} {g1}! Si parte!", "urlo")
+    # Beppe si presenta e passa la parola: il nome a metà frase è quello del compagno, non il suo (Gianluca, puntata 6)
+    add("B", f"Buongiorno, buonasera e buonanotte a tutti, siete su Radio Girrr, la radio ufficiale della Lega O Fant A Girrr! Io sono {b1}, e oggi con me c'è", "urlo")
+    add("G", f"{g1}! Si parte!", "urlo")
     add("B", f"Giornata numero {n}! {g0}, hai già guardato i punteggi?")
     add("G", pick([("Guardati e riguardati. Una giornata da ricordare." if cronache_attive else "Guardati, riguardati e ho pure fatto una scommessa con me stesso. Ho perso."), "Sì, al barbecue con gli amici: più di un arrosto bruciato, ma i punteggi li ho letti tutti!", "Certo, qui in studio, appena usciti. Che serata!", "Sul divano, con una pizza in mano: giornata perfetta.", "Altro che guardati: li ho imparati a memoria!", "Sì, in terrazza con un bel caffè. Tutto liscio, sono pronto!", "Con la famiglia a pranzo: nessuno ha parlato d'altro."]))
-    # --- punteggi estremi: a volte si esalta, a volte si prende in giro
-    tono = pick(["esalta", "sfotte"])
     mv, fl, mz = a["mvp"], a["flop"], a["maz"]
-    if tono == "esalta":
-        add("B", f"Il re della giornata è {mv[0]}! {f(mv[1])} {unita_punteggio}! Che prestazione!", "urlo")
-        add("G", f"{f(mv[1])} {unita_punteggio}! {curva(mv[0])}")
+    if D.get("partite"):
+        risultati(D["partite"], n, add, pick, rng)
     else:
-        add("B", f"Il re della giornata è {mv[0]}, con {f(mv[1])} {unita_punteggio}.")
-        add("G", f"Bravi, eh. Però il vero esame è la prossima settimana. {curva(mv[0])}", "sarcasmo")
-    if rng.random() < 0.6:
-        add("B", f"Dall'altra parte, il flop: {fl[0]} si ferma a {f(fl[1])} {unita_punteggio}.")
-        add("G", pick([f"Coraggio, {fl[0]}! Si cade, ci si rialza!", f"{f(fl[1])}. Non infierisco. {curva(fl[0])}", "Qui ci vuole un abbraccio. Sottovoce, eh."]), "sus" if rng.random() < 0.4 else None)
-        r_ = rng.random()
-        if r_ < 0.4: add("B", pick(RIDE), "ride")
-        elif r_ < 0.7: add("G", pick(SOSP), "sospiro")
-    if mz[2] >= 8:
-        add("B", f"E la sconfitta più pesante è quella di {mz[0]}, battuta da {mz[3]} con {f(mz[2])} {unita_punteggio} di scarto! Una mazzata!")
-        if rng.random() < 0.6: add("G", pick(["Ahia!", "Questa ha fatto male anche a noi!", "Altro che mazzata: una cassa di birra in testa!"]), "urlo")
-        if rng.random() < 0.5: add("B", pick(STUP), "stupore")
+        # --- punteggi estremi (solo senza i risultati partita per partita, nei dati vecchi): a volte si esalta, a volte si prende in giro
+        tono = pick(["esalta", "sfotte"])
+        if tono == "esalta":
+            add("B", f"Il re della giornata è {mv[0]}! {f(mv[1])} {unita_punteggio}! Che prestazione!", "urlo")
+            add("G", f"{f(mv[1])} {unita_punteggio}! {curva(mv[0])}")
+        else:
+            add("B", f"Il re della giornata è {mv[0]}, con {f(mv[1])} {unita_punteggio}.")
+            add("G", f"Bravi, eh. Però il vero esame è la prossima settimana. {curva(mv[0])}", "sarcasmo")
+        if rng.random() < 0.6:
+            add("B", f"Dall'altra parte, il flop: {fl[0]} si ferma a {f(fl[1])} {unita_punteggio}.")
+            add("G", pick([f"Coraggio, {fl[0]}! Si cade, ci si rialza!", f"{f(fl[1])}. Non infierisco. {curva(fl[0])}", "Qui ci vuole un abbraccio. Sottovoce, eh."]), "sus" if rng.random() < 0.4 else None)
+            r_ = rng.random()
+            if r_ < 0.4: add("B", pick(RIDE), "ride")
+            elif r_ < 0.7: add("G", pick(SOSP), "sospiro")
+        if mz[2] >= 8:
+            add("B", f"E la sconfitta più pesante è quella di {mz[0]}, battuta da {mz[3]} con {f(mz[2])} {unita_punteggio} di scarto! Una mazzata!")
+            if rng.random() < 0.6: add("G", pick(["Ahia!", "Questa ha fatto male anche a noi!", "Altro che mazzata: una cassa di birra in testa!"]), "urlo")
+            if rng.random() < 0.5: add("B", pick(STUP), "stupore")
     if cronache_attive:
         # --- classifica: solo serie rilevanti, non la stessa notizia ogni settimana
         t1, t2, t3 = T[0], T[1], T[2]
@@ -157,7 +185,12 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
         for x, y in (conf.get("partite") or []): avv[x] = y; avv[y] = x
         info = []
         prom = {}
-        pare = set()   # squadre la cui promessa si è chiusa in pareggio (esito "p" dal database)
+        pare = set()   # squadre che hanno pareggiato (esito "p" della promessa dal database, o il risultato della partita)
+        esito = {}
+        for x, _, _, y, r_ in D.get("partite") or []:
+            if r_ and r_ != "-":
+                gx, gy = (int(z) for z in r_.split("-"))
+                esito[x] = "v" if gx > gy else "p" if gx == gy else "s"; esito[y] = "v" if gy > gx else "p" if gx == gy else "s"
         for t, ans in cf.items():
             if isinstance(ans, dict) and ans.get("esito") == "p": pare.add(t)
             # formato nuovo: {"toni": [...], "promessa": "frase", "pesa": 1|2}; formato vecchio: solo la lista dei toni
@@ -165,11 +198,15 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
             if isinstance(ans, dict) and ans.get("promessa"): prom[t] = ans
             if t not in pt or t not in avv or avv[t] not in pt: continue
             tono = min(2, round(sum(toni) / len(toni))); vinta = pt[t] > pt[avv[t]]
+            if t in esito: vinta = esito[t] == "v"   # conta il risultato della partita, non i Fantapunti
+            if esito.get(t) == "p": pare.add(t)
             info.append((t, tono, vinta, avv[t]))
         TONO = ["si è presentato come la squadra da battere", "è stato molto umile", "ha lanciato la sfida a tutti"]
         VERO = {(0, True): "{t} aveva parlato da campione e ha vinto. Parole mantenute!", (0, False): "{t} aveva parole forti per niente: si è fermato contro {o}.",
                 (1, True): "{t} è stato umile, ma in campo ha dimostrato che la sua squadra può fare molto!", (1, False): "{t} è stato umile e il campo gli ha dato ragione: ha perso contro {o}.",
                 (2, True): "{t} ha provocato tutti e poi ha vinto: chi di sfida ferisce...", (2, False): "{t} aveva dichiarato guerra e ha perso la battaglia contro {o}."}
+        PARI = ["{t} aveva parlato da campione, ma contro {o} è finita in pareggio: parole a metà.", "{t} è stato umile e contro {o} ha strappato un pareggio. Un punto che fa morale!",
+                "{t} aveva lanciato la sfida, ma contro {o} è finita pari: tanto rumore per un punto."]
         if info:
             ordine = sorted(info, key=lambda z: (z[0] not in prom, z[1] == 1 and not z[2], not ((z[1] == 0 and not z[2]) or (z[1] == 1 and z[2])), z[0]))
             scelte = ordine[:3]
@@ -184,6 +221,8 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
                           else f"{t} aveva promesso: {pz}. Parola mantenuta, e la dirigenza apprezza!" if v
                           else f"{t} aveva promesso: {pz}. E ha perso contro {o}: parola tradita, e il presidente ha detto che potevano evitare di essere così sfacciati.")
                     add("G" if i == 0 else "B", fr, None if (v or t in pare) else "sarcasmo")
+                elif t in pare:
+                    add("G" if i == 0 else "B", PARI[tn].format(t=t, o=o))
                 else:
                     add("G" if i == 0 else "B", VERO[(tn, v)].format(t=t, o=o), "sarcasmo" if (tn == 0 and not v) else None)
     # --- sfide per il derby lanciate in conferenza (stato: accettata / rifiutata / scaduta / attesa)
@@ -207,14 +246,20 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
     cup = D["cup"][-1] if D.get("cup") else None
     if cup:
         add("B", f"Passiamo alla Champions Cup, la coppa della nostra lega! Si è chiusa la giornata {cup['n']}!", "urlo")
-        for i, m in enumerate(sorted(cup["m"], key=lambda m: -abs(m[2]-m[3]))[:2]):
-            x, y = m[1], m[4]; ga, gb = (int(z) for z in m[5].split("-"))
-            if ga == gb: fr = f"{x} e {y} si dividono la posta: finisce {NUM[ga]} a {NUM[gb]}."
-            else:
-                w, l, gw, gl = (x, y, ga, gb) if ga > gb else (y, x, gb, ga)
-                fr = f"Vittoria di {w} contro {l}: {NUM[gw]} a {NUM[gl]}."
-            add("B" if i == 0 else "G", fr)
-            if l == "Grodah" if ga != gb else False: add("G", "Cade la campionessa in carica! L'anno scorso la Coppa Campioni era sua!", "urlo")
+        # tutte le partite, girone per girone (Gianluca, puntata 6: prima ne diceva solo due)
+        gironi = {}
+        for m in cup["m"]: gironi.setdefault(m[0], []).append(m)
+        for i, gr in enumerate(sorted(gironi)):
+            fr = []
+            for m in gironi[gr]:
+                x, y = m[1], m[4]; ga, gb = (int(z) for z in m[5].split("-"))
+                if ga == gb: fr.append(f"{x} e {y} pareggiano {NUM[ga]} a {NUM[gb]}")
+                else:
+                    w, l, gw, gl = (x, y, ga, gb) if ga > gb else (y, x, gb, ga)
+                    fr.append(f"{w} batte {l} {NUM[gw]} a {NUM[gl]}")
+            add("B" if i % 2 == 0 else "G", f"{'Nel girone' if i == 0 else 'Nell' + chr(39) + 'altro girone, il girone'} {gr}: " + "; ".join(fr) + ".")
+            if any(m[1] == "Grodah" and int(m[5].split('-')[0]) < int(m[5].split('-')[1]) or m[4] == "Grodah" and int(m[5].split('-')[1]) < int(m[5].split('-')[0]) for m in gironi[gr]):
+                add("G" if i % 2 == 0 else "B", "Cade la campionessa in carica! L'anno scorso la Coppa Campioni era sua!", "urlo")
     # --- derby
     # derby: prima i voti degli amici di Gianluca (regole.json, "derby_amici"); senza voti si calcola dalla storia della lega (derby.py)
     import derby as _d

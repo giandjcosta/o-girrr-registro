@@ -6,6 +6,7 @@ Prova testi: aggiungere --cronache-classifica --uscita DIRECTORY_SEPARATA.
 Senza il primo flag il comportamento della Radio esistente resta invariato.
   SITO    cartella del ramo gh-pages del sito (data.json, girrr/dati/lab-dati.json, girrr/voci/archivio.json)
   EVENTI  calcoli/eventi.json del main del sito (conferenze, promesse, sfide e Derby dal database)
+  --rifai rifà la puntata di una giornata già in archivio (opzione «rifai» del workflow)
   --segna dopo la puntata riuscita: segna i Derby annunciati (girrr/voci/annunciate.json del sito)
 Scrive voci-src/dati.json, conferenze.json e (se serve) svuota curva.json. Stampa  giornata=N  per GitHub Actions
 (giornata= vuoto se non c'è niente da fare: giornata non chiusa, o puntata già in archivio).
@@ -33,6 +34,7 @@ def main(argv=None):
     p.add_argument('sito', type=Path)
     p.add_argument('eventi', type=Path)
     p.add_argument('--segna', action='store_true')
+    p.add_argument('--rifai', action='store_true', help="rifà la puntata anche se la giornata è già in archivio (la nuova sostituisce la vecchia)")
     p.add_argument('--cronache-classifica', action='store_true', help='Attiva esplicitamente le nuove cronache')
     p.add_argument('--uscita', type=Path, help='Directory separata per la preparazione di prova')
     args = p.parse_args(argv)
@@ -51,7 +53,7 @@ def main(argv=None):
         ANN.write_text(json.dumps(sorted(k | set(carica(ANN, []))), indent=1), encoding="utf-8")
         print(f"giornata={n}"); return
     arc = carica(SITO / "girrr/voci/archivio.json", [])
-    if any(re.search(rf"Giornata {n}\b", (e.get("tag") or "") + " " + (e.get("titolo") or "")) for e in arc):
+    if not args.rifai and any(re.search(rf"Giornata {n}\b", (e.get("tag") or "") + " " + (e.get("titolo") or "")) for e in arc):
         print("giornata="); return          # già fatta
     ev = carica(EV, [])
     dati = carica(SITO / "girrr/dati/lab-dati.json")
@@ -62,6 +64,8 @@ def main(argv=None):
     if cp_ and not all(m[5] and m[5] != "-" for m in cp_[-1]["m"]):
         print("giornata="); return          # la Coppa di questa giornata non è ancora chiusa: aspetto
     # Champions Cup: se ne parla solo se si è giocato nella stessa giornata di Serie A del campionato
+    # i risultati della giornata, partita per partita: [casa, punteggio casa, punteggio trasferta, trasferta, "gol-gol"]
+    dati["partite"] = r["m"]
     dati["cup"] = [c for c in d["cal"].get("cup", []) if c.get("sa") == sa and c.get("m") and all(m[5] and m[5] != "-" for m in c["m"])][-1:]
     if args.cronache_classifica:
         sys.path.insert(0, str(QUI.parent / 'calcoli'))
