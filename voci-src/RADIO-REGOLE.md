@@ -9,7 +9,7 @@ Limite Gemini: 100 richieste al giorno PER MODELLO (una puntata ne usa circa 32)
 
 Testo e toni:
 - Niente parentesi o etichette tra [ ]: vengono lette ad alta voce. Il tono deve venire dal senso della frase e dalla scrittura (maiuscole e "!!!" per l'urlo da gol, "Ahahahahah" per la risata, "Ma... davvero?! No!" per lo stupore, puntini per il sospiro).
-- "Girrr" si pronuncia "Girr" (due r), altrimenti si mangiano la r.
+- "Girrr" si scrive per la voce "Gìrr": due r, altrimenti si mangiano la r, e l'accento sulla i, altrimenti gridando la i sparisce e diventa «Grrr» (puntata 6 del 3 novembre).
 - Parole che si possono leggere in due modi vanno con l'accento giusto (tabella ACC in puntata.py): Rovesciàta, guardàti, ancòra, sùbito, ecc.
 - Tra una voce e l'altra niente rumori: ogni battuta è rifinita (rifinisci in gtrim.py) e le code di rumore di Gemini sono tagliate (taglia_coda).
 
