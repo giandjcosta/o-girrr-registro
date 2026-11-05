@@ -1,5 +1,5 @@
 {
- "aggiornato": "2026-11-05T06:43:18Z",
+ "aggiornato": "2026-11-05T18:43:49Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
@@ -15,12 +15,11 @@
   {
    "nome": "Aggiornamento del venerdì (partite giocate e formazioni)",
    "quando": "Una volta: 5 novembre alle 17:12",
-   "stato": "attiva",
+   "stato": "conclusa",
    "ultimo": {
-    "quando": "2026-10-30T16:20:19Z",
+    "quando": "2026-11-05T16:13:11Z",
     "esito": "riuscito"
-   },
-   "prossimo": "2026-11-05T16:12:00Z"
+   }
   },
   {
    "nome": "Aggiornamento del martedì (partite giocate e formazioni)",
