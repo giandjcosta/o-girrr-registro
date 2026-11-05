@@ -1,5 +1,5 @@
 {
- "aggiornato": "2026-11-04T18:42:34Z",
+ "aggiornato": "2026-11-05T06:43:18Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
@@ -69,9 +69,9 @@
    "nome": "Controllo automatismi del mattino",
    "quando": "Ogni giorno alle 07:33",
    "stato": "attiva",
-   "prossimo": "2026-11-05T06:33:00Z",
+   "prossimo": "2026-11-06T06:33:00Z",
    "ultimo": {
-    "quando": "2026-11-04T06:33:28Z",
+    "quando": "2026-11-05T06:33:58Z",
     "esito": "riuscito"
    },
    "nota": "Avvisa solo se qualcosa è fermo da più di 2 giorni."
