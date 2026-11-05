@@ -1,0 +1,35 @@
+name: ChatGPT Tabellone e Annuario QA
+on:
+  push:
+    branches: [chatgpt/tabellone-annuario]
+    paths:
+      - 'lab/index.html'
+      - 'lab/prova-tabellone-*.html'
+      - 'anteprima/**'
+      - 'prove/collaudo_tabellone_annuario_browser.py'
+      - '.github/workflows/chatgpt-tabellone-annuario-qa.yml'
+  workflow_dispatch:
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rigenera Anteprima da Lab
+        run: python3 anteprima/build.py
+      - name: Verifica Anteprima versionata
+        run: git diff --exit-code -- anteprima/index.html anteprima/attuale.html
+      - name: Collaudo Carriera e Anteprima
+        run: python3 prove/collaudo_anteprima_52.py
+      - name: Collaudo Moviola
+        run: python3 prove/prova_moviola.py
+      - name: Installa browser di prova
+        run: |
+          python3 -m pip install playwright
+          python3 -m playwright install chromium
+      - name: Avvia server locale
+        run: |
+          python3 -m http.server 8765 >/tmp/o-girrr-qa.log 2>&1 &
+          sleep 2
+      - name: Prova browser Chromium 320 e 1280
+        run: python3 prove/collaudo_tabellone_annuario_browser.py
