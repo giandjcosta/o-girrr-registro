@@ -7,7 +7,10 @@ self.GIRRR_SPECCHIO = (function () {
   var sito = qui + 'sito/';
   var perc = new URL(sito).pathname;                              /* /o-girrr-registro/lab/offline/sito/ */
   var origine = new URL('/o-fant-a-girrr/', self.location.href).href;
-  var locali = { 'offline.js': new URL('../../rilascio/offline/offline.js', self.location.href).href };
+  var locali = {
+    'offline.js': new URL('../../rilascio/offline/offline.js', self.location.href).href,
+    'manifest.webmanifest': new URL('../../rilascio/scorciatoie/manifest.webmanifest', self.location.href).href /* con le scorciatoie */
+  };
   var percEsc = perc.replace(/\//g, '\\/');
   /* Gli indirizzi del sito vero diventano quelli dello specchio (anche nella regola che riconosce il sito) */
   var dominio = 'https://giandjcosta.github.io/', qua = self.location.origin + '/';

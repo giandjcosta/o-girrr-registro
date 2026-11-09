@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 9 novembre 2026)
 
+## 9 novembre (sera, 2) — Claude: «vai» di Gianluca per la copia offline nel Lab, avviso che si chiude, scorciatoie dell'icona
+
+- **«Vai» di Gianluca** per la copia offline («basta che si possa togliere la notifica»): ramo unito a `main` del registro, prova visibile in `lab/offline/`. Il sito vero non è ancora toccato: il rilascio con `rilascio/offline/applica.py` aspetta la prova di Gianluca sul telefono.
+- **Avviso chiudibile:** con la ✕ gli avvisi della copia offline non tornano più finché la scheda o l'app resta aperta (`sessionStorage` `girrr_off_zitto`), nemmeno cambiando pagina o perdendo di nuovo la rete. «Di nuovo online» sparisce da solo dopo 8 secondi, «Copia offline pronta» dopo 6.
+- **Scorciatoie dell'icona** (richiesta di Gianluca): `rilascio/scorciatoie/manifest.webmanifest` = manifest del sito + `shortcuts` Tabellone, Curva, Giornale, Totogirrr (pagine della Lega, come l'icona oggi). Android e PC sì, iPhone no. Nella prova lo specchio serve questo manifest; `applica.py` lo copia al rilascio.
+- **Idee non fatte ma consultabili:** `proposte/idee-da-fare.md` (notifiche push spiegate, Radio per il treno e calendario messi «per ora no», più nuove idee). Da aggiornare quando un'idea si fa.
+- **Prove (Chromium, 320 px):** ✕ → l'avviso resta chiuso su un'altra pagina offline e al ritorno della rete; manifest dello specchio con le 4 scorciatoie e indirizzi giusti; nessun errore JavaScript. Non provati: Android vero (scorciatoie), Safari/iPhone.
+
 ## 9 novembre (sera) — Claude: copia offline di O Girrr (prova nel Lab, sito non toccato)
 
 Richiesta di Gianluca (in treno la rete non regge): una versione consultabile senza rete, aggiornata ogni mezz'ora o un'ora.

@@ -7,7 +7,8 @@ Uso:
 
 Fa:
   1. copia sw.js e offline.js nella radice del sito (accanto a index.html e data.json);
-  2. aggiunge <script src="…/offline.js" defer></script> prima di </head> in ogni pagina di Lega e Stadio,
+  2. mette il manifest con le scorciatoie dell'icona (rilascio/scorciatoie/manifest.webmanifest);
+  3. aggiunge <script src="…/offline.js" defer></script> prima di </head> in ogni pagina di Lega e Stadio,
      nello Spogliatoio (index.html) e in riepilogo.html, con il percorso relativo giusto.
 Si può rilanciare: le pagine che hanno già offline.js non si toccano.
 Dopo il rilascio copiare le pagine cambiate anche in ufficiale/src/sito/ (Lega in girrr/, Stadio in stadio/girrr/).
@@ -32,6 +33,11 @@ for f in ("sw.js", "offline.js"):
         cambi.append(("copia", GH / f))
         if VAI:
             shutil.copyfile(QUI / f, GH / f)
+MAN = QUI.parent / "scorciatoie" / "manifest.webmanifest"
+if (GH / "manifest.webmanifest").read_bytes() != MAN.read_bytes():
+    cambi.append(("copia", GH / "manifest.webmanifest"))
+    if VAI:
+        shutil.copyfile(MAN, GH / "manifest.webmanifest")
 for p in pagine:
     if not p.exists():
         continue

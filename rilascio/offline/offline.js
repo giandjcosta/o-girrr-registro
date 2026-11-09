@@ -57,7 +57,11 @@
     document.head.appendChild(s);
   }
 
+  /* Chiuso con la ✕: gli avvisi offline/online non tornano più finché l'app resta aperta (scheda o app chiusa = si riparte) */
+  function zitto() { try { return sessionStorage.getItem('girrr_off_zitto') === '1'; } catch (e) { return false; } }
+  function chiudi() { try { sessionStorage.setItem('girrr_off_zitto', '1'); } catch (e) {} nascondi(); }
   function mostra(tipo, testo, bottone) {
+    if (zitto()) return;
     if (!document.body) { document.addEventListener('DOMContentLoaded', function () { mostra(tipo, testo, bottone); }); return; }
     stile();
     if (!box) {
@@ -71,10 +75,11 @@
       '<button type="button" class="x" aria-label="Chiudi">✕</button>';
     var b = box.querySelectorAll('button');
     if (bottone) b[0].onclick = function () { location.reload(); };
-    b[b.length - 1].onclick = nascondi;
+    b[b.length - 1].onclick = tipo === 'pronta' ? nascondi : chiudi;
     requestAnimationFrame(function () { requestAnimationFrame(function () { box && box.classList.add('su'); }); });
     clearTimeout(mostra.t);
     if (tipo === 'pronta') mostra.t = setTimeout(nascondi, 6000);
+    if (tipo === 'online') mostra.t = setTimeout(nascondi, 8000);
   }
   function posiziona() { if (!box) return; var su = sopraLaBarra(); box.style.bottom = su ? su + 'px' : ''; }
   window.addEventListener('resize', posiziona);
