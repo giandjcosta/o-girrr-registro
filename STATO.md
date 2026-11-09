@@ -1,5 +1,11 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 9 novembre 2026)
 
+## 9 novembre (notte, 9) — Claude: pillola «V5.6 ›» nella Home sopra gli sponsor (prova nel Lab)
+
+- **Decisione di Gianluca:** la pillola della versione va nella **Home**, in fondo a destra, subito sopra gli sponsor («Gentilmente offerto da»), così scorrendo in basso si vede che versione hai. Non è più in fondo alle Notifiche. `rilascio/versioni/versioni.js` (stessa pillola con bordo e freccia; il tocco apre Versioni); testi aggiornati in `versioni.json`, `lab/novita-5-6.html`, `lab/offline/`.
+- **Prove** (`prove/prova_pillola_home.js`, 16 schermi × Lega e Stadio): la pillola c'è, è subito prima degli sponsor, apre Versioni, non c'è più nelle Notifiche, nessuno scorrimento laterale. Il controllo «a destra» della prova misurava anche il margine della pagina: dalle foto è allineata al bordo destro dei riquadri. L'errore «Transition was aborted… ViewTransition» compare con qualsiasi link della Home (anche quelli già online): viene dalle transizioni tra pagine del sito in Chromium senza schermo, non da questa modifica.
+- **Sito non toccato:** si pubblica con la 5.6.1 insieme al cambio fluido delle Versioni e alle notifiche lette rimpicciolite, dopo il «vai».
+
 ## 9 novembre (notte, 8) — Claude: Messaggio/Changelog fluido, notifiche lette rimpicciolite (prova nel Lab)
 
 - **Versioni:** il cambio Messaggio ⇄ Changelog non ridisegna più tutta la lista. Le testate restano ferme; nelle schede aperte il testo sfuma (0,2 s), cambia e la scheda passa piano alla nuova altezza (0,4 s); le chiuse cambiano senza animazione. Con «riduci movimento» niente animazioni. File: `rilascio/versioni/versioni.js`.
