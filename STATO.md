@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 9 novembre 2026)
 
+## 9 novembre (notte, 11) — Claude: **ONLINE** versione 5.6.1 («Vai» di Gianluca)
+
+- **`gh-pages` `4694f35`** con `python3 rilascio/rilascio561.py COPIA --vai`: `versioni.js` (Messaggio/Changelog fluido, pillola «V5.6.1 ›» nella Home sopra gli sponsor), `versioni.json` con la 5.6.1, `notifiche-lette.js` nella radice e nelle due Notifiche.
+- **Controllato sul sito vero** (Chromium attraverso la rete): pillola sopra gli sponsor su 16 schermi × Lega e Stadio, apre Versioni, non è più nelle Notifiche; cambio fluido (11-22 altezze intermedie) e gruppo «Già lette · 6» con la pagina più corta su telefoni e tablet (iPhone 15 Pro da 1313 a 923 px); su PC 1920, monitor 2560 e TV la pagina sta già tutta nello schermo. Nessun errore nuovo. Non provati: Safari vero.
+- **Sorgenti** `ufficiale/src/sito/` aggiornate (versioni.js, versioni.json, notifiche-lette.js, le due notifiche.html). `AGENTS.md` del registro e del sito: sul sito c'è la 5.6.1.
+- **Per tornare indietro:** `git revert 4694f35` su `gh-pages` (torna la 5.6).
+- **In sospeso:** versione inglese (stima data a Gianluca, servono le sue risposte: per chi è, solo interfaccia o anche Giornale, Radio e Curva).
+
 ## 9 novembre (notte, 10) — Claude: 5.6.1 pronta (Gianluca: «son 5.6.1 ok»), aspetta il «vai» per il sito
 
 - **5.6.1 (aggiornamento minore)** in `versioni.json` (con `aggiungi.py`): «Notifiche più ordinate» — notifiche lette rimpicciolite nel gruppo «Già lette», passaggio fluido Messaggio/Changelog, pillola della versione nella Home sopra gli sponsor. Messaggio per il gruppo scritto.
