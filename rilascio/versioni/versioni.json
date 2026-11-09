@@ -397,7 +397,7 @@
       "nota": "Numero 2.0 e data 9 ottobre indicati da te (non sono scritti nel messaggio). Prima del cambio di nome la testata era «Il Giornale del Girrr»; qui è riportata la versione finale con «O»."
     },
     {
-      "v": "–",
+      "v": "1.5",
       "data": "2026-10-08",
       "tipo": "medio",
       "titolo": "Mercato Scambi",
@@ -420,8 +420,7 @@
           ]
         }
       ],
-      "nota": "Numero di versione non conservato. La scheda Statistiche era nata nello stesso giro ma l'hai voluta solo per te e l'ho tolta dal messaggio e dal changelog. Il testo 'Completo e simpatico' è ricomposto da due frammenti della stessa bozza: le etichette «Equilibrato»/«Per te» potrebbero essere state ritoccate in seguito. Data dai commit del sito: sera dell'8 ottobre (22:23-22:53 ora italiana).",
-      "numero": "Dato non conservato"
+      "nota": "Numero 1.5 deciso da Gianluca il 9 novembre 2026 (uscito dopo lo Spogliatoio, prima del Giornale). Data dai commit del sito: sera dell'8 ottobre (22:23-22:53 ora italiana). La scheda Statistiche era nata nello stesso giro ma Gianluca l'ha voluta solo per sé."
     },
     {
       "v": "1.0",
