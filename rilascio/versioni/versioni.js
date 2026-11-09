@@ -12,12 +12,12 @@
   var ridotto = false; try { ridotto = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
 
   function E(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-  function grassetto(s) { return E(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>'); }
+  function grassetto(s) { return E(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/(^|[\s(])\*([^*\n]+?)\*(?=[\s).,!?]|$)/g, '$1<i>$2</i>'); }
   function data(iso) { var p = String(iso || '').split('-'); return p.length === 3 ? (+p[2]) + ' ' + MESI[+p[1] - 1] + ' ' + p[0] : ''; }
   function periodo(x) {
-    if (!x.fino) return data(x.data);
+    if (!x.fino) return (x.circa ? 'circa ' : '') + data(x.data);
     var a = x.data.split('-'), b = x.fino.split('-');
-    return a[1] === b[1] ? (+a[2]) + '-' + (+b[2]) + ' ' + MESI[+a[1] - 1] + ' ' + a[0] : data(x.data) + ' – ' + data(x.fino);
+    return (x.circa ? 'Tra il ' + (+a[2]) + ' e il ' : (+a[2]) + '-') + (+b[2]) + ' ' + MESI[+b[1] - 1] + ' ' + b[0];
   }
   function carica() { return fetch(ROOT + 'versioni.json', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
 
@@ -40,7 +40,7 @@
       '.vv-f{flex:none;width:22px;height:22px;transition:transform .35s ease;opacity:.8}.vv-v.aperta .vv-f{transform:rotate(180deg)}' +
       '.vv-c{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease}.vv-v.aperta .vv-c{grid-template-rows:1fr}' +
       '.vv-c>div{overflow:hidden}.vv-in{padding:0 16px 16px}' +
-      '.vv-msg{font-size:15px;line-height:1.55;font-weight:500;background:rgba(0,0,0,.18);border-radius:14px;padding:12px 14px}' +
+      '.vv-msg{white-space:pre-line;overflow-wrap:anywhere;font-size:15px;line-height:1.55;font-weight:500;background:rgba(0,0,0,.18);border-radius:14px;padding:12px 14px}' +
       '.vv-msg b{font-weight:900}' +
       '.vv-area{margin-top:12px}.vv-area:first-child{margin-top:0}.vv-area h4{margin:0 0 4px;font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:' + (stadio ? acc : 'var(--hi,#ffd166)') + '}' +
       '.vv-area h4{font-family:Inter,system-ui,sans-serif!important}.vv-area ul{margin:0;padding-left:18px}.vv-area li{font-size:14px;line-height:1.5;margin:3px 0}' +
@@ -71,7 +71,7 @@
         var ap = aperte[x.v] === undefined ? i === 0 : aperte[x.v];
         return '<section class="vv-v' + (x.tipo === 'storia' ? ' storia' : '') + (ap ? ' aperta' : '') + '" data-v="' + E(x.v) + '">' +
           '<button type="button" class="vv-h" aria-expanded="' + ap + '"><span class="vv-n">' + E(x.v) + '</span><span class="vv-t"><b>' + E(x.titolo || '') + '</b><small>' +
-          E(TIPO[x.tipo] || 'Aggiornamento') + ' · ' + E(periodo(x)) + '</small></span>' +
+          E(TIPO[x.tipo] || 'Aggiornamento') + ' · ' + E(periodo(x)).replace(/^c/, 'C').replace(/^(\d)/, '$1') + (x.numero ? ' · Numero: ' + E(x.numero) : '') + '</small></span>' +
           '<svg class="vv-f" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>' +
           '<div class="vv-c"><div><div class="vv-in">' + corpo(x) + '</div></div></div></section>';
       }).join('');
