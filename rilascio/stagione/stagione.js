@@ -1,7 +1,7 @@
 /* Carriera · La mia stagione (Claude, 9 novembre 2026, decisione di Gianluca: «La mia Stagione in Carriera»).
    Va nella radice del sito (/o-fant-a-girrr/stagione.js), incluso da girrr/app.html e stadio/girrr/app.html.
    La Carriera chiama window.GirrrStagione(squadra) per la scheda «Stagione» e mette quello che restituisce.
-   Schede da scorrere col dito: posizione, bilancio, strisce, miglior giornata, il titolare più prezioso,
+   Schede (telefono una sotto l'altra, tablet 2 colonne, PC 3): posizione, bilancio, strisce, miglior giornata, il titolare più prezioso,
    Borsino e Champions Cup. Solo dati veri (data.json, formazioni.json, borsino.json); dove mancano «Dato non conservato». */
 (function () {
   var io = document.currentScript, ROOT = new URL('./', io && io.src ? io.src : location.href).href;
@@ -104,12 +104,14 @@
     var s = document.createElement('style'); s.id = 'ms-css';
     s.textContent =
       '.ms-intro{color:var(--mute,#bfe3ff);font-size:13px;font-weight:600;margin:0 0 10px}' +
-      '.ms-scorri{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 10px;margin:0 -2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.ms-scorri::-webkit-scrollbar{display:none}' +
-      '.ms-c{flex:0 0 84%;max-width:360px;scroll-snap-align:start;min-height:230px;display:flex;flex-direction:column;padding:16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);' +
+      /* Telefono: una sotto l'altra (si scorre in basso). Tablet: 2 colonne. PC e TV: 3 colonne (Gianluca) */
+      '.ms-scorri{display:grid;grid-template-columns:1fr;gap:10px;margin:0 0 10px}' +
+      '@media (min-width:600px){.ms-scorri{grid-template-columns:repeat(2,minmax(0,1fr))}}' +
+      '@media (min-width:1000px){.ms-scorri{grid-template-columns:repeat(3,minmax(0,1fr))}}' +
+      '.ms-c{min-width:0;display:flex;flex-direction:column;padding:14px 16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);' +
       (stadio ? 'border-left:6px solid ' + ACC + ';border-radius:12px' : 'border-left:8px solid ' + ACC + ';border-radius:4px 14px 14px 4px') + '}' +
-      '@media (min-width:900px){.ms-scorri{flex-wrap:wrap;overflow:visible;scroll-snap-type:none}.ms-c{flex:1 1 280px;max-width:none}.ms-dito{display:none}}' +
       '.ms-k{font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:' + (stadio ? ACC : '#ffd166') + '}' +
-      '.ms-big{font-weight:900;font-size:44px;line-height:1.05;margin:10px 0 4px;color:#fbf6ec;overflow-wrap:anywhere' + (stadio ? ';font-family:Lobster,cursive;font-weight:400' : '') + '}' +
+      '.ms-big{font-weight:900;font-size:clamp(32px,9vw,44px);line-height:1.05;margin:10px 0 4px;color:#fbf6ec;overflow-wrap:anywhere' + (stadio ? ';font-family:Lobster,cursive;font-weight:400' : '') + '}' +
       '.ms-sub{font-weight:800;font-size:14px;color:#fbf6ec}.ms-txt{margin-top:auto;padding-top:10px;font-size:13px;line-height:1.45;color:var(--mute,#bfe3ff)}.ms-nota{font-size:11.5px;opacity:.75;margin-top:6px}' +
       '.ms-forma{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}.ms-forma i{font-style:normal;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:900;color:#fff;background:#6b7393}' +
       '.ms-forma i.V{background:#2fbf71}.ms-forma i.P{background:#e5484d}' +
@@ -130,7 +132,7 @@
     if (!D || !D.cal) return '<p class="ms-intro">La stagione non è raggiungibile in questo momento. Riprova tra poco.</p>';
     var S = schede(t);
     if (!S.length) return '<p class="ms-intro">La stagione comincia con la prima giornata giocata.</p>';
-    return '<p class="ms-intro">La stagione di ' + E(t) + ' finora.<span class="ms-dito"> Scorri col dito ›</span></p><div class="ms-scorri">' + S.map(function (s) {
+    return '<p class="ms-intro">La stagione di ' + E(t) + ' finora.</p><div class="ms-scorri">' + S.map(function (s) {
       return '<section class="ms-c"><div class="ms-k">' + E(s.k) + '</div><div class="ms-big">' + E(s.big) + '</div><div class="ms-sub">' + E(s.sub) + '</div>' +
         (s.graf ? grafico(s.graf) : '') + (s.forma ? '<div class="ms-forma">' + s.forma.map(function (f) { return '<i class="' + f + '">' + f + '</i>'; }).join('') + '</div>' : '') +
         (s.txt ? '<div class="ms-txt">' + E(s.txt) + (s.nota ? '<div class="ms-nota">' + E(s.nota) + '</div>' : '') + '</div>' : '') + '</section>';
