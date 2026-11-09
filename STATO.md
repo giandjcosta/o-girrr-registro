@@ -1,5 +1,17 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 9 novembre 2026)
 
+## 9 novembre (notte, 13) — Claude: **ONLINE** versione 5.6.2 («Sisi vai 5.6.2 con il The Blues Brothers»)
+
+- **`gh-pages` `414a959`**: Condividi della Curva con l'immagine del post (`rilascio/curva562/condividi_img.py`) e nome **«The Blues Brothers»** (`rilascio/nomi/applica_nomi.py COPIA --vai`). Per tornare indietro: `git revert 414a959` su `gh-pages`.
+- **Nome della squadra di Leanzino e Mario:** la chiave interna resta «The Blue brothers» (decisione di Gianluca: «non credo ce ne sia necessità»): codici di accesso, `data.json`, Supabase, calcoli invariati, nessuno deve rientrare nello Spogliatoio. Cambia ciò che si legge:
+  - `nomi.js` nella radice, caricato subito dopo `<head>` in 33 pagine (Lega, Stadio, Spogliatoio, riepilogo): testi, attributi visibili, testo disegnato nei canvas (Condividi, Curva) e `navigator.share`. I valori dei menu (`<option value>`) restano la chiave. Per citare apposta il nome vecchio si mette uno spazio invisibile (U+200B) tra «Blue» e «brothers».
+  - `scripts/pdf_settimana.py`: `esc()` passa da `nome_mostrato()`, quindi PDF del Giornale e immagini del Tabellone generate da adesso.
+  - `scripts/leghe_importa.py`: «The Blues Brothers» (nome già cambiato su Leghe da Christian) torna alla chiave interna (`DA_LEGHE`).
+  - Edge Function `push-invia` versione 2: titolo e testo delle notifiche con il nome nuovo (`rilascio/push/push-invia/index.ts`).
+- **Restano col nome vecchio:** PNG e PDF già pubblicati in `riepiloghi/` (scritti dai workflow, non si toccano a mano) e la voce della Radio già registrata.
+- **Curva:** post di Ciro Trattativa (id 47, lo scoop) e di Girrr Sport (id 48, dieci minuti dopo, con il comunicato della Lega tra «»). I post della Curva hanno al massimo 280 caratteri.
+- **`versioni.json`:** 5.6.2 «The Blues Brothers e Condividi dalla Curva» (aggiornamento minore). Sorgenti `ufficiale/src/sito/` aggiornate (pagine con `nomi.js`, le due curva.html, nomi.js, versioni.json).
+
 ## 9 novembre (notte, 12) — Claude: Curva, Condividi con l'immagine dei risultati (prova, proposta 5.6.2)
 
 - **Problema (Gianluca, foto da WhatsApp):** il pulsante Condividi della Curva creava l'immagine con il solo testo del post: i post «Fine giornata» di Lega e Champions Cup uscivano senza il Tabellone dei risultati. Causa: `condividi()` in `curva.html` usava solo le foto caricate dagli utenti (`IM[p.id]`), mentre i risultati mostrano `riepiloghi/tabellone-lega-NN.png` / `tabellone-coppa-NN.png` e i personaggi immagini disegnate al volo.
