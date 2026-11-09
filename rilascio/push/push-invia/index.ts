@@ -129,9 +129,13 @@ async function chiavi() {
   webpush.setVapidDetails(SITO, c.pub, c.priv);
   return c;
 }
+// Nomi mostrati (Claude, 9 novembre 2026, 5.6.2): la chiave resta «The Blue brothers», nelle notifiche si legge il nome ufficiale. Stessa tabella di nomi.js.
+const NOMI: [string, string][] = [["Blue brothers", "Blues Brothers"], ["Blue Brothers", "Blues Brothers"], ["BLUE BROTHERS", "BLUES BROTHERS"], ["blue brothers", "blues brothers"]];
+const nomeMostrato = (s: string) => NOMI.reduce((x, [a, b]) => x.split(a).join(b), String(s || ""));
 // deno-lint-ignore no-explicit-any
 async function manda(s: any, dati: { titolo: string; testo: string; url: string; tag: string }, ttl: number, urgente: boolean) {
   try {
+    dati = { ...dati, titolo: nomeMostrato(dati.titolo), testo: nomeMostrato(dati.testo) };
     await webpush.sendNotification({ endpoint: s.endpoint, keys: { p256dh: s.p256dh, auth: s.auth } }, JSON.stringify(dati), { TTL: ttl, urgency: urgente ? "high" : "normal" });
     return "ok";
   } catch (e) {
