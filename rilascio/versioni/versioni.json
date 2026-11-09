@@ -5,18 +5,9 @@
       "v": "5.6",
       "data": "2026-11-09",
       "tipo": "medio",
-      "titolo": "O Girrr anche senza rete",
-      "messaggio": "🚆 **O Girrr 5.6 è online!** In treno, in galleria o con una tacca sola: l'app si apre lo stesso e vi mostra l'ultima copia salvata, aggiornata ogni mezz'ora. Arrivano le notifiche sul telefono (anche 3 ore e 1 ora prima della formazione: niente più scuse!), la ricerca dei giocatori nello Spogliatoio, «La mia stagione» nella Carriera e il pulsante Condividi per mandare risultati e classifica nel gruppo. E da oggi c'è anche questa pagina, con tutta la nostra storia versione per versione. Aggiornate e fateci sapere! 📲",
+      "titolo": "Notifiche sul telefono e La mia stagione",
+      "messaggio": "📲 **O Girrr 5.6 è online!** Arrivano le notifiche sul telefono: risultati della vostra partita, nuovo Giornale, Curva, Derby e anche 3 ore e 1 ora prima della formazione (niente più scuse!). Scegliete voi quali ricevere. Nello Spogliatoio c'è la nuova scheda Cerca per sapere tutto di un giocatore, nella Carriera arriva «La mia stagione» e nel Tabellone il pulsante Condividi per mandare risultati e classifica nel gruppo. E da oggi c'è anche questa pagina, con tutta la nostra storia versione per versione. Aggiornate e fateci sapere! ⚽",
       "novita": [
-        {
-          "area": "Copia offline",
-          "voci": [
-            "L'app si apre anche senza rete e mostra l'ultima copia salvata sul telefono: pagine di Lega e Stadio, Spogliatoio, classifica, risultati, Giornale e quello che hai già aperto di Curva, Totogirrr e Derby.",
-            "Con la rete lenta la pagina aspetta il sito al massimo 4 secondi, poi apre la copia e si aggiorna da sola appena può.",
-            "La copia si rinfresca ogni 30 minuti con l'app aperta; su Android, con l'app nella schermata Home, anche ad app chiusa.",
-            "Avviso in basso «Offline · Copia delle …» e «Di nuovo online»: con la ✕ resta chiuso finché non chiudi l'app."
-          ]
-        },
         {
           "area": "Notifiche sul telefono",
           "voci": [
@@ -46,13 +37,37 @@
           ]
         },
         {
-          "area": "Icona e versioni",
+          "area": "Versioni",
           "voci": [
-            "Tenendo premuta l'icona (Android e PC): Tabellone, Curva, Giornale e Totogirrr, nella grafica scelta l'ultima volta.",
             "Nuova pagina Versioni: tutte le versioni di O Girrr con il messaggio e l'elenco dei cambiamenti."
           ]
         }
       ]
+    },
+    {
+      "v": "5.5.1",
+      "data": "2026-11-09",
+      "tipo": "minore",
+      "titolo": "O Girrr anche senza rete",
+      "messaggio": "🚆 **O Girrr 5.5.1 è online!** Piccolo aggiornamento, grande comodità: in treno, in galleria o con una tacca sola l'app si apre lo stesso e vi mostra l'ultima copia salvata, aggiornata ogni mezz'ora. E su Android, tenendo premuta l'icona, arrivate dritti a Tabellone, Curva, Giornale e Totogirrr, nella grafica che avete scelto. 📶",
+      "novita": [
+        {
+          "area": "Copia offline",
+          "voci": [
+            "L'app si apre anche senza rete e mostra l'ultima copia salvata sul telefono: pagine di Lega e Stadio, Spogliatoio, classifica, risultati, Giornale e quello che hai già aperto di Curva, Totogirrr e Derby.",
+            "Con la rete lenta la pagina aspetta il sito al massimo 4 secondi, poi apre la copia e si aggiorna da sola appena può.",
+            "La copia si rinfresca ogni 30 minuti con l'app aperta; su Android, con l'app nella schermata Home, anche ad app chiusa.",
+            "Avviso in basso «Offline · Copia delle …» e «Di nuovo online»: con la ✕ resta chiuso finché non chiudi l'app."
+          ]
+        },
+        {
+          "area": "Icona",
+          "voci": [
+            "Tenendo premuta l'icona (Android e PC): Tabellone, Curva, Giornale e Totogirrr, nella grafica scelta l'ultima volta."
+          ]
+        }
+      ],
+      "nota": "Online sul sito il 9 novembre 2026 (gh-pages e06cbe2). Numero 5.5.1 deciso da Gianluca: copia offline e scorciatoie sono i «due piccoli cambi» prima della 5.6."
     },
     {
       "v": "5.5",

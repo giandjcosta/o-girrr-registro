@@ -28,7 +28,7 @@ Qui ci sono il Lab, l'Anteprima, le sorgenti delle pagine del sito vero e lo sta
   - correzione minore → cambia la terza cifra: 5.6.1, 5.6.2, …;
   - aggiornamento medio → cambia la seconda cifra: 5.7 (cioè 5.7.0), 5.8, …;
   - aggiornamento grande → cambia la prima cifra: 6.0, 7.0, ….
-- La versione attuale è la **5.6** (copia offline, scorciatoie dell'icona, notifiche sul telefono, Cerca un giocatore, pagina Versioni).
+- Sul sito c'è la **5.5.1** (copia offline e scorciatoie dell'icona, 9 novembre 2026). La **5.6** è in prova nel Lab: notifiche sul telefono, Cerca un giocatore, Condividi, La mia stagione, pagina Versioni.
 - A ogni rilascio aggiungi la versione in cima a `versioni.json` con `python3 rilascio/versioni/aggiungi.py --tipo minore|medio|grande …` (il numero lo calcola da solo): un **messaggio** per il gruppo, nel tono dei messaggi di prima (livello editoriale, niente fantapunti né scommesse), e il **changelog** diviso per area (livello tecnico). Poi copia `versioni.json` nella radice di `gh-pages`: la pagina Versioni (`girrr/versioni.html`, `stadio/girrr/versioni.html`) e l'avviso in Home si aggiornano da soli.
 - Dalla 1.0 alla 4.4 la divisione in versioni non è conservata («Dato non conservato»): se Gianluca ritrova i messaggi, vanno aggiunti a `versioni.json`.
 

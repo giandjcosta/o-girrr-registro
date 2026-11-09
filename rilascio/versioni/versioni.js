@@ -8,7 +8,7 @@
   var io = document.currentScript, ROOT = new URL('./', io && io.src ? io.src : location.href).href;
   var stadio = /\/stadio\//.test(location.pathname);
   var MESI = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'];
-  var TIPO = { grande: 'Aggiornamento grande', medio: 'Aggiornamento', minore: 'Correzione', storia: 'Le origini' };
+  var TIPO = { grande: 'Aggiornamento grande', medio: 'Aggiornamento', minore: 'Aggiornamento minore', storia: 'Le origini' };
   var ridotto = false; try { ridotto = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
 
   function E(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
@@ -67,7 +67,7 @@
     box.innerHTML = '<p class="vv-intro">Tutte le versioni di O Girrr, dalla più recente. «Messaggio» è l\'annuncio per il gruppo, «Changelog» l\'elenco dei cambiamenti.</p>' +
       '<div class="vv-seg" role="group" aria-label="Come leggere le versioni"><button type="button" data-m="messaggio">Messaggio</button><button type="button" data-m="changelog">Changelog</button></div>' +
       '<div class="vv-lista vv-fade"><p class="vv-intro">Carico le versioni…</p></div>' +
-      '<p class="vv-leg"><b>Come si contano le versioni.</b> Aggiornamento grande: cambia il primo numero (6.0). Aggiornamento: cambia il secondo (5.7). Correzione: cambia il terzo (5.6.1).</p>';
+      '<p class="vv-leg"><b>Come si contano le versioni.</b> Aggiornamento grande: cambia il primo numero (6.0). Aggiornamento: cambia il secondo (5.7). Aggiornamento minore o correzione: cambia il terzo (5.6.1).</p>';
     var lista = box.querySelector('.vv-lista'), V = [], aperte = {};
     function corpo(x) {
       if (modo === 'messaggio') return '<div class="vv-msg">' + grassetto(x.messaggio || 'Dato non conservato') + '</div>';
