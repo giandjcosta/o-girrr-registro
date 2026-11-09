@@ -1,5 +1,5 @@
 {
- "aggiornato": "2026-11-09T06:42:23Z",
+ "aggiornato": "2026-11-09T18:45:00Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
@@ -24,23 +24,21 @@
   {
    "nome": "Aggiornamento del martedì (partite giocate e formazioni)",
    "quando": "Una volta: 9 novembre alle 11:47",
-   "stato": "attiva",
+   "stato": "conclusa",
    "ultimo": {
-    "quando": "2026-11-03T10:47:50Z",
+    "quando": "2026-11-09T10:48:06Z",
     "esito": "riuscito"
-   },
-   "prossimo": "2026-11-09T10:47:00Z"
+   }
   },
   {
    "nome": "Risultati di lega e coppa dal PC (Leghe)",
    "quando": "Una volta: 9 novembre alle 18:07",
-   "stato": "attiva",
+   "stato": "conclusa",
    "nota": "Serve il PC acceso con Chrome.",
    "ultimo": {
-    "quando": "2026-11-03T17:07:50Z",
+    "quando": "2026-11-09T17:09:10Z",
     "esito": "riuscito"
-   },
-   "prossimo": "2026-11-09T17:07:00Z"
+   }
   },
   {
    "nome": "Regista del calendario",
@@ -78,12 +76,11 @@
   {
    "nome": "O Giornale del Girrr (PDF settimanale)",
    "quando": "Una volta: 9 novembre alle 18:51",
-   "stato": "attiva",
+   "stato": "conclusa",
    "ultimo": {
-    "quando": "2026-11-03T17:51:52Z",
+    "quando": "2026-11-09T17:51:38Z",
     "esito": "riuscito"
-   },
-   "prossimo": "2026-11-09T17:51:00Z"
+   }
   },
   {
    "nome": "Conferma mensile “tutto regolare”",
