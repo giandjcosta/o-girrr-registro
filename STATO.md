@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 9 novembre 2026)
 
+## 9 novembre (notte, 7) — Claude: **ONLINE** versione 5.6 («Pubblica 5.6» di Gianluca)
+
+- **`gh-pages` `caa13c6`** (21 file), fatto con `python3 rilascio/rilascio56.py COPIA --vai`: `push.js` nelle due Notifiche (interruttori iPhone/Android nei colori della grafica, pallino bianco), `cerca.js` nello Spogliatoio (scheda «Cerca»), `condividi.js` in Tabellone e Giornale, `stagione.js` e scheda «Stagione» nella Carriera di `app.html` (Lega e Stadio), `versioni.js` + `versioni.json` (dalla 1.0 alla 5.6) + `girrr/versioni.html` e `stadio/girrr/versioni.html`, `versioni.js` nelle Home (avviso «È uscita la 5.6» per 3 visite) e nelle Notifiche (pillola «V5.6 ›» in fondo a destra), `sw.js` con la ricezione delle notifiche e le pagine Versioni nella copia offline, `apri.html` con l'ancora. La 5.5.1 (copia offline e scorciatoie) era già online dal pomeriggio (`e06cbe2`); la pagina Versioni nella 5.5.1 risulta nel changelog perché era pronta con lei.
+- **Prima del push:** prova su 7 schermi (iPhone SE 320, iPhone 15 Pro, Pixel 7, iPad Mini, Galaxy Tab S4 orizzontale, PC 1920, TV 4K) sui file esatti del rilascio: Home con l'avviso 5.6, Notifiche con il riquadro e «V5.6 ›», Tabellone con Condividi (Classifica), Carriera Stadio · Stagione, Versioni con la 5.6 in cima, Spogliatoio con la scheda Cerca; nessuno scorrimento laterale, nessun errore. Le prove complete su 16 schermi erano già fatte sulla stessa versione dei file.
+- **Notifiche push:** database e giro ogni 5 minuti già attivi (Gianluca ha eseguito `da-incollare.sql`); da ora ci si iscrive dalla pagina Notifiche del sito. Non provato con un telefono vero: serve che Gianluca attivi l'interruttore e tocchi «Manda una notifica di prova».
+- **Sorgenti** `ufficiale/src/sito/` riallineate a `gh-pages` (pagine cambiate e file nuovi nella radice).
+- **Per tornare indietro:** `git revert caa13c6` su `gh-pages` (torna la 5.5.1). Per spegnere solo l'invio delle notifiche: `select cron.unschedule('push-giro');` (serve il «vai»).
+
 ## 9 novembre (notte, 6) — Claude: pulsante «V5.5.1 ›» più visibile, pagina Versioni pronta per il sito con la 5.5.1 (aspetta il «vai»)
 
 - **Pulsante della versione:** ora è una pillolina con bordo e freccia, «V5.6 ›» nel Lab e «V5.5.1 ›» sul sito, in fondo a destra della pagina Notifiche (Gianluca: «quasi non si nota che si possa premere»).
