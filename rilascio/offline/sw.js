@@ -345,3 +345,31 @@ self.addEventListener('fetch', function (event) {
     event.respondWith(primaLaRete(event, req, C_SITO, k, ATTESA_FILE, event.clientId));
   }
 });
+
+/* ---------- Notifiche push (Claude, 9 novembre 2026) ----------
+   Le manda la funzione «push-invia» di Supabase; qui si mostrano e, toccandole, si apre la pagina giusta
+   (apri.html sceglie Lega o Stadio come l'ultima volta). */
+self.addEventListener('push', function (event) {
+  var d = {};
+  try { d = event.data ? event.data.json() : {}; } catch (e) { d = { testo: event.data ? event.data.text() : '' }; }
+  event.waitUntil(self.registration.showNotification(d.titolo || 'O Girrr', {
+    body: d.testo || '',
+    icon: BASE + 'assets/icon-192.png',
+    tag: d.tag || undefined,
+    lang: 'it',
+    data: { url: d.url || 'apri.html?p=index' }
+  }));
+});
+self.addEventListener('notificationclick', function (event) {
+  event.notification.close();
+  var u = new URL((event.notification.data && event.notification.data.url) || 'apri.html?p=index', BASE).href;
+  event.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function (cl) {
+    for (var i = 0; i < cl.length; i++) {
+      var c = cl[i];
+      if (c.url.indexOf(AMBITO) === 0 && 'navigate' in c && u.indexOf(AMBITO) === 0) {
+        return c.focus().then(function (w) { return (w || c).navigate(u); }).catch(function () { return self.clients.openWindow(u); });
+      }
+    }
+    return self.clients.openWindow(u);
+  }));
+});
