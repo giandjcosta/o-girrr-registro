@@ -6,7 +6,7 @@
       "data": "2026-11-09",
       "tipo": "medio",
       "titolo": "O Girrr anche senza rete",
-      "messaggio": "🚆 **O Girrr 5.6 è online!** In treno, in galleria o con una tacca sola: l'app si apre lo stesso e vi mostra l'ultima copia salvata, aggiornata ogni mezz'ora. Arrivano le notifiche sul telefono (anche 3 ore e 1 ora prima della formazione: niente più scuse!), la ricerca dei giocatori nello Spogliatoio e le scorciatoie tenendo premuta l'icona. E da oggi c'è anche questa pagina, con tutta la nostra storia versione per versione. Aggiornate e fateci sapere! 📲",
+      "messaggio": "🚆 **O Girrr 5.6 è online!** In treno, in galleria o con una tacca sola: l'app si apre lo stesso e vi mostra l'ultima copia salvata, aggiornata ogni mezz'ora. Arrivano le notifiche sul telefono (anche 3 ore e 1 ora prima della formazione: niente più scuse!), la ricerca dei giocatori nello Spogliatoio, «La mia stagione» nella Carriera e il pulsante Condividi per mandare risultati e classifica nel gruppo. E da oggi c'è anche questa pagina, con tutta la nostra storia versione per versione. Aggiornate e fateci sapere! 📲",
       "novita": [
         {
           "area": "Copia offline",
@@ -29,7 +29,20 @@
         {
           "area": "Spogliatoio",
           "voci": [
-            "Cerca un giocatore: chi lo ha in rosa e quanto è stato pagato, stato per la prossima giornata, infortunio, stagione, ultimi voti e fantavoti, Borsino e Moviola."
+            "Nuova scheda «Cerca» dopo «Rosa»: chi ha in rosa un giocatore e quanto è stato pagato, stato per la prossima giornata, infortunio, stagione, ultimi voti e fantavoti, Borsino e Moviola."
+          ]
+        },
+        {
+          "area": "Carriera",
+          "voci": [
+            "Nuova scheda «Stagione»: posizione in classifica giornata per giornata, bilancio, striscia senza sconfitte, giornata migliore, il titolare più prezioso, il colpo di mercato e la Champions Cup."
+          ]
+        },
+        {
+          "area": "Condividi",
+          "voci": [
+            "Nel Tabellone: la tua partita, i risultati della giornata o la classifica come immagine pronta per il gruppo, nella grafica Lega o Stadio.",
+            "Nel Giornale: la copertina dell'ultimo numero."
           ]
         },
         {

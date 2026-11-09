@@ -15,6 +15,9 @@ self.GIRRR_SPECCHIO = (function () {
     'girrr/versioni.html': new URL('../../rilascio/versioni/pagine/girrr/versioni.html', self.location.href).href,
     'stadio/girrr/versioni.html': new URL('../../rilascio/versioni/pagine/stadio/girrr/versioni.html', self.location.href).href,
     'condividi.js': new URL('../../rilascio/condividi/condividi.js', self.location.href).href, /* Condividi come immagine */
+    'stagione.js': new URL('../../rilascio/stagione/stagione.js', self.location.href).href, /* Carriera · La mia stagione */
+    'girrr/app.html': new URL('../../rilascio/stagione/pagine/girrr/app.html', self.location.href).href,
+    'stadio/girrr/app.html': new URL('../../rilascio/stagione/pagine/stadio/girrr/app.html', self.location.href).href,
     'push.js': new URL('../../rilascio/push/push.js', self.location.href).href, /* notifiche sul telefono */
     'apri.html': new URL('../../rilascio/scorciatoie/apri.html', self.location.href).href,
     'manifest.webmanifest': new URL('../../rilascio/scorciatoie/manifest.webmanifest', self.location.href).href /* con le scorciatoie */
@@ -38,7 +41,7 @@ self.GIRRR_SPECCHIO = (function () {
         var ct = r.headers.get('content-type') || '';
         if (!r.ok || !/text\/html|javascript|json|text\/css|manifest/.test(ct)) return r;
         return r.text().then(function (t) {
-          if (!loc) t = riscrivi(t);
+          if (!loc || /\.html$/.test(dest.split('?')[0])) t = riscrivi(t); /* le pagine del sito preparate qui si riscrivono come le altre */
           if (/text\/html/.test(ct) && t.indexOf('offline.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'offline.js" defer></script></head>');
           if (/text\/html/.test(ct) && /\/o-fant-a-girrr\/(stadio\/)?girrr\/(index\.html|notifiche\.html)?$/.test(dest.split('?')[0]) && t.indexOf('versioni.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'versioni.js" defer></script></head>');
           if (/text\/html/.test(ct) && /\/o-fant-a-girrr\/(index\.html)?$/.test(dest.split('?')[0]) && t.indexOf('cerca.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'cerca.js" defer></script></head>');

@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 9 novembre 2026)
 
+## 9 novembre (notte, 3) — Claude: La mia stagione nella Carriera, pallino bianco anche sull'oro, foto su PC e TV
+
+- **Database delle notifiche: ancora da creare** (la conferma di Supabase non arriva a Gianluca). Gli ho dato il contenuto di `rilascio/push/da-incollare.sql` da incollare nell'editor SQL.
+- **La mia stagione** (decisione di Gianluca: nella Carriera): `rilascio/stagione/stagione.js` (radice del sito) + `rilascio/stagione/stagione.py COPIA [--lab]`, che aggiunge alla Carriera di `app.html` (Lega e Stadio) la scheda «Stagione» dopo Panoramica. Schede: In classifica (posizione, punti, grafico giornata per giornata, migliore e peggiore), Il bilancio (V-N-P, gol, forma), La striscia (senza sconfitte e vittorie di fila), La giornata migliore (fantapunti), Il titolare più prezioso (fantavoti dei titolari da `formazioni.json`; formazioni della 1ª: «Dato non conservato»), Il colpo di mercato (Borsino), Champions Cup. Telefono: si scorrono col dito; da 900 px una accanto all'altra. Controllato: The Blue brothers 7ª, 8 punti, 2-2-3 come nel Tabellone. `rilascio56.py` lo applica; nel Lab lo specchio serve le due `app.html` preparate.
+- **Interruttori:** pallino sempre bianco, anche sull'oro dello Stadio (iPhone e Android).
+- **Foto su PC e TV** inviate a Gianluca: `lab/novita-5-6/pc.jpg` e `tv.jpg` (Home con l'avviso, Versioni, Notifiche, Cerca, Condividi, Stagione). Le pagine restano centrate alla larghezza del resto del sito.
+- **`versioni.json` 5.6:** aggiunte Carriera · Stagione e Condividi; messaggio aggiornato. **`lab/novita-5-6.html`:** schede «La mia stagione» e «Come si vede su PC e TV».
+
 ## 9 novembre (notte, 2) — Claude: avviso Versioni poi solo in fondo alle Notifiche, Changelog nel Lab, maiuscola dopo «·», immagini senza indirizzo
 
 - **Database delle notifiche: ancora da creare.** Terzo tentativo con `apply_migration`, la conferma di Supabase non arriva a Gianluca e scade. Strada da usare: `rilascio/push/da-incollare.sql` nell'editor SQL di Supabase. La funzione `push-invia` è già online.

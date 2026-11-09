@@ -9,7 +9,8 @@ Uso:
 Fa:
   1. copia offline e scorciatoie (rilascio/offline/applica.py: sw.js, offline.js, apri.html, manifest, offline.js nelle pagine);
   2. copia nella radice versioni.json, versioni.js, cerca.js, condividi.js e push.js;
-  3. crea girrr/versioni.html e stadio/girrr/versioni.html (rilascio/versioni/crea_pagine.py);
+  3. crea girrr/versioni.html e stadio/girrr/versioni.html (rilascio/versioni/crea_pagine.py) e aggiunge la scheda
+     «Stagione» alla Carriera (rilascio/stagione/stagione.py);
   4. aggiunge gli script: versioni.js nelle due Home e nelle due Notifiche, cerca.js nello Spogliatoio, condividi.js in Tabellone e Giornale,
      push.js nelle due Notifiche.
 Si può rilanciare: dove lo script c'è già non si aggiunge.
@@ -27,7 +28,8 @@ if not (GH / "data.json").exists():
 subprocess.run([sys.executable, str(QUI / "offline" / "applica.py"), str(GH)] + (["--vai"] if VAI else []), check=True)
 
 FILE = {"versioni.json": QUI / "versioni" / "versioni.json", "versioni.js": QUI / "versioni" / "versioni.js",
-        "cerca.js": QUI / "cerca" / "cerca.js", "condividi.js": QUI / "condividi" / "condividi.js"}
+        "cerca.js": QUI / "cerca" / "cerca.js", "condividi.js": QUI / "condividi" / "condividi.js",
+        "stagione.js": QUI / "stagione" / "stagione.js"}
 if PUSH:
     FILE["push.js"] = QUI / "push" / "push.js"
 for nome, src in FILE.items():
@@ -38,6 +40,7 @@ for nome, src in FILE.items():
 
 if VAI:
     subprocess.run([sys.executable, str(QUI / "versioni" / "crea_pagine.py"), str(GH)], check=True)
+    subprocess.run([sys.executable, str(QUI / "stagione" / "stagione.py"), str(GH)], check=True)
 else:
     print("  pagina  girrr/versioni.html, stadio/girrr/versioni.html")
 
