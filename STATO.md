@@ -1,5 +1,12 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 9 novembre 2026)
 
+## 9 novembre (notte, 6) — Claude: pulsante «V5.5.1 ›» più visibile, pagina Versioni pronta per il sito con la 5.5.1 (aspetta il «vai»)
+
+- **Pulsante della versione:** ora è una pillolina con bordo e freccia, «V5.6 ›» nel Lab e «V5.5.1 ›» sul sito, in fondo a destra della pagina Notifiche (Gianluca: «quasi non si nota che si possa premere»).
+- **La pagina Versioni passa alla 5.5.1:** in `versioni.json` la voce «Versioni» e la frase sulla pagina passano dalla 5.6 alla 5.5.1, così sul sito la pagina esce con la 5.5.1 come ultima versione. La 5.6 resta solo nel Lab.
+- **Pronto per il sito:** `python3 rilascio/versioni/rilascio551.py COPIA_GH_PAGES` (versioni.json senza la 5.6, versioni.js, le due versioni.html, script nelle due Home e nelle due Notifiche). Provato su una copia di `gh-pages` su 16 schermi: avviso «È uscita la 5.5.1» in Home (Lega e Stadio), «V5.5.1 ›» in fondo alle Notifiche, prima scheda 5.5.1, nessuna emoji da sola, nessuno scorrimento laterale, nessun errore.
+- **Non pubblicato:** il push su `gh-pages` è stato fermato dal controllo di sicurezza (rilascio in produzione senza un «vai» esplicito). Gianluca aveva scritto «nel sito mi aspetto che ci sia scritto 5.5.1»: serve il suo «vai» esplicito. Niente è stato scritto sul sito.
+
 ## 9 novembre (notte, 5) — Claude: 5.5.1 e 5.6 separate
 
 - **Decisione di Gianluca:** copia offline e scorciatoie dell'icona (online dal 9 novembre, `gh-pages` `e06cbe2`) sono la **5.5.1** («due piccoli cambi»); la **5.6** è il resto: notifiche sul telefono, Cerca, Condividi, La mia stagione, Versioni.

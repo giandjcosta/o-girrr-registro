@@ -3,7 +3,7 @@
    si aggiorna da sola quando un rilascio aggiunge una versione.
    - In versioni.html (Lega e Stadio) disegna la pagina: interruttore «Messaggio / Changelog» e una scheda per versione.
    - Nella Home mostra «È uscita la 5.6 · Scopri le novità» per 3 visite o finché non lo tocchi.
-   - In fondo alla pagina Notifiche, a destra: un piccolo «V5.6» cliccabile, sempre. */
+   - In fondo alla pagina Notifiche, a destra: una piccola pillola «V5.6 ›» cliccabile, sempre. */
 (function () {
   var io = document.currentScript, ROOT = new URL('./', io && io.src ? io.src : location.href).href;
   var stadio = /\/stadio\//.test(location.pathname);
@@ -139,8 +139,11 @@
     carica().then(function (j) {
       var x = (j.versioni || [])[0]; if (!x || document.querySelector('.vv-fondo')) return;
       var a = document.createElement('a'); a.className = 'vv-fondo'; a.href = 'versioni.html';
-      a.textContent = 'V' + x.v; a.setAttribute('aria-label', 'Versione ' + x.v + ': tutte le versioni');
-      a.style.cssText = 'display:block;width:max-content;margin:18px 0 6px auto;padding:6px 8px;font:800 11px/1 Inter,system-ui,sans-serif;letter-spacing:.08em;color:inherit;opacity:.45;text-decoration:none;border-radius:6px';
+      a.textContent = 'V' + x.v + ' ›'; a.setAttribute('aria-label', 'Versione ' + x.v + ': tutte le versioni');
+      /* Piccola ma riconoscibile come pulsante: pillola con il bordo e la freccia (Gianluca: «quasi non si nota») */
+      a.style.cssText = 'display:block;width:max-content;margin:18px 0 6px auto;padding:7px 13px;font:800 12px/1 Inter,system-ui,sans-serif;letter-spacing:.06em;color:inherit;opacity:.8;text-decoration:none;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:rgba(255,255,255,.06);transition:opacity .25s,background-color .25s';
+      a.onmouseenter = function () { a.style.opacity = '1'; a.style.background = 'rgba(255,255,255,.14)'; };
+      a.onmouseleave = function () { a.style.opacity = '.8'; a.style.background = 'rgba(255,255,255,.06)'; };
       var w = document.querySelector('.wrap') || document.body;
       w.appendChild(a);
     }).catch(function () {});

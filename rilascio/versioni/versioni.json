@@ -6,7 +6,7 @@
       "data": "2026-11-09",
       "tipo": "medio",
       "titolo": "Notifiche sul telefono e La mia stagione",
-      "messaggio": "📲 **O Girrr 5.6 è online!** Arrivano le notifiche sul telefono: risultati della vostra partita, nuovo Giornale, Curva, Derby e anche 3 ore e 1 ora prima della formazione (niente più scuse!). Scegliete voi quali ricevere. Nello Spogliatoio c'è la nuova scheda Cerca per sapere tutto di un giocatore, nella Carriera arriva «La mia stagione» e nel Tabellone il pulsante Condividi per mandare risultati e classifica nel gruppo. E da oggi c'è anche questa pagina, con tutta la nostra storia versione per versione. Aggiornate e fateci sapere! ⚽",
+      "messaggio": "📲 **O Girrr 5.6 è online!** Arrivano le notifiche sul telefono: risultati della vostra partita, nuovo Giornale, Curva, Derby e anche 3 ore e 1 ora prima della formazione (niente più scuse!). Scegliete voi quali ricevere. Nello Spogliatoio c'è la nuova scheda Cerca per sapere tutto di un giocatore, nella Carriera arriva «La mia stagione» e nel Tabellone il pulsante Condividi per mandare risultati e classifica nel gruppo. Aggiornate e fateci sapere! ⚽",
       "novita": [
         {
           "area": "Notifiche sul telefono",
@@ -35,12 +35,6 @@
             "Nel Tabellone: la tua partita, i risultati della giornata o la classifica come immagine pronta per il gruppo, nella grafica Lega o Stadio.",
             "Nel Giornale: la copertina dell'ultimo numero."
           ]
-        },
-        {
-          "area": "Versioni",
-          "voci": [
-            "Nuova pagina Versioni: tutte le versioni di O Girrr con il messaggio e l'elenco dei cambiamenti."
-          ]
         }
       ]
     },
@@ -49,7 +43,7 @@
       "data": "2026-11-09",
       "tipo": "minore",
       "titolo": "O Girrr anche senza rete",
-      "messaggio": "🚆 **O Girrr 5.5.1 è online!** Piccolo aggiornamento, grande comodità: in treno, in galleria o con una tacca sola l'app si apre lo stesso e vi mostra l'ultima copia salvata, aggiornata ogni mezz'ora. E su Android, tenendo premuta l'icona, arrivate dritti a Tabellone, Curva, Giornale e Totogirrr, nella grafica che avete scelto. 📶",
+      "messaggio": "🚆 **O Girrr 5.5.1 è online!** Piccolo aggiornamento, grande comodità: in treno, in galleria o con una tacca sola l'app si apre lo stesso e vi mostra l'ultima copia salvata, aggiornata ogni mezz'ora. Su Android, tenendo premuta l'icona, arrivate dritti a Tabellone, Curva, Giornale e Totogirrr, nella grafica che avete scelto. E da oggi c'è questa pagina, con tutta la nostra storia versione per versione: dalla 1.0 dello Spogliatoio fino a qui. 📶",
       "novita": [
         {
           "area": "Copia offline",
@@ -64,6 +58,13 @@
           "area": "Icona",
           "voci": [
             "Tenendo premuta l'icona (Android e PC): Tabellone, Curva, Giornale e Totogirrr, nella grafica scelta l'ultima volta."
+          ]
+        },
+        {
+          "area": "Versioni",
+          "voci": [
+            "Nuova pagina Versioni: tutte le versioni di O Girrr, dalla 1.0, con il messaggio per il gruppo e l'elenco dei cambiamenti.",
+            "Avviso in Home per le prime 3 visite e pulsante «V5.5.1 ›» in fondo alla pagina Notifiche."
           ]
         }
       ],
