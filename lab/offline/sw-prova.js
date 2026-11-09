@@ -18,6 +18,7 @@ self.GIRRR_SPECCHIO = (function () {
     'stagione.js': new URL('../../rilascio/stagione/stagione.js', self.location.href).href, /* Carriera · La mia stagione */
     'girrr/app.html': new URL('../../rilascio/stagione/pagine/girrr/app.html', self.location.href).href,
     'stadio/girrr/app.html': new URL('../../rilascio/stagione/pagine/stadio/girrr/app.html', self.location.href).href,
+    'notifiche-lette.js': new URL('../../rilascio/notifiche/notifiche-lette.js', self.location.href).href, /* lette rimpicciolite */
     'push.js': new URL('../../rilascio/push/push.js', self.location.href).href, /* notifiche sul telefono */
     'apri.html': new URL('../../rilascio/scorciatoie/apri.html', self.location.href).href,
     'manifest.webmanifest': new URL('../../rilascio/scorciatoie/manifest.webmanifest', self.location.href).href /* con le scorciatoie */
@@ -46,6 +47,7 @@ self.GIRRR_SPECCHIO = (function () {
           if (/text\/html/.test(ct) && /\/o-fant-a-girrr\/(stadio\/)?girrr\/(index\.html|notifiche\.html)?$/.test(dest.split('?')[0]) && t.indexOf('versioni.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'versioni.js" defer></script></head>');
           if (/text\/html/.test(ct) && /\/o-fant-a-girrr\/(index\.html)?$/.test(dest.split('?')[0]) && t.indexOf('cerca.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'cerca.js" defer></script></head>');
           if (/text\/html/.test(ct) && /\/(tabellone|giornale)\.html$/.test(dest.split('?')[0]) && t.indexOf('condividi.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'condividi.js" defer></script></head>');
+          if (/text\/html/.test(ct) && /\/notifiche\.html$/.test(dest.split('?')[0]) && t.indexOf('notifiche-lette.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'notifiche-lette.js" defer></script></head>');
           if (/text\/html/.test(ct) && /\/notifiche\.html$/.test(dest.split('?')[0]) && t.indexOf('push.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'push.js" defer></script></head>');
           return new Response(t, { status: r.status, headers: { 'content-type': ct } });
         });
