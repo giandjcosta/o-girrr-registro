@@ -19,6 +19,8 @@ self.GIRRR_SPECCHIO = (function () {
     'girrr/app.html': new URL('../../rilascio/stagione/pagine/girrr/app.html', self.location.href).href,
     'stadio/girrr/app.html': new URL('../../rilascio/stagione/pagine/stadio/girrr/app.html', self.location.href).href,
     'notifiche-lette.js': new URL('../../rilascio/notifiche/notifiche-lette.js', self.location.href).href, /* lette rimpicciolite */
+    'girrr/curva.html': new URL('../../rilascio/curva562/pagine/girrr/curva.html', self.location.href).href, /* Condividi con l'immagine del post */
+    'stadio/girrr/curva.html': new URL('../../rilascio/curva562/pagine/stadio/girrr/curva.html', self.location.href).href,
     'push.js': new URL('../../rilascio/push/push.js', self.location.href).href, /* notifiche sul telefono */
     'apri.html': new URL('../../rilascio/scorciatoie/apri.html', self.location.href).href,
     'manifest.webmanifest': new URL('../../rilascio/scorciatoie/manifest.webmanifest', self.location.href).href /* con le scorciatoie */
