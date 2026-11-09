@@ -35,5 +35,5 @@ A fine girone e a fine stagione un riepilogo a schede da scorrere per ogni squad
 Mentre si gioca la Serie A, punteggio provvisorio delle partite del Girrr. Prima bisogna capire se esiste una fonte affidabile dei voti in diretta: senza, non si fa.
 
 ## Fatte
-- **Copia offline** (9 novembre 2026): prova nel Lab `lab/offline/`, vedi `STATO.md`.
-- **Scorciatoie dell'icona** (9 novembre 2026): Tabellone, Curva, Giornale, Totogirrr; prova nel Lab, vedi `STATO.md`.
+- **Copia offline** (online il 9 novembre 2026, `gh-pages` `e06cbe2`), vedi `STATO.md`.
+- **Scorciatoie dell'icona nella grafica scelta** (online il 9 novembre 2026, `gh-pages` `e06cbe2`): Tabellone, Curva, Giornale, Totogirrr. Non su iPhone.

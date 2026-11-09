@@ -27,7 +27,7 @@ var LETTURE = /^(curva_feed|curva_img|curva_adm_img|curva_pimg|toto_pr_pubblico|
 var DA_RINFRESCARE = /^(curva_feed|toto_pr_pubblico|[a-z_]+_stato)$/;
 
 var PAGINE = [
-  'index.html', 'riepilogo.html',
+  'index.html', 'riepilogo.html', 'apri.html',
   'girrr/index.html', 'girrr/app.html', 'girrr/campo.html', 'girrr/tabellone.html', 'girrr/curva.html',
   'girrr/notifiche.html', 'girrr/albo.html', 'girrr/derby.html', 'girrr/rivalita.html', 'girrr/giornale.html',
   'girrr/squadre.html', 'girrr/statistiche.html', 'girrr/totogirrr.html',

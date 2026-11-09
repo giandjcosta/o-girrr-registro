@@ -33,11 +33,12 @@ for f in ("sw.js", "offline.js"):
         cambi.append(("copia", GH / f))
         if VAI:
             shutil.copyfile(QUI / f, GH / f)
-MAN = QUI.parent / "scorciatoie" / "manifest.webmanifest"
-if (GH / "manifest.webmanifest").read_bytes() != MAN.read_bytes():
-    cambi.append(("copia", GH / "manifest.webmanifest"))
-    if VAI:
-        shutil.copyfile(MAN, GH / "manifest.webmanifest")
+for f in ("manifest.webmanifest", "apri.html"):   # scorciatoie dell'icona, nella grafica scelta
+    M = QUI.parent / "scorciatoie" / f
+    if not (GH / f).exists() or (GH / f).read_bytes() != M.read_bytes():
+        cambi.append(("copia", GH / f))
+        if VAI:
+            shutil.copyfile(M, GH / f)
 for p in pagine:
     if not p.exists():
         continue

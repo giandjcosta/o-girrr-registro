@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 9 novembre 2026)
 
+## 9 novembre (sera, 3) — Claude: **ONLINE** copia offline e scorciatoie dell'icona («vai» di Gianluca)
+
+- **`gh-pages` `e06cbe2`** (32 file): `sw.js`, `offline.js`, `apri.html`, `manifest.webmanifest` con le scorciatoie, `<script src="…/offline.js" defer>` in 30 pagine. Fatto con `python3 rilascio/offline/applica.py COPIA --vai`. Nessun file `main` del sito toccato.
+- **Scorciatoie nella grafica scelta:** le scorciatoie aprono `apri.html?p=tabellone|curva|giornale|totogirrr`, che legge `orr_gv` (a = Lega, n = Stadio, la scelta dell'interruttore della Home) e va in `girrr/…` o `stadio/girrr/…`. Pagine ammesse: index, tabellone, curva, giornale, totogirrr, campo, notifiche. `start_url` dell'icona invariato (`girrr/`), per non cambiare l'identità dell'app installata. iPhone: le scorciatoie dei siti aggiunti alla Home non esistono (limite di Apple).
+- **Controllato sul sito vero** (Chromium a 320 px, attraverso la rete): prima copia fatta (82 file sito + 18 dati), in modalità aereo si aprono Home Lega e Stadio, Tabellone, Curva, Spogliatoio, Giornale e `apri.html?p=campo`, con «Offline · Copia delle …»; nessun errore JavaScript, nessuno scorrimento laterale. Non provati: iPhone/Safari e Android veri.
+- **Sorgenti:** `ufficiale/src/sito/` riallineate a `gh-pages` (erano indietro solo di `ui.css?v=55r9`), più `sw.js`, `offline.js`, `apri.html`, `manifest.webmanifest`.
+- **Per tornare indietro:** `git revert e06cbe2` su `gh-pages`; per cancellare anche le copie sui telefoni pubblicare `rilascio/offline/sw-spegni.js` come `sw.js`.
+
 ## 9 novembre (sera, 2) — Claude: «vai» di Gianluca per la copia offline nel Lab, avviso che si chiude, scorciatoie dell'icona
 
 - **«Vai» di Gianluca** per la copia offline («basta che si possa togliere la notifica»): ramo unito a `main` del registro, prova visibile in `lab/offline/`. Il sito vero non è ancora toccato: il rilascio con `rilascio/offline/applica.py` aspetta la prova di Gianluca sul telefono.

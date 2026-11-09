@@ -9,6 +9,7 @@ self.GIRRR_SPECCHIO = (function () {
   var origine = new URL('/o-fant-a-girrr/', self.location.href).href;
   var locali = {
     'offline.js': new URL('../../rilascio/offline/offline.js', self.location.href).href,
+    'apri.html': new URL('../../rilascio/scorciatoie/apri.html', self.location.href).href,
     'manifest.webmanifest': new URL('../../rilascio/scorciatoie/manifest.webmanifest', self.location.href).href /* con le scorciatoie */
   };
   var percEsc = perc.replace(/\//g, '\\/');
