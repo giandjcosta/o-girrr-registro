@@ -30,14 +30,14 @@ var PAGINE = [
   'index.html', 'riepilogo.html', 'apri.html',
   'girrr/index.html', 'girrr/app.html', 'girrr/campo.html', 'girrr/tabellone.html', 'girrr/curva.html',
   'girrr/notifiche.html', 'girrr/albo.html', 'girrr/derby.html', 'girrr/rivalita.html', 'girrr/giornale.html',
-  'girrr/squadre.html', 'girrr/statistiche.html', 'girrr/totogirrr.html',
+  'girrr/squadre.html', 'girrr/statistiche.html', 'girrr/totogirrr.html', 'girrr/versioni.html',
   'stadio/girrr/index.html', 'stadio/girrr/app.html', 'stadio/girrr/campo.html', 'stadio/girrr/tabellone.html',
   'stadio/girrr/curva.html', 'stadio/girrr/notifiche.html', 'stadio/girrr/albo.html', 'stadio/girrr/derby.html',
   'stadio/girrr/rivalita.html', 'stadio/girrr/giornale.html', 'stadio/girrr/squadre.html',
-  'stadio/girrr/statistiche.html', 'stadio/girrr/totogirrr.html'
+  'stadio/girrr/statistiche.html', 'stadio/girrr/totogirrr.html', 'stadio/girrr/versioni.html'
 ];
 var DATI = [
-  'data.json', 'formazioni.json', 'toto-quote.json', 'testi.json', 'manifest.webmanifest', 'riepiloghi/indice.json',
+  'data.json', 'formazioni.json', 'toto-quote.json', 'testi.json', 'manifest.webmanifest', 'versioni.json', 'riepiloghi/indice.json',
   'girrr/dati/borsino.json', 'girrr/dati/cronache.json', 'girrr/dati/fiducia.json', 'girrr/dati/lab-dati.json',
   'girrr/dati/moviola.json', 'girrr/dati/probabilita.json', 'girrr/v55/allenatori.json', 'girrr/v55/annuario.json',
   'girrr/voci/puntata.json', 'girrr/voci/archivio.json', 'girrr/voci/elenco.json', 'girrr/voci/elenco2.json'

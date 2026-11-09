@@ -1,0 +1,297 @@
+{
+  "nota": "Fonte unica della pagina Versioni (girrr/versioni.html e stadio/girrr/versioni.html). A ogni rilascio si aggiunge la versione in cima con rilascio/versioni/aggiungi.py. Numeri: correzione minore = terza cifra (5.6.1), aggiornamento medio = seconda cifra (5.7.0), aggiornamento grande = prima cifra (6.0). Dove manca la storia: «Dato non conservato».",
+  "versioni": [
+    {
+      "v": "5.6",
+      "data": "2026-11-09",
+      "tipo": "medio",
+      "titolo": "O Girrr anche senza rete",
+      "messaggio": "🚆 **O Girrr 5.6 è online!** In treno, in galleria o con una tacca sola: l'app si apre lo stesso e vi mostra l'ultima copia salvata, aggiornata ogni mezz'ora. Arrivano le notifiche sul telefono (anche 3 ore e 1 ora prima della formazione: niente più scuse!), la ricerca dei giocatori nello Spogliatoio e le scorciatoie tenendo premuta l'icona. E da oggi c'è anche questa pagina, con tutta la nostra storia versione per versione. Aggiornate e fateci sapere! 📲",
+      "novita": [
+        {
+          "area": "Copia offline",
+          "voci": [
+            "L'app si apre anche senza rete e mostra l'ultima copia salvata sul telefono: pagine di Lega e Stadio, Spogliatoio, classifica, risultati, Giornale e quello che hai già aperto di Curva, Totogirrr e Derby.",
+            "Con la rete lenta la pagina aspetta il sito al massimo 4 secondi, poi apre la copia e si aggiorna da sola appena può.",
+            "La copia si rinfresca ogni 30 minuti con l'app aperta; su Android, con l'app nella schermata Home, anche ad app chiusa.",
+            "Avviso in basso «Offline · Copia delle …» e «Di nuovo online»: con la ✕ resta chiuso finché non chiudi l'app."
+          ]
+        },
+        {
+          "area": "Notifiche sul telefono",
+          "voci": [
+            "Nella pagina Notifiche scegli quali avvisi ricevere: Formazione (3 ore e 1 ora prima), Risultati della tua partita, Giornale, Curva, Applausi, Derby, Totogirrr.",
+            "Interruttori come quelli del tuo telefono: iPhone su iPhone, Android su Android.",
+            "Di notte, dalle 23:00 alle 7:30, gli avvisi aspettano la mattina, tranne quelli della formazione.",
+            "Su iPhone arrivano aprendo O Girrr dall'icona sulla schermata Home (iOS 16.4 o successivo)."
+          ]
+        },
+        {
+          "area": "Spogliatoio",
+          "voci": [
+            "Cerca un giocatore: chi lo ha in rosa e quanto è stato pagato, stato per la prossima giornata, infortunio, stagione, ultimi voti e fantavoti, Borsino e Moviola."
+          ]
+        },
+        {
+          "area": "Icona e versioni",
+          "voci": [
+            "Tenendo premuta l'icona (Android e PC): Tabellone, Curva, Giornale e Totogirrr, nella grafica scelta l'ultima volta.",
+            "Nuova pagina Versioni: tutte le versioni di O Girrr con il messaggio e l'elenco dei cambiamenti."
+          ]
+        }
+      ]
+    },
+    {
+      "v": "5.5",
+      "data": "2026-11-01",
+      "tipo": "medio",
+      "titolo": "Oggi al Girrr",
+      "messaggio": "🔥 **O Girrr 5.5 è online!** La Home vi dice subito cosa è successo con «Oggi al Girrr», le notifiche hanno la loro pagina, il Tabellone va a schede con il Campo dentro la partita e la fase finale a tabellone, nell'Albo d'oro arriva l'Annuario e la Carriera si rifà il look. In Curva c'è il sondaggio della giornata e chi vuole sbirciare può entrare come ospite. Lega o Stadio: scegliete la vostra grafica e buon divertimento! ⚽",
+      "novita": [
+        {
+          "area": "Home e Notifiche",
+          "voci": [
+            "Oggi al Girrr: notifiche subito visibili, posizione e cammino in classifica, ultimi risultati e prossime sfide della tua squadra.",
+            "Pagina Notifiche con le novità divise per tipo e quelle personali (risposte e applausi in Curva, sfide Derby, prestiti e movimenti del Totogirrr); «Segna tutte come lette» vale su ogni dispositivo."
+          ]
+        },
+        {
+          "area": "Tabellone e Campo",
+          "voci": [
+            "Tabellone a schede: classifica con podio e ultimo posto in evidenza, risultati, Campo con le formazioni dentro il campo e l'andamento dei punti giornata per giornata.",
+            "Campo anche in Champions Cup e fase finale disegnata come un tabellone."
+          ]
+        },
+        {
+          "area": "Albo d'oro e Carriera",
+          "voci": [
+            "Annuario: le statistiche di ogni stagione.",
+            "Carriera nuova, con schede su una riga che scorre."
+          ]
+        },
+        {
+          "area": "Curva, Giornale e Spogliatoio",
+          "voci": [
+            "Sondaggio della giornata in Curva e nuovi personaggi.",
+            "Cronache nel Giornale.",
+            "Modalità ospite: si guarda tutto in sola lettura.",
+            "Grafiche Lega e Stadio uguali su tutte le pagine, Spogliatoio compreso."
+          ]
+        },
+        {
+          "area": "Ritocchi dopo l'uscita (2-3 novembre)",
+          "voci": [
+            "Prima apertura più veloce e «tira giù per aggiornare».",
+            "Home con la testata di prima e un solo logo in alto.",
+            "Infortuni e squalifiche contati in «Chi scambiare» e «Mercato Scambi».",
+            "Carriera con la reputazione da 0 a 100; Moviola in ordine.",
+            "Albo d'oro: i punti del 2022/23 scritti come «Dato non conservato»."
+          ]
+        }
+      ]
+    },
+    {
+      "v": "5.3",
+      "data": "2026-10-31",
+      "tipo": "medio",
+      "titolo": "Campionati e coppe",
+      "messaggio": "🏆 **O Girrr 5.3 è online!** Nell'Albo d'oro i titoli di sempre sono divisi tra campionati e Coppe Campioni, e ogni stagione dell'Era Contemporanea ha la sua storia: il ritorno del re, il bis del Wakanda, il titolo della discordia, la pazienza di ser, la Coppa di RikyArma. Nel Totogirrr arriva la scheda Movimenti. Andate a rileggervi la vostra storia! 📜",
+      "novita": [
+        {
+          "area": "Albo d'oro",
+          "voci": [
+            "Titoli di sempre divisi in campionati, Coppe Campioni e totale, per tutti gli allenatori.",
+            "Era Contemporanea con una storia per ogni stagione."
+          ]
+        },
+        {
+          "area": "Totogirrr",
+          "voci": [
+            "Nuova scheda Movimenti: entrate e uscite della squadra, dalla più recente, con i totali."
+          ]
+        },
+        {
+          "area": "Champions Cup e Derby",
+          "voci": [
+            "Sponsor dei Big in Champions Cup: 4 vittorie nel girone invece di 5.",
+            "Regole dei Derby: una partita è Derby se la votano gli amici, o se la rivalità arriva a 80."
+          ]
+        }
+      ]
+    },
+    {
+      "v": "5.2",
+      "data": "2026-10-30",
+      "tipo": "medio",
+      "titolo": "La Carriera parla di te",
+      "messaggio": "🚀 **O Girrr 5.2 è online!** Carriera in 5 schede, andamento della Fiducia e Storia delle posizioni, sponsor di Lega e Champions Cup, premi da riscuotere nel Totogirrr e classifica più completa (V, N, P, GF, GS, DR). Entrate con il vostro codice e date un'occhiata alla vostra squadra!",
+      "novita": [
+        {
+          "area": "Carriera",
+          "voci": [
+            "Divisa in Panoramica, Obiettivi, Fiducia, Storia e Regole; ogni allenatore vede la sua squadra entrando con il codice.",
+            "Fiducia giornata per giornata, linea del tempo degli obiettivi e grafico con tutte le posizioni dal 1° al 10°."
+          ]
+        },
+        {
+          "area": "Sponsor e premi",
+          "voci": [
+            "Sponsor di campionato e di Champions Cup: obiettivo raggiunto, premio da riscuotere nel Totogirrr.",
+            "Reputazione della stagione: +2 per ogni obiettivo del presidente, +1 per quello dello sponsor."
+          ]
+        },
+        {
+          "area": "Tabellone e Albo d'oro",
+          "voci": [
+            "Classifica con vittorie, pareggi, sconfitte, gol fatti, gol subiti e differenza reti.",
+            "Regole in fondo al Tabellone e all'Albo d'oro."
+          ]
+        }
+      ]
+    },
+    {
+      "v": "5.1",
+      "data": "2026-10-25",
+      "tipo": "medio",
+      "titolo": "La storia si scrive ancora",
+      "messaggio": "🏆 **O Girrr 5.1 è online!** Nuova Storia della Lega e delle ere nell'Albo d'oro, Derby riconosciuti da rivalità 80, Moviola e Curva più complete, migliorie per telefono e scadenze degli obiettivi Carriera corrette. Aprite il sito: la storia della nostra Lega è tutta da leggere!",
+      "novita": [
+        {
+          "area": "Albo d'oro",
+          "voci": [
+            "Nuova scheda La Storia: la nascita del nome, le stagioni e le rivalità raccontate come un campionato vero.",
+            "Le Ere con il punto mediano («L'Era dei Titani · La scintilla»); le stagioni senza vincitore stanno nel Grande Silenzio."
+          ]
+        },
+        {
+          "area": "Derby",
+          "voci": [
+            "Una sfida è Derby quando la rivalità vale 80 o più; etichetta Derby nel Tabellone e nel Totogirrr.",
+            "Il Derby dell'Emma ha nome e storia."
+          ]
+        },
+        {
+          "area": "Squadre, Carriera, Moviola e Curva",
+          "voci": [
+            "Card dell'allenatore nelle pagine delle squadre.",
+            "Obiettivi con scadenza valutati alla giornata indicata, mai «Fatto» prima.",
+            "Moviola di Girrr Sport nel sito e in Curva; i post di Lega, Giornale e Champions Cup non spariscono più."
+          ]
+        }
+      ]
+    },
+    {
+      "v": "5.0",
+      "data": "2026-10-18",
+      "tipo": "grande",
+      "titolo": "Pagine nuove, Derby e Sfide",
+      "messaggio": "🎉 **O Girrr 5.0 è online!** È la versione più grande di sempre: arrivano Girrr Sport, lo Spogliatoio nuovo, il Totogirrr e la Carriera, si sceglie la grafica (Lega o Stadio) e nascono i Derby e le Sfide tra allenatori, con la Conferenza stampa prima della partita. Lanciate la vostra prima sfida: chi ha paura? ⚔️",
+      "novita": [
+        {
+          "area": "Pagine nuove",
+          "voci": [
+            "Girrr Sport, Spogliatoio, Totogirrr e Carriera.",
+            "Interruttore tra la grafica Lega e la grafica Stadio, con passaggio fluido."
+          ]
+        },
+        {
+          "area": "Derby e Sfide",
+          "voci": [
+            "Derby ufficiali votati dagli allenatori o nati da una Sfida accettata, con il nome concordato.",
+            "Sfide tra allenatori: 72 ore per rispondere, nome del Derby proposto e confermato.",
+            "Sfida 1 contro 1 nel Totogirrr.",
+            "Conferenza stampa con promesse chiuse dopo la partita: mantenuta, pareggio o tradita."
+          ]
+        },
+        {
+          "area": "Albo d'oro e Radio",
+          "voci": [
+            "Ere apribili, Stagioni, Rivalità e Albo di Latta di sempre.",
+            "Aspettative del presidente e fiducia; prime puntate della Radio."
+          ]
+        }
+      ]
+    },
+    {
+      "v": "4.5",
+      "data": "2026-10-13",
+      "tipo": "medio",
+      "titolo": "Curva, Prestiti e Albo d'oro",
+      "messaggio": "📣 **O Girrr 4.5 è online!** In Curva arrivano il profilo TotoGirrr e L'Americano Spaesato, Ciro Trattativa ha i suoi thread e le squadre si seguono a vicenda. Nel Totogirrr nascono i Prestiti tra allenatori e i Movimenti, e nell'Albo d'oro le storie degli allenatori sono riscritte con le foto. Fatevi un giro in Curva! 🎙️",
+      "novita": [
+        {
+          "area": "Curva",
+          "voci": [
+            "Nuovo profilo TotoGirrr con la V blu: quote della giornata, la quota più difficile e le statistiche.",
+            "Nuovo personaggio L'Americano Spaesato, e ogni personaggio ha più frasi diverse.",
+            "Ciro Trattativa ha i thread lunghi con commenti, elogia le operazioni di mercato e ha il suo banner.",
+            "Girrr Sport rilancia i cori ufficiali delle squadre; le squadre si seguono a vicenda e seguono i profili ufficiali.",
+            "Bio più leggibili e zoom di avatar e banner adatto a telefono, tablet e PC."
+          ]
+        },
+        {
+          "area": "Totogirrr",
+          "voci": [
+            "Nuova scheda Prestiti: chiedi fantacrediti a un altro fantallenatore, scegli importo e tasso; lui accetta, rifiuta o propone un altro tasso.",
+            "Il 25% delle vincite va in automatico a chi ti ha prestato, finché non hai saldato.",
+            "Movimenti: vedi sempre dove sono finiti i tuoi fantacrediti."
+          ]
+        },
+        {
+          "area": "Albo d'oro e Home",
+          "voci": [
+            "Le storie degli allenatori riscritte, con foto e i nomi di un tempo nelle stagioni passate.",
+            "Il pulsante per la nostra lega su Leghe Fantacalcio è in alto nella Home."
+          ]
+        }
+      ]
+    },
+    {
+      "v": "1.0 – 4.4",
+      "data": "2026-10-07",
+      "fino": "2026-10-12",
+      "tipo": "storia",
+      "titolo": "Le prime versioni",
+      "suddivisione": "Dato non conservato",
+      "messaggio": "🐣 **Dove comincia la nostra storia.** Negli archivi O Girrr parte il 7 ottobre 2026: prima la Home con classifica e risultati, poi lo Spogliatoio, il Giornale, la Curva con i cori e i personaggi, e l'Albo d'oro con la storia di tutte le stagioni. I messaggi delle singole versioni dalla 1.0 alla 4.4 non sono stati conservati, ma il lavoro è tutto qui sotto. 💪",
+      "novita": [
+        {
+          "area": "Home e Lega (dal 7 ottobre)",
+          "voci": [
+            "Prima versione della Home e dei dati della Lega, con classifica, risultati e il riepilogo della giornata in una pagina condivisibile."
+          ]
+        },
+        {
+          "area": "Spogliatoio (8-12 ottobre)",
+          "voci": [
+            "Rosa, statistiche di squadre e giocatori, calendario di campionato e Champions Cup, probabili formazioni, suggerimenti di mercato, infortuni e stili grafici."
+          ]
+        },
+        {
+          "area": "Giornale",
+          "voci": [
+            "Pagelle, risultati e collegamenti ai numeri del Giornale; i pareggi restano pareggi."
+          ]
+        },
+        {
+          "area": "Curva",
+          "voci": [
+            "Cori delle squadre, profili ufficiali di Lega e coppa, Girrr Sport e Ciro Trattativa; commenti, reazioni, seguiti, notifiche e condivisione."
+          ]
+        },
+        {
+          "area": "Albo d'oro",
+          "voci": [
+            "Storico delle stagioni e schede degli allenatori con nomi precedenti, percorsi, storie e scontri diretti."
+          ]
+        },
+        {
+          "area": "Versioni dalla 1.0 alla 4.4",
+          "voci": [
+            "Divisione dei cambiamenti nelle singole versioni: Dato non conservato."
+          ]
+        }
+      ]
+    }
+  ]
+}

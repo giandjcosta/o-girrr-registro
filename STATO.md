@@ -1,5 +1,16 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 9 novembre 2026)
 
+## 9 novembre (sera, 5) — Claude: versione 5.6, pagina Versioni, regola dei numeri di versione
+
+Decisioni di Gianluca: gli aggiornamenti di questi giorni sono la **5.6**; da ora c'è una pagina con tutte le versioni (messaggio simpatico e changelog) che si aggiorna da sola; prima di ogni rilascio si chiede se è correzione minore (5.6.1), aggiornamento medio (5.7) o grande (6.0). Regola scritta in `AGENTS.md` del registro e del sito (`main` del sito `5aa8a3f`).
+- **Fonte unica:** `rilascio/versioni/versioni.json` (va nella radice di `gh-pages`). Versioni: 5.6, 5.5 (con i ritocchi del 2-3 novembre), 5.3, 5.2, 5.1, 5.0, 4.5, e «1.0 – 4.4» con la storia vera per date (7-12 ottobre) e la divisione in versioni «Dato non conservato»: nei repository, nella posta, su Drive e in Curva non c'è traccia dei numeri prima della 4.5 (la 4.5 viene dalla pagina Novità del 13 ottobre, commit `c97b963` del sito). Nessuna 5.4. Messaggi: 5.1 e 5.2 da `proposte/annunci-5-1-5-2.md`, gli altri scritti ora sui cambiamenti veri.
+- **Pagina:** `rilascio/versioni/versioni.js` (radice del sito) disegna `girrr/versioni.html` e `stadio/girrr/versioni.html` (create da `rilascio/versioni/crea_pagine.py COPIA_GH_PAGES` partendo da `notifiche.html`, stessa testata e grafica): interruttore Messaggio / Changelog (ricordato), una scheda per versione che si apre con una transizione fluida, la più recente aperta, legenda dei numeri. Nella Home: avviso «È uscita la 5.6 · Scopri le novità» per 3 visite o finché non lo tocchi, e collegamento fisso «· Versione 5.6 ›» in fondo.
+- **Nuova versione:** `python3 rilascio/versioni/aggiungi.py --tipo minore|medio|grande --titolo … --messaggio … --voce "Area: testo"` (numero calcolato: 5.6 → 5.6.1 / 5.7 / 6.0; `--prova` per vedere senza scrivere).
+- **Pagina delle novità:** `lab/novita-5-6.html` (foto in `lab/novita-5-6/`), collegata dal Lab e dall'Anteprima.
+- **Prova nel Lab:** `lab/offline/` → lo specchio serve anche `versioni.js`, `versioni.json` e le due `versioni.html`, e aggiunge `versioni.js` alle Home. Copia offline: anche le pagine Versioni e `versioni.json`.
+- **Prove (Chromium):** Versioni Lega e Stadio a 320 px (8 schede, Messaggio e Changelog, apertura), avviso in Home per 3 visite poi solo il collegamento, `novita-5-6.html` a 320 e 1280 px senza risorse mancanti, `aggiungi.py --prova` per i tre tipi. Nessun errore. Non provati: Safari/iPhone.
+- **Rilascio 5.6 (dopo la prova e il «vai»):** su `gh-pages` copiare `versioni.json`, `versioni.js`, `cerca.js`, `push.js`, `sw.js` aggiornato, `apri.html`; `python3 rilascio/versioni/crea_pagine.py COPIA`; aggiungere `<script src="../versioni.js" defer>` alle due Home (`girrr/index.html`, `stadio/girrr/index.html`, Stadio `../../`), `push.js` alle due Notifiche e `cerca.js` allo Spogliatoio; sorgenti in `ufficiale/src/sito/`. Le notifiche push solo dopo la conferma della migrazione Supabase.
+
 ## 9 novembre (sera, 4) — Claude: notifiche push e Cerca un giocatore (prova nel Lab; database in attesa della conferma)
 
 Richieste di Gianluca: notifiche push con scelta di quali ricevere (interruttori iPhone su iPhone, Android su Android), conto alla rovescia della formazione 3 ore e 1 ora prima, Cerca un giocatore sempre nello Spogliatoio.
