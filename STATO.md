@@ -1,4 +1,13 @@
-# Stato del progetto O Girrr (ultimi giorni — aggiornato 3 novembre 2026)
+# Stato del progetto O Girrr (ultimi giorni — aggiornato 9 novembre 2026)
+
+## 9 novembre — Claude: **ONLINE** 7ª giornata di campionato (Serie A 11) e 4ª di Champions Cup, Giornale n° 7
+
+- **Importazione dagli screen** (Chrome di Gianluca non raggiungibile dal telefono): formazioni lette dagli screen di Leghe e composte in `LETTURA.json` (fuori dal repo). Le sostituzioni sono state ricostruite dal totale: l'importatore ha verificato tutte le 10 squadre (somma fantavoti + modificatore difesa = totale Leghe), classifica ricalcolata uguale a quella di Leghe in ogni riga. The Blue brothers e AFA SELECCION hanno giocato **in 10** (nessun cambio valido). Nome in rosa con accento: «Laurientè». `gh-pages` `23c955c`; `calcTs["11"]` = 08:48 UTC (ora presa dal messaggio di Gianluca, non da Leghe), uscita prevista 10:48 ora italiana, Coppa +5 minuti.
+- Mariana Coneja–Apo team e Oranje VC–WOA valgono sia per il campionato che per la Champions Cup (stesso risultato); Real Madrink–Blue brothers e Atletico–Grodah sono solo di Coppa. Riposano stif dc (gir. A) e AFA SELECCION (gir. B).
+- **Calcoli dopo la giornata** lanciati a mano (run 42589587347, `main` `db4be7d`): giornata 7 in `calcoli/giornate.json`.
+- **Giornale n° 7** (`gh-pages` `f6397d1`): testi secondo i tre livelli di scrittura, PDF di 4 pagine controllate rasterizzate, tabellone Lega 07 e Coppa 04, archivio. `controllo_giornata.py 7`: 15 ok, 0 errori; 4 avvisi sono falsi allarmi sulle sigle dei nomi (F.P., M., K.). Le copertine vecchie rigenerate da `pdftoppm` non sono state committate (restano quelle di prima).
+- **Moviola** nessun episodio manuale (Gianluca non ha mandato link). **Radio** non ancora uscita: serve il post vero della Curva della settimana da Gianluca e che il Giornale sia online.
+- Nota per la lettura da screen: nella schermata della partita le righe in grigio sono giocatori non entrati; quelle in nero sono entrati. Nelle partite della Coppa le formazioni sono le stesse del campionato.
 
 ## 3 novembre (1) — Claude: **ONLINE** 6ª giornata di campionato (Serie A 10) e 3ª di Champions Cup
 
