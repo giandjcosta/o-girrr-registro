@@ -43,7 +43,7 @@
   function E(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
   function stile() {
-    var acc = stadio ? '#ffd166' : '#d62839', suAcc = stadio ? '#1d2a52' : '#fff';
+    var acc = stadio ? '#ffd166' : '#d62839', suAcc = '#fff'; /* pallino sempre bianco, anche sull'oro (Gianluca) */
     var s = document.createElement('style');
     s.textContent =
       '.pt{margin-top:6px}.pt p.pt-nota{color:var(--v53-muted,#bfe3ff);font-size:13px;line-height:1.45;margin:8px 0 0}' +
@@ -59,7 +59,7 @@
       '.pt-ios .pt-row b{font-weight:600;font-size:16px}' +
       '.pt-ios .pt-sw{flex:none;position:relative;width:51px;height:31px;border-radius:16px;border:0;padding:0;cursor:pointer;background:rgba(120,120,128,.36);transition:background-color .25s ease}' +
       '.pt-ios .pt-sw::after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.15),0 3px 1px rgba(0,0,0,.06);transition:transform .25s cubic-bezier(.3,.7,.4,1)}' +
-      '.pt-ios .pt-sw[aria-checked=true]{background:' + acc + '}' + (stadio ? '.pt-ios .pt-sw[aria-checked=true]::after{background:#1d2a52}' : '') + '.pt-ios .pt-sw[aria-checked=true]::after{transform:translateX(20px)}' +
+      '.pt-ios .pt-sw[aria-checked=true]{background:' + acc + '}' + '.pt-ios .pt-sw[aria-checked=true]::after{transform:translateX(20px)}' +
       /* Android: righe Material e interruttori Material 3 */
       '.pt-and .pt-group{margin-top:8px}.pt-and .pt-row{padding:12px 2px;min-height:56px;box-sizing:border-box}' +
       '.pt-and .pt-row b{font-weight:600;font-size:16px;letter-spacing:.01em}' +
