@@ -3,7 +3,7 @@
    si aggiorna da sola quando un rilascio aggiunge una versione.
    - In versioni.html (Lega e Stadio) disegna la pagina: interruttore «Messaggio / Changelog» e una scheda per versione.
    - Nella Home mostra «È uscita la 5.6 · Scopri le novità» per 3 visite o finché non lo tocchi.
-   - In fondo alla pagina Notifiche: voce piccola «Versione 5.6 · Changelog ›», sempre. */
+   - In fondo alla pagina Notifiche, a destra: un piccolo «V5.6» cliccabile, sempre. */
 (function () {
   var io = document.currentScript, ROOT = new URL('./', io && io.src ? io.src : location.href).href;
   var stadio = /\/stadio\//.test(location.pathname);
@@ -124,13 +124,13 @@
     }).catch(function () {});
   }
 
-  /* Notifiche: voce piccola in fondo in fondo, lontana da tutto (decisione di Gianluca) */
+  /* Notifiche: un piccolo «V5.6» cliccabile in fondo in fondo a destra, si vede solo arrivando in fondo (Gianluca) */
   function inFondoNotifiche() {
     carica().then(function (j) {
       var x = (j.versioni || [])[0]; if (!x || document.querySelector('.vv-fondo')) return;
       var a = document.createElement('a'); a.className = 'vv-fondo'; a.href = 'versioni.html';
-      a.textContent = 'Versione ' + x.v + ' · Changelog ›';
-      a.style.cssText = 'display:block;text-align:center;margin:28px auto 8px;padding:8px;font:700 11.5px/1.4 Inter,system-ui,sans-serif;letter-spacing:.06em;color:inherit;opacity:.55;text-decoration:none';
+      a.textContent = 'V' + x.v; a.setAttribute('aria-label', 'Versione ' + x.v + ': tutte le versioni');
+      a.style.cssText = 'display:block;width:max-content;margin:18px 0 6px auto;padding:6px 8px;font:800 11px/1 Inter,system-ui,sans-serif;letter-spacing:.08em;color:inherit;opacity:.45;text-decoration:none;border-radius:6px';
       var w = document.querySelector('.wrap') || document.body;
       w.appendChild(a);
     }).catch(function () {});

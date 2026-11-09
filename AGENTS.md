@@ -70,6 +70,7 @@ Repository: `o-fant-a-girrr` (sito della lega), `o-girrr-registro` (laboratorio 
 - Mai scrivere nel codice chiavi, token o password. Le chiavi "publishable" di Supabase già presenti nelle pagine sono pubbliche per scelta; ogni altra chiave no.
 - Cambi di pagina, schede e aperture di tendine e menu devono essere fluidi (dissolvenze e scorrimenti morbidi, niente di scattante), rispettando «riduci movimento».
 - Prima di consegnare, prova davvero: le pagine devono funzionare a 320 px di larghezza (iPhone SE) senza scorrere di lato, e la console del browser non deve avere errori nuovi.
+- **Prove su tutti gli schermi (Gianluca, 9 novembre 2026):** ogni novità e ogni versione si prova su telefono piccolo e grande (iPhone SE, iPhone recente, Android piccolo e grande), iPad e tablet Android in verticale e orizzontale, PC (1280, 1920), monitor grande (2560) e smart TV (1920×1080 a densità doppia), con l'identità di iOS e di Android. A Gianluca si mandano le foto su PC e TV. Script pronto nel registro: `prove/prova_schermi_56.js`. Se un motore non è disponibile (per esempio WebKit/Safari) va detto.
 
 ### Cosa serve il "vai" di Gianluca
 - Qualsiasi modifica al sito vero, anche una correzione di testo: prima preview nel Lab, poi certificazione e «Vai» esplicito di Gianluca.
