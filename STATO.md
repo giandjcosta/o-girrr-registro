@@ -1,5 +1,11 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 9 novembre 2026)
 
+## 9 novembre (notte, 5) — Claude: 5.5.1 e 5.6 separate
+
+- **Decisione di Gianluca:** copia offline e scorciatoie dell'icona (online dal 9 novembre, `gh-pages` `e06cbe2`) sono la **5.5.1** («due piccoli cambi»); la **5.6** è il resto: notifiche sul telefono, Cerca, Condividi, La mia stagione, Versioni.
+- `versioni.json`: nuova 5.5.1 (aggiornamento minore, con messaggio e changelog di copia offline e scorciatoie); 5.6 senza quelle voci, titolo «Notifiche sul telefono e La mia stagione», messaggio aggiornato. L'etichetta del tipo minore ora è «Aggiornamento minore» (non «Correzione»). Prossimo numero calcolato da `aggiungi.py`: 5.6 → 5.6.1 / 5.7 / 6.0.
+- `lab/novita-5-6.html`: la sezione «Già online» è ora «Già online · Versione 5.5.1». `AGENTS.md` del registro e del sito: sul sito c'è la 5.5.1, la 5.6 è in prova.
+
 ## 9 novembre (notte, 4) — Claude: notifiche push attive, storia delle versioni 1.0-4.5, V5.6 piccolo, Stagione a colonne
 
 - **Notifiche push ATTIVE.** Gianluca ha eseguito `da-incollare.sql` nell'editor SQL: 3 tabelle in `push_private`, 10 funzioni `push_*`, giro `push-giro` ogni 5 minuti attivo. Chiavi di firma create dalla funzione (`{chiave:true}` → 200). Primo giro automatico delle 21:15 UTC: HTTP 200, 0 iscrizioni, nessun errore. Senza gettone il giro risponde 401 (giusto). Le pagine con gli interruttori sono ancora solo nel Lab: la prima iscrizione vera si può fare dalla prova nel Lab (`lab/offline/` → Notifiche).
