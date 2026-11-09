@@ -1,5 +1,11 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 9 novembre 2026)
 
+## 9 novembre (10:10) — Claude: uscita anticipata e Radio
+
+- Su richiesta di Gianluca («fai uscire tutto ora») `calcTs[11]` portato alle 07:55Z (gh-pages daa6ee6): Giornale, post Lega e Coppa già visibili. Nel DB (`curva_adm`) i post della 7ª (Girrr Sport, Giornale, Moviola) sono già pubblicati, nessun orario nel futuro, nessuna modifica al database.
+- Moviola: nessun episodio manuale, restano quelli automatici.
+- **Radio NON uscita**: run 42590719838 fallita, Gemini TTS risponde 400 («Unknown name speechConfig at generation_config») per `gemini-3.8-flash-tts` e `-lite-tts`. Non pubblicato nulla. Da sistemare `voci-src/puntata.py` (formato della richiesta TTS) prima di rilanciare con `subito=1`.
+
 ## 9 novembre — Claude: **ONLINE** 7ª giornata di campionato (Serie A 11) e 4ª di Champions Cup, Giornale n° 7
 
 - **Importazione dagli screen** (Chrome di Gianluca non raggiungibile dal telefono): formazioni lette dagli screen di Leghe e composte in `LETTURA.json` (fuori dal repo). Le sostituzioni sono state ricostruite dal totale: l'importatore ha verificato tutte le 10 squadre (somma fantavoti + modificatore difesa = totale Leghe), classifica ricalcolata uguale a quella di Leghe in ogni riga. The Blue brothers e AFA SELECCION hanno giocato **in 10** (nessun cambio valido). Nome in rosa con accento: «Laurientè». `gh-pages` `23c955c`; `calcTs["11"]` = 08:48 UTC (ora presa dal messaggio di Gianluca, non da Leghe), uscita prevista 10:48 ora italiana, Coppa +5 minuti.
