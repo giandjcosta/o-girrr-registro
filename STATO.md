@@ -1,5 +1,11 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 9 novembre 2026)
 
+## 9 novembre (notte, 10) — Claude: 5.6.1 pronta (Gianluca: «son 5.6.1 ok»), aspetta il «vai» per il sito
+
+- **5.6.1 (aggiornamento minore)** in `versioni.json` (con `aggiungi.py`): «Notifiche più ordinate» — notifiche lette rimpicciolite nel gruppo «Già lette», passaggio fluido Messaggio/Changelog, pillola della versione nella Home sopra gli sponsor. Messaggio per il gruppo scritto.
+- **Rilascio:** `python3 rilascio/rilascio561.py COPIA_GH_PAGES [--vai]` (versioni.js, versioni.json, notifiche-lette.js nella radice e nelle due Notifiche). Provato su una copia di `gh-pages` (`caa13c6` + 5.6.1): pillola «V5.6.1 ›» sopra gli sponsor su 16 schermi × Lega e Stadio, cambio fluido e «Già lette» su 10 schermi; nessun errore nuovo (l'errore di transizione «ViewTransition» c'era già con ogni link). Sui PC grandi e sulla TV la pagina Notifiche sta già tutta nello schermo.
+- **Non pubblicata:** Gianluca ha confermato il numero; per pubblicare serve un «vai» esplicito (come per la 5.5.1, il controllo di sicurezza ferma i rilasci senza).
+
 ## 9 novembre (notte, 9) — Claude: pillola «V5.6 ›» nella Home sopra gli sponsor (prova nel Lab)
 
 - **Decisione di Gianluca:** la pillola della versione va nella **Home**, in fondo a destra, subito sopra gli sponsor («Gentilmente offerto da»), così scorrendo in basso si vede che versione hai. Non è più in fondo alle Notifiche. `rilascio/versioni/versioni.js` (stessa pillola con bordo e freccia; il tocco apre Versioni); testi aggiornati in `versioni.json`, `lab/novita-5-6.html`, `lab/offline/`.
