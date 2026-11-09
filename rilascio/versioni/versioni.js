@@ -12,7 +12,17 @@
   var ridotto = false; try { ridotto = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
 
   function E(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-  function grassetto(s) { return E(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/(^|[\s(])\*([^*\n]+?)\*(?=[\s).,!?]|$)/g, '$1<i>$2</i>'); }
+  /* Le emoji a inizio e fine riga restano attaccate alla parola vicina (spazio che non va a capo):
+     così non resta mai una coppa da sola su una riga (Gianluca) */
+  var EMO = '(?:\\p{Extended_Pictographic}|\\uFE0F|\\u200D)+';
+  function legaEmoji(s) {
+    try {
+      return String(s == null ? '' : s)
+        .replace(new RegExp('[ \\t]+(' + EMO + ')', 'gu'), '\u00a0$1')
+        .replace(new RegExp('(^|\\n)(' + EMO + ')[ \\t]+', 'gu'), '$1$2\u00a0');
+    } catch (e) { return s; }
+  }
+  function grassetto(s) { s = legaEmoji(s); return E(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/(^|[\s(])\*([^*\n]+?)\*(?=[\s).,!?]|$)/g, '$1<i>$2</i>'); }
   function data(iso) { var p = String(iso || '').split('-'); return p.length === 3 ? (+p[2]) + ' ' + MESI[+p[1] - 1] + ' ' + p[0] : ''; }
   function periodo(x) {
     if (!x.fino) return (x.circa ? 'circa ' : '') + data(x.data);
