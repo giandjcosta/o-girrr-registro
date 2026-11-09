@@ -5,13 +5,8 @@ Nessuna di queste è approvata: ognuna aspetta il «vai» di Gianluca (e, se toc
 
 ## In attesa
 
-### Notifiche push vere (proposta da Claude, 9 novembre 2026, da decidere)
-Le notifiche arrivano sul telefono anche con O Girrr chiuso, come quelle di WhatsApp.
-- **Come funzionerebbe:** nella pagina Notifiche un pulsante «Avvisami sul telefono». Il telefono chiede il permesso; se dici sì, crea un «indirizzo» di consegna solo suo, che si salva su Supabase insieme alla squadra. Quando succede qualcosa (Giornale uscito, risultati della giornata, risposta in Curva, sfida nel Derby), una funzione su Supabase o un workflow manda il messaggio a quell'indirizzo, firmato con una chiave segreta. Il service worker della copia offline (`sw.js`) lo riceve e mostra la notifica; toccandola si apre la pagina giusta (le destinazioni ci sono già, `destinazioni55.js`).
-- **Si appoggia a quello che c'è:** le notifiche personali su Supabase (`notifiche_stato`) esistono già; la push sarebbe la stessa notifica, spedita anche al telefono. Ognuno sceglie quali ricevere.
-- **Telefoni:** Android sì, anche dal browser. iPhone solo con O Girrr aggiunto alla schermata Home (iOS 16.4 o successivo). PC sì.
-- **Costi:** zero; i servizi di consegna di Google, Apple e Mozilla sono gratuiti.
-- **Serve:** una tabella e una funzione su Supabase (il «vai» per il database), due chiavi segrete nei segreti del progetto (mai nel codice), il pulsante nella pagina Notifiche. Prova nel Lab prima.
+### Notifiche push (Gianluca: «crea pure», 9 novembre 2026) — in prova nel Lab
+Fatte nel Lab (`lab/offline/`), aspettano la conferma della migrazione su Supabase e poi la prova sul telefono. Dettagli in `STATO.md`.
 
 ### Scarica la Radio per il treno (Claude, 9 novembre 2026; Gianluca: «per ora no»)
 Un pulsante «Scarica per ascoltare offline» accanto alla puntata: salva l'mp3 (circa 1,4 MB) nella copia offline.
@@ -19,20 +14,26 @@ Un pulsante «Scarica per ascoltare offline» accanto alla puntata: salva l'mp3 
 ### Calendario delle giornate in Google Calendar (Claude, 9 novembre 2026; Gianluca: «per ora no»)
 Un file `.ics` scritto dai workflow con le giornate e l'orario di consegna della formazione: si aggiunge una volta a Google Calendar (o al calendario dell'iPhone) e si aggiorna da solo, con il promemoria.
 
-### Conto alla rovescia della formazione (Claude, 9 novembre 2026)
-In Home «Mancano 3 h 20 min alla consegna della formazione», rosso nell'ultima ora. Con le notifiche push, anche un avviso due ore prima a chi non ha ancora schierato (se il dato è disponibile da Leghe).
+### Conto alla rovescia della formazione (Gianluca: sì, come notifica 3 ore e 1 ora prima)
+Dentro le notifiche push. Resta da fare, se si vuole, il conto alla rovescia scritto anche nella Home.
 
-### Condividi come immagine (Claude, 9 novembre 2026)
-Un pulsante «Condividi» sul risultato della tua partita, sul Tabellone e sulla copertina del Giornale, che apre la condivisione del telefono (WhatsApp del gruppo) con un'immagine pronta. Le immagini del Tabellone le generano già i workflow (`riepiloghi/tabellone-*.png`).
+### Condividi come immagine (Gianluca chiede dove e cosa sarebbe)
+- **Dove:** un pulsante «Condividi» (icona di condivisione del telefono) in tre punti: sotto la tua partita nel Tabellone, sulla classifica, sulla copertina del Giornale.
+- **Cosa:** un'immagine verticale pronta per WhatsApp, con la grafica scelta (Lega o Stadio): stemmi, risultato, marcatori e giornata («Mariana Coneja–Apo team 3-2 · 7ª giornata»); per la classifica le prime posizioni con la tua squadra evidenziata; per il Giornale la copertina. Si apre il menu del telefono e scegli il gruppo. Solo dati del livello sportivo, niente fantapunti.
+- **Come:** l'immagine si disegna nel telefono (canvas) e si passa alla condivisione del sistema (Web Share, iPhone e Android); su PC si scarica.
 
-### Cerca un giocatore (Claude, 9 novembre 2026)
-Una casella di ricerca: scrivi «Pulisic» e vedi chi lo ha in rosa, voti e fantavoti della stagione, episodi della Moviola, andamento nel Borsino. I dati ci sono già (`data.json`, `formazioni.json`, `girrr/dati/`).
+### Cerca un giocatore (Gianluca: «sempre nello Spogliatoio») — in prova nel Lab
+Fatto nel Lab (`lab/offline/` → Spogliatoio). Dettagli in `STATO.md`.
 
-### La mia stagione (Claude, 9 novembre 2026)
-A fine girone e a fine stagione un riepilogo a schede da scorrere per ogni squadra: miglior giornata, giocatore che ha portato più fantapunti, Derby vinti, posizione più alta. Livello tecnico per i numeri, editoriale per i testi.
+### La mia stagione (Gianluca chiede dove e come sarebbe)
+- **Dove:** nello Spogliatoio, una scheda «La mia stagione» accanto a Statistiche; in più un riquadro in Home che compare a fine girone d'andata e a fine stagione («È pronta la tua stagione»).
+- **Come:** schede a tutto schermo da scorrere col dito, una alla volta, con la grafica scelta: posizione e punti in classifica (e la migliore posizione raggiunta), vittorie, pareggi e sconfitte, la striscia più lunga, la miglior giornata (fantapunti, livello tecnico), il giocatore che ha portato più fantapunti, il colpo di mercato (Borsino), Derby vinti e persi, Champions Cup. Ultima scheda riassuntiva da condividere come immagine.
+- Solo dati veri; dove mancano «Dato non conservato».
 
-### Risultati provvisori durante la giornata (Claude, 9 novembre 2026, fonte da verificare)
-Mentre si gioca la Serie A, punteggio provvisorio delle partite del Girrr. Prima bisogna capire se esiste una fonte affidabile dei voti in diretta: senza, non si fa.
+### Risultati provvisori durante la giornata (Gianluca: «difficilissimo seguire tutto mentre si gioca»)
+- I voti ufficiali arrivano a fine partita (sera o giorno dopo); durante le partite esistono solo i dati «live» (gol, assist, cartellini, minuti), che però sono le parti che decidono i bonus e malus.
+- Un «in diretta» onesto: durante le partite di Serie A, per ogni sfida del Girrr solo i **fatti certi dei giocatori schierati** (gol, assist, rigori, cartellini, chi è in campo), senza inventare voti né un punteggio provvisorio. Il risultato vero resta quello di Leghe a fine giornata. Si aggiorna ogni pochi minuti.
+- Il problema è la fonte: serve un servizio con i dati live di Serie A affidabile e consultabile (spesso a pagamento o senza permesso di uso), e le formazioni schierate su Leghe prima della chiusura. Prima di farlo bisogna trovare la fonte; senza, niente.
 
 ## Fatte
 - **Copia offline** (online il 9 novembre 2026, `gh-pages` `e06cbe2`), vedi `STATO.md`.
