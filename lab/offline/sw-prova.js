@@ -40,7 +40,7 @@ self.GIRRR_SPECCHIO = (function () {
         return r.text().then(function (t) {
           if (!loc) t = riscrivi(t);
           if (/text\/html/.test(ct) && t.indexOf('offline.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'offline.js" defer></script></head>');
-          if (/text\/html/.test(ct) && /\/o-fant-a-girrr\/(stadio\/)?girrr\/(index\.html)?$/.test(dest.split('?')[0]) && t.indexOf('versioni.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'versioni.js" defer></script></head>');
+          if (/text\/html/.test(ct) && /\/o-fant-a-girrr\/(stadio\/)?girrr\/(index\.html|notifiche\.html)?$/.test(dest.split('?')[0]) && t.indexOf('versioni.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'versioni.js" defer></script></head>');
           if (/text\/html/.test(ct) && /\/o-fant-a-girrr\/(index\.html)?$/.test(dest.split('?')[0]) && t.indexOf('cerca.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'cerca.js" defer></script></head>');
           if (/text\/html/.test(ct) && /\/(tabellone|giornale)\.html$/.test(dest.split('?')[0]) && t.indexOf('condividi.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'condividi.js" defer></script></head>');
           if (/text\/html/.test(ct) && /\/notifiche\.html$/.test(dest.split('?')[0]) && t.indexOf('push.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'push.js" defer></script></head>');

@@ -80,7 +80,7 @@
     var ps = (D.ps || {})[id], v = (D.votes || {})[id] || {}, lg = (D.log || {})[id] || {}, b = BOR[id], mv = MOV[id] || [];
     var h = '<h3><span>' + E(x.n) + '</span><button type="button" class="gc-x" aria-label="Chiudi la scheda">✕</button></h3>' +
       '<div class="gc-sub">' + E(x.t) + ' · ' + (RUOLI[x.r] || x.r) + (x.q != null ? ' · Quotazione ' + E(x.q) : '') + '</div><div class="gc-tags">';
-    if (x.rosa) h += '<span class="gc-tag' + (x.rosa.team === mio ? ' mio' : '') + '">' + E(x.rosa.team) + ' · pagato ' + E(x.rosa.c) + ' fantacrediti</span>';
+    if (x.rosa) h += '<span class="gc-tag' + (x.rosa.team === mio ? ' mio' : '') + '">' + E(x.rosa.team) + ' · Pagato ' + E(x.rosa.c) + ' fantacrediti</span>';
     else h += '<span class="gc-tag">Svincolato</span>';
     if (pr) h += '<span class="gc-tag ' + (pr === 'T' ? 'ok' : pr === 'I' ? 'no' : pr === 'D' || pr === 'B' || pr === 'R' ? 'mid' : '') + '">' + (D.nx ? D.nx + 'ª di Serie A: ' : 'Prossima: ') + E(PROSSIMA[pr] || pr) + '</span>';
     h += '</div>';

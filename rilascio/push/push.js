@@ -1,4 +1,4 @@
-/* O Girrr · notifiche sul telefono (Claude, 9 novembre 2026, richiesta di Gianluca).
+/* O Girrr · Notifiche sul telefono (Claude, 9 novembre 2026, richiesta di Gianluca).
    Va nella radice del sito (/o-fant-a-girrr/push.js), incluso dalla pagina Notifiche di Lega e Stadio.
    Riempie il riquadro «Notifiche sul telefono»: interruttore generale e uno per tipo di avviso,
    con la forma del telefono (iPhone: interruttori iOS; Android e PC: interruttori Android) e il colore della grafica

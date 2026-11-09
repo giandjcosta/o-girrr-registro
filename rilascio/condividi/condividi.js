@@ -62,7 +62,7 @@
     if (!document.fonts || !document.fonts.load) return Promise.resolve();
     return Promise.all(['900 80px Inter', '700 40px Inter', '400 80px Lobster'].map(function (f) { return document.fonts.load(f).catch(function () {}); }));
   }
-  function base(ctx, logo, kick, titolo) {
+  function base(ctx, logo, kick, titolo, piede) {
     var g = ctx.createLinearGradient(0, 0, W * 0.3, H);
     g.addColorStop(0, stadio ? '#25356b' : '#2c3f7c'); g.addColorStop(0.55, '#1d2a52'); g.addColorStop(1, '#141d3d');
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
@@ -77,8 +77,8 @@
     if (ctx.letterSpacing !== undefined) ctx.letterSpacing = '0px';
     ctx.fillStyle = '#fbf6ec'; ctx.font = (stadio ? '400 76px ' : '900 70px ') + TIT;
     adatta(ctx, titolo, 250, 192, W - 300, stadio ? 76 : 70, stadio ? '400' : '900', TIT);
-    ctx.fillStyle = 'rgba(255,255,255,.55)'; ctx.font = '700 26px Inter, system-ui, sans-serif'; ctx.textAlign = 'center';
-    ctx.fillText('O Girrr · giandjcosta.github.io/o-fant-a-girrr', W / 2, H - 52); ctx.textAlign = 'left';
+    ctx.fillStyle = 'rgba(255,255,255,.6)'; ctx.font = '800 28px Inter, system-ui, sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(piede, W / 2, H - 52); ctx.textAlign = 'left';
   }
   function adatta(ctx, testo, x, y, max, size, peso, fam) {
     var s = size; ctx.font = peso + ' ' + s + 'px ' + fam;
@@ -131,7 +131,7 @@
       if (p.gir) { ctx.fillStyle = '#bfe3ff'; ctx.font = '700 22px Inter, system-ui, sans-serif'; ctx.fillText('Girone ' + p.gir, W / 2, y + 30); }
       ctx.textAlign = 'left';
     });
-    return comp + ' · risultati della ' + v.g.n + 'ª giornata';
+    return comp + ' · Risultati della ' + v.g.n + 'ª giornata';
   }
   function tabella(ctx, d, v, mio) {
     var c = classifica(d, v.g.n);
@@ -158,7 +158,8 @@
     return Promise.all([caratteri(), img(ROOT + 'assets/loghi/logo-lega-o-fant-a-girrr.png')]).then(function (x) {
       var c = document.createElement('canvas'); c.width = W; c.height = H;
       var ctx = c.getContext('2d');
-      base(ctx, x[1], 'O Fant A Girrr · 2026/27', tipo === 'classifica' ? 'Classifica' : tipo === 'mia' ? 'La mia partita' : (art(v.g.n).replace(/^./, function (z) { return z.toUpperCase(); }) + v.g.n + 'ª giornata'));
+      var piede = 'O Fant A Girrr · ' + (v.coppa && tipo !== 'classifica' ? 'Champions Cup' : 'Campionato') + ' 2026/27';
+      base(ctx, x[1], 'O Fant A Girrr · 2026/27', tipo === 'classifica' ? 'Classifica' : tipo === 'mia' ? 'La mia partita' : (art(v.g.n).replace(/^./, function (z) { return z.toUpperCase(); }) + v.g.n + 'ª giornata'), piede);
       var testo = tipo === 'mia' ? laMiaPartita(ctx, d, v, mio) : tipo === 'classifica' ? tabella(ctx, d, v, mio) : risultati(ctx, d, v, mio);
       if (!testo) throw new Error('La tua squadra non gioca in questa giornata');
       return new Promise(function (ok) { c.toBlob(function (b) { ok({ blob: b, testo: testo, nome: 'o-girrr-' + tipo + '-' + v.g.n + '.png', url: c.toDataURL('image/png') }); }, 'image/png'); });

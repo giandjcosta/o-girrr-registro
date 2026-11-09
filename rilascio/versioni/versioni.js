@@ -2,7 +2,8 @@
    Va nella radice del sito (/o-fant-a-girrr/versioni.js). Legge versioni.json (stessa cartella), quindi la pagina
    si aggiorna da sola quando un rilascio aggiunge una versione.
    - In versioni.html (Lega e Stadio) disegna la pagina: interruttore «Messaggio / Changelog» e una scheda per versione.
-   - Nella Home mostra una volta sola «È uscita la 5.6 · Scopri le novità» quando c'è una versione nuova. */
+   - Nella Home mostra «È uscita la 5.6 · Scopri le novità» per 3 visite o finché non lo tocchi.
+   - In fondo alla pagina Notifiche: voce piccola «Versione 5.6 · Changelog ›», sempre. */
 (function () {
   var io = document.currentScript, ROOT = new URL('./', io && io.src ? io.src : location.href).href;
   var stadio = /\/stadio\//.test(location.pathname);
@@ -99,14 +100,6 @@
   function avvisoHome() {
     carica().then(function (j) {
       var x = (j.versioni || [])[0]; if (!x) return;
-      /* Collegamento fisso in fondo alla Home */
-      var piede = document.querySelector('.foot');
-      if (piede && !piede.querySelector('.vv-piede')) {
-        var l = document.createElement('a'); l.className = 'vv-piede'; l.href = 'versioni.html';
-        l.style.cssText = 'color:inherit;font-weight:800;margin-left:6px;white-space:nowrap';
-        l.textContent = '· Versione ' + x.v + ' ›';
-        piede.appendChild(l);
-      }
       var vista = null; try { vista = localStorage.getItem('girrr_versione_vista'); } catch (e) {}
       if (vista === x.v) return;
       /* Si mostra al massimo 3 volte, o finché non lo tocchi */
@@ -131,10 +124,22 @@
     }).catch(function () {});
   }
 
+  /* Notifiche: voce piccola in fondo in fondo, lontana da tutto (decisione di Gianluca) */
+  function inFondoNotifiche() {
+    carica().then(function (j) {
+      var x = (j.versioni || [])[0]; if (!x || document.querySelector('.vv-fondo')) return;
+      var a = document.createElement('a'); a.className = 'vv-fondo'; a.href = 'versioni.html';
+      a.textContent = 'Versione ' + x.v + ' · Changelog ›';
+      a.style.cssText = 'display:block;text-align:center;margin:28px auto 8px;padding:8px;font:700 11.5px/1.4 Inter,system-ui,sans-serif;letter-spacing:.06em;color:inherit;opacity:.55;text-decoration:none';
+      var w = document.querySelector('.wrap') || document.body;
+      w.appendChild(a);
+    }).catch(function () {});
+  }
   function avvia() {
     var box = document.getElementById('versioni');
     if (box) pagina(box);
     else if (/\/girrr\/(index\.html)?$/.test(location.pathname)) avvisoHome();
+    else if (/\/notifiche\.html$/.test(location.pathname)) inFondoNotifiche();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', avvia); else avvia();
 })();

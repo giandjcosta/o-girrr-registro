@@ -1,4 +1,4 @@
--- O Girrr · notifiche sul telefono: TUTTO IN UNO da incollare nell'editor SQL di Supabase (progetto qmjqfgmvimsuxvghetgi) e premere Run.
+-- O Girrr · Notifiche sul telefono: TUTTO IN UNO da incollare nell'editor SQL di Supabase (progetto qmjqfgmvimsuxvghetgi) e premere Run.
 -- Crea solo cose nuove (schema push_private, funzioni push_*, giro ogni 5 minuti). Si può rilanciare senza danni.
 
 -- Notifiche push di O Girrr (Claude, 9 novembre 2026, richiesta di Gianluca).
