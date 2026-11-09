@@ -49,14 +49,14 @@
       '.vv-t small{display:block;color:var(--sub,#bfe3ff);font-weight:700;font-size:12px;margin-top:3px}' +
       '.vv-f{flex:none;width:22px;height:22px;transition:transform .35s ease;opacity:.8}.vv-v.aperta .vv-f{transform:rotate(180deg)}' +
       '.vv-c{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease}.vv-v.aperta .vv-c{grid-template-rows:1fr}' +
-      '.vv-c>div{overflow:hidden}.vv-in{padding:0 16px 16px}' +
+      '.vv-c>div{overflow:hidden}.vv-in{padding:0 16px 16px;box-sizing:border-box;overflow:hidden;transition:opacity .2s ease,height .4s ease}' +
       '.vv-msg{white-space:pre-line;overflow-wrap:anywhere;font-size:15px;line-height:1.55;font-weight:500;background:rgba(0,0,0,.18);border-radius:14px;padding:12px 14px}' +
       '.vv-msg b{font-weight:900}' +
       '.vv-area{margin-top:12px}.vv-area:first-child{margin-top:0}.vv-area h4{margin:0 0 4px;font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:' + (stadio ? acc : 'var(--hi,#ffd166)') + '}' +
       '.vv-area h4{font-family:Inter,system-ui,sans-serif!important}.vv-area ul{margin:0;padding-left:18px}.vv-area li{font-size:14px;line-height:1.5;margin:3px 0}' +
       '.vv-leg{margin-top:18px;font-size:12.5px;line-height:1.55;color:var(--sub,#bfe3ff);font-weight:600}.vv-leg b{color:var(--chiaro,#fbf6ec)}' +
       '.vv-fade{transition:opacity .25s ease}.vv-fade.via{opacity:0}' +
-      '@media (prefers-reduced-motion: reduce){.vv-c,.vv-f,.vv-seg button,.vv-fade{transition:none!important}}';
+      '@media (prefers-reduced-motion: reduce){.vv-c,.vv-f,.vv-seg button,.vv-fade,.vv-in{transition:none!important}}';
     document.head.appendChild(s);
   }
 
@@ -92,12 +92,30 @@
         };
       });
     }
+    /* Messaggio ⇄ Changelog fluido (Gianluca): le testate restano ferme; nelle schede aperte il testo
+       sfuma, si cambia e la scheda si allunga o si accorcia piano fino alla nuova altezza */
+    function cambia() {
+      Array.prototype.forEach.call(box.querySelectorAll('.vv-seg button'), function (b) { b.setAttribute('aria-pressed', String(b.dataset.m === modo)); });
+      Array.prototype.forEach.call(lista.querySelectorAll('.vv-v'), function (sez) {
+        var x = V.filter(function (y) { return y.v === sez.dataset.v; })[0], el = sez.querySelector('.vv-in');
+        if (!x || !el) return;
+        if (ridotto || !sez.classList.contains('aperta')) { el.innerHTML = corpo(x); return; }
+        var h1 = el.offsetHeight;
+        el.style.height = h1 + 'px'; el.style.opacity = '0';
+        setTimeout(function () {
+          el.innerHTML = corpo(x);
+          el.style.height = 'auto'; var h2 = el.offsetHeight; el.style.height = h1 + 'px';
+          void el.offsetHeight;
+          el.style.height = h2 + 'px'; el.style.opacity = '1';
+          setTimeout(function () { el.style.height = ''; }, 420);
+        }, 200);
+      });
+    }
     Array.prototype.forEach.call(box.querySelectorAll('.vv-seg button'), function (b) {
       b.onclick = function () {
         if (b.dataset.m === modo) return;
         modo = b.dataset.m; try { localStorage.setItem('girrr_versioni_modo', modo); } catch (e) {}
-        lista.classList.add('via');
-        setTimeout(function () { disegna(); lista.classList.remove('via'); }, ridotto ? 0 : 250);
+        cambia();
       };
     });
     carica().then(function (j) {

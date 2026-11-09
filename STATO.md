@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 9 novembre 2026)
 
+## 9 novembre (notte, 8) — Claude: Messaggio/Changelog fluido, notifiche lette rimpicciolite (prova nel Lab)
+
+- **Versioni:** il cambio Messaggio ⇄ Changelog non ridisegna più tutta la lista. Le testate restano ferme; nelle schede aperte il testo sfuma (0,2 s), cambia e la scheda passa piano alla nuova altezza (0,4 s); le chiuse cambiano senza animazione. Con «riduci movimento» niente animazioni. File: `rilascio/versioni/versioni.js`.
+- **Notifiche lette rimpicciolite:** `rilascio/notifiche/notifiche-lette.js` (radice del sito, da includere nelle due Notifiche). Le nuove restano come sono; le lette vanno in fondo nel gruppo chiuso «Già lette · N» (si apre con un tocco, transizione morbida, stato ricordato nella sessione) e da aperte sono righe compatte con il solo titolo. Se non ce ne sono di nuove compare «Nessuna notifica nuova.». Si ricompone da solo quando cambi filtro o segni tutto come letto.
+- **Prove** (`prove/prova_fluido_lette.js`, 10 schermi dal telefono 320 alla TV): cambio con 24 altezze intermedie (niente salto), testate non ridisegnate, gruppo «Già lette · 6» dopo «Segna tutte come lette», pagina più corta (iPhone 15 Pro da 1365 a 975 px), righe compatte visibili, gruppo che resta dopo il filtro; nessuno scorrimento laterale né errori. Sul monitor 2560 la pagina era già più corta dello schermo.
+- **Nel Lab:** lo specchio (`lab/offline/`) serve `notifiche-lette.js` alle Notifiche e il nuovo `versioni.js`. Sito non toccato: serve il «vai» e il numero di versione (proposta 5.6.1).
+- **Versione inglese (richiesta di Gianluca per la 5.6.1):** stima e domande in chat; proposta di farla come 5.7 (aggiornamento medio) a fasi.
+
 ## 9 novembre (notte, 7) — Claude: **ONLINE** versione 5.6 («Pubblica 5.6» di Gianluca)
 
 - **`gh-pages` `caa13c6`** (21 file), fatto con `python3 rilascio/rilascio56.py COPIA --vai`: `push.js` nelle due Notifiche (interruttori iPhone/Android nei colori della grafica, pallino bianco), `cerca.js` nello Spogliatoio (scheda «Cerca»), `condividi.js` in Tabellone e Giornale, `stagione.js` e scheda «Stagione» nella Carriera di `app.html` (Lega e Stadio), `versioni.js` + `versioni.json` (dalla 1.0 alla 5.6) + `girrr/versioni.html` e `stadio/girrr/versioni.html`, `versioni.js` nelle Home (avviso «È uscita la 5.6» per 3 visite) e nelle Notifiche (pillola «V5.6 ›» in fondo a destra), `sw.js` con la ricezione delle notifiche e le pagine Versioni nella copia offline, `apri.html` con l'ancora. La 5.5.1 (copia offline e scorciatoie) era già online dal pomeriggio (`e06cbe2`); la pagina Versioni nella 5.5.1 risulta nel changelog perché era pronta con lei.
