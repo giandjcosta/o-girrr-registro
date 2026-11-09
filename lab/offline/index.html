@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Copia offline · Prova</title>
+<link rel="icon" href="../../favicon-64.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&family=Inter:wght@500;700;800;900&display=swap">
+<style>
+:root{--bg:#141d3d;--bg2:#1d2a52;--ink:#fbf6ec;--mute:#bfe3ff;--gold:#ffd166;--red:#d62839;--ok:#7be495;--line:rgba(255,255,255,.2);--glass:rgba(255,255,255,.08)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink)}
+body{font:500 15px/1.5 Inter,system-ui,-apple-system,sans-serif;min-height:100vh;padding:18px max(16px,env(safe-area-inset-left,0px)) 60px;
+  background:radial-gradient(900px 520px at 85% -8%,rgba(214,40,57,.28),transparent 62%),linear-gradient(180deg,#2c3f7c,#141d3d 70%);background-attachment:fixed}
+.col{max-width:620px;margin:0 auto}
+a.back{color:var(--gold);font-weight:800;font-size:12px;text-decoration:none;border-bottom:1px solid currentColor}
+h1{font-family:Lobster,cursive;font-weight:400;font-size:34px;line-height:1.05;margin:12px 0 6px}
+.proto{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#141d3d;background:var(--gold);padding:2px 8px;border-radius:99px}
+p.lead{color:var(--mute);margin:8px 0 16px}
+.card{background:var(--glass);border:1px solid var(--line);border-left:6px solid var(--red);border-radius:4px 14px 14px 4px;padding:14px 16px;margin-bottom:12px}
+.card h2{font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.card ol,.card ul{padding-left:20px}.card li{margin:4px 0}
+.st{display:flex;align-items:center;gap:10px;font-weight:800}
+.st i{flex:none;width:10px;height:10px;border-radius:50%;background:#888}.st.ok i{background:var(--ok);box-shadow:0 0 8px var(--ok)}.st.no i{background:var(--red)}
+.st small{display:block;color:var(--mute);font-weight:600;font-size:12.5px}
+.bt{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.bt a,.bt button{display:inline-block;font:inherit;font-weight:800;font-size:14px;padding:10px 16px;border-radius:999px;border:0;cursor:pointer;text-decoration:none;transition:opacity .3s,transform .2s}
+.lega{background:var(--red);color:#fff}.stadio{background:var(--gold);color:#1d2a52}.gh{background:var(--glass);color:var(--ink);border:1px solid var(--line)!important}
+.bt button:disabled{opacity:.5;cursor:default}
+.mut{color:var(--mute);font-size:13px}
+@media (prefers-reduced-motion:reduce){.bt a,.bt button{transition:none}}
+</style>
+</head>
+<body>
+<div class="col">
+  <a class="back" href="../">‹ Torna al Lab</a>
+  <h1>Copia offline</h1>
+  <span class="proto">Prova · sito vero non toccato</span>
+  <p class="lead">O Girrr si apre anche senza rete, per esempio in treno: mostra l'ultima copia salvata sul telefono. Con la rete funziona come prima e intanto rinfresca la copia, al massimo ogni 30 minuti.</p>
+
+  <div class="card">
+    <h2>Stato su questo dispositivo</h2>
+    <div class="st" id="st"><i></i><div><span id="st-t">Controllo…</span><small id="st-s"></small></div></div>
+    <div class="bt">
+      <a class="lega" href="sito/girrr/">Apri O Girrr · Lega</a>
+      <a class="stadio" href="sito/stadio/girrr/">Apri O Girrr · Stadio</a>
+      <button class="gh" id="ora" type="button" disabled>Salva la copia adesso</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Come provarla</h2>
+    <ol>
+      <li>Apri questa pagina con la rete e aspetta «Copia salvata» (la prima volta scarica circa 3 MB).</li>
+      <li>Metti il telefono in modalità aereo.</li>
+      <li>Ricarica o apri Lega o Stadio: le pagine si aprono e in basso compare <b>«Offline · Copia delle …»</b>.</li>
+      <li>Togli la modalità aereo: compare <b>«Di nuovo online»</b> con il pulsante Aggiorna (sparisce da solo dopo 8 secondi).</li>
+      <li>Con la <b>✕</b> l'avviso si chiude e non torna più finché non chiudi l'app, nemmeno cambiando pagina o perdendo di nuovo la rete.</li>
+    </ol>
+    <p class="mut" style="margin-top:8px">Con la rete lenta (treno veloce, galleria) la pagina aspetta il sito al massimo 4 secondi, poi mostra la copia e in basso compare «Rete lenta · Copia delle …»; se nel frattempo il sito risponde, la copia si aggiorna da sola.</p>
+  </div>
+
+  <div class="card">
+    <h2>Cosa c'è nella copia</h2>
+    <ul>
+      <li>Tutte le pagine di Lega e Stadio e lo Spogliatoio, con classifica, risultati, Tabellone, Campo, Albo, Statistiche, Moviola e Borsino.</li>
+      <li>Il Giornale: copertine degli ultimi numeri e il PDF dell'ultimo.</li>
+      <li>Curva, Totogirrr, Derby e notifiche: l'ultima versione che hai aperto con la rete, rinfrescata ogni 30 minuti.</li>
+    </ul>
+    <p class="mut" style="margin-top:8px">Senza rete non si può scrivere nella Curva, votare o giocare una schedina: si legge soltanto. La Radio si ascolta solo con la rete. Le pagine di questa prova sono quelle vere: quello che scrivi nella Curva da qui finisce davvero nella Curva.</p>
+  </div>
+
+  <div class="card">
+    <h2>Scorciatoie dell'icona</h2>
+    <p>Su Android, tenendo premuta l'icona di O Girrr nella schermata Home compaiono <b>Tabellone, Curva, Giornale e Totogirrr</b>. Per provarle qui: apri O Girrr · Lega, menu di Chrome, «Aggiungi a schermata Home» (si aggiunge una seconda icona di prova, poi si può togliere). Su iPhone Apple non le mostra.</p>
+  </div>
+
+  <div class="card">
+    <h2>Quando si aggiorna</h2>
+    <ul>
+      <li>Ogni volta che apri l'app con la rete, se la copia ha più di 30 minuti.</li>
+      <li>Ogni 30 minuti mentre l'app resta aperta.</li>
+      <li>Su Android, con O Girrr aggiunto alla schermata Home, anche ad app chiusa quando il telefono lo concede (di solito più o meno ogni ora). Su iPhone Apple non lo permette: la copia si rinfresca quando apri l'app.</li>
+    </ul>
+  </div>
+</div>
+<script>
+(function(){
+  var st=document.getElementById('st'),t=document.getElementById('st-t'),s=document.getElementById('st-s'),ora=document.getElementById('ora');
+  var MESI=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
+  function quando(x){var d=new Date(x),hm=('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
+    if(d.toDateString()===new Date().toDateString())return 'oggi alle '+hm;return 'il '+d.getDate()+' '+MESI[d.getMonth()]+' alle '+hm}
+  function scrivi(cl,a,b){st.className='st '+cl;t.textContent=a;s.textContent=b||''}
+  if(!('serviceWorker' in navigator)){scrivi('no','Questo browser non supporta la copia offline.');return}
+  var reg=null;
+  function sw(){return navigator.serviceWorker.controller||(reg&&reg.active)}
+  function chiedi(){var w=sw();if(w)w.postMessage({tipo:'girrr-stato'})}
+  navigator.serviceWorker.addEventListener('message',function(e){var d=e.data||{};
+    if(d.tipo==='girrr-stato'){ora.disabled=!navigator.onLine;
+      if(d.ultimo)scrivi('ok','Copia salvata '+quando(d.ultimo),'Si rinfresca da sola ogni 30 minuti quando sei online.');
+      else scrivi('','Copia in preparazione…','Resta su questa pagina qualche secondo.')}
+    if(d.tipo==='girrr-copia-pronta'){ora.disabled=false;ora.textContent='Salva la copia adesso';scrivi('ok','Copia salvata '+quando(d.ora),'Ora puoi provare in modalità aereo.')}
+  });
+  ora.onclick=function(){var w=sw();if(!w)return;ora.disabled=true;ora.textContent='Salvo…';w.postMessage({tipo:'girrr-aggiorna',forza:true})};
+  window.addEventListener('online',chiedi);window.addEventListener('offline',function(){ora.disabled=true});
+  navigator.serviceWorker.register('sw-prova.js',{scope:'./',updateViaCache:'none'}).then(function(r){
+    reg=r;
+    function pronto(){chiedi();var w=sw();if(w&&navigator.onLine)w.postMessage({tipo:'girrr-aggiorna'})}
+    if(r.active)pronto();else{var x=r.installing||r.waiting;if(x)x.addEventListener('statechange',function(){if(x.state==='activated')pronto()})}
+  }).catch(function(e){scrivi('no','Non è stato possibile attivare la copia.',String(e&&e.message||e))});
+})();
+</script>
+</body>
+</html>
