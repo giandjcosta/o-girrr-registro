@@ -1,5 +1,12 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 9 novembre 2026)
 
+## 9 novembre (notte, 12) — Claude: Curva, Condividi con l'immagine dei risultati (prova, proposta 5.6.2)
+
+- **Problema (Gianluca, foto da WhatsApp):** il pulsante Condividi della Curva creava l'immagine con il solo testo del post: i post «Fine giornata» di Lega e Champions Cup uscivano senza il Tabellone dei risultati. Causa: `condividi()` in `curva.html` usava solo le foto caricate dagli utenti (`IM[p.id]`), mentre i risultati mostrano `riepiloghi/tabellone-lega-NN.png` / `tabellone-coppa-NN.png` e i personaggi immagini disegnate al volo.
+- **Correzione:** `rilascio/curva562/condividi_img.py COPIA [--lab]` aggiunge una riga a `condividi()` (Lega e Stadio): se manca la foto, si usa l'immagine che il post mostra davvero nella Curva. Copie per il Lab in `rilascio/curva562/pagine/`, servite dallo specchio di `lab/offline/`.
+- **Prova** (`prove/prova_curva_condividi.js`, iPhone 15 Pro, Pixel 7, PC 1440 × Lega e Stadio): i post «Fine giornata» della 7ª di campionato e della 4ª di Champions Cup ora si condividono con il Tabellone (immagini alte 1245 e 1313 px invece del solo testo); nessun errore nuovo.
+- **Sito non toccato:** proposta come 5.6.2 (correzione minore); serve il «vai».
+
 ## 9 novembre (notte, 11) — Claude: **ONLINE** versione 5.6.1 («Vai» di Gianluca)
 
 - **`gh-pages` `4694f35`** con `python3 rilascio/rilascio561.py COPIA --vai`: `versioni.js` (Messaggio/Changelog fluido, pillola «V5.6.1 ›» nella Home sopra gli sponsor), `versioni.json` con la 5.6.1, `notifiche-lette.js` nella radice e nelle due Notifiche.
