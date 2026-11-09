@@ -17,23 +17,27 @@ Un file `.ics` scritto dai workflow con le giornate e l'orario di consegna della
 ### Conto alla rovescia della formazione (Gianluca: sì, come notifica 3 ore e 1 ora prima)
 Dentro le notifiche push. Resta da fare, se si vuole, il conto alla rovescia scritto anche nella Home.
 
-### Condividi come immagine (Gianluca chiede dove e cosa sarebbe)
-- **Dove:** un pulsante «Condividi» (icona di condivisione del telefono) in tre punti: sotto la tua partita nel Tabellone, sulla classifica, sulla copertina del Giornale.
-- **Cosa:** un'immagine verticale pronta per WhatsApp, con la grafica scelta (Lega o Stadio): stemmi, risultato, marcatori e giornata («Mariana Coneja–Apo team 3-2 · 7ª giornata»); per la classifica le prime posizioni con la tua squadra evidenziata; per il Giornale la copertina. Si apre il menu del telefono e scegli il gruppo. Solo dati del livello sportivo, niente fantapunti.
-- **Come:** l'immagine si disegna nel telefono (canvas) e si passa alla condivisione del sistema (Web Share, iPhone e Android); su PC si scarica.
+### Condividi come immagine (Gianluca: «ok, puoi crearlo») — in prova nel Lab
+Fatto nel Lab: `rilascio/condividi/condividi.js`. Tabellone → «Condividi»: La mia partita, Risultati della giornata, Classifica; Giornale → «Condividi l'ultimo numero». Dettagli in `STATO.md`.
 
-### Cerca un giocatore (Gianluca: «sempre nello Spogliatoio») — in prova nel Lab
-Fatto nel Lab (`lab/offline/` → Spogliatoio). Dettagli in `STATO.md`.
+### Cerca un giocatore (Gianluca: «una scheda a sé nello Spogliatoio») — in prova nel Lab
+Scheda «Cerca» dopo «Rosa». Dettagli in `STATO.md`.
 
-### La mia stagione (Gianluca chiede dove e come sarebbe)
-- **Dove:** nello Spogliatoio, una scheda «La mia stagione» accanto a Statistiche; in più un riquadro in Home che compare a fine girone d'andata e a fine stagione («È pronta la tua stagione»).
-- **Come:** schede a tutto schermo da scorrere col dito, una alla volta, con la grafica scelta: posizione e punti in classifica (e la migliore posizione raggiunta), vittorie, pareggi e sconfitte, la striscia più lunga, la miglior giornata (fantapunti, livello tecnico), il giocatore che ha portato più fantapunti, il colpo di mercato (Borsino), Derby vinti e persi, Champions Cup. Ultima scheda riassuntiva da condividere come immagine.
+### La mia stagione (Gianluca: «meglio in Spogliatoio, Albo o Carriera?»)
+- **Proposta di Claude: nella Carriera**, come nuova scheda «Stagione» accanto a Panoramica, Obiettivi, Fiducia, Storia e Regole. È il posto della tua storia da allenatore (si entra con il codice, ci sono già fiducia, obiettivi e posizioni giornata per giornata). Lo Spogliatoio resta per gestire la rosa; l'Albo d'oro è la storia di tutti.
+- A fine stagione il riepilogo resta anche nell'**Albo d'oro**, nell'Annuario della stagione, per ogni squadra.
+- **Come:** schede a tutto schermo da scorrere col dito: posizione e punti (e la migliore posizione raggiunta), vittorie, pareggi e sconfitte, la striscia più lunga, la miglior giornata (fantapunti, livello tecnico), il giocatore che ha portato più fantapunti, il colpo di mercato (Borsino), Derby, Champions Cup; ultima scheda da condividere come immagine.
 - Solo dati veri; dove mancano «Dato non conservato».
 
-### Risultati provvisori durante la giornata (Gianluca: «difficilissimo seguire tutto mentre si gioca»)
-- I voti ufficiali arrivano a fine partita (sera o giorno dopo); durante le partite esistono solo i dati «live» (gol, assist, cartellini, minuti), che però sono le parti che decidono i bonus e malus.
-- Un «in diretta» onesto: durante le partite di Serie A, per ogni sfida del Girrr solo i **fatti certi dei giocatori schierati** (gol, assist, rigori, cartellini, chi è in campo), senza inventare voti né un punteggio provvisorio. Il risultato vero resta quello di Leghe a fine giornata. Si aggiorna ogni pochi minuti.
-- Il problema è la fonte: serve un servizio con i dati live di Serie A affidabile e consultabile (spesso a pagamento o senza permesso di uso), e le formazioni schierate su Leghe prima della chiusura. Prima di farlo bisogna trovare la fonte; senza, niente.
+### Risultati provvisori durante la giornata (Gianluca: «si potrebbe usare Fantacalcio, ma non ho un'API della loro app»)
+- Fantacalcio/Leghe non ha un'API pubblica. Le strade possibili, tutte da verificare prima: (1) leggere Leghe dal browser con l'accesso di Gianluca, come già si fa per importare le giornate: funziona solo con il PC acceso e collegato, troppo fragile per il «live»; (2) un servizio di dati live di Serie A (gol, assist, cartellini, minuti), da scegliere guardando costi e condizioni d'uso.
+- Anche con la fonte, durante le partite non ci sono i voti: si mostrerebbero solo i fatti certi dei giocatori schierati, senza inventare un punteggio. Il risultato vero resta quello di Leghe.
+
+### Altre idee (Claude, 9 novembre 2026)
+- **Testa a testa:** scegli due squadre e vedi i loro scontri della stagione (Campionato e Champions Cup), la classifica a confronto e, se è un Derby, la sua storia. Per le stagioni passate dove manca il dato: «Dato non conservato».
+- **MVP dei tifosi:** dopo ogni giornata un sondaggio in Curva con tre candidati scelti dai dati (migliori voti della giornata); il vincitore finisce nel Giornale e nell'Annuario.
+- **Promemoria del mercato scambi:** quando si apre e si chiude una finestra di mercato, avviso in Home e notifica sul telefono, con il conto alla rovescia.
+- **Testo più grande:** un interruttore in Info per ingrandire i caratteri su tutte le pagine (utile su TV e per chi legge da lontano).
 
 ## Fatte
 - **Copia offline** (online il 9 novembre 2026, `gh-pages` `e06cbe2`), vedi `STATO.md`.

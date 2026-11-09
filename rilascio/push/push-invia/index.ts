@@ -169,7 +169,7 @@ async function giro() {
   return { iscrizioni: (iscr || []).length, generali: generali.map((e) => e.chiave), mandate, errori, scadute: scadute.length, notte: zitto };
 }
 
-if (import.meta.main) Deno.serve(async (req) => {
+if (import.meta.main !== false) Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: CORS });
   if (req.method !== "POST") return risposta({ errore: "Solo POST" }, 405);
   // deno-lint-ignore no-explicit-any
