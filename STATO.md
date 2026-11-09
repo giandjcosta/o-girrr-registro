@@ -4,7 +4,7 @@
 
 - Su richiesta di Gianluca («fai uscire tutto ora») `calcTs[11]` portato alle 07:55Z (gh-pages daa6ee6): Giornale, post Lega e Coppa già visibili. Nel DB (`curva_adm`) i post della 7ª (Girrr Sport, Giornale, Moviola) sono già pubblicati, nessun orario nel futuro, nessuna modifica al database.
 - Moviola: nessun episodio manuale, restano quelli automatici.
-- **Radio NON uscita**: run 42590719838 fallita, Gemini TTS risponde 400 («Unknown name speechConfig at generation_config») per `gemini-3.8-flash-tts` e `-lite-tts`. Non pubblicato nulla. Da sistemare `voci-src/puntata.py` (formato della richiesta TTS) prima di rilanciare con `subito=1`.
+- **Radio uscita** (run 42591271342, Gemini). Il primo tentativo era fallito perché `pip install google-genai` aveva preso la 3.0.0, che rompe la richiesta TTS: nel workflow `radio-giornata.yml` (main del sito) ora è `"google-genai<3"`. Da rivedere quando la 3.x sarà compatibile.
 
 ## 9 novembre — Claude: **ONLINE** 7ª giornata di campionato (Serie A 11) e 4ª di Champions Cup, Giornale n° 7
 
