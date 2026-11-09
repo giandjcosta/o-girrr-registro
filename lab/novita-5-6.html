@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Novità 5.6 · O Girrr</title>
+<style>
+:root{--bg:#0d1630;--bg2:#13204a;--card:#172654;--line:#2c3f73;--text:#f5f6fb;--muted:#b6c3e0;--red:#d62839;--gold:#ffd166;--green:#2fae6b}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:radial-gradient(ellipse at 70% -10%,#25407c 0,transparent 55%),var(--bg);color:var(--text);font:16px/1.5 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:inherit}
+.w{max-width:1120px;margin:0 auto;padding:0 16px}
+.top{display:flex;flex-wrap:wrap;gap:8px;padding:14px 0}
+.top a{font-size:13px;font-weight:800;text-decoration:none;padding:6px 11px;border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+.top a:hover{color:var(--text);border-color:var(--muted)}
+header.hero{padding:18px 0 8px}
+.kick{font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+h1{font-size:clamp(32px,7vw,56px);line-height:1.02;margin:8px 0 12px;letter-spacing:-.02em}
+h1 span{color:var(--red)}
+.lead{max-width:720px;color:var(--muted);font-size:17px;margin:0 0 18px}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px;font-size:13px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:999px;white-space:nowrap}
+.chip.nuovo{background:var(--red);color:#fff}
+.chip.meglio{background:#2a4a8f;color:#dbe6ff}
+.chip.attesa{background:#5a4613;color:var(--gold)}
+.chip.online{background:#164a35;color:#9ff0c6}
+.shot-pc{display:block;margin:0 0 34px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.shot-pc img{display:block;width:100%;height:auto}
+.indice{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px}
+.indice a{font-size:14px;font-weight:800;text-decoration:none;padding:8px 13px;border-radius:10px;background:var(--bg2);border:1px solid var(--line)}
+h2.sez{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:38px 0 14px;border-top:1px solid var(--line);padding-top:22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(310px,100%),1fr));gap:18px}
+.card{display:flex;flex-direction:column;background:linear-gradient(160deg,var(--card),#111d42);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.phone{position:relative;margin:18px auto 0;width:min(78%,250px);aspect-ratio:390/780;border-radius:26px;border:7px solid #070d1f;background:#070d1f;overflow:hidden;box-shadow:0 16px 36px rgba(0,0,0,.5)}
+.phone img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card h3{margin:2px 0 0;font-size:21px;line-height:1.2}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.card ul{margin:0;padding-left:18px;color:var(--muted);font-size:14.5px}
+.card li{margin:2px 0}
+.dove{font-size:13px;color:#d9e3f7;background:rgba(255,255,255,.05);border-radius:8px;padding:7px 10px}
+.dove b{color:var(--gold)}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:6px}
+.btn{flex:1 1 120px;text-align:center;text-decoration:none;font-weight:900;font-size:14px;padding:11px 12px;border-radius:11px;background:var(--red);color:#fff}
+.btn.st{background:var(--gold);color:#1a1405}
+.btn:focus-visible,.indice a:focus-visible,.top a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.box{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+.box h3{margin:0 0 8px;font-size:19px}
+.box ul{margin:0;padding-left:18px;color:var(--muted)}
+.box li{margin:5px 0}
+.box b{color:var(--text)}
+.due{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(290px,100%),1fr));gap:18px}
+footer{color:var(--muted);font-size:13px;padding:34px 0 40px}
+@media(max-width:420px){.lead{font-size:16px}.card h3{font-size:19px}.phone{width:82%}}
+</style></head>
+<body>
+<div class="w">
+<nav class="top" aria-label="Registro"><a href="../">Registro</a><a href="./">Laboratorio</a><a href="offline/">Novità in prova</a><a href="novita-5-5.html">Novità 5.5</a></nav>
+
+<header class="hero">
+<div class="kick">O Fant A Girrr · Versione 5.6</div>
+<h1>Le novità della <span>5.6</span></h1>
+<p class="lead">Aggiornamento medio dopo la 5.5. Copia offline e scorciatoie sono già sul sito vero; notifiche sul telefono, Cerca un giocatore e pagina Versioni si provano nel Lab, sulle pagine vere della Lega, prima del tuo «vai».</p>
+<div class="legend"><span class="chip nuovo">Nuovo</span><span class="chip online">Già online</span><span class="chip attesa">Aspetta il tuo sì</span></div>
+</header>
+
+<nav class="indice" aria-label="Indice">
+<a href="#offline">Copia offline</a><a href="#scorciatoie">Scorciatoie</a><a href="#notifiche">Notifiche sul telefono</a><a href="#cerca">Cerca un giocatore</a><a href="#versioni">Versioni</a>
+</nav>
+
+<h2 class="sez">Già online</h2>
+<div class="grid">
+<article class="card" id="offline">
+<div class="phone"><img src="novita-5-6/offline.jpg" alt="Tabellone aperto senza rete, con l'avviso Offline · Copia delle 20:42" loading="lazy"></div>
+<div class="body"><span class="chip online" style="align-self:flex-start">Già online</span>
+<h3>Copia offline</h3>
+<p>In treno o in galleria O Girrr si apre lo stesso: mostra l'ultima copia salvata sul telefono, rinfrescata ogni 30 minuti.</p>
+<ul><li>Tutte le pagine di Lega e Stadio, lo Spogliatoio, classifica, risultati e Giornale</li><li>Curva, Totogirrr e Derby: l'ultima versione che hai aperto</li><li>Con la rete lenta aspetta al massimo 4 secondi, poi apre la copia</li><li>Avviso «Offline · Copia delle …» e «Di nuovo online»; con la ✕ resta chiuso finché non chiudi l'app</li></ul>
+<div class="dove">Dove: <b>Tutte le pagine</b>, avviso in basso.</div>
+<div class="btns"><a class="btn" href="offline/sito/girrr/tabellone.html">Apri · Lega</a><a class="btn st" href="offline/sito/stadio/girrr/tabellone.html">Apri · Stadio</a></div></div>
+</article>
+
+<article class="card" id="scorciatoie">
+<div class="body"><span class="chip online" style="align-self:flex-start">Già online</span>
+<h3>Scorciatoie dell'icona</h3>
+<p>Tenendo premuta l'icona di O Girrr (Android e PC): Tabellone, Curva, Giornale e Totogirrr. Si aprono nella grafica scelta l'ultima volta, Lega o Stadio.</p>
+<ul><li>Su iPhone Apple non le permette</li><li>L'icona va aggiunta di nuovo alla schermata Home se le scorciatoie non compaiono</li></ul>
+<div class="dove">Dove: <b>icona di O Girrr</b> sulla schermata Home.</div></div>
+</article>
+</div>
+
+<h2 class="sez">Aspettano il tuo sì</h2>
+<div class="grid">
+<article class="card" id="notifiche">
+<div class="phone"><img src="novita-5-6/notifiche-iphone.jpg" alt="Notifiche sul telefono con gli interruttori in stile iPhone" loading="lazy"></div>
+<div class="body"><span class="chip attesa" style="align-self:flex-start">Aspetta il tuo sì</span>
+<h3>Notifiche sul telefono</h3>
+<p>Avvisi sul telefono anche con l'app chiusa. Scegli quali ricevere, con gli interruttori del tuo telefono: iPhone su iPhone, Android su Android.</p>
+<ul><li>Formazione: 3 ore e 1 ora prima dell'inizio della giornata</li><li>Risultati della tua partita, nuovo Giornale</li><li>Curva (risposte, applausi), Derby, Totogirrr</li><li>Di notte (23:00-7:30) aspettano la mattina, tranne la formazione</li><li>«Manda una notifica di prova»; su iPhone serve O Girrr nella schermata Home</li></ul>
+<div class="dove">Dove: <b>Notifiche</b>, riquadro «Notifiche sul telefono».</div>
+<div class="btns"><a class="btn" href="offline/sito/girrr/notifiche.html?demo&amp;piattaforma=ios">Apri · Lega</a><a class="btn st" href="offline/sito/stadio/girrr/notifiche.html?demo&amp;piattaforma=android">Apri · Stadio</a></div></div>
+</article>
+
+<article class="card" id="cerca">
+<div class="phone"><img src="novita-5-6/cerca.jpg" alt="Spogliatoio: scheda di Malen trovata con Cerca un giocatore" loading="lazy"></div>
+<div class="body"><span class="chip attesa" style="align-self:flex-start">Aspetta il tuo sì</span>
+<h3>Cerca un giocatore</h3>
+<p>Nello Spogliatoio, sopra le schede: scrivi un nome e vedi tutto del giocatore.</p>
+<ul><li>Chi lo ha in rosa e quanto è stato pagato, oppure Svincolato</li><li>Stato per la prossima giornata e infortunio</li><li>Stagione: presenze, media voto, fantamedia, gol, assist</li><li>Ultime giornate con voto, fantavoto e bonus; Borsino e Moviola</li><li>Segue la grafica scelta nello Spogliatoio</li></ul>
+<div class="dove">Dove: <b>Spogliatoio</b>, sopra le schede.</div>
+<div class="btns"><a class="btn" href="offline/sito/">Apri lo Spogliatoio</a></div></div>
+</article>
+
+<article class="card" id="versioni">
+<div class="phone"><img src="novita-5-6/versioni.jpg" alt="Pagina Versioni con il messaggio della 5.6" loading="lazy"></div>
+<div class="body"><span class="chip attesa" style="align-self:flex-start">Aspetta il tuo sì</span>
+<h3>Versioni</h3>
+<p>Tutte le versioni di O Girrr, dalla più recente, con il messaggio per il gruppo e il changelog. Si aggiorna da sola a ogni nuova versione.</p>
+<ul><li>Interruttore «Messaggio / Changelog»</li><li>Avviso in Home «È uscita la 5.6» per 3 visite, poi il collegamento in fondo alla Home</li><li>Dalla 1.0 alla 4.4 la divisione in versioni non è conservata: c'è la storia per date</li></ul>
+<div class="dove">Dove: <b>Home</b>, in fondo («Versione 5.6 ›») e nell'avviso.</div>
+<div class="btns"><a class="btn" href="offline/sito/girrr/versioni.html">Apri · Lega</a><a class="btn st" href="offline/sito/stadio/girrr/versioni.html">Apri · Stadio</a></div></div>
+</article>
+
+</div>
+<footer>O Girrr · Laboratorio · Versione 5.6 · Online sul sito la copia offline e le scorciatoie; il resto aspetta il tuo «vai».</footer>
+</div>
+</body></html>

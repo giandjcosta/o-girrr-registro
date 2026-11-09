@@ -23,6 +23,15 @@ Qui ci sono il Lab, l'Anteprima, le sorgenti delle pagine del sito vero e lo sta
 - Le novità sono **integrate anche nell'Anteprima** (`anteprima/`), così Gianluca vede come si muove tutto insieme, non solo la scheda singola.
 - Transizioni sempre fluide (vedi «Mentre lavori»).
 
+## Numeri di versione e pagina Versioni (decisione di Gianluca, 9 novembre 2026)
+- **Prima di rilasciare qualcosa sul sito vero chiedi a Gianluca che tipo di aggiornamento è:**
+  - correzione minore → cambia la terza cifra: 5.6.1, 5.6.2, …;
+  - aggiornamento medio → cambia la seconda cifra: 5.7 (cioè 5.7.0), 5.8, …;
+  - aggiornamento grande → cambia la prima cifra: 6.0, 7.0, ….
+- La versione attuale è la **5.6** (copia offline, scorciatoie dell'icona, notifiche sul telefono, Cerca un giocatore, pagina Versioni).
+- A ogni rilascio aggiungi la versione in cima a `versioni.json` con `python3 rilascio/versioni/aggiungi.py --tipo minore|medio|grande …` (il numero lo calcola da solo): un **messaggio** per il gruppo, nel tono dei messaggi di prima (livello editoriale, niente fantapunti né scommesse), e il **changelog** diviso per area (livello tecnico). Poi copia `versioni.json` nella radice di `gh-pages`: la pagina Versioni (`girrr/versioni.html`, `stadio/girrr/versioni.html`) e l'avviso in Home si aggiornano da soli.
+- Dalla 1.0 alla 4.4 la divisione in versioni non è conservata («Dato non conservato»): se Gianluca ritrova i messaggi, vanno aggiunti a `versioni.json`.
+
 ## Regole grafiche — Lega e Stadio (decisione di Gianluca, 1° novembre 2026)
 Le due grafiche devono essere davvero diverse, e ognuna uguale su tutte le pagine, menu, sottomenu, schede e riquadri:
 - **Lega** (grafica «normale», più statica): riquadri grandi dritti come le partite del Tabellone, banda laterale dritta (8 px, rossa) e angoli appena arrotondati (4 px a sinistra, 14 px a destra). Pillole, schede e cerchi delle giornate restano tondi: la Lega non va resa tutta squadrata (Gianluca, 1° novembre).
