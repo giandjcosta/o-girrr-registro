@@ -1,6 +1,6 @@
-/* Spogliatoio · Cerca un giocatore (Claude, 9 novembre 2026, richiesta di Gianluca: «lo metterei sempre in Spogliatoio»).
+/* Spogliatoio · Cerca un giocatore (Claude, 9 novembre 2026, richiesta di Gianluca: «una scheda a sé nello Spogliatoio»).
    Va nella radice del sito (/o-fant-a-girrr/cerca.js), incluso dallo Spogliatoio (index.html).
-   Casella sopra le schede: scrivi un nome e vedi chi lo ha in rosa, stato per la prossima giornata, infortunio,
+   Scheda «Cerca» dopo «Rosa»: scrivi un nome e vedi chi lo ha in rosa, stato per la prossima giornata, infortunio,
    voti e fantavoti, statistiche della stagione, Borsino e Moviola. Usa i colori della grafica scelta (variabili del tema). */
 (function () {
   if (window.__girrrCerca) return; window.__girrrCerca = 1;
@@ -40,13 +40,13 @@
   function stile() {
     var s = document.createElement('style');
     s.textContent =
-      '.gc{position:relative;margin:10px 0 12px}' +
+      '.gc{position:relative;margin:4px 0 12px}' +
       '.gc-in{display:flex;align-items:center;gap:8px;background:linear-gradient(160deg,var(--card,#22135a),var(--card2,#170c40));border:1px solid var(--line,#4a2bd6);border-radius:var(--rad,16px);padding:0 12px;min-height:46px}' +
       '.gc-in svg{flex:none;opacity:.75}.gc-in input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink,#f3efff);font:inherit;font-weight:700;font-size:16px;padding:11px 0;outline:0}' +
       '.gc-in input::placeholder{color:var(--mute,#cdc6f0);opacity:.85;font-weight:600}.gc-in:focus-within{border-color:var(--hl,#ffc63a)}' +
       '.gc-x{flex:none;border:0;background:none;color:var(--mute,#cdc6f0);font-size:18px;cursor:pointer;padding:6px;line-height:1}' +
-      '.gc-lista{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:60;background:var(--card2,#170c40);border:1px solid var(--line,#4a2bd6);border-radius:var(--rad,16px);overflow:hidden;box-shadow:0 14px 30px rgba(0,0,0,.35);opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .2s;pointer-events:none}' +
-      '.gc-lista.su{opacity:1;transform:none;pointer-events:auto}' +
+      '.gc-lista{margin-top:8px;background:var(--card2,#170c40);border:1px solid var(--line,#4a2bd6);border-radius:var(--rad,16px);overflow:hidden;opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .2s;display:none}.gc-nota{margin:10px 2px 0;font-size:12.5px;color:var(--mute,#cdc6f0);line-height:1.45}' +
+      '.gc-lista.su{display:block;opacity:1;transform:none}' +
       '.gc-lista button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:0;background:none;color:var(--ink,#f3efff);font:inherit;padding:10px 12px;cursor:pointer}' +
       '.gc-lista button+button{border-top:1px solid rgba(127,127,127,.2)}.gc-lista button[aria-selected=true],.gc-lista button:hover{background:rgba(127,127,127,.16)}' +
       '.gc-r{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:12px;background:var(--accA,#b3246f);color:var(--acc-ink,#fff)}' +
@@ -101,39 +101,42 @@
     return h;
   }
 
-  function monta() {
-    var dopo = document.querySelector('details.skin-menu') || document.getElementById('tabs');
-    if (!dopo || document.querySelector('.gc')) return;
-    stile();
-    var w = document.createElement('div'); w.className = 'gc';
-    w.innerHTML = '<label class="gc-in"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>' +
-      '<input type="search" placeholder="Cerca un giocatore" autocomplete="off" enterkeyhint="search" aria-label="Cerca un giocatore" role="combobox" aria-expanded="false" aria-controls="gc-lista">' +
-      '<button type="button" class="gc-x" aria-label="Cancella" hidden>✕</button></label><div class="gc-lista" id="gc-lista" role="listbox"></div><div class="gc-card card" hidden></div>';
-    dopo.parentNode.insertBefore(w, dopo.nextSibling);
-    var inp = w.querySelector('input'), lista = w.querySelector('.gc-lista'), card = w.querySelector('.gc-card'), x = w.querySelector('.gc-in .gc-x'), trovati = [];
-    function apri(su) { lista.classList.toggle('su', su); inp.setAttribute('aria-expanded', String(su)); }
+  /* Scheda «Cerca» nella barra dello Spogliatoio. Lo Spogliatoio non sa niente di questa scheda: quando la tocchi
+     si disegna qui dentro #app; quando tocchi un'altra scheda torna tutto come prima. */
+  var attiva = false, mia = null, ultima = '';
+  function tabs() { return document.getElementById('tabs'); }
+  function seleziona() {
+    Array.prototype.forEach.call(tabs().querySelectorAll('button'), function (b) { b.setAttribute('aria-selected', String(b === mia)); });
+  }
+  function disegna(app) {
+    var mio = chi();
+    app.innerHTML = '<h2 class="sec">Cerca un giocatore</h2><div class="gc"><label class="gc-in"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>' +
+      '<input type="search" placeholder="Scrivi un nome, per esempio Malen" autocomplete="off" enterkeyhint="search" aria-label="Cerca un giocatore" aria-controls="gc-lista">' +
+      '<button type="button" class="gc-x" aria-label="Cancella" hidden>✕</button></label>' +
+      '<div class="gc-lista" id="gc-lista" role="listbox"></div><div class="gc-card card" hidden></div>' +
+      '<p class="gc-nota">Tutti i giocatori di Serie A: chi li ha in rosa, stato per la prossima giornata, voti, Borsino e Moviola.' + (mio ? ' I giocatori di ' + E(mio) + ' sono evidenziati.' : '') + '</p></div>';
+    var inp = app.querySelector('input'), lista = app.querySelector('.gc-lista'), card = app.querySelector('.gc-card'), x = app.querySelector('.gc-in .gc-x'), trovati = [];
     function mostra() {
-      var q = inp.value; x.hidden = !q;
-      if (piano(q).trim().length < 2) { apri(false); return; }
+      var q = inp.value; x.hidden = !q; ultima = q;
+      try { sessionStorage.setItem('girrr_cerca', q); } catch (e) {}
+      if (piano(q).trim().length < 2) { lista.classList.remove('su'); lista.innerHTML = ''; return; }
       dati().then(function () {
-        trovati = risultati(inp.value); scelto = -1; var mio = chi();
+        trovati = risultati(inp.value); scelto = -1; var io = chi();
         lista.innerHTML = trovati.length ? trovati.map(function (p, i) {
-          return '<button type="button" role="option" data-i="' + i + '" aria-selected="false"' + (p.rosa && p.rosa.team === mio ? ' class="gc-mio"' : '') + '><span class="gc-r">' + E(p.r) + '</span><span><b>' + E(p.n) + '</b><small>' + E(p.t) + ' · ' + (p.rosa ? E(p.rosa.team) : 'Svincolato') + '</small></span></button>';
+          return '<button type="button" role="option" data-i="' + i + '" aria-selected="false"' + (p.rosa && p.rosa.team === io ? ' class="gc-mio"' : '') + '><span class="gc-r">' + E(p.r) + '</span><span><b>' + E(p.n) + '</b><small>' + E(p.t) + ' · ' + (p.rosa ? E(p.rosa.team) : 'Svincolato') + '</small></span></button>';
         }).join('') : '<div class="gc-vuoto">Nessun giocatore con questo nome.</div>';
-        Array.prototype.forEach.call(lista.querySelectorAll('button'), function (b) { b.onmousedown = function (e) { e.preventDefault(); }; b.onclick = function () { scegli(+b.dataset.i); }; });
-        apri(true);
+        Array.prototype.forEach.call(lista.querySelectorAll('button'), function (b) { b.onclick = function () { scegli(+b.dataset.i); }; });
+        lista.classList.add('su');
       });
     }
     function scegli(i) {
       var p = trovati[i]; if (!p) return;
-      apri(false); inp.blur();
+      lista.classList.remove('su'); lista.innerHTML = ''; inp.blur();
       card.classList.remove('su'); card.innerHTML = scheda(p); card.hidden = false;
-      card.querySelector('.gc-x').onclick = function () { card.classList.remove('su'); setTimeout(function () { card.hidden = true; }, 300); };
+      card.querySelector('.gc-x').onclick = function () { card.classList.remove('su'); setTimeout(function () { card.hidden = true; }, 300); inp.focus(); };
       requestAnimationFrame(function () { requestAnimationFrame(function () { card.classList.add('su'); }); });
     }
-    inp.addEventListener('focus', function () { dati(); if (inp.value) mostra(); });
     inp.addEventListener('input', mostra);
-    inp.addEventListener('blur', function () { setTimeout(function () { apri(false); }, 150); });
     inp.addEventListener('keydown', function (e) {
       var bs = lista.querySelectorAll('button');
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
@@ -141,9 +144,34 @@
         scelto = (scelto + (e.key === 'ArrowDown' ? 1 : -1) + bs.length) % bs.length;
         Array.prototype.forEach.call(bs, function (b, i) { b.setAttribute('aria-selected', String(i === scelto)); });
       } else if (e.key === 'Enter') { e.preventDefault(); scegli(scelto >= 0 ? scelto : 0); }
-      else if (e.key === 'Escape') { apri(false); }
     });
-    x.onclick = function () { inp.value = ''; x.hidden = true; apri(false); inp.focus(); };
+    x.onclick = function () { inp.value = ''; mostra(); inp.focus(); };
+    try { ultima = ultima || sessionStorage.getItem('girrr_cerca') || ''; } catch (e) {}
+    if (ultima) { inp.value = ultima; mostra(); }
+    dati();
+    if (matchMedia && matchMedia('(hover:hover)').matches) inp.focus();
+  }
+  function apri() {
+    var app = document.getElementById('app'); if (!app) return;
+    attiva = true; seleziona();
+    app.classList.remove('enter'); void app.offsetWidth; app.classList.add('enter');
+    disegna(app);
+  }
+  function monta() {
+    var t = tabs(); if (!t || t.querySelector('[data-t="cerca"]')) return;
+    stile();
+    mia = document.createElement('button');
+    mia.setAttribute('role', 'tab'); mia.dataset.t = 'cerca'; mia.setAttribute('aria-selected', 'false'); mia.textContent = 'Cerca';
+    var dopo = t.querySelector('[data-t="rosa"]');
+    t.insertBefore(mia, dopo ? dopo.nextSibling : t.firstChild);
+    mia.addEventListener('click', function (e) { e.stopPropagation(); e.preventDefault(); apri(); });
+    /* Le altre schede: lo Spogliatoio ridisegna da solo e la nostra si spegne */
+    t.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('button'); if (b && b !== mia) attiva = false; }, true);
+    /* Se lo Spogliatoio si ridisegna da solo (dati nuovi) mentre sei in Cerca, si torna in Cerca */
+    var app = document.getElementById('app');
+    if (app && window.MutationObserver) new MutationObserver(function () {
+      if (attiva && !app.querySelector('.gc')) { seleziona(); disegna(app); }
+    }).observe(app, { childList: true });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', monta); else monta();
 })();

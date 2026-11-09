@@ -1,7 +1,8 @@
 /* O Girrr · notifiche sul telefono (Claude, 9 novembre 2026, richiesta di Gianluca).
    Va nella radice del sito (/o-fant-a-girrr/push.js), incluso dalla pagina Notifiche di Lega e Stadio.
    Riempie il riquadro «Notifiche sul telefono»: interruttore generale e uno per tipo di avviso,
-   con la grafica del telefono (iPhone: interruttori iOS; Android e PC: interruttori Material di Android).
+   con la forma del telefono (iPhone: interruttori iOS; Android e PC: interruttori Android) e il colore della grafica
+   (Lega rosso, Stadio oro) su tutti e due.
    Prove: ?piattaforma=ios o ?piattaforma=android per vedere l'altra grafica, ?demo per gli interruttori senza iscriversi. */
 (function () {
   var SUP = 'https://qmjqfgmvimsuxvghetgi.supabase.co', KEY = 'sb_publishable_qPhimkrF4iUvIad7JPoH8A_i-eOqG7n';
@@ -58,7 +59,7 @@
       '.pt-ios .pt-row b{font-weight:600;font-size:16px}' +
       '.pt-ios .pt-sw{flex:none;position:relative;width:51px;height:31px;border-radius:16px;border:0;padding:0;cursor:pointer;background:rgba(120,120,128,.36);transition:background-color .25s ease}' +
       '.pt-ios .pt-sw::after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.15),0 3px 1px rgba(0,0,0,.06);transition:transform .25s cubic-bezier(.3,.7,.4,1)}' +
-      '.pt-ios .pt-sw[aria-checked=true]{background:#34c759}.pt-ios .pt-sw[aria-checked=true]::after{transform:translateX(20px)}' +
+      '.pt-ios .pt-sw[aria-checked=true]{background:' + acc + '}' + (stadio ? '.pt-ios .pt-sw[aria-checked=true]::after{background:#1d2a52}' : '') + '.pt-ios .pt-sw[aria-checked=true]::after{transform:translateX(20px)}' +
       /* Android: righe Material e interruttori Material 3 */
       '.pt-and .pt-group{margin-top:8px}.pt-and .pt-row{padding:12px 2px;min-height:56px;box-sizing:border-box}' +
       '.pt-and .pt-row b{font-weight:600;font-size:16px;letter-spacing:.01em}' +
