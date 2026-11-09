@@ -1,4 +1,4 @@
-/* O Girrr · copia offline (Claude, 9 novembre 2026, richiesta di Gianluca dal treno).
+/* O Girrr · Copia offline (Claude, 9 novembre 2026, richiesta di Gianluca dal treno).
    Va nella radice del sito (/o-fant-a-girrr/sw.js) e lo registra offline.js.
 
    Cosa fa:

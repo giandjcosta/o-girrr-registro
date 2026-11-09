@@ -10,7 +10,7 @@ Fa:
   1. copia offline e scorciatoie (rilascio/offline/applica.py: sw.js, offline.js, apri.html, manifest, offline.js nelle pagine);
   2. copia nella radice versioni.json, versioni.js, cerca.js, condividi.js e push.js;
   3. crea girrr/versioni.html e stadio/girrr/versioni.html (rilascio/versioni/crea_pagine.py);
-  4. aggiunge gli script: versioni.js nelle due Home, cerca.js nello Spogliatoio, condividi.js in Tabellone e Giornale,
+  4. aggiunge gli script: versioni.js nelle due Home e nelle due Notifiche, cerca.js nello Spogliatoio, condividi.js in Tabellone e Giornale,
      push.js nelle due Notifiche.
 Si può rilanciare: dove lo script c'è già non si aggiunge.
 """
@@ -41,7 +41,7 @@ if VAI:
 else:
     print("  pagina  girrr/versioni.html, stadio/girrr/versioni.html")
 
-SCRIPT = [("versioni.js", ["girrr/index.html", "stadio/girrr/index.html"]),
+SCRIPT = [("versioni.js", ["girrr/index.html", "stadio/girrr/index.html", "girrr/notifiche.html", "stadio/girrr/notifiche.html"]),
           ("cerca.js", ["index.html"]),
           ("condividi.js", ["girrr/tabellone.html", "stadio/girrr/tabellone.html", "girrr/giornale.html", "stadio/girrr/giornale.html"])]
 if PUSH:

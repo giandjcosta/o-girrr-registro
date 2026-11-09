@@ -1,4 +1,4 @@
-// O Girrr · invio delle notifiche push (Claude, 9 novembre 2026).
+// O Girrr · Invio delle notifiche push (Claude, 9 novembre 2026).
 // Edge Function «push-invia» su Supabase. Tre usi:
 //   {chiave:true}                       -> chiave pubblica per iscriversi (la crea al primo uso)
 //   {prova:true, team, code, endpoint}  -> notifica di prova a quel telefono (una al minuto)

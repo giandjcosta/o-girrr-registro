@@ -1,5 +1,15 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 9 novembre 2026)
 
+## 9 novembre (notte, 2) — Claude: avviso Versioni poi solo in fondo alle Notifiche, Changelog nel Lab, maiuscola dopo «·», immagini senza indirizzo
+
+- **Database delle notifiche: ancora da creare.** Terzo tentativo con `apply_migration`, la conferma di Supabase non arriva a Gianluca e scade. Strada da usare: `rilascio/push/da-incollare.sql` nell'editor SQL di Supabase. La funzione `push-invia` è già online.
+- **Versioni:** in Home l'avviso «È uscita la 5.6» resta per 3 visite o finché non lo tocchi; **niente più collegamento in fondo alla Home**. Sempre presente solo una voce piccola e chiara in fondo in fondo alla pagina **Notifiche**: «Versione 5.6 · Changelog ›» (Lega e Stadio; `rilascio56.py` aggiunge `versioni.js` anche alle Notifiche).
+- **Lab:** link **«Changelog»** nella barra del Lab (e nell'Anteprima) → `lab/changelog.html`, che disegna `rilascio/versioni/versioni.json` come la pagina del sito; funziona anche senza passare dalla prova offline.
+- **Maiuscola dopo «·»:** corretti «· Pagato» (Cerca), «Campionato · Risultati della …» (Condividi) e i commenti nel codice. Regola scritta in `AGENTS.md` del registro e del sito (`main` del sito `be351a3`): «Dopo il punto mediano la parola comincia sempre con la maiuscola».
+- **Immagini di Condividi:** in fondo non c'è più l'indirizzo del sito ma «O Fant A Girrr · Campionato 2026/27» (o «Champions Cup 2026/27»). Il link resta solo nel testo del messaggio che accompagna l'immagine.
+- **Versioni 1.0-4.4:** erano in Claude chat. Messaggio pronto da incollare là: `proposte/prompt-claude-chat-versioni.md`; la risposta va data a Claude Code per `versioni.json`.
+- **Prove (Chromium, 320 px):** avviso in Home alle visite 1-3 e non alla 4, nessun link in fondo alla Home; voce in fondo alle Notifiche Stadio; «Pagato» maiuscolo; testo e piè di pagina delle immagini; Changelog del Lab con le 8 schede, 320 px, link presente nel Lab. Nessun errore.
+
 ## 9 novembre (notte) — Claude: interruttori nei colori della grafica, Cerca come scheda, Condividi, prove su tablet/PC/TV, funzione push online
 
 - **Database delle notifiche: ANCORA DA CREARE.** Gianluca ha confermato, ma la richiesta di conferma di Supabase è scaduta due volte (60 s senza risposta, forse non gli compare sul telefono). Alternativa pronta: `rilascio/push/da-incollare.sql` (= `push.sql` + `push-cron.sql`) da incollare nell'editor SQL di Supabase (progetto `qmjqfgmvimsuxvghetgi`, SQL Editor → New query → Run). Si può rilanciare senza danni.
