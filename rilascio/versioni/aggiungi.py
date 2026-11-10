@@ -49,7 +49,9 @@ for voce in a.voce:
     area, _, testo = voce.partition(":")
     if not testo:
         area, testo = "Novità", voce
-    gruppi.setdefault(area.strip(), []).append(testo.strip())
+    testo = testo.strip()
+    testo = testo[:1].upper() + testo[1:]  # ogni voce del changelog con la maiuscola (Gianluca)
+    gruppi.setdefault(area.strip(), []).append(testo)
 nuova = {"v": v, "data": a.data, "tipo": a.tipo, "titolo": a.titolo, "messaggio": a.messaggio,
          "novita": [{"area": k, "voci": x} for k, x in gruppi.items()]}
 print(f"{ultima} -> {v}")

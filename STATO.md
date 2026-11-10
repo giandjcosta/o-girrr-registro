@@ -1,4 +1,8 @@
-# Stato del progetto O Girrr (ultimi giorni — aggiornato 9 novembre 2026)
+# Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
+
+## 10 novembre — Claude: Versioni, voci del changelog con la maiuscola (correzione di testo online)
+
+- Gianluca: «dopo i pallini voglio le lettere maiuscole». Sei voci del changelog (5.6.1 e 5.6.2) cominciavano con la minuscola: corrette in `versioni.json` (`gh-pages` `c1a8f5b`, per tornare indietro `git revert c1a8f5b`). `aggiungi.py` ora mette da solo la maiuscola a ogni voce. Provato su Lega e Stadio (iPhone 15 Pro): 125 voci, nessuna minuscola, nessun errore.
 
 ## 9 novembre (notte, 13) — Claude: **ONLINE** versione 5.6.2 («Sisi vai 5.6.2 con il The Blues Brothers»)
 
