@@ -5,6 +5,14 @@ Nessuna di queste è approvata: ognuna aspetta il «vai» di Gianluca (e, se toc
 
 ## In attesa
 
+### 5.8 · Claude in redazione (decisione di Gianluca, 11 novembre 2026: «questa novità la mettiamo per la 5.8»)
+- **Niente API a pagamento** (Gianluca: «pago già un abbonamento per Claude, non voglio pagare altri soldi»): l'abbonamento non copre le chiamate da un sito, quindi Claude non risponde in diretta dentro le pagine. Lavora invece **dietro le quinte** con una sessione programmata di Claude Code (compresa nell'abbonamento, usa i suoi limiti di utilizzo) che legge dati e database, scrive i contenuti e li pubblica sul sito come file.
+- **Prima parte:** domande della conferenza su misura per ogni squadra, preparate prima di ogni giornata dalla situazione vera (classifica, Derby, promesse); giudizio delle risposte scritte a mano (tono, promessa) e domanda successiva del giornalista, qualche volta al giorno.
+- **Poi:** risposte di Ciro Trattativa e Girrr Sport ai cori, cronache delle partite, riassunto della settimana per ogni allenatore, commento del Giro di boa.
+- **Regole per Claude:** dati veri, «Dato non conservato» dove mancano, niente scommesse nei post ufficiali, niente Fantapunti in Radio e Giornale (con le eccezioni di `AGENTS.md`), maiuscola dopo «·».
+- **In diretta, solo se servirà:** Gemini con il livello gratuito (chiave già usata per la Radio), con limiti giornalieri e ritorno alle frasi fisse quando finiscono.
+
+
 ### Scarica la Radio per il treno (Claude, 9 novembre 2026; Gianluca: «per ora no»)
 Un pulsante «Scarica per ascoltare offline» accanto alla puntata: salva l'mp3 (circa 1,4 MB) nella copia offline.
 
@@ -40,7 +48,7 @@ La notifica 3 ore e 1 ora prima è online con la 5.6. Resta da fare, se si vuole
 - **Giro di boa:** prova grafica nel Lab (`lab/prove-grafiche/giro-di-boa.html`), da decidere; si sbloccherebbe alla 17ª giornata.
 
 ## Fatte
-- **In prova nel Lab, non ancora online** (10 novembre 2026, vedi `STATO.md`): tag delle squadre nei post della conferenza, conferenza bloccata dopo la pubblicazione, tono nella fiducia, conferenza dell'avversario con «Rispondi in Curva», scheda Promesse della Carriera, **Testa a testa** (pagina Derby) e **testo più grande** (solo sulle smart TV, senza interruttore: decisione di Gianluca).
+- **Online con la 5.7** (11 novembre 2026, vedi `STATO.md`): Sala stampa, conferenza del dopo partita, menzioni sul telefono; tag delle squadre nei post della conferenza, conferenza bloccata dopo la pubblicazione, tono nella fiducia, conferenza dell'avversario con «Rispondi in Curva», scheda Promesse della Carriera, **Testa a testa** (pagina Derby) e **testo più grande** (solo sulle smart TV, senza interruttore: decisione di Gianluca).
 - **Copia offline** (online il 9 novembre 2026, `gh-pages` `e06cbe2`), vedi `STATO.md`.
 - **Scorciatoie dell'icona nella grafica scelta** (online il 9 novembre 2026, `gh-pages` `e06cbe2`): Tabellone, Curva, Giornale, Totogirrr. Non su iPhone.
 - **5.6** (online il 9 novembre 2026, `gh-pages` `caa13c6`): notifiche sul telefono (con la formazione 3 ore e 1 ora prima), Cerca un giocatore (scheda dello Spogliatoio), Condividi come immagine, La mia stagione (Carriera), pagina Versioni.

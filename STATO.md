@@ -1,5 +1,16 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 11 novembre — Claude: **ONLINE** versione 5.7 («Sì, anche il database»)
+
+- **Decisioni di Gianluca:** «implementiamo quello che dicevi prima nella 5.7», con il «vai» anche per il database; la redazione con Claude va nella **5.8** (`proposte/idee-da-fare.md`).
+- **Database** (Supabase, migrazioni `v57_push_menzioni` e `v57_conf_dopo`): prima controllata la definizione viva di `push_private.eventi`, uguale a `rilascio/push/da-incollare.sql`; poi applicati `rilascio/menzioni/menzioni.sql` e `rilascio/conferenze/dopo.sql`. Verificato: `conf_dopo_pubbliche` risponde `[]`, `conf_dopo_salva` rifiuta un codice sbagliato, `push_private.eventi` funziona per tutte le 10 squadre e nelle ultime 12 ore non ci sono menzioni (nessuna raffica di notifiche vecchie). Per tornare indietro: le istruzioni sono in testa ai due file SQL.
+- **`gh-pages` `ddf30fc`:** `rilascio/curva563/cuori.py` (la 5.6.3 entra nella 5.7), `rilascio/conferenze/applica.py` (31 pagine: `tv.js` in tutte, novità in `app.html` e `curva.html` di Lega e Stadio), `push.js`, `condividi.js`, `conferenze.js`, `tv.js`, `versioni.json` con la 5.7 (`aggiungi.py --tipo medio`, messaggio e changelog). Prima del push: `prove/prova_conferenze.js` tutto a posto e `prove/prova_schermi_conferenze.js` 16 schermi × 9 pagine, 0 problemi, sulla copia di rilascio.
+- **Controllo sul sito vero** (Chromium, iPhone SE, Pixel 7, PC 1920, smart TV; Lega e Stadio): Home, Versioni con la 5.7, Conferenza con avversario, Sala stampa e dopo partita collegato al database, Promesse, Testa a testa, interruttore Menzioni, Giro di boa nascosto fino alla 17ª, Curva; testo grande solo sulla TV; 0 problemi, nessun errore in console, nessuna scrittura nel database (intercettate).
+- **`main` del sito `c05cf9f`:** `calcoli/post_curva.py`, `leggi_eventi.py`, `fiducia.py` (prima controllato che sul sito fossero ancora quelli di prima). `AGENTS.md` del sito: «Sul sito: 5.7».
+- **Registro:** `ufficiale/src/sito/` allineato a `gh-pages` (19 file più `conferenze.js` e `tv.js`; resta diverso `girrr/v55/ui.js`, già prima della 5.7, non toccato); `lab/novita-5-7.html` con le foto in `lab/novita-5-7/`, collegata dal Lab; `rilascio/versioni/versioni.json`; `AGENTS.md`.
+- **Per tornare indietro:** sito `git revert ddf30fc` su `gh-pages` e `git revert c05cf9f` su `main`; database come scritto nei file SQL.
+- **Non provati:** Safari/WebKit vero, una TV vera, una notifica vera sul telefono, il primo giro vero dei workflow con i nuovi calcoli (il prossimo «Curva, post quasi subito» parte entro 5 minuti; la prima conferenza del dopo partita vera dopo l'8ª giornata).
+
 ## 10 novembre (5) — Claude: post delle conferenze con partita, allenatore e squadra (Lab)
 
 - **Segnalazione (Gianluca):** «Scritta così non so quanto senso abbia, non specifichi chi è l'allenatore e chi la squadra» (il post diceva «DJ Cst Brazil, alla vigilia di DJ Cst Brazil - Mark Lenders»).
