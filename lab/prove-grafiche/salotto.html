@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="it">
+<head>
+<script src="/o-fant-a-girrr/nomi.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Diretta in salotto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lobster&family=Inter:wght@500;700;800;900&display=swap" rel="stylesheet">
+<!-- Prova grafica (Claude, 10 novembre 2026, Gianluca: «diretta in salotto, mostrami cosa intendi»).
+     Una pagina da lasciare aperta sulla TV durante la giornata: gira da sola tra risultati, classifica, prossimo turno e Curva,
+     con i dati veri del sito (data.json e la Curva in sola lettura). Non è sul sito: è solo nel Lab. -->
+<style>
+:root{--bg:#141d3d;--bg2:#1d2a52;--ink:#f4f6ff;--mute:#a9b4d6;--red:#d62839;--blu:#4cc9f0;--gold:#ffd166;--line:rgba(255,255,255,.12);--ok:#7be495}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;overflow:hidden}
+body{background:radial-gradient(ellipse at 20% 0%,#2b3d7a 0%,transparent 55%),repeating-linear-gradient(115deg,rgba(255,255,255,.025) 0 40px,transparent 40px 80px),var(--bg)}
+.tv{position:fixed;inset:0;display:grid;grid-template-rows:auto 1fr auto;padding:2.2vw 3vw 1.6vw}
+header{display:flex;align-items:center;gap:1.6vw}
+header img{height:6vw}
+header .tit{flex:1}
+header small{display:block;color:var(--gold);font-weight:800;letter-spacing:.35em;font-size:1vw}
+header h1{font-family:Lobster,cursive;font-weight:400;font-size:3.4vw;line-height:1.1}
+.live{display:flex;align-items:center;gap:.6vw;background:var(--red);padding:.5vw 1.2vw;border-radius:99px;font-weight:900;font-size:1.2vw;letter-spacing:.12em}
+.live i{width:.8vw;height:.8vw;border-radius:50%;background:#fff;animation:pulsa 1.4s infinite}
+@keyframes pulsa{50%{opacity:.25}}
+.ora{font-size:2.6vw;font-weight:900;font-variant-numeric:tabular-nums;margin-left:1.4vw}
+main{position:relative;margin-top:1.6vw}
+section{position:absolute;inset:0;opacity:0;transform:translateY(1.2vw);transition:opacity .9s ease,transform .9s ease;pointer-events:none}
+section.on{opacity:1;transform:none}
+h2{font-size:2.3vw;font-weight:900;margin-bottom:1.2vw;display:flex;align-items:baseline;gap:1vw}
+h2 span{font-size:1.2vw;color:var(--mute);font-weight:700}
+.griglia{display:grid;grid-template-columns:1fr 1fr;gap:1vw 1.6vw}
+.partita{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1vw;background:rgba(255,255,255,.06);border:1px solid var(--line);border-left:.45vw solid var(--red);border-radius:.4vw 1vw 1vw .4vw;padding:1.1vw 1.4vw;font-size:1.55vw;font-weight:800}
+.partita .b{text-align:right}
+.partita .ris{font-size:2.3vw;font-weight:900;min-width:7vw;text-align:center;font-variant-numeric:tabular-nums}
+.partita.derby{border-left-color:var(--gold)}
+.partita small{display:block;color:var(--mute);font-size:.95vw;font-weight:700;margin-top:.2vw}
+.tag{display:inline-block;background:var(--gold);color:#141d3d;font-size:.85vw;font-weight:900;letter-spacing:.1em;padding:.15vw .6vw;border-radius:99px;text-transform:uppercase;margin-top:.3vw}
+table{width:100%;border-collapse:collapse;font-size:1.45vw}
+th{color:var(--mute);font-size:1vw;letter-spacing:.12em;text-transform:uppercase;text-align:right;padding:.4vw .8vw}
+th:nth-child(2){text-align:left}
+td{padding:.55vw .8vw;border-top:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+td:nth-child(2){text-align:left;font-weight:800}
+td:first-child{font-weight:900;color:var(--mute);width:3vw}
+tr.top td:first-child{color:var(--gold)}
+tr.giu td:first-child{color:var(--red)}
+td b{font-size:1.6vw}
+.curva{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4vw}
+.coro{background:rgba(10,18,48,.55);border:1px solid var(--line);border-radius:1.2vw;padding:1.4vw;font-size:1.35vw;line-height:1.45}
+.coro b{display:block;color:var(--gold);font-size:1.1vw;margin-bottom:.5vw}
+footer{display:flex;align-items:center;gap:1.4vw;color:var(--mute);font-size:1.05vw;font-weight:700}
+.pallini{display:flex;gap:.6vw}
+.pallini i{width:2.6vw;height:.45vw;border-radius:99px;background:rgba(255,255,255,.18);overflow:hidden;position:relative}
+.pallini i.on::after{content:'';position:absolute;inset:0;background:var(--gold);transform-origin:left;animation:barra var(--durata) linear}
+@keyframes barra{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+footer .spazio{flex:1}
+.nota{position:fixed;left:50%;top:.6vw;transform:translateX(-50%);background:rgba(255,209,102,.95);color:#141d3d;font-weight:800;font-size:.9vw;padding:.3vw .9vw;border-radius:99px}
+@media (prefers-reduced-motion:reduce){section{transition:opacity .3s}.live i,.pallini i.on::after{animation:none}}
+</style>
+</head>
+<body>
+<div class="nota">Prova grafica nel Lab · Si cambia da sola ogni 12 secondi</div>
+<div class="tv">
+  <header>
+    <img src="/o-fant-a-girrr/assets/loghi/logo-lega-o-fant-a-girrr.png" alt="O Fant A Girrr">
+    <div class="tit"><small>O FANT A GIRRR · DIRETTA IN SALOTTO</small><h1 id="titolo">O Girrr</h1></div>
+    <div class="live"><i></i>IN ONDA</div>
+    <div class="ora" id="ora"></div>
+  </header>
+  <main id="schermi"><section class="on"><h2>Carico i dati…</h2></section></main>
+  <footer><div class="pallini" id="pallini"></div><span id="cosa"></span><span class="spazio"></span><span id="agg"></span></footer>
+</div>
+<script>
+(function(){
+  var SITO='/o-fant-a-girrr/',DB='https://qmjqfgmvimsuxvghetgi.supabase.co',KEY='sb_publishable_qPhimkrF4iUvIad7JPoH8A_i-eOqG7n',DURATA=12000;
+  var N=window.girrrNome||function(s){return s};
+  function E(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function gol(s){var r=/^(\d+)\s*-\s*(\d+)$/.exec(s||'');return r?[+r[1],+r[2]]:null}
+  function pubblicato(D,sa){var v=(D.votiTs||{})[sa],c=(D.calcTs||{})[sa];if(!v&&!c)return true;return Date.now()>=Math.max(v?Date.parse(v):0,c?Date.parse(c):0)+3600000}
+  function giocata(D,g){return g.m.length&&g.m.every(function(m){return gol(m[4])})&&pubblicato(D,g.sa)}
+  function classifica(D){var T={};D.teams.forEach(function(t){T[t.name]={t:t.name,g:0,v:0,n:0,p:0,gf:0,gs:0,pt:0,fp:0}});
+    D.cal.lega.forEach(function(g){if(!giocata(D,g))return;g.m.forEach(function(m){var r=gol(m[4]),a=T[m[0]],b=T[m[3]];if(!r||!a||!b)return;
+      [[a,r[0],r[1],+m[1]||0],[b,r[1],r[0],+m[2]||0]].forEach(function(z){var s=z[0];s.g++;s.gf+=z[1];s.gs+=z[2];s.fp+=z[3];if(z[1]>z[2]){s.v++;s.pt+=3}else if(z[1]===z[2]){s.n++;s.pt++}else s.p++})})});
+    return Object.keys(T).map(function(k){return T[k]}).sort(function(a,b){return b.pt-a.pt||(b.gf-b.gs)-(a.gf-a.gs)||b.gf-a.gf||b.fp-a.fp})}
+  function partita(m,ris,nota){return '<div class="partita"><div>'+E(N(m[0]))+(nota?'<small>'+nota+'</small>':'')+'</div><div class="ris">'+ris+'</div><div class="b">'+E(N(m[3]))+'</div></div>'}
+  var schermi=[],i=0,tim=null;
+  function mostra(){var S=document.querySelectorAll('#schermi section');S.forEach(function(s,j){s.classList.toggle('on',j===i)});
+    document.getElementById('pallini').innerHTML=schermi.map(function(s,j){return '<i class="'+(j===i?'on':'')+'" style="--durata:'+DURATA+'ms"></i>'}).join('');
+    document.getElementById('cosa').textContent=schermi[i]?schermi[i].nome:''}
+  function avanti(){i=(i+1)%Math.max(1,schermi.length);mostra()}
+  function ora(){var d=new Date();document.getElementById('ora').textContent=d.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'})}
+  ora();setInterval(ora,10000);
+  Promise.all([fetch(SITO+'data.json',{cache:'no-cache'}).then(function(r){return r.json()}),
+    fetch(DB+'/rest/v1/rpc/curva_feed',{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+KEY,'Content-Type':'application/json'},body:JSON.stringify({p_team:null,p_code:null})}).then(function(r){return r.json()}).catch(function(){return null})
+  ]).then(function(x){
+    var D=x[0],F=x[1],L=D.cal.lega,gio=L.filter(function(g){return giocata(D,g)}),ult=gio[gio.length-1],pros=L.filter(function(g){return !giocata(D,g)})[0],C=classifica(D);
+    schermi=[];
+    if(ult)schermi.push({nome:'Risultati della '+ult.n+'ª giornata',h:'<h2>Risultati · '+ult.n+'ª giornata <span>Campionato</span></h2><div class="griglia">'+ult.m.map(function(m){var r=gol(m[4]);return partita(m,r[0]+' - '+r[1])}).join('')+'</div>'});
+    schermi.push({nome:'Classifica',h:'<h2>Classifica <span>Dopo la '+(ult?ult.n:0)+'ª giornata</span></h2><table><tr><th></th><th>Squadra</th><th>Punti</th><th>G</th><th>V</th><th>N</th><th>P</th><th>Gol</th></tr>'+C.map(function(s,j){return '<tr class="'+(j<3?'top':j>=C.length-2?'giu':'')+'"><td>'+(j+1)+'</td><td>'+E(N(s.t))+'</td><td><b>'+s.pt+'</b></td><td>'+s.g+'</td><td>'+s.v+'</td><td>'+s.n+'</td><td>'+s.p+'</td><td>'+s.gf+' - '+s.gs+'</td></tr>'}).join('')+'</table>'});
+    if(pros)schermi.push({nome:'Prossimo turno',h:'<h2>Prossimo turno · '+pros.n+'ª giornata <span>Serie A '+pros.sa+'</span></h2><div class="griglia">'+pros.m.map(function(m){var a=C.findIndex(function(s){return s.t===m[0]})+1,b=C.findIndex(function(s){return s.t===m[3]})+1;return partita(m,'vs',a+'ª contro '+b+'ª')}).join('')+'</div>'});
+    var cori=F&&F.posts?F.posts.slice().sort(function(a,b){return b.ts-a.ts}).filter(function(p){return p.body&&p.body.length<220&&!/porc|\bdio\b|cazz|merd|vaff|stronz|bastard/i.test(p.body)})   /* in TV niente parolacce */.slice(0,3):[];
+    if(cori.length)schermi.push({nome:'Dalla Curva',h:'<h2>Dalla Curva <span>Gli ultimi cori</span></h2><div class="curva">'+cori.map(function(p){return '<div class="coro"><b>'+E(N(p.team))+'</b>'+E(p.body)+'</div>'}).join('')+'</div>'});
+    document.getElementById('schermi').innerHTML=schermi.map(function(s){return '<section>'+s.h+'</section>'}).join('');
+    document.getElementById('agg').textContent='Dati del sito · Aggiornati '+(D.updated||'');
+    i=0;mostra();clearInterval(tim);tim=setInterval(avanti,DURATA);
+  }).catch(function(){document.getElementById('schermi').innerHTML='<section class="on"><h2>Non riesco a leggere i dati del sito.</h2></section>'});
+})();
+</script>
+</body>
+</html>

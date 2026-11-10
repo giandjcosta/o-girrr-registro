@@ -10,7 +10,7 @@ const SCRIVE = /salva|scrivi|lancia|rispondi|vota|reagisci|registra|cancella|pro
 const RISP = [{ a: 1, k: 1, t: 'Una partita alla volta, con umiltà.', w: 0 }, { a: 1, k: 1, t: 'Mariana Coneja è un ottimo avversario: serve attenzione.', w: 0 }, { a: 2, k: 2, t: 'Chi non crede in noi può restare a casa.', w: 1 }];
 const AVV = { team: 'Mariana Coneja', giornata: 8, risposte: [{ a: 0, k: 0, t: 'Lo centriamo, senza dubbi.', w: 1 }, { a: 2, k: 2, t: 'Oranje VC? Chiedete a loro se hanno la formazione.', w: 1 }, { a: 1, k: 1, t: 'Grazie, continuiamo a lavorare a testa bassa.', w: 0 }], libera: null, promessa: 'Lo centriamo, senza dubbi.', pesa: 1 };
 
-async function contesto(browser, opz, { bloccata, avversario, squadra = 'Oranje VC' } = {}) {
+async function contesto(browser, opz, { bloccata, avversario, squadra = 'Oranje VC', dopo } = {}) {
   const ctx = await browser.newContext(opz);
   await ctx.addInitScript(t => { try { localStorage.setItem('fg', JSON.stringify({ team: t, code: 'PROVA' })); } catch (e) {} }, squadra);
   const scritte = [];
@@ -21,6 +21,9 @@ async function contesto(browser, opz, { bloccata, avversario, squadra = 'Oranje 
       const r = await route.fetch(); const j = await r.json();
       return route.fulfill({ json: j.filter(c => !(c.team === AVV.team && c.giornata === 8)).concat([AVV]) });
     }
+    /* conferenza del dopo partita: 'nessuna' = la funzione non c'è ancora (come oggi), altrimenti un database finto */
+    if (nome === 'conf_dopo_pubbliche' && dopo) return dopo === 'nessuna' ? route.fulfill({ status: 404, json: { code: 'PGRST202' } }) : route.fulfill({ json: dopo.righe });
+    if (nome === 'conf_dopo_salva' && dopo) { scritte.dopo = JSON.parse(route.request().postData()); return dopo === 'nessuna' ? route.fulfill({ status: 404, json: { code: 'PGRST202' } }) : (dopo.righe.push({ team: scritte.dopo.p_team, giornata: scritte.dopo.p_giornata, risposta: Object.assign({}, scritte.dopo.p_risposta, { a: String(scritte.dopo.p_risposta.a) }) }), route.fulfill({ status: 204, body: '' })); }
     if (nome === 'curva_feed') { const r = await route.fetch(); const j = await r.json(); return route.fulfill({ json: Object.assign(j, { ok: true }) }); }   /* il codice di prova vale come vero */
     if (SCRIVE.test(nome) && !/_(stato|pubblico|lista)$/.test(nome)) { scritte.push(nome); return route.fulfill({ json: null }); }
     return route.continue();
@@ -67,6 +70,35 @@ async function contesto(browser, opz, { bloccata, avversario, squadra = 'Oranje 
     ok(!scritte.length, G + ' · Nessuna scrittura nel database (' + scritte.join(',') + ')');
     if (FOTO) { await p.$eval('#cpub', x => x.scrollIntoView({ block: 'center' })); await p.screenshot({ path: `${FOTO}/conf-bloccata-${G}.png` }); }
     ok(!e.length, G + ' · Nessun errore JS (conferenza bloccata) ' + e.join(' / '));
+
+    // Sala stampa e conferenza del dopo partita
+    await ctx.close();
+    for (const modo of ['nessuna', 'finta']) {
+      const righe = [{ team: 'Apo team', giornata: 7, risposta: { a: '2', t: 'Non commento: chi deve capire ha capito.', k: 2 } }];
+      ({ ctx, scritte } = await contesto(browser, devices['iPhone SE'], { bloccata: true, dopo: modo === 'nessuna' ? 'nessuna' : { righe } }));
+      p = await ctx.newPage(); e = err(p);
+      await p.goto(B + graf + 'app.html#conf'); await p.waitForSelector('.cf-dopo', { timeout: 15000 }); await p.waitForTimeout(800);
+      const sala = await p.textContent('.cf-sala');
+      ok(/Sala stampa · Giornata 8/.test(sala) && (/Silenzio stampa/.test(sala) || /«/.test(sala)), G + ' · ' + modo + ' · Sala stampa della vigilia');
+      ok(!/Oranje VC<\/b>/.test(await p.innerHTML('.cf-sala')), G + ' · ' + modo + ' · Nella Sala stampa non c\'è la mia squadra');
+      const dq = await p.textContent('.cf-dopo');
+      ok(/Dopo la partita · Giornata 7/.test(dq) && /WOA/.test(dq), G + ' · ' + modo + ' · Domanda del dopo partita sulla 7ª contro WOA');
+      await p.click('[data-cdq="1"]'); await p.waitForTimeout(200);
+      ok(/Tono: Umile/.test(await p.textContent('.cf-dopo')) && /DOPO LA PARTITA/.test(await p.textContent('.cf-dopo')), G + ' · ' + modo + ' · Scelta, tono e anteprima del post');
+      await p.click('#cdpub'); await p.waitForTimeout(1200);
+      ok(scritte.dopo && scritte.dopo.p_giornata === 7 && scritte.dopo.p_team === 'Oranje VC' && scritte.dopo.p_risposta.k === 1, G + ' · ' + modo + ' · Invio con giornata 7, squadra e tono');
+      if (modo === 'nessuna') ok(/non si salva niente/.test(await p.textContent('.cf-dopo')), G + ' · Senza database: avviso che non si salva');
+      else {
+        const d2 = await p.textContent('.cf-dopo');
+        ok(/Pubblicata · Non si cambia più/.test(d2), G + ' · Dopo l\'invio la risposta è bloccata');
+        const s2 = await p.textContent('.cf-sala-dopo');
+        ok(/Non commento/.test(s2) && /Silenzio stampa/.test(s2), G + ' · Sala stampa del dopo partita: Apo team ha parlato, gli altri Silenzio stampa');
+        if (FOTO) { await p.$eval('.cf-dopo', x => x.scrollIntoView({ block: 'start' })); await p.screenshot({ path: `${FOTO}/dopo-${G}.png` }); await p.$eval('.cf-sala', x => x.scrollIntoView({ block: 'start' })); await p.screenshot({ path: `${FOTO}/sala-${G}.png` }); }
+      }
+      await lato(p, G + ' · ' + modo + ' · Conferenza con dopo partita');
+      ok(!e.length, G + ' · ' + modo + ' · Nessun errore JS ' + e.join(' / '));
+      if (modo === 'nessuna') await ctx.close();
+    }
 
     // 5. Promesse nella Carriera
     await p.goto(B + graf + 'app.html#carriera'); await p.waitForSelector('[data-ctab="prom"]'); await p.click('[data-ctab="prom"]');

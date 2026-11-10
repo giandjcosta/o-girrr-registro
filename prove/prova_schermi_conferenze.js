@@ -16,7 +16,7 @@ const SCHERMI = [
   ['Monitor 2560', { viewport: { width: 2560, height: 1440 } }], ['Smart TV 4K', { viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 2, userAgent: TV }]
 ];
 const PAGINE = [
-  ['Conferenza Lega', 'girrr/app.html#conf', '.cf-avv'], ['Conferenza Stadio', 'stadio/girrr/app.html#conf', '.cf-avv'],
+  ['Conferenza Lega', 'girrr/app.html#conf', '.cf-avv'], ['Conferenza Stadio', 'stadio/girrr/app.html#conf', '.cf-avv'], ['Sala stampa e dopo partita Lega', 'girrr/app.html#conf', '.cf-dopo'], ['Sala stampa e dopo partita Stadio', 'stadio/girrr/app.html#conf', '.cf-sala-dopo'],
   ['Promesse Lega', 'girrr/app.html#carriera', '.cf-pr'], ['Promesse Stadio', 'stadio/girrr/app.html#carriera', '.cf-pr'],
   ['Derby Lega', 'girrr/app.html#derby', '.cf-tt'], ['Derby Stadio', 'stadio/girrr/app.html#derby', '.cf-tt'],
   ['Curva Lega', 'girrr/curva.html?come=Oranje%20VC&scrivi=%40mariana_coneja%20', '#tx']

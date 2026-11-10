@@ -56,7 +56,7 @@ def app(t, rel):
                     "/* " + SEGNO + ": la conferenza della giornata, una volta nel database, non si cambia più */\n"
                     "function confBloccata(){var G=D.cal[0]&&D.cal[0].n;return DBS.conf.some(function(c){return c.giornata===G&&Array.isArray(c.risposte)&&c.risposte.length})}\n"
                     "/* le funzioni che servono a conferenze.js (questo script è chiuso: da fuori non si vedono) */\n"
-                    "window.GirrrApp={render:function(){render()},gsPost:gsPost,isDer:isDer,rvInfo:rvInfo,rvWord:rvWord,derName:derName,mg:mg};\n"
+                    "window.GirrrApp={render:function(){render()},gsPost:gsPost,isDer:isDer,rvInfo:rvInfo,rvWord:rvWord,derName:derName,mg:mg,me:function(){return GUEST?null:ME},toast:lvToast};\n"
                     "function vConfL(){\n  var t=ME,o=nextOpp(t),Q=confQs(t),cf=S.cf,ch=confChosen(t),done=ch.every(function(c){return c}),lk=confBloccata(),dis=lk?' disabled':'';")
     t = sostituisci(t, rel, """'<button data-cq="'+i+'" data-ca="'+j+'" aria-pressed="'+(cf.a[i]===j)+'">'""",
                     """'<button data-cq="'+i+'" data-ca="'+j+'" aria-pressed="'+(cf.a[i]===j)+'"'+dis+'>'""")
