@@ -72,6 +72,17 @@ def calendario_lega():
         return None
 
 
+def partita(cal, team, giornata):
+    """(casa, trasferta, risultato) della partita di campionato della squadra in quella giornata, nell'ordine del calendario;
+    risultato '' se non ancora giocata. None se non si trova."""
+    for g in cal or []:
+        if g.get("n") == giornata:
+            for m in g.get("m", []):
+                if team in (m[0], m[3]):
+                    return m[0], m[3], (m[4] if m[4] and m[4] != "-" else "")
+    return None
+
+
 def avversario(cal, team, giornata):
     for g in cal or []:
         if g.get("n") == giornata:
@@ -99,6 +110,7 @@ def eventi_conferenza(conf, cal=None):
         tono = tono_conferenza(c)
         out.append(dict(tipo="conferenza", k=f"C{c['giornata']}-{c['team']}", team=c["team"], giornata=c["giornata"],
                         avversario=avversario(cal, c["team"], c["giornata"]), tono=tono,
+                        partita=" - ".join((partita(cal, c["team"], c["giornata"]) or ("", ""))[:2]).strip(" -"),
                         libera=(c.get("libera") or "").strip(), risposte=ris, promessa=(c.get("promessa") or "").strip()))
     return out
 
@@ -126,15 +138,10 @@ def eventi_dopo(dopo, cal=None):
         t = ((c.get("risposta") or {}).get("t") or "").strip()
         if c["giornata"] != ultima or not t:
             continue
-        avv, ris = "", ""
-        for g in cal or []:
-            if g.get("n") != c["giornata"]:
-                continue
-            for m in g.get("m", []):
-                if c["team"] in (m[0], m[3]) and "-" in str(m[4]) and m[4] != "-":
-                    a, b = m[4].split("-")
-                    avv, ris = (m[3], f"{a}-{b}") if m[0] == c["team"] else (m[0], f"{b}-{a}")
-        out.append(dict(tipo="dopo", k=f"D{c['giornata']}-{c['team']}", team=c["team"], giornata=c["giornata"], avversario=avv, risultato=ris, risposta=t))
+        p = partita(cal, c["team"], c["giornata"])   # nell'ordine del calendario: «Oranje VC - Apo team 1-1»
+        out.append(dict(tipo="dopo", k=f"D{c['giornata']}-{c['team']}", team=c["team"], giornata=c["giornata"],
+                        avversario=avversario(cal, c["team"], c["giornata"]), partita=f"{p[0]} - {p[1]}" if p else "",
+                        risultato=p[2] if p else "", risposta=t))
     return out
 
 

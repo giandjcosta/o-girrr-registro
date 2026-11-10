@@ -1,5 +1,12 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 10 novembre (5) — Claude: post delle conferenze con partita, allenatore e squadra (Lab)
+
+- **Segnalazione (Gianluca):** «Scritta così non so quanto senso abbia, non specifichi chi è l'allenatore e chi la squadra» (il post diceva «DJ Cst Brazil, alla vigilia di DJ Cst Brazil - Mark Lenders»).
+- **Nuovo testo** (`calcoli/post_curva.py`, con la partita in ordine di calendario da `calcoli/leggi_eventi.py`): «CONFERENZA STAMPA · Mariana Coneja - Oranje VC» a capo «DJ Cst Brazil, allenatore di Oranje VC: «…» Su Mariana Coneja: «…» Alla dirigenza: «…» @oranje_vc @mariana_coneja». Dopo partita: «DOPO LA PARTITA · WOA - Oranje VC 1-2» a capo «DJ Cst Brazil, allenatore di Oranje VC: «…»». Parola mantenuta e Promessa tradita: «DJ Cst Brazil, allenatore di Oranje VC, l'aveva detto…». Due allenatori: «Leanzino & Mario, allenatori di The Blues Brothers»; la riga comincia con la maiuscola («Apo, allenatore di Apo team»); niente doppio punto dopo le virgolette.
+- **Anteprime nella pagina** allineate allo stesso testo: «Come appare in Curva» della conferenza (`applica.py`, funzioni `cfChi` e `cfPartita` in `app.html`), «Cosa ha detto l'avversario» e dopo partita (`conferenze.js`).
+- **Prove:** `prove/prova_conferenze.js` tutto a posto; testi controllati con i dati veri (sotto i 280 caratteri).
+
 ## 10 novembre (4) — Claude: Giro di boa dentro Condividi del Tabellone (prova nel Lab, sito non toccato)
 
 - **Richiesta (Gianluca: «Sì, prova»):** il Giro di boa non come pagina nuova (la Home e la Carriera · Stagione mostrano già posizione, punti, cammino e strisce) ma come **pagella di metà stagione da condividere**, con cose che oggi non ci sono.

@@ -75,6 +75,13 @@
     for (var i = 0; i < g.m.length; i++) { if (g.m[i][0] === t) return g.m[i][3]; if (g.m[i][3] === t) return g.m[i][0]; }
     return '';
   }
+  /* Chi parla e quale partita, come nei post di Girrr Sport (calcoli/post_curva.py): «DJ Cst Brazil, allenatore di Oranje VC»,
+     «Mariana Coneja - Oranje VC» nell'ordine del calendario */
+  function chiParla(x) { var a = mg(x); if (a === x) return x; a = a.charAt(0).toUpperCase() + a.slice(1); return a + ', ' + (/&| e /.test(a) ? 'allenatori' : 'allenatore') + ' di ' + x; }
+  function partitaDi(x, n) {
+    var g = (D.cal.lega || []).filter(function (z) { return z.n === n; })[0], m = g && g.m.filter(function (z) { return z[0] === x || z[3] === x; })[0];
+    return m ? m[0] + ' - ' + m[3] : x;
+  }
   function tono(c) {
     var r = (c && c.risposte || []).filter(function (x) { return x && x.t; });
     return r.length === 3 ? Math.min(2, Math.floor(r.reduce(function (a, x) { return a + (+x.k || 0); }, 0) / 3 + 0.5)) : null;
@@ -102,8 +109,8 @@
       return h + salaStampa(t, o, G) + window.GirrrConfDopo(t);
     }
     var r = (c.risposte || []).map(function (x) { return x && x.t; }).filter(Boolean), k = tono(c);
-    var testo = '<b>CONFERENZA STAMPA</b> · ' + E(o) + ', alla vigilia di ' + E(o) + ' - ' + E(t) + ': '
-      + (r.length === 3 ? '«' + E(r[0]) + '» Su ' + E(t) + ': «' + E(r[1]) + '» E alla dirigenza: «' + E(r[2]) + '»' : r.map(function (x) { return '«' + E(x) + '»'; }).join(' '));
+    var testo = '<b>CONFERENZA STAMPA</b> · ' + E(D ? partitaDi(o, G) : o + ' - ' + t) + '<br>' + E(chiParla(o)) + ': '
+      + (r.length === 3 ? '«' + E(r[0]) + '» Su ' + E(t) + ': «' + E(r[1]) + '» Alla dirigenza: «' + E(r[2]) + '»' : r.map(function (x) { return '«' + E(x) + '»'; }).join(' '));
     h += (fa('gsPost') ? fa('gsPost')(testo, 'Giornata ' + G) : '<div class="post"><q>' + testo + '</q></div>');
     h += '<div class="row" style="gap:6px;flex-wrap:wrap;margin-top:10px">' + (k != null ? '<span class="tag g">Tono: ' + TONI[k] + '</span>' : '')
       + (c.promessa ? '<span class="tag">Ha fatto una promessa</span>' : '<span class="tag">Nessuna promessa</span>') + '</div>';
@@ -187,7 +194,8 @@
       : '<button class="btn" id="cdpub" style="margin-top:12px"' + (scelta && !dsInvio ? '' : ' disabled') + '>Pubblica su Curva</button>';
     if (dopoAttivo === false) h += '<p class="sm mut" style="margin-top:8px">Prova: il database non ha ancora la conferenza del dopo partita, quindi qui non si salva niente.</p>';
     if (scelta) {
-      var testo = '<b>DOPO LA PARTITA</b> · ' + E(t) + ' dopo ' + E(t) + ' - ' + E(Q.o) + ' ' + E(Q.ris) + ': «' + E(scelta.t) + '»';
+      var mm = g.m.filter(function (z) { return z[0] === t || z[3] === t; })[0];
+      var testo = '<b>DOPO LA PARTITA</b> · ' + E(mm[0] + ' - ' + mm[3] + ' ' + mm[4]) + '<br>' + E(chiParla(t)) + ': «' + E(scelta.t) + '»';
       h += '<h4 style="margin:14px 0 6px">Come appare in Curva</h4>' + (fa('gsPost') ? fa('gsPost')(testo, mia ? 'Pubblicata' : 'Adesso') : '<div class="post"><q>' + testo + '</q></div>');
     }
     h += '</div>';

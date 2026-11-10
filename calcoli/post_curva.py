@@ -57,6 +57,28 @@ def m(t):
     return NOMI.get(t, t)
 
 
+# Nomi delle squadre come si leggono sul sito (nomi.js): la chiave interna resta quella di prima
+MOSTRA = {"The Blue brothers": "The Blues Brothers"}
+
+
+def sq(t):
+    return MOSTRA.get(t, t)
+
+
+def chi(t):
+    """Chi parla in conferenza: allenatore e squadra, così si capisce sempre chi è chi («DJ Cst Brazil, allenatore di Oranje VC»)."""
+    if m(t) == t:
+        return sq(t)
+    a = m(t)[:1].upper() + m(t)[1:]   # la riga comincia sempre con la maiuscola («apo» -> «Apo»)
+    return f"{a}, {'allenatori' if '&' in a or ' e ' in a else 'allenatore'} di {sq(t)}"
+
+
+def cit(x):
+    """Una frase tra virgolette chiusa da un punto solo: «Vinciamo noi». oppure «Vinciamo noi.» (mai «… noi.».)"""
+    x = x.strip()
+    return f"«{x}»" if x[-1:] in ".!?…" else f"«{x}»."
+
+
 def tag(t):
     """Menzione della squadra nella Curva, come hnd() di curva.html: «Oranje VC» -> «@oranje_vc».
     La Curva la riconosce nel testo e la squadra trova il post nelle sue Notifiche (scheda Menzioni)."""
@@ -94,12 +116,14 @@ def post(e):
                 return []
             testa = f"CONFERENZA STAMPA · Giornata {e['giornata']}\n{m(e['team'])}: "
             return [(GS, (testa + " ".join(f"«{r}»" for r in ris))[:280])]
-        me, opp = m(e["team"]), m(e["avversario"]) if e.get("avversario") else ""
-        vigilia = f"alla vigilia di {me} - {opp}" if opp else f"alla vigilia della giornata {e['giornata']}"
+        # 5.7 (Gianluca: «non specifichi chi è l'allenatore e chi la squadra»): in testa la partita con le squadre, nell'ordine
+        # del calendario; poi chi parla, con allenatore e squadra. Lo stesso testo è nell'anteprima dell'app (Come appare in Curva).
+        opp = sq(e["avversario"]) if e.get("avversario") else ""
+        part = " - ".join(sq(x) for x in e["partita"].split(" - ")) if e.get("partita") else (f"{sq(e['team'])} - {opp}" if opp else f"Giornata {e['giornata']}")
         su = f" Su {opp}:" if opp else " Sulla partita:"
 
         def monta(r, coda):
-            return f"CONFERENZA STAMPA · {me}, {vigilia}: «{r[0]}»{su} «{r[1]}» E alla dirigenza: «{r[2]}»{coda}"
+            return f"CONFERENZA STAMPA · {part}\n{chi(e['team'])}: «{r[0]}»{su} «{r[1]}» Alla dirigenza: «{r[2]}»{coda}"
         # 5.6.3/5.7: si taggano chi parla e l'avversario, così la conferenza arriva nelle Notifiche di tutti e due
         # se non sta nei 280 caratteri va via prima l'hashtag, poi il tag dell'avversario; il tag di chi parla resta sempre
         mio = " " + tag(e["team"])
@@ -118,8 +142,8 @@ def post(e):
             out.append((CIRO_H, parola, 0))   # il commento di Ciro, tale e quale all'app: esce sotto il post della conferenza (indice 0)
         return out
     if t == "dopo":   # conferenza del dopo partita: una risposta sola, con il risultato vero
-        me = m(e["team"])
-        testa = f"DOPO LA PARTITA · {me}" + (f", dopo {me} - {m(e['avversario'])} {e['risultato']}" if e.get("avversario") and e.get("risultato") else "") + ": "
+        part = " - ".join(sq(x) for x in e["partita"].split(" - ")) if e.get("partita") else ""
+        testa = "DOPO LA PARTITA · " + (f"{part} {e.get('risultato', '')}".strip() if part else f"Giornata {e['giornata']}") + f"\n{chi(e['team'])}: "
         r = e["risposta"]
         for coda in (f" {tag(e['team'])} #ConferenzaStampa", f" {tag(e['team'])}"):
             if len(testa + f"«{r}»" + coda) <= 280:
@@ -144,9 +168,9 @@ def post(e):
         return [(GS, testa + x[:280 - len(testa) - len(coda) - 1].rstrip() + "…" + coda)]
     if t == "promessa":
         if e["esito"] == "v":
-            return [(GIORNALE, f"PAROLA MANTENUTA\n{m(e['team'])} l'aveva detto in conferenza stampa: «{e['promessa']}». Poi è andato in campo e l'ha fatto. {tag(e['team'])} #ConferenzaStampa")]
+            return [(GIORNALE, f"PAROLA MANTENUTA\n{chi(e['team'])}, l'aveva detto in conferenza stampa: {cit(e['promessa'])} Poi la squadra è andata in campo e l'ha fatto. {tag(e['team'])} #ConferenzaStampa")]
         if e["esito"] == "s":   # come nel database: v mantenuta, p pareggio (nessun post), s tradita
-            return [(GIORNALE, f"PROMESSA TRADITA\n{m(e['team'])} in conferenza stampa: «{e['promessa']}». Il campo ha risposto altro, e la dirigenza ha preso nota. {tag(e['team'])} #ConferenzaStampa")]
+            return [(GIORNALE, f"PROMESSA TRADITA\n{chi(e['team'])}, in conferenza stampa: {cit(e['promessa'])} Il campo ha risposto altro, e la dirigenza ha preso nota. {tag(e['team'])} #ConferenzaStampa")]
     return []
 
 
