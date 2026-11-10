@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 10 novembre — Claude: Curva, cuori e rilanci che si vedono sul telefono (prova nel Lab, proposta 5.6.3)
+
+- **Problema (Gianluca):** premendo il cuore restava il bordo grigio; sui post vecchi non si vedevano i cuori e i rilanci già fatti. Causa: in `curva.html` (Lega e Stadio) i colori di «già messo» (`.acts .app.on`, `.ril.on`, `.rsp.on`) erano dentro `@media (hover:hover)`, cioè solo con il mouse. Sul telefono il cuore aveva il riempimento rosa ma bordo e numero grigi, il rilancio restava tutto grigio. I dati ci sono: `curva_feed` restituisce tutti i cuori e rilanci della squadra (`mine`, senza limiti di tempo), e le chiavi dei post non sono cambiate. Inoltre il cuore si colorava solo dopo il giro completo al database e il ricaricamento della Curva.
+- **Correzione:** `rilascio/curva563/cuori.py COPIA [--lab]`: i colori valgono su ogni schermo, e al tocco il cuore o il rilancio si colora subito; se il database risponde con un errore torna com'era. Database non toccato.
+- **Prova** (`prove/prova_curva_cuori.js`, con le risposte del database simulate, niente scritto davvero): iPhone 15 Pro e Pixel 7 × Lega e Stadio, cuore rosa pieno e rilancio verde subito al tocco, confermati dopo la risposta, tolti se c'è errore; sui post vecchi (Curva, Lega 7ª giornata) cuore e rilancio colorati anche su PC; nessun errore nuovo.
+- **Nel Lab:** lo specchio `lab/offline/` serve le due curva.html da `rilascio/curva563/pagine/`. Sito non toccato: serve il «vai» e il tipo di versione (proposta 5.6.3, correzione minore).
+- **Nota:** un cuore già messo ma che sembrava vuoto, se ritoccato, è stato tolto: quei cuori non tornano da soli.
+
 ## 10 novembre — Claude: Versioni, voci del changelog con la maiuscola (correzione di testo online)
 
 - Gianluca: «dopo i pallini voglio le lettere maiuscole». Sei voci del changelog (5.6.1 e 5.6.2) cominciavano con la minuscola: corrette in `versioni.json` (`gh-pages` `c1a8f5b`, per tornare indietro `git revert c1a8f5b`). `aggiungi.py` ora mette da solo la maiuscola a ogni voce. Provato su Lega e Stadio (iPhone 15 Pro): 125 voci, nessuna minuscola, nessun errore.
