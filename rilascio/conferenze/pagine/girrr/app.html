@@ -1183,7 +1183,7 @@ function confDelta(ch,win){var d=0;ch.forEach(function(c){if(c&&c.w){var peso=c.
 /* Claude, conferenze 10/11: la conferenza della giornata, una volta nel database, non si cambia più */
 function confBloccata(){var G=D.cal[0]&&D.cal[0].n;return DBS.conf.some(function(c){return c.giornata===G&&Array.isArray(c.risposte)&&c.risposte.length})}
 /* le funzioni che servono a conferenze.js (questo script è chiuso: da fuori non si vedono) */
-window.GirrrApp={render:function(){render()},gsPost:gsPost,isDer:isDer,rvInfo:rvInfo,rvWord:rvWord,derName:derName,mg:mg};
+window.GirrrApp={render:function(){render()},gsPost:gsPost,isDer:isDer,rvInfo:rvInfo,rvWord:rvWord,derName:derName,mg:mg,me:function(){return GUEST?null:ME},toast:lvToast};
 function vConfL(){
   var t=ME,o=nextOpp(t),Q=confQs(t),cf=S.cf,ch=confChosen(t),done=ch.every(function(c){return c}),lk=confBloccata(),dis=lk?' disabled':'';
   var h=where('Nuovo menu','Conferenza','poi in Curva su Girrr Sport')+'<h2>Conferenza stampa</h2><p class="lead">Le domande cambiano con la tua situazione: classifica, obiettivo del presidente, avversario e fiducia della dirigenza. Quello che dici conta: se prometti e poi perdi, la dirigenza se lo ricorda.</p>';

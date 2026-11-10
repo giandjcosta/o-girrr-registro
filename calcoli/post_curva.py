@@ -10,6 +10,7 @@ Formato di eventi.json: lista di oggetti con "tipo" e "k" (chiave unica dell'eve
   {"tipo":"sfida",   "k":"S12", "da":"Oranje VC", "a":"Grodah", "frase":"Quest'anno Grodah dovrà guardarmi dal basso."}
      (opzionali: "f" = numero 0-2 della frase, "testo" = frase vera scelta nell'app: esce nell'Intervista speciale di qualsiasi coppia)
   {"tipo":"conferenza","k":"C3-Apo team", "team":"Apo team", "giornata":3, "libera":"...", "promessa":"", "risposte":["...","..."]}   (conferenza pre partita, su Girrr Sport; opzionali "avversario" e "tono" 0-2: se ci sono, esce anche il commento di Ciro Trattativa)
+  {"tipo":"dopo", "k":"D7-Apo team", "team":"Apo team", "giornata":7, "avversario":"WOA", "risultato":"2-1", "risposta":"..."}   (conferenza del dopo partita, su Girrr Sport)
   {"tipo":"rifiuto", "k":"S12", "da":"Oranje VC", "a":"Grodah"}                     (a ha rifiutato)
   {"tipo":"scaduta", "k":"S12", "da":"Oranje VC", "a":"Grodah"}                     (nessuna risposta in 3 giorni)
   {"tipo":"accettata","k":"S12", "da":"Oranje VC", "a":"Grodah"}                     (a ha accettato: il Derby nasce quando si accordano sul nome)
@@ -116,6 +117,14 @@ def post(e):
             _, parola = CIRO[e["tono"]]
             out.append((CIRO_H, parola, 0))   # il commento di Ciro, tale e quale all'app: esce sotto il post della conferenza (indice 0)
         return out
+    if t == "dopo":   # conferenza del dopo partita: una risposta sola, con il risultato vero
+        me = m(e["team"])
+        testa = f"DOPO LA PARTITA · {me}" + (f", dopo {me} - {m(e['avversario'])} {e['risultato']}" if e.get("avversario") and e.get("risultato") else "") + ": "
+        r = e["risposta"]
+        for coda in (f" {tag(e['team'])} #ConferenzaStampa", f" {tag(e['team'])}"):
+            if len(testa + f"«{r}»" + coda) <= 280:
+                return [(GS, testa + f"«{r}»" + coda)]
+        return [(GS, testa + f"«{r[:280 - len(testa) - len(coda) - 3].rstrip()}…»" + coda)]
     if t == "rifiuto":
         return [(GS, f"RIFIUTO CLAMOROSO\n{m(e['a'])} non considera {m(e['da'])} nemmeno degno di un Derby. La rivalità, intanto, sale. #GirrrSport")]
     if t == "scaduta":

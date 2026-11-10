@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="it">
+<head>
+<script src="/o-fant-a-girrr/nomi.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Giro di boa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lobster&family=Inter:wght@500;700;800;900&display=swap" rel="stylesheet">
+<!-- Prova grafica (Claude, 10 novembre 2026, Gianluca: «giro di boa fammi vedere come sarebbe»).
+     A metà campionato (17ª giornata) ogni squadra ha il suo riassunto del girone d'andata, come immagine da condividere
+     (stesso formato di Condividi della 5.6, 1080×1350). Qui con i dati veri delle giornate giocate finora. Non è sul sito. -->
+<style>
+:root{--bg:#141d3d;--ink:#f4f6ff;--mute:#a9b4d6;--red:#d62839;--gold:#ffd166;--ok:#7be495;--line:rgba(255,255,255,.14)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d1430;color:var(--ink);font-family:Inter,system-ui,sans-serif;min-height:100vh;padding:16px}
+.barra{max-width:540px;margin:0 auto 14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.barra p{flex:1 1 100%;color:var(--mute);font-size:14px}
+select{flex:1;min-width:0;font:inherit;font-weight:700;padding:10px 12px;border-radius:12px;background:#1d2a52;color:var(--ink);border:1px solid var(--line)}
+.scala{max-width:540px;margin:0 auto;aspect-ratio:1080/1350;position:relative}
+.img{position:absolute;left:0;top:0;width:1080px;height:1350px;transform-origin:0 0;padding:64px 70px;overflow:hidden;
+  background:radial-gradient(ellipse at 15% 0%,#33468a 0%,transparent 60%),repeating-linear-gradient(115deg,rgba(255,255,255,.03) 0 50px,transparent 50px 100px),var(--bg);
+  border-left:18px solid var(--red);display:flex;flex-direction:column}
+.testa{display:flex;align-items:center;gap:26px}
+.testa img{height:120px}
+.testa small{display:block;color:var(--gold);font-weight:900;letter-spacing:.32em;font-size:22px}
+.testa h1{font-family:Lobster,cursive;font-weight:400;font-size:78px;line-height:1.05}
+.squadra{margin-top:40px;font-size:62px;font-weight:900;line-height:1.05}
+.all{color:var(--mute);font-size:28px;font-weight:700;margin-top:8px}
+.grandi{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}
+.box{background:rgba(255,255,255,.07);border:1px solid var(--line);border-radius:10px 26px 26px 10px;padding:22px 26px}
+.box small{display:block;color:var(--mute);font-size:21px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.box b{display:block;font-size:72px;font-weight:900;line-height:1.1;font-variant-numeric:tabular-nums}
+.box span{font-size:22px;color:var(--mute);font-weight:700}
+.cammino{margin-top:30px}
+.cammino small,.fatti small{color:var(--mute);font-size:21px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.cammino svg{display:block;width:100%;height:170px;margin-top:10px}
+.fatti{margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:18px 26px}
+.fatti div{border-top:1px solid var(--line);padding-top:14px}
+.fatti b{display:block;font-size:30px;font-weight:800;margin-top:6px;line-height:1.25}
+.ultime{margin-top:30px}.ultime small{color:var(--mute);font-size:21px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.ultime div{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:12px}
+.ultime span{display:flex;flex-direction:column;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:18px;padding:16px 6px;font-size:26px;font-weight:800}
+.ultime b{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-size:28px;color:#141d3d;background:var(--mute)}
+.ultime .rV b{background:var(--ok)}.ultime .rP b{background:var(--red);color:#fff}.ultime .rN b{background:var(--gold)}
+.ultime i{font-style:normal;font-size:17px;color:var(--mute);text-align:center;line-height:1.2}
+.piede{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;color:var(--mute);font-size:21px;font-weight:700}
+.piede b{color:var(--gold);font-size:24px;letter-spacing:.2em}
+</style>
+</head>
+<body>
+<div class="barra"><p>Prova grafica nel Lab · Il riassunto si sblocca alla 17ª giornata; qui con le giornate giocate finora.</p><select id="sq" aria-label="Squadra"></select></div>
+<div class="scala" id="scala"><div class="img" id="img"></div></div>
+<script>
+(function(){
+  var SITO='/o-fant-a-girrr/',N=window.girrrNome||function(s){return s};
+  var MGR={'Apo team':'apo','WOA':'ser','Grodah':'RikyArma','The Blue brothers':'Leanzino & Mario','Real Madrink':'AndrewTT','stif dc':'stifson','AFA SELECCION':'Maria','Mariana Coneja':'Mark Lenders','Atletico ma non troppo':'Riccardo','Oranje VC':'DJ Cst Brazil'};
+  function E(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function gol(s){var r=/^(\d+)\s*-\s*(\d+)$/.exec(s||'');return r?[+r[1],+r[2]]:null}
+  function pubblicato(D,sa){var v=(D.votiTs||{})[sa],c=(D.calcTs||{})[sa];if(!v&&!c)return true;return Date.now()>=Math.max(v?Date.parse(v):0,c?Date.parse(c):0)+3600000}
+  function giocata(D,g){return g.m.length&&g.m.every(function(m){return gol(m[4])})&&pubblicato(D,g.sa)}
+  function classifica(D,fino){var T={};D.teams.forEach(function(t){T[t.name]={t:t.name,v:0,n:0,p:0,gf:0,gs:0,pt:0,fp:0}});
+    D.cal.lega.forEach(function(g){if(g.n>fino||!giocata(D,g))return;g.m.forEach(function(m){var r=gol(m[4]),a=T[m[0]],b=T[m[3]];if(!r)return;
+      [[a,r[0],r[1],+m[1]||0],[b,r[1],r[0],+m[2]||0]].forEach(function(z){var s=z[0];s.gf+=z[1];s.gs+=z[2];s.fp+=z[3];if(z[1]>z[2]){s.v++;s.pt+=3}else if(z[1]===z[2]){s.n++;s.pt++}else s.p++})})});
+    var o=Object.keys(T).map(function(k){return T[k]}).sort(function(a,b){return b.pt-a.pt||(b.gf-b.gs)-(a.gf-a.gs)||b.gf-a.gf||b.fp-a.fp});o.forEach(function(s,i){s.pos=i+1});return T}
+  var D=null;
+  function disegna(t){
+    var gio=D.cal.lega.filter(function(g){return giocata(D,g)&&g.n<=17}),ult=gio.length?gio[gio.length-1].n:0,C=classifica(D,ult),s=C[t];
+    var pos=gio.map(function(g){return classifica(D,g.n)[t].pos});
+    var part=gio.map(function(g){var m=g.m.filter(function(x){return x[0]===t||x[3]===t})[0],r=gol(m[4]),c=m[0]===t;return {n:g.n,o:c?m[3]:m[0],a:c?r[0]:r[1],b:c?r[1]:r[0]}});
+    var vit=part.filter(function(p){return p.a>p.b}).sort(function(x,y){return (y.a-y.b)-(x.a-x.b)||y.a-x.a})[0];
+    var str=0,best=0;part.forEach(function(p){if(p.a>=p.b){str++;best=Math.max(best,str)}else str=0});
+    var piuGol=part.slice().sort(function(x,y){return y.a-x.a})[0];
+    var W=940,H=170,max=D.teams.length,x=function(i){return 30+i*(W-60)/Math.max(1,pos.length-1)},y=function(p){return 20+(p-1)*(H-40)/(max-1)};
+    var linea=pos.map(function(p,i){return (i?'L':'M')+x(i).toFixed(1)+' '+y(p).toFixed(1)}).join(' ');
+    var svg='<svg viewBox="0 0 '+W+' '+H+'" aria-label="Posizioni giornata per giornata"><path d="'+linea+'" fill="none" stroke="#ffd166" stroke-width="5" stroke-linejoin="round"/>'+pos.map(function(p,i){return '<circle cx="'+x(i)+'" cy="'+y(p)+'" r="17" fill="#141d3d" stroke="#ffd166" stroke-width="4"/><text x="'+x(i)+'" y="'+(y(p)+7)+'" fill="#fff" font-size="20" font-weight="900" text-anchor="middle" font-family="Inter">'+p+'</text>'}).join('')+'</svg>';
+    document.getElementById('img').innerHTML='<div class="testa"><img src="'+SITO+'assets/loghi/logo-lega-o-fant-a-girrr.png" alt=""><div><small>CAMPIONATO 2026/27</small><h1>Giro di boa</h1></div></div>'
+      +'<div class="squadra">'+E(N(t))+'</div><div class="all">Allenatore: '+E(MGR[t]||'')+' · Girone d\'andata, '+ult+' giornate su 17</div>'
+      +'<div class="grandi"><div class="box"><small>Posizione</small><b>'+s.pos+'ª</b><span>su '+D.teams.length+'</span></div><div class="box"><small>Punti</small><b>'+s.pt+'</b><span>'+s.v+' V · '+s.n+' N · '+s.p+' P</span></div><div class="box"><small>Gol</small><b>'+s.gf+'</b><span>Subiti '+s.gs+'</span></div></div>'
+      +'<div class="cammino"><small>Il cammino in classifica</small>'+svg+'</div>'
+      +'<div class="fatti"><div><small>Vittoria più larga</small><b>'+(vit?vit.a+'-'+vit.b+' a '+E(N(vit.o))+' ('+vit.n+'ª)':'Nessuna vittoria')+'</b></div>'
+      +'<div><small>Striscia senza sconfitte</small><b>'+best+(best===1?' partita':' partite')+'</b></div>'
+      +'<div><small>Più gol in una partita</small><b>'+(piuGol?piuGol.a+' contro '+E(N(piuGol.o)):'–')+'</b></div>'
+      +'<div><small>Media punti</small><b>'+(s.pt/Math.max(1,ult)).toFixed(2).replace('.',',')+' a partita</b></div></div>'
+      +'<div class="ultime"><small>Le ultime cinque</small><div>'+part.slice(-5).map(function(p){var e=p.a>p.b?'V':p.a<p.b?'P':'N';return '<span class="r'+e+'"><b>'+e+'</b>'+p.a+'-'+p.b+'<i>'+E(N(p.o))+'</i></span>'}).join('')+'</div></div>'
+      +'<div class="piede"><span>giandjcosta.github.io/o-fant-a-girrr</span><b>O GIRRR</b></div>';
+  }
+  function scala(){var w=document.getElementById('scala').clientWidth;document.getElementById('img').style.transform='scale('+(w/1080)+')'}
+  window.addEventListener('resize',scala);
+  fetch(SITO+'data.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(d){D=d;
+    var sel=document.getElementById('sq'),q=new URLSearchParams(location.search).get('squadra');
+    sel.innerHTML=D.teams.map(function(t){return '<option value="'+E(t.name)+'">'+E(N(t.name))+'</option>'}).join('');
+    if(q)sel.value=q;sel.onchange=function(){disegna(sel.value)};disegna(sel.value);scala()});
+})();
+</script>
+</body>
+</html>

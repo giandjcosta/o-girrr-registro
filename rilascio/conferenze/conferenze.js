@@ -1,11 +1,12 @@
 /* Conferenze stampa e Testa a testa (Claude, 10 novembre 2026, richiesta di Gianluca: «Farei le prime 6»).
    Va nella radice del sito (/o-fant-a-girrr/conferenze.js), incluso da girrr/app.html e stadio/girrr/app.html.
    La pagina chiama:
-     window.GirrrConfAvv(squadra, avversario, giornata)  riquadro «Cosa ha detto l'avversario», nella Conferenza
+     window.GirrrConfAvv(squadra, avversario, giornata)  nella Conferenza: «Cosa ha detto l'avversario», Sala stampa della vigilia,
+                                                         conferenza del dopo partita e Sala stampa del dopo partita
      window.GirrrPromesse(squadra)                       scheda «Promesse» della Carriera
      window.GirrrTesta(a, b)                              riquadro «Testa a testa» in fondo alla pagina Derby
    Dati veri, solo in lettura: data.json, girrr/dati/fiducia.json e le funzioni pubbliche del database conf_pubbliche
-   e conf_promesse (le stesse che legge il workflow della Curva). Non scrive niente.
+   e conf_promesse (le stesse che legge il workflow della Curva). Scrive solo la conferenza del dopo partita (conf_dopo_salva).
    I risultati si contano solo quando la giornata è pubblicata sul sito (stessa regola di stagione.js). */
 (function () {
   var io = document.currentScript, ROOT = new URL('./', io && io.src ? io.src : location.href).href;
@@ -21,6 +22,7 @@
     var st = document.createElement('style');
     st.textContent = '.opts button[disabled]{cursor:default}.opts button[disabled][aria-pressed="false"]{opacity:.4}.cfree[disabled]{opacity:.8}'
       + '.cf-tt-sel select{flex:1 1 140px;max-width:none}.cf-sum small{display:block;min-height:2.4em}.cf-avv a.btn{text-decoration:none}'
+      + '.cf-ss{padding:9px 0;border-top:1px solid var(--line)}.cf-sala h3+p+.cf-ss,.cf-sala h3+.cf-ss{border-top:0}.cf-silenzio{font-style:italic;margin-top:4px}.cdfree{width:100%}'
       + '@media (max-width:400px){.cf-sum{grid-template-columns:repeat(2,minmax(0,1fr))!important;row-gap:12px}.cf-sum small{min-height:0}}';
     (document.head || document.documentElement).appendChild(st);
   } catch (e) {}
@@ -97,7 +99,7 @@
     if (!c) {
       h += '<p class="sm mut">' + E(o) + ' non ha ancora parlato in conferenza stampa. Quando lo farà, le sue parole compaiono qui.</p>'
         + '<a class="btn o" href="' + scrivi + '" style="display:inline-block;margin-top:10px">Scrivigli in Curva</a></div>';
-      return h;
+      return h + salaStampa(t, o, G) + window.GirrrConfDopo(t);
     }
     var r = (c.risposte || []).map(function (x) { return x && x.t; }).filter(Boolean), k = tono(c);
     var testo = '<b>CONFERENZA STAMPA</b> · ' + E(o) + ', alla vigilia di ' + E(o) + ' - ' + E(t) + ': '
@@ -107,8 +109,121 @@
       + (c.promessa ? '<span class="tag">Ha fatto una promessa</span>' : '<span class="tag">Nessuna promessa</span>') + '</div>';
     if (c.promessa) h += '<p class="sm" style="margin-top:8px">Se perde, la sua dirigenza se lo segna: «' + E(c.promessa) + '»</p>';
     h += '<a class="btn" href="' + scrivi + '" style="display:inline-block;margin-top:12px">Rispondi in Curva</a></div>';
-    return h;
+    return h + salaStampa(t, o, G) + window.GirrrConfDopo(t);
   };
+
+  /* ---------- Sala stampa: cosa hanno detto gli altri (o «Silenzio stampa») ---------- */
+  function squadre() { return (D && D.teams || []).map(function (x) { return x.name; }); }
+  function salaStampa(t, o, G) {
+    if (!D || !CONF) return '';
+    var altri = squadre().filter(function (x) { return x !== t && x !== o; });
+    var h = '<div class="card cf-sala"><h3>Sala stampa · Giornata ' + G + '</h3><p class="sm mut" style="margin:4px 0 6px">Le conferenze delle altre squadre alla vigilia.</p>';
+    altri.forEach(function (x) {
+      var c = CONF.filter(function (z) { return z.team === x && z.giornata === G; })[0], k = tono(c), av = avversario(x, G);
+      h += '<div class="cf-ss">' + '<div class="row" style="gap:6px;flex-wrap:wrap"><b>' + E(x) + '</b>' + (av ? '<span class="mut sm">Contro ' + E(av) + '</span>' : '') + '</div>';
+      if (!c) h += '<p class="sm mut cf-silenzio">Silenzio stampa.</p></div>';
+      else {
+        h += '<p class="sm" style="margin:4px 0">' + (c.risposte || []).filter(function (z) { return z && z.t; }).map(function (z) { return '«' + E(z.t) + '»'; }).join(' ') + '</p>'
+          + '<div class="row" style="gap:6px;flex-wrap:wrap">' + (k != null ? '<span class="tag">Tono: ' + TONI[k] + '</span>' : '') + (c.promessa ? '<span class="tag g">Promessa</span>' : '') + '</div></div>';
+      }
+    });
+    return h + '</div>';
+  }
+
+  /* ---------- Conferenza del dopo partita (sotto la conferenza stampa) ----------
+     Una domanda sul risultato vero dell'ultima giornata pubblicata, tre risposte (Sicuro, Umile, Provocatorio) o una scritta a mano.
+     Si salva con conf_dopo_salva (rilascio/conferenze/dopo.sql: serve il «vai» di Gianluca sul database); finché la funzione non c'è
+     si vede tutto ma non si salva niente. Sotto: la Sala stampa del dopo partita, con «Silenzio stampa» per chi non ha parlato. */
+  var DOPO = null, dopoAttivo = null, ds = { g: 0, a: null, free: '' }, dsInvio = false;
+  function rpcCorpo(n, corpo) {
+    return fetch(URLDB + '/rest/v1/rpc/' + n, { method: 'POST', headers: { apikey: KEY, Authorization: 'Bearer ' + KEY, 'Content-Type': 'application/json' }, body: JSON.stringify(corpo || {}) })
+      .then(function (r) { return r.text().then(function (x) { var y = null; try { y = x ? JSON.parse(x) : null; } catch (e) {} return { ok: r.ok, status: r.status, j: y }; }); });
+  }
+  function caricaDopo(forza) {
+    if (dopoAttivo !== null && !forza) return;
+    dopoAttivo = dopoAttivo || false;
+    rpcCorpo('conf_dopo_pubbliche').then(function (r) {
+      if (r.ok && Array.isArray(r.j)) { DOPO = r.j; dopoAttivo = true; } else { DOPO = []; dopoAttivo = false; }
+      ridisegna();
+    }).catch(function () { DOPO = []; ridisegna(); });
+  }
+  function codice() { try { var o = JSON.parse(localStorage.getItem('fg') || '{}'); return o.code || ''; } catch (e) { return ''; } }
+  function ultimaGiocata(t) {
+    var L = (D.cal.lega || []).filter(function (g) { return giocata(g) && g.m.some(function (m) { return m[0] === t || m[3] === t; }); });
+    return L.length ? L[L.length - 1] : null;
+  }
+  function domandeDopo(t, g) {
+    var o = avversario(t, g.n), e = esito(t, g.n), m = g.m.filter(function (x) { return x[0] === t || x[3] === t; })[0], r = gol(m[4]);
+    var ris = m[0] === t ? r[0] + '-' + r[1] : r[1] + '-' + r[0];
+    var pr = (PROM || []).filter(function (p) { return p.team === t && p.giornata === g.n && p.promessa; })[0];
+    var q = e === 'v' ? 'Avete battuto ' + o + ' ' + ris + '. Che partita è stata?' : e === 'n' ? 'Finisce ' + ris + ' con ' + o + '. Punto guadagnato o due persi?' : 'Sconfitta ' + ris + ' con ' + o + '. Cosa è mancato?';
+    if (pr) q = 'Alla vigilia avevate detto: «' + pr.promessa + '». ' + q;
+    var A = e === 'v' ? ['Abbiamo fatto quello che avevamo detto: vittoria meritata.', 'Tre punti importanti, ma resta tanto da lavorare.', o + ' ha visto chi comanda.']
+      : e === 'n' ? ['Un punto che ci tiene in corsa.', 'Potevamo fare di più, lo ammetto.', 'Con un po\' di fortuna in più l\'avremmo vinta noi.']
+        : ['Una giornata storta: si riparte subito.', 'Hanno meritato loro, complimenti a ' + o + '.', 'Non commento: chi deve capire ha capito.'];
+    return { o: o, e: e, ris: ris, q: q, a: A.map(function (x, i) { return { t: x, k: i }; }) };
+  }
+  window.GirrrConfDopo = function (t) {
+    if (!D) return '';
+    caricaDopo();
+    var g = ultimaGiocata(t); if (!g) return '';
+    if (ds.g !== g.n) ds = { g: g.n, a: null, free: '' };
+    var Q = domandeDopo(t, g), mia = (DOPO || []).filter(function (x) { return x.team === t && x.giornata === g.n; })[0];
+    var h = '<div class="card cf-dopo"><h3>Dopo la partita · Giornata ' + g.n + '</h3><p class="sm mut" style="margin:4px 0 10px">Una domanda sola, sul risultato vero. La risposta esce in Curva su Girrr Sport e non si cambia più.</p>'
+      + '<div class="q"><p>' + E(Q.q) + '</p><div class="opts">';
+    var dis = mia ? ' disabled' : '';
+    if (mia) {
+      var r0 = mia.risposta || {};
+      h += Q.a.map(function (a) { return '<button aria-pressed="' + (String(r0.a) === String(a.k) && r0.t === a.t) + '" disabled>' + E(a.t) + '</button>'; }).join('')
+        + (r0.a === 'free' ? '<button aria-pressed="true" disabled>' + E(r0.t) + '</button>' : '');
+    } else {
+      h += Q.a.map(function (a, i) { return '<button data-cdq="' + i + '" aria-pressed="' + (ds.a === i) + '">' + E(a.t) + '</button>'; }).join('')
+        + (ds.a === 'free' ? '<input class="cdfree" maxlength="80" value="' + E(ds.free) + '" placeholder="Scrivi la tua risposta" autocomplete="off" enterkeyhint="done">' : '<button data-cdq="free" aria-pressed="false">Rispondo a modo mio…</button>');
+    }
+    h += '</div></div>';
+    var scelta = mia ? mia.risposta : ds.a === 'free' ? (ds.free.trim() ? { a: 'free', t: ds.free.trim(), k: 1 } : null) : ds.a != null ? { a: ds.a, t: Q.a[ds.a].t, k: Q.a[ds.a].k } : null;
+    if (scelta) h += '<div class="mut sm" style="margin-top:4px">Tono: ' + TONI[scelta.k != null ? scelta.k : 1] + '</div>';
+    h += mia ? '<button class="btn" disabled style="opacity:.6;cursor:default;margin-top:12px">Pubblicata · Non si cambia più</button>'
+      : '<button class="btn" id="cdpub" style="margin-top:12px"' + (scelta && !dsInvio ? '' : ' disabled') + '>Pubblica su Curva</button>';
+    if (dopoAttivo === false) h += '<p class="sm mut" style="margin-top:8px">Prova: il database non ha ancora la conferenza del dopo partita, quindi qui non si salva niente.</p>';
+    if (scelta) {
+      var testo = '<b>DOPO LA PARTITA</b> · ' + E(t) + ' dopo ' + E(t) + ' - ' + E(Q.o) + ' ' + E(Q.ris) + ': «' + E(scelta.t) + '»';
+      h += '<h4 style="margin:14px 0 6px">Come appare in Curva</h4>' + (fa('gsPost') ? fa('gsPost')(testo, mia ? 'Pubblicata' : 'Adesso') : '<div class="post"><q>' + testo + '</q></div>');
+    }
+    h += '</div>';
+    /* Sala stampa del dopo partita */
+    var altri = squadre().filter(function (x) { return x !== t; });
+    h += '<div class="card cf-sala cf-sala-dopo"><h3>Sala stampa · Dopo la giornata ' + g.n + '</h3>';
+    if (!dopoAttivo) h += '<p class="sm mut">Le parole delle altre squadre compaiono qui quando il database avrà la conferenza del dopo partita.</p>';
+    else altri.forEach(function (x) {
+      var c = DOPO.filter(function (z) { return z.team === x && z.giornata === g.n; })[0], av = avversario(x, g.n), m = g.m.filter(function (z) { return z[0] === x || z[3] === x; })[0], r = m && gol(m[4]);
+      h += '<div class="cf-ss"><div class="row" style="gap:6px;flex-wrap:wrap"><b>' + E(x) + '</b>' + (r ? '<span class="mut sm">' + E(m[0]) + ' ' + r[0] + '-' + r[1] + ' ' + E(m[3]) + '</span>' : '') + '</div>'
+        + (c && c.risposta && c.risposta.t ? '<p class="sm" style="margin:4px 0">«' + E(c.risposta.t) + '»</p>' : '<p class="sm mut cf-silenzio">Silenzio stampa.</p>') + '</div>';
+    });
+    return h + '</div>';
+  };
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-cdq],#cdpub'); if (!b || b.disabled) return;
+    e.preventDefault();
+    if (b.id !== 'cdpub') { var v = b.dataset.cdq; ds.a = v === 'free' ? 'free' : +v; ridisegna(); if (v === 'free') { var i = document.querySelector('.cdfree'); if (i) i.focus(); } return; }
+    var t = (window.GirrrApp && window.GirrrApp.me) ? window.GirrrApp.me() : null; if (!t) return;
+    var g = ultimaGiocata(t), Q = domandeDopo(t, g);
+    var r = ds.a === 'free' ? { a: 'free', t: ds.free.trim().slice(0, 80), k: 1 } : { a: ds.a, t: Q.a[ds.a].t, k: Q.a[ds.a].k };
+    if (!r.t) return;
+    dsInvio = true; ridisegna();
+    rpcCorpo('conf_dopo_salva', { p_team: t, p_code: codice(), p_giornata: g.n, p_risposta: r }).then(function (x) {
+      dsInvio = false;
+      if (x.ok) { avviso('Dopo partita pubblicato'); caricaDopo(true); return; }
+      avviso(x.status === 404 ? 'Prova: la conferenza del dopo partita non è ancora nel database. Niente è stato salvato.' : ((x.j && x.j.message) || 'Qualcosa non ha funzionato'));
+      ridisegna();
+    }).catch(function () { dsInvio = false; avviso('Non riesco a collegarmi: riprova tra poco'); ridisegna(); });
+  });
+  document.addEventListener('input', function (e) {
+    var f = e.target.closest && e.target.closest('.cdfree'); if (!f) return;
+    ds.free = f.value.slice(0, 80);
+    var b = document.getElementById('cdpub'); if (b) b.disabled = !ds.free.trim();
+  });
+  function avviso(m) { if (fa('toast')) fa('toast')(m); else try { alert(m); } catch (e) {} }
 
   /* ---------- 5. Le mie promesse (Carriera) ---------- */
   window.GirrrPromesse = function (t) {
