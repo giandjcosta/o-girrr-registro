@@ -95,17 +95,30 @@ def eventi_conferenza(conf, cal=None):
         righe = [r for r in (c.get("risposte") or []) if r.get("t")]
         ris = [r["t"].strip() for r in righe]
         # stesso calcolo dell'app: tono 0 Sicuro, 1 Umile, 2 Provocatorio = media dei toni delle tre risposte, arrotondata per eccesso a .5
-        tono = min(2, int(sum(int(r.get("k", 1)) for r in righe) / 3 + 0.5)) if len(righe) == 3 else None
+        tono = tono_conferenza(c)
         out.append(dict(tipo="conferenza", k=f"C{c['giornata']}-{c['team']}", team=c["team"], giornata=c["giornata"],
                         avversario=avversario(cal, c["team"], c["giornata"]), tono=tono,
                         libera=(c.get("libera") or "").strip(), risposte=ris, promessa=(c.get("promessa") or "").strip()))
     return out
 
 
+def tono_conferenza(c):
+    """Tono della conferenza (0 Sicuro, 1 Umile, 2 Provocatorio), lo stesso calcolo dell'app; None se le risposte non sono tre."""
+    righe = [r for r in (c.get("risposte") or []) if r.get("t")]
+    return min(2, int(sum(int(r.get("k", 1)) for r in righe) / 3 + 0.5)) if len(righe) == 3 else None
+
+
+def con_tono(prom, conf):
+    """Aggiunge a ogni promessa il tono della sua conferenza (5.6.3/5.7: il tono conta per la fiducia, vedi fiducia.py)."""
+    toni = {(c["team"], c["giornata"]): tono_conferenza(c) for c in conf or []}
+    return [dict(p, tono=toni.get((p["team"], p["giornata"]))) for p in prom]
+
+
 if __name__ == "__main__":
     prom = rpc("conf_promesse", {})
-    ev = eventi(rpc("derby_stato", {}), prom) + (lambda c: eventi_conferenza(c, calendario_lega() if c else None))(rpc("conf_pubbliche", {}))
+    conf = rpc("conf_pubbliche", {})
+    ev = eventi(rpc("derby_stato", {}), prom) + eventi_conferenza(conf, calendario_lega() if conf else None)
     USCITA.write_text(json.dumps(ev, ensure_ascii=False, indent=1), encoding="utf-8")
-    # le promesse grezze servono a fiducia.py (che ricalcola l'esito dai risultati veri)
-    (USCITA.parent / "conferenze.json").write_text(json.dumps(prom, ensure_ascii=False, indent=1), encoding="utf-8")
+    # le promesse grezze, con il tono della conferenza, servono a fiducia.py (che ricalcola l'esito dai risultati veri)
+    (USCITA.parent / "conferenze.json").write_text(json.dumps(con_tono(prom, conf), ensure_ascii=False, indent=1), encoding="utf-8")
     print("eventi.json scritto:", len(ev), "eventi;", "conferenze.json:", len(prom), "promesse")

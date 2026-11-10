@@ -31,7 +31,16 @@ La notifica 3 ore e 1 ora prima è online con la 5.6. Resta da fare, se si vuole
 - **Promemoria del mercato scambi:** quando si apre e si chiude una finestra di mercato, avviso in Home e notifica sul telefono, con il conto alla rovescia.
 - **Testo più grande:** un interruttore in Info per ingrandire i caratteri su tutte le pagine (utile su TV e per chi legge da lontano).
 
+### Nuove idee (Claude, 10 novembre 2026)
+- **Menzioni sul telefono:** chi viene taggato in Curva (anche da Girrr Sport) riceve la notifica push. Serve una riga in più in `push_private.eventi`: modifica al database, con il «vai» apposta.
+- **Sala stampa:** una pagina pubblica con tutte le conferenze della giornata, squadra per squadra, e chi non ha parlato («Ha scelto il silenzio stampa»).
+- **Conferenza del dopo partita:** una domanda sola dopo il risultato vero (vittoria, pareggio o sconfitta), con tre risposte; esce su Girrr Sport e chiude la storia della promessa.
+- **Diretta in salotto (TV):** una pagina per la TV che gira da sola tra classifica, risultati, Curva e prossimo turno, da lasciare accesa durante la giornata.
+- **Classifica dei Derby:** punti fatti solo negli scontri tra rivali, con il re dei Derby della stagione (dove manca il dato: «Dato non conservato»).
+- **Giro di boa:** a metà campionato, il riassunto del girone d'andata di ogni squadra come immagine da condividere (Condividi della 5.6).
+
 ## Fatte
+- **In prova nel Lab, non ancora online** (10 novembre 2026, vedi `STATO.md`): tag delle squadre nei post della conferenza, conferenza bloccata dopo la pubblicazione, tono nella fiducia, conferenza dell'avversario con «Rispondi in Curva», scheda Promesse della Carriera, **Testa a testa** (pagina Derby) e **testo più grande** (solo sulle smart TV, senza interruttore: decisione di Gianluca).
 - **Copia offline** (online il 9 novembre 2026, `gh-pages` `e06cbe2`), vedi `STATO.md`.
 - **Scorciatoie dell'icona nella grafica scelta** (online il 9 novembre 2026, `gh-pages` `e06cbe2`): Tabellone, Curva, Giornale, Totogirrr. Non su iPhone.
 - **5.6** (online il 9 novembre 2026, `gh-pages` `caa13c6`): notifiche sul telefono (con la formazione 3 ore e 1 ora prima), Cerca un giocatore (scheda dello Spogliatoio), Condividi come immagine, La mia stagione (Carriera), pagina Versioni.

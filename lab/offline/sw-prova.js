@@ -16,11 +16,13 @@ self.GIRRR_SPECCHIO = (function () {
     'stadio/girrr/versioni.html': new URL('../../rilascio/versioni/pagine/stadio/girrr/versioni.html', self.location.href).href,
     'condividi.js': new URL('../../rilascio/condividi/condividi.js', self.location.href).href, /* Condividi come immagine */
     'stagione.js': new URL('../../rilascio/stagione/stagione.js', self.location.href).href, /* Carriera · La mia stagione */
-    'girrr/app.html': new URL('../../rilascio/stagione/pagine/girrr/app.html', self.location.href).href,
-    'stadio/girrr/app.html': new URL('../../rilascio/stagione/pagine/stadio/girrr/app.html', self.location.href).href,
+    'girrr/app.html': new URL('../../rilascio/conferenze/pagine/girrr/app.html', self.location.href).href, /* conferenze: bloccata, avversario, Promesse, Testa a testa */
+    'stadio/girrr/app.html': new URL('../../rilascio/conferenze/pagine/stadio/girrr/app.html', self.location.href).href,
+    'conferenze.js': new URL('../../rilascio/conferenze/conferenze.js', self.location.href).href,
+    'tv.js': new URL('../../rilascio/conferenze/tv.js', self.location.href).href, /* testo più grande solo sulla TV (?tv per provarlo dal PC) */
     'notifiche-lette.js': new URL('../../rilascio/notifiche/notifiche-lette.js', self.location.href).href, /* lette rimpicciolite */
-    'girrr/curva.html': new URL('../../rilascio/curva563/pagine/girrr/curva.html', self.location.href).href, /* 5.6.3: cuori e rilanci colorati sul telefono, subito al tocco */
-    'stadio/girrr/curva.html': new URL('../../rilascio/curva563/pagine/stadio/girrr/curva.html', self.location.href).href,
+    'girrr/curva.html': new URL('../../rilascio/conferenze/pagine/girrr/curva.html', self.location.href).href, /* 5.6.3 (cuori e rilanci) più ?scrivi= della conferenza */
+    'stadio/girrr/curva.html': new URL('../../rilascio/conferenze/pagine/stadio/girrr/curva.html', self.location.href).href,
     'push.js': new URL('../../rilascio/push/push.js', self.location.href).href, /* notifiche sul telefono */
     'apri.html': new URL('../../rilascio/scorciatoie/apri.html', self.location.href).href,
     'manifest.webmanifest': new URL('../../rilascio/scorciatoie/manifest.webmanifest', self.location.href).href /* con le scorciatoie */
@@ -37,7 +39,7 @@ self.GIRRR_SPECCHIO = (function () {
     prendi: function (href, init) {
       var dest = href, loc = false;
       if (href.indexOf(sito) === 0) {
-        var rel = href.slice(sito.length), p = rel.split('?')[0];
+        var rel = href.slice(sito.length).split('#')[0], p = rel.split('?')[0]; /* nelle navigazioni l'indirizzo arriva con il #: senza toglierlo la pagina di prova non si riconosceva */
         if (locali[p]) { dest = locali[p]; loc = true; } else dest = origine + rel;
       }
       return fetch(dest, { cache: init.cache || 'default', credentials: 'same-origin' }).then(function (r) {
@@ -45,6 +47,7 @@ self.GIRRR_SPECCHIO = (function () {
         if (!r.ok || !/text\/html|javascript|json|text\/css|manifest/.test(ct)) return r;
         return r.text().then(function (t) {
           if (!loc || /\.html$/.test(dest.split('?')[0])) t = riscrivi(t); /* le pagine del sito preparate qui si riscrivono come le altre */
+          if (/text\/html/.test(ct) && t.indexOf('tv.js') < 0) t = t.replace(/<head[^>]*>/i, function (h) { return h + '<script src="' + sito + 'tv.js"></script>'; }); /* testo grande sulla TV, su ogni pagina */
           if (/text\/html/.test(ct) && t.indexOf('offline.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'offline.js" defer></script></head>');
           if (/text\/html/.test(ct) && /\/o-fant-a-girrr\/(stadio\/)?girrr\/(index\.html|notifiche\.html)?$/.test(dest.split('?')[0]) && t.indexOf('versioni.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'versioni.js" defer></script></head>');
           if (/text\/html/.test(ct) && /\/o-fant-a-girrr\/(index\.html)?$/.test(dest.split('?')[0]) && t.indexOf('cerca.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'cerca.js" defer></script></head>');

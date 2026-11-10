@@ -22,7 +22,7 @@ Moviola: un post su Girrr Sport per l'ultima giornata di moviola.json con l'epis
 Regole (decise da Gianluca): i post usano i nomi degli allenatori; i post ufficiali non parlano mai di scommesse; "Derby" sempre con la D maiuscola.
 Ogni post è al massimo di 280 caratteri.
 """
-import datetime, json, sys, urllib.request
+import datetime, json, re, sys, urllib.request
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -54,6 +54,12 @@ FRASI = {("Oranje VC", "Apo team"): [
 
 def m(t):
     return NOMI.get(t, t)
+
+
+def tag(t):
+    """Menzione della squadra nella Curva, come hnd() di curva.html: «Oranje VC» -> «@oranje_vc».
+    La Curva la riconosce nel testo e la squadra trova il post nelle sue Notifiche (scheda Menzioni)."""
+    return "@" + re.sub(r"[^a-z0-9]+", "_", t.lower()).strip("_")
 
 
 def post(e):
@@ -93,14 +99,18 @@ def post(e):
 
         def monta(r, coda):
             return f"CONFERENZA STAMPA · {me}, {vigilia}: «{r[0]}»{su} «{r[1]}» E alla dirigenza: «{r[2]}»{coda}"
-        coda = " #ConferenzaStampa"
-        testo = monta(ris, coda)
-        if len(testo) > 280:
-            testo = monta(ris, "")                      # prima si toglie l'hashtag
+        # 5.6.3/5.7: si taggano chi parla e l'avversario, così la conferenza arriva nelle Notifiche di tutti e due
+        # se non sta nei 280 caratteri va via prima l'hashtag, poi il tag dell'avversario; il tag di chi parla resta sempre
+        mio = " " + tag(e["team"])
+        tags = mio + (" " + tag(e["avversario"]) if e.get("avversario") else "")
+        for coda in (tags + " #ConferenzaStampa", tags, mio):
+            testo = monta(ris, coda)
+            if len(testo) <= 280:
+                break
         while len(testo) > 280:                         # poi si accorcia la risposta più lunga, un po' alla volta
             k = max(range(3), key=lambda i: len(ris[i]))
             ris[k] = ris[k].rstrip(" …")[:-4].rstrip() + "…"
-            testo = monta(ris, "")
+            testo = monta(ris, mio)
         out = [(GS, testo)]
         if e.get("tono") in (0, 1, 2):   # nell'app c'è anche il tono e la risposta di Ciro Trattativa
             _, parola = CIRO[e["tono"]]
@@ -125,9 +135,9 @@ def post(e):
         return [(GS, testa + x[:280 - len(testa) - len(coda) - 1].rstrip() + "…" + coda)]
     if t == "promessa":
         if e["esito"] == "v":
-            return [(GIORNALE, f"PAROLA MANTENUTA\n{m(e['team'])} l'aveva detto in conferenza stampa: «{e['promessa']}». Poi è andato in campo e l'ha fatto. #ConferenzaStampa")]
+            return [(GIORNALE, f"PAROLA MANTENUTA\n{m(e['team'])} l'aveva detto in conferenza stampa: «{e['promessa']}». Poi è andato in campo e l'ha fatto. {tag(e['team'])} #ConferenzaStampa")]
         if e["esito"] == "s":   # come nel database: v mantenuta, p pareggio (nessun post), s tradita
-            return [(GIORNALE, f"PROMESSA TRADITA\n{m(e['team'])} in conferenza stampa: «{e['promessa']}». Il campo ha risposto altro, e la dirigenza ha preso nota. #ConferenzaStampa")]
+            return [(GIORNALE, f"PROMESSA TRADITA\n{m(e['team'])} in conferenza stampa: «{e['promessa']}». Il campo ha risposto altro, e la dirigenza ha preso nota. {tag(e['team'])} #ConferenzaStampa")]
     return []
 
 
