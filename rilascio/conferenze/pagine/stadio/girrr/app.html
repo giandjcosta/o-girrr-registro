@@ -1166,6 +1166,8 @@ function freeClaim(tx){var s=(tx||'').toLowerCase();if(!s.trim())return null;var
 function confChosen(t){var Q=confQs(t);return Q.map(function(q,i){var a=S.cf.a[i];if(a==='free')return freeClaim(S.cf.free[i]);return a===undefined?null:q.a[a]})}
 function confDelta(ch,win){var d=0;ch.forEach(function(c){if(c&&c.w){var peso=c.k===2?2:1;d+=win?peso:-peso}});return Math.max(-3,Math.min(3,d))}
 /* Claude, conferenze 10/11: la conferenza della giornata, una volta nel database, non si cambia più */
+function cfChi(x){var a=mg(x);if(a===x)return x;a=a.charAt(0).toUpperCase()+a.slice(1);return a+', '+(/&| e /.test(a)?'allenatori':'allenatore')+' di '+x}
+function cfPartita(x){var r=(D.cal[0]&&D.cal[0].m)||[];for(var i=0;i<r.length;i++)if(r[i][0]===x||r[i][1]===x)return r[i][0]+' - '+r[i][1];return x}
 function confBloccata(){var G=D.cal[0]&&D.cal[0].n;return DBS.conf.some(function(c){return c.giornata===G&&Array.isArray(c.risposte)&&c.risposte.length})}
 /* le funzioni che servono a conferenze.js (questo script è chiuso: da fuori non si vedono) */
 window.GirrrApp={render:function(){render()},gsPost:gsPost,isDer:isDer,rvInfo:rvInfo,rvWord:rvWord,derName:derName,mg:mg,me:function(){return GUEST?null:ME},toast:lvToast};
@@ -1179,7 +1181,7 @@ function vConfL(){
     :'<button class="btn" id="cpub" '+(done?'':'disabled style="opacity:.45;cursor:not-allowed"')+'>Pubblica su Curva</button><p class="sm mut" style="margin-top:8px">Una volta pubblicata, la conferenza non si può più cambiare.</p></div>';
   if(cf.pub&&done){
     var tone=Math.min(2,Math.round(ch.reduce(function(a,c){return a+c.k},0)/3));
-    h+='<div class="card"><h3>Come appare in Curva</h3><div class="post"><div class="hd"><img src="'+D.img.gs+'" alt="Girrr Sport"><div><b>Girrr Sport</b><span class="mut sm">@girrrsport · Adesso</span></div></div><q><b>CONFERENZA STAMPA</b> · '+esc(t)+', alla vigilia di '+esc(t)+' - '+esc(o)+': «'+esc(ch[0].t)+'» Su '+esc(o)+': «'+esc(ch[1].t)+'» E alla dirigenza: «'+esc(ch[2].t)+'»</q><span class="tag g">Tono: '+TONI[tone]+'</span><div class="rep"><b>'+REP[tone][0]+'</b> risponde: '+esc(REP[tone][1])+'</div></div></div>';
+    h+='<div class="card"><h3>Come appare in Curva</h3><div class="post"><div class="hd"><img src="'+D.img.gs+'" alt="Girrr Sport"><div><b>Girrr Sport</b><span class="mut sm">@girrrsport · Adesso</span></div></div><q><b>CONFERENZA STAMPA</b> · '+esc(cfPartita(t))+'<br>'+esc(cfChi(t))+': «'+esc(ch[0].t)+'» Su '+esc(o)+': «'+esc(ch[1].t)+'» Alla dirigenza: «'+esc(ch[2].t)+'»</q><span class="tag g">Tono: '+TONI[tone]+'</span><div class="rep"><b>'+REP[tone][0]+'</b> risponde: '+esc(REP[tone][1])+'</div></div></div>';
     h+=lvDopo(t,ch,ch.filter(function(c){return c.w}).length)}
   h+=(window.GirrrConfAvv?window.GirrrConfAvv(t,o,D.cal[0]&&D.cal[0].n):'');
   return h+'<p class="note">Le dichiarazioni e il loro esito entrano anche nella radio: "aveva promesso e ha perso" o "parola mantenuta" fanno parte del riassunto della conferenza. Le frasi si aggiornano ogni giornata con classifica, obiettivo e fiducia.</p>';

@@ -67,6 +67,14 @@ def app(t, rel):
     t = sostituisci(t, rel, """  h+='<button class="btn" id="cpub" '+(done?'':'disabled style="opacity:.45;cursor:not-allowed"')+'>Pubblica su Curva</button></div>';""",
                     """  h+=lk?'<button class="btn" id="cpub" disabled style="opacity:.6;cursor:default">Pubblicata · Non si cambia più</button><p class="sm mut" style="margin-top:8px">La conferenza è uscita in Curva: le parole dette restano quelle.</p></div>'
     :'<button class="btn" id="cpub" '+(done?'':'disabled style="opacity:.45;cursor:not-allowed"')+'>Pubblica su Curva</button><p class="sm mut" style="margin-top:8px">Una volta pubblicata, la conferenza non si può più cambiare.</p></div>';""")
+    # Anteprima del post come esce in Curva (Gianluca: «non specifichi chi è l'allenatore e chi la squadra»): la partita
+    # nell'ordine del calendario, poi chi parla con allenatore e squadra; stesso testo di calcoli/post_curva.py
+    t = sostituisci(t, rel, """<q><b>CONFERENZA STAMPA</b> · '+esc(t)+', alla vigilia di '+esc(t)+' - '+esc(o)+': «'+esc(ch[0].t)+'» Su '+esc(o)+': «'+esc(ch[1].t)+'» E alla dirigenza: «'+esc(ch[2].t)+'»</q>""",
+                    """<q><b>CONFERENZA STAMPA</b> · '+esc(cfPartita(t))+'<br>'+esc(cfChi(t))+': «'+esc(ch[0].t)+'» Su '+esc(o)+': «'+esc(ch[1].t)+'» Alla dirigenza: «'+esc(ch[2].t)+'»</q>""")
+    t = sostituisci(t, rel, "function confBloccata(){",
+                    "function cfChi(x){var a=mg(x);if(a===x)return x;a=a.charAt(0).toUpperCase()+a.slice(1);return a+', '+(/&| e /.test(a)?'allenatori':'allenatore')+' di '+x}\n"
+                    "function cfPartita(x){var r=(D.cal[0]&&D.cal[0].m)||[];for(var i=0;i<r.length;i++)if(r[i][0]===x||r[i][1]===x)return r[i][0]+' - '+r[i][1];return x}\n"
+                    "function confBloccata(){")
     t = sostituisci(t, rel, """    h+=lvDopo(t,ch,ch.filter(function(c){return c.w}).length)}
   return h+'<p class="note">Le dichiarazioni""",
                     """    h+=lvDopo(t,ch,ch.filter(function(c){return c.w}).length)}
