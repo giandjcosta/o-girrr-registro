@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 10 novembre (4) — Claude: Giro di boa dentro Condividi del Tabellone (prova nel Lab, sito non toccato)
+
+- **Richiesta (Gianluca: «Sì, prova»):** il Giro di boa non come pagina nuova (la Home e la Carriera · Stagione mostrano già posizione, punti, cammino e strisce) ma come **pagella di metà stagione da condividere**, con cose che oggi non ci sono.
+- **Dove:** Tabellone → «Condividi» → quarta scelta «Il mio girone d'andata» (solo con una squadra). Sul sito compare dalla 17ª giornata pubblicata; nel Lab (e con `?girone`) sempre, con le giornate giocate finora. Proposte non ancora fatte: riquadro in Home nella settimana della 17ª e post «Campione d'inverno» di Girrr Sport.
+- **Cosa c'è nell'immagine** (1080×1350, grafica Lega o Stadio, livello sportivo, niente fantapunti): posizione, punti (V · N · P) e gol; «Campione d'inverno» per la prima dopo la 17ª («In testa a metà strada» prima); **voto della dirigenza** (posizione rispetto all'attesa del presidente, obiettivo e fiducia da `girrr/dati/fiducia.json`; senza dati «Dato non conservato»); **Champions Cup** nello stesso periodo (girone, V · N · P); **Derby del girone** (Derby storici da `novita-dati.js` più quelli nati da una sfida, da `derby_stato`); **promesse** mantenute, finite in pareggio e tradite.
+- **File:** `rilascio/condividi/condividi.js` (lo stesso file del sito: al rilascio va copiato nella radice di `gh-pages`). Prova del Lab servita dallo specchio come prima.
+- **Prove:** nello specchio del Lab in locale, Lega e Stadio, iPhone SE (320), iPhone 15 Pro, Pixel 7: le quattro immagini (La mia partita, Risultati, Classifica, Girone d'andata) si preparano senza errori e senza scorrimento laterale; fuori dal Lab, prima della 17ª, la scelta resta nascosta. Non provati: Safari vero e la condivisione vera dal telefono.
+
 ## 10 novembre (3) — Claude: Sala stampa, dopo partita, menzioni sul telefono, prove grafiche (Lab; database in attesa del «vai»)
 
 - **«Vai» di Gianluca per il Lab:** il ramo `claude/conferenze-stampa-punteggio-pe4qga` è unito al `main` del registro (`c609725`), poi le novità qui sotto. Sito vero non toccato: per il rilascio servono il tipo di versione e il «vai» per il sito.
