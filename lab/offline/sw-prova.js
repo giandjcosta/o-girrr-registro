@@ -16,8 +16,9 @@ self.GIRRR_SPECCHIO = (function () {
     'stadio/girrr/versioni.html': new URL('../../rilascio/versioni/pagine/stadio/girrr/versioni.html', self.location.href).href,
     'condividi.js': new URL('../../rilascio/condividi/condividi.js', self.location.href).href, /* Condividi come immagine */
     'stagione.js': new URL('../../rilascio/stagione/stagione.js', self.location.href).href, /* Carriera · La mia stagione */
-    'girrr/app.html': new URL('../../rilascio/conferenze/pagine/girrr/app.html', self.location.href).href, /* conferenze: bloccata, avversario, Promesse, Testa a testa */
-    'stadio/girrr/app.html': new URL('../../rilascio/conferenze/pagine/stadio/girrr/app.html', self.location.href).href,
+    'girrr/app.html': new URL('../../rilascio/redazione/pagine/girrr/app.html', self.location.href).href, /* 5.8: domande della redazione di Girrr Sport (sopra la 5.7) */
+    'stadio/girrr/app.html': new URL('../../rilascio/redazione/pagine/stadio/girrr/app.html', self.location.href).href,
+    'girrr/dati/redazione.json': new URL('../redazione/redazione.json', self.location.href).href, /* scritto da Claude e controllato da redazione/controlla.py */
     'conferenze.js': new URL('../../rilascio/conferenze/conferenze.js', self.location.href).href,
     'tv.js': new URL('../../rilascio/conferenze/tv.js', self.location.href).href, /* testo più grande solo sulla TV (?tv per provarlo dal PC) */
     'notifiche-lette.js': new URL('../../rilascio/notifiche/notifiche-lette.js', self.location.href).href, /* lette rimpicciolite */
@@ -47,6 +48,9 @@ self.GIRRR_SPECCHIO = (function () {
         if (!r.ok || !/text\/html|javascript|json|text\/css|manifest/.test(ct)) return r;
         return r.text().then(function (t) {
           if (!loc || /\.html$/.test(dest.split('?')[0])) t = riscrivi(t); /* le pagine del sito preparate qui si riscrivono come le altre */
+          /* La Carriera e la Conferenza leggono lab-dati.json con una richiesta sincrona, che il browser non fa passare dal
+             service worker: nello specchio andrebbe persa e la pagina userebbe i dati incorporati, vecchi. Va diretta al sito. */
+          if (/text\/html/.test(ct)) t = t.replace(/x\.open\('GET','(?:\.\.\/\.\.\/girrr\/|)dati\/lab-dati\.json\?'/g, "x.open('GET','" + origine + "girrr/dati/lab-dati.json?'");
           if (/text\/html/.test(ct) && t.indexOf('tv.js') < 0) t = t.replace(/<head[^>]*>/i, function (h) { return h + '<script src="' + sito + 'tv.js"></script>'; }); /* testo grande sulla TV, su ogni pagina */
           if (/text\/html/.test(ct) && t.indexOf('offline.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'offline.js" defer></script></head>');
           if (/text\/html/.test(ct) && /\/o-fant-a-girrr\/(stadio\/)?girrr\/(index\.html|notifiche\.html)?$/.test(dest.split('?')[0]) && t.indexOf('versioni.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'versioni.js" defer></script></head>');
