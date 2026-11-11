@@ -24,7 +24,9 @@ Al massimo due giri per giornata, più quei due eventuali tentativi.
 3. Scrivi `redazione/redazione.json` (formato sotto), partendo dal file che c'è già: le domande di una giornata, una volta
    pubblicate, **non si cambiano** (qualcuno può aver già risposto). Si riscrivono solo per una giornata nuova.
 4. `python3 redazione/controlla.py --pubblica lab/redazione/redazione.json` (nel Lab). Se elenca errori, correggi e rilancia.
-   Sul sito (`girrr/dati/redazione.json` di `gh-pages`) si pubblica solo dopo il «vai» di Gianluca alla 5.8.
+   Poi **sul sito vero** (5.8 online, «vai» di Gianluca dell'11 novembre 2026): clona o aggiorna `giandjcosta/o-fant-a-girrr`,
+   ramo `gh-pages`, `python3 redazione/controlla.py --pubblica CARTELLA_DEL_SITO/girrr/dati/redazione.json`, commit **solo di quel
+   file** («Claude: Redazione · …»), `git pull --rebase` e push su `gh-pages`. Nessun altro file del sito, mai il ramo `main` del sito.
 5. `python3 redazione/serve.py --fatto dopo` (oppure `--fatto vigilia`): segna il giro in `redazione/stato.json`.
 6. Commit solo di `redazione/redazione.json`, `redazione/dossier.json`, `redazione/stato.json` e `lab/redazione/redazione.json`,
    con messaggio che comincia con «Claude: Redazione · …», `git pull --rebase`, push. Mai push forzati, nessun altro file.

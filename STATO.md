@@ -1,5 +1,15 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 11 novembre (3) — Claude: **ONLINE** versione 5.8 («Vai»)
+
+- ** :**  sulle due , ,  (domande dell'8ª e giudizio di Apo team alla 7ª, controllati),  con la 5.8 (aggiornamento medio, messaggio e changelog). Prima del push sulla copia di rilascio:  0 problemi,  tutto a posto,  16 schermi × 9 pagine 0 problemi,  tutto a posto.
+- **Controllo sul sito vero:** controllo generale della 5.7 su iPhone SE, Pixel 7, PC e TV (0 problemi); domande della redazione per Grodah, Apo team (con il giudizio e «Non riportata») e WOA sul PC; Oranje VC, con la sua conferenza vera già pubblicata, tiene le domande di sempre, bloccate; nessun errore in console, nessuna scrittura. Foto su PC e TV in .
+- ** del sito  e :**  con i giudizi della redazione e  («Sul sito: 5.8»). Correzione subito dopo: aspettano il giudizio solo le conferenze delle giornate su cui lavora la redazione (le vecchie di Apo team, 3ª-6ª, sarebbero rimaste in attesa per sempre). Prova a vuoto del workflow della Curva: 0 post nuovi.
+- **Redazione sul sito:**  ora pubblica anche su  (solo ); aggiornato il messaggio dell'attività programmata «Redazione di Girrr Sport» (, primo giro 20 novembre alle 14:00).
+- **Registro:** sorgenti allineate ( due  e ), ,  («Sul sito c'è la 5.8»), .
+- **Per tornare indietro:**  su ,  su ; per fermare la redazione, disattivare l'attività programmata.
+- **Non provati:** Safari vero, una TV vera, il primo giro automatico della redazione (20 novembre).
+
 ## 11 novembre (2) — Claude: 5.8 · Claude in redazione (prova nel Lab, sito e database non toccati)
 
 - **Decisione di Gianluca:** «Partiamo con la 5.8». Niente API a pagamento: Claude lavora dietro le quinte in una sessione di Claude Code (abbonamento di Gianluca) e pubblica file; le pagine li leggono.
