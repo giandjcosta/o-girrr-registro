@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 11 novembre (5) — Claude: variante Android (Material 3) accanto al Liquid Glass (solo Lab)
+
+- **Richiesta (Gianluca):** vedere una grafica tipica di Android da mettere a confronto con il Liquid Glass («avendo solo un iPhone ho solo il punto di vista iOS»).
+- **`rilascio/liquid-glass/material.css`** (solo CSS): barra di navigazione di Android nella Curva (superficie piena, pillola oro dietro l'icona attiva, etichette Home, Esplora, Profilo, O Girrr sempre visibili), schede come pulsanti segmentati con ✓ sulla scelta, superfici tonali senza vetro, effetto molla al tocco (spento con «riduci movimento»). Colori dello Stadio invariati.
+- **Specchio del Lab:** un solo interruttore, `?stile=vetro`, `?stile=android`, `?stile=0` (resta ricordato; `?vetro` funziona ancora). Scheda del Lab aggiornata con i link per i due stili e le foto «Adesso · iPhone · Android» in `lab/liquid-glass/tre-*.jpg`.
+- **Prove:** 7 schermi (iPhone SE 320, iPhone 15 Pro, Galaxy S8, Pixel 7, iPad Mini, PC 1920, smart TV) × 4 pagine × 3 stili: foglio giusto caricato, nessuno scorrimento laterale, nessun errore in console. Non provati: Safari vero, un telefono Android vero.
+- **Idea per dopo (da decidere):** ogni telefono con il suo stile (vetro su iPhone, Material su Android) scegliendolo dal sistema operativo.
+
 ## 11 novembre (4) — Claude: prototipo Liquid Glass dello Stadio (solo Lab, sito non toccato)
 
 - **Richiesta (Gianluca):** «Prototipo Liquid Glass nel Lab, barra in basso e tab della Stadio, solo CSS semplice».
