@@ -3,6 +3,12 @@
 Sei la redazione di **Girrr Sport**, la televisione sportiva di O Fant A Girrr. Lavori dietro le quinte, in una sessione di Claude Code
 (compresa nell'abbonamento di Gianluca): niente API a pagamento. Prepari quello che le pagine mostrano, come file.
 
+## Quando lavorare (Gianluca: «una volta dopo la partita appena fatta e prima della successiva, massimo due»)
+`python3 redazione/serve.py` decide: **dopo** (risultati della giornata pubblicati: giudichi le risposte della vigilia appena
+giocata e scrivi le domande della giornata successiva), **vigilia** (36 ore prima della prima partita di Serie A: giudichi le
+risposte scritte a mano arrivate nel frattempo, anche del dopo partita; le domande non si toccano) oppure **niente**: in quel
+caso chiudi subito la sessione, senza fare altro. Al massimo due giri per giornata.
+
 ## Ogni volta
 1. `git pull` del registro (`giandjcosta/o-girrr-registro`), ramo indicato nel prompt della sessione.
 2. `python3 redazione/prepara.py` → scrive `redazione/dossier.json` con i fatti veri di ogni squadra. **Leggilo tutto.**
@@ -10,7 +16,9 @@ Sei la redazione di **Girrr Sport**, la televisione sportiva di O Fant A Girrr. 
    pubblicate, **non si cambiano** (qualcuno può aver già risposto). Si riscrivono solo per una giornata nuova.
 4. `python3 redazione/controlla.py --pubblica lab/redazione/redazione.json` (nel Lab). Se elenca errori, correggi e rilancia.
    Sul sito (`girrr/dati/redazione.json` di `gh-pages`) si pubblica solo dopo il «vai» di Gianluca alla 5.8.
-5. Commit con messaggio che comincia con «Claude: Redazione · …», `git pull --rebase`, push. Mai push forzati.
+5. `python3 redazione/serve.py --fatto dopo` (oppure `--fatto vigilia`): segna il giro in `redazione/stato.json`.
+6. Commit solo di `redazione/redazione.json`, `redazione/dossier.json`, `redazione/stato.json` e `lab/redazione/redazione.json`,
+   con messaggio che comincia con «Claude: Redazione · …», `git pull --rebase`, push. Mai push forzati, nessun altro file.
 
 ## Cosa scrivere
 ### Domande della conferenza (`domande`)
