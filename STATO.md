@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 11 novembre (4) — Claude: prototipo Liquid Glass dello Stadio (solo Lab, sito non toccato)
+
+- **Richiesta (Gianluca):** «Prototipo Liquid Glass nel Lab, barra in basso e tab della Stadio, solo CSS semplice».
+- **File:** `rilascio/liquid-glass/liquid-glass.css` (solo CSS: fondo trasparente, `backdrop-filter` sfocato, filo di luce in alto, ombra morbida). Riguarda la barra in basso della Curva (solo telefono, sotto 760 px: capsula che galleggia, disegnata con `::before` perché `fixNav` della Curva riattacca la barra al bordo) e le schede dello Stadio: `.v55-schede`, `.seg`, interruttore `.sw`, pillole `.v53-pills` delle Notifiche e del Tabellone, `.tabs` della Curva (scheda attiva come pillola chiara). Colori invariati: scheda attiva oro, Campionato rosso e Champions Cup azzurra. Ripieghi: senza `backdrop-filter` e con «riduci trasparenza» fondo pieno; con «riduci movimento» niente transizioni nuove.
+- **Lab:** lo specchio (`lab/offline/sw-prova.js`) aggiunge il foglio alle sole pagine `stadio/girrr/` quando si apre con `?vetro` (resta acceso, `?vetro=0` lo spegne). Nuova scheda «Liquid Glass · Stadio» in `lab/offline/` con i link (Curva, Tabellone, Carriera, Notifiche) e le foto prima/dopo in `lab/liquid-glass/`; link dal Lab.
+- **Prove** (specchio in locale su una copia di `gh-pages`, Chromium): iPhone SE 320, iPhone 15 Pro, Galaxy S8, Pixel 7, iPad Mini, Galaxy Tab S4 orizzontale, PC 1280 e 1920, smart TV (1920×1080 a densità doppia, identità Tizen) × Curva, Tabellone, Carriera, Notifiche: vetro attivo, nessuno scorrimento laterale, nessun errore in console; Curva chiara e scura. **Non provati:** Safari/WebKit vero (il `backdrop-filter` di iOS è quello che conta di più per questo effetto), una TV vera, monitor 2560.
+- **Da decidere (Gianluca):** se piace; se sì, anche per la Lega (con le sue regole: più dritta) e tipo di versione per il rilascio.
+
 ## 11 novembre (3) — Claude: **ONLINE** versione 5.8 («Vai»)
 
 - **`gh-pages` `6897f71`:** `rilascio/redazione/applica.py` sulle due `app.html`, `conferenze.js`, `girrr/dati/redazione.json` (domande dell'8ª e giudizio di Apo team alla 7ª, controllati), `versioni.json` con la 5.8 (aggiornamento medio, messaggio e changelog). Prima del push, sulla copia di rilascio: `prove/prova_redazione.js` 0 problemi, `prove/prova_conferenze.js` tutto a posto, `prove/prova_schermi_conferenze.js` 16 schermi × 9 pagine 0 problemi, `prove/prova_redazione.py` tutto a posto.
