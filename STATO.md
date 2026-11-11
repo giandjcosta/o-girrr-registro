@@ -2,12 +2,13 @@
 
 ## 11 novembre (3) — Claude: **ONLINE** versione 5.8 («Vai»)
 
-- ** :**  sulle due , ,  (domande dell'8ª e giudizio di Apo team alla 7ª, controllati),  con la 5.8 (aggiornamento medio, messaggio e changelog). Prima del push sulla copia di rilascio:  0 problemi,  tutto a posto,  16 schermi × 9 pagine 0 problemi,  tutto a posto.
-- **Controllo sul sito vero:** controllo generale della 5.7 su iPhone SE, Pixel 7, PC e TV (0 problemi); domande della redazione per Grodah, Apo team (con il giudizio e «Non riportata») e WOA sul PC; Oranje VC, con la sua conferenza vera già pubblicata, tiene le domande di sempre, bloccate; nessun errore in console, nessuna scrittura. Foto su PC e TV in .
-- ** del sito  e :**  con i giudizi della redazione e  («Sul sito: 5.8»). Correzione subito dopo: aspettano il giudizio solo le conferenze delle giornate su cui lavora la redazione (le vecchie di Apo team, 3ª-6ª, sarebbero rimaste in attesa per sempre). Prova a vuoto del workflow della Curva: 0 post nuovi.
-- **Redazione sul sito:**  ora pubblica anche su  (solo ); aggiornato il messaggio dell'attività programmata «Redazione di Girrr Sport» (, primo giro 20 novembre alle 14:00).
-- **Registro:** sorgenti allineate ( due  e ), ,  («Sul sito c'è la 5.8»), .
-- **Per tornare indietro:**  su ,  su ; per fermare la redazione, disattivare l'attività programmata.
+- **`gh-pages` `6897f71`:** `rilascio/redazione/applica.py` sulle due `app.html`, `conferenze.js`, `girrr/dati/redazione.json` (domande dell'8ª e giudizio di Apo team alla 7ª, controllati), `versioni.json` con la 5.8 (aggiornamento medio, messaggio e changelog). Prima del push, sulla copia di rilascio: `prove/prova_redazione.js` 0 problemi, `prove/prova_conferenze.js` tutto a posto, `prove/prova_schermi_conferenze.js` 16 schermi × 9 pagine 0 problemi, `prove/prova_redazione.py` tutto a posto.
+- **Controllo sul sito vero:** controllo generale della 5.7 su iPhone SE, Pixel 7, PC e TV (0 problemi); domande della redazione per Grodah, Apo team (con il giudizio e «Non riportata») e WOA sul PC; Oranje VC, con la sua conferenza vera già pubblicata, tiene le domande di sempre, bloccate; nessun errore in console, nessuna scrittura. Foto su PC e TV in `lab/novita-5-8/`.
+- **`main` del sito `4b74020` e `e4465da`:** `calcoli/leggi_eventi.py` con i giudizi della redazione e `AGENTS.md` («Sul sito: 5.8»). Correzione subito dopo: aspettano il giudizio solo le conferenze delle giornate su cui lavora la redazione (le vecchie di Apo team, 3ª-6ª, sarebbero rimaste in attesa per sempre). Prova a vuoto del workflow della Curva: 0 post nuovi.
+- **Redazione sul sito:** `redazione/ISTRUZIONI.md` ora pubblica anche su `gh-pages` (solo `girrr/dati/redazione.json`); aggiornato il messaggio dell'attività programmata «Redazione di Girrr Sport» (`trig_01EqeQx1LgBhzDydDz7heiAf`, primo giro 20 novembre alle 14:00).
+- **Registro:** sorgenti allineate (`ufficiale/src/sito/`, le due `app.html` e `conferenze.js`), `lab/novita-5-8.html`, `AGENTS.md` («Sul sito c'è la 5.8»), `rilascio/versioni/versioni.json`.
+- **Incidente durante il rilascio (nessun danno):** un comando di Claude ha passato questo testo alla shell senza proteggerlo, e la shell ha provato a eseguire i nomi tra apici inversi; sono falliti tutti (anche due `git revert`, «bad revision»). Verificato dopo: `gh-pages`, `main` del sito e registro intatti. Il testo è stato riscritto da un file.
+- **Per tornare indietro:** `git revert 6897f71` su `gh-pages`, `git revert e4465da 4b74020` su `main`; per fermare la redazione, disattivare l'attività programmata.
 - **Non provati:** Safari vero, una TV vera, il primo giro automatico della redazione (20 novembre).
 
 ## 11 novembre (2) — Claude: 5.8 · Claude in redazione (prova nel Lab, sito e database non toccati)
