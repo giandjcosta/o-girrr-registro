@@ -30,7 +30,7 @@ le, pc = carica("le", "calcoli/leggi_eventi.py"), carica("pc", "calcoli/post_cur
 ora = datetime.datetime.now(datetime.timezone.utc).isoformat()
 conf = [{"team": "Apo team", "giornata": 7, "risposte": [{"a": "free", "k": 1, "t": "Ci crediamo", "w": 0}, {"a": "free", "k": 1, "t": "Partita difficile", "w": 0}, {"a": "free", "k": 1, "t": "Frase offensiva", "w": 0}]},
         {"team": "WOA", "giornata": 7, "risposte": [{"a": "free", "k": 1, "t": "Vinciamo noi", "w": 0}, {"a": 0, "k": 0, "t": "Lo centriamo", "w": 1}, {"a": 1, "k": 1, "t": "Grazie", "w": 0}], "promessa": "Lo centriamo", "pesa": 1}]
-red = {"controllato": True, "aggiornato": ora, "giudizi": {"Apo team|7": {"risposte": [
+red = {"controllato": True, "aggiornato": ora, "giornata": 8, "giudizi": {"Apo team|7": {"risposte": [
     {"i": 0, "k": 1, "w": 0, "pubblicabile": True, "nota": "x"}, {"i": 1, "k": 1, "w": 0, "pubblicabile": True, "nota": "x"}, {"i": 2, "k": 2, "w": 1, "pubblicabile": False, "nota": "x"}]}}}
 c2, p2, d2, att = le.applica_redazione(conf, [{"team": "Apo team", "giornata": 7, "promessa": "Frase offensiva", "pesa": 1, "esito": "s"}], [], red)
 ok(att == {"C7-WOA"}, "con la redazione attiva, la conferenza non ancora giudicata aspetta")
@@ -41,5 +41,7 @@ _, _, _, att2 = le.applica_redazione(conf, [], [], dict(red, aggiornato="2026-01
 ok(att2 == set(), "con la redazione ferma da più di 24 ore non aspetta niente")
 c3, p3, _, att3 = le.applica_redazione(conf, [], [], None)
 ok(c3 == conf and att3 == set(), "senza redazione tutto come prima")
+_, _, _, att4 = le.applica_redazione([dict(conf[1], giornata=4)], [], [], red)
+ok(att4 == set(), "le conferenze vecchie (prima della giornata della redazione meno una) non aspettano")
 print("Tutto a posto." if not ko else f"Problemi: {ko}")
 sys.exit(1 if ko else 0)
