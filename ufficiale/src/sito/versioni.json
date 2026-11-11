@@ -2,6 +2,114 @@
   "nota": "Fonte unica della pagina Versioni (girrr/versioni.html e stadio/girrr/versioni.html). A ogni rilascio si aggiunge la versione in cima con rilascio/versioni/aggiungi.py. Numeri: correzione minore = terza cifra (5.6.1), aggiornamento medio = seconda cifra (5.7.0), aggiornamento grande = prima cifra (6.0). Dove manca la storia: «Dato non conservato». Le versioni 1.0-4.5 e il Mercato Scambi vengono dai messaggi recuperati da Claude chat (9 novembre 2026), date controllate con i commit del sito. Il campo «nota» e «altre_varianti» non si mostrano nella pagina.",
   "versioni": [
     {
+      "v": "5.8.1",
+      "data": "2026-11-12",
+      "tipo": "minore",
+      "titolo": "Curva più ordinata",
+      "messaggio": "🔧 **O Girrr 5.8.1 è online!** Piccola sistemata alla Curva: i Sondaggi chiusi ora stanno allineati agli altri sondaggi e non hanno più le righe a tutta larghezza sopra e sotto. Buona giornata a tutti! ⚽",
+      "novita": [
+        {
+          "area": "Curva",
+          "voci": [
+            "Sondaggi chiusi allineato ai sondaggi, con il margine laterale come il resto",
+            "Tolte le righe a tutta larghezza sopra e sotto Sondaggi chiusi"
+          ]
+        }
+      ]
+    },
+    {
+      "v": "5.8",
+      "data": "2026-11-11",
+      "tipo": "medio",
+      "titolo": "Claude in redazione",
+      "messaggio": "📰 **O Girrr 5.8 è online!** Da questa giornata in conferenza stampa le domande ve le fa la redazione di Girrr Sport, scritte apposta per la vostra squadra: classifica, avversario, Derby, le promesse che avete fatto. E quando rispondete a modo vostro, il giornalista legge davvero: vi dice che tono avete usato, se è una promessa, e qualche volta vi incalza con un'altra domanda. Le frasi fuori dalle righe non escono in Curva. Buona giornata a tutti! ⚽",
+      "novita": [
+        {
+          "area": "Conferenza",
+          "voci": [
+            "Domande della redazione di Girrr Sport, diverse per ogni squadra e scritte sulla sua situazione vera (classifica, avversario, Derby, promesse, fiducia)",
+            "«Il giornalista ha letto», il giudizio sulle risposte scritte a mano con tono, promessa e domanda successiva",
+            "Le frasi offensive non vengono mai riportate, né sul sito né nei post di Girrr Sport",
+            "Se la conferenza è già pubblicata o il file della redazione non c'è, restano le domande di sempre"
+          ]
+        },
+        {
+          "area": "Carriera",
+          "voci": [
+            "Tono e promessa decisi dalla redazione contano per la fiducia al posto della regola automatica"
+          ]
+        },
+        {
+          "area": "Curva",
+          "voci": [
+            "Le conferenze con risposte scritte a mano escono dopo il giudizio della redazione (se la redazione è ferma da più di 24 ore, escono come prima)"
+          ]
+        },
+        {
+          "area": "Redazione",
+          "voci": [
+            "Lavora dietro le quinte al massimo due volte per giornata, dopo la partita e alla vigilia"
+          ]
+        }
+      ]
+    },
+    {
+      "v": "5.7",
+      "data": "2026-11-11",
+      "tipo": "medio",
+      "titolo": "Sala stampa, Promesse e Testa a testa",
+      "messaggio": "🎙️ **O Girrr 5.7 è online!** La sala stampa si allarga: dopo la vostra conferenza leggete cosa ha detto il prossimo avversario e tutte le altre squadre, e chi non parla finisce in «Silenzio stampa». Dopo ogni partita c'è anche la conferenza del dopo gara, una domanda sul risultato vero. Girrr Sport vi tagga nei suoi post e, se volete, vi arriva la notifica sul telefono. Nella Carriera c'è la scheda Promesse, nel Derby il Testa a testa tra due squadre a scelta, e sulle smart TV il sito si legge più grande. A metà campionato arriverà il Giro di boa. Buona giornata a tutti! ⚽",
+      "novita": [
+        {
+          "area": "Conferenza",
+          "voci": [
+            "Una volta pubblicata non si cambia più, e prima di pubblicare c'è l'avviso",
+            "«Cosa ha detto» il prossimo avversario, con «Rispondi in Curva» che apre la Curva con il suo tag già scritto",
+            "Sala stampa con le conferenze delle altre squadre, o «Silenzio stampa» per chi non ha parlato",
+            "Conferenza del dopo partita, una domanda sul risultato vero con la sua Sala stampa; esce su Girrr Sport e non si cambia più",
+            "I post di Girrr Sport indicano la partita, l'allenatore e la squadra, e taggano le squadre"
+          ]
+        },
+        {
+          "area": "Carriera",
+          "voci": [
+            "Nuova scheda Promesse, con esito e peso di ogni promessa sulla fiducia della dirigenza",
+            "Il tono della conferenza conta per la fiducia, solo quando c'è una promessa"
+          ]
+        },
+        {
+          "area": "Derby",
+          "voci": [
+            "Testa a testa tra due squadre a scelta, con scontri della stagione, classifica a confronto e storia del Derby"
+          ]
+        },
+        {
+          "area": "Notifiche",
+          "voci": [
+            "Nuovo interruttore Menzioni, per la notifica sul telefono quando qualcuno ti tagga in Curva"
+          ]
+        },
+        {
+          "area": "Curva",
+          "voci": [
+            "Cuori e rilanci già messi si vedono anche sul telefono e si colorano subito al tocco"
+          ]
+        },
+        {
+          "area": "TV",
+          "voci": [
+            "Sulle smart TV tutto il sito è più grande del 30%; telefoni, tablet e PC restano uguali"
+          ]
+        },
+        {
+          "area": "Tabellone",
+          "voci": [
+            "In Condividi, dalla 17ª giornata, «Il mio girone d'andata» (Giro di boa)"
+          ]
+        }
+      ]
+    },
+    {
       "v": "5.6.2",
       "data": "2026-11-09",
       "tipo": "minore",
