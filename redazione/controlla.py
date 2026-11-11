@@ -2,7 +2,7 @@
 """Redazione di Girrr Sport · Controllo di quello che ha scritto la redazione (Claude, 11 novembre 2026, versione 5.8).
 
 Prima di pubblicare, controlla redazione.json (scritto da Claude seguendo ISTRUZIONI.md) contro il dossier e le regole
-della lega. Se c'è anche un solo errore non pubblica niente e li elenca tutti.
+della lega (forma, lunghezze, maiuscole, nomi; nessuna parola vietata per ora). Se c'è anche un solo errore non pubblica niente e li elenca tutti.
 
 Uso:  python3 redazione/controlla.py [redazione/redazione.json] [--dossier redazione/dossier.json] [--pubblica DESTINAZIONE]
 Con --pubblica scrive il file controllato nella destinazione (nel Lab: lab/redazione/redazione.json; sul sito, con il «vai»
@@ -23,7 +23,7 @@ FILE = Path(next((a for i, a in enumerate(ARG) if not a.startswith("--") and (i 
 DOSSIER = Path(opz("--dossier", QUI / "dossier.json"))
 DEST = opz("--pubblica")
 
-VIETATE = re.compile(r"fantapunt|scommess|\bquot[ae]\b|puntat[ae]\b|schedin|bookmaker|totogirrr", re.I)
+# Parole vietate: nessuna per ora (Gianluca, 11 novembre 2026: «Non metter parole vietate per ora»).
 errori = []
 
 
@@ -35,8 +35,6 @@ def testo(dove, t, minimo, massimo):
     if not isinstance(t, str) or not (minimo <= len(t.strip()) <= massimo):
         return err(dove, f"testo tra {minimo} e {massimo} caratteri ({len(t) if isinstance(t, str) else '—'}): {t!r}")
     t = t.strip()
-    if VIETATE.search(t):
-        err(dove, f"parola vietata (scommesse o Fantapunti): {t!r}")
     if not t[0].isupper() and not t[0] in "«\"'0123456789":
         err(dove, f"deve cominciare con la maiuscola: {t!r}")
     for m in re.finditer(r"·\s+(\S)", t):
