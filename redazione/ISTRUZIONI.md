@@ -51,7 +51,7 @@ Per ogni elemento di `da_giudicare`, con la sua `chiave`:
 
 ## Regole della lega (sempre)
 - **Solo fatti veri del dossier.** Niente risultati, gol o statistiche inventati. Dove manca un dato: «Dato non conservato».
-- Livello **editoriale**: è una conferenza stampa. Niente Fantapunti, niente fantacrediti, **mai scommesse** (il controllo le blocca).
+- Livello **editoriale**: è una conferenza stampa. Niente Fantapunti, niente fantacrediti, **mai scommesse** (regole della lega; il controllo per ora non ha parole vietate, decisione di Gianluca: stai attento tu).
 - Gol del risultato, punti in classifica e posizione non si confondono. I pareggi restano pareggi.
 - Le frasi cominciano con la maiuscola, anche dopo un punto; **dopo «·» sempre la maiuscola**. «Derby» con la D maiuscola.
 - Tono da campionato vero: piccante quando serve, mai offensivo verso persone.

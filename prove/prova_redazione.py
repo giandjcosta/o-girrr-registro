@@ -25,7 +25,7 @@ rs["domande"]["WOA"][0]["a"][0]["t"] = "Vinciamo noi · la quota è alta."
 with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
     json.dump(rs, f, ensure_ascii=False)
 r = subprocess.run([sys.executable, str(R / "redazione/controlla.py"), f.name], capture_output=True, text=True)
-ok(r.returncode == 1 and "parola vietata" in r.stdout and "dopo «·»" in r.stdout, "controlla.py blocca scommesse e minuscola dopo «·»")
+ok(r.returncode == 1 and "dopo «·»" in r.stdout and "parola vietata" not in r.stdout, "controlla.py blocca la minuscola dopo «·», nessuna parola vietata")
 le, pc = carica("le", "calcoli/leggi_eventi.py"), carica("pc", "calcoli/post_curva.py")
 ora = datetime.datetime.now(datetime.timezone.utc).isoformat()
 conf = [{"team": "Apo team", "giornata": 7, "risposte": [{"a": "free", "k": 1, "t": "Ci crediamo", "w": 0}, {"a": "free", "k": 1, "t": "Partita difficile", "w": 0}, {"a": "free", "k": 1, "t": "Frase offensiva", "w": 0}]},
