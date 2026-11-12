@@ -1,0 +1,83 @@
+"""Prova isolata: server da /workspace su 8765. Nessun sito o database scritto."""
+from pathlib import Path
+import json, os, tempfile
+from playwright.sync_api import sync_playwright
+BASE=os.environ.get('TIFOSI_BASE','http://127.0.0.1:8765/o-girrr-registro/lab/prova-tifosi/')
+ROOT=Path(__file__).resolve().parents[1]
+PHOTO=ROOT/'lab/prova-tifosi/foto';PHOTO.mkdir(exist_ok=True)
+TEMP=Path(tempfile.mkdtemp(prefix='tifosi-foto-'))
+PAGES=[('home','index.html','pt-home'),('mvp','curva.html','pt-mvp'),('derby','derby.html','pt-derby'),('carriera','app.html','pt-storia'),('giornale','giornale.html','pt-articolo'),('archivio','albo.html','pt-archivio')]
+report={'motori':{},'problemi':[],'schermate':0,'visite':0,'verifiche':[]}
+with sync_playwright() as p:
+    profiles=[('SE320',{'viewport':{'width':320,'height':568}}),('SE',p.devices['iPhone SE']),('iPhone15',p.devices['iPhone 15 Pro']),('iPhoneMax',p.devices['iPhone 15 Pro Max']),('AndroidS8',p.devices['Galaxy S8']),('Pixel7',p.devices['Pixel 7']),('AndroidS9',p.devices['Galaxy S9+']),('iPadMini',p.devices['iPad Mini']),('iPadLandscape',p.devices['iPad (gen 7) landscape']),('iPadPro',p.devices['iPad Pro 11']),('AndroidTab',p.devices['Galaxy Tab S4']),('AndroidTabLandscape',p.devices['Galaxy Tab S4 landscape']),('PC1280',{'viewport':{'width':1280,'height':850}}),('PC1920',{'viewport':{'width':1920,'height':1080}}),('Monitor2560',{'viewport':{'width':2560,'height':1440}}),('TV',{'viewport':{'width':1920,'height':1080},'device_scale_factor':2}),('390',{'viewport':{'width':390,'height':844}}),('768',{'viewport':{'width':768,'height':1024}}),('1440',{'viewport':{'width':1440,'height':900}})]
+    browsers=[]
+    for engine in ['chromium','webkit','firefox']:
+        try:
+            opts={'executable_path':'/usr/bin/chromium','args':['--no-sandbox']} if engine=='chromium' else {}
+            browser=getattr(p,engine).launch(**opts);browsers.append((engine,browser));report['motori'][engine]='Eseguito'
+        except Exception:
+            report['motori'][engine]='Non disponibile: eseguibile Playwright assente'
+    for engine,browser in browsers:
+        for pn,options in profiles:
+            options=dict(options);options.pop('default_browser_type',None)
+            if engine=='firefox':options.pop('is_mobile',None)
+            ctx=browser.new_context(**options);page=ctx.new_page();errors=[];bad=[];external=[]
+            page.on('pageerror',lambda e:errors.append(str(e)))
+            page.on('response',lambda r:bad.append(str(r.status)+' '+r.url) if r.status>=400 else None)
+            page.on('request',lambda r:external.append(r.url) if 'supabase.' in r.url else None)
+            # Non dipendere dai font remoti per misure e assenza errori di rete.
+            page.route('https://fonts.googleapis.com/**',lambda r:r.fulfill(status=200,content_type='text/css',body=''))
+            for skin in ['lega','stadio']:
+                for slug,file,target in PAGES:
+                    errors.clear();bad.clear();external.clear()
+                    u=BASE+skin+'/'+file+'?squadra=Oranje%20VC'+('#carriera' if slug=='carriera' else '')
+                    try:
+                        page.goto(u,wait_until='load');page.locator('#'+target).wait_for(state='attached');page.wait_for_timeout(120)
+                        if slug=='mvp':
+                            # La Curva inserisce il sondaggio nel proprio menu: aprirlo dal richiamo Home usa l'ancora.
+                            page.evaluate("document.getElementById('pt-mvp').scrollIntoView()")
+                        if slug=='archivio':
+                            page.evaluate("location.hash='pt-archivio'");page.wait_for_timeout(100)
+                        overflow=page.evaluate('document.documentElement.scrollWidth>innerWidth+1')
+                        if overflow:raise AssertionError('Scorrimento orizzontale')
+                        if errors or bad or external:raise AssertionError(json.dumps({'js':errors,'http':bad,'supabase':external}))
+                        report['visite']+=1
+                        if engine=='chromium' and pn in ['390','PC1280']:
+                            w=options['viewport']['width']
+                            page.evaluate('(id)=>{let el=document.getElementById(id);window.scrollTo(0,el.getBoundingClientRect().top+scrollY-150)}',target);page.wait_for_timeout(220)
+                            after=TEMP/f'{slug}-{skin}-{w}-dopo.png';page.screenshot(path=str(after))
+                            # Il comando Prima deve eliminare tutte le aggiunte conservando la pagina nativa.
+                            page.goto(u.replace('?squadra','?prima=1&squadra'),wait_until='load');page.wait_for_timeout(350)
+                            assert page.locator('.pt-box').count()==0
+                            before=TEMP/f'{slug}-{skin}-{w}-prima.png';page.screenshot(path=str(before))
+                            # Affiancamento di screenshot integrali, senza alterare le pagine.
+                            from PIL import Image,ImageDraw
+                            a=Image.open(before);b=Image.open(after);canvas=Image.new('RGB',(a.width+b.width,max(a.height,b.height)+32),'#10192f');canvas.paste(a,(0,32));canvas.paste(b,(a.width,32));draw=ImageDraw.Draw(canvas);draw.text((12,8),'PRIMA',fill='white');draw.text((a.width+12,8),'CON PROPOSTE',fill='white');canvas.save(PHOTO/f'{slug}-{skin}-{w}.png');report['schermate']+=1
+                    except Exception as e:report['problemi'].append(f'{engine}/{pn}/{skin}/{slug}: {str(e)[:500]}')
+            ctx.close()
+            print(engine,pn,'Visite',report['visite'],'Problemi',len(report['problemi']),flush=True)
+        # Percorsi e interazione nel browser reale.
+        ctx=browser.new_context(viewport={'width':390,'height':844});page=ctx.new_page()
+        try:
+            for skin in ['lega','stadio']:
+                page.goto(BASE+skin+'/index.html?squadra=Oranje%20VC');page.locator('#pt-home a').filter(has_text='Apri la votazione').click();page.locator('#pt-mvp').wait_for(state='visible')
+                assert '/prova-tifosi/'+skin+'/curva.html' in page.url
+                page.locator('[data-pt-vote="Oranje VC"]').click();assert page.locator('[data-pt-vote="Oranje VC"]').get_attribute('aria-pressed')=='true'
+                page.reload();page.locator('[data-pt-vote="Oranje VC"][aria-pressed="true"]').wait_for()
+                page.locator('[data-pt-vote="stif dc"]').click();assert page.locator('[data-pt-vote][aria-pressed=true]').count()==1
+                page.locator('[data-pt-abstain]').click();assert page.locator('[data-pt-vote][aria-pressed=true]').count()==0
+                page.locator('#pt-mvp a').filter(has_text='Il verdetto').click();page.locator('#pt-articolo').wait_for(state='visible')
+                page.locator('#pt-articolo a').click();page.locator('#pt-mvp').wait_for(state='visible')
+                page.locator('#pt-mvp a').filter(has_text='Archivio').click();page.locator('#pt-archivio').wait_for(state='visible')
+                page.goto(BASE+skin+'/index.html');page.locator('#pt-home a').filter(has_text='Re dei Derby').click();page.locator('#pt-derby').wait_for(state='visible')
+                page.locator('#pt-derby summary').first.click();page.wait_for_timeout(500);assert not page.locator('#pt-derby details').first.evaluate('(d)=>d.open')
+                page.goto(BASE+skin+'/albo.html');page.locator('[data-at="derby"]').click();page.locator('#pt-derby-access a').click();page.locator('#pt-derby').wait_for(state='visible')
+                page.locator('#lg').click();page.locator('#pt-home').wait_for(state='visible')
+                page.locator('#pt-storia-home summary').click();page.locator('#pt-storia-home a').click();page.locator('#pt-storia').wait_for(state='visible')
+                page.locator('#olg').click();page.locator('#pt-home').wait_for(state='visible')
+                report['verifiche'].append(engine+'/'+skin+': Home→Voto→Giornale→Voto→Archivio; Home→Derby; voto/cambio/ritiro/persistenza; tendina Derby; Albo→Derby; Home→Racconto→Carriera→Logo Home')
+        except Exception as e:report['problemi'].append(engine+'/Interazioni: '+str(e)[:500])
+        ctx.close();browser.close()
+(ROOT/'lab/prova-tifosi/collaudo.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+print(json.dumps(report,ensure_ascii=False,indent=2))
+raise SystemExit(bool(report['problemi']))

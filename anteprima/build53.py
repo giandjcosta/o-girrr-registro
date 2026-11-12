@@ -79,6 +79,7 @@ def genera53():
         a=a.replace('home-'+skin+'.html','5.5/index-'+skin+'.html')
         # This dedicated page opens Albo even without a hash, like the original Albo page.
         a=a.replace("var hh=(location.hash||'').slice(1);","var hh=(location.hash||'#oro').slice(1);")
+        a = a.replace('href="../lab/prova-tifosi/index.html"', 'href="../../lab/prova-tifosi/index.html"')
         (out/f'albo-{skin}.html').write_text(a)
         c=(R/'anteprima/campo.html').read_text()
         c=c.replace('</head>','<link rel="stylesheet" href="ui.css?v=55w"><script src="destinazioni55.js?v=55w" defer></script><script src="ui.js?v=55w" defer></script></head>',1)
