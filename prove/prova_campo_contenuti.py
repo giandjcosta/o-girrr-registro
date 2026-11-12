@@ -69,7 +69,7 @@ with sync_playwright() as pw:
 
         # I pannelli aggiunti alla Curva devono seguire anche il cambio chiaro/scuro.
         p.goto(ROOT + f'curva-{skin}.html')
-        p.locator('#v53poll .v55-pp-q').wait_for()
+        p.locator('#v53poll .v55-pp-q').first.wait_for()
         for tema in ('light', 'dark'):
             p.evaluate('(t)=>document.documentElement.dataset.theme=t', tema)
             colori = p.locator('#v53poll').evaluate('''e=>({

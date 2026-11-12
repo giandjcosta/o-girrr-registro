@@ -47,7 +47,7 @@ with sync_playwright() as p:
     page.locator('#riscatta-sponsor').wait_for(timeout=18000)
     pre=page.locator('.bal b').inner_text()
     page.locator('#riscatta-sponsor').click()
-    page.locator('.prize-corner.claimed').wait_for(timeout=10000)
+    page.wait_for_function("!document.getElementById('riscatta-sponsor')",timeout=10000)
     page.wait_for_timeout(850)
     post=page.locator('.bal b').inner_text()
     assert pre!=post,(browser_name,width,'balance unchanged',pre,post)
