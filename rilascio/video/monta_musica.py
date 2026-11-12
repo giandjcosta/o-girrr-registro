@@ -1,0 +1,89 @@
+#!/usr/bin/env python3
+"""Mette un brano vero sotto il video della giornata, tagliato sulla durata del video (Claude, 12 novembre 2026).
+
+Il video non dura sempre uguale (la scena «Da non perdere» a volte manca), il brano è più lungo. Lo script tiene l'inizio
+del brano e attacca il suo finale vero (gli ultimi CODA secondi), così la musica parte e finisce come l'ha pensata chi
+l'ha fatta. Il punto del taglio è scelto dove il ritmo delle due parti combacia (confronto degli attacchi dei colpi),
+con una dissolvenza di 80 ms: non si sente lo stacco. Il video non viene ricodificato.
+
+Brani usati per la prova: «O Fant a Girrr (1)» e «(2)», fatti da Gianluca con MakeBestMusic.
+
+Uso: python3 rilascio/video/monta_musica.py BRANO.mp3 VIDEO_MUTO.mp4 VIDEO_CON_MUSICA.mp4 [--coda SECONDI]
+"""
+import argparse
+import subprocess
+import tempfile
+import wave
+
+import numpy as np
+
+SR = 48000
+HOP = 480  # 10 ms
+
+
+def carica(f):
+    raw = subprocess.run(['ffmpeg', '-loglevel', 'error', '-i', f, '-ac', '2', '-ar', str(SR), '-f', 's16le', '-'],
+                         capture_output=True, check=True).stdout
+    return np.frombuffer(raw, '<i2').astype(np.float32).reshape(-1, 2) / 32768
+
+
+def durata(f):
+    return float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f],
+                                capture_output=True, text=True, check=True).stdout)
+
+
+def attacchi(x):  # quanto cresce il volume ogni 10 ms: i colpi di batteria
+    m = x.mean(1)
+    n = len(m) // HOP
+    e = np.log1p(1000 * (m[:n * HOP].reshape(n, HOP) ** 2).sum(1))
+    o = np.maximum(0, np.diff(e, prepend=e[0]))
+    return o - o.mean()
+
+
+def monta(x, lungo, coda):
+    tot = len(x) / SR
+    if tot <= lungo:
+        return x
+    o = attacchi(x)
+    a0, b0 = lungo - coda, tot - coda  # taglio ideale: inizio [0, a], finale [b, fine]
+    fin = 200  # confronto su 2 s prima e dopo il taglio
+    meglio, ab = -1e9, (a0, b0)
+    for da in range(-60, 61, 1):       # sposto il taglio fino a 0,6 s...
+        for db in range(-25, 26, 1):   # ...e il finale fino a 0,25 s (la durata cambia al massimo di 0,25 s)
+            a, b = int(a0 * 100) + da, int(b0 * 100) + da + db
+            if a - fin < 0 or b + fin > len(o):
+                continue
+            s = np.dot(o[a - fin:a + fin], o[b - fin:b + fin])
+            if s > meglio:
+                meglio, ab = s, (a / 100, b / 100)
+    a, b = int(ab[0] * SR), int(ab[1] * SR)
+    xf = int(0.08 * SR)
+    f = np.linspace(0, 1, xf)[:, None]
+    out = np.concatenate([x[:a - xf], x[a - xf:a] * (1 - f) + x[b - xf:b] * f, x[b:]])
+    print('taglio a %.2f s, riprende da %.2f s del brano (finale di %.1f s)' % (ab[0], ab[1], tot - ab[1]))
+    return out
+
+
+if __name__ == '__main__':
+    p = argparse.ArgumentParser()
+    p.add_argument('brano')
+    p.add_argument('video')
+    p.add_argument('uscita')
+    p.add_argument('--coda', type=float, default=8.0, help='secondi del finale vero del brano da tenere')
+    A = p.parse_args()
+    lungo = durata(A.video)
+    y = monta(carica(A.brano), lungo, A.coda)
+    y = y[:int(lungo * SR)]
+    if len(y) < lungo * SR:
+        y = np.concatenate([y, np.zeros((int(lungo * SR) - len(y), 2), np.float32)])
+    y[:int(0.02 * SR)] *= np.linspace(0, 1, int(0.02 * SR))[:, None]
+    with tempfile.NamedTemporaryFile(suffix='.wav') as t:
+        w = wave.open(t.name, 'wb')
+        w.setnchannels(2)
+        w.setsampwidth(2)
+        w.setframerate(SR)
+        w.writeframes((np.clip(y, -1, 1) * 32767).astype('<i2').tobytes())
+        w.close()
+        subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-i', A.video, '-i', t.name, '-map', '0:v', '-map', '1:a',
+                        '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-shortest', A.uscita], check=True)
+    print('scritto', A.uscita, '%.1f s' % lungo)

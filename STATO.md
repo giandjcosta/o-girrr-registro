@@ -1,5 +1,8 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (23) — Claude: video della giornata (B), le musiche di Gianluca sotto il video (Lab)
+- Gianluca ha fatto due brani con MakeBestMusic («O Fant a Girrr (1)», 1:28, e «(2)», 1:13, circa 129 BPM). `rilascio/video/monta_musica.py BRANO VIDEO USCITA --coda S` tiene l'inizio del brano e attacca il finale vero, con il taglio dove il ritmo combacia (confronto degli attacchi dei colpi) e dissolvenza di 80 ms; la durata segue il video (anche senza «Da non perdere»). Video: `lab/video-giornata/strada-b-musica-1.mp4` (taglio a 29,1 s, finale di 7,5 s) e `strada-b-musica-2.mp4` (taglio a 26,6 s, finale di 10 s), nella pagina `strade.html`. La musica generata col codice (`musica.py`) resta solo come ripiego. Da verificare: le condizioni d'uso di MakeBestMusic per Instagram.
+
 ## 12 novembre (22) — Claude: video della giornata (B), musica di sottofondo originale (Lab)
 - `rilascio/video/musica.py`: musica generata con numpy (gratis, niente brani di altri), a tempo con le scene da `scene.json` (scritto da `render.mjs`): colpo e accordo sul logo della lega, ritmo da sigla sportiva in La minore per il Campionato, rullo sul podio e piatto all'arrivo dei gradini, stacco e colpo sul logo della coppa, tema un tono sopra con le campanelle per la Champions Cup, Campionato più leggero su «Da non perdere», accordo maggiore finale che sfuma; fruscio a ogni tendina. Controllati volume (medio −16 dB, massimo −0,9 dB) e spettro: i colpi cadono sui cambi di scena. Non ascoltata da Claude: serve l'orecchio di Gianluca.
 
