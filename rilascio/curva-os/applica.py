@@ -16,7 +16,9 @@ Questo script cambia la pagina così:
   3. Pillola «Nuovi cori»: l'aggiornamento di ogni minuto non riempie più il feed mentre lo leggi; se ci sono davvero
      cori nuovi e sei sceso, compare la pillola; toccandola il feed risale e si aggiorna.
   4. Bozza del coro (resta se esci, finché non lo lanci) e link a ogni coro (curva.html?coro=CHIAVE, anche in «Condividi»).
-  5. Notifiche con due schede: «Attività» (applausi, rilanci, risposte, visualizzazioni, traguardi) e «Menzioni».
+  5. Impostazioni (pulsante della luna): Aspetto Automatico, Chiaro o Scuro; suono dell'applauso. Condividi manda anche la
+     foto del coro. Anteprima del link per WhatsApp (Open Graph, immagine assets/curva/anteprima-curva.png da pubblicare).
+  6. Notifiche con due schede: «Attività» (applausi, rilanci, risposte, visualizzazioni, traguardi) e «Menzioni».
 
 Uso: python3 rilascio/curva-os/applica.py CARTELLA_DEL_SITO [--lab]   (CARTELLA_DEL_SITO: una copia di gh-pages)
 Con --lab aggiunge window.__curvaProva, l'aggancio per le prove automatiche (entrare come squadra, ridisegnare,
@@ -99,7 +101,67 @@ function cvLink(k){return location.origin+location.pathname+'?coro='+encodeURICo
  if(e){e.scrollIntoView({block:'center'});e.classList.add('cv-evidenza');setTimeout(function(){e.classList.remove('cv-evidenza')},1800)}},300)})();
 '''
 
+IMPOSTAZIONI = r'''
+/* Impostazioni della Curva (Claude, 12 novembre 2026): il pulsante della luna apre un foglio con
+   Aspetto (Automatico, Chiaro, Scuro: Automatico segue il telefono e cambia da solo) e Suoni (applauso con suono). */
+function cvAspettoT(v){return v==='auto'?(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):v}
+function cvAspetto(v){window.__cvAspetto=v;try{localStorage.setItem('cv-aspetto',v)}catch(e){}tema(cvAspettoT(v));render()}
+function cvSuonoOn(){try{return localStorage.getItem('cv-suoni')!=='0'}catch(e){return true}}
+function cvSuonoSalva(v){try{localStorage.setItem('cv-suoni',v?'1':'0')}catch(e){}}
+/* Suono dell'applauso: due note brevi fatte dal browser (nessun file). Su iPhone tace con il silenzioso (sessione audio «ambient»);
+   su Android segue il volume dei contenuti multimediali. */
+var cvAC=null;
+function cvSuono(){if(!cvSuonoOn())return;try{if(navigator.audioSession)navigator.audioSession.type='ambient';var C=window.AudioContext||window.webkitAudioContext;if(!C)return;
+ cvAC=cvAC||new C();if(cvAC.state==='suspended')cvAC.resume();var t=cvAC.currentTime;
+ [[740,0],[1110,.07]].forEach(function(n){var o=cvAC.createOscillator(),g=cvAC.createGain();o.type='sine';o.frequency.setValueAtTime(n[0],t+n[1]);
+  g.gain.setValueAtTime(.0001,t+n[1]);g.gain.exponentialRampToValueAtTime(.16,t+n[1]+.012);g.gain.exponentialRampToValueAtTime(.0001,t+n[1]+.16);
+  o.connect(g);g.connect(cvAC.destination);o.start(t+n[1]);o.stop(t+n[1]+.18)})}catch(e){}}
+function cvImpostazioni(){if(document.getElementById('cv-imp')){cvChiudiImp();return}
+ var a=window.__cvAspetto||'auto',s=cvSuonoOn(),o=document.createElement('div');o.id='cv-imp';o.className='cv-imp';
+ o.innerHTML='<div class="cv-imp-f"></div><div class="cv-imp-p" role="dialog" aria-modal="true" aria-label="Impostazioni della Curva"><i class="cv-imp-m" aria-hidden="true"></i><b>Aspetto</b><div class="cv-imp-seg">'+
+  [['auto','Automatico'],['light','Chiaro'],['dark','Scuro']].map(function(x){return '<button type="button" data-asp="'+x[0]+'" aria-pressed="'+(a===x[0])+'">'+x[1]+'</button>'}).join('')+
+  '</div><small>Automatico segue il telefono: scuro quando lo è il telefono, anche la sera.</small><b>Suoni</b><div class="cv-imp-seg"><button type="button" data-suono="1" aria-pressed="'+s+'">Sì</button><button type="button" data-suono="0" aria-pressed="'+(!s)+'">No</button></div><small>Un suono breve quando metti un applauso. Su iPhone tace con il silenzioso.</small><button type="button" class="cv-imp-ok">Fatto</button></div>';
+ document.body.appendChild(o);void o.offsetWidth;o.classList.add('on');
+ o.addEventListener('click',function(e){if(e.target.classList.contains('cv-imp-f')||e.target.classList.contains('cv-imp-ok')){cvChiudiImp();return}var b=e.target.closest('button');if(!b)return;
+  if(b.dataset.asp)cvAspetto(b.dataset.asp);else if(b.dataset.suono){cvSuonoSalva(b.dataset.suono==='1');if(b.dataset.suono==='1')cvSuono()}else return;
+  [].forEach.call(b.parentNode.children,function(x){x.setAttribute('aria-pressed',String(x===b))})});
+ var p=o.querySelector('[aria-pressed=true]');if(p)p.focus({preventScroll:true})}
+function cvChiudiImp(){var o=document.getElementById('cv-imp');if(!o)return;o.classList.remove('on');setTimeout(function(){o.remove()},320);var g=document.getElementById('tg');if(g)g.focus({preventScroll:true})}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')cvChiudiImp()});
+if(window.matchMedia){var cvMQ=matchMedia('(prefers-color-scheme: dark)'),cvMQf=function(){if((window.__cvAspetto||'auto')==='auto'){tema(cvAspettoT('auto'));try{render()}catch(e){}}};if(cvMQ.addEventListener)cvMQ.addEventListener('change',cvMQf);else if(cvMQ.addListener)cvMQ.addListener(cvMQf)}
+/* Condividi: insieme all'immagine del coro anche la sua foto, se c'è */
+function cvFoto(src){if(!src)return Promise.resolve(null);return fetch(src).then(function(r){return r.blob()}).then(function(b){var ty=b.type||'image/jpeg';return new File([b],'foto-coro.'+(/png/.test(ty)?'png':'jpg'),{type:ty})}).catch(function(){return null})}
+(function(){var s=document.createElement('style');s.textContent=
+ '.cv-imp{position:fixed;inset:0;z-index:90}.cv-imp-f{position:absolute;inset:0;background:rgba(0,0,0,.35);opacity:0;transition:opacity .3s ease}'+
+ '.cv-imp-p{position:absolute;left:0;right:0;bottom:0;margin:0 auto;max-width:520px;background:var(--bg);color:var(--tx);border-radius:22px 22px 0 0;padding:10px 20px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -10px 40px rgba(0,0,0,.25);transform:translateY(105%);transition:transform .38s cubic-bezier(.2,.9,.25,1);display:flex;flex-direction:column;gap:8px}'+
+ '.cv-imp.on .cv-imp-f{opacity:1}.cv-imp.on .cv-imp-p{transform:none}.cv-imp-m{display:block;width:40px;height:5px;border-radius:3px;background:var(--ln);margin:2px auto 8px}'+
+ '.cv-imp-p b{font:800 15px Inter,system-ui,sans-serif;margin-top:6px}.cv-imp-p small{color:var(--mu);font:500 13px/1.4 Inter,system-ui,sans-serif}'+
+ '.cv-imp-seg{display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--hv);border:1px solid var(--ln)}'+
+ '.cv-imp-seg button{flex:1;border:0;border-radius:10px;padding:11px 6px;background:transparent;color:var(--tx);font:700 14px Inter,system-ui,sans-serif;cursor:pointer;transition:background-color .25s,color .25s}'+
+ '.cv-imp-seg button[aria-pressed=true]{background:var(--acc);color:#fff}'+
+ '.cv-imp-ok{margin-top:10px;border:0;border-radius:999px;padding:13px;background:var(--tx);color:var(--bg);font:800 15px Inter,system-ui,sans-serif;cursor:pointer}'+
+ '@media (min-width:760px){.cv-imp-p{bottom:auto;top:50%;border-radius:22px;transform:translateY(-40%) scale(.96);opacity:0;transition:transform .3s ease,opacity .3s ease}.cv-imp.on .cv-imp-p{transform:translateY(-50%);opacity:1}}'+
+ '@media (prefers-reduced-motion:reduce){.cv-imp-p,.cv-imp-f{transition:opacity .2s!important}.cv-imp-p{transform:none!important}}';document.head.appendChild(s)})();
+'''
+
+ANTEPRIMA = ('<meta property="og:type" content="website"><meta property="og:site_name" content="O Fant A Girrr">'
+             '<meta property="og:title" content="Curva · O Fant A Girrr"><meta property="og:description" content="Cori, applausi e notizie della lega.">'
+             '<meta property="og:image" content="https://giandjcosta.github.io/o-fant-a-girrr/assets/curva/anteprima-curva.png">'
+             '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">')
+
 SOSTITUZIONI = [
+    # impostazioni: aspetto (Automatico, Chiaro, Scuro) e suoni; anteprima del link (WhatsApp)
+    ("document.getElementById('tg').onclick=function(){tema(curTema()==='dark'?'light':'dark');render()};",
+     "document.getElementById('tg').onclick=function(){cvImpostazioni()};document.getElementById('tg').setAttribute('aria-label','Impostazioni: aspetto e suoni');"),
+    ("(function(){var t=null;try{t=localStorage.getItem('cv-tema')}catch(e){}if(!t)t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';tema(t)})();",
+     "(function(){var a=null;try{a=localStorage.getItem('cv-aspetto')}catch(e){}if(a!=='light'&&a!=='dark')a='auto';window.__cvAspetto=a;"
+     "tema(a==='auto'?(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):a)})();   /* Claude: Aspetto Automatico, Chiaro o Scuro (cv-aspetto) */"),
+    ('<meta name="theme-color" content="#ffffff" id="tc">', '<meta name="theme-color" content="#ffffff" id="tc">' + ANTEPRIMA),
+    # suono dell'applauso
+    ("var key=k+'|'+kind,on=!MN[key];", "var key=k+'|'+kind,on=!MN[key];if(on&&kind==='a')cvSuono();"),
+    # condividi con la foto del coro
+    ("Promise.all([carica(imgP(a,'a')),carica(ph)]).then(function(r){var av=r[0],im=r[1],",
+     "Promise.all([carica(imgP(a,'a')),carica(ph),cvFoto(ph)]).then(function(r){var av=r[0],im=r[1],f2=r[2],"),
     # 1. intestazione, barra in basso e contenuto
     ("document.getElementById('nav').innerHTML=", "morfaIn(document.getElementById('nav'),"),
     ("Lancia un coro</button>'\n}", "Lancia un coro</button>')\n}"),
@@ -117,7 +179,8 @@ SOSTITUZIONI = [
     ("pimg=null;if(vista!=='u'){filt='tutti'}", "pimg=null;cvSvuota();if(vista!=='u'){filt='tutti'}"),
     ("ev1('curva/risposta','Curva: risposta');open[k]=true;", "ev1('curva/risposta','Curva: risposta');i.value='';open[k]=true;"),
     # 4. link al coro nella condivisione
-    ("navigator.share({files:[f],text:nm(a)+' sulla Curva'})", "navigator.share({files:[f],text:nm(a)+' sulla Curva: '+cvLink(k)})"),
+    ("if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],text:nm(a)+' sulla Curva'}).catch(function(){}).then(riallinea)}",
+     "if(navigator.canShare&&navigator.canShare({files:[f]})){var fs=f2&&navigator.canShare({files:[f,f2]})?[f,f2]:[f];navigator.share({files:fs,text:nm(a)+' sulla Curva: '+cvLink(k)}).catch(function(){}).then(riallinea)}"),
     ("toast('Immagine salvata')}",
      "toast('Immagine salvata');try{navigator.clipboard.writeText(cvLink(k)).then(function(){toast('Immagine salvata e link del coro copiato')}).catch(function(){})}catch(e){}}"),
     # 5. Notifiche: Attività e Menzioni
@@ -144,7 +207,7 @@ def applica(t, lab=False):
     k = 'function render(){'
     assert t.count(k) == 1
     # render() nasconde la pillola: dopo un ridisegno i cori nuovi sono già nel feed
-    return t.replace(k, MORFA.strip() + '\n' + (PROVA.strip() + '\n' if lab else '') + k + 'cvNascondi();')
+    return t.replace(k, MORFA.strip() + '\n' + IMPOSTAZIONI.strip() + '\n' + (PROVA.strip() + '\n' if lab else '') + k + 'cvNascondi();')
 
 
 if __name__ == '__main__':

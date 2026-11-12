@@ -11,7 +11,7 @@
 <title>Curva · O Girrr</title>
 <link rel="icon" type="image/png" href="../assets/favicon-64.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap"></noscript>
-<meta name="theme-color" content="#ffffff" id="tc">
+<meta name="theme-color" content="#ffffff" id="tc"><meta property="og:type" content="website"><meta property="og:site_name" content="O Fant A Girrr"><meta property="og:title" content="Curva · O Fant A Girrr"><meta property="og:description" content="Cori, applausi e notizie della lega."><meta property="og:image" content="https://giandjcosta.github.io/o-fant-a-girrr/assets/curva/anteprima-curva.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="O Girrr">
@@ -328,7 +328,7 @@ function toast(t){var d=document.createElement('div');d.className='toast';d.text
 function serve(){if(!me){toast('Entra con il codice della tua squadra per partecipare');return false}if(NET===false){toast('Non riesco a collegarmi ai cori in questo momento');return false}return true}
 /* tema */
 function tema(t){document.documentElement.setAttribute('data-theme',t);document.getElementById('tc').setAttribute('content',t==='dark'?'#0b0f14':'#ffffff');try{localStorage.setItem('cv-tema',t)}catch(e){}}
-(function(){var t=null;try{t=localStorage.getItem('cv-tema')}catch(e){}if(!t)t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';tema(t)})();
+(function(){var a=null;try{a=localStorage.getItem('cv-aspetto')}catch(e){}if(a!=='light'&&a!=='dark')a='auto';window.__cvAspetto=a;tema(a==='auto'?(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):a)})();   /* Claude: Aspetto Automatico, Chiaro o Scuro (cv-aspetto) */
 function curTema(){return document.documentElement.getAttribute('data-theme')}
 /* feed unificato */
 var RC={},MN={},RTS={},PM={};
@@ -623,7 +623,7 @@ function topR(titolo,sott,tabs){
   '<div class="tt">'+(vista==='home'?'<span style="display:flex;align-items:center;gap:8px"><i class="lg" data-lega="1" style="width:28px;height:28px;cursor:pointer"></i>Curva</span>':esc(titolo)+(sott?'<small>'+esc(sott)+'</small>':''))+'</div>'+
   (me===ADMIN&&S.v>=5?'<button class="ib" data-v="adm" aria-label="Per Me" title="Per Me">'+I.adm+'</button>':'')+'<button class="ib" data-v="info" aria-label="Info" title="Come funziona">'+I.info+'</button><button class="ib" id="rfb" aria-label="Aggiorna" title="Aggiorna"><svg viewBox="0 0 24 24" '+S0+'><path d="M20 12a8 8 0 1 1-2.5-5.8"/><path d="M20 4v5h-5"/></svg></button><button class="ib" id="tg" aria-label="Cambia tema">'+(curTema()==='dark'?I.sun:I.moon)+'</button></div>'+(tabs?'<div class="tabs">'+tabs+'</div>':'')+(NET===false?'<div class="net">Non riesco a collegarmi ai cori: puoi leggere, ma non scrivere.</div>':''));
  document.getElementById('rfb').onclick=function(){rinfresca()};
- document.getElementById('tg').onclick=function(){tema(curTema()==='dark'?'light':'dark');render()};
+ document.getElementById('tg').onclick=function(){cvImpostazioni()};document.getElementById('tg').setAttribute('aria-label','Impostazioni: aspetto e suoni');
 }
 function isDef(h){return h==='lega_ofantagirrr'||h==='champions_cup'||h==='girrr_sport'||h==='giornale_girrr'||(ACC[h]&&ACC[h].k==='sq'&&h!==meH)}
 function isFol(h){if(!me)return false;var row=S.follow.indexOf(h)>=0;return isDef(h)?!row:row}
@@ -762,6 +762,46 @@ function cvLink(k){return location.origin+location.pathname+'?coro='+encodeURICo
  vista='home';filt='tutti';FEED_SHOW=Math.max(FEED_SHOW,i+5);open[k]=true;render();
  var e=document.querySelector('#vista article.post[data-k="'+(window.CSS&&CSS.escape?CSS.escape(k):k)+'"]');
  if(e){e.scrollIntoView({block:'center'});e.classList.add('cv-evidenza');setTimeout(function(){e.classList.remove('cv-evidenza')},1800)}},300)})();
+/* Impostazioni della Curva (Claude, 12 novembre 2026): il pulsante della luna apre un foglio con
+   Aspetto (Automatico, Chiaro, Scuro: Automatico segue il telefono e cambia da solo) e Suoni (applauso con suono). */
+function cvAspettoT(v){return v==='auto'?(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):v}
+function cvAspetto(v){window.__cvAspetto=v;try{localStorage.setItem('cv-aspetto',v)}catch(e){}tema(cvAspettoT(v));render()}
+function cvSuonoOn(){try{return localStorage.getItem('cv-suoni')!=='0'}catch(e){return true}}
+function cvSuonoSalva(v){try{localStorage.setItem('cv-suoni',v?'1':'0')}catch(e){}}
+/* Suono dell'applauso: due note brevi fatte dal browser (nessun file). Su iPhone tace con il silenzioso (sessione audio «ambient»);
+   su Android segue il volume dei contenuti multimediali. */
+var cvAC=null;
+function cvSuono(){if(!cvSuonoOn())return;try{if(navigator.audioSession)navigator.audioSession.type='ambient';var C=window.AudioContext||window.webkitAudioContext;if(!C)return;
+ cvAC=cvAC||new C();if(cvAC.state==='suspended')cvAC.resume();var t=cvAC.currentTime;
+ [[740,0],[1110,.07]].forEach(function(n){var o=cvAC.createOscillator(),g=cvAC.createGain();o.type='sine';o.frequency.setValueAtTime(n[0],t+n[1]);
+  g.gain.setValueAtTime(.0001,t+n[1]);g.gain.exponentialRampToValueAtTime(.16,t+n[1]+.012);g.gain.exponentialRampToValueAtTime(.0001,t+n[1]+.16);
+  o.connect(g);g.connect(cvAC.destination);o.start(t+n[1]);o.stop(t+n[1]+.18)})}catch(e){}}
+function cvImpostazioni(){if(document.getElementById('cv-imp')){cvChiudiImp();return}
+ var a=window.__cvAspetto||'auto',s=cvSuonoOn(),o=document.createElement('div');o.id='cv-imp';o.className='cv-imp';
+ o.innerHTML='<div class="cv-imp-f"></div><div class="cv-imp-p" role="dialog" aria-modal="true" aria-label="Impostazioni della Curva"><i class="cv-imp-m" aria-hidden="true"></i><b>Aspetto</b><div class="cv-imp-seg">'+
+  [['auto','Automatico'],['light','Chiaro'],['dark','Scuro']].map(function(x){return '<button type="button" data-asp="'+x[0]+'" aria-pressed="'+(a===x[0])+'">'+x[1]+'</button>'}).join('')+
+  '</div><small>Automatico segue il telefono: scuro quando lo è il telefono, anche la sera.</small><b>Suoni</b><div class="cv-imp-seg"><button type="button" data-suono="1" aria-pressed="'+s+'">Sì</button><button type="button" data-suono="0" aria-pressed="'+(!s)+'">No</button></div><small>Un suono breve quando metti un applauso. Su iPhone tace con il silenzioso.</small><button type="button" class="cv-imp-ok">Fatto</button></div>';
+ document.body.appendChild(o);void o.offsetWidth;o.classList.add('on');
+ o.addEventListener('click',function(e){if(e.target.classList.contains('cv-imp-f')||e.target.classList.contains('cv-imp-ok')){cvChiudiImp();return}var b=e.target.closest('button');if(!b)return;
+  if(b.dataset.asp)cvAspetto(b.dataset.asp);else if(b.dataset.suono){cvSuonoSalva(b.dataset.suono==='1');if(b.dataset.suono==='1')cvSuono()}else return;
+  [].forEach.call(b.parentNode.children,function(x){x.setAttribute('aria-pressed',String(x===b))})});
+ var p=o.querySelector('[aria-pressed=true]');if(p)p.focus({preventScroll:true})}
+function cvChiudiImp(){var o=document.getElementById('cv-imp');if(!o)return;o.classList.remove('on');setTimeout(function(){o.remove()},320);var g=document.getElementById('tg');if(g)g.focus({preventScroll:true})}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')cvChiudiImp()});
+if(window.matchMedia){var cvMQ=matchMedia('(prefers-color-scheme: dark)'),cvMQf=function(){if((window.__cvAspetto||'auto')==='auto'){tema(cvAspettoT('auto'));try{render()}catch(e){}}};if(cvMQ.addEventListener)cvMQ.addEventListener('change',cvMQf);else if(cvMQ.addListener)cvMQ.addListener(cvMQf)}
+/* Condividi: insieme all'immagine del coro anche la sua foto, se c'è */
+function cvFoto(src){if(!src)return Promise.resolve(null);return fetch(src).then(function(r){return r.blob()}).then(function(b){var ty=b.type||'image/jpeg';return new File([b],'foto-coro.'+(/png/.test(ty)?'png':'jpg'),{type:ty})}).catch(function(){return null})}
+(function(){var s=document.createElement('style');s.textContent=
+ '.cv-imp{position:fixed;inset:0;z-index:90}.cv-imp-f{position:absolute;inset:0;background:rgba(0,0,0,.35);opacity:0;transition:opacity .3s ease}'+
+ '.cv-imp-p{position:absolute;left:0;right:0;bottom:0;margin:0 auto;max-width:520px;background:var(--bg);color:var(--tx);border-radius:22px 22px 0 0;padding:10px 20px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -10px 40px rgba(0,0,0,.25);transform:translateY(105%);transition:transform .38s cubic-bezier(.2,.9,.25,1);display:flex;flex-direction:column;gap:8px}'+
+ '.cv-imp.on .cv-imp-f{opacity:1}.cv-imp.on .cv-imp-p{transform:none}.cv-imp-m{display:block;width:40px;height:5px;border-radius:3px;background:var(--ln);margin:2px auto 8px}'+
+ '.cv-imp-p b{font:800 15px Inter,system-ui,sans-serif;margin-top:6px}.cv-imp-p small{color:var(--mu);font:500 13px/1.4 Inter,system-ui,sans-serif}'+
+ '.cv-imp-seg{display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--hv);border:1px solid var(--ln)}'+
+ '.cv-imp-seg button{flex:1;border:0;border-radius:10px;padding:11px 6px;background:transparent;color:var(--tx);font:700 14px Inter,system-ui,sans-serif;cursor:pointer;transition:background-color .25s,color .25s}'+
+ '.cv-imp-seg button[aria-pressed=true]{background:var(--acc);color:#fff}'+
+ '.cv-imp-ok{margin-top:10px;border:0;border-radius:999px;padding:13px;background:var(--tx);color:var(--bg);font:800 15px Inter,system-ui,sans-serif;cursor:pointer}'+
+ '@media (min-width:760px){.cv-imp-p{bottom:auto;top:50%;border-radius:22px;transform:translateY(-40%) scale(.96);opacity:0;transition:transform .3s ease,opacity .3s ease}.cv-imp.on .cv-imp-p{transform:translateY(-50%);opacity:1}}'+
+ '@media (prefers-reduced-motion:reduce){.cv-imp-p,.cv-imp-f{transition:opacity .2s!important}.cv-imp-p{transform:none!important}}';document.head.appendChild(s)})();
 /* Solo nel Lab: aggancio per le prove automatiche (prove/prova_curva_ferma.js) */
 window.__curvaProva={render:function(){render()},entra:function(t){me=t;code='PROVA';meH=hnd(t);render()},
  vai:function(v,n){vista=v;if(n)ntab=n;render()},notifiche:function(){return notifiche()},nuovi:function(){cvNuovi()},pubblica:function(){lancia()}};
@@ -910,7 +950,7 @@ function condividi(k){var p=POSTS.filter(function(q){return q.k===k})[0];if(!p)r
  var ph=p.hi&&IM[p.id]?IM[p.id]:null;
  /* Claude, 5.6.2: anche l'immagine che il post mostra nella Curva (Tabellone dei risultati, immagini dei personaggi) */
  if(!ph){var sel='article.post[data-k="'+(window.CSS&&CSS.escape?CSS.escape(k):k)+'"] .pimg img',vis=Array.prototype.filter.call(document.querySelectorAll(sel),function(x){return x.complete&&x.naturalWidth>0&&x.offsetParent!==null})[0];if(vis)ph=vis.currentSrc||vis.src}
- Promise.all([carica(imgP(a,'a')),carica(ph)]).then(function(r){var av=r[0],im=r[1],tx=String(p.x),y0=300;
+ Promise.all([carica(imgP(a,'a')),carica(ph),cvFoto(ph)]).then(function(r){var av=r[0],im=r[1],f2=r[2],tx=String(p.x),y0=300;
   var tmp=document.createElement('canvas').getContext('2d');tmp.font='500 50px '+FF;
   function righe(t,mw){var n=0;t.split('\n').forEach(function(par){var w=par.split(' '),l='';w.forEach(function(wd){var tt=l?l+' '+wd:wd;if(tmp.measureText(tt).width>mw&&l){n++;l=wd}else l=tt});n++});return n}
   var th=righe(tx,W-pad*2)*68,ih=im?Math.min(620,Math.round((W-pad*2)*im.height/im.width)):0,H=y0+th+(ih?ih+40:0)+240;
@@ -929,7 +969,7 @@ function condividi(k){var p=POSTS.filter(function(q){return q.k===k})[0];if(!p)r
   g.textAlign='right';g.fillStyle='#8b98ad';g.font='500 32px '+FF;g.fillText('O Fant A Girrr',W-pad,H-60);
   c.toBlob(function(b){if(!b){toast('Non riesco a creare l\'immagine');return}
    var f=new File([b],'coro-'+a.h+'.png',{type:'image/png'});
-   if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],text:nm(a)+' sulla Curva: '+cvLink(k)}).catch(function(){}).then(riallinea)}
+   if(navigator.canShare&&navigator.canShare({files:[f]})){var fs=f2&&navigator.canShare({files:[f,f2]})?[f,f2]:[f];navigator.share({files:fs,text:nm(a)+' sulla Curva: '+cvLink(k)}).catch(function(){}).then(riallinea)}
    else{var u=URL.createObjectURL(b),l=document.createElement('a');l.href=u;l.download=f.name;document.body.appendChild(l);l.click();l.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000);toast('Immagine salvata');try{navigator.clipboard.writeText(cvLink(k)).then(function(){toast('Immagine salvata e link del coro copiato')}).catch(function(){})}catch(e){}}
    ev1('curva/condividi','Curva: coro condiviso')},'image/png')})}
 function fixNav(){var n=document.querySelector('.nav');if(!n||window.innerWidth>=760)return;n.style.transform='';var vv=window.visualViewport,H=Math.max(window.innerHeight,vv?vv.height+vv.offsetTop:0,document.documentElement.clientHeight),g=Math.round(H-n.getBoundingClientRect().bottom);if(g>4)n.style.transform='translateY('+g+'px)'}
@@ -953,7 +993,7 @@ function lancia(){
  var arg={p_team:me,p_code:code,p_body:v},fnr='curva_scrivi';if(pin.length){fnr='curva_sondaggio';arg.p_opts=pin}else if(pimg)arg.p_img=pimg;rpc(fnr,arg).then(function(){ev1(pin.length?'curva/sondaggio':pimg?'curva/foto':'curva/coro',pin.length?'Curva: sondaggio':pimg?'Curva: coro con foto':'Curva: coro scritto');pimg=null;cvSvuota();if(vista!=='u'){filt='tutti'}else{ptab='cori'}return carica()}).then(function(){render();if(vista==='u')toast('Coro pubblicato')}).catch(function(e){toast(e.message);go.disabled=false});
 }
 function reagisci(k,kind){if(!serve())return;
- var key=k+'|'+kind,on=!MN[key];
+ var key=k+'|'+kind,on=!MN[key];if(on&&kind==='a')cvSuono();
  /* Claude, 5.6.3: si colora subito al tocco */try{document.querySelectorAll('article.post[data-k="'+(window.CSS&&CSS.escape?CSS.escape(k):k)+'"] .acts .'+(kind==='a'?'app':'ril')).forEach(function(b){b.classList.toggle('on',on)})}catch(e){}
  rpc('curva_reagisci',{p_team:me,p_code:code,p_k:k,p_kind:kind}).then(function(){ev1('curva/reazione','Curva: applauso o rilancio');return carica()}).then(function(){render()}).catch(function(e){render();toast(e.message)})}
 /* eventi */

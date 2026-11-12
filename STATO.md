@@ -1,5 +1,12 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (6) — Claude: Impostazioni della Curva (Aspetto e Suoni), Condividi con la foto, anteprima per WhatsApp (Lab)
+
+- **Richieste (Gianluca):** tema scuro automatico, ma ognuno sceglie Automatico, Scuro o Chiaro in Curva; un suono all'applauso «se non sei in silenzioso», niente vibrazione; anteprima con l'immagine quando mandi il link su WhatsApp; Condividi di un coro con immagine che manda anche l'immagine.
+- **`rilascio/curva-os/applica.py`:** il pulsante della luna apre il foglio Impostazioni (Aspetto: Automatico, Chiaro, Scuro, salvato in `cv-aspetto`, di partenza Automatico, che cambia da solo quando cambia il telefono; Suoni: Sì o No in `cv-suoni`, di partenza Sì). Chi aveva scelto chiaro o scuro con il vecchio pulsante riparte da Automatico (la vecchia scelta `cv-tema` non distingueva la scelta dal tema del telefono). Suono dell'applauso fatto dal browser (due note brevi, nessun file), solo quando l'applauso si accende; su iPhone sessione audio «ambient», che tace con il silenzioso; su Android segue il volume dei contenuti. Condividi: oltre all'immagine del coro (che già conteneva la foto, dalla 5.6.2) anche la foto da sola, e il link. Anteprima del link (Open Graph) nelle due `curva.html`: immagine `rilascio/curva-os/anteprima-curva.png` (fatta da `anteprima-curva.html`), che al rilascio va in `assets/curva/anteprima-curva.png` del sito. Un'anteprima diversa per ogni coro richiederebbe una pagina statica per coro scritta dal workflow (proposta, non fatta).
+- **Stili per sistema** del foglio (`curva-os.src.css`): iPhone foglio pieno con la capsula di scelta (il vetro faceva leggere i cori dietro, in WebKit), Android foglio di Material con pulsanti segmentati e spunta.
+- **Prove:** `prove/prova_curva_ferma.js` in più controlla foglio Impostazioni (dentro lo schermo, scelte, Scuro, Automatico che segue il telefono scuro e chiaro, suono di prova, chiusura), applauso con suono e Condividi con due file e il link (spia al posto della condivisione vera): 8 schermi × 2 Curve tutto a posto.
+
 ## 12 novembre (5) — Claude: pillola «Nuovi cori», bozza del coro, link ai cori (Lab) e un problema delle prove con WebKit
 
 - **Decisione di Gianluca:** le funzionalità proposte «le aggiungerei tutte», la pillola come «una pillola che ti dice che ci sono nuovi cori e che premendola risale tutto il feed e si aggiorna, nel caso ci siano davvero nuovi cori».

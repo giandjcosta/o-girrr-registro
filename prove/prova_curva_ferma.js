@@ -30,6 +30,9 @@ const SCRIVE = /salva|scrivi|lancia|rispondi|vota|reagisci|registra|segui|push_|
     const motore = att === 'ios' && bw ? 'WebKit' : 'Chromium';
     const c = await (motore === 'WebKit' ? bw : bc).newContext(o);
     await c.addInitScript(BLOCCA);
+    // Spie: suoni (oscillatori creati) e Condividi (navigator.share sostituito: niente viene condiviso davvero)
+    await c.addInitScript(() => { window.__osc = 0; const A = window.AudioContext || window.webkitAudioContext; if (A) { const o = A.prototype.createOscillator; A.prototype.createOscillator = function () { window.__osc++; return o.apply(this, arguments); }; }
+      window.__condivisi = null; navigator.canShare = () => true; navigator.share = (d) => { window.__condivisi = { files: (d.files || []).map(f => f.name), text: d.text }; return Promise.resolve(); }; });
     await c.route('**/rest/v1/rpc/**', async r => { const n = r.request().url().split('/rpc/')[1].split('?')[0]; if (SCRIVE.test(n) && !/_(stato|pubblico|lista)$/.test(n)) return r.fulfill({ json: null, headers: CORS }); return r.continue(); });
     const p = await c.newPage(); const errs = [], pr = [];
     let fase = 'apertura';
@@ -71,6 +74,33 @@ const SCRIVE = /salva|scrivi|lancia|rispondi|vota|reagisci|registra|segui|push_|
         await (await p.$$('.tabs button'))[0].click(); await p.waitForTimeout(60);
         d = await stessi(); if (d.length) pr.push(pn + ' ritorno: ricreati ' + d.join(' '));
         const sw = await p.evaluate(() => [document.documentElement.scrollWidth, innerWidth]); if (sw[0] > sw[1] + 1) pr.push(pn + ': scorre di lato');
+        // Impostazioni (pulsante della luna): Aspetto Automatico, Chiaro, Scuro; Suoni
+        fase = pn + ' impostazioni';
+        await p.click('#tg'); await p.waitForTimeout(600);
+        const imp = await p.evaluate(() => { const o = document.querySelector('#cv-imp.on .cv-imp-p'); if (!o) return null; const r = o.getBoundingClientRect();
+          return { dentro: r.left >= -1 && r.right <= innerWidth + 1 && r.bottom <= innerHeight + 1 && r.top >= 0, scelte: [...o.querySelectorAll('[data-asp]')].map(b => b.textContent + (b.getAttribute('aria-pressed') === 'true' ? '*' : '')).join(' | ') }; });
+        if (!imp || !imp.dentro || !/^Automatico\* \| Chiaro \| Scuro$/.test(imp.scelte)) pr.push(pn + ': foglio Impostazioni ' + JSON.stringify(imp));
+        if (sn === 'iPhone 15 Pro' || sn === 'Pixel 7') await p.screenshot({ path: '/tmp/claude-0/prova/impostazioni-' + pn + '-' + sn.replace(/\W+/g, '_') + '.png' });
+        const tema = () => p.evaluate(() => [document.documentElement.getAttribute('data-theme'), localStorage.getItem('cv-aspetto')]);
+        await p.click('[data-asp=dark]'); await p.waitForTimeout(200);
+        let th = await tema(); if (th[0] !== 'dark' || th[1] !== 'dark') pr.push(pn + ': Scuro ' + th);
+        await p.click('[data-asp=auto]'); await p.emulateMedia({ colorScheme: 'dark' }); await p.waitForTimeout(300);
+        th = await tema(); if (th[0] !== 'dark' || th[1] !== 'auto') pr.push(pn + ': Automatico con il telefono scuro ' + th);
+        await p.emulateMedia({ colorScheme: 'light' }); await p.waitForTimeout(300);
+        th = await tema(); if (th[0] !== 'light') pr.push(pn + ': Automatico con il telefono chiaro ' + th);
+        const haAudio = await p.evaluate(() => !!(window.AudioContext || window.webkitAudioContext));
+        const o0 = await p.evaluate(() => window.__osc); await p.click('[data-suono="1"]'); await p.waitForTimeout(150);
+        if (haAudio && !(await p.evaluate((o0) => window.__osc > o0, o0))) pr.push(pn + ': il suono di prova non parte');
+        await p.click('.cv-imp-ok'); await p.waitForTimeout(500);
+        if (await p.$('#cv-imp')) pr.push(pn + ': il foglio Impostazioni non si chiude');
+        // Condividi un coro con la foto: immagine del coro + foto, e il link
+        fase = pn + ' condividi';
+        const kf = await p.evaluate(() => { const i = [...document.querySelectorAll('#vista article.post .pimg img')].find(x => x.complete && x.naturalWidth > 0); return i ? i.closest('article.post').getAttribute('data-k') : null; });
+        if (kf) {
+          await p.click('#vista article.post[data-k="' + kf + '"] [data-a=shr]'); await p.waitForTimeout(3000);
+          const cd = await p.evaluate(() => window.__condivisi);
+          if (!cd || cd.files.length !== 2 || !/\?coro=/.test(cd.text)) pr.push(pn + ': Condividi con la foto ' + JSON.stringify(cd));
+        } else console.log('   ' + sn + ' ' + pn + ': nessun coro con foto tra i primi, Condividi non provato');
         fase = pn + ' entrata come squadra';
         // 4. Entro come squadra (dentro la pagina) per il campo di scrittura e le Notifiche
         const ok = await p.evaluate(() => { try { __curvaProva.entra('Oranje VC'); return !!document.getElementById('tx'); } catch (e) { return e.message; } });
@@ -80,6 +110,11 @@ const SCRIVE = /salva|scrivi|lancia|rispondi|vota|reagisci|registra|segui|push_|
         if (!tx[0] || tx[1] !== 'Prova di scrittura') pr.push(pn + ': il testo che scrivi non resta ' + JSON.stringify(tx));
         await p.fill('#tx', '');
         // Notifiche: Attività e Menzioni
+        // Applauso con il suono (la scrittura è bloccata)
+        fase = pn + ' applauso';
+        const o1 = await p.evaluate(() => window.__osc);
+        const app = await p.$('#vista article.post .acts .app:not(.on)');
+        if (app) { await app.click(); await p.waitForTimeout(200); if (haAudio && !(await p.evaluate((o1) => window.__osc > o1, o1))) pr.push(pn + ': applauso senza suono'); }
         fase = pn + ' notifiche';
         // Notifiche vere della squadra (calcolate dalla pagina): Attività senza menzioni, Menzioni solo menzioni
         await p.evaluate(() => { __curvaProva.vai('notifiche', 'tutte'); });
