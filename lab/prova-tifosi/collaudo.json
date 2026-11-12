@@ -1,0 +1,17 @@
+{
+  "motori": {
+    "chromium": "Eseguito",
+    "webkit": "Non disponibile: eseguibile Playwright assente",
+    "firefox": "Non disponibile: eseguibile Playwright assente"
+  },
+  "problemi": [],
+  "schermate": 24,
+  "visite": 264,
+  "verifiche": [
+    "chromium/lega: Home→Voto→Giornale→Voto→Archivio; Home→Derby; voto/cambio/ritiro/persistenza; tendina Derby",
+    "chromium/stadio: Home→Voto→Giornale→Voto→Archivio; Home→Derby; voto/cambio/ritiro/persistenza; tendina Derby",
+    "chromium/lega: Home→Voto→Giornale→Voto→Archivio; Home→Derby; voto/cambio/ritiro/persistenza; tendina Derby; Albo→Derby; Home→Racconto→Carriera→Logo Home",
+    "chromium/stadio: Home→Voto→Giornale→Voto→Archivio; Home→Derby; voto/cambio/ritiro/persistenza; tendina Derby; Albo→Derby; Home→Racconto→Carriera→Logo Home"
+  ],
+  "font_originali": "Riprova 320/390/1280 con cache temporanea Inter, Lobster e Lora usati dal sito"
+}

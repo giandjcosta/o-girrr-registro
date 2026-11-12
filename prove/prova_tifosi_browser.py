@@ -8,8 +8,23 @@ PHOTO=ROOT/'lab/prova-tifosi/foto';PHOTO.mkdir(exist_ok=True)
 TEMP=Path(tempfile.mkdtemp(prefix='tifosi-foto-'))
 PAGES=[('home','index.html','pt-home'),('mvp','curva.html','pt-mvp'),('derby','derby.html','pt-derby'),('carriera','app.html','pt-storia'),('giornale','giornale.html','pt-articolo'),('archivio','albo.html','pt-archivio')]
 report={'motori':{},'problemi':[],'schermate':0,'visite':0,'verifiche':[]}
+if os.environ.get('TIFOSI_SOLO_PERCORSI') or os.environ.get('TIFOSI_FOTO'):
+    report=json.loads((ROOT/'lab/prova-tifosi/collaudo.json').read_text())
+def fonts(ctx):
+    cache=Path(os.environ.get('TIFOSI_FONT_CACHE','/tmp/tifosi-font-cache'))
+    if (cache/'fonts.json').exists():
+        mapping=json.loads((cache/'fonts.json').read_text())
+        ctx.route('https://fonts.googleapis.com/**',lambda r:r.fulfill(status=200,content_type='text/css',body=(cache/'fonts.css').read_text()))
+        ctx.route('https://fonts.gstatic.com/**',lambda r:r.fulfill(status=200,content_type='font/ttf',body=Path(mapping[r.request.url]).read_bytes()) if r.request.url in mapping else r.continue_())
+    else:
+        ctx.route('https://fonts.googleapis.com/**',lambda r:r.fulfill(status=200,content_type='text/css',body=''))
 with sync_playwright() as p:
     profiles=[('SE320',{'viewport':{'width':320,'height':568}}),('SE',p.devices['iPhone SE']),('iPhone15',p.devices['iPhone 15 Pro']),('iPhoneMax',p.devices['iPhone 15 Pro Max']),('AndroidS8',p.devices['Galaxy S8']),('Pixel7',p.devices['Pixel 7']),('AndroidS9',p.devices['Galaxy S9+']),('iPadMini',p.devices['iPad Mini']),('iPadLandscape',p.devices['iPad (gen 7) landscape']),('iPadPro',p.devices['iPad Pro 11']),('AndroidTab',p.devices['Galaxy Tab S4']),('AndroidTabLandscape',p.devices['Galaxy Tab S4 landscape']),('PC1280',{'viewport':{'width':1280,'height':850}}),('PC1920',{'viewport':{'width':1920,'height':1080}}),('Monitor2560',{'viewport':{'width':2560,'height':1440}}),('TV',{'viewport':{'width':1920,'height':1080},'device_scale_factor':2}),('390',{'viewport':{'width':390,'height':844}}),('768',{'viewport':{'width':768,'height':1024}}),('1440',{'viewport':{'width':1440,'height':900}})]
+    if os.environ.get('TIFOSI_FOTO'):
+        profiles=[x for x in profiles if x[0] in ['SE320','PC1280','390']]
+        report['schermate']=0
+        report['font_originali']='Riprova 320/390/1280 con cache temporanea Inter, Lobster e Lora usati dal sito'
+    if os.environ.get('TIFOSI_SOLO_PERCORSI'):profiles=[]
     browsers=[]
     for engine in ['chromium','webkit','firefox']:
         try:
@@ -21,18 +36,18 @@ with sync_playwright() as p:
         for pn,options in profiles:
             options=dict(options);options.pop('default_browser_type',None)
             if engine=='firefox':options.pop('is_mobile',None)
-            ctx=browser.new_context(**options);page=ctx.new_page();errors=[];bad=[];external=[]
+            ctx=browser.new_context(**options);fonts(ctx);page=ctx.new_page();errors=[];bad=[];external=[]
             page.on('pageerror',lambda e:errors.append(str(e)))
             page.on('response',lambda r:bad.append(str(r.status)+' '+r.url) if r.status>=400 else None)
             page.on('request',lambda r:external.append(r.url) if 'supabase.' in r.url else None)
             # Non dipendere dai font remoti per misure e assenza errori di rete.
-            page.route('https://fonts.googleapis.com/**',lambda r:r.fulfill(status=200,content_type='text/css',body=''))
+            # I font vengono predisposti dal contesto, prima della prima pagina.
             for skin in ['lega','stadio']:
                 for slug,file,target in PAGES:
                     errors.clear();bad.clear();external.clear()
                     u=BASE+skin+'/'+file+'?squadra=Oranje%20VC'+('#carriera' if slug=='carriera' else '')
                     try:
-                        page.goto(u,wait_until='load');page.locator('#'+target).wait_for(state='attached');page.wait_for_timeout(120)
+                        page.goto(u,wait_until='load');page.evaluate('document.fonts.ready');page.locator('#'+target).wait_for(state='attached');page.wait_for_timeout(120)
                         if slug=='mvp':
                             # La Curva inserisce il sondaggio nel proprio menu: aprirlo dal richiamo Home usa l'ancora.
                             page.evaluate("document.getElementById('pt-mvp').scrollIntoView()")
@@ -47,7 +62,7 @@ with sync_playwright() as p:
                             page.evaluate('(id)=>{let el=document.getElementById(id);window.scrollTo(0,el.getBoundingClientRect().top+scrollY-150)}',target);page.wait_for_timeout(220)
                             after=TEMP/f'{slug}-{skin}-{w}-dopo.png';page.screenshot(path=str(after))
                             # Il comando Prima deve eliminare tutte le aggiunte conservando la pagina nativa.
-                            page.goto(u.replace('?squadra','?prima=1&squadra'),wait_until='load');page.wait_for_timeout(350)
+                            page.goto(u.replace('?squadra','?prima=1&squadra'),wait_until='load');page.evaluate('document.fonts.ready');page.wait_for_timeout(350)
                             assert page.locator('.pt-box').count()==0
                             before=TEMP/f'{slug}-{skin}-{w}-prima.png';page.screenshot(path=str(before))
                             # Affiancamento di screenshot integrali, senza alterare le pagine.
@@ -57,7 +72,7 @@ with sync_playwright() as p:
             ctx.close()
             print(engine,pn,'Visite',report['visite'],'Problemi',len(report['problemi']),flush=True)
         # Percorsi e interazione nel browser reale.
-        ctx=browser.new_context(viewport={'width':390,'height':844});page=ctx.new_page()
+        ctx=browser.new_context(viewport={'width':390,'height':844});fonts(ctx);page=ctx.new_page()
         try:
             for skin in ['lega','stadio']:
                 page.goto(BASE+skin+'/index.html?squadra=Oranje%20VC');page.locator('#pt-home a').filter(has_text='Apri la votazione').click();page.locator('#pt-mvp').wait_for(state='visible')
@@ -78,6 +93,7 @@ with sync_playwright() as p:
                 report['verifiche'].append(engine+'/'+skin+': Home→Voto→Giornale→Voto→Archivio; Home→Derby; voto/cambio/ritiro/persistenza; tendina Derby; Albo→Derby; Home→Racconto→Carriera→Logo Home')
         except Exception as e:report['problemi'].append(engine+'/Interazioni: '+str(e)[:500])
         ctx.close();browser.close()
+report['verifiche']=list(dict.fromkeys(report['verifiche']))
 (ROOT/'lab/prova-tifosi/collaudo.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(report,ensure_ascii=False,indent=2))
 raise SystemExit(bool(report['problemi']))
