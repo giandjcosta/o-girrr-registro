@@ -1,5 +1,18 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre — ChatGPT: Storia per giornata, MVP nei Record e pagina Derby stagionale
+
+Revisione grafica della PR #56 richiesta da Gianluca, sempre **PROTOTIPO**, nessun merge né rilascio:
+
+- **Carriera → Storia → La mia settimana**: modulo soltanto nella scheda Storia, dopo la sua navigazione nativa; sette tendine per le giornate complete, ultima aperta e precedenti chiuse. Risultato con casa/ospite corretti, racconto, posizione e punti di quel momento, grafico facoltativo e successiva sfida. Citazione della conferenza solo sulla settimana coerente col dossier. Gli allenatori e la loro storia originale restano; Panoramica non mostra il nuovo modulo. Link diretto con `sezione=storia`.
+- **Albo → Record → Record 2026/27 → MVP della giornata**: archivio spostato da Stagioni alla scheda Record; tendina stagionale separata dagli altri record. Nessun premio retroattivo inventato. Il collegamento diretto apre Record e la stagione.
+- **Albo → Derby → Derby della stagione 2026/27**: voce del sottomenu che apre la nuova pagina `derby-stagione.html`, in entrambe le skin. Vittorie, pareggi, sconfitte, giocati; niente punti classifica, pari merito a parità di vittorie. Grodah ha 2 Derby vinti, Apo e WOA 1, The Blues Brothers 0 nel perimetro delle 6 rivalità storiche e 5 incontri verificabili. Gli altri Derby originali restano; ritorno all'Albo/Derby; nessun collegamento speciale Home. Il registro completo degli altri Derby ufficiali manca ancora.
+- Applicata anche la decisione precedente sull'**MVP**: scelta chiusa di redazione e pubblico/personaggi, senza voto degli allenatori; le vecchie preferenze umane locali non influiscono. Le preferenze della giuria restano dimostrative. **Giornale**: la scheda del verdetto è ancora una proposta separata; impaginazione dentro il numero/PDF non completata in questa revisione, collocazione già decisa e da preparare. Non dichiararla integrata.
+- Evidenze temporanee «Novità», menu originali e geometrie Lega/Stadio conservati. Nuove schermate e stati aperto/chiuso in `lab/prova-tifosi/foto/`, percorsi nella mappa. Build Anteprima e modello superati; matrice e riprove del browser descritte in `collaudo.json`. Motori/dispositivi assenti e vecchio errore Campo rimangono dichiarati. I primi tentativi dei percorsi cercavano il vecchio contenitore e usavano un selettore numerico non quotato: aggiornato il collaudo alla nuova struttura, senza togliere le verifiche dei clic.
+- **Consegna verificata**: 264 visite Chromium senza problemi (19 profili, due skin e sei percorsi, più riprova fotografica), unità del modello superate, 24 confronti prima/dopo aggiornati, quattro immagini della settimana aperta/chiusa e due immagini TV simulata. Provati i menu, sette tendine, cambio a Panoramica e ritorno, Record attivo e pagina Derby separata. WebKit/Firefox locali e dispositivi fisici non disponibili.
+- Nessuna modifica al sito, Supabase, fonti ufficiali o al ramo di Claude. PR #56 resta in bozza, da rivedere. Dettagli e limiti aggiornati nel README della prova.
+
+
 ## 12 novembre — ChatGPT: revisione dei richiami e link diretti alle novità
 
 Correzioni richieste da Gianluca sulla prova della PR #56 (non pubblicata):
