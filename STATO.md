@@ -1,5 +1,14 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre — ChatGPT: diagnosi e controllo della chiave premi (ramo isolato)
+
+- Controllata in sola lettura la funzione viva `carriera_registra_server`: EXECUTE è già concesso a `service_role`, negato ad `anon`. Nessuna modifica al database.
+- Il workflow del 12 novembre calcola 10 premi, poi riceve 401/42501. Il valore del segreto GitHub non è accessibile: non è ancora dimostrato se sia una chiave pubblica o una configurazione errata.
+- `calcoli/premi/registra_premi.py`: riconosce le nuove chiavi `sb_secret_` (solo header apikey), mantiene i JWT service_role del progetto, rifiuta chiavi pubbliche/di altri progetti prima della rete. Supporta il segreto `SUPABASE_SECRET_KEY` con fallback al precedente. `--controlla-chiave` fa solo la diagnosi locale, senza scritture né stampa della chiave.
+- Preparata anche la modifica del workflow nel ramo ChatGPT del sito: segreto disponibile solo nei passaggi che registrano, verifica preliminare prima di installare Playwright. Da integrare dopo lo script del registro.
+- Prova: `python3 prove/prova_chiave_premi.py`, 3 test superati (trasporto simulato, nessun contatto con Supabase). Nessun premio registrato in questa sessione; la ripresa reale richiede una chiave server valida nei segreti GitHub.
+
+
 ## 11 novembre (3) — Claude: **ONLINE** versione 5.8 («Vai»)
 
 - **`gh-pages` `6897f71`:** `rilascio/redazione/applica.py` sulle due `app.html`, `conferenze.js`, `girrr/dati/redazione.json` (domande dell'8ª e giudizio di Apo team alla 7ª, controllati), `versioni.json` con la 5.8 (aggiornamento medio, messaggio e changelog). Prima del push, sulla copia di rilascio: `prove/prova_redazione.js` 0 problemi, `prove/prova_conferenze.js` tutto a posto, `prove/prova_schermi_conferenze.js` 16 schermi × 9 pagine 0 problemi, `prove/prova_redazione.py` tutto a posto.
