@@ -147,7 +147,9 @@ const SCRIVE = /salva|scrivi|lancia|rispondi|vota|reagisci|registra|segui|push_|
         await p.evaluate(() => scrollTo(0, 1400)); await p.waitForTimeout(300);
         await p.evaluate(() => __curvaProva.nuovi()); await p.waitForTimeout(400);
         if (await p.evaluate(() => !!document.querySelector('#cv-nuovi.on'))) pr.push(pn + ': pillola senza cori nuovi');
-        const k0 = await p.evaluate(() => { const a = document.querySelector('#vista article.post'), k = a.getAttribute('data-k'); a.remove(); document.getElementById('vista').__h = null; __curvaProva.nuovi(); return k; });
+        // I cori dei personaggi escono a gruppi con la stessa ora (per esempio tre cori alle 23:30): se ne togliessimo uno solo,
+        // il più nuovo rimasto avrebbe la stessa ora e non sarebbe «nuovo». Si tolgono i primi 5 insieme (pochi, per non accorciare la pagina)
+        const k0 = await p.evaluate(() => { const A = [...document.querySelectorAll('#vista article.post')], k = A[0].getAttribute('data-k'); A.slice(0, 5).forEach(a => a.remove()); document.getElementById('vista').__h = null; __curvaProva.nuovi(); return k; });
         await p.waitForTimeout(500);
         const pil = await p.evaluate(() => { const b = document.querySelector('#cv-nuovi.on'); if (!b) return null; const r = b.getBoundingClientRect(), t = document.getElementById('top').getBoundingClientRect(); return { top: Math.round(r.top), sottoIntestazione: r.top >= t.bottom - 1, dentro: r.left >= 0 && r.right <= innerWidth, av: b.querySelectorAll('.av').length, testo: b.lastElementChild.textContent }; });
         if (!pil || !pil.sottoIntestazione || !pil.dentro || !pil.av || pil.testo !== 'Nuovi cori') pr.push(pn + ': pillola ' + JSON.stringify(pil));
