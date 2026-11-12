@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre — ChatGPT: Registro online e primo giro automatico verificato
+
+- PR #52 unita con il «vai» di Gianluca (`48ba482`): Anteprima corrente, Archivio e Changelog sono online nella repo di prova. `registro-stato.json` pubblico conferma la 5.8.1 già esistente; nessuna nuova versione dell'app.
+- Primo giro automatico `43212611020` e prova manuale `43212623995`: entrambi riusciti. Nessuna differenza da salvare, nessun commit inutile. GitHub Pages della repo di prova è pubblicato da `main`.
+- Verifica finale: la lettura dei sondaggi (`sondaggio_stato`) è ammessa nella copia in sola lettura; le funzioni che votano/commentano restano bloccate. Il giro manuale ripubblica anche senza differenze per collaudare il percorso di deploy.
+- Matrice nuova: tutti e tre i motori reali su 16 schermi superati (`43211846985`). Alcune vecchie suite della 5.2/5.5 sono ancora da riallineare completamente alle interfacce correnti; non confondere questi esiti con la matrice del Registro attuale.
+
+
 ## 12 novembre — ChatGPT: «Vai» ai merge, matrice browser e proposte conservate
 
 - Gianluca ha autorizzato esplicitamente le tre PR e precisato che la manutenzione della repo di prova non deve creare una nuova versione dell'app. Nessuna voce o annuncio aggiunto a `versioni.json`.

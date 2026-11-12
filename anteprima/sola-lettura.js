@@ -4,7 +4,7 @@
   'use strict';
   var nativeFetch = window.fetch.bind(window);
   var reads = new Set(['curva_feed', 'curva_img', 'curva_adm_img', 'curva_pimg', 'curva_adm_lista',
-    'derby_stato', 'conf_pubbliche', 'conf_promesse', 'conf_dopo_pubbliche',
+    'derby_stato', 'sondaggio_stato', 'conf_pubbliche', 'conf_promesse', 'conf_dopo_pubbliche',
     'carriera_stato', 'toto_stato', 'toto_pr_stato', 'toto_pr_pubblico', 'duello_stato', 'notifiche_stato', 'push_stato']);
   function allowed(url, method) {
     var u = new URL(url, location.href);
