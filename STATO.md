@@ -1,5 +1,15 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre — ChatGPT: «Vai» ai merge, matrice browser e proposte conservate
+
+- Gianluca ha autorizzato esplicitamente le tre PR e precisato che la manutenzione della repo di prova non deve creare una nuova versione dell'app. Nessuna voce o annuncio aggiunto a `versioni.json`.
+- Unite PR registro #51 (`efae25b`) e sito #8 (`ad578e5`), solo script/controllo chiave e workflow premi: nessuna pagina del sito o database modificato.
+- Eseguita diagnosi reale con `vai=false`, `controlla_chiave=true`: run `43211818769`, errore «Chiave premi assente o non valida». Il job termina prima del calcolo e di ogni registrazione. Chiesto a Gianluca di configurare `SUPABASE_SECRET_KEY` nei segreti GitHub, senza inviare valori in chat.
+- Nuovo collaudo `registro-browser-qa.yml`: Chromium, WebKit e Firefox × 16 profili, tutti superati nel run `43211846985` (48 combinazioni). Firefox provato anche localmente. Samsung Internet e dispositivi fisici non disponibili: non equivalgono al cambio di user-agent. La regola è in `AGENTS.md`.
+- Due vecchi test cercavano elementi superati: titoli `h3` dei sondaggi e label della reputazione; il test premi non preparava lo stato necessario e aspettava una scheda di premio riscosso che oggi sparisce. Aggiornate le verifiche al comportamento corrente, mantenendo i controlli su fiducia, credito e layout. Campo Lega/Stadio verificato localmente con successo.
+- Le idee non sono abbandonate: `proposte/roadmap-discussa-12-novembre.md` conserva priorità, miglioramenti e correzioni alle proposte iniziali. Nessuna nuova funzionalità implementata senza scelta di Gianluca. Curva/video di Claude non toccati.
+
+
 ## 12 novembre — ChatGPT: allineamento automatico del Registro (PR, non ancora online)
 
 - Richiesta di Gianluca: riallineare Changelog, Archivio e Anteprima all'ultima versione online e mantenerli aggiornati automaticamente, senza interferire con Claude.

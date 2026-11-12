@@ -16,8 +16,13 @@ with sync_playwright() as p:
      page.locator('.trust-visual .trust-fill').wait_for(timeout=10000)
      before=page.locator('.trust-visual').get_attribute('data-target')
      options=page.locator('#cteam option').all_text_contents()
-     other=next(t for t in options if t!='Oranje VC')
-     page.locator('#cteam').select_option(label=other)
+     if options:
+      other=next(t for t in options if t!='Oranje VC')
+      page.locator('#cteam').select_option(label=other)
+     else:
+      # Nell'app si può vedere solo la propria squadra; il cambio è uno strumento di prova.
+      page.goto(base+route+'?come=Apo%20team#carriera',wait_until='domcontentloaded')
+      page.locator('.trust-visual .trust-fill').wait_for(timeout=10000)
      page.wait_for_function("old => document.querySelector('.trust-visual')?.dataset.target !== old",arg=before,timeout=10000)
      page.wait_for_timeout(1500)
      page.wait_for_function("Math.abs(Number(document.querySelector('.trust-fill').getAttribute('stroke-dasharray').split(' ')[0])-Number(document.querySelector('.trust-visual').dataset.target))<0.06",timeout=6000)
