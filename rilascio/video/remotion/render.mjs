@@ -50,7 +50,7 @@ const prossC = CU.find(x => x.n === nc + 1), bcS = prossC && cg.length ? scegli(
 const props = { cl: C.map(t => ({ n: t.n, pt: t.pt })), nc2: prossC ? prossC.n : null, bigC: bcS,  n, nc, m: g.m.map(m => ({ a: m[0], b: m[3], sc: m[4] })), mc: !gc ? [] : gc.m.map(m => ({ g: m[0], a: m[1], b: m[4], sc: m[5] })), c: C.slice(0, 3).map(t => ({ n: t.n, pt: t.pt })), gir, big: bmS };
 fs.mkdirSync('public', { recursive: true }); const LG = SITO + 'assets/loghi/';
 [['logo-lega-o-fant-a-girrr.png', 'logo-lega.png'], ['logo-cup-champions-cup.png', 'logo-coppa.png'], ['logo-tv-girrr-sport-live.png', 'tv-lega.png'], ['logo-tv-cup-girrr-live.png', 'tv-coppa.png']].forEach(([a, b]) => fs.copyFileSync(LG + a, 'public/' + b));
-const browserExecutable = process.argv[2];
+const browserExecutable = process.argv[2] || null;   /* senza percorso Remotion scarica il suo Chrome (sul workflow) */
 const serveUrl = await bundle({ entryPoint: './src/index.jsx', publicDir: './public' });
 const composition = await selectComposition({ serveUrl, id: 'Giornata', inputProps: props, browserExecutable });
 await renderMedia({ composition, serveUrl, codec: 'h264', outputLocation: process.env.USCITA || '/home/user/o-girrr-registro/lab/video-giornata/strada-b-remotion.mp4', inputProps: props, browserExecutable, crf: 22 });

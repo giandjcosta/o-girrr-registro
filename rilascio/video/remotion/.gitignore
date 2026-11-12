@@ -1,0 +1,4 @@
+public/*.png
+node_modules/
+scene.json
+.cache/

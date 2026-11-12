@@ -6,14 +6,17 @@
 set -e
 QUI=$(cd "$(dirname "$0")" && pwd)
 SITO=$(cd "$1" && pwd)/; USCITA=$2
-CHROME=${CHROME:-$(ls -d /opt/pw-browsers/chromium_headless_shell-*/*/ 2>/dev/null | head -1)chrome-headless-shell}
+# Chrome headless: quello indicato in CHROME, se no quello di Playwright se c'è, se no lo scarica Remotion (sul workflow).
+if [ -z "$CHROME" ]; then D=$(ls -d /opt/pw-browsers/chromium_headless_shell-*/*/ 2>/dev/null | head -1); [ -n "$D" ] && CHROME=${D}chrome-headless-shell; fi
 cd "$QUI/remotion"
-SITO=$SITO USCITA=/tmp/video-muto.mp4 node render.mjs "$CHROME"
+MUTO=$(mktemp --suffix=.mp4)
+SITO=$SITO USCITA=$MUTO node render.mjs "$CHROME"
 # Il passaggio alla Coppa e il ritorno al Campionato seguono la scaletta: logo della Coppa e chiusura da scene.json
 read -r COPPA FINE < <(python3 -c "import json;S=json.load(open('scene.json'));t=0;d={}
 for k,n in S['scene']:d[k]=t;t+=n/S['fps']
 print('%.2f %.2f'%(d['introCoppa']+0.5,t-6.83))")
-python3 "$QUI/monta_musica.py" "$QUI/musica/campionato.mp3" /tmp/video-muto.mp4 "$USCITA" \
+python3 "$QUI/monta_musica.py" "$QUI/musica/campionato.mp3" "$MUTO" "$USCITA" \
   --dopo "$QUI/musica/coppa-victory.mp3:19.46:126.7@$COPPA:1.0" \
   --dopo "$QUI/musica/campionato.mp3:64.77:72.6@$FINE:1.0" \
   --coda 7 --effetti scene.json
+rm -f "$MUTO"
