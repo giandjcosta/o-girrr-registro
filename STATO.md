@@ -1,5 +1,8 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (24) — Claude: video della giornata (B), fischio d'inizio sul logo della lega (Lab)
+- Gianluca ha fatto il fischio dell'arbitro (`rilascio/video/suoni/fischio-inizio.mp3`, 10 s: il fischio è tra 1,1 e 2,3 s, poi brusio). `monta_musica.py` ha l'opzione `--suono FILE:DA:A@QUANDO:VOLUME`: ritaglia il pezzo, lo porta a volume pieno, sfuma la coda e abbassa un po' la musica sotto. Nei due video con la musica di Gianluca il fischio parte a 0,05 s: nella sua banda è circa 10 dB sopra la musica. Proposti altri suoni: triplice fischio finale, boato sul podio, brusio di stadio.
+
 ## 12 novembre (23) — Claude: video della giornata (B), le musiche di Gianluca sotto il video (Lab)
 - Gianluca ha fatto due brani con MakeBestMusic («O Fant a Girrr (1)», 1:28, e «(2)», 1:13, circa 129 BPM). `rilascio/video/monta_musica.py BRANO VIDEO USCITA --coda S` tiene l'inizio del brano e attacca il finale vero, con il taglio dove il ritmo combacia (confronto degli attacchi dei colpi) e dissolvenza di 80 ms; la durata segue il video (anche senza «Da non perdere»). Video: `lab/video-giornata/strada-b-musica-1.mp4` (taglio a 29,1 s, finale di 7,5 s) e `strada-b-musica-2.mp4` (taglio a 26,6 s, finale di 10 s), nella pagina `strade.html`. La musica generata col codice (`musica.py`) resta solo come ripiego. Da verificare: le condizioni d'uso di MakeBestMusic per Instagram.
 

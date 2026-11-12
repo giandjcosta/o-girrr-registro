@@ -8,7 +8,11 @@ con una dissolvenza di 80 ms: non si sente lo stacco. Il video non viene ricodif
 
 Brani usati per la prova: «O Fant a Girrr (1)» e «(2)», fatti da Gianluca con MakeBestMusic.
 
-Uso: python3 rilascio/video/monta_musica.py BRANO.mp3 VIDEO_MUTO.mp4 VIDEO_CON_MUSICA.mp4 [--coda SECONDI]
+Suoni sopra la musica (fischio, folla…): --suono FILE:DA:A@QUANDO:VOLUME, per esempio --suono fischio.mp3:0.9:3@0:1.0
+(prende il pezzo DA-A secondi del file, lo porta a volume pieno per VOLUME e lo mette a QUANDO secondi del video; con
+QUANDO negativo conta dalla fine del video). Con un suono sopra, la musica si abbassa un poco per lasciarlo sentire.
+
+Uso: python3 rilascio/video/monta_musica.py BRANO.mp3 VIDEO_MUTO.mp4 VIDEO_CON_MUSICA.mp4 [--coda SECONDI] [--suono …]
 """
 import argparse
 import subprocess
@@ -70,6 +74,7 @@ if __name__ == '__main__':
     p.add_argument('video')
     p.add_argument('uscita')
     p.add_argument('--coda', type=float, default=8.0, help='secondi del finale vero del brano da tenere')
+    p.add_argument('--suono', action='append', default=[], help='FILE:DA:A@QUANDO:VOLUME')
     A = p.parse_args()
     lungo = durata(A.video)
     y = monta(carica(A.brano), lungo, A.coda)
@@ -77,6 +82,23 @@ if __name__ == '__main__':
     if len(y) < lungo * SR:
         y = np.concatenate([y, np.zeros((int(lungo * SR) - len(y), 2), np.float32)])
     y[:int(0.02 * SR)] *= np.linspace(0, 1, int(0.02 * SR))[:, None]
+    for s in A.suono:
+        sorg, dove = s.rsplit('@', 1)
+        f, da, a = sorg.rsplit(':', 2)
+        quando, vol = (float(v) for v in dove.split(':'))
+        z = carica(f)[int(float(da) * SR):int(float(a) * SR)]
+        z = z / (np.abs(z).max() + 1e-9) * 0.9 * vol
+        k = int(0.25 * len(z))  # sfuma l'ultimo quarto
+        z[-k:] *= np.linspace(1, 0, k)[:, None]
+        i = int((quando if quando >= 0 else lungo + quando) * SR)
+        j = min(len(y), i + len(z))
+        g = np.ones(len(y), np.float32)  # la musica scende di circa 5 dB sotto il suono
+        g[i:j] = 0.55
+        g = np.convolve(g, np.ones(2400) / 2400, 'same')
+        y = y * g[:, None]
+        y[i:j] += z[:j - i]
+        print('suono', f, 'a %.2f s' % (i / SR))
+    y = np.tanh(y * 1.1) / np.tanh(1.1) * 0.95
     with tempfile.NamedTemporaryFile(suffix='.wav') as t:
         w = wave.open(t.name, 'wb')
         w.setnchannels(2)
