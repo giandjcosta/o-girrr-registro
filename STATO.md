@@ -1,5 +1,8 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (31) — Claude: video della giornata (B), prova con la folla che cresce sul podio (Lab)
+- Gianluca ha mandato una nuova folla (`rilascio/video/suoni/folla-podio.mp3`: cresce per circa 1 s e poi cala, diversa dal boato secco di prima). Solo in prova, con `--folla`: al massimo tra 9,4 e 9,8 s, quando l'1° arriva in cima, sotto la musica (−3/−6 dB). Video `lab/video-giornata/strada-b-chiusura-b-folla.mp4`; le versioni senza folla restano come sono.
+
 ## 12 novembre (30) — Claude: video della giornata (B), tolta la folla che esulta sul primo posto (Lab)
 - Gianluca voleva togliere il boato del podio (avevo capito di rifarlo): tolto da `scaletta()`, resta solo la salita quando l'1° arriva in cima. Rifatte le due versioni che gli piacciono di più: `strada-b-effetti.mp4` (chiusura con «Victory») e `strada-b-chiusura-b.mp4` (ritorno al Campionato). Gianluca ci pensa.
 

@@ -66,6 +66,7 @@ EFFETTI = {
     'cascata':   ('cascata.mp3', 0.0, 1.2, 0.0, -10, False),
     'podio':     ('podio.mp3', 0.25, 1.2, 0.9, -10, False),
     'boato':     ('boato.mp3', 0.0, 3.0, 0.1, -7, True),
+    'folla-podio': ('folla-podio.mp3', 0.0, 3.0, 0.8, -9, False),    # folla che cresce coi gradini (solo con --folla)
     'ultimo':    ('ultimo.mp3', 0.0, 0.7, 0.0, -9, False),
     'logo-coppa': ('logo-coppa.mp3', 0.0, 1.0, 0.33, -2, True),
     'derby':     ('derby.mp3', 0.0, 3.3, 0.0, -6, True),
@@ -74,7 +75,7 @@ EFFETTI = {
 }
 
 
-def scaletta(S):
+def scaletta(S, folla=False):
     """Elenco (effetto, secondo del video in cui cade il colpo) dalla scaletta delle scene (scene.json di render.mjs).
     Gli istanti sono quelli di src/index.jsx: le partite entrano a 14 + 9·i fotogrammi, le righe della classifica a 8 + 3·i,
     i gradini del podio salgono dal 3° all'1° e l'1° arriva in cima a 1,47 s (molla di Podio), i loghi delle aperture
@@ -90,7 +91,7 @@ def scaletta(S):
             E.append(('logo-coppa', ini[k] + 0.4))   # quando il logo della Coppa atterra, sopra la salita di «Victory»
     for k, n in (('lega', S.get('m', 5)), ('coppa', S.get('mc', 4))):
         E += [('pop', ini[k] + (14 + 9 * i + 3) / fps) for i in range(n)]
-    E += [('podio', ini['podio'] + 1.45)]   # la salita finisce quando l'1° è in cima; niente folla che esulta (Gianluca, 12 novembre)
+    E += [('podio', ini['podio'] + 1.45)] + ([('folla-podio', ini['podio'] + 1.47)] if folla else [])   # la salita finisce quando l'1° è in cima; niente folla che esulta (Gianluca, 12 novembre)
     ncl = S.get('cl', 10)
     E += [('cascata', ini['classifica'] + 8 / fps), ('ultimo', ini['classifica'] + (8 + 3 * (ncl - 1) + 4) / fps)]
     if 'prossime' in ini and S.get('derby'):
@@ -168,6 +169,7 @@ if __name__ == '__main__':
     p.add_argument('--dopo', action='append', default=[], help='FILE:INIZIO:FINE@QUANDO[:DISSOLVENZA], ripetibile')
     p.add_argument('--dissolvenza', type=float, default=0.5, help='secondi in cui il primo brano lascia il posto al secondo')
     p.add_argument('--effetti', default='', help='scene.json di render.mjs: effetti grafici a tempo')
+    p.add_argument('--folla', action='store_true', help='folla che cresce coi gradini del podio (prova)')
     p.add_argument('--suono', action='append', default=[], help='FILE:DA:A@QUANDO:VOLUME')
     A = p.parse_args()
     lungo = durata(A.video)
@@ -216,7 +218,7 @@ if __name__ == '__main__':
         y[i:j] += z[:j - i]
         print('suono', f, 'a %.2f s' % (i / SR))
     if A.effetti:
-        y = mescola(y, scaletta(json.load(open(A.effetti))), lungo)
+        y = mescola(y, scaletta(json.load(open(A.effetti)), A.folla), lungo)
     y = np.tanh(y * 1.1) / np.tanh(1.1) * 0.95
     with tempfile.NamedTemporaryFile(suffix='.wav') as t:
         w = wave.open(t.name, 'wb')

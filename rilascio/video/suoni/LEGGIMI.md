@@ -15,5 +15,6 @@ Fatti da Gianluca il 12 novembre 2026 con i prompt di Claude. Volumi e tagli son
 | `logo-coppa.mp3` | salita e colpo | logo della Champions Cup, con l'esplosione di «Victory» |
 | `derby.mp3` | tamburi e mani da curva | scritta «DERBY» in «Da non perdere», solo se c'è un Derby |
 | `triplice-fischio.mp3` | fischio finale, colpi separati | «Tutto su O Girrr» |
+| `folla-podio.mp3` | folla che cresce per 1 s e poi cala | solo in prova (`--folla`): al massimo quando l'1° arriva in cima |
 | `stadio.mp3` | brusio di stadio, 30 s | sotto tutto il video, molto basso |
 | `contatore.mp3`, `triplice-fischio-lungo.mp3` | contatore, fischio finale lungo | non usati nel video (di scorta, o per la Radio) |
