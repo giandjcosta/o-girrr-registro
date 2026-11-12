@@ -23,7 +23,7 @@
 | Stato del progetto (cosa è online, cosa è in prova) | [STATO.md](STATO.md) |
 | Collaudo automatico su telefono e PC, Chromium e WebKit (Safari) | https://github.com/giandjcosta/o-girrr-registro/actions/workflows/claude-collaudo-55.yml |
 
-Versione online sul sito vero: **5.8.1**. Anteprima corrente: copia in sola lettura della stessa versione; i prototipi restano nel Laboratorio. Allineamento automatico dopo le modifiche al Lab e controllo dei rilasci ogni 30 minuti (gli orari GitHub possono slittare).
+Versione online sul sito vero: **5.8.2**. Anteprima corrente: copia in sola lettura della stessa versione; i prototipi restano nel Laboratorio. Allineamento automatico dopo le modifiche al Lab e controllo dei rilasci ogni 30 minuti (gli orari GitHub possono slittare).
 
 Per riprendere il lavoro in una chat nuova: "Leggi STATO.md nel repo o-girrr-registro e continuiamo da lì". In `STATO.md` c'è cosa è online, cosa è in prova e cosa resta da fare.
 
