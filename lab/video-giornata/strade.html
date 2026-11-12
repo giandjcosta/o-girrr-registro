@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Video della giornata · A e B</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&family=Lobster&display=swap">
+<style>
+/* Le quattro strade per il video della giornata, a confronto (Claude, 12 novembre 2026). Stessi dati veri (7ª giornata), nessuna voce. */
+:root{--bg:#0d1430;--card:#1d2a52;--tx:#fbf6ec;--mu:#b9c3dc;--oro:#ffd166}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--tx);font:500 15px/1.45 Inter,system-ui,sans-serif;padding:20px 16px 50px}
+h1{font:400 40px Lobster,cursive;margin-bottom:4px}p.s{color:var(--mu);max-width:900px;margin-bottom:22px}
+.griglia{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px;max-width:1200px}
+.v{background:var(--card);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.v video{width:100%;aspect-ratio:9/16;border-radius:12px;background:#000}
+.v b{font:900 17px Inter,sans-serif}.v b span{color:var(--oro)}
+.v ul{margin:0;padding-left:18px;color:var(--mu);font-size:14px}.v li.si::marker{content:'＋ ';color:#4ade80}.v li.no::marker{content:'－ ';color:#f87171}
+.v a{color:var(--oro);font-weight:700}
+</style>
+</head>
+<body>
+<h1>Video della giornata · A e B</h1>
+<p class="s">Stessi dati veri (risultati della 7ª, podio, partita da non perdere dell'8ª), nessuna voce, nessun servizio a pagamento. Le strade C (dal telefono) e D (immagini e ffmpeg) sono state scartate da Gianluca. La B è stata rifatta con la grafica ufficiale e la scaletta di Gianluca: logo della lega, risultati e classifica del Campionato (ultimo in rosso), logo della coppa, risultati e gironi della Champions Cup (ultimo in rosso), partite da non perdere (rosso Campionato, azzurro Coppa), «Tutto su O Girrr».</p>
+<div class="griglia">
+ <div class="v"><b><span>A</span> · Pagina animata + Playwright</b><video src="giornata-7.mp4" controls muted playsinline preload="metadata"></video>
+  <ul><li class="si">Quasi pronta, gratis, esce da sola dopo ogni giornata (workflow)</li><li class="si">Stessa grafica del sito, si cambia come una pagina</li><li class="no">Animazioni più semplici</li></ul><a href="./">Guarda la pagina dal vivo</a></div>
+ <div class="v"><b><span>B</span> · Remotion</b><video src="strada-b-remotion.mp4" controls playsinline preload="metadata"></video>
+  <ul><li class="si">Il più «da TV»: molle vere, numeri che salgono, tendine tra le scene</li><li class="si">Gira nel workflow come la A</li><li class="si">Con musica originale a tempo con le scene (generata, nessun diritto da pagare)</li><li class="no">Più lavoro all'inizio; licenza gratuita per uso personale e piccoli gruppi (da verificare per noi)</li></ul></div>
+ <div class="v"><b><span>B</span> · Musica di Gianluca (1)</b><video src="strada-b-musica-1.mp4" controls playsinline preload="metadata"></video>
+  <ul><li class="si">«O Fant a Girrr (1)», fatta da Gianluca con MakeBestMusic</li><li class="si">Inizio del brano fino a 29 s, poi gli ultimi 7,5 s</li><li class="si">Tagliata da sola sulla durata del video, con il finale vero del brano (rilascio/video/monta_musica.py)</li></ul></div>
+ <div class="v"><b><span>B</span> · Musica di Gianluca (2)</b><video src="strada-b-musica-2.mp4" controls playsinline preload="metadata"></video>
+  <ul><li class="si">«O Fant a Girrr (2)», fatta da Gianluca con MakeBestMusic</li><li class="si">Inizio del brano fino a 26,6 s, poi gli ultimi 10 s (con lo stacco prima del finale)</li><li class="si">Tagliata da sola sulla durata del video, con il finale vero del brano (rilascio/video/monta_musica.py)</li></ul></div>
+ <div class="v"><b><span>B</span> · Musica di Gianluca (3)</b><video src="strada-b-musica-3.mp4" controls playsinline preload="metadata"></video>
+  <ul><li class="si">«Victory» di maksymmalko, scelta da Gianluca (Pixabay)</li><li class="si">Fischio d'inizio sul logo, la parte piena esplode sul podio, colpo finale su «Tutto su O Girrr»</li></ul></div>
+ <div class="v"><b><span>B</span> · Calma e epica insieme (2)</b><video src="strada-b-insieme-2.mp4" controls playsinline preload="metadata"></video>
+  <ul><li class="si">Campionato sulla base calma da TV «O Fant a Girrr (2)», con il fischio d'inizio</li><li class="si">Sul logo della Coppa esplode «Victory», che chiude con il suo colpo finale su «Tutto su O Girrr»</li></ul></div>
+ <div class="v"><b><span>B</span> · Calma e epica insieme (1)</b><video src="strada-b-insieme-1.mp4" controls playsinline preload="metadata"></video>
+  <ul><li class="si">Campionato sulla base calma da TV «O Fant a Girrr (1)», con il fischio d'inizio</li><li class="si">Sul logo della Coppa esplode «Victory», che chiude con il suo colpo finale su «Tutto su O Girrr»</li></ul></div>
+ <div class="v"><b><span>B</span> · Con gli effetti</b><video src="strada-b-effetti.mp4" controls playsinline preload="metadata"></video>
+  <ul><li class="si">Base calma (2) e «Victory» come «insieme-2», più gli effetti di Gianluca a tempo: stinger dei loghi, fischio d'inizio, whoosh sulle tendine, pop sulle partite, podio con boato, cascata e «dun» dell'ultimo in classifica, triplice fischio, brusio di stadio</li><li class="si">Volume medio uguale a quello senza effetti: non coprono la musica</li></ul></div>
+ <div class="v" style="outline:3px solid var(--oro)"><b><span>B</span> · Chiusura B · Ritorno al Campionato · Scelta da Gianluca</b><video src="strada-b-chiusura-b.mp4" controls playsinline preload="metadata"></video>
+  <ul><li class="si">Su «Da non perdere» torna la base calma del Campionato, il suo finale vero chiude il video</li></ul></div>
+ <div class="v"><b><span>B</span> · Chiusura C · Victory morbida</b><video src="strada-b-chiusura-c.mp4" controls playsinline preload="metadata"></video>
+  <ul><li class="si">«Victory» piena fino a «Tutto su O Girrr», poi la fine della sua frase che scende piano, al posto del colpo secco</li></ul></div>
+</div>
+</body>
+</html>
