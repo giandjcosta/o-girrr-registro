@@ -23,7 +23,7 @@
 | Stato del progetto (cosa è online, cosa è in prova) | [STATO.md](STATO.md) |
 | Collaudo automatico su telefono e PC, Chromium e WebKit (Safari) | https://github.com/giandjcosta/o-girrr-registro/actions/workflows/claude-collaudo-55.yml |
 
-Versione online sul sito vero: **5.8.2**. Anteprima corrente: copia in sola lettura della stessa versione; i prototipi restano nel Laboratorio. Allineamento automatico dopo le modifiche al Lab e controllo dei rilasci ogni 30 minuti (gli orari GitHub possono slittare).
+Versione online sul sito vero: **5.8.2**. Anteprima corrente: copia in sola lettura della stessa versione; i prototipi restano nel Laboratorio. Allineamento automatico dopo le modifiche al Lab e sincronizzazione ogni 7 giorni, subito se esce una versione nuova (gli orari GitHub possono slittare).
 
 Per riprendere il lavoro in una chat nuova: "Leggi STATO.md nel repo o-girrr-registro e continuiamo da lì". In `STATO.md` c'è cosa è online, cosa è in prova e cosa resta da fare.
 
@@ -51,4 +51,4 @@ Per riprendere il lavoro in una chat nuova: "Leggi STATO.md nel repo o-girrr-reg
 
 Ogni modifica destinata al sito, comprese le correzioni di testo, viene prima mostrata e provata nel Lab. Il sito vero aspetta la certificazione della prova e il "vai" esplicito di Gianluca.
 
-L’allineamento automatico è eseguito da `.github/workflows/sincronizza-registro.yml`: rigenera Anteprima, Archivio e Changelog dopo le modifiche al Lab e controlla il sito ogni 30 minuti. La versione e il commit sincronizzati sono in `registro-stato.json`. Le modifiche sperimentali non ancora unite a `main` restano sui rami degli autori.
+L’allineamento automatico è eseguito da `.github/workflows/sincronizza-registro.yml`: rigenera Anteprima, Archivio e Changelog dopo le modifiche al Lab e si sincronizza ogni 7 giorni dall'ultima sincronizzazione, oppure appena sul sito c'è una versione nuova (controllo ogni 6 ore). La versione e il commit sincronizzati sono in `registro-stato.json`. Le modifiche sperimentali non ancora unite a `main` restano sui rami degli autori.

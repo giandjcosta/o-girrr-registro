@@ -87,7 +87,7 @@ def sincronizza(site):
         scrivi(path, text)
     readme = ROOT / 'README.md'
     text = readme.read_text()
-    text = re.sub(r'Versione online sul sito vero:.*?(?=\n\n)', 'Versione online sul sito vero: **' + latest['v'] + '**. Anteprima corrente: copia in sola lettura della stessa versione; i prototipi restano nel Laboratorio. Allineamento automatico dopo le modifiche al Lab e controllo dei rilasci ogni 30 minuti (gli orari GitHub possono slittare).', text, flags=re.S)
+    text = re.sub(r'Versione online sul sito vero:.*?(?=\n\n)', 'Versione online sul sito vero: **' + latest['v'] + '**. Anteprima corrente: copia in sola lettura della stessa versione; i prototipi restano nel Laboratorio. Allineamento automatico dopo le modifiche al Lab e sincronizzazione ogni 7 giorni, subito se esce una versione nuova (gli orari GitHub possono slittare).', text, flags=re.S)
     scrivi(readme, text)
     print('Registro allineato alla ' + latest['v'] + ' · Sito ' + sha[:7] + ' · ' + str(len(files)) + ' file in sola lettura')
 
