@@ -69,17 +69,18 @@ with sync_playwright() as pw:
 
         # I pannelli aggiunti alla Curva devono seguire anche il cambio chiaro/scuro.
         p.goto(ROOT + f'curva-{skin}.html')
-        p.locator('#v53poll h3').wait_for()
+        p.locator('#v53poll .v55-pp-q').first.wait_for()
         for tema in ('light', 'dark'):
             p.evaluate('(t)=>document.documentElement.dataset.theme=t', tema)
+            p.wait_for_timeout(300)  # La transizione del tema dura 250 ms.
             colori = p.locator('#v53poll').evaluate('''e=>({
-              titolo:getComputedStyle(e.querySelector('h3')).color,
+              titolo:getComputedStyle(e.querySelector('.v55-pp-head b')).color,
               testo:getComputedStyle(document.body).color,
-              fondo:getComputedStyle(e.closest('.v53-panel')).backgroundColor,
+              fondo:getComputedStyle(e.querySelector('.v55-pollpost')).backgroundColor,
               pagina:getComputedStyle(document.body).backgroundColor})''')
             # Il corpo della Curva dissolve i colori in 250 ms.
             expect(p.locator('body')).to_have_css('color', colori['titolo'])
-            expect(p.locator('body')).to_have_css('background-color', colori['fondo'])
+            assert colori['fondo'] in ('rgba(0, 0, 0, 0)', colori['pagina']), colori
         c.close()
         print('PASS Campo', skin, 'risultato, attesa, cambio partita, skin e Curva chiara/scura', flush=True)
     b.close()

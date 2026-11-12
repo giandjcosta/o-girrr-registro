@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ingresso abituale del Registro e cambio skin dentro la cornice dell'Anteprima."""
+"""Regressione della cornice storica 5.5; l'ingresso corrente è provato da prova_registro_corrente.py."""
 import json
 from pathlib import Path
 from playwright.sync_api import sync_playwright
@@ -20,9 +20,7 @@ with sync_playwright() as pw:
           localStorage.setItem('orr_gv','a');localStorage.setItem('orr_gu',location.origin+'/ufficiale/girrr/index.html');
           sessionStorage.setItem('ingresso-test','1')}
         """)
-        page.goto(ROOT+'/aggiornamenti.html',wait_until='networkidle')
-        page.get_by_role('link',name='Anteprima 5.5',exact=True).click()
-        page.wait_for_url('**/ufficiale/')
+        page.goto(ROOT+'/anteprima/storica55.html',wait_until='networkidle')
         def frame():return page.frame_locator('#f')
         def check(label):
             page.wait_for_timeout(600)

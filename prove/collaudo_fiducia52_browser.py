@@ -16,15 +16,20 @@ with sync_playwright() as p:
      page.locator('.trust-visual .trust-fill').wait_for(timeout=10000)
      before=page.locator('.trust-visual').get_attribute('data-target')
      options=page.locator('#cteam option').all_text_contents()
-     other=next(t for t in options if t!='Oranje VC')
-     page.locator('#cteam').select_option(label=other)
+     if options:
+      other=next(t for t in options if t!='Oranje VC')
+      page.locator('#cteam').select_option(label=other)
+     else:
+      # Nell'app si può vedere solo la propria squadra; il cambio è uno strumento di prova.
+      page.goto(base+route+'?come=Apo%20team#carriera',wait_until='domcontentloaded')
+      page.locator('.trust-visual .trust-fill').wait_for(timeout=10000)
      page.wait_for_function("old => document.querySelector('.trust-visual')?.dataset.target !== old",arg=before,timeout=10000)
      page.wait_for_timeout(1500)
      page.wait_for_function("Math.abs(Number(document.querySelector('.trust-fill').getAttribute('stroke-dasharray').split(' ')[0])-Number(document.querySelector('.trust-visual').dataset.target))<0.06",timeout=6000)
      q=page.evaluate("""() => {
        const el=document.querySelector('.trust-visual'), path=el?.querySelector('.trust-fill'), num=el?.querySelector('.trust-number'),
        gray=el?.querySelector('svg>path'), text=el?.querySelector('svg[aria-label]');
-       const rewards=document.querySelector('[aria-label="Premi Carriera in simulazione"]');
+       const rewards=document.querySelector('[role="progressbar"][aria-label="Reputazione"]');
        return {value:+el?.dataset.target,dash:path?.getAttribute('stroke-dasharray'),
          label:text?.getAttribute('aria-label'),number:+num?.textContent,gray:gray?.getAttribute('stroke'),
          multicolor:!!el?.querySelector('linearGradient'),hasMarker:!!el?.querySelector('circle'),
@@ -42,11 +47,12 @@ with sync_playwright() as p:
   for width in (320,390,1440):
    page=browser.new_page(viewport={'width':width,'height':900})
    try:
+    page.add_init_script("sessionStorage.setItem('ogirrr52-v2',JSON.stringify({team:'Oranje VC',premi:{'Oranje VC':[{obiettivo:'sponsor_2026_27',sponsor:'Sponsor di prova',crediti:50,reputazione:1}]}}))")
     page.goto(base+'anteprima/totogirrr-52.html',wait_until='domcontentloaded')
     page.locator('#riscatta-sponsor').wait_for(timeout=18000)
     pre=page.locator('.bal b').inner_text()
     page.locator('#riscatta-sponsor').click()
-    page.locator('.prize-corner.claimed').wait_for(timeout=10000)
+    page.wait_for_function("!document.getElementById('riscatta-sponsor')",timeout=10000)
     page.wait_for_timeout(850)
     post=page.locator('.bal b').inner_text()
     assert pre!=post,(browser_name,width,'balance unchanged',pre,post)

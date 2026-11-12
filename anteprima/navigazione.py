@@ -64,3 +64,5 @@ def genera():
     (R/'anteprima/campo.html').write_text(c)
     # Cornice dell'Anteprima nel Registro, distinta dalle sorgenti congelate del sito.
     (R/'ufficiale/index.html').write_text((R/'anteprima/sorgenti/involucro.html').read_text())
+    from cornice_pubblicata import genera_cornice
+    genera_cornice(R)

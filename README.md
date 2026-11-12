@@ -16,14 +16,14 @@
 | **Aggiornamenti** (cosa porta ogni versione) | https://giandjcosta.github.io/o-girrr-registro/aggiornamenti.html |
 | **Laboratorio** (le prove nuove) | https://giandjcosta.github.io/o-girrr-registro/lab/ |
 | **Novità 5.5** (tutte le novità con foto e link) | https://giandjcosta.github.io/o-girrr-registro/lab/novita-5-5.html |
-| **Anteprima 5.5** · ingresso con scelta della grafica | https://giandjcosta.github.io/o-girrr-registro/ufficiale/ |
-| Anteprima 5.5 · pagine nuove (Home, Notifiche, Tabellone, Campo, Albo, Curva) | https://giandjcosta.github.io/o-girrr-registro/anteprima/5.5/index.html |
-| Anteprima dell'app (Carriera, Spogliatoio…) · Lega / Stadio | https://giandjcosta.github.io/o-girrr-registro/anteprima/attuale.html · https://giandjcosta.github.io/o-girrr-registro/anteprima/index.html |
-| Archivio delle versioni uscite | https://giandjcosta.github.io/o-girrr-registro/lab/versione-5-3.html (5.3) · https://giandjcosta.github.io/o-girrr-registro/lab/versione-5-2.html (5.2) · https://giandjcosta.github.io/o-girrr-registro/lab/versione-5-1.html (5.1) |
+| **Anteprima corrente** · ultima versione online, in sola lettura, con scelta della grafica | https://giandjcosta.github.io/o-girrr-registro/ufficiale/ |
+| Archivio della prova 5.5 · pagine (Home, Notifiche, Tabellone, Campo, Albo, Curva) | https://giandjcosta.github.io/o-girrr-registro/anteprima/5.5/index.html |
+| Anteprima storica dell'app 5.5 · Lega / Stadio | https://giandjcosta.github.io/o-girrr-registro/anteprima/attuale.html · https://giandjcosta.github.io/o-girrr-registro/anteprima/index.html |
+| Archivio delle versioni uscite | https://giandjcosta.github.io/o-girrr-registro/archivio.html |
 | Stato del progetto (cosa è online, cosa è in prova) | [STATO.md](STATO.md) |
 | Collaudo automatico su telefono e PC, Chromium e WebKit (Safari) | https://github.com/giandjcosta/o-girrr-registro/actions/workflows/claude-collaudo-55.yml |
 
-Versione online sul sito vero: **5.3**. Versione in prova: **5.5**.
+Versione online sul sito vero: **5.8.1**. Anteprima corrente: copia in sola lettura della stessa versione; i prototipi restano nel Laboratorio. Allineamento automatico dopo le modifiche al Lab e controllo dei rilasci ogni 30 minuti (gli orari GitHub possono slittare).
 
 Per riprendere il lavoro in una chat nuova: "Leggi STATO.md nel repo o-girrr-registro e continuiamo da lì". In `STATO.md` c'è cosa è online, cosa è in prova e cosa resta da fare.
 
@@ -50,3 +50,5 @@ Per riprendere il lavoro in una chat nuova: "Leggi STATO.md nel repo o-girrr-reg
 3. Solo con il "vai" di Gianluca si fa il push sui rami `gh-pages` e `main` di o-fant-a-girrr.
 
 Ogni modifica destinata al sito, comprese le correzioni di testo, viene prima mostrata e provata nel Lab. Il sito vero aspetta la certificazione della prova e il "vai" esplicito di Gianluca.
+
+L’allineamento automatico è eseguito da `.github/workflows/sincronizza-registro.yml`: rigenera Anteprima, Archivio e Changelog dopo le modifiche al Lab e controlla il sito ogni 30 minuti. La versione e il commit sincronizzati sono in `registro-stato.json`. Le modifiche sperimentali non ancora unite a `main` restano sui rami degli autori.

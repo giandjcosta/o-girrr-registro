@@ -1,0 +1,35 @@
+name: ChatGPT - Registro Chromium WebKit Firefox
+on:
+  push:
+    paths: ['anteprima/**', 'prove/prova_registro_corrente.py', 'registro-stato.json', 'archivio.html', '.github/workflows/registro-browser-qa.yml']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        motore: [chromium, webkit, firefox]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: |
+          pip install playwright==1.62.0
+          python3 -m playwright install --with-deps ${{ matrix.motore }}
+      - name: Registro su 16 schermi, navigazione e blocco scritture
+        env:
+          MOTORI: ${{ matrix.motore }}
+          CHROMIUM_PATH: /browser-playwright
+        run: python3 prove/prova_registro_corrente.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: registro-${{ matrix.motore }}
+          path: qa_artifacts/registro-corrente/
