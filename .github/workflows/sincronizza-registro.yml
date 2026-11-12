@@ -10,9 +10,12 @@ on:
       - 'changelog.py'
       - '.github/workflows/sincronizza-registro.yml'
   schedule:
-    - cron: '17,47 * * * *'
+    # Controllo ogni 6 ore: si sincronizza solo se dall'ultima sincronizzazione
+    # sono passati 7 giorni, o se sul sito c'è una versione nuova (regola di Gianluca).
+    - cron: '23 */6 * * *'
   workflow_dispatch:
 permissions:
+  actions: read
   contents: write
   pages: write
   id-token: write
@@ -20,7 +23,41 @@ concurrency:
   group: sincronizza-registro
   cancel-in-progress: false
 jobs:
+  controlla:
+    # Claude: decide se serve sincronizzare (Gianluca, 12 novembre 2026: ogni 7 giorni dall'ultima sincronizzazione).
+    runs-on: ubuntu-latest
+    outputs:
+      serve: ${{ steps.decidi.outputs.serve }}
+    steps:
+      - id: decidi
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENTO: ${{ github.event_name }}
+          REPO: ${{ github.repository }}
+          RUN: ${{ github.run_id }}
+        run: |
+          if [ "$EVENTO" != "schedule" ]; then echo 'serve=true' >> "$GITHUB_OUTPUT"; exit 0; fi
+          # Versione nuova sul sito: si sincronizza subito.
+          sito=$(curl -fsSL https://raw.githubusercontent.com/giandjcosta/o-fant-a-girrr/gh-pages/versioni.json | jq -r '.versioni[0].v' || echo '')
+          reg=$(curl -fsSL "https://raw.githubusercontent.com/$REPO/main/registro-stato.json" | jq -r '.versione' || echo '')
+          if [ -n "$sito" ] && [ "$sito" != "$reg" ]; then
+            echo "Versione nuova sul sito: $sito (registro $reg)"; echo 'serve=true' >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          # Ultima sincronizzazione: l'ultima esecuzione in cui il passo «allinea» è riuscito.
+          ultima=''
+          for id in $(gh api "repos/$REPO/actions/workflows/sincronizza-registro.yml/runs?status=success&per_page=100" --jq '.workflow_runs[].id'); do
+            [ "$id" = "$RUN" ] && continue
+            fine=$(gh api "repos/$REPO/actions/runs/$id/jobs" --jq '.jobs[] | select(.name=="allinea" and .conclusion=="success") | .completed_at' | head -1)
+            if [ -n "$fine" ]; then ultima="$fine"; break; fi
+          done
+          if [ -z "$ultima" ]; then echo 'Nessuna sincronizzazione trovata'; echo 'serve=true' >> "$GITHUB_OUTPUT"; exit 0; fi
+          ore=$(( ( $(date -u +%s) - $(date -u -d "$ultima" +%s) ) / 3600 ))
+          echo "Ultima sincronizzazione: $ultima ($ore ore fa)"
+          # 7 giorni = 168 ore; 3 ore di margine per il controllo ogni 6 ore.
+          if [ "$ore" -ge 165 ]; then echo 'serve=true' >> "$GITHUB_OUTPUT"; else echo 'serve=false' >> "$GITHUB_OUTPUT"; fi
   allinea:
+    needs: controlla
+    if: needs.controlla.outputs.serve == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
