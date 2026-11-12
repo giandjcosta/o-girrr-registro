@@ -5,7 +5,7 @@
 //   (FIREFOX=eseguibile e FIREFOX_PROFILO=profilo con il certificato del proxy, nell'ambiente cloud; SOLO=Pixel per un solo schermo)
 // 16 schermi × pagine della 6.0 (Home, Curva, Video, Giornale, Tabellone di Lega e Stadio) e «Condividi la giornata».
 // Controlla: niente scorrimento di lato, nessun errore nuovo, stile della Curva per sistema, 7 video nella scheda Video,
-// pulsanti e pacchetto di «Condividi la giornata». Le scritture nel database sono bloccate (blocca_scritture.js).
+// pulsanti e pacchetto di «Condividi la giornata» (video, Radio, Tabelloni ufficiali di Campionato e Coppa, Giornale). Le scritture nel database sono bloccate (blocca_scritture.js).
 const pw = require('playwright'), { devices } = pw, fs = require('fs');
 const { script: BLOCCA } = require('./blocca_scritture');
 const MOTORE = process.env.MOTORE || 'chromium', D = process.argv[2];
@@ -65,10 +65,12 @@ async function contesto(opz) {
       if (/Home/.test(pn)) {
         await p.locator('#big .cd-gio').scrollIntoViewIfNeeded(); await p.locator('#big .cd-gio').click();
         await p.waitForSelector('.cd-pk', { timeout: 25000 }).catch(() => {});
-        await p.waitForTimeout(700);
+        // la finestra sale con una transizione: si misura quando è ferma (in WebKit può partire più tardi)
+        await p.waitForFunction(() => { const b = document.querySelector('.cd-box'); return b && getComputedStyle(b).transform === 'none'; }, null, { timeout: 5000 }).catch(() => {});
+        await p.waitForTimeout(400);
         const k = await p.evaluate(() => ({ n: document.querySelectorAll('.cd-pz').length, lato: document.documentElement.scrollWidth > innerWidth + 1, box: (document.querySelector('.cd-box') || {}).scrollWidth > (document.querySelector('.cd-box') || {}).clientWidth + 1,
           az: (() => { const a = document.querySelector('.cd-az.fis'); if (!a) return false; const b = a.getBoundingClientRect(); return b.bottom <= innerHeight + 1 && b.top >= 0; })() }));
-        if (k.n !== 7) probl.push(pn + ': Condividi la giornata con ' + k.n + ' pezzi invece di 7');
+        if (k.n !== 5) probl.push(pn + ': Condividi la giornata con ' + k.n + ' pezzi invece di 5');
         if (k.lato || k.box) probl.push(pn + ': Condividi la giornata scorre di lato');
         if (!k.az) probl.push(pn + ': pulsanti di Condividi la giornata fuori dallo schermo');
         if (D && /PC 1920|Smart TV|iPhone 15 Pro$|Pixel 7/.test(sn) && MOTORE === 'chromium') await p.screenshot({ path: D + '/condividi-' + nome(sn) + '-' + nome(pn) + '.png' });
