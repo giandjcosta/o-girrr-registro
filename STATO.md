@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (7) — Claude: lampo breve sul coro del link, suono spento di partenza fuori da iPhone, promemoria della formazione sospeso (Lab)
+
+- **Link al coro (Gianluca: «nessun riquadro rosso o giallo, al massimo una brevissima animazione»):** la Curva arriva al coro e fa un lampo grigio leggero di circa mezzo secondo, poi niente (con «riduci movimento» nemmeno quello).
+- **Suono (Gianluca: «su qualsiasi dispositivo il suono deve tacere col silenzioso»):** una pagina web può farlo solo su iPhone e iPad (sessione audio «ambient»); su Android e sul computer non c'è modo di sapere se il telefono è in silenzioso. Quindi di partenza il suono è acceso solo su iPhone e iPad, spento altrove (si accende in Impostazioni, con la spiegazione).
+- **Promemoria della formazione: sospeso.** Il sito non sa chi ha schierato: `formazioni.json` ha solo le giornate già giocate e nessun workflow si collega a Leghe Fantacalcio. Il «vai» di Gianluca era legato a questa domanda: database non toccato, alternative proposte in chat.
+- **Anteprima per WhatsApp:** immagine fissa, frasi senza giornata (non invecchiano).
+- **Prove:** `prove/prova_curva_ferma.js` (in più: suono di partenza, lampo che sparisce) 8 schermi × 2 Curve tutto a posto.
+
 ## 12 novembre (6) — Claude: Impostazioni della Curva (Aspetto e Suoni), Condividi con la foto, anteprima per WhatsApp (Lab)
 
 - **Richieste (Gianluca):** tema scuro automatico, ma ognuno sceglie Automatico, Scuro o Chiaro in Curva; un suono all'applauso «se non sei in silenzioso», niente vibrazione; anteprima con l'immagine quando mandi il link su WhatsApp; Condividi di un coro con immagine che manda anche l'immagine.

@@ -752,9 +752,9 @@ window.addEventListener('resize',function(){var b=document.getElementById('cv-nu
  '.cv-nuovi{position:fixed;z-index:25;display:flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:7px 15px 7px 10px;background:var(--blu);color:#fff;font:700 14px Inter,system-ui,sans-serif;box-shadow:0 6px 18px rgba(0,0,0,.25);cursor:pointer;opacity:0;pointer-events:none;transform:translate(-50%,-14px) scale(.92);transition:opacity .25s ease,transform .35s cubic-bezier(.2,.9,.3,1.2);-webkit-tap-highlight-color:transparent}'+
  '.cv-nuovi.on{opacity:1;pointer-events:auto;transform:translate(-50%,0)}.cv-nuovi svg{width:16px;height:16px;flex:none}'+
  '.cvn-avs{display:flex}.cvn-avs .av{width:22px!important;height:22px!important;min-width:0!important;font-size:9px!important;border:2px solid currentColor;margin:0 0 0 -7px!important;flex:none}.cvn-avs .av:first-child{margin-left:0!important}'+
- '.post{transition:background-color 1.4s ease}.post.cv-evidenza{background-color:color-mix(in srgb,var(--blu) 16%,transparent);transition:none}'+
+ '.post{transition:background-color .6s ease}.post.cv-evidenza{background-color:color-mix(in srgb,var(--tx) 7%,transparent);transition-duration:.15s}'+   /* lampo grigio brevissimo, nessun riquadro colorato */
  '@media (prefers-reduced-motion:reduce){.cv-nuovi{transition:opacity .2s}}';document.head.appendChild(s)})();
-/* Link a ogni coro (Claude, 12 novembre 2026): curva.html?coro=CHIAVE apre la Curva su quel coro e lo evidenzia */
+/* Link a ogni coro (Claude, 12 novembre 2026): curva.html?coro=CHIAVE apre la Curva su quel coro; un lampo grigio di mezzo secondo fa capire quale */
 function cvLink(k){return location.origin+location.pathname+'?coro='+encodeURIComponent(k)}
 (function(){var k=null;try{k=new URLSearchParams(location.search).get('coro')}catch(e){}if(!k)return;var n=0,t=setInterval(function(){
  if(++n>80){clearInterval(t);return}
@@ -764,12 +764,15 @@ function cvLink(k){return location.origin+location.pathname+'?coro='+encodeURICo
  if(i<0){toast('Questo coro non c\'è più');return}
  vista='home';filt='tutti';FEED_SHOW=Math.max(FEED_SHOW,i+5);open[k]=true;render();
  var e=document.querySelector('#vista article.post[data-k="'+(window.CSS&&CSS.escape?CSS.escape(k):k)+'"]');
- if(e){e.scrollIntoView({block:'center'});e.classList.add('cv-evidenza');setTimeout(function(){e.classList.remove('cv-evidenza')},1800)}},300)})();
+ if(e){e.scrollIntoView({block:'center'});if(!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)){e.classList.add('cv-evidenza');setTimeout(function(){e.classList.remove('cv-evidenza')},350)}}},300)})();
 /* Impostazioni della Curva (Claude, 12 novembre 2026): il pulsante della luna apre un foglio con
    Aspetto (Automatico, Chiaro, Scuro: Automatico segue il telefono e cambia da solo) e Suoni (applauso con suono). */
 function cvAspettoT(v){return v==='auto'?(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):v}
 function cvAspetto(v){window.__cvAspetto=v;try{localStorage.setItem('cv-aspetto',v)}catch(e){}tema(cvAspettoT(v));render()}
-function cvSuonoOn(){try{return localStorage.getItem('cv-suoni')!=='0'}catch(e){return true}}
+/* Di partenza il suono è acceso solo su iPhone e iPad, dove tace con il silenzioso; su Android e sul computer una pagina web
+   non può sapere se il telefono è in silenzioso, quindi parte spento e si accende a mano. */
+function cvIos(){var u=navigator.userAgent||'';return /iPhone|iPad|iPod/.test(u)||(/Macintosh/.test(u)&&navigator.maxTouchPoints>1)}
+function cvSuonoOn(){var v=null;try{v=localStorage.getItem('cv-suoni')}catch(e){}return v===null?cvIos():v==='1'}
 function cvSuonoSalva(v){try{localStorage.setItem('cv-suoni',v?'1':'0')}catch(e){}}
 /* Suono dell'applauso: due note brevi fatte dal browser (nessun file). Su iPhone tace con il silenzioso (sessione audio «ambient»);
    su Android segue il volume dei contenuti multimediali. */
@@ -783,7 +786,7 @@ function cvImpostazioni(){if(document.getElementById('cv-imp')){cvChiudiImp();re
  var a=window.__cvAspetto||'auto',s=cvSuonoOn(),o=document.createElement('div');o.id='cv-imp';o.className='cv-imp';
  o.innerHTML='<div class="cv-imp-f"></div><div class="cv-imp-p" role="dialog" aria-modal="true" aria-label="Impostazioni della Curva"><i class="cv-imp-m" aria-hidden="true"></i><b>Aspetto</b><div class="cv-imp-seg">'+
   [['auto','Automatico'],['light','Chiaro'],['dark','Scuro']].map(function(x){return '<button type="button" data-asp="'+x[0]+'" aria-pressed="'+(a===x[0])+'">'+x[1]+'</button>'}).join('')+
-  '</div><small>Automatico segue il telefono: scuro quando lo è il telefono, anche la sera.</small><b>Suoni</b><div class="cv-imp-seg"><button type="button" data-suono="1" aria-pressed="'+s+'">Sì</button><button type="button" data-suono="0" aria-pressed="'+(!s)+'">No</button></div><small>Un suono breve quando metti un applauso. Su iPhone tace con il silenzioso.</small><button type="button" class="cv-imp-ok">Fatto</button></div>';
+  '</div><small>Automatico segue il telefono: scuro quando lo è il telefono, anche la sera.</small><b>Suoni</b><div class="cv-imp-seg"><button type="button" data-suono="1" aria-pressed="'+s+'">Sì</button><button type="button" data-suono="0" aria-pressed="'+(!s)+'">No</button></div><small>'+(cvIos()?'Un suono breve quando metti un applauso. Tace quando l\'iPhone è in silenzioso.':'Un suono breve quando metti un applauso. Il sito non può sapere se il telefono è in silenzioso: per questo parte spento, e segue il volume dei contenuti.')+'</small><button type="button" class="cv-imp-ok">Fatto</button></div>';
  document.body.appendChild(o);void o.offsetWidth;o.classList.add('on');
  o.addEventListener('click',function(e){if(e.target.classList.contains('cv-imp-f')||e.target.classList.contains('cv-imp-ok')){cvChiudiImp();return}var b=e.target.closest('button');if(!b)return;
   if(b.dataset.asp)cvAspetto(b.dataset.asp);else if(b.dataset.suono){cvSuonoSalva(b.dataset.suono==='1');if(b.dataset.suono==='1')cvSuono()}else return;

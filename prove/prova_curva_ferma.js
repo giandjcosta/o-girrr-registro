@@ -89,6 +89,9 @@ const SCRIVE = /salva|scrivi|lancia|rispondi|vota|reagisci|registra|segui|push_|
         await p.emulateMedia({ colorScheme: 'light' }); await p.waitForTimeout(300);
         th = await tema(); if (th[0] !== 'light') pr.push(pn + ': Automatico con il telefono chiaro ' + th);
         const haAudio = await p.evaluate(() => !!(window.AudioContext || window.webkitAudioContext));
+        const suonoAcceso = await p.evaluate(() => document.querySelector('[data-suono="1"]').getAttribute('aria-pressed') === 'true');
+        // nello Stadio vale la scelta fatta nella Lega, quindi il valore di partenza si controlla solo nella prima pagina
+        if (pn === 'Lega' && suonoAcceso !== (motore === 'WebKit' || /iPhone|iPad/.test(sn))) pr.push(pn + ': suono di partenza ' + (suonoAcceso ? 'acceso' : 'spento') + ' (acceso solo su iPhone e iPad)');
         const o0 = await p.evaluate(() => window.__osc); await p.click('[data-suono="1"]'); await p.waitForTimeout(150);
         if (haAudio && !(await p.evaluate((o0) => window.__osc > o0, o0))) pr.push(pn + ': il suono di prova non parte');
         await p.click('.cv-imp-ok'); await p.waitForTimeout(500);
@@ -167,6 +170,8 @@ const SCRIVE = /salva|scrivi|lancia|rispondi|vota|reagisci|registra|segui|push_|
         await p.waitForTimeout(3500);
         const lk = await p.evaluate((kl) => { const e = document.querySelector('#vista article.post[data-k="' + CSS.escape(kl) + '"]'); if (!e) return { trovato: false, url: location.search }; const r = e.getBoundingClientRect(); return { trovato: true, inVista: r.top < innerHeight && r.bottom > 0, url: location.search }; }, kl);
         if (!lk.trovato || !lk.inVista || /coro=/.test(lk.url)) pr.push(pn + ': link al coro ' + JSON.stringify(lk));
+        await p.waitForTimeout(1200);
+        if (await p.evaluate(() => !!document.querySelector('.cv-evidenza'))) pr.push(pn + ': il lampo sul coro non sparisce');
         await p.waitForLoadState('networkidle').catch(() => {});   // WebKit segnala come errore le richieste interrotte cambiando pagina
       } catch (e) { pr.push(pn + ': ' + e.message.split('\n')[0].slice(0, 100)); }
     }
