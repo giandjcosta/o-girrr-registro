@@ -1200,7 +1200,7 @@ var PERS_N={
   pm:["{sq}. Mah."],
   so:["Questa non me l'aspettavo."]},
  pizzeria_fuorigioco:{
-  gen:["Stasera la Pizza Capolista è dedicata a {top}. Mozzarella, pomodoro e un po' di invidia. {#}","Da noi il forno è sempre caldo, come il gruppo della lega la domenica sera.","Prenotate il tavolo per la prossima giornata: il dolce lo offre la casa a chi vince."],
+  gen:["Stasera la Pizza Capolista è dedicata a {top}. Mozzarella, pomodoro e un po' di invidia. {#}","Da noi il forno è sempre caldo, come il gruppo della lega la domenica sera.","Prenotate il tavolo per la prossima giornata: chi perde paga il dolce."],
   ri:["{vinc} vince {sc}: pizza Margherita offerta dallo chef (al vincitore, non al gruppo).","{perd} perde {sc}. Consolatevi con una diavola: piccante come la sconfitta.","{sc} per {vinc}. Festeggiamo con una calzone, chiusa come la sua difesa."],
   cl:["Nuova pizza della settimana: la «{top}», in cima alla classifica e al menù.","{sq} al {pos}° posto? Abbiamo la pizza giusta: la Quattro Stagioni, per ricominciare."],
   pm:["{sq} oggi: tanta farina, poco lievito."],

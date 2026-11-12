@@ -1,5 +1,11 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (9) — Claude: correzioni dopo la revisione di Gianluca (Lab)
+
+- **Promemoria della formazione: scartato** (Gianluca: «lasciamolo fuori»), tolto da `proposte/idee-da-fare.md`.
+- **Pizzeria Fuorigioco:** rimessa la frase «chi perde paga il dolce» (Gianluca: «lo puoi lasciare»).
+- **Monitor del VAR:** «Atletico ma non troppo» usciva dal monitor; ora i nomi hanno una larghezza massima e restano dentro, su tutti e due i lati (provato con il nome più lungo a destra e a sinistra). L'aggancio di prova `__curvaProva.img(tipo, partita)` disegna anche una partita scelta.
+
 ## 12 novembre (8) — Claude: nuovi personaggi della Curva, prove con Firefox e Samsung Internet, reazioni, colori della squadra, video delle 4 strade (Lab)
 
 - **Decisioni di Gianluca:** i 12 account proposti più Pizzeria Fuorigioco (non verificata), Radio Girrr e Il VAR del Girrr verificati; più frasi per ogni personaggio, anche provocatorie; immagini disegnate dalla pagina con dati veri, lavagna del bar e altre foto d'epoca; reazioni con il cuore per primo e le altre tenendo premuto, tutte nello stesso stile; anteprima dei colori della squadra; prove con Firefox e Samsung Internet; anteprima video delle 4 strade, senza voce (i soldi della voce sono per la Radio); niente VoiceOver per ora.
