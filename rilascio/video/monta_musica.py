@@ -90,7 +90,8 @@ def scaletta(S, folla=False):
         if k == 'introCoppa':
             E.append(('logo-coppa', ini[k] + 0.4))   # quando il logo della Coppa atterra, sopra la salita di «Victory»
     for k, n in (('lega', S.get('m', 5)), ('coppa', S.get('mc', 4))):
-        E += [('pop', ini[k] + (14 + 9 * i + 3) / fps) for i in range(n)]
+        if k in ini:   # nella 1ª giornata la Champions Cup non c'è ancora
+            E += [('pop', ini[k] + (14 + 9 * i + 3) / fps) for i in range(n)]
     E += [('podio', ini['podio'] + 1.45)] + ([('folla-podio', ini['podio'] + 1.47)] if folla else [])   # la salita finisce quando l'1° è in cima; niente folla che esulta (Gianluca, 12 novembre)
     ncl = S.get('cl', 10)
     E += [('cascata', ini['classifica'] + 8 / fps), ('ultimo', ini['classifica'] + (8 + 3 * (ncl - 1) + 4) / fps)]

@@ -16,8 +16,8 @@ self.GIRRR_SPECCHIO = (function () {
     'stadio/girrr/versioni.html': new URL('../../rilascio/versioni/pagine/stadio/girrr/versioni.html', self.location.href).href,
     'condividi.js': new URL('../../rilascio/condividi/condividi.js', self.location.href).href, /* Condividi come immagine */
     'stagione.js': new URL('../../rilascio/stagione/stagione.js', self.location.href).href, /* Carriera · La mia stagione */
-    'girrr/app.html': new URL('../../rilascio/carriera/pagine/girrr/app.html', self.location.href).href, /* app.html del sito (5.8.1) con il numero della fiducia a cartellini e le schede centrate (rilascio/carriera/applica.py) */
-    'stadio/girrr/app.html': new URL('../../rilascio/carriera/pagine/stadio/girrr/app.html', self.location.href).href,
+    'girrr/app.html': new URL('../../rilascio/video/pagine/girrr/app.html', self.location.href).href, /* app.html del sito (5.8.2, con la Carriera a cartellini) e la scheda Video di Girrr Sport (rilascio/video/scheda/applica.py --lab) */
+    'stadio/girrr/app.html': new URL('../../rilascio/video/pagine/stadio/girrr/app.html', self.location.href).href,
     'girrr/dati/redazione.json': new URL('../redazione/redazione.json', self.location.href).href, /* scritto da Claude e controllato da redazione/controlla.py */
     'conferenze.js': new URL('../../rilascio/conferenze/conferenze.js', self.location.href).href,
     'tv.js': new URL('../../rilascio/conferenze/tv.js', self.location.href).href, /* testo più grande solo sulla TV (?tv per provarlo dal PC) */

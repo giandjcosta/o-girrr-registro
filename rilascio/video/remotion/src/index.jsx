@@ -108,7 +108,7 @@ const Tendina = ({ t }) => { const f = useCurrentFrame(), x = interpolate(f, [0,
   return <AbsoluteFill style={{ transform: `translateX(${x}%) skewX(-12deg)`, background: `linear-gradient(90deg,${TEMA[t].acc} 0 70%,${ORO} 70% 78%,transparent 78%)` }} />; };
 
 const SC = [['introLega', 75], ['lega', 165], ['podio', 120], ['classifica', 160], ['introCoppa', 70], ['coppa', 150], ['gironi', 135], ['prossime', 140], ['fine', 80]];
-const inizi = (p) => { let da = 0; return SC.filter(([k]) => k !== 'prossime' || p.big || p.bigC).map(([k, d]) => { const s = da; da += d; return [k, s, d]; }); };
+const inizi = (p) => { let da = 0; return SC.filter(([k]) => (k !== 'prossime' || p.big || p.bigC) && (COPPA.indexOf(k) < 0 || (p.mc && p.mc.length))).map(([k, d]) => { const s = da; da += d; return [k, s, d]; }); };
 const durata = (p) => inizi(p).reduce((t, x) => t + x[2], 0);
 const COPPA = ['introCoppa', 'coppa', 'gironi'];
 const Video = (p) => { const INIZI = inizi(p); return <AbsoluteFill style={{ background: '#1d2a52' }}><Caratteri />

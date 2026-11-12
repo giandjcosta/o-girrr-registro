@@ -5,7 +5,7 @@ import fs from 'fs';
 const SITO = process.env.SITO || '/tmp/claude-0/srv/o-fant-a-girrr/';
 const CHIAVE = 'sb_publishable_qPhimkrF4iUvIad7JPoH8A_i-eOqG7n';   /* chiave pubblica delle pagine, solo lettura */
 const D = JSON.parse(fs.readFileSync(SITO + 'data.json', 'utf8'));
-const L = D.cal.lega, gi = L.filter(x => x.m.every(m => m[4] && m[4] !== '-')), n = gi[gi.length - 1].n, g = L.find(x => x.n === n), dopo = L.find(x => x.n === n + 1);
+const L = D.cal.lega, gi = L.filter(x => x.m.every(m => m[4] && m[4] !== '-')), n = process.env.GIORNATA ? +process.env.GIORNATA : gi[gi.length - 1].n, g = L.find(x => x.n === n), dopo = L.find(x => x.n === n + 1);
 const T = {}; gi.filter(x => x.n <= n).forEach(x => x.m.forEach(m => { const r = m[4].split('-').map(Number); [[m[0], r[0], r[1], m[1]], [m[3], r[1], r[0], m[2]]].forEach(([s, a, b, fp]) => { const t = T[s] = T[s] || { n: s, pt: 0, fp: 0 }; t.fp += fp; t.pt += a > b ? 3 : a === b ? 1 : 0; }); }));
 const C = Object.values(T).sort((a, b) => b.pt - a.pt || b.fp - a.fp);
 
@@ -43,11 +43,11 @@ const scegli = (partite, ST) => { const P = ST[ST.length - 1], el = [];
 const STL = storia(gi.filter(x => x.n <= n), m => [m[0], m[1], m[2], m[3], m[4]], () => 'L');
 const bmS = dopo ? scegli(dopo.m.map(m => [m[0], m[3]]), STL) : null;
 // Champions Cup: l'ultima giornata giocata fino allo stesso turno di Serie A (righe: girone, A, fantapunti A, fantapunti B, B, risultato)
-const CU = D.cal.cup, cg = CU.filter(x => x.m.every(m => m[5] && m[5] !== '-') && x.sa <= g.sa), nc = cg[cg.length - 1].n, gc = cg[cg.length - 1];
+const CU = D.cal.cup, cg = CU.filter(x => x.m.every(m => m[5] && m[5] !== '-') && x.sa <= g.sa), nc = cg.length ? cg[cg.length - 1].n : 0, gc = cg[cg.length - 1] || null;   /* prima giornata: la Champions Cup non è ancora cominciata */
 const TC = {}; cg.forEach(x => { x.m.forEach(m => { const r = m[5].split('-').map(Number); [[m[1], r[0], r[1], m[2]], [m[4], r[1], r[0], m[3]]].forEach(([s, a, b, fp]) => { const t = TC[s] = TC[s] || { n: s, g: m[0], pt: 0, fp: 0 }; t.fp += fp; t.pt += a > b ? 3 : a === b ? 1 : 0; }); }); (x.rest || []).forEach(([gr, s]) => { TC[s] = TC[s] || { n: s, g: gr, pt: 0, fp: 0 }; }); });
 const gir = {}; Object.values(TC).sort((a, b) => b.pt - a.pt || b.fp - a.fp).forEach(t => { (gir[t.g] = gir[t.g] || []).push({ n: t.n, pt: t.pt }); });
-const prossC = CU.find(x => x.n === nc + 1), bcS = prossC ? scegli(prossC.m.map(m => [m[1], m[4]]), storia(cg, m => [m[1], m[2], m[3], m[4], m[5]], m => m[0])) : null;
-const props = { cl: C.map(t => ({ n: t.n, pt: t.pt })), nc2: prossC ? prossC.n : null, bigC: bcS,  n, nc, m: g.m.map(m => ({ a: m[0], b: m[3], sc: m[4] })), mc: gc.m.map(m => ({ g: m[0], a: m[1], b: m[4], sc: m[5] })), c: C.slice(0, 3).map(t => ({ n: t.n, pt: t.pt })), gir, big: bmS };
+const prossC = CU.find(x => x.n === nc + 1), bcS = prossC && cg.length ? scegli(prossC.m.map(m => [m[1], m[4]]), storia(cg, m => [m[1], m[2], m[3], m[4], m[5]], m => m[0])) : null;
+const props = { cl: C.map(t => ({ n: t.n, pt: t.pt })), nc2: prossC ? prossC.n : null, bigC: bcS,  n, nc, m: g.m.map(m => ({ a: m[0], b: m[3], sc: m[4] })), mc: !gc ? [] : gc.m.map(m => ({ g: m[0], a: m[1], b: m[4], sc: m[5] })), c: C.slice(0, 3).map(t => ({ n: t.n, pt: t.pt })), gir, big: bmS };
 fs.mkdirSync('public', { recursive: true }); const LG = SITO + 'assets/loghi/';
 [['logo-lega-o-fant-a-girrr.png', 'logo-lega.png'], ['logo-cup-champions-cup.png', 'logo-coppa.png'], ['logo-tv-girrr-sport-live.png', 'tv-lega.png'], ['logo-tv-cup-girrr-live.png', 'tv-coppa.png']].forEach(([a, b]) => fs.copyFileSync(LG + a, 'public/' + b));
 const browserExecutable = process.argv[2];
@@ -55,6 +55,6 @@ const serveUrl = await bundle({ entryPoint: './src/index.jsx', publicDir: './pub
 const composition = await selectComposition({ serveUrl, id: 'Giornata', inputProps: props, browserExecutable });
 await renderMedia({ composition, serveUrl, codec: 'h264', outputLocation: process.env.USCITA || '/home/user/o-girrr-registro/lab/video-giornata/strada-b-remotion.mp4', inputProps: props, browserExecutable, crf: 22 });
 // tempi delle scene per la musica (rilascio/video/musica.py): stessa scaletta di src/index.jsx
-const SCENE = eval(/const SC = (\[.*?\]);/s.exec(fs.readFileSync('./src/index.jsx', 'utf8'))[1]).filter(([k]) => k !== 'prossime' || props.big || props.bigC);
+const SCENE = eval(/const SC = (\[.*?\]);/s.exec(fs.readFileSync('./src/index.jsx', 'utf8'))[1]).filter(([k]) => (k !== 'prossime' || props.big || props.bigC) && (['introCoppa', 'coppa', 'gironi'].indexOf(k) < 0 || props.mc.length));
 fs.writeFileSync('scene.json', JSON.stringify({ fps: 30, scene: SCENE, m: props.m.length, mc: props.mc.length, cl: props.cl.length, derby: !!((props.big && props.big.k === 'derby') || (props.bigC && props.bigC.k === 'derby')) }));   /* per gli effetti di monta_musica.py */
 console.log('fatto', JSON.stringify({ big: props.big, bigC: props.bigC }));
