@@ -61,8 +61,8 @@ html[data-os=ios] .tabs button:active::before{transform:scale(1.08);filter:brigh
 html[data-os=ios][data-cambio-tabs] .tabs button.on::before{
   animation:os-ios-scivola-tabs var(--ios-scattante-durata) var(--ios-scattante) both,os-ios-goccia .5s ease-out both}
 
-/* --- Contenuto: al cambio di scheda scivola appena dalla parte giusta e si schiarisce --- */
-html[data-os=ios][data-cambio-tabs] #vista{animation:os-ios-laterale var(--ios-morbida-durata) var(--ios-morbida) both}
+/* --- Contenuto: al cambio di scheda scivolano dalla parte giusta solo i cori (il riquadro della squadra e il campo per scrivere restano fermi) --- */
+html[data-os=ios][data-cambio-tabs] #vista>:is(article.post,.vuoto){animation:os-ios-laterale var(--ios-morbida-durata) var(--ios-morbida) both}
 html[data-os=ios][data-cambio-nav] #vista,html[data-os=ios][data-os-avvio] #vista{animation:os-ios-appare var(--ios-morbida-durata) var(--ios-morbida) both}
 
 /* --- Cori nuovi (dopo una ricarica o all'apertura): salgono e si mettono a fuoco --- */
@@ -157,7 +157,7 @@ html[data-os=android] .tabs button.on:after{width:auto!important;left:20%;right:
 html[data-os=android][data-cambio-tabs] .tabs button.on:after{animation:os-and-scivola var(--m3-spaziale-veloce-durata) var(--m3-spaziale-veloce) both}
 
 /* --- Contenuto: «asse condiviso» tra le schede (scorre dalla parte giusta), «dissolvenza attraverso» tra le sezioni --- */
-html[data-os=android][data-cambio-tabs] #vista{animation:os-and-asse var(--m3-spaziale-durata) var(--m3-spaziale) both,os-and-dissolvi var(--m3-effetti-durata) var(--m3-effetti) both}
+html[data-os=android][data-cambio-tabs] #vista>:is(article.post,.vuoto){animation:os-and-asse var(--m3-spaziale-durata) var(--m3-spaziale) both,os-and-dissolvi var(--m3-effetti-durata) var(--m3-effetti) both}
 html[data-os=android][data-cambio-nav] #vista,html[data-os=android][data-os-avvio] #vista{animation:os-and-attraverso var(--m3-spaziale-durata) var(--m3-spaziale) both,os-and-dissolvi var(--m3-effetti-durata) var(--m3-effetti) both}
 
 /* --- Cori nuovi: salgono uno dopo l'altro, con il rimbalzo --- */
@@ -234,7 +234,7 @@ html[data-os=android] .lb .lbx{transition-timing-function:var(--m3-spaziale)!imp
    «Riduci movimento»: niente animazioni nuove, in tutti e due gli stili
    ===================================================================== */
 @media (prefers-reduced-motion:reduce){
-  html[data-os] #vista,html[data-os] .post,html[data-os] .nav,html[data-os] .nav button svg,html[data-os] .nav button::before,
+  html[data-os] #vista,html[data-os] #vista>.vuoto,html[data-os] .post,html[data-os] .nav,html[data-os] .nav button svg,html[data-os] .nav button::before,
   html[data-os] .tabs button::before,html[data-os] .tabs button.on:after,html[data-os] .acts .app.on svg,html[data-os] .toast{animation:none!important}
   html[data-os] .ptrb.sp::before,html[data-os] .ptrb.sp::after{animation-duration:2s!important}
   html[data-os] .nav,html[data-os] .tabs button::before,html[data-os] .nav button::before{transition:none!important}

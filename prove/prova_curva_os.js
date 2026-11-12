@@ -4,9 +4,10 @@
 //   cambio di scheda (indicatore che scivola, contenuto), cambio di sezione (barra in basso, contenuto), niente all'apertura dopo l'avvio,
 //   ricarica (rotellina di iOS o forma di Android), onda al tocco su Android, barra che si rimpicciolisce scorrendo su iPhone.
 // Uso: servire la cartella che contiene o-girrr-registro e una copia di gh-pages come o-fant-a-girrr su http://localhost:8771/, poi
-//   node prove/prova_curva_os.js [CARTELLA_FOTO]      (SOLO=Pixel per provare solo gli schermi con quel nome)
+//   WEBKIT=/percorso/di/pw_run.sh node prove/prova_curva_os.js [CARTELLA_FOTO]      (SOLO=Pixel per provare solo gli schermi con quel nome)
 // Il database si legge soltanto: le funzioni che scrivono sono intercettate.
-const { chromium, devices } = require('playwright');
+const { chromium, webkit, devices } = require('playwright');
+const WK = process.env.WEBKIT;   // percorso di pw_run.sh di WebKit: iPhone e iPad si provano con il motore di Safari
 const L = 'http://localhost:8771/o-girrr-registro/lab/offline/';
 const D = process.argv[2];
 const TV = 'Mozilla/5.0 (SMART-TV; Linux; Tizen 7.0) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/5.0 Chrome/94.0 TV Safari/537.36';
@@ -21,10 +22,12 @@ const SCRIVE = /salva|scrivi|lancia|rispondi|vota|reagisci|registra|segui|push_|
 // Nome dell'animazione in corso su un elemento (o sul suo ::before / ::after)
 const ANIM = (sel, ps) => { const e = document.querySelector(sel); return e ? getComputedStyle(e, ps || null).animationName : '-'; };
 (async () => {
-  const b = await chromium.launch(); let ko = 0;
+  const b = await chromium.launch(), bw = WK ? await webkit.launch({ executablePath: WK }) : null; let ko = 0;
+  if (!bw) console.log('Attenzione: WebKit non indicato, iPhone e iPad si provano con Chromium');
   for (const [sn, att, o] of SCH) {
     if (process.env.SOLO && !sn.includes(process.env.SOLO)) continue;
-    const c = await b.newContext(o);
+    const motore = att === 'ios' && bw ? 'WebKit' : 'Chromium';
+    const c = await (motore === 'WebKit' ? bw : b).newContext(o);
     await c.route('**/rest/v1/rpc/**', async r => { const n = r.request().url().split('/rpc/')[1].split('?')[0]; if (SCRIVE.test(n) && !/_(stato|pubblico|lista)$/.test(n)) return r.fulfill({ json: null }); return r.continue(); });
     const p = await c.newPage(); const errs = [];
     p.on('pageerror', e => errs.push(e.message.slice(0, 90)));
@@ -44,8 +47,8 @@ const ANIM = (sel, ps) => { const e = document.querySelector(sel); return e ? ge
         await tb[2].click(); await p.waitForTimeout(40);
         for (const ms of [0, 120]) { await p.waitForTimeout(ms); const z = await p.evaluate(() => [document.documentElement.scrollWidth, innerWidth, innerHeight]); if (z[0] > z[1] + 1 || z[1] !== o.viewport.width) { pr.push(pn + ': durante il cambio di scheda la pagina si allarga ' + JSON.stringify(z)); break; } }
         const a = await p.evaluate(([f]) => { const os = document.documentElement.dataset.os, F = new Function('return ' + f)();
-          return { c: document.documentElement.hasAttribute('data-cambio-tabs'), ind: F('.tabs .on', os === 'ios' ? '::before' : '::after'), vista: F('#vista'), dx: getComputedStyle(document.documentElement).getPropertyValue('--os-tabs-dx'), dir: getComputedStyle(document.documentElement).getPropertyValue('--os-dir') }; }, [ANIM.toString()]);
-        if (mob && (!a.c || !/scivola/.test(a.ind) || !/laterale|asse/.test(a.vista) || !parseFloat(a.dx) || a.dir.trim() !== '1')) pr.push(pn + ': cambio di scheda ' + JSON.stringify(a));
+          return { c: document.documentElement.hasAttribute('data-cambio-tabs'), ind: F('.tabs .on', os === 'ios' ? '::before' : '::after'), vista: F('#vista>article.post') + '/' + F('#vista>.vuoto'), fermo: F('#vista>.mine') + F('#vista>.comp'), dx: getComputedStyle(document.documentElement).getPropertyValue('--os-tabs-dx'), dir: getComputedStyle(document.documentElement).getPropertyValue('--os-dir') }; }, [ANIM.toString()]);
+        if (mob && (!a.c || !/scivola/.test(a.ind) || !/laterale|asse/.test(a.vista) || /laterale|asse|appare|attraverso/.test(a.fermo) || !parseFloat(a.dx) || a.dir.trim() !== '1')) pr.push(pn + ': cambio di scheda ' + JSON.stringify(a));
         if (!mob && a.c) pr.push(pn + ': animazioni nuove anche sul PC');
         await p.waitForTimeout(900);
         // Applauso simulato: la Curva ridisegna senza cambiare scheda → niente animazione dell'indicatore
@@ -64,7 +67,7 @@ const ANIM = (sel, ps) => { const e = document.querySelector(sel); return e ? ge
       if (att === 'ios' && rc.sp && rc.an !== 'os-ios-raggi') pr.push(pn + ': rotellina di iOS ' + JSON.stringify(rc));
       if (att === 'android' && rc.sp && rc.an !== 'os-and-forma') pr.push(pn + ': forma di Android ' + JSON.stringify(rc));
       if (att === 'altro' && rc.sp && rc.svg !== 'giro') pr.push(pn + ': ricarica del PC cambiata ' + JSON.stringify(rc));
-      await p.waitForSelector('.ptrb:not(.sp)', { timeout: 15000 }).catch(() => pr.push(pn + ': la ricarica non finisce'));
+      await p.waitForSelector('.ptrb:not(.sp)', { state: 'attached', timeout: 15000 }).catch(() => pr.push(pn + ': la ricarica non finisce'));
       await p.waitForTimeout(300);
 
       // Onda al tocco (solo Android)
@@ -89,19 +92,19 @@ const ANIM = (sel, ps) => { const e = document.querySelector(sel); return e ? ge
         await p.click('#nav button[data-v=home]'); await p.waitForTimeout(900);
         // iPhone: scorrendo in giù la barra si rimpicciolisce, risalendo torna grande
         if (att === 'ios') {
-          await p.mouse.wheel(0, 900); await p.waitForTimeout(500);
+          await p.evaluate(() => scrollBy(0, 900)); await p.waitForTimeout(500);
           const giu = await p.evaluate(() => [document.documentElement.hasAttribute('data-giu'), getComputedStyle(document.querySelector('.nav')).scale]);
-          await p.mouse.wheel(0, -300); await p.waitForTimeout(500);
+          await p.evaluate(() => scrollBy(0, -300)); await p.waitForTimeout(500);
           const su = await p.evaluate(() => document.documentElement.hasAttribute('data-giu'));
           if (!giu[0] || giu[1] === 'none' || su) pr.push(pn + ': barra che si rimpicciolisce ' + JSON.stringify([giu, su]));
-          if (D && sn === 'iPhone 15 Pro' && pn === 'Stadio') { await p.mouse.wheel(0, 900); await p.waitForTimeout(700); await p.screenshot({ path: D + '/curva-Stadio-iPhone_15_Pro-giu.png' }); }
+          if (D && sn === 'iPhone 15 Pro' && pn === 'Stadio') { await p.evaluate(() => scrollBy(0, 900)); await p.waitForTimeout(700); await p.screenshot({ path: D + '/curva-Stadio-iPhone_15_Pro-giu.png' }); }
         }
       }
     }
     if (errs.length) pr.push('errori JS: ' + [...new Set(errs)].join(' / '));
     ko += pr.length;
-    console.log((pr.length ? '✗ ' : '✓ ') + sn + ' (' + att + ')' + (pr.length ? ' → ' + pr.join(' | ') : ''));
+    console.log((pr.length ? '✗ ' : '✓ ') + sn + ' (' + att + ', ' + motore + ')' + (pr.length ? ' → ' + pr.join(' | ') : ''));
     await c.close();
   }
-  console.log(ko ? 'Problemi: ' + ko : 'Tutto a posto'); await b.close();
+  console.log(ko ? 'Problemi: ' + ko : 'Tutto a posto'); await b.close(); if (bw) await bw.close();
 })();

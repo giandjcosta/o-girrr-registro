@@ -22,8 +22,8 @@ self.GIRRR_SPECCHIO = (function () {
     'conferenze.js': new URL('../../rilascio/conferenze/conferenze.js', self.location.href).href,
     'tv.js': new URL('../../rilascio/conferenze/tv.js', self.location.href).href, /* testo più grande solo sulla TV (?tv per provarlo dal PC) */
     'notifiche-lette.js': new URL('../../rilascio/notifiche/notifiche-lette.js', self.location.href).href, /* lette rimpicciolite */
-    'girrr/curva.html': new URL('../../rilascio/conferenze/pagine/girrr/curva.html', self.location.href).href, /* 5.6.3 (cuori e rilanci) più ?scrivi= della conferenza */
-    'stadio/girrr/curva.html': new URL('../../rilascio/conferenze/pagine/stadio/girrr/curva.html', self.location.href).href,
+    'girrr/curva.html': new URL('../../rilascio/curva-os/pagine/girrr/curva.html', self.location.href).href, /* Curva del sito (5.8.1) aggiornata pezzo per pezzo e Notifiche divise in Attività e Menzioni (rilascio/curva-os/applica.py) */
+    'stadio/girrr/curva.html': new URL('../../rilascio/curva-os/pagine/stadio/girrr/curva.html', self.location.href).href,
     'push.js': new URL('../../rilascio/push/push.js', self.location.href).href, /* notifiche sul telefono */
     'apri.html': new URL('../../rilascio/scorciatoie/apri.html', self.location.href).href,
     'liquid-glass.css': new URL('../../rilascio/liquid-glass/liquid-glass.css', self.location.href).href, /* prototipo Liquid Glass dello Stadio (?stile=vetro) */

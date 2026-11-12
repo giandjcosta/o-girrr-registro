@@ -47,6 +47,20 @@ La notifica 3 ore e 1 ora prima è online con la 5.6. Resta da fare, se si vuole
 - **Classifica dei Derby:** punti fatti solo negli scontri tra rivali, con il re dei Derby della stagione (dove manca il dato: «Dato non conservato»). Gianluca: «si potrebbe fare potenzialmente».
 - **Giro di boa:** prova grafica nel Lab (`lab/prove-grafiche/giro-di-boa.html`), da decidere; si sbloccherebbe alla 17ª giornata.
 
+### Novità proposte per l'app (Claude, 12 novembre 2026, su richiesta di Gianluca)
+Nessuna è fatta, tranne il video della giornata, che è una prova nel Lab. Tra parentesi: cosa serve.
+- **Video**
+  - *Video della giornata* (prova nel Lab: `lab/video-giornata/`, esempio `giornata-7.mp4`): 16 secondi in verticale per storie e stato di WhatsApp, fatti dai dati veri (risultati, podio, prossima giornata). Passo dopo: «Condividi → Video» nel Tabellone, registrato dal telefono stesso (MediaRecorder: MP4 su iPhone, WebM o MP4 su Android), senza servizi a pagamento.
+  - *La classifica che si muove*: le barre delle 10 squadre che corrono giornata per giornata fino a oggi (dati già in `data.json`).
+  - *La Radio in video*: la puntata della Radio con i titoli che scorrono e l'onda della voce, da mandare su WhatsApp (ffmpeg nel workflow, gratis).
+  - *Il mio girone d'andata animato*: la pagella del Giro di boa che si compone pezzo per pezzo.
+- **Funzionalità:** promemoria della formazione sul telefono qualche ora prima della consegna, se non risulta schierata (`formazioni.json` e notifiche, che ci sono già); pillola «3 cori nuovi» in cima alla Curva invece di ridisegnare; bozza del coro che resta se esci; link a ogni singolo coro da mandare su WhatsApp.
+- **Grafica e UI:** Curva con lo stile del sistema (in prova); sagome grigie mentre carica al posto di «Carico…»; colori della propria squadra nell'app (come Material You); tema scuro automatico la sera su tutto il sito.
+- **Collegamenti:** anteprima con immagine quando mandi un link della lega su WhatsApp (Open Graph); codice QR per entrare con la propria squadra su un telefono nuovo; calendario delle giornate (idea già sopra); tasto per aprire Leghe Fantacalcio sulla formazione.
+- **Interattività:** reazioni ai cori oltre all'applauso (database, «vai» apposta); «allenatore della settimana» votato dai tifosi; quiz sulla storia della lega; vibrazione leggera all'applauso su Android (su iPhone Safari non la permette).
+- **Statistiche:** la stagione in Curva di ogni squadra (cori, applausi ricevuti, coro più applaudito); andamento della posizione giornata per giornata per tutte; partite vinte e perse per pochi fantapunti (livello tecnico).
+- **Compatibilità:** prove automatiche con WebKit (il motore di Safari) per ogni novità, ora possibili; iPhone con iOS 16 o più vecchi (molle sostituite da curve classiche, da provare); Samsung Internet e Firefox su Android; VoiceOver e TalkBack (etichette dei pulsanti, contrasto).
+
 ## Fatte
 - **Online con la 5.7** (11 novembre 2026, vedi `STATO.md`): Sala stampa, conferenza del dopo partita, menzioni sul telefono; tag delle squadre nei post della conferenza, conferenza bloccata dopo la pubblicazione, tono nella fiducia, conferenza dell'avversario con «Rispondi in Curva», scheda Promesse della Carriera, **Testa a testa** (pagina Derby) e **testo più grande** (solo sulle smart TV, senza interruttore: decisione di Gianluca).
 - **Copia offline** (online il 9 novembre 2026, `gh-pages` `e06cbe2`), vedi `STATO.md`.

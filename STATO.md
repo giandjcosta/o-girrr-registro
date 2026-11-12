@@ -1,5 +1,17 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (3) — Claude: Curva ferma (aggiornata pezzo per pezzo), Notifiche divise, prove con WebKit, video della giornata (Lab, sito non toccato)
+
+- **Segnalazione (Gianluca):** nei video la pagina, i loghi e le grafiche si ricaricano da zero; intestazione e barra in basso devono restare ferme. «Non puoi fare il lazy loading anche nella Curva come nello Spogliatoio? Così non deve ricreare tutto ogni volta».
+- **Causa:** a ogni ridisegno (scheda, applauso, aggiornamento di ogni minuto) la Curva riscrive con `innerHTML` intestazione, barra e contenuto; `transizioni.js` del sito fa ricomparire in dissolvenza tutto quello che è nuovo (classe `fx-in`), cioè tutto, e i loghi si ricaricano. C'era già prima, non dipende dagli stili per sistema.
+- **`rilascio/curva-os/applica.py SITO [--lab]`:** dalla Curva pubblicata (5.8.1) scrive `rilascio/curva-os/pagine/{girrr,stadio/girrr}/curva.html` con `morfaIn`: confronta il nuovo HTML con quello che c'è e cambia solo il diverso; i cori (`article.post`) si riconoscono da `data-k`; i pezzi non cambiati non si toccano (foto caricate, immagini nascoste perché mancanti, testo che stai scrivendo). Due ascoltatori del campo di scrittura agganciati una volta sola. La Curva già carica i cori 20 alla volta scorrendo: ora in più non ricrea quelli già disegnati. `--lab` aggiunge `window.__curvaProva` per le prove (al rilascio senza).
+- **Notifiche:** schede «Attività» (applausi, rilanci, risposte, visualizzazioni, traguardi; senza menzioni) e «Menzioni». Con i dati veri di Oranje VC: 31 e 9.
+- **Movimenti:** al cambio di scheda scivolano solo i cori (il riquadro della squadra e il campo per scrivere restano fermi).
+- **WebKit:** installato in questa sessione (Playwright 1.63, `install webkit` in una cartella a parte e `install-deps webkit`): iPhone e iPad ora si provano con il motore di Safari 26, Android e PC con Chromium. `prove/prova_curva_os.js` e la nuova `prove/prova_curva_ferma.js` (elementi non ricreati dopo ridisegno, ricarica, cambio di scheda e ritorno; nessuna dissolvenza su intestazione e barra; testo che resta; Notifiche) accettano `WEBKIT=…/pw_run.sh`. Risultati: 14 schermi × Curva Lega e Stadio tutto a posto; 8 schermi × 2 Curve tutto a posto. Nota: cambiando pagina WebKit segnala come «access control checks» le richieste ancora in corso della pagina che si chiude (foto dei profili): la prova le conta a parte. Corretto un errore della prova dei movimenti (aspettava che la rotellina chiusa fosse visibile).
+- **Video della giornata** (`lab/video-giornata/`, esempio `giornata-7.mp4`, 16 s, 720×1280): risultati della giornata, podio (solo le prime tre: gli spareggi a pari punti della lega dal 4° posto non sono sicuri), partita da non perdere della prossima; dati da `data.json`, livello sportivo, niente fantapunti. Registrato con Playwright e ffmpeg.
+- **Proposte di novità** in `proposte/idee-da-fare.md` («Novità proposte per l'app»).
+- **Non provati:** Safari vero su iPhone (solo WebKit di Playwright), un telefono Android vero, la Curva con una squadra vera entrata col codice (nelle prove la squadra è impostata dentro la pagina, scritture bloccate).
+
 ## 12 novembre (2) — Claude: Curva, movimenti di iPhone e di Android su tutta la Curva (prototipo nel Lab, sito non toccato)
 
 - **Richiesta (Gianluca):** le animazioni del Liquid Glass e di Material 3 (più «bouncy») su tutta la Curva, anche al cambio di scheda e alla ricarica.
