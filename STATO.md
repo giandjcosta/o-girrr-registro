@@ -1,5 +1,11 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (12) — Claude: reazioni con nomi e numeri, video B con Champions Cup e grafica ufficiale (Lab)
+
+- **Reazioni (Gianluca):** il cuore non si ripete accanto al cuore; ogni reazione ha un nome proprio (Applausi, Risate, Fiamme, Wow, Gufate, Pagliacci, Lacrime); accanto al cuore, ogni altra reazione con il suo numero, anche quando è una sola; la tua è colorata; toccandola la togli o la cambi (`lab/curva-os/reazioni.html`, ancora senza salvataggio).
+- **Video:** C e D scartate (pagina `lab/video-giornata/strade.html` con A e B; i loro file restano nel registro). B rifatta con la grafica ufficiale: Campionato rosso con il logo della lega e «Girrr Sport Live», Champions Cup azzurra con il logo della coppa e «Cup Girrr Live», carattere Inter al posto del Lobster; in più risultati della 4ª di Champions Cup (stesso turno di Serie A della 7ª) e classifica dei due gironi (punti, a pari punti il totale della stagione, come la Curva; nessuna regola di qualificazione scritta, perché non è nei dati). 25 secondi, senza voce. Sorgenti in `rilascio/video/remotion/`.
+- **Da Gianluca:** i loghi e i colori delle squadre (sono su Leghe Fantacalcio, qui non ci sono); quale tra A e B; il «Vai per il Lab».
+
 ## 12 novembre (11) — Claude: Carriera, fiducia a cartellini e schede centrate (Lab)
 
 - **Segnalazioni (Gianluca, foto dal sito vero):** il numero della fiducia «resta in alto e rimane un po' buggato» nell'animazione; «Panoramica» non è centrata, «tende un po' a sinistra il rosso». Proposta sua: un'animazione «da punteggio coi cartellini».

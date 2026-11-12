@@ -1,81 +1,84 @@
 import React, { useEffect, useState } from 'react';
 import { registerRoot, Composition, AbsoluteFill, Sequence, useCurrentFrame, useVideoConfig, spring, interpolate, Img, delayRender, continueRender, staticFile } from 'remotion';
+import FONT from './font.js';
 
-// Strada B (Claude, 12 novembre 2026): lo stesso video della giornata fatto con Remotion. Dati veri passati da fuori (inputProps).
+// Video della giornata con Remotion (Claude, 12 novembre 2026). Grafica ufficiale: Campionato rosso con il logo della lega e
+// «Girrr Sport Live», Champions Cup azzurra con il logo della coppa e «Cup Girrr Live». Dati veri passati da fuori (inputProps).
 const NOMI = { 'The Blue brothers': 'The Blues Brothers' };
 const nm = s => NOMI[s] || s;
-const ORO = '#ffd166', CHIARO = '#fbf6ec', ROSSO = '#d62839';
+const CHIARO = '#fbf6ec', ORO = '#ffd166';
+const TEMA = { lega: { acc: '#d62839', acc2: '#8e1a2a', logo: 'logo-lega.png', tv: 'tv-lega.png', nome: 'CAMPIONATO' }, coppa: { acc: '#3d93d6', acc2: '#1d5f99', logo: 'logo-coppa.png', tv: 'tv-coppa.png', nome: 'CHAMPIONS CUP' } };
+const F = (w, s) => `${w} ${s}px Inter, system-ui, sans-serif`;
+const cl = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' };
 
-const Sfondo = () => <AbsoluteFill style={{ background: 'radial-gradient(700px 500px at 85% -5%, rgba(214,40,57,.35), transparent 60%), radial-gradient(800px 600px at -10% 30%, rgba(61,147,214,.3), transparent 60%), linear-gradient(180deg,#2c3f7c,#1d2a52 45%,#141d3d)' }} />;
+const Sfondo = ({ t }) => <AbsoluteFill style={{ background: `radial-gradient(700px 500px at 85% -5%, ${TEMA[t].acc}55, transparent 60%), radial-gradient(800px 600px at -10% 30%, rgba(61,147,214,.25), transparent 60%), linear-gradient(180deg,#24366e,#1d2a52 45%,#121a38)` }} />;
 
-const Caratteri = () => {
-  const [h] = useState(() => delayRender('caratteri'));
-  useEffect(() => { const l = document.createElement('style'); l.textContent = `@font-face{font-family:'Inter';font-weight:700;font-style:normal;src:url(FONT/f0.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
-@font-face{font-family:'Inter';font-weight:700;font-style:normal;src:url(FONT/f1.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
-@font-face{font-family:'Inter';font-weight:800;font-style:normal;src:url(FONT/f2.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
-@font-face{font-family:'Inter';font-weight:800;font-style:normal;src:url(FONT/f3.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
-@font-face{font-family:'Inter';font-weight:900;font-style:normal;src:url(FONT/f4.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
-@font-face{font-family:'Inter';font-weight:900;font-style:normal;src:url(FONT/f5.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
-@font-face{font-family:'Lobster';font-weight:400;font-style:normal;src:url(FONT/f6.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
-@font-face{font-family:'Lobster';font-weight:400;font-style:normal;src:url(FONT/f7.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}`.split('FONT/').join(staticFile('font/')); document.head.appendChild(l);   /* caratteri in locale (public/font) */
-    Promise.all([document.fonts.load('64px Lobster'), document.fonts.load('900 24px Inter')]).finally(() => continueRender(h)); }, []);
-  return null;
-};
+const Caratteri = () => { const [h] = useState(() => delayRender('caratteri'));
+  useEffect(() => { const l = document.createElement('style'); l.textContent = FONT.split('FONT/').join(staticFile('font/')); document.head.appendChild(l);
+    document.fonts.load('900 24px Inter').finally(() => continueRender(h)); }, []); return null; };
 
-// Numero che «sale» fino al valore (i gol del risultato contano da 0)
-const Conta = ({ a, da }) => { const f = useCurrentFrame(); const v = Math.round(interpolate(f, [da, da + 18], [0, a], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })); return <>{v}</>; };
+const Conta = ({ a, da }) => { const f = useCurrentFrame(); return <>{Math.round(interpolate(f, [da, da + 16], [0, a], cl))}</>; };
+const Tv = ({ t }) => <Img src={staticFile(TEMA[t].tv)} style={{ position: 'absolute', top: 48, right: 40, width: 190, borderRadius: 6, boxShadow: '0 6px 18px rgba(0,0,0,.35)' }} />;
 
-const Apertura = ({ n }) => { const f = useCurrentFrame(), { fps } = useVideoConfig(); const s = spring({ frame: f, fps, config: { damping: 9, stiffness: 120 } });
+const Titolo = ({ t, k, tit }) => { const f = useCurrentFrame(), A = TEMA[t].acc;
+  return <div style={{ position: 'relative', padding: '150px 56px 0' }}>
+    <div style={{ font: F(900, 22), letterSpacing: '.3em', color: A === '#d62839' ? ORO : '#9fd0ff' }}>{k}</div>
+    <div style={{ font: F(900, 54), color: CHIARO, marginTop: 6, letterSpacing: '-.01em' }}>{tit}</div>
+    <div style={{ height: 12, marginTop: 22, borderRadius: 3, transform: 'skewX(-45deg)', width: `${interpolate(f, [0, 22], [0, 100], cl)}%`, background: `linear-gradient(90deg,${A} 0 14%,${ORO} 14% calc(14% + 12px),#0f1736 calc(14% + 12px) 100%)` }} /></div>; };
+
+const Apertura = ({ n, nc }) => { const f = useCurrentFrame(), { fps } = useVideoConfig(); const s = spring({ frame: f, fps, config: { damping: 9, stiffness: 120 } }), s2 = spring({ frame: f - 14, fps, config: { damping: 10, stiffness: 120 } });
   return <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-    <Img src={staticFile('logo.png')} style={{ width: 300, transform: `scale(${s}) rotate(${(1 - s) * -25}deg)` }} />
-    <div style={{ font: '96px Lobster', color: CHIARO, marginTop: 40, opacity: interpolate(f, [12, 30], [0, 1], { extrapolateRight: 'clamp' }), transform: `translateY(${interpolate(f, [12, 30], [40, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })}px)` }}>{n}ª giornata</div>
-    <div style={{ font: '900 26px Inter', letterSpacing: '.3em', color: ORO, marginTop: 10, opacity: interpolate(f, [24, 40], [0, 1], { extrapolateRight: 'clamp' }) }}>CAMPIONATO · I RISULTATI</div>
+    <div style={{ display: 'flex', gap: 34, alignItems: 'center' }}>
+      <Img src={staticFile('logo-lega.png')} style={{ width: 210, transform: `scale(${s}) rotate(${(1 - s) * -20}deg)` }} />
+      <Img src={staticFile('logo-coppa.png')} style={{ width: 190, transform: `scale(${s2}) rotate(${(1 - s2) * 20}deg)` }} /></div>
+    <div style={{ font: F(900, 70), color: CHIARO, marginTop: 50, opacity: interpolate(f, [16, 32], [0, 1], cl) }}>La giornata</div>
+    <div style={{ font: F(900, 26), letterSpacing: '.22em', color: ORO, marginTop: 14, opacity: interpolate(f, [26, 42], [0, 1], cl) }}>CAMPIONATO · {n}ª</div>
+    <div style={{ font: F(900, 26), letterSpacing: '.22em', color: '#9fd0ff', marginTop: 8, opacity: interpolate(f, [32, 48], [0, 1], cl) }}>CHAMPIONS CUP · {nc}ª</div>
   </AbsoluteFill>; };
 
-const Titolo = ({ k, t }) => { const f = useCurrentFrame(); return <div style={{ padding: '90px 56px 0' }}>
-  <div style={{ font: '900 24px Inter', letterSpacing: '.3em', color: ORO }}>{k}</div>
-  <div style={{ font: '64px Lobster', color: CHIARO, marginTop: 6 }}>{t}</div>
-  <div style={{ height: 14, marginTop: 24, borderRadius: 3, transform: 'skewX(-45deg)', width: `${interpolate(f, [0, 25], [0, 100], { extrapolateRight: 'clamp' })}%`, background: `linear-gradient(90deg,${ROSSO} 0 12%,${ORO} 12% calc(12% + 14px),#0f1736 calc(12% + 14px) 100%)` }} /></div>; };
+const Partita = ({ x, i, t, girone }) => { const f = useCurrentFrame(), { fps } = useVideoConfig(), da = 14 + i * 9, s = spring({ frame: f - da, fps, config: { damping: 12, stiffness: 140 } }), r = x.sc.split('-').map(Number), A = TEMA[t].acc;
+  return <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', gap: 14, padding: '20px 22px', borderRadius: 20, background: 'rgba(255,255,255,.09)', borderLeft: `10px solid ${A}`, opacity: s, transform: `translateX(${(1 - s) * 200}px)` }}>
+    <b style={{ font: F(800, 25), color: r[0] > r[1] ? ORO : CHIARO }}>{nm(x.a)}</b>
+    <span style={{ font: F(900, 48), color: CHIARO, background: 'rgba(0,0,0,.28)', borderRadius: 14, padding: '2px 16px', minWidth: 140, textAlign: 'center' }}><Conta a={r[0]} da={da + 6} /> - <Conta a={r[1]} da={da + 6} /></span>
+    <b style={{ font: F(800, 25), textAlign: 'right', color: r[1] > r[0] ? ORO : CHIARO }}>{nm(x.b)}</b>
+    {girone && <i style={{ gridColumn: '1 / 4', font: F(800, 15), letterSpacing: '.2em', color: '#9fd0ff', fontStyle: 'normal', marginTop: -6 }}>GIRONE {x.g}</i>}</div>; };
 
-const Risultati = ({ n, m }) => { const f = useCurrentFrame(), { fps } = useVideoConfig();
-  return <AbsoluteFill><Titolo k={`CAMPIONATO · ${n}ª GIORNATA`} t="I risultati" />
-    <div style={{ padding: '30px 56px', display: 'flex', flexDirection: 'column', gap: 22 }}>
-      {m.map((x, i) => { const da = 15 + i * 12, s = spring({ frame: f - da, fps, config: { damping: 12, stiffness: 140 } }); const r = x[4].split('-').map(Number);
-        return <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', gap: 16, padding: '24px 26px', borderRadius: 22, background: 'rgba(255,255,255,.09)', borderLeft: `10px solid ${ROSSO}`, opacity: s, transform: `translateX(${(1 - s) * 200}px)` }}>
-          <b style={{ font: '800 27px Inter', color: r[0] > r[1] ? ORO : CHIARO }}>{nm(x[0])}</b>
-          <span style={{ font: '900 52px Inter', color: CHIARO, background: 'rgba(0,0,0,.28)', borderRadius: 16, padding: '4px 18px', minWidth: 150, textAlign: 'center' }}><Conta a={r[0]} da={da + 8} /> - <Conta a={r[1]} da={da + 8} /></span>
-          <b style={{ font: '800 27px Inter', textAlign: 'right', color: r[1] > r[0] ? ORO : CHIARO }}>{nm(x[3])}</b></div>; })}
-    </div></AbsoluteFill>; };
+const Risultati = ({ t, n, m }) => <AbsoluteFill><Sfondo t={t} /><Tv t={t} /><Titolo t={t} k={`${TEMA[t].nome} · ${n}ª GIORNATA`} tit="I risultati" />
+  <div style={{ position: 'relative', padding: '26px 56px', display: 'flex', flexDirection: 'column', gap: 16 }}>{m.map((x, i) => <Partita key={i} x={x} i={i} t={t} girone={t === 'coppa'} />)}</div></AbsoluteFill>;
 
 const Podio = ({ n, c }) => { const f = useCurrentFrame(), { fps } = useVideoConfig();
-  const col = [[c[1], 2, 320, 20, '#dfe6f3'], [c[0], 1, 420, 8, ORO], [c[2], 3, 250, 30, '#e7a46a']];
-  return <AbsoluteFill><Titolo k="CAMPIONATO" t={`La classifica dopo la ${n}ª`} />
+  return <AbsoluteFill><Sfondo t="lega" /><Tv t="lega" /><Titolo t="lega" k="CAMPIONATO" tit={`La classifica dopo la ${n}ª`} />
     <div style={{ position: 'absolute', bottom: 120, left: 0, right: 0, display: 'flex', justifyContent: 'center', alignItems: 'flex-end', gap: 22 }}>
-      {col.map(([t, pos, h, da, bg]) => { const s = spring({ frame: f - da, fps, config: { damping: 11, stiffness: 90 } });
+      {[[c[1], 2, 320, 20, '#dfe6f3'], [c[0], 1, 420, 8, ORO], [c[2], 3, 250, 30, '#e7a46a']].map(([q, pos, h, da, bg]) => { const s = spring({ frame: f - da, fps, config: { damping: 11, stiffness: 90 } });
         return <div key={pos} style={{ width: 190, textAlign: 'center' }}>
-          <div style={{ font: '800 28px Inter', color: CHIARO, opacity: s }}>{nm(t.n)}</div>
-          <div style={{ font: '700 26px Inter', color: ORO, margin: '6px 0 12px', opacity: s }}><Conta a={t.pt} da={da} /> punti</div>
-          <div style={{ height: h * s, background: bg, borderRadius: '18px 18px 6px 6px', font: '90px Lobster', color: '#1d2a52', paddingTop: 16 }}>{pos}</div></div>; })}
-    </div></AbsoluteFill>; };
+          <div style={{ font: F(800, 27), color: CHIARO, opacity: s }}>{nm(q.n)}</div>
+          <div style={{ font: F(700, 25), color: ORO, margin: '6px 0 12px', opacity: s }}><Conta a={q.pt} da={da} /> punti</div>
+          <div style={{ height: h * s, background: bg, borderRadius: '18px 18px 6px 6px', font: F(900, 84), color: '#1d2a52', paddingTop: 18 }}>{pos}</div></div>; })}</div></AbsoluteFill>; };
 
-const Prossima = ({ n, big, altre }) => { const f = useCurrentFrame(), { fps } = useVideoConfig(); const s = spring({ frame: f - 8, fps, config: { damping: 10, stiffness: 110 } });
-  return <AbsoluteFill><Titolo k={`PROSSIMA GIORNATA · ${n + 1}ª`} t="La partita da non perdere" />
-    <div style={{ margin: '60px 56px 0', padding: '40px 30px', borderRadius: 26, textAlign: 'center', background: `linear-gradient(120deg,${ROSSO},#8e1a2a 60%,#141d3d 130%)`, transform: `scale(${s})`, boxShadow: '0 30px 60px rgba(0,0,0,.4)' }}>
-      <div style={{ font: '900 46px Inter', color: CHIARO }}>{nm(big[0])}</div><div style={{ font: '56px Lobster', color: ORO, margin: '8px 0' }}>contro</div><div style={{ font: '900 46px Inter', color: CHIARO }}>{nm(big[1])}</div></div>
-    <div style={{ marginTop: 34, display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'center' }}>
-      {altre.map((x, i) => <span key={i} style={{ font: '700 25px Inter', color: 'rgba(251,246,236,.9)', opacity: interpolate(f, [20 + i * 5, 30 + i * 5], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) }}>{nm(x[0])} - {nm(x[1])}</span>)}</div>
-    <div style={{ position: 'absolute', bottom: 90, width: '100%', textAlign: 'center', font: '800 28px Inter', color: CHIARO }}>Tutto su O Girrr</div></AbsoluteFill>; };
+const Gironi = ({ nc, gir }) => { const f = useCurrentFrame(), { fps } = useVideoConfig();
+  return <AbsoluteFill><Sfondo t="coppa" /><Tv t="coppa" /><Titolo t="coppa" k="CHAMPIONS CUP" tit={`I gironi dopo la ${nc}ª`} />
+    <div style={{ position: 'relative', padding: '30px 56px', display: 'flex', flexDirection: 'column', gap: 26 }}>
+      {Object.keys(gir).sort().map((g, gi) => <div key={g}><div style={{ font: F(900, 20), letterSpacing: '.25em', color: '#9fd0ff', marginBottom: 10 }}>GIRONE {g}</div>
+        {gir[g].map((q, i) => { const s = spring({ frame: f - 10 - gi * 14 - i * 5, fps, config: { damping: 14, stiffness: 150 } });
+          return <div key={q.n} style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '12px 18px', marginBottom: 8, borderRadius: 14, background: 'rgba(255,255,255,.08)', borderLeft: '8px solid #3d93d6', opacity: s, transform: `translateY(${(1 - s) * 30}px)` }}>
+            <b style={{ font: F(900, 26), color: '#9fd0ff', width: 30 }}>{i + 1}</b><span style={{ font: F(800, 25), color: CHIARO, flex: 1 }}>{nm(q.n)}</span><b style={{ font: F(900, 28), color: CHIARO }}>{q.pt}</b></div>; })}</div>)}</div></AbsoluteFill>; };   /* nessuna regola di qualificazione: non la scriviamo se non è nei dati */
 
-// Passaggio tra le scene: una tendina rossa e oro che scorre
-const Tendina = () => { const f = useCurrentFrame(); const x = interpolate(f, [0, 14], [-120, 120]);
-  return <AbsoluteFill style={{ transform: `translateX(${x}%) skewX(-12deg)`, background: `linear-gradient(90deg,${ROSSO} 0 70%,${ORO} 70% 78%,transparent 78%)` }} />; };
+const Prossima = ({ n, big }) => { const f = useCurrentFrame(), { fps } = useVideoConfig(), s = spring({ frame: f - 8, fps, config: { damping: 10, stiffness: 110 } });
+  return <AbsoluteFill><Sfondo t="lega" /><Tv t="lega" /><Titolo t="lega" k={`PROSSIMA GIORNATA · ${n + 1}ª`} tit="La partita da non perdere" />
+    <div style={{ position: 'relative', margin: '70px 56px 0', padding: '44px 30px', borderRadius: 26, textAlign: 'center', background: 'linear-gradient(120deg,#d62839,#8e1a2a 60%,#141d3d 130%)', transform: `scale(${s})`, boxShadow: '0 30px 60px rgba(0,0,0,.4)' }}>
+      <div style={{ font: F(900, 46), color: CHIARO }}>{nm(big[0])}</div><div style={{ font: F(900, 26), letterSpacing: '.3em', color: ORO, margin: '14px 0' }}>CONTRO</div><div style={{ font: F(900, 46), color: CHIARO }}>{nm(big[1])}</div></div>
+    <div style={{ position: 'absolute', bottom: 110, width: '100%', textAlign: 'center' }}><Img src={staticFile('logo-lega.png')} style={{ width: 90, opacity: interpolate(f, [20, 35], [0, 1], cl) }} /><div style={{ font: F(800, 26), color: CHIARO, marginTop: 10 }}>Tutto su O Girrr</div></div></AbsoluteFill>; };
 
-const Video = (p) => <AbsoluteFill><Caratteri /><Sfondo />
-  <Sequence durationInFrames={84}><Apertura n={p.n} /></Sequence>
-  <Sequence from={84} durationInFrames={186}><Risultati n={p.n} m={p.m} /></Sequence>
-  <Sequence from={270} durationInFrames={126}><Podio n={p.n} c={p.c} /></Sequence>
-  <Sequence from={396}><Prossima n={p.n} big={p.big} altre={p.altre} /></Sequence>
-  {[77, 263, 389].map(d => <Sequence key={d} from={d} durationInFrames={15}><Tendina /></Sequence>)}
+// Passaggio tra le scene: tendina del colore della competizione che arriva
+const Tendina = ({ t }) => { const f = useCurrentFrame(), x = interpolate(f, [0, 14], [-120, 120]);
+  return <AbsoluteFill style={{ transform: `translateX(${x}%) skewX(-12deg)`, background: `linear-gradient(90deg,${TEMA[t].acc} 0 70%,${ORO} 70% 78%,transparent 78%)` }} />; };
+
+const SC = [['apertura', 80], ['lega', 170], ['podio', 120], ['coppa', 160], ['gironi', 130], ['prossima', 100]];
+let da = 0; const INIZI = SC.map(([k, d]) => { const s = da; da += d; return [k, s, d]; }); const TOT = da;
+const Video = (p) => <AbsoluteFill style={{ background: '#1d2a52' }}><Caratteri />
+  {INIZI.map(([k, s, d]) => <Sequence key={k} from={s} durationInFrames={d}>
+    {k === 'apertura' ? <><Sfondo t="lega" /><Apertura n={p.n} nc={p.nc} /></> : k === 'lega' ? <Risultati t="lega" n={p.n} m={p.m} /> : k === 'podio' ? <Podio n={p.n} c={p.c} /> : k === 'coppa' ? <Risultati t="coppa" n={p.nc} m={p.mc} /> : k === 'gironi' ? <Gironi nc={p.nc} gir={p.gir} /> : <Prossima n={p.n} big={p.big} />}</Sequence>)}
+  {INIZI.slice(1).map(([k, s]) => <Sequence key={'t' + k} from={s - 7} durationInFrames={15}><Tendina t={k === 'coppa' || k === 'gironi' ? 'coppa' : 'lega'} /></Sequence>)}
 </AbsoluteFill>;
 
-registerRoot(() => <Composition id="Giornata" component={Video} durationInFrames={480} fps={30} width={720} height={1280} defaultProps={{ n: 7, m: [], c: [{}, {}, {}], big: ['', ''], altre: [] }} />);
+registerRoot(() => <Composition id="Giornata" component={Video} durationInFrames={TOT} fps={30} width={720} height={1280} defaultProps={{ n: 7, nc: 4, m: [], mc: [], c: [{}, {}, {}], gir: {}, big: ['', ''] }} />);
