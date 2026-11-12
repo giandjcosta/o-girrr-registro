@@ -1,5 +1,8 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (28) — Claude: video della giornata (B), podio dal 3° all'1°, transizione alla Coppa più morbida, loghi finali uguali (Lab)
+- Su indicazione di Gianluca: il podio sale come in TV, 3° (8 fotogrammi), 2° (22), 1° (36), e l'1° è in cima a 1,47 s (calcolato con la stessa molla): lì la salita e il boato, prima cadevano quando l'1 non era ancora su. Whoosh molto basso su ogni tendina (−17 dB) e più forte nel passaggio Campionato → Coppa (−6 dB); stinger della Coppa quando il logo atterra (17,7 s). Passaggio musicale: `--dissolvenza 1.0`, la base calma sfuma in 1 s e sotto il logo sale «Victory» (20,0-22,3 s del brano), l'esplosione cade a 19,67 s, quando partono i risultati della Coppa (`--dopo m3:19.46:126.7@17.83`). Loghi di «Tutto su O Girrr» alla stessa altezza (190 px; prima 170 e 150 di larghezza). Video: `lab/video-giornata/strada-b-effetti.mp4`; `strada-b-remotion.mp4` rifatto con la musica generata.
+
 ## 12 novembre (27) — Claude: video della giornata (B), effetti sonori di Gianluca a tempo con le grafiche (Lab)
 - Gianluca ha fatto 13 effetti con i prompt (in `rilascio/video/suoni/`, con nomi chiari e `LEGGIMI.md`). `monta_musica.py --effetti scene.json`: tempi calcolati dai fotogrammi di `src/index.jsx` (`scaletta()`), volume di ogni effetto rispetto al volume medio della musica (`EFFETTI`, in dB), solo loghi, fischi e boato abbassano la musica (a 0,6, in 0,1 s). `render.mjs` scrive in `scene.json` anche partite, righe e Derby. Nel video 24 effetti, 11 tipi; tamburi del Derby solo se c'è un Derby; contatore e fischio finale lungo non usati. Volume medio −12,3 dB con e senza effetti. Video: `lab/video-giornata/strada-b-effetti.mp4`.
 

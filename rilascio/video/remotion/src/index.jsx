@@ -56,7 +56,7 @@ const Risultati = ({ t, n, m }) => <AbsoluteFill><Sfondo t={t} /><Tv t={t} /><Ti
 const Podio = ({ n, c }) => { const f = useCurrentFrame(), { fps } = useVideoConfig();
   return <AbsoluteFill><Sfondo t="lega" /><Tv t="lega" /><Titolo t="lega" k="CAMPIONATO" tit={`Il podio dopo la ${n}ª`} />
     <div style={{ position: 'absolute', bottom: 120, left: 0, right: 0, display: 'flex', justifyContent: 'center', alignItems: 'flex-end', gap: 22 }}>
-      {[[c[1], 2, 320, 20, '#dfe6f3'], [c[0], 1, 420, 8, ORO], [c[2], 3, 250, 30, '#e7a46a']].map(([q, pos, h, da, bg]) => { const s = spring({ frame: f - da, fps, config: { damping: 11, stiffness: 90 } });
+      {/* come in TV: sale prima il 3°, poi il 2°, per ultimo l'1° (in cima a 1,47 s: lì il boato, vedi monta_musica.py) */[[c[1], 2, 320, 22, '#dfe6f3'], [c[0], 1, 420, 36, ORO], [c[2], 3, 250, 8, '#e7a46a']].map(([q, pos, h, da, bg]) => { const s = spring({ frame: f - da, fps, config: { damping: 11, stiffness: 90 } });
         return <div key={pos} style={{ width: 190, textAlign: 'center' }}>
           <div style={{ font: F(800, 27), color: CHIARO, opacity: s }}>{nm(q.n)}</div>
           <div style={{ font: F(700, 25), color: ORO, margin: '6px 0 12px', opacity: s }}><Conta a={q.pt} da={da} /> punti</div>
@@ -99,7 +99,7 @@ const DaNonPerdere = ({ n, big, nc2, bigC }) => <AbsoluteFill><Sfondo t="lega" /
 
 const Fine = () => { const f = useCurrentFrame(), { fps } = useVideoConfig(), s = spring({ frame: f, fps, config: { damping: 11, stiffness: 120 } });
   return <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}><Sfondo t="lega" />
-    <div style={{ position: 'relative', display: 'flex', gap: 28, alignItems: 'center', transform: `scale(${s})` }}><Img src={staticFile('logo-lega.png')} style={{ width: 170 }} /><Img src={staticFile('logo-coppa.png')} style={{ width: 150 }} /></div>
+    <div style={{ position: 'relative', display: 'flex', gap: 28, alignItems: 'center', transform: `scale(${s})` }}><Img src={staticFile('logo-lega.png')} style={{ height: 190 }} /><Img src={staticFile('logo-coppa.png')} style={{ height: 190 }} /></div>
     <div style={{ position: 'relative', font: F(900, 54), color: CHIARO, marginTop: 44, opacity: interpolate(f, [12, 28], [0, 1], cl) }}>Tutto su O Girrr</div>
     <div style={{ position: 'relative', font: F(800, 24), color: ORO, marginTop: 12, opacity: interpolate(f, [20, 36], [0, 1], cl) }}>Risultati, classifiche e Curva</div></AbsoluteFill>; };
 

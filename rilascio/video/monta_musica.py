@@ -15,7 +15,7 @@ QUANDO negativo conta dalla fine del video). Con un suono sopra, la musica si ab
 --inizio S fa partire il brano da S secondi (per far cadere una «esplosione» del brano su un momento del video), --fine S
 lo ferma a S secondi (per togliere il silenzio finale e far cadere il colpo finale sulla chiusura del video).
 --dopo FILE:INIZIO:FINE@QUANDO passa a un secondo brano a QUANDO secondi del video (per esempio dalla base calma da TV
-del Campionato a quella epica della Coppa): il primo sfuma nel mezzo secondo prima, il secondo parte da INIZIO secondi
+del Campionato a quella epica della Coppa): il primo sfuma nei secondi di --dissolvenza (0,5 di partenza) prima, il secondo parte da INIZIO secondi
 del suo brano (scelto in modo che la sua «esplosione» cada a QUANDO), si ferma a FINE e il suo finale vero chiude il video.
 --effetti scene.json mette gli effetti grafici (cartella suoni/) a tempo con le scene, calcolati fotogramma per fotogramma
 dalla stessa scaletta del video (vedi EFFETTI qui sotto). Ogni effetto ha il suo volume rispetto al volume medio della
@@ -60,7 +60,8 @@ SUONI = __import__('os').path.join(__import__('os').path.dirname(__import__('os'
 EFFETTI = {
     'logo-lega': ('logo-lega.mp3', 0.0, 0.9, 0.10, -3, True),
     'fischio':   ('fischio-inizio.mp3', 0.9, 3.0, 0.3, -4, True),
-    'whoosh':    ('whoosh.mp3', 0.0, 0.5, 0.25, -12, False),
+    'whoosh':    ('whoosh.mp3', 0.0, 0.5, 0.25, -17, False),          # molto basso, a ogni tendina
+    'whoosh-coppa': ('whoosh.mp3', 0.0, 0.5, 0.25, -6, False),        # più forte: dal Campionato alla Coppa
     'pop':       ('pop.mp3', 0.0, 0.15, 0.0, -15, False),
     'cascata':   ('cascata.mp3', 0.0, 1.2, 0.0, -10, False),
     'podio':     ('podio.mp3', 0.25, 1.2, 0.9, -10, False),
@@ -76,20 +77,20 @@ EFFETTI = {
 def scaletta(S):
     """Elenco (effetto, secondo del video in cui cade il colpo) dalla scaletta delle scene (scene.json di render.mjs).
     Gli istanti sono quelli di src/index.jsx: le partite entrano a 14 + 9·i fotogrammi, le righe della classifica a 8 + 3·i,
-    i gradini del podio arrivano entro 1,2 s, la tendina copre il cambio di scena."""
+    i gradini del podio salgono dal 3° all'1° e l'1° arriva in cima a 1,47 s (molla di Podio), i loghi delle aperture
+    atterrano a circa 0,4 s, la tendina copre il cambio di scena."""
     fps, ini, t = S['fps'], {}, 0.0
     for k, d in S['scene']:
         ini[k] = t
         t += d / fps
     E = [('logo-lega', 0.25), ('fischio', 1.2)]
     for k, _ in S['scene'][1:]:
+        E.append(('whoosh-coppa' if k == 'introCoppa' else 'whoosh', ini[k]))
         if k == 'introCoppa':
-            E.append(('logo-coppa', ini[k]))
-        elif k != 'fine':
-            E.append(('whoosh', ini[k]))
+            E.append(('logo-coppa', ini[k] + 0.4))   # quando il logo della Coppa atterra, sopra la salita di «Victory»
     for k, n in (('lega', S.get('m', 5)), ('coppa', S.get('mc', 4))):
         E += [('pop', ini[k] + (14 + 9 * i + 3) / fps) for i in range(n)]
-    E += [('podio', ini['podio'] + 0.95), ('boato', ini['podio'] + 1.05)]
+    E += [('podio', ini['podio'] + 1.45), ('boato', ini['podio'] + 1.5)]   # boato quando l'1° è in cima
     ncl = S.get('cl', 10)
     E += [('cascata', ini['classifica'] + 8 / fps), ('ultimo', ini['classifica'] + (8 + 3 * (ncl - 1) + 4) / fps)]
     if 'prossime' in ini and S.get('derby'):
@@ -165,6 +166,7 @@ if __name__ == '__main__':
     p.add_argument('--inizio', type=float, default=0.0, help='secondi del brano da cui partire')
     p.add_argument('--fine', type=float, default=0.0, help='secondi del brano a cui fermarsi (0 = fino alla fine)')
     p.add_argument('--dopo', default='', help='FILE:INIZIO:FINE@QUANDO')
+    p.add_argument('--dissolvenza', type=float, default=0.5, help='secondi in cui il primo brano lascia il posto al secondo')
     p.add_argument('--effetti', default='', help='scene.json di render.mjs: effetti grafici a tempo')
     p.add_argument('--suono', action='append', default=[], help='FILE:DA:A@QUANDO:VOLUME')
     A = p.parse_args()
@@ -176,7 +178,7 @@ if __name__ == '__main__':
     if A.dopo:
         sorg, q = A.dopo.rsplit('@', 1)
         f2, i2, f2fine = sorg.rsplit(':', 2)
-        q, xf = float(q), 0.5
+        q, xf = float(q), A.dissolvenza
         z = carica(f2)[int(float(i2) * SR):int(float(f2fine) * SR)].copy()
         z[-int(0.3 * SR):] *= np.linspace(1, 0, int(0.3 * SR))[:, None]
         z = monta(z, lungo - q + xf, A.coda)
