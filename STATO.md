@@ -1,5 +1,14 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre — Claude: Curva con uno stile per iPhone e uno per Android (prototipo nel Lab, sito non toccato)
+
+- **Richiesta (Gianluca):** «Riusciamo a differenziare l'App per Android da quella per iPhone? (credo abbia senso solo nella Curva) grafica e animazioni per i due sistemi operativi».
+- **`rilascio/curva-os/curva-os.js`** (piccolo, nella `<head>`): riconosce il telefono dall'identità del browser e scrive `<html data-os="ios|android|altro">` (iPad compreso, che si presenta come Mac; le TV Android TV prenderebbero lo stile Android, ma sopra i 760 px cambiano solo le schede). `?os=ios`, `?os=android` (ricordato), `?os=auto`. Segna per 0,6 secondi quando cambia la sezione della barra o la scheda (`data-cambio-nav`, `data-cambio-tabs`): la Curva ridisegna tutto anche dopo un applauso, così l'animazione parte solo al cambio vero e non all'apertura.
+- **`rilascio/curva-os/curva-os.css`:** iPhone · Liquid Glass (capsula di vetro in basso disegnata dal `::before` per non litigare con `fixNav`, schede di vetro, pillola che si gonfia, avviso a pillola di vetro; ripieghi senza vetro e con «riduci trasparenza»). Android · Material 3 (barra piena con etichette, pillola tonale del colore della pagina che si allarga a molla, lineetta delle schede dal centro, «snackbar», strato al tocco). PC e TV: nessuna regola. «Riduci movimento»: niente animazioni nuove.
+- **Lab:** lo specchio aggiunge i due file alle Curve di Lega e Stadio; i prototipi `?stile=` di ieri restano per le altre pagine Stadio e non toccano più la Curva. Scheda «Curva · Uno stile per iPhone e uno per Android» in `lab/offline/`, link dal Lab, GIF delle animazioni e foto in `lab/curva-os/`.
+- **Prove:** `prove/prova_curva_os.js` (nuova) su 14 schermi (iPhone SE 320, iPhone 15 Pro e Pro Max, Galaxy S8, Pixel 7, Galaxy S24, iPad Mini e orizzontale, Galaxy Tab S4 verticale e orizzontale, PC 1280 e 1920, monitor 2560, smart TV) × Curva Lega e Stadio: stile giusto, nessuno scorrimento laterale, animazioni al cambio di scheda e di sezione e non all'apertura, nessun errore. **Non provati:** Safari/WebKit vero e un telefono Android vero; l'identità di iPhone e Android è simulata in Chromium.
+- **Al rilascio servirebbe:** `curva-os.js` e `curva-os.css` nella radice di `gh-pages`, uno `<script>` e un `<link>` nella `<head>` delle due `curva.html`. Da decidere (Gianluca): se piace, e il tipo di versione.
+
 ## 11 novembre (5) — Claude: variante Android (Material 3) accanto al Liquid Glass (solo Lab)
 
 - **Richiesta (Gianluca):** vedere una grafica tipica di Android da mettere a confronto con il Liquid Glass («avendo solo un iPhone ho solo il punto di vista iOS»).
