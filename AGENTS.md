@@ -52,6 +52,16 @@ O Girrr si racconta come un campionato vero, ma i dati sono quelli ufficiali di 
 - "Derby" sempre con la D maiuscola. Titoli ed etichette con la maiuscola iniziale.
 - I post ufficiali (Girrr Sport, Lega, Giornale) non parlano mai di scommesse.
 
+## La mia settimana — regola editoriale permanente (Gianluca, 12 novembre 2026)
+
+Chiunque modifichi i racconti, i generatori o i prompt di **Carriera → Storia → La mia settimana** deve leggere e applicare [redazione/LA-MIA-SETTIMANA.md](redazione/LA-MIA-SETTIMANA.md).
+
+- È una breve cronaca giornalistica con un filo di stagione: titolo specifico, apertura sulla notizia, sviluppo e aggancio al capitolo successivo. Normalmente tre paragrafi, circa 100–180 parole; meno se i fatti sono pochi.
+- Non basta elencare risultato, punti e posizione in prosa. I numeri devono dare significato al racconto, mentre il riepilogo resta nei riquadri tecnici.
+- Varietà tra giornate e squadre; niente aperture o frasi identiche a prescindere dagli eventi. Ogni episodio considera il cammino precedente senza anticipare il futuro.
+- Soltanto fatti verificati: nessuna scena, sequenza dei gol, emozione personale o dichiarazione inventata. Citazioni attribuite al momento corretto; Derby soltanto se ufficiali, non dedotti dalle rivalità.
+- Una bozza già scritta vale solo finché coincidono i fatti di origine. Verificare cronologia e dati prima di riusarla. Nessuna pubblicazione o generazione a pagamento è autorizzata da questa regola.
+
 ## Regole comuni a tutti i repository di Gianluca
 
 Valgono per chiunque modifichi questi repository: Gianluca, Claude Code (cloud o desktop), l'agente di VS Code, Perplexity, Aider, **Grok** o altri.
