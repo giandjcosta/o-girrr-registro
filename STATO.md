@@ -1,5 +1,9 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (15) — Claude: video B con la scaletta di Gianluca (Lab)
+
+- **Scaletta (Gianluca):** logo della lega da solo e tutto il Campionato (risultati, classifica completa con l'ultimo posto in rosso); logo della coppa e Champions Cup (risultati, gironi con l'ultimo di ogni girone in rosso); partite da non perdere con riquadro rosso per il Campionato (8ª) e azzurro per la Coppa (5ª); chiusura «Tutto su O Girrr» con i due loghi. 32 secondi, senza voce. Classifiche ordinate come la Curva (punti, poi totale della stagione). `lab/video-giornata/strada-b-remotion.mp4`, sorgenti in `rilascio/video/remotion/`.
+
 ## 12 novembre (14) — Claude: il pallino Live di Girrr Sport lampeggia solo durante le partite (Lab)
 
 - **Segnalazione (Gianluca):** il pallino sopra il logo di Girrr Sport (Home, riquadro Tabellone, Lega e Stadio) lampeggiava sempre, anche senza partite.
