@@ -1406,7 +1406,7 @@ function morphDom(o,n){
 function render(){try{var _t=TABS.filter(function(z){return z[0]===cur})[0];$('#ot').textContent=_t?_t[1]:'';$('#olg').src=D.img.lega;document.title='O Girrr · '+(_t?_t[1]:'')}catch(e){}requestAnimationFrame(function(){var r=document.querySelector('.oro-scroll'),a=r&&r.querySelector('[aria-pressed="true"]');if(a)a.scrollIntoView({block:'nearest',inline:'center'})});
   var _vw=$('#view'),_nv=document.createElement('div');_nv.innerHTML=V[cur]()+'';
   morphDom(_vw,_nv);
-  if(cur==='carriera')animaFiducia(S.cteam,fid(S.cteam));
+  if(cur==='carriera'){var _ct=CARSCELTA?S.cteam:ME;animaFiducia(_ct,fid(_ct))}
   [].forEach.call(document.querySelectorAll('#view .seg'),function(g){var a=g.querySelector('[aria-pressed=true]');if(a&&g.scrollWidth>g.clientWidth)centra(g,a)});
   var _tb=$('#tabs'),_sl=_tb.scrollLeft;if(_tb.children.length===TABS.length){[].forEach.call(_tb.children,function(b){b.setAttribute('aria-selected',b.dataset.tab===cur)})}else _tb.innerHTML=TABS.map(function(t){return '<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(cur===t[0])+'" aria-label="'+t[1]+'">'+(t[0]==='sport'?'<img class="gsl" src="'+D.img.gs+'" alt="Girrr Sport">':(({home:1,oro:1,spog:1,carriera:1})[t[0]]?'<img src="'+D.img.lega+'" alt="">':'')+t[1])+'</button>'}).join('');
   try{_tb.style.scrollBehavior='auto';_tb.scrollLeft=_sl;var s=$('#tabs [aria-selected=true]');if(s)centra(_tb,s);_tb.style.scrollBehavior='';aggFade(_tb)}catch(e){}
