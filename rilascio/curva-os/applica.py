@@ -147,6 +147,86 @@ function cvFoto(src){if(!src)return Promise.resolve(null);return fetch(src).then
  '@media (prefers-reduced-motion:reduce){.cv-imp-p,.cv-imp-f{transition:opacity .2s!important}.cv-imp-p{transform:none!important}}';document.head.appendChild(s)})();
 '''
 
+PERSONAGGI = r'''
+/* Nuovi account della Curva (Claude, 12 novembre 2026): le frasi sono in curva-banca.js (PERS_N, dal giorno TAGLIO_N) */
+(function(){var P=location.pathname.indexOf('/stadio/')>=0?'../../assets/':'../assets/';
+ [['rodrigo_saudade','Rodrigo Saudade','Brasiliano a Torino. Joga bonito, tifa forte, cucina feijoada.','#1f9d55','#f2c230'],
+  ['klaus_puenktlich','Klaus Pünktlich','Ingegnere bavarese. Formazione consegnata sempre alle 14:59. Ordnung muss sein.','#1b1b1b','#c8102e'],
+  ['elpibe_rosario','El Pibe de Rosario','Fútbol, mate y garra. Da Rosario con passione.','#6cace4','#1c3f6e'],
+  ['mister_tea','Mister Tea','Londra, 1966. Tea at five, formazione alle sei.','#1d3a6e','#b22234'],
+  ['jp_chic','Jean-Pierre Chic','Il calcio è moda. Il 3-5-2 torna sempre. Voilà.','#1f3a93','#e5e5e5'],
+  ['mamma_del_portiere','La Mamma del Portiere','Il portiere non sbaglia mai. Sbaglia la difesa.','#d17a22','#5c2e0b'],
+  ['meteo_girrr','Il Meteorologo','Previsioni del tempo e dei gol. Affidabilità variabile.','#4ea8de','#1e3a5f'],
+  ['ultra_da_divano','Ultrà da Divano','Sciarpa, telecomando e cori. Dal divano, dal 2009.','#8d0801','#1b1b1b'],
+  ['pentito_del_fanta','Il Fantallenatore Pentito','Ogni lunedì mi pento. Ogni sabato ricomincio.','#6c757d','#343a40'],
+  ['prof_di_mate','La Prof di Matematica','Statistica, probabilità e compiti per casa. Anche per voi.','#2a9d8f','#264653'],
+  ['bomber99','xX_Bomber99_Xx','fanta, gaming e pizza. nn rispondo ai vocali','#7b2cbf','#240046'],
+  ['utente84629','utente84629','','#8a8f98','#4a4f57']
+ ].forEach(function(x){add(x[0],x[1],'fan','',x[2],[x[3],x[4]])});
+ add('pizzeria_fuorigioco','Pizzeria Fuorigioco','fan','','La pizza della lega. Forno a legna e chiacchiere da bancone.',['#c8102e','#1e5631']);
+ ACC.pizzeria_fuorigioco.img=P+'loghi/sponsor-pizzeria-fuorigioco.png';
+ add('radio_girrr','Radio Girrr','org','oro','La radio della lega. Le voci della giornata, in onda dopo ogni turno.',['#13224f','#ffd166']);
+ add('var_girrr','Il VAR del Girrr','org','oro','Gli episodi della giornata rivisti al monitor. La Moviola della lega.',['#0b1220','#3d93d6']);
+ try{(CVB.COMUNI_N||[]).forEach(function(u){var h=hue(u[0]);add(u[0],u[1],'u','',BIOU[h%BIOU.length],['hsl('+h+' 45% 38%)','hsl('+((h+50)%360)+' 40% 22%)'])})}catch(e){}
+})();
+/* Immagini nuove dei personaggi, disegnate con i dati veri della lega (risultati, classifica, prossimo turno) */
+function mpN(s){s=String(s||'');return s==='The Blue brothers'?'The Blues Brothers':s}   /* i nomi delle squadre come li scrive la lega (stif dc minuscolo); The Blues Brothers come in nomi.js */
+var MEMEPLUS={
+ lavagna_ris:function(c,T,PK,n,cx,W,H,F){var CH="'Marker Felt','Comic Sans MS','Segoe Print',cursive",R=cx.ris||[];c.fillStyle='#24382c';c.fillRect(0,0,W,H);c.strokeStyle='#8b5a2b';c.lineWidth=22;c.strokeRect(11,11,W-22,H-22);
+  for(var i=0;i<30;i++){c.fillStyle='rgba(255,255,255,'+(.02+(i%3)*.01)+')';c.fillRect((i*137)%W,(i*71)%H,120,2)}
+  T('BAR SPORT',W/2,82,'800 50px '+CH,'#f4f1de','center');T('Risultati della '+(cx.g||'')+'ª giornata',W/2,124,'600 28px '+CH,'#cfd8c4','center');
+  R.slice(0,5).forEach(function(m,i){var y=180+i*62,g=String(m[2]).split('-');T(mpN(m[0]),W/2-70,y,'700 30px '+CH,'#f4f1de','right',300);T(g[0]+' - '+g[1],W/2,y,'800 34px '+CH,'#ffd166','center');T(mpN(m[1]),W/2+70,y,'700 30px '+CH,'#f4f1de','left',300)});
+  T(PK(['Caffè offerto a chi ha vinto','Chi ha perso offre il cornetto','Il barista commenta gratis'],2),W/2,H-40,'600 26px '+CH,'#cfd8c4','center')},
+ epoca2:function(c,T,PK,n,cx,W,H,F){var EP=PK([['Anno 1966 · la radiolina in tribuna','Si ascoltava tutto, si vedeva poco.'],['Anno 1974 · il pallone di cuoio','Pesava come un mattone. Ed era bellissimo.'],['Anno 1969 · la gita allo stadio','Partenza alle sei, panino col salame.'],['Anno 1977 · la squadra del paese','Maglie cucite dalla sarta, numeri col pennarello.'],['Anno 1963 · il campo di terra','Le righe le tracciava il custode, a occhio.'],['Anno 1981 · la televisione del bar','Tutto il paese davanti a un televisore solo.']],0);
+  c.fillStyle='#d9c7a0';c.fillRect(0,0,W,H);c.fillStyle='#f4ead2';c.fillRect(70,40,W-140,H-80);var g=c.createLinearGradient(0,90,0,H-150);g.addColorStop(0,'#8a7354');g.addColorStop(1,'#4b3a26');c.fillStyle=g;c.fillRect(100,70,W-200,H-210);
+  var k=n(1,3);c.fillStyle='rgba(30,20,10,.75)';for(var i=0;i<(k===0?7:k===1?5:9);i++){var x=150+i*((W-300)/(k===0?6:k===1?4:8)),y=H-210-20-(i%2)*30;c.beginPath();c.arc(x,y-60,22,0,7);c.fill();c.fillRect(x-24,y-38,48,60)}
+  if(k===1){c.fillStyle='rgba(240,230,210,.8)';c.beginPath();c.arc(W/2,H-180,26,0,7);c.fill()}
+  var v=c.createRadialGradient(W/2,H/2-40,100,W/2,H/2-40,460);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(60,35,10,.5)');c.fillStyle=v;c.fillRect(100,70,W-200,H-210);
+  T(EP[0],W/2,H-98,"italic 700 30px Georgia,serif",'#3b2a14','center',W-180);T(EP[1],W/2,H-62,"italic 22px Georgia,serif",'#5b4630','center',W-180)},
+ cartolina:function(c,T,PK,n,cx,W,H,F){var R=cx.ris||[],m=cx.vinc&&cx.sc?[cx.vinc,cx.perd,cx.sc]:(R.length?R[n(0,R.length)]:null);   /* la stessa partita del testo, se c'è */c.fillStyle='#fdf6e3';c.fillRect(0,0,W,H);
+  var g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,'#38b6ff');g.addColorStop(.6,'#ffd166');g.addColorStop(.61,'#1f9d55');g.addColorStop(1,'#0b6e3a');c.fillStyle=g;c.fillRect(30,30,W/2-40,H-60);
+  c.fillStyle='#ffe66d';c.beginPath();c.arc(150,120,48,0,7);c.fill();c.fillStyle='#14532d';c.beginPath();c.moveTo(30,H-120);c.quadraticCurveTo(200,H-260,W/2-10,H-130);c.lineTo(W/2-10,H-30);c.lineTo(30,H-30);c.fill();
+  T('SAUDAÇÕES',W/4+5,H/2+20,'900 46px '+F,'#ffffff','center',W/2-80);c.fillStyle='#c9b98f';c.fillRect(W/2+5,40,2,H-80);
+  c.strokeStyle='#b23a48';c.lineWidth=4;c.setLineDash([6,6]);c.strokeRect(W-170,50,120,140);c.setLineDash([]);T('RIO',W-110,130,'900 34px '+F,'#b23a48','center');
+  var H1="'Segoe Print','Comic Sans MS',cursive";T('Ciao ragazzi!',W/2+40,250,'700 30px '+H1,'#1d3557');
+  T(m?'Qui tutti parlano di '+mpN(m[0]):'Qui si parla solo di calcio,',W/2+40,300,'26px '+H1,'#1d3557','left',W/2-80);T(m?m[2]+' contro '+mpN(m[1])+'.':'e io penso alla lega.',W/2+40,340,'26px '+H1,'#1d3557','left',W/2-80);
+  T('Saudade, Rodrigo',W-60,H-70,'700 26px '+H1,'#1d3557','right')},
+ tabelle:function(c,T,PK,n,cx,W,H,F){var L=cx.cls||[];c.fillStyle='#f5f5f2';c.fillRect(0,0,W,H);[['#000',0],['#dd0000',1],['#ffce00',2]].forEach(function(s){c.fillStyle=s[0];c.fillRect(0,s[1]*10,W,10)});
+  T('TABELLE',40,90,'900 48px '+F,'#111');T((cx.g||'')+'. SPIELTAG · O FANT A GIRRR',W-40,88,'700 22px '+F,'#555','right');
+  T('PLATZ',40,140,'800 18px '+F,'#777');T('MANNSCHAFT',140,140,'800 18px '+F,'#777');T('PUNKTE',W-40,140,'800 18px '+F,'#777','right');
+  L.slice(0,6).forEach(function(t,i){var y=190+i*58;c.fillStyle=i%2?'#ffffff':'#ecece6';c.fillRect(30,y-38,W-60,54);T(String(i+1),60,y,'900 32px '+F,i===0?'#dd0000':'#111','center');T(mpN(t[0]),140,y,'700 30px '+F,'#111','left',520);T(String(t[1]),W-50,y,'900 32px '+F,'#111','right')});
+  T('Ordnung muss sein.',W/2,H-18,'italic 600 20px '+F,'#555','center')},
+ meteo:function(c,T,PK,n,cx,W,H,F){var L=cx.prox||[];var g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,'#1e3a5f');g.addColorStop(1,'#4ea8de');c.fillStyle=g;c.fillRect(0,0,W,H);
+  T('PREVISIONI',40,70,'900 44px '+F,'#fff');T((cx.gn||'')+'ª giornata · Gol e nuvole',W-40,68,'700 22px '+F,'#d7ecff','right');
+  function sole(x,y){c.fillStyle='#ffd166';c.beginPath();c.arc(x,y,18,0,7);c.fill()}function nuvola(x,y,s){c.fillStyle=s||'#f1f5f9';c.beginPath();c.arc(x-14,y,14,0,7);c.arc(x+2,y-8,18,0,7);c.arc(x+18,y,13,0,7);c.fill();c.fillRect(x-28,y,58,14)}
+  L.slice(0,5).forEach(function(m,i){var y=135+i*80,k=n(i+2,4);c.fillStyle='rgba(255,255,255,.12)';c.fillRect(30,y-30,W-60,66);T(mpN(m[0])+' – '+mpN(m[1]),60,y+12,'700 28px '+F,'#fff','left',560);
+   var x=W-100;if(k===0)sole(x,y+2);else if(k===1){sole(x-8,y-4);nuvola(x+6,y+8)}else if(k===2){nuvola(x,y,'#cbd5e1');c.strokeStyle='#bfe3ff';c.lineWidth=3;for(var j=0;j<3;j++){c.beginPath();c.moveTo(x-16+j*14,y+20);c.lineTo(x-22+j*14,y+34);c.stroke()}}else{nuvola(x,y,'#94a3b8');c.fillStyle='#ffd166';c.beginPath();c.moveTo(x,y+16);c.lineTo(x-8,y+32);c.lineTo(x+2,y+30);c.lineTo(x-4,y+44);c.lineTo(x+10,y+24);c.lineTo(x,y+26);c.fill()}});
+  T('Affidabilità della previsione: variabile.',W/2,H-16,'italic 600 18px '+F,'#e0f2fe','center')},
+ pizza:function(c,T,PK,n,cx,W,H,F){var L=cx.cls||[],R=cx.ris||[];c.fillStyle='#fff8ec';c.fillRect(0,0,W,H);for(var i=0;i<W;i+=40){c.fillStyle=(i/40)%2?'#c8102e':'#fff8ec';c.fillRect(i,0,40,24);c.fillRect(i,H-24,40,24)}
+  T('PIZZERIA FUORIGIOCO',W/2,82,'900 40px Georgia,serif','#1e5631','center');T('Il menù della '+(cx.g||'')+'ª giornata',W/2,118,'italic 24px Georgia,serif','#7a5c3a','center');
+  var v=[['La Capolista',L[0]?'Dedicata a '+mpN(L[0][0])+': in cima anche al menù':'Mozzarella e ambizione','9 €'],['La Rimonta',L[2]?'Per '+mpN(L[2][0])+', terza: ci crede ancora':'Pomodoro e speranza','8 €'],['La Diavola del risultato',R[0]?mpN(R[0][0])+' '+R[0][2]+' '+mpN(R[0][1])+': piccante':'Piccante come una sconfitta','8,50 €'],['La Margherita del lunedì','Semplice, per ricominciare','6 €']];
+  v.forEach(function(x,i){var y=185+i*82;T(x[0],60,y,'700 30px Georgia,serif','#1e1e1e');T(x[1],60,y+30,'italic 20px Georgia,serif','#6b5b4b','left',620);T(x[2],W-60,y,'700 28px Georgia,serif','#c8102e','right')})},
+ onda:function(c,T,PK,n,cx,W,H,F){var L=cx.prox||[],m=L[0];c.fillStyle='#0d1430';c.fillRect(0,0,W,H);c.fillStyle='#d62839';c.beginPath();c.arc(70,70,12,0,7);c.fill();T('ON AIR',96,80,'900 30px '+F,'#fff');
+  T('RADIO GIRRR',W/2,180,'900 72px '+F,'#ffd166','center');T('La puntata della '+(cx.g||'')+'ª giornata',W/2,230,'700 28px '+F,'#e5e7eb','center');
+  for(var i=0;i<46;i++){var h=20+((n(i%9,7)+i*13)%70);c.fillStyle=i%2?'#3d93d6':'#5fb0ef';c.fillRect(70+i*17,330-h/2,10,h)}
+  if(m)T('Prossimo turno: '+mpN(m[0])+' – '+mpN(m[1]),W/2,H-60,'700 26px '+F,'#cbd5e1','center',W-80)},
+ var:function(c,T,PK,n,cx,W,H,F){var R=cx.ris||[],m=cx.vinc&&cx.sc?[cx.vinc,cx.perd,cx.sc]:(R.length?R[n(0,R.length)]:null);   /* la stessa partita del testo, se c'è */c.fillStyle='#0b1220';c.fillRect(0,0,W,H);c.fillStyle='#1f2937';c.fillRect(110,60,W-220,H-150);c.fillStyle='#0f172a';c.fillRect(126,76,W-252,H-182);
+  c.strokeStyle='#3d93d6';c.lineWidth=6;c.strokeRect(126,76,W-252,H-182);T('CHECK VAR',W/2,140,'900 52px '+F,'#3d93d6','center');
+  if(m){var g=String(m[2]).split('-');T(mpN(m[0]),W/2-120,240,'800 30px '+F,'#fff','right',260);T(g[0]+' - '+g[1],W/2,244,'900 46px '+F,'#ffd166','center');T(mpN(m[1]),W/2+120,240,'800 30px '+F,'#fff','left',260)}
+  c.fillStyle='#16a34a';c.fillRect(W/2-170,290,340,54);T('DECISIONE CONFERMATA',W/2,327,'900 26px '+F,'#fff','center');c.fillStyle='#374151';c.fillRect(W/2-60,H-90,120,30);c.fillRect(W/2-140,H-60,280,14);
+  T('Il VAR del Girrr · '+(cx.g||'')+'ª giornata',W/2,H-14,'700 18px '+F,'#9ca3af','center')},
+ quaderno:function(c,T,PK,n,cx,W,H,F){var L=cx.cls||[];c.fillStyle='#fdfdf8';c.fillRect(0,0,W,H);c.strokeStyle='#cfe3f3';c.lineWidth=1;for(var x=0;x<W;x+=26){c.beginPath();c.moveTo(x,0);c.lineTo(x,H);c.stroke()}for(var y=0;y<H;y+=26){c.beginPath();c.moveTo(0,y);c.lineTo(W,y);c.stroke()}
+  c.strokeStyle='#e57373';c.lineWidth=3;c.beginPath();c.moveTo(80,0);c.lineTo(80,H);c.stroke();var HW="'Segoe Print','Comic Sans MS',cursive";
+  T('Compito di matematica',110,70,'700 36px '+HW,'#1d3557');
+  if(L.length>1){var d=L[0][1]-L[1][1];T('Problema: '+mpN(L[0][0])+' ha '+L[0][1]+' punti,',110,140,'26px '+HW,'#1d3557','left',W-150);T(mpN(L[1][0])+' ne ha '+L[1][1]+'. Quanti punti di distacco?',110,182,'26px '+HW,'#1d3557','left',W-150);
+   T(L[0][1]+' − '+L[1][1]+' = '+d,110,260,'700 40px '+HW,'#1d3557');T(d===0?'Risposta: nessuno. Pari!':'Risposta: '+d+(d===1?' punto.':' punti.'),110,320,'700 30px '+HW,'#c62828')}
+  T('Bravi. Ma studiate di più.',W-60,H-40,'italic 700 26px '+HW,'#c62828','right')},
+ coreo:function(c,T,PK,n,cx,W,H,F){var cols=[['#d62839','#ffffff'],['#1d3557','#ffd166'],['#0b6e3a','#ffffff'],['#000','#ffd166']][n(0,4)];c.fillStyle='#111';c.fillRect(0,0,W,H);
+  for(var y=0;y<9;y++)for(var x=0;x<18;x++){c.fillStyle=(x+y)%2?cols[0]:cols[1];if(y>=3&&y<=5)c.fillStyle=cols[0];c.fillRect(x*50+2,y*50+2,46,46)}
+  T(PK(['CURVA GIRRR','SEMPRE CON VOI','NOI CI SIAMO','CANTA LA CURVA'],3),W/2,222,'900 64px '+F,cols[1],'center',W-60);   /* nessuna squadra a caso: il testo del coro può parlare di un'altra */T('Coreografia dal divano · 3 cuscini, 1 coperta',W/2,H-20,'700 20px '+F,'#ddd','center')}
+};
+'''
+
 ANTEPRIMA = ('<meta property="og:type" content="website"><meta property="og:site_name" content="O Fant A Girrr">'
              '<meta property="og:title" content="Curva · O Fant A Girrr"><meta property="og:description" content="Cori, applausi e notizie della lega.">'
              '<meta property="og:image" content="https://giandjcosta.github.io/o-fant-a-girrr/assets/curva/anteprima-curva.png">'
@@ -160,6 +240,8 @@ SOSTITUZIONI = [
      "(function(){var a=null;try{a=localStorage.getItem('cv-aspetto')}catch(e){}if(a!=='light'&&a!=='dark')a='auto';window.__cvAspetto=a;"
      "tema(a==='auto'?(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):a)})();   /* Claude: Aspetto Automatico, Chiaro o Scuro (cv-aspetto) */"),
     ('<meta name="theme-color" content="#ffffff" id="tc">', '<meta name="theme-color" content="#ffffff" id="tc">' + ANTEPRIMA),
+    # immagini nuove dei personaggi (MEMEPLUS, in PERSONAGGI)
+    ("if(t==='lavagna'){", "if(MEMEPLUS[t]){MEMEPLUS[t](c,T,PK,n,cx,W,H,F)}else if(t==='lavagna'){"),
     # suono dell'applauso
     ("var key=k+'|'+kind,on=!MN[key];", "var key=k+'|'+kind,on=!MN[key];if(on&&kind==='a')cvSuono();"),
     # condividi con la foto del coro
@@ -198,7 +280,8 @@ SOSTITUZIONI = [
 PROVA = r'''
 /* Solo nel Lab: aggancio per le prove automatiche (prove/prova_curva_ferma.js) */
 window.__curvaProva={render:function(){render()},entra:function(t){me=t;code='PROVA';meH=hnd(t);render()},
- vai:function(v,n){vista=v;if(n)ntab=n;render()},notifiche:function(){return notifiche()},nuovi:function(){cvNuovi()},pubblica:function(){lancia()}};
+ vai:function(v,n){vista=v;if(n)ntab=n;render()},notifiche:function(){return notifiche()},nuovi:function(){cvNuovi()},pubblica:function(){lancia()},dati:function(){return {D:D,SQ:SQ,ST:ST}},
+ img:function(t){var c={sq:ST.cls[0].n,sq2:ST.cls[1].n,gio:'',g:ST.ult&&ST.ult.n,ris:ST.ult?ST.ult.m.map(function(m){return[m[0],m[3],m[4]]}):[],cls:ST.cls.slice(0,6).map(function(x){return[x.n,x.pt]}),gn:ST.next&&ST.next.n,prox:ST.next?ST.next.m.map(function(m){return[m[0],m[3]]}):[]};return memeImg({k:'prova-'+t,imgt:t,cx:c})}};
 '''
 
 
@@ -210,7 +293,7 @@ def applica(t, lab=False):
     k = 'function render(){'
     assert t.count(k) == 1
     # render() nasconde la pillola: dopo un ridisegno i cori nuovi sono già nel feed
-    return t.replace(k, MORFA.strip() + '\n' + IMPOSTAZIONI.strip() + '\n' + (PROVA.strip() + '\n' if lab else '') + k + 'cvNascondi();')
+    return t.replace(k, MORFA.strip() + '\n' + IMPOSTAZIONI.strip() + '\n' + PERSONAGGI.strip() + '\n' + (PROVA.strip() + '\n' if lab else '') + k + 'cvNascondi();')
 
 
 if __name__ == '__main__':

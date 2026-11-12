@@ -27,6 +27,8 @@ self.GIRRR_SPECCHIO = (function () {
     'push.js': new URL('../../rilascio/push/push.js', self.location.href).href, /* notifiche sul telefono */
     'apri.html': new URL('../../rilascio/scorciatoie/apri.html', self.location.href).href,
     'liquid-glass.css': new URL('../../rilascio/liquid-glass/liquid-glass.css', self.location.href).href, /* prototipo Liquid Glass dello Stadio (?stile=vetro) */
+    'girrr/curva-banca.js': new URL('../../rilascio/curva-os/pagine/girrr/curva-banca.js', self.location.href).href, /* nuovi personaggi, frasi e immagini (rilascio/curva-os/banca.py) */
+    'stadio/girrr/curva-banca.js': new URL('../../rilascio/curva-os/pagine/stadio/girrr/curva-banca.js', self.location.href).href,
     'curva-os.js': new URL('../../rilascio/curva-os/curva-os.js', self.location.href).href, /* Curva: uno stile per iPhone e uno per Android */
     'curva-os.css': new URL('../../rilascio/curva-os/curva-os.css', self.location.href).href,
     'material.css': new URL('../../rilascio/liquid-glass/material.css', self.location.href).href, /* prototipo Android, Material 3, dello Stadio (?stile=android) */
