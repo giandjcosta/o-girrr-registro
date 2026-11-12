@@ -8,7 +8,11 @@
 // Uso: servire la cartella che contiene o-girrr-registro e una copia di gh-pages come o-fant-a-girrr su http://localhost:8771/, poi
 //   WEBKIT=/percorso/di/pw_run.sh node prove/prova_curva_ferma.js      (SOLO=Pixel per un solo schermo)
 // Senza WEBKIT gli iPhone si provano con Chromium (e lo dice). Il database si legge soltanto: le scritture sono intercettate.
-const { chromium, webkit, devices } = require('playwright');
+const { chromium, webkit, firefox, devices } = require('playwright');
+const FF = process.env.FIREFOX;   // percorso dell'eseguibile di Firefox: le schermate «Firefox» si provano con Firefox (Gecko)
+const FF_PROFILO = process.env.FIREFOX_PROFILO;   // profilo di Firefox con il certificato del proxy dell'ambiente cloud (certutil): senza, Firefox qui non si collega a Supabase
+function contestoFirefox(o) { const fs = require('fs'), dir = fs.mkdtempSync('/tmp/ffp-'); if (FF_PROFILO) fs.cpSync(FF_PROFILO, dir, { recursive: true }); return firefox.launchPersistentContext(dir, { executablePath: FF, ...o }); }
+const UA_FF = 'Mozilla/5.0 (Android 14; Mobile; rv:132.0) Gecko/132.0 Firefox/132.0', UA_SAM = 'Mozilla/5.0 (Linux; Android 14; SM-S921B) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/26.0 Chrome/122.0.0.0 Mobile Safari/537.36';
 const L = 'http://localhost:8771/o-girrr-registro/lab/offline/';
 const { script: BLOCCA } = require('./blocca_scritture');   // scritture bloccate dentro la pagina (in WebKit route non basta)
 const WK = process.env.WEBKIT;
@@ -16,19 +20,23 @@ const SCH = [
   ['iPhone SE 320', 'ios', { ...devices['iPhone SE'], viewport: { width: 320, height: 568 } }], ['iPhone 15 Pro', 'ios', devices['iPhone 15 Pro']],
   ['iPad Mini', 'ios', devices['iPad Mini']],
   ['Galaxy S8', 'android', devices['Galaxy S8']], ['Pixel 7', 'android', devices['Pixel 7']], ['Galaxy Tab S4', 'android', devices['Galaxy Tab S4']],
-  ['PC 1280', 'altro', { viewport: { width: 1280, height: 800 } }], ['PC 1920', 'altro', { viewport: { width: 1920, height: 1080 } }]
+  ['PC 1280', 'altro', { viewport: { width: 1280, height: 800 } }], ['PC 1920', 'altro', { viewport: { width: 1920, height: 1080 } }],
+  ['Firefox PC 1280', 'altro', { viewport: { width: 1280, height: 800 } }], ['Firefox PC 1920', 'altro', { viewport: { width: 1920, height: 1080 } }],
+  ['Firefox Android', 'android', { viewport: { width: 412, height: 839 }, userAgent: UA_FF, hasTouch: true }],
+  ['Samsung Internet Galaxy S24', 'android', { ...(devices['Galaxy S24'] || devices['Galaxy S9+']), userAgent: UA_SAM }]
 ];
 // Risposta finta alle scritture con le intestazioni CORS: senza, WebKit la rifiuta (e la Curva tratta l'invio come fallito)
 const CORS = { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': '*' };
 const SCRIVE = /salva|scrivi|lancia|rispondi|vota|reagisci|registra|segui|push_|cancella|proponi/;
 (async () => {
-  const bc = await chromium.launch(), bw = WK ? await webkit.launch({ executablePath: WK }) : null;
+  const bc = await chromium.launch(), bw = WK ? await webkit.launch({ executablePath: WK }) : null, bf = FF ? true : null;
   if (!bw) console.log('Attenzione: WebKit non indicato, gli iPhone si provano con Chromium');
   let ko = 0;
   for (const [sn, att, o] of SCH) {
     if (process.env.SOLO && !sn.includes(process.env.SOLO)) continue;
-    const motore = att === 'ios' && bw ? 'WebKit' : 'Chromium';
-    const c = await (motore === 'WebKit' ? bw : bc).newContext(o);
+    if (/^Firefox/.test(sn) && !bf) { console.log('– ' + sn + ': Firefox non indicato (FIREFOX=…), salto'); continue; }
+    const motore = /^Firefox/.test(sn) ? 'Firefox' : att === 'ios' && bw ? 'WebKit' : 'Chromium';
+    const c = await (motore === 'Firefox' ? contestoFirefox(o) : (motore === 'WebKit' ? bw : bc).newContext(o));
     await c.addInitScript(BLOCCA);
     // Spie: suoni (oscillatori creati) e Condividi (navigator.share sostituito: niente viene condiviso davvero)
     await c.addInitScript(() => { window.__osc = 0; const A = window.AudioContext || window.webkitAudioContext; if (A) { const o = A.prototype.createOscillator; A.prototype.createOscillator = function () { window.__osc++; return o.apply(this, arguments); }; }

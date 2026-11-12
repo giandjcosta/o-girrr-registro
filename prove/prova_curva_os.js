@@ -6,7 +6,11 @@
 // Uso: servire la cartella che contiene o-girrr-registro e una copia di gh-pages come o-fant-a-girrr su http://localhost:8771/, poi
 //   WEBKIT=/percorso/di/pw_run.sh node prove/prova_curva_os.js [CARTELLA_FOTO]      (SOLO=Pixel per provare solo gli schermi con quel nome)
 // Il database si legge soltanto: le funzioni che scrivono sono intercettate.
-const { chromium, webkit, devices } = require('playwright');
+const { chromium, webkit, firefox, devices } = require('playwright');
+const FF = process.env.FIREFOX;   // percorso dell'eseguibile di Firefox: le schermate «Firefox» si provano con Firefox (Gecko)
+const FF_PROFILO = process.env.FIREFOX_PROFILO;   // profilo di Firefox con il certificato del proxy dell'ambiente cloud (certutil): senza, Firefox qui non si collega a Supabase
+function contestoFirefox(o) { const fs = require('fs'), dir = fs.mkdtempSync('/tmp/ffp-'); if (FF_PROFILO) fs.cpSync(FF_PROFILO, dir, { recursive: true }); return firefox.launchPersistentContext(dir, { executablePath: FF, ...o }); }
+const UA_FF = 'Mozilla/5.0 (Android 14; Mobile; rv:132.0) Gecko/132.0 Firefox/132.0', UA_SAM = 'Mozilla/5.0 (Linux; Android 14; SM-S921B) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/26.0 Chrome/122.0.0.0 Mobile Safari/537.36';
 const WK = process.env.WEBKIT;   // percorso di pw_run.sh di WebKit: iPhone e iPad si provano con il motore di Safari
 const L = 'http://localhost:8771/o-girrr-registro/lab/offline/';
 const { script: BLOCCA } = require('./blocca_scritture');   // scritture bloccate dentro la pagina (in WebKit route non basta)
@@ -17,18 +21,22 @@ const SCH = [
   ['Galaxy S8', 'android', devices['Galaxy S8']], ['Pixel 7', 'android', devices['Pixel 7']], ['Galaxy S24', 'android', devices['Galaxy S24'] || devices['Galaxy S9+']],
   ['iPad Mini', 'ios', devices['iPad Mini']], ['iPad orizzontale', 'ios', devices['iPad (gen 7) landscape']], ['Galaxy Tab S4', 'android', devices['Galaxy Tab S4']], ['Galaxy Tab S4 orizzontale', 'android', devices['Galaxy Tab S4 landscape']],
   ['PC 1280', 'altro', { viewport: { width: 1280, height: 800 } }], ['PC 1920', 'altro', { viewport: { width: 1920, height: 1080 } }],
+  ['Firefox PC 1280', 'altro', { viewport: { width: 1280, height: 800 } }], ['Firefox PC 1920', 'altro', { viewport: { width: 1920, height: 1080 } }],
+  ['Firefox Android', 'android', { viewport: { width: 412, height: 839 }, userAgent: UA_FF, hasTouch: true }],
+  ['Samsung Internet Galaxy S24', 'android', { ...(devices['Galaxy S24'] || devices['Galaxy S9+']), userAgent: UA_SAM }],
   ['Monitor 2560', 'altro', { viewport: { width: 2560, height: 1440 } }], ['Smart TV', 'altro', { viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 2, userAgent: TV }]
 ];
 const SCRIVE = /salva|scrivi|lancia|rispondi|vota|reagisci|registra|segui|push_|cancella|proponi/;
 // Nome dell'animazione in corso su un elemento (o sul suo ::before / ::after)
 const ANIM = (sel, ps) => { const e = document.querySelector(sel); return e ? getComputedStyle(e, ps || null).animationName : '-'; };
 (async () => {
-  const b = await chromium.launch(), bw = WK ? await webkit.launch({ executablePath: WK }) : null; let ko = 0;
+  const b = await chromium.launch(), bw = WK ? await webkit.launch({ executablePath: WK }) : null, bf = FF ? true : null; let ko = 0;
   if (!bw) console.log('Attenzione: WebKit non indicato, iPhone e iPad si provano con Chromium');
   for (const [sn, att, o] of SCH) {
     if (process.env.SOLO && !sn.includes(process.env.SOLO)) continue;
-    const motore = att === 'ios' && bw ? 'WebKit' : 'Chromium';
-    const c = await (motore === 'WebKit' ? bw : b).newContext(o);
+    if (/^Firefox/.test(sn) && !bf) { console.log('– ' + sn + ': Firefox non indicato (FIREFOX=…), salto'); continue; }
+    const motore = /^Firefox/.test(sn) ? 'Firefox' : att === 'ios' && bw ? 'WebKit' : 'Chromium';
+    const c = await (motore === 'Firefox' ? contestoFirefox(o) : (motore === 'WebKit' ? bw : b).newContext(o));
     await c.addInitScript(BLOCCA);
     await c.route('**/rest/v1/rpc/**', async r => { const n = r.request().url().split('/rpc/')[1].split('?')[0]; if (SCRIVE.test(n) && !/_(stato|pubblico|lista)$/.test(n)) return r.fulfill({ json: null }); return r.continue(); });
     const p = await c.newPage(); const errs = [];
