@@ -12,6 +12,7 @@ Uso:
 La chiave non viene mai stampata. L'URL del progetto è pubblico (è già nelle pagine del sito).
 """
 import json
+import base64
 import os
 import sys
 import urllib.error
@@ -63,11 +64,38 @@ def costruisci(premi, data, oggi):
     return righe
 
 
+def intestazioni(chiave):
+    """Controllo locale del tipo di chiave; la validità è sempre verificata da Supabase."""
+    chiave = chiave.strip()
+    headers = {"apikey": chiave, "Content-Type": "application/json"}
+    if chiave.startswith("sb_secret_"):
+        return headers
+    try:
+        if len(chiave.split(".")) != 3:
+            raise ValueError()
+        payload = chiave.split(".")[1]
+        claims = json.loads(base64.urlsafe_b64decode(payload + "=" * (-len(payload) % 4)))
+        if not isinstance(claims, dict):
+            raise ValueError()
+    except (IndexError, ValueError, TypeError):
+        raise SystemExit("Chiave premi assente o non valida: configurare SUPABASE_SECRET_KEY (sb_secret_) oppure SUPABASE_SERVICE_ROLE_KEY (JWT service_role) nei segreti GitHub del sito.") from None
+    if claims.get("role") != "service_role" or claims.get("ref") != "qmjqfgmvimsuxvghetgi":
+        raise SystemExit("Il segreto premi non contiene una chiave service_role di questo progetto. Una chiave anon/publishable non può registrare premi. Correggere il segreto GitHub; non allargare i permessi del database.")
+    headers["Authorization"] = f"Bearer {chiave}"
+    return headers
+
+
+def chiave_server():
+    chiave = os.environ.get("SUPABASE_SECRET_KEY", "").strip() or os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "").strip()
+    intestazioni(chiave)
+    return chiave
+
+
 def registra(riga, chiave):
     corpo = json.dumps(riga).encode("utf-8")
     richiesta = urllib.request.Request(
         f"{PROGETTO}/rest/v1/rpc/carriera_registra_server", data=corpo, method="POST",
-        headers={"apikey": chiave, "Authorization": f"Bearer {chiave}", "Content-Type": "application/json"})
+        headers=intestazioni(chiave))
     try:
         with urllib.request.urlopen(richiesta, timeout=30) as r:
             return r.read().decode("utf-8").strip('"')
@@ -76,6 +104,10 @@ def registra(riga, chiave):
 
 
 def main():
+    if "--controlla-chiave" in sys.argv:
+        chiave_server()
+        print("Tipo e progetto della chiave premi controllati, senza chiamate al database. La validità sarà verificata dal server.")
+        return
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     if len(args) != 2:
         raise SystemExit(__doc__)
@@ -92,9 +124,7 @@ def main():
         print("\nPROVA: non ho scritto niente. Con --vai registro questi premi nel database.")
         return
 
-    chiave = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
-    if not chiave:
-        raise SystemExit("Manca il segreto SUPABASE_SERVICE_ROLE_KEY: niente registrazione.")
+    chiave = chiave_server()
     print("\nRegistrazione:")
     for r in righe:
         esito = registra(r, chiave)
