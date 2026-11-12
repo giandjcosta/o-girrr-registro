@@ -1,5 +1,12 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (16) — Claude: «Colori della mia squadra» come scelta nelle Impostazioni della Curva (Lab)
+
+- **Gianluca:** ha mandato maglie e stemmi delle 10 squadre da Leghe Fantacalcio (salvati in `riferimenti/squadre-leghe/`), «non devi per forza mettere maglie e loghi nei profili, è per farti capire il colore»; il cambio di colore in base alla squadra deve essere una personalizzazione da scegliere.
+- **Colori** (principale, secondo; in `applica.py`, `COLORI_SQ`): WOA rosso e nero, stif dc verde acqua e arancione, The Blues Brothers oro e nero, Real Madrink blu e nero, Mariana Coneja rosso e oro, Grodah viola e fucsia, Atletico ma non troppo blu e arancione, Oranje VC arancione e blu notte, AFA SELECCION celeste e oro, Apo team viola scuro e nero.
+- **Impostazioni** (pulsante della luna): nuova riga «Colori»: «Della lega» (di partenza) o «Di [squadra]» (solo se sei entrato con una squadra), salvata in `cv-colori`. Con i colori della squadra cambiano accento e link (`--acc`, `--blu`), la pillola di Android; sul tema scuro un po' più chiari per leggerli. Avatar e profili non cambiano.
+- **Prove** (Chromium, Pixel 7, Stadio): le 10 squadre con i loro colori, scelta salvata, ritorno ai colori della lega, nessun errore. Foto: `lab/curva-os/colori-squadra.jpg`, `lab/curva-os/colori-impostazioni.png`.
+
 ## 12 novembre (15) — Claude: video B con la scaletta di Gianluca (Lab)
 
 - **Scaletta (Gianluca):** logo della lega da solo e tutto il Campionato (risultati, classifica completa con l'ultimo posto in rosso); logo della coppa e Champions Cup (risultati, gironi con l'ultimo di ogni girone in rosso); partite da non perdere con riquadro rosso per il Campionato (8ª) e azzurro per la Coppa (5ª); chiusura «Tutto su O Girrr» con i due loghi. 32 secondi, senza voce. Classifiche ordinate come la Curva (punti, poi totale della stagione). `lab/video-giornata/strada-b-remotion.mp4`, sorgenti in `rilascio/video/remotion/`.

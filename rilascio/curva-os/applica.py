@@ -105,6 +105,19 @@ IMPOSTAZIONI = r'''
 /* Impostazioni della Curva (Claude, 12 novembre 2026): il pulsante della luna apre un foglio con
    Aspetto (Automatico, Chiaro, Scuro: Automatico segue il telefono e cambia da solo) e Suoni (applauso con suono). */
 function cvAspettoT(v){return v==='auto'?(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):v}
+/* Colori della mia squadra (Claude, 12 novembre 2026): personalizzazione da scegliere in Impostazioni (di partenza i colori della lega).
+   Colori presi da maglie e stemmi su Leghe Fantacalcio (foto di Gianluca, riferimenti/squadre-leghe/): [principale, secondo]. */
+var COLORI_SQ={'WOA':['#c8102e','#1a1a1a'],'stif dc':['#2a9d8f','#e2703a'],'The Blue brothers':['#b08d2e','#151515'],'Real Madrink':['#283593','#111111'],
+ 'Mariana Coneja':['#d32f2f','#d4a017'],'Grodah':['#7b1fa2','#e0409a'],'Atletico ma non troppo':['#1f4fbf','#f07a2a'],'Oranje VC':['#ef7f1a','#1d2a52'],
+ 'AFA SELECCION':['#3f8fd8','#d4a52a'],'Apo team':['#5b2d90','#141414']};
+function cvColoriOn(){try{return localStorage.getItem('cv-colori')==='squadra'}catch(e){return false}}
+function cvColori(){var r=document.documentElement,c=me&&COLORI_SQ[me];
+ if(cvColoriOn()&&c){r.setAttribute('data-colori-sq','');r.style.setProperty('--sq1',c[0]);r.style.setProperty('--sq2',c[1])}
+ else{r.removeAttribute('data-colori-sq');r.style.removeProperty('--sq1');r.style.removeProperty('--sq2')}}
+(function(){var s=document.createElement('style');s.textContent=
+ 'html[data-colori-sq]{--acc:var(--sq1)!important;--blu:var(--sq1)!important}'+
+ ':root[data-theme=dark][data-colori-sq]{--acc:color-mix(in srgb,var(--sq1) 72%,#fff)!important;--blu:color-mix(in srgb,var(--sq1) 72%,#fff)!important}'+   /* sul tema scuro un po\' più chiari, per leggerli */
+ 'html[data-os=android][data-colori-sq]{--os-indicatore:color-mix(in srgb,var(--acc) 26%,var(--bg))!important}';document.head.appendChild(s)})();
 function cvAspetto(v){window.__cvAspetto=v;try{localStorage.setItem('cv-aspetto',v)}catch(e){}tema(cvAspettoT(v));render()}
 /* Di partenza il suono è acceso solo su iPhone e iPad, dove tace con il silenzioso; su Android e sul computer una pagina web
    non può sapere se il telefono è in silenzioso, quindi parte spento e si accende a mano. */
@@ -123,10 +136,10 @@ function cvImpostazioni(){if(document.getElementById('cv-imp')){cvChiudiImp();re
  var a=window.__cvAspetto||'auto',s=cvSuonoOn(),o=document.createElement('div');o.id='cv-imp';o.className='cv-imp';
  o.innerHTML='<div class="cv-imp-f"></div><div class="cv-imp-p" role="dialog" aria-modal="true" aria-label="Impostazioni della Curva"><i class="cv-imp-m" aria-hidden="true"></i><b>Aspetto</b><div class="cv-imp-seg">'+
   [['auto','Automatico'],['light','Chiaro'],['dark','Scuro']].map(function(x){return '<button type="button" data-asp="'+x[0]+'" aria-pressed="'+(a===x[0])+'">'+x[1]+'</button>'}).join('')+
-  '</div><small>Automatico segue il telefono: scuro quando lo è il telefono, anche la sera.</small><b>Suoni</b><div class="cv-imp-seg"><button type="button" data-suono="1" aria-pressed="'+s+'">Sì</button><button type="button" data-suono="0" aria-pressed="'+(!s)+'">No</button></div><small>'+(cvIos()?'Un suono breve quando metti un applauso. Tace quando l\'iPhone è in silenzioso.':'Un suono breve quando metti un applauso. Il sito non può sapere se il telefono è in silenzioso: per questo parte spento, e segue il volume dei contenuti.')+'</small><button type="button" class="cv-imp-ok">Fatto</button></div>';
+  '</div><small>Automatico segue il telefono: scuro quando lo è il telefono, anche la sera.</small>'+(me&&COLORI_SQ[me]?'<b>Colori</b><div class="cv-imp-seg"><button type="button" data-col="lega" aria-pressed="'+(!cvColoriOn())+'">Della lega</button><button type="button" data-col="squadra" aria-pressed="'+cvColoriOn()+'" style="--sq:'+COLORI_SQ[me][0]+'">Di '+esc(nm(acc(hnd(me))))+'</button></div><small>Con i colori di '+esc(nm(acc(hnd(me))))+' pulsanti, schede e link prendono il colore della tua maglia.</small>':'<b>Colori</b><small>Entra con la tua squadra per usare i suoi colori.</small>')+'<b>Suoni</b><div class="cv-imp-seg"><button type="button" data-suono="1" aria-pressed="'+s+'">Sì</button><button type="button" data-suono="0" aria-pressed="'+(!s)+'">No</button></div><small>'+(cvIos()?'Un suono breve quando metti un applauso. Tace quando l\'iPhone è in silenzioso.':'Un suono breve quando metti un applauso. Il sito non può sapere se il telefono è in silenzioso: per questo parte spento, e segue il volume dei contenuti.')+'</small><button type="button" class="cv-imp-ok">Fatto</button></div>';
  document.body.appendChild(o);void o.offsetWidth;o.classList.add('on');
  o.addEventListener('click',function(e){if(e.target.classList.contains('cv-imp-f')||e.target.classList.contains('cv-imp-ok')){cvChiudiImp();return}var b=e.target.closest('button');if(!b)return;
-  if(b.dataset.asp)cvAspetto(b.dataset.asp);else if(b.dataset.suono){cvSuonoSalva(b.dataset.suono==='1');if(b.dataset.suono==='1')cvSuono()}else return;
+  if(b.dataset.asp)cvAspetto(b.dataset.asp);else if(b.dataset.col){try{localStorage.setItem('cv-colori',b.dataset.col)}catch(e){}cvColori()}else if(b.dataset.suono){cvSuonoSalva(b.dataset.suono==='1');if(b.dataset.suono==='1')cvSuono()}else return;
   [].forEach.call(b.parentNode.children,function(x){x.setAttribute('aria-pressed',String(x===b))})});
  var p=o.querySelector('[aria-pressed=true]');if(p)p.focus({preventScroll:true})}
 function cvChiudiImp(){var o=document.getElementById('cv-imp');if(!o)return;o.classList.remove('on');setTimeout(function(){o.remove()},320);var g=document.getElementById('tg');if(g)g.focus({preventScroll:true})}
@@ -293,7 +306,7 @@ def applica(t, lab=False):
     k = 'function render(){'
     assert t.count(k) == 1
     # render() nasconde la pillola: dopo un ridisegno i cori nuovi sono già nel feed
-    return t.replace(k, MORFA.strip() + '\n' + IMPOSTAZIONI.strip() + '\n' + PERSONAGGI.strip() + '\n' + (PROVA.strip() + '\n' if lab else '') + k + 'cvNascondi();')
+    return t.replace(k, MORFA.strip() + '\n' + IMPOSTAZIONI.strip() + '\n' + PERSONAGGI.strip() + '\n' + (PROVA.strip() + '\n' if lab else '') + k + 'cvNascondi();cvColori();')
 
 
 if __name__ == '__main__':
