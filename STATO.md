@@ -1,5 +1,12 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre — ChatGPT: collaudo completo del deploy e Fiducia dell'Anteprima
+
+- La prova manuale del deploy (`43213132734`) ha trovato un errore di configurazione: `deploy-pages` richiede un ambiente. Aggiunto `environment: github-pages` al job, mantenendo ramo, hosting e sito vero invariati. Il primo giro di sola sincronizzazione era già riuscito.
+- Individuato il difetto residuo nel vecchio collaudo Fiducia: l'Anteprima visualizzava la squadra `ME`, ma animava il valore di `S.cteam` (esempio: valore atteso 39, arco a 52). Corretto in `anteprima/build.py` solo il collegamento dell'animazione alla squadra visualizzata, rigenerate le copie storiche. Nessuna modifica al Lab di Claude né alle pagine del sito vero.
+- Il collaudo mantiene i controlli su valore, numero, arco, reputazione, schermi e riscatti nel conto simulato; non sono stati rimossi controlli per farlo passare.
+
+
 ## 12 novembre — ChatGPT: Registro online e primo giro automatico verificato
 
 - PR #52 unita con il «vai» di Gianluca (`48ba482`): Anteprima corrente, Archivio e Changelog sono online nella repo di prova. `registro-stato.json` pubblico conferma la 5.8.1 già esistente; nessuna nuova versione dell'app.

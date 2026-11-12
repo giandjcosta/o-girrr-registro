@@ -59,6 +59,7 @@ sost("function go(t){", "function go(t){t=route(t);if(t==='home'){location.href=
 sost("if(V[hh])cur=hh;", "if(V[hh])cur=route(hh);if(cur==='home'){location.replace('@@HOME@@')}")
 sost("carriera:vCar,", "carriera:vCarr,")
 sost("var CARSCELTA=true;", "var CARSCELTA=false;")   # Anteprima e sito vero: solo la propria squadra (in prova si cambia con ?come=Squadra)
+sost("if(cur==='carriera')animaFiducia(S.cteam,fid(S.cteam));", "if(cur==='carriera'){var _ct=CARSCELTA?S.cteam:ME;animaFiducia(_ct,fid(_ct))}")
 if RIL0:   # nel sito vero i premi arrivano dal database (carriera_stato), non dal Totogirrr finto dell'anteprima
     sost("var PREMI52=true,", "var PREMI52=false,")
 else:   # anteprima: Totogirrr è la pagina finta anteprima/totogirrr-52.html, con la squadra della Carriera; niente strumenti di prova a vista
