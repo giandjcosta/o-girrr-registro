@@ -1,5 +1,8 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (29) — Claude: video della giornata (B), due chiusure alternative (Lab)
+- Gianluca: basi di Campionato e Coppa approvate, la chiusura (colpo finale di «Victory») non convince; la versione `strada-b-effetti.mp4` resta la base. `monta_musica.py`: `--dopo` ripetibile, con la dissolvenza per ogni passaggio (`@QUANDO:DISSOLVENZA`). Chiusura B (`strada-b-chiusura-b.mp4`): su «Da non perdere» torna la base calma (2) dal 64,8 s, il suo finale (colpo a 68,5, pausa, risalita 69,5-71,3, sfuma) chiude il video. Chiusura C (`strada-b-chiusura-c.mp4`): «Victory» fino a 62,9 s, la fine della sua prima parte piena (cala da 60,3 s) cade su «Tutto su O Girrr». Il boato sul podio non convince Gianluca: prompt nuovo proposto.
+
 ## 12 novembre (28) — Claude: video della giornata (B), podio dal 3° all'1°, transizione alla Coppa più morbida, loghi finali uguali (Lab)
 - Su indicazione di Gianluca: il podio sale come in TV, 3° (8 fotogrammi), 2° (22), 1° (36), e l'1° è in cima a 1,47 s (calcolato con la stessa molla): lì la salita e il boato, prima cadevano quando l'1 non era ancora su. Whoosh molto basso su ogni tendina (−17 dB) e più forte nel passaggio Campionato → Coppa (−6 dB); stinger della Coppa quando il logo atterra (17,7 s). Passaggio musicale: `--dissolvenza 1.0`, la base calma sfuma in 1 s e sotto il logo sale «Victory» (20,0-22,3 s del brano), l'esplosione cade a 19,67 s, quando partono i risultati della Coppa (`--dopo m3:19.46:126.7@17.83`). Loghi di «Tutto su O Girrr» alla stessa altezza (190 px; prima 170 e 150 di larghezza). Video: `lab/video-giornata/strada-b-effetti.mp4`; `strada-b-remotion.mp4` rifatto con la musica generata.
 

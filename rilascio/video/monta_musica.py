@@ -165,7 +165,7 @@ if __name__ == '__main__':
     p.add_argument('--coda', type=float, default=8.0, help='secondi del finale vero del brano da tenere')
     p.add_argument('--inizio', type=float, default=0.0, help='secondi del brano da cui partire')
     p.add_argument('--fine', type=float, default=0.0, help='secondi del brano a cui fermarsi (0 = fino alla fine)')
-    p.add_argument('--dopo', default='', help='FILE:INIZIO:FINE@QUANDO')
+    p.add_argument('--dopo', action='append', default=[], help='FILE:INIZIO:FINE@QUANDO[:DISSOLVENZA], ripetibile')
     p.add_argument('--dissolvenza', type=float, default=0.5, help='secondi in cui il primo brano lascia il posto al secondo')
     p.add_argument('--effetti', default='', help='scene.json di render.mjs: effetti grafici a tempo')
     p.add_argument('--suono', action='append', default=[], help='FILE:DA:A@QUANDO:VOLUME')
@@ -176,20 +176,23 @@ if __name__ == '__main__':
     if A.fine:
         x[-int(0.3 * SR):] *= np.linspace(1, 0, int(0.3 * SR))[:, None]
     if A.dopo:
-        sorg, q = A.dopo.rsplit('@', 1)
-        f2, i2, f2fine = sorg.rsplit(':', 2)
-        q, xf = float(q), A.dissolvenza
-        z = carica(f2)[int(float(i2) * SR):int(float(f2fine) * SR)].copy()
-        z[-int(0.3 * SR):] *= np.linspace(1, 0, int(0.3 * SR))[:, None]
-        z = monta(z, lungo - q + xf, A.coda)
-        k, n = int((q - xf) * SR), int(xf * SR)
-        y = x[:k + n].copy()
-        if len(y) < k + n:
-            y = np.concatenate([y, np.zeros((k + n - len(y), 2), np.float32)])
-        y[k:] *= np.linspace(1, 0, n)[:, None]
-        z[:n] *= np.linspace(0, 1, n)[:, None]
-        y = np.concatenate([y[:k], y[k:] + z[:n], z[n:]])
-        print('secondo brano', f2, 'da %.2f s del video' % (q - xf))
+        y = x
+        for nr, d in enumerate(A.dopo):   # FILE:INIZIO:FINE@QUANDO[:DISSOLVENZA], anche più di uno (si torna a un brano)
+            sorg, q = d.rsplit('@', 1)
+            f2, i2, f2fine = sorg.rsplit(':', 2)
+            q, xf = (float(q.split(':')[0]), float(q.split(':')[1]) if ':' in q else A.dissolvenza)
+            z = carica(f2)[int(float(i2) * SR):int(float(f2fine) * SR)].copy()
+            z[-int(0.3 * SR):] *= np.linspace(1, 0, int(0.3 * SR))[:, None]
+            if nr == len(A.dopo) - 1:   # l'ultimo chiude il video con il suo finale vero
+                z = monta(z, lungo - q + xf, A.coda)
+            k, n = int((q - xf) * SR), int(xf * SR)
+            y = y[:k + n].copy()
+            if len(y) < k + n:
+                y = np.concatenate([y, np.zeros((k + n - len(y), 2), np.float32)])
+            y[k:] *= np.linspace(1, 0, n)[:, None]
+            z[:n] *= np.linspace(0, 1, n)[:, None]
+            y = np.concatenate([y[:k], y[k:] + z[:n], z[n:]])
+            print('brano', f2, 'da %.2f s del video' % (q - xf))
     else:
         y = monta(x, lungo, A.coda)
     y = y[:int(lungo * SR)]
