@@ -1,0 +1,71 @@
+name: ChatGPT - Allineamento automatico del Registro
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'lab/**'
+      - 'anteprima/**'
+      - 'rilascio/versioni/**'
+      - 'sincronizza.py'
+      - 'changelog.py'
+      - '.github/workflows/sincronizza-registro.yml'
+  schedule:
+    - cron: '17,47 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: sincronizza-registro
+  cancel-in-progress: false
+jobs:
+  allinea:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/checkout@v4
+        with:
+          repository: giandjcosta/o-fant-a-girrr
+          ref: gh-pages
+          path: .sito-pubblicato
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Genera copia pubblicata, archivio, changelog e Anteprima
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python3 sincronizza.py --sito .sito-pubblicato
+          python3 changelog.py
+          python3 anteprima/build.py
+          python3 prove/prova_sincronizzazione.py
+          python3 prove/prova_cambio_versione_registro.py
+      - name: Salva solo i file generati, senza sovrascrivere lavori concorrenti
+        id: salva
+        run: |
+          git config user.name 'ChatGPT'
+          git config user.email 'noreply@openai.com'
+          git add -- anteprima/pubblicata/ anteprima/storica55.html anteprima/index.html anteprima/attuale.html anteprima/5.5/ anteprima/home-lega.html anteprima/home-stadio.html anteprima/tabellone-lega.html anteprima/tabellone-stadio.html anteprima/campo.html ufficiale/index.html archivio.html registro-stato.json index.html aggiornamenti.html rilascio/versioni/versioni.json ufficiale/src/sito/versioni.json README.md
+          echo 'cambiato=false' >> "$GITHUB_OUTPUT"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'ChatGPT: Registro allineato automaticamente al sito e al Laboratorio'
+          git pull --rebase origin main
+          git push origin HEAD:main
+          echo 'cambiato=true' >> "$GITHUB_OUTPUT"
+      - name: Prepara sito del Registro (senza checkout esterno)
+        if: steps.salva.outputs.cambiato == 'true'
+        run: |
+          mkdir -p "$RUNNER_TEMP/pagine-registro"
+          git archive HEAD | tar -x -C "$RUNNER_TEMP/pagine-registro"
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.salva.outputs.cambiato == 'true'
+        with:
+          path: ${{ runner.temp }}/pagine-registro
+      - uses: actions/deploy-pages@v4
+        if: steps.salva.outputs.cambiato == 'true'

@@ -1,5 +1,21 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre — ChatGPT: allineamento automatico del Registro (PR, non ancora online)
+
+- Richiesta di Gianluca: riallineare Changelog, Archivio e Anteprima all'ultima versione online e mantenerli aggiornati automaticamente, senza interferire con Claude.
+- Base verificata: sito `gh-pages` `97f0697`, versione 5.8.1. Il ramo di Claude `claude/liquid-glass-lab-prototype-qslq3e` (Curva per sistema e video) non è stato modificato, unito o pubblicato.
+- `sincronizza.py --sito CHECKOUT_GH_PAGES`: copia navigabile in `anteprima/pubblicata/`, tutte le pagine protette prima degli script originali da `anteprima/sola-lettura.js`; soltanto RPC di lettura esplicitamente elencate, scritture e service worker bloccati. Nessun accesso o codice personale incorporato. `registro-stato.json` conserva versione e commit. Fonte dei rilasci: `versioni.json` del sito, usata anche per `archivio.html` e per il Changelog del Lab.
+- L'ingresso `ufficiale/` segue la versione corrente in Lega/Stadio. Le prove 5.5 rimangono dove sono; cornice storica conservata in `anteprima/storica55.html`, con il suo test di regressione. `registro-nav.js` aggiorna i link correnti del Lab. Il Lab è cambiato solo per il caricamento di questo piccolo script, senza modifiche al codice delle funzionalità.
+- `changelog.py`: storico completo (471 modifiche filtrate fino al commit pubblicato), fallisce senza sostituire lo snapshot se la rete dà errore. La fusione con la cache del browser conserva anche lo snapshot più recente.
+- Workflow `sincronizza-registro.yml`: dopo modifiche al Lab/strumenti di build e ogni 30 minuti per rilevare rilasci esterni (possibili ritardi GitHub), rigenera, controlla, salva soltanto file generati e pubblica il Registro se cambia. Concorrenza serializzata, pull con rebase prima del push, nessun push forzato. Non pubblica mai il sito vero. Il deploy esplicito serve perché i commit fatti con GITHUB_TOKEN non avviano da soli Pages.
+- `aggiorna.py` non chiama più il vecchio `ufficiale/build.py`, che dipendeva dal percorso del checkout di Claude e dalle patch della 5.0. `anteprima/build.py` resta riproducibile e conserva l'ingresso corrente.
+- Regola permanente scritta in `AGENTS.md`; README corretto e versione corrente generata automaticamente.
+- Prove superate: `prova_sincronizzazione.py`, `prova_cambio_versione_registro.py` (rilascio successivo, storico conservato, Lab intatto, idempotenza), `collaudo_anteprima_52.py`, `collaudo_preview52_totogirrr_milestone.js`, `collaudo_fiducia_universale52.js`. `prova_registro_corrente.py`: 16 profili Chromium (iPhone 320/SE/Pro/Pro Max, Android, iPad, tablet Android, PC 1280/1920/2560, TV a densità doppia), Changelog/Archivio/Anteprima, cambio grafica e richiesta di scrittura rifiutata dentro la pagina; nessun errore JS o overflow. Foto PC/TV in `qa_artifacts/registro-corrente/` (locali, ignorate da Git).
+- Non provati: Safari/WebKit in questa sessione, dispositivi fisici, primo giro del nuovo workflow dopo il merge. Nessun premio registrato e nessuna modifica al database.
+- Integrazione delle PR premi #51 (registro) e #8 (sito) rifiutata dal controllo automatico di approvazione, che richiede consenso esplicito al merge su main. Nessun aggiramento: le correzioni e questa automazione restano sui rami ChatGPT fino all'approvazione.
+- Ripristino dopo un'eventuale integrazione: revert dei commit ChatGPT; per fermare i giri automatici disabilitare `sincronizza-registro.yml`. I prototipi storici e il ramo di Claude sono conservati.
+
+
 ## 12 novembre — ChatGPT: diagnosi e controllo della chiave premi (ramo isolato)
 
 - Controllata in sola lettura la funzione viva `carriera_registra_server`: EXECUTE è già concesso a `service_role`, negato ad `anon`. Nessuna modifica al database.
