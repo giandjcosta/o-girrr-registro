@@ -1,5 +1,8 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (17) — Claude: reazioni, tornano le frecce del repost della Curva (Lab)
+- Gianluca preferisce il cuore e la nuvoletta dei commenti del prototipo `lab/curva-os/reazioni.html`, ma le frecce del repost della Curva attuale: nel prototipo ora c'è l'icona del repost della Curva (frecce curve). Numeri di fianco a tutti i simboli, come prima. Provato a 320 px, nessun errore. Foto: `lab/curva-os/reazioni-frecce.png`.
+
 ## 12 novembre (16) — Claude: «Colori della mia squadra» come scelta nelle Impostazioni della Curva (Lab)
 
 - **Gianluca:** ha mandato maglie e stemmi delle 10 squadre da Leghe Fantacalcio (salvati in `riferimenti/squadre-leghe/`), «non devi per forza mettere maglie e loghi nei profili, è per farti capire il colore»; il cambio di colore in base alla squadra deve essere una personalizzazione da scegliere.
