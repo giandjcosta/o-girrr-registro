@@ -9,7 +9,7 @@ Fatti da Gianluca il 12 novembre 2026 con i prompt di Claude. Volumi e tagli son
 | `whoosh.mp3` | fruscio | ogni tendina tra le scene |
 | `pop.mp3` | pop leggero | ogni partita che entra nei risultati (Campionato e Coppa) |
 | `podio.mp3` | salita | gradini del podio |
-| `boato.mp3` | boato della folla, 3 s | arrivo del podio |
+| `boato.mp3` | boato della folla, 3 s | non usato: Gianluca non vuole la folla che esulta sul primo posto |
 | `cascata.mp3` | cascata di tic | righe della classifica |
 | `ultimo.mp3` | «dun» deluso | riga rossa dell'ultimo in classifica |
 | `logo-coppa.mp3` | salita e colpo | logo della Champions Cup, con l'esplosione di «Victory» |

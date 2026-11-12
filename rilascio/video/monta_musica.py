@@ -90,7 +90,7 @@ def scaletta(S):
             E.append(('logo-coppa', ini[k] + 0.4))   # quando il logo della Coppa atterra, sopra la salita di «Victory»
     for k, n in (('lega', S.get('m', 5)), ('coppa', S.get('mc', 4))):
         E += [('pop', ini[k] + (14 + 9 * i + 3) / fps) for i in range(n)]
-    E += [('podio', ini['podio'] + 1.45), ('boato', ini['podio'] + 1.5)]   # boato quando l'1° è in cima
+    E += [('podio', ini['podio'] + 1.45)]   # la salita finisce quando l'1° è in cima; niente folla che esulta (Gianluca, 12 novembre)
     ncl = S.get('cl', 10)
     E += [('cascata', ini['classifica'] + 8 / fps), ('ultimo', ini['classifica'] + (8 + 3 * (ncl - 1) + 4) / fps)]
     if 'prossime' in ini and S.get('derby'):

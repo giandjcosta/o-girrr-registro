@@ -1,5 +1,8 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (30) — Claude: video della giornata (B), tolta la folla che esulta sul primo posto (Lab)
+- Gianluca voleva togliere il boato del podio (avevo capito di rifarlo): tolto da `scaletta()`, resta solo la salita quando l'1° arriva in cima. Rifatte le due versioni che gli piacciono di più: `strada-b-effetti.mp4` (chiusura con «Victory») e `strada-b-chiusura-b.mp4` (ritorno al Campionato). Gianluca ci pensa.
+
 ## 12 novembre (29) — Claude: video della giornata (B), due chiusure alternative (Lab)
 - Gianluca: basi di Campionato e Coppa approvate, la chiusura (colpo finale di «Victory») non convince; la versione `strada-b-effetti.mp4` resta la base. `monta_musica.py`: `--dopo` ripetibile, con la dissolvenza per ogni passaggio (`@QUANDO:DISSOLVENZA`). Chiusura B (`strada-b-chiusura-b.mp4`): su «Da non perdere» torna la base calma (2) dal 64,8 s, il suo finale (colpo a 68,5, pausa, risalita 69,5-71,3, sfuma) chiude il video. Chiusura C (`strada-b-chiusura-c.mp4`): «Victory» fino a 62,9 s, la fine della sua prima parte piena (cala da 60,3 s) cade su «Tutto su O Girrr». Il boato sul podio non convince Gianluca: prompt nuovo proposto.
 
