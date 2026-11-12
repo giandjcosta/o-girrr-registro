@@ -1,5 +1,9 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (19) — Claude: video della giornata (B), la partita da non perdere scelta con i criteri di Gianluca (Lab)
+- `rilascio/video/remotion/render.mjs` sceglie la partita del prossimo turno, in quest'ordine: Derby (stessa regola del Tabellone: votato o nato da una sfida accettata col nome, altrimenti rivalità da 80 in su; scritta speciale «DERBY» in oro con il nome), 1ª contro 2ª, 3ª contro 4ª, l'ultima all'inseguimento (ultima da almeno 3 giornate, almeno 4 punti nelle ultime 3, contro una squadra a 3 punti o meno), una lunga storia (5 anni o più nella pagina Rivalità). In Champions Cup posizioni del girone; se nessuna partita rientra la Coppa non compare. In Campionato, se nessuna rientra, la sfida della capolista. I Derby votati si leggono da Supabase con la chiave pubblica (`derby_stato`, sola lettura, come il Tabellone).
+- Con i dati di oggi: Campionato 8ª Real Madrink-Grodah e Coppa 5ª Apo team-Real Madrink, tutte e due «Una lunga storia». Foto: `lab/video-giornata/strada-b-da-non-perdere.png` e, con dati di prova, `strada-b-derby.png` (Derby e nessuna partita di Coppa). Il caso «L'ultima all'inseguimento» non capita con i dati di oggi.
+
 ## 12 novembre (18) — Claude: video della giornata (B), torna il podio e righe colorate (Lab)
 - Su richiesta di Gianluca: prima il podio dei primi 3, poi la classifica completa. Primi 3 con lo sfondo oro, argento e bronzo trasparente come le altre righe; ultimo del Campionato e ultimo di ogni girone della Champions Cup in un rosso più scuro di quello della lega (#9e0f22), sempre trasparente. Le altre righe hanno il numero bianco e la banda del colore ufficiale (rosso Campionato, azzurro Coppa). Video di 36 s: `lab/video-giornata/strada-b-remotion.mp4`, foto delle scene `strada-b-scene.jpg`. Sorgente `rilascio/video/remotion/src/index.jsx`.
 

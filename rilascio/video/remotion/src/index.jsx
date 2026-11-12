@@ -69,13 +69,6 @@ const Gironi = ({ nc, gir }) => { const f = useCurrentFrame(), { fps } = useVide
         {gir[g].map((q, i) => { const s = spring({ frame: f - 10 - gi * 14 - i * 5, fps, config: { damping: 14, stiffness: 150 } });
           return <div key={q.n} style={{ marginBottom: 8 }}><Riga pos={i + 1} nome={q.n} pt={q.pt} t="coppa" ult={i === gir[g].length - 1} s={s} mossa={`translateY(${(1 - s) * 30}px)`} conta={q.pt} /></div>; })}</div>)}</div></AbsoluteFill>; };   /* nessuna regola di qualificazione: non la scriviamo se non è nei dati */
 
-const Prossima = ({ n, big }) => { const f = useCurrentFrame(), { fps } = useVideoConfig(), s = spring({ frame: f - 8, fps, config: { damping: 10, stiffness: 110 } });
-  return <AbsoluteFill><Sfondo t="lega" /><Tv t="lega" /><Titolo t="lega" k={`PROSSIMA GIORNATA · ${n + 1}ª`} tit="La partita da non perdere" />
-    <div style={{ position: 'relative', margin: '70px 56px 0', padding: '44px 30px', borderRadius: 26, textAlign: 'center', background: 'linear-gradient(120deg,#d62839,#8e1a2a 60%,#141d3d 130%)', transform: `scale(${s})`, boxShadow: '0 30px 60px rgba(0,0,0,.4)' }}>
-      <div style={{ font: F(900, 46), color: CHIARO }}>{nm(big[0])}</div><div style={{ font: F(900, 26), letterSpacing: '.3em', color: ORO, margin: '14px 0' }}>CONTRO</div><div style={{ font: F(900, 46), color: CHIARO }}>{nm(big[1])}</div></div>
-    <div style={{ position: 'absolute', bottom: 110, width: '100%', textAlign: 'center' }}><Img src={staticFile('logo-lega.png')} style={{ width: 90, opacity: interpolate(f, [20, 35], [0, 1], cl) }} /><div style={{ font: F(800, 26), color: CHIARO, marginTop: 10 }}>Tutto su O Girrr</div></div></AbsoluteFill>; };
-
-
 const Intro = ({ t, n }) => { const f = useCurrentFrame(), { fps } = useVideoConfig(), s = spring({ frame: f, fps, config: { damping: 9, stiffness: 120 } }), A = TEMA[t].acc;
   return <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}><Sfondo t={t} />
     <Img src={staticFile(TEMA[t].logo)} style={{ position: 'relative', width: 300, transform: `scale(${s}) rotate(${(1 - s) * (t === 'lega' ? -20 : 20)}deg)`, filter: 'drop-shadow(0 20px 40px rgba(0,0,0,.45))' }} />
@@ -89,14 +82,20 @@ const Classifica = ({ n, c }) => { const f = useCurrentFrame(), { fps } = useVid
       {c.map((q, i) => { const s = spring({ frame: f - 8 - i * 3, fps, config: { damping: 14, stiffness: 150 } });
         return <Riga key={q.n} pos={i + 1} nome={q.n} t="lega" med={MEDAGLIE[i]} ult={i === ult} s={s} mossa={`translateX(${(1 - s) * 120}px)`} conta={<Conta a={q.pt} da={8 + i * 3} />} />; })}</div></AbsoluteFill>; };
 
-const Riquadro = ({ t, k, a, b, da }) => { const f = useCurrentFrame(), { fps } = useVideoConfig(), s = spring({ frame: f - da, fps, config: { damping: 10, stiffness: 110 } }), A = TEMA[t];
+// Perché è da non perdere: Derby (scritta speciale in oro con il nome), sfida di classifica o lunga storia
+const Motivo = ({ x, t, s }) => x.k === 'derby'
+  ? <div style={{ margin: '12px auto 0', opacity: s }}><span style={{ display: 'inline-block', font: F(900, 22), letterSpacing: '.32em', color: '#1d2a52', background: `linear-gradient(90deg,${ORO},#ffe7a3,${ORO})`, borderRadius: 999, padding: '6px 18px 6px 24px', boxShadow: '0 0 24px rgba(255,209,102,.55)' }}>DERBY</span>
+      {x.nome && <div style={{ font: F(800, 24), fontStyle: 'italic', color: ORO, marginTop: 10 }}>{x.nome}</div>}</div>
+  : <div style={{ margin: '12px auto 0', opacity: s }}><span style={{ display: 'inline-block', font: F(900, 17), letterSpacing: '.2em', color: CHIARO, border: '2px solid rgba(255,255,255,.55)', borderRadius: 999, padding: '4px 14px' }}>{x.k.toUpperCase()}</span></div>;
+
+const Riquadro = ({ t, k, x, da }) => { const a = x.a, b = x.b; const f = useCurrentFrame(), { fps } = useVideoConfig(), s = spring({ frame: f - da, fps, config: { damping: 10, stiffness: 110 } }), A = TEMA[t];
   return <div style={{ position: 'relative', margin: '0 56px 26px', padding: '26px 26px 30px', borderRadius: 24, textAlign: 'center', background: `linear-gradient(120deg,${A.acc},${A.acc2} 60%,#141d3d 130%)`, transform: `scale(${s})`, opacity: s, boxShadow: '0 24px 50px rgba(0,0,0,.4)' }}>
     <Img src={staticFile(A.logo)} style={{ position: 'absolute', top: 16, left: 18, width: 54 }} />
     <div style={{ font: F(900, 18), letterSpacing: '.24em', color: t === 'lega' ? ORO : '#d6ecff' }}>{k}</div>
-    <div style={{ font: F(900, 38), color: CHIARO, marginTop: 14 }}>{nm(a)}</div><div style={{ font: F(900, 20), letterSpacing: '.3em', color: t === 'lega' ? ORO : '#d6ecff', margin: '8px 0' }}>CONTRO</div><div style={{ font: F(900, 38), color: CHIARO }}>{nm(b)}</div></div>; };
+    <div style={{ font: F(900, 38), color: CHIARO, marginTop: 14 }}>{nm(a)}</div><div style={{ font: F(900, 20), letterSpacing: '.3em', color: t === 'lega' ? ORO : '#d6ecff', margin: '8px 0' }}>CONTRO</div><div style={{ font: F(900, 38), color: CHIARO }}>{nm(b)}</div><Motivo x={x} t={t} s={interpolate(useCurrentFrame(), [da + 14, da + 26], [0, 1], cl)} /></div>; };
 
-const DaNonPerdere = ({ n, big, nc2, bigC }) => <AbsoluteFill><Sfondo t="lega" /><Titolo t="lega" k="PROSSIMO TURNO" tit="Da non perdere" />
-  <div style={{ position: 'relative', marginTop: 34 }}><Riquadro t="lega" k={`CAMPIONATO · ${n + 1}ª GIORNATA`} a={big[0]} b={big[1]} da={8} />{bigC && <Riquadro t="coppa" k={`CHAMPIONS CUP · ${nc2}ª GIORNATA`} a={bigC[0]} b={bigC[1]} da={20} />}</div></AbsoluteFill>;
+const DaNonPerdere = ({ n, big, nc2, bigC }) => <AbsoluteFill><Sfondo t="lega" /><Titolo t="lega" k="PROSSIMO TURNO" tit={bigC ? 'Da non perdere' : 'La partita da non perdere'} />
+  <div style={{ position: 'relative', marginTop: 34 }}><Riquadro t="lega" k={`CAMPIONATO · ${n + 1}ª GIORNATA`} x={big} da={8} />{bigC && <Riquadro t="coppa" k={`CHAMPIONS CUP · ${nc2}ª GIORNATA`} x={bigC} da={20} />}</div></AbsoluteFill>;
 
 const Fine = () => { const f = useCurrentFrame(), { fps } = useVideoConfig(), s = spring({ frame: f, fps, config: { damping: 11, stiffness: 120 } });
   return <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}><Sfondo t="lega" />
@@ -117,4 +116,4 @@ const Video = (p) => <AbsoluteFill style={{ background: '#1d2a52' }}><Caratteri 
   {INIZI.slice(1).map(([k, s]) => <Sequence key={'t' + k} from={s - 7} durationInFrames={15}><Tendina t={COPPA.indexOf(k) >= 0 ? 'coppa' : 'lega'} /></Sequence>)}
 </AbsoluteFill>;
 
-registerRoot(() => <Composition id="Giornata" component={Video} durationInFrames={TOT} fps={30} width={720} height={1280} defaultProps={{ n: 7, nc: 4, nc2: 5, m: [], mc: [], cl: [], gir: {}, big: ['', ''], bigC: null }} />);
+registerRoot(() => <Composition id="Giornata" component={Video} durationInFrames={TOT} fps={30} width={720} height={1280} defaultProps={{ n: 7, nc: 4, nc2: 5, m: [], mc: [], cl: [], gir: {}, big: { a: '', b: '', k: '' }, bigC: null }} />);
