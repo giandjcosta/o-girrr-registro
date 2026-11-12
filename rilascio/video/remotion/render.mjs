@@ -54,4 +54,7 @@ const browserExecutable = process.argv[2];
 const serveUrl = await bundle({ entryPoint: './src/index.jsx', publicDir: './public' });
 const composition = await selectComposition({ serveUrl, id: 'Giornata', inputProps: props, browserExecutable });
 await renderMedia({ composition, serveUrl, codec: 'h264', outputLocation: '/home/user/o-girrr-registro/lab/video-giornata/strada-b-remotion.mp4', inputProps: props, browserExecutable, crf: 22 });
+// tempi delle scene per la musica (rilascio/video/musica.py): stessa scaletta di src/index.jsx
+const SCENE = eval(/const SC = (\[.*?\]);/s.exec(fs.readFileSync('./src/index.jsx', 'utf8'))[1]).filter(([k]) => k !== 'prossime' || props.big || props.bigC);
+fs.writeFileSync('scene.json', JSON.stringify({ fps: 30, scene: SCENE }));
 console.log('fatto', JSON.stringify({ big: props.big, bigC: props.bigC }));

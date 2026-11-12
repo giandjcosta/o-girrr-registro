@@ -1,5 +1,8 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (22) — Claude: video della giornata (B), musica di sottofondo originale (Lab)
+- `rilascio/video/musica.py`: musica generata con numpy (gratis, niente brani di altri), a tempo con le scene da `scene.json` (scritto da `render.mjs`): colpo e accordo sul logo della lega, ritmo da sigla sportiva in La minore per il Campionato, rullo sul podio e piatto all'arrivo dei gradini, stacco e colpo sul logo della coppa, tema un tono sopra con le campanelle per la Champions Cup, Campionato più leggero su «Da non perdere», accordo maggiore finale che sfuma; fruscio a ogni tendina. Controllati volume (medio −16 dB, massimo −0,9 dB) e spettro: i colpi cadono sui cambi di scena. Non ascoltata da Claude: serve l'orecchio di Gianluca.
+
 ## 12 novembre (21) — Claude: video della giornata (B), niente partita da non perdere se non ce n'è una importante (Lab)
 - Tolto il ripiego della capolista: anche in Campionato la partita compare solo se rientra nei criteri. Se non rientra niente né in Campionato né in Coppa, la scena «Da non perdere» non c'è e il video passa a «Tutto su O Girrr» (durata calcolata dai dati con `calculateMetadata`: 31,8 s invece di 36,5). Provati i casi «nessuna» e «solo Coppa»: `lab/video-giornata/strada-b-casi.png`. Video con i dati veri invariato (tutte e due le partite rientrano).
 
