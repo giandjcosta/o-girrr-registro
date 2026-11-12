@@ -12,8 +12,6 @@ self.GIRRR_SPECCHIO = (function () {
     'cerca.js': new URL('../../rilascio/cerca/cerca.js', self.location.href).href, /* Cerca un giocatore nello Spogliatoio */
     'versioni.js': new URL('../../rilascio/versioni/versioni.js', self.location.href).href, /* pagina Versioni */
     'versioni.json': new URL('../../rilascio/versioni/versioni.json', self.location.href).href,
-    'girrr/versioni.html': new URL('../../rilascio/versioni/pagine/girrr/versioni.html', self.location.href).href,
-    'stadio/girrr/versioni.html': new URL('../../rilascio/versioni/pagine/stadio/girrr/versioni.html', self.location.href).href,
     'condividi.js': new URL('../../rilascio/condividi/condividi.js', self.location.href).href, /* Condividi come immagine */
     'stagione.js': new URL('../../rilascio/stagione/stagione.js', self.location.href).href, /* Carriera · La mia stagione */
     'girrr/app.html': new URL('../../rilascio/video/pagine/girrr/app.html', self.location.href).href, /* app.html del sito (5.8.2, con la Carriera a cartellini) e la scheda Video di Girrr Sport (rilascio/video/scheda/applica.py --lab) */
@@ -30,10 +28,10 @@ self.GIRRR_SPECCHIO = (function () {
     'girrr/curva-banca.js': new URL('../../rilascio/curva-os/pagine/girrr/curva-banca.js', self.location.href).href, /* nuovi personaggi, frasi e immagini (rilascio/curva-os/banca.py) */
     'stadio/girrr/curva-banca.js': new URL('../../rilascio/curva-os/pagine/stadio/girrr/curva-banca.js', self.location.href).href,
     'girrr/v55/ui.js': new URL('../../rilascio/curva-os/pagine/girrr/v55/ui.js', self.location.href).href, /* commenti del sondaggio senza «· bot» */
-    'girrr/': new URL('../../rilascio/live/pagine/girrr/index.html', self.location.href).href, /* Home: il pallino Live lampeggia solo durante le partite (rilascio/live/applica.py) */
-    'girrr/index.html': new URL('../../rilascio/live/pagine/girrr/index.html', self.location.href).href,
-    'stadio/girrr/': new URL('../../rilascio/live/pagine/stadio/girrr/index.html', self.location.href).href,
-    'stadio/girrr/index.html': new URL('../../rilascio/live/pagine/stadio/girrr/index.html', self.location.href).href,
+    'girrr/': new URL('../../rilascio/condividi/pagine/girrr/index.html', self.location.href).href, /* Home del sito (5.8.2, con il pallino Live) e «Condividi la giornata» (rilascio/condividi/applica.py) */
+    'girrr/index.html': new URL('../../rilascio/condividi/pagine/girrr/index.html', self.location.href).href,
+    'stadio/girrr/': new URL('../../rilascio/condividi/pagine/stadio/girrr/index.html', self.location.href).href,
+    'stadio/girrr/index.html': new URL('../../rilascio/condividi/pagine/stadio/girrr/index.html', self.location.href).href,
     'curva-os.js': new URL('../../rilascio/curva-os/curva-os.js', self.location.href).href, /* Curva: uno stile per iPhone e uno per Android */
     'curva-os.css': new URL('../../rilascio/curva-os/curva-os.css', self.location.href).href,
     'material.css': new URL('../../rilascio/liquid-glass/material.css', self.location.href).href, /* prototipo Android, Material 3, dello Stadio (?stile=android) */
