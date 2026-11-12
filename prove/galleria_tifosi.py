@@ -1,0 +1,16 @@
+"""Raccoglie le foto effettive del collaudo per la revisione, senza modificarle."""
+from pathlib import Path
+import base64
+R=Path(__file__).resolve().parents[1];OUT=R/'consegna';OUT.mkdir(exist_ok=True)
+shots=R/'qa_artifacts/tifosi-chromium'
+parts=[]
+for profile,label in [('PC1920','PC · 1920 × 900'),('TV','TV · 1920 × 1080 · Densità doppia')]:
+ for feature,title in [('mvp','Girrr Sport → Squadra della settimana'),('derby','Albo → Derby → Classifica'),('settimana','Carriera → La mia settimana')]:
+  for skin in ['lega','stadio']:
+   file=shots/f'{skin}-{feature}-{profile}.png'
+   if not file.exists():continue
+   src='data:image/png;base64,'+base64.b64encode(file.read_bytes()).decode()
+   parts.append(f'<figure data-profilo="{profile}"><figcaption><b>{title}</b><span>{skin.capitalize()} · {label}</span></figcaption><button aria-label="Ingrandisci {title}, {skin}"><img src="{src}" alt="{title}, grafica {skin}"></button></figure>')
+s='''<!doctype html><html lang="it"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Foto della revisione · O Girrr</title><style>*{box-sizing:border-box}body{margin:0;background:#141d3d;color:#fbf6ec;font:15px/1.5 system-ui,sans-serif}header,main{max-width:1440px;margin:auto;padding:24px}h1{margin:0;font-size:28px}p,figcaption span{color:#bfe3ff}main{display:grid;grid-template-columns:1fr 1fr;gap:20px}figure{margin:0;border:1px solid #ffffff30;border-radius:12px;overflow:hidden;background:#1d2a52}figcaption{padding:14px}figcaption span{display:block;font-size:12px}button{cursor:pointer;border:0;background:transparent;padding:0;color:inherit}figure button{display:block;width:100%}img{width:100%;display:block}nav{display:flex;gap:10px}nav button{border:1px solid #ffffff40;border-radius:20px;padding:8px 15px;font:inherit}nav button[aria-pressed=true]{background:#ffd166;color:#141d3d}figure[hidden]{display:none}dialog{width:98vw;max-width:2000px;padding:8px;background:#141d3d;color:white;border:1px solid #ffffff50}dialog::backdrop{background:#000b}dialog>button{display:block;padding:10px;position:sticky;top:0;background:#141d3d;border-radius:15px;font:inherit}@media(max-width:760px){main{grid-template-columns:1fr;padding:14px}header{padding:20px 14px}}</style><header><h1>Le tre novità nelle due grafiche</h1><p>Foto della preview locale. Clicca una schermata per ingrandirla. I profili PC e TV sono emulati in Chromium.</p><nav><button data-p="PC1920" aria-pressed="true">PC</button><button data-p="TV" aria-pressed="false">TV</button></nav></header><main>'''+''.join(parts)+'''</main><dialog><button>Chiudi ×</button><img alt="Schermata ingrandita"></dialog><script>const d=document.querySelector('dialog');function filter(p){document.querySelectorAll('figure').forEach(e=>e.hidden=e.dataset.profilo!==p);document.querySelectorAll('[data-p]').forEach(e=>e.setAttribute('aria-pressed',e.dataset.p===p))}document.querySelectorAll('[data-p]').forEach(e=>e.onclick=()=>filter(e.dataset.p));document.querySelectorAll('figure button').forEach(e=>e.onclick=()=>{d.querySelector('img').src=e.querySelector('img').src;d.showModal()});d.querySelector('button').onclick=()=>d.close();filter('PC1920');</script></html>'''
+(OUT/'foto-pc-tv.html').write_text(s)
+print('Foto raccolte:',len(parts))
