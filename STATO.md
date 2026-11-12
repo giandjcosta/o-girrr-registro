@@ -1,5 +1,10 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (13) — Claude: reazioni dentro la barra completa del coro (Lab)
+
+- **Gianluca:** «nel coro ci deve essere spazio per il repost, per il condividi e per quanti l'hanno visualizzato».
+- **`lab/curva-os/reazioni.html`:** la barra del coro resta quella della Curva (risposte, rilanci, cuore con gli applausi, visualizzazioni, condividi); le altre reazioni stanno in una riga piccola sopra, ognuna con icona e numero; tenendo premuto il cuore si apre la barra delle reazioni. A 320 px tutto sta nella riga (pulsanti e barra un po' più stretti), nessuno scorrimento laterale; provato anche su iPhone 15 Pro.
+
 ## 12 novembre (12) — Claude: reazioni con nomi e numeri, video B con Champions Cup e grafica ufficiale (Lab)
 
 - **Reazioni (Gianluca):** il cuore non si ripete accanto al cuore; ogni reazione ha un nome proprio (Applausi, Risate, Fiamme, Wow, Gufate, Pagliacci, Lacrime); accanto al cuore, ogni altra reazione con il suo numero, anche quando è una sola; la tua è colorata; toccandola la togli o la cambi (`lab/curva-os/reazioni.html`, ancora senza salvataggio).

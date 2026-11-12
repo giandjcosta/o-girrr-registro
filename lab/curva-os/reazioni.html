@@ -17,15 +17,19 @@ h1{font:900 22px Inter,sans-serif;margin:8px 0 4px}p.s{color:var(--mu);margin-bo
 .post{display:flex;gap:12px;padding:14px 4px;border-bottom:1px solid var(--ln)}
 .av{width:44px;height:44px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900}
 .pb{flex:1;min-width:0}.pb b{font-weight:800}.pb span{color:var(--mu)}.pb .x{margin:3px 0 10px;line-height:1.4}
-.acts{display:flex;gap:22px;color:var(--mu);position:relative;align-items:center}
+.acts{display:flex;justify-content:space-between;color:var(--mu);position:relative;align-items:center;margin-left:-8px}
+.acts>button{min-width:0}.acts>button span{white-space:nowrap}
+.barra{left:0!important}
+
 .acts button{display:flex;align-items:center;gap:6px;border:0;background:none;color:inherit;font:600 13px Inter,sans-serif;padding:6px 8px;border-radius:999px;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;touch-action:manipulation}
 .acts svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .acts .rea.on{color:var(--c)}.acts .rea.on svg .pieno{fill:currentColor;stroke:none}
 .acts .rea.pop svg{animation:pop .45s cubic-bezier(.3,1.6,.5,1)}
 @keyframes pop{0%{transform:scale(.4)}100%{transform:scale(1)}}
-.riep{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin-left:2px}
-.riep .chip{gap:4px;padding:4px 8px;border:1px solid var(--ln);border-radius:999px;color:var(--mu);font:700 13px Inter,sans-serif}
-.riep .chip svg{width:16px;height:16px;color:var(--c)}
+.riep{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin:0 0 6px}.riep:empty{display:none}
+.riep .chip{display:flex;align-items:center;cursor:pointer;background:none;gap:4px;padding:3px 8px;border:1px solid var(--ln);border-radius:999px;color:var(--mu);font:700 13px Inter,sans-serif}
+.riep .chip svg{width:16px;height:16px;color:var(--c);fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.riep .chip svg .pieno{fill:currentColor;stroke:none}
 .riep .chip.on{border-color:var(--c);color:var(--c);background:color-mix(in srgb,var(--c) 10%,transparent)}
 .riep .chip.on svg .pieno{fill:currentColor;stroke:none}
 .barra{position:absolute;left:-6px;bottom:42px;display:flex;gap:0;padding:4px 6px;max-width:calc(100vw - 24px);border-radius:999px;background:var(--bg);box-shadow:0 8px 28px rgba(0,0,0,.22),0 0 0 1px var(--ln);
@@ -38,6 +42,9 @@ h1{font:900 22px Inter,sans-serif;margin:8px 0 4px}p.s{color:var(--mu);margin-bo
 .barra button:hover,.barra button.su{transform:translateY(-6px) scale(1.25)}.barra button:hover small,.barra button.su small{opacity:1}
 .nota{margin-top:22px;padding:14px;border-radius:14px;background:var(--hv);color:var(--mu);line-height:1.5;font-size:14px}
 @media (prefers-reduced-motion:reduce){.barra,.barra button,.acts .rea.pop svg{transition:none;animation:none}}
+@media (max-width:380px){   /* telefoni piccoli: tutto sta nella riga (in fondo, così vince sulle regole sopra) */
+ .acts>button{padding:6px 4px;font-size:12px;gap:3px}.acts>button svg{width:18px;height:18px}
+ .barra{padding:4px}.barra button{padding:6px 3px}.barra button svg{width:24px;height:24px}}
 </style>
 </head>
 <body>
@@ -57,13 +64,15 @@ h1{font:900 22px Inter,sans-serif;margin:8px 0 4px}p.s{color:var(--mu);margin-bo
   ['pagliaccio','Pagliaccio','Pagliacci','#e63946','<circle cx="12" cy="13" r="7.5"/><circle class="pieno" cx="12" cy="13.6" r="1.8"/><circle cx="12" cy="13.6" r="1.8"/><path d="M9 10.5h.01M15 10.5h.01M8.8 16.4q3.2 2.4 6.4 0"/><path d="M5.3 9.5Q3 8.5 3.5 6M18.7 9.5q2.3-1 1.8-3.5M8.5 5.8Q12 2.5 15.5 5.8"/>'],
   ['lacrime','Lacrima','Lacrime','#3d93d6','<circle class="pieno" cx="12" cy="12" r="9" opacity=".25"/><circle cx="12" cy="12" r="9"/><path d="M8 10h2.5M13.5 10H16M9 16.5q3-2 6 0"/><path d="M8.5 12.5q-1 1.6-.2 2.6.9.6 1.6-.4.3-.9-1.4-2.2z"/>']
  ];
+ var IC={rsp:'<path d="M4 5h16v11H9l-5 4z"/>',ril:'<path d="M7 7h11l-3-3M17 17H6l3 3"/><path d="M18 7v5M6 17v-5"/>',vis:'<path d="M5 20V10M10 20V4M15 20v-8M20 20v-5"/>',shr:'<path d="M12 4v11M7 9l5-5 5 5"/><path d="M5 14v6h14v-6"/>'};
+ function ic(k){return '<svg viewBox="0 0 24 24" aria-hidden="true">'+IC[k]+'</svg>'}
  function ico(r){return '<svg viewBox="0 0 24 24" aria-hidden="true">'+r[4]+'</svg>'}
  var CORI=[['RG','#13224f','Radio Girrr','@radio_girrr','Mariana Coneja vince 3-2 e resta in testa. Il commento nella puntata della giornata.',{cuore:31,risata:4,fuoco:12}],
   ['UD','#8d0801','Ultrà da Divano','@ultra_da_divano','Ho urlato così forte che il vicino ha battuto sul muro. Ricambiato.',{risata:22,cuore:9,gufo:2}],
   ['KP','#1b1b1b','Klaus Pünktlich','@klaus_puenktlich','Formazione consegnata alle 14:59. Ordnung muss sein.',{cuore:14,wow:6,pagliaccio:3}]];
  var lista=document.getElementById('lista');
  CORI.forEach(function(c,i){var d=document.createElement('article');d.className='post';d.dataset.mia='';
-  d.innerHTML='<div class="av" style="background:'+c[1]+'">'+c[0]+'</div><div class="pb"><b>'+c[2]+'</b> <span>'+c[3]+' · 2 h</span><div class="x">'+c[4]+'</div><div class="acts"><button class="rea" type="button" aria-label="Applauso (tieni premuto per altre reazioni)" style="--c:#f91880">'+ico(R[0])+'<span class="n"></span></button><span class="riep"></span><div class="barra" role="menu" aria-label="Reazioni">'+
+  d.innerHTML='<div class="av" style="background:'+c[1]+'">'+c[0]+'</div><div class="pb"><b>'+c[2]+'</b> <span>'+c[3]+' · 2 h</span><div class="x">'+c[4]+'</div><div class="riep" aria-label="Altre reazioni"></div><div class="acts"><button type="button" aria-label="Risposte">'+ic('rsp')+'<span>'+(3+i*4)+'</span></button><button type="button" aria-label="Rilanci">'+ic('ril')+'<span>'+(8-i*2)+'</span></button><button class="rea" type="button" aria-label="Applauso (tieni premuto per altre reazioni)" style="--c:#f91880">'+ico(R[0])+'<span class="n"></span></button><button type="button" aria-label="Visualizzazioni">'+ic('vis')+'<span>'+['2,5 K','1,9 K','812'][i]+'</span></button><button type="button" aria-label="Condividi">'+ic('shr')+'</button><div class="barra" role="menu" aria-label="Reazioni">'+
    R.map(function(r){return '<button type="button" role="menuitem" data-r="'+r[0]+'" style="--c:'+r[3]+'" aria-label="'+r[1]+'">'+ico(r)+'<small>'+r[1]+'</small></button>'}).join('')+'</div></div></div>';
   lista.appendChild(d);d._c=Object.assign({},c[5]);agg(d)});
  /* Il cuore ha il suo pulsante con il numero degli applausi; accanto, ogni altra reazione con il suo numero (anche 1).
