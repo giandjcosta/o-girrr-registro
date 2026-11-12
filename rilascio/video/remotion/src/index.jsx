@@ -8,6 +8,13 @@ const NOMI = { 'The Blue brothers': 'The Blues Brothers' };
 const nm = s => NOMI[s] || s;
 const CHIARO = '#fbf6ec', ORO = '#ffd166';
 const TEMA = { lega: { acc: '#d62839', acc2: '#8e1a2a', logo: 'logo-lega.png', tv: 'tv-lega.png', nome: 'CAMPIONATO' }, coppa: { acc: '#3d93d6', acc2: '#1d5f99', logo: 'logo-coppa.png', tv: 'tv-coppa.png', nome: 'CHAMPIONS CUP' } };
+// Righe delle classifiche: primi 3 (oro, argento, bronzo) e ultimo (rosso più scuro di quello della lega) con lo sfondo
+// colorato ma trasparente come le altre righe; le altre righe hanno il numero bianco e la banda del colore ufficiale.
+const MEDAGLIE = [[255, 209, 102], [223, 230, 243], [231, 164, 106]], ULTIMO = [158, 15, 34];
+const rgb = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+const Riga = ({ pos, nome, pt, t, med, ult, s, mossa, conta }) => { const c = ult ? ULTIMO : med;
+  return <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '11px 18px', borderRadius: 14, background: c ? rgb(c, ult ? .42 : .2) : 'rgba(255,255,255,.08)', borderLeft: `8px solid ${c ? rgb(ult ? [196, 30, 52] : c, 1) : TEMA[t].acc}`, opacity: s, transform: mossa }}>
+    <b style={{ font: F(900, 26), color: med && !ult ? rgb(med, 1) : CHIARO, width: 34 }}>{pos}</b><span style={{ font: F(800, 25), color: CHIARO, flex: 1 }}>{nm(nome)}</span><b style={{ font: F(900, 28), color: CHIARO }}>{conta}</b></div>; };
 const F = (w, s) => `${w} ${s}px Inter, system-ui, sans-serif`;
 const cl = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' };
 
@@ -47,7 +54,7 @@ const Risultati = ({ t, n, m }) => <AbsoluteFill><Sfondo t={t} /><Tv t={t} /><Ti
   <div style={{ position: 'relative', padding: '26px 56px', display: 'flex', flexDirection: 'column', gap: 16 }}>{m.map((x, i) => <Partita key={i} x={x} i={i} t={t} girone={t === 'coppa'} />)}</div></AbsoluteFill>;
 
 const Podio = ({ n, c }) => { const f = useCurrentFrame(), { fps } = useVideoConfig();
-  return <AbsoluteFill><Sfondo t="lega" /><Tv t="lega" /><Titolo t="lega" k="CAMPIONATO" tit={`La classifica dopo la ${n}ª`} />
+  return <AbsoluteFill><Sfondo t="lega" /><Tv t="lega" /><Titolo t="lega" k="CAMPIONATO" tit={`Il podio dopo la ${n}ª`} />
     <div style={{ position: 'absolute', bottom: 120, left: 0, right: 0, display: 'flex', justifyContent: 'center', alignItems: 'flex-end', gap: 22 }}>
       {[[c[1], 2, 320, 20, '#dfe6f3'], [c[0], 1, 420, 8, ORO], [c[2], 3, 250, 30, '#e7a46a']].map(([q, pos, h, da, bg]) => { const s = spring({ frame: f - da, fps, config: { damping: 11, stiffness: 90 } });
         return <div key={pos} style={{ width: 190, textAlign: 'center' }}>
@@ -60,8 +67,7 @@ const Gironi = ({ nc, gir }) => { const f = useCurrentFrame(), { fps } = useVide
     <div style={{ position: 'relative', padding: '30px 56px', display: 'flex', flexDirection: 'column', gap: 26 }}>
       {Object.keys(gir).sort().map((g, gi) => <div key={g}><div style={{ font: F(900, 20), letterSpacing: '.25em', color: '#9fd0ff', marginBottom: 10 }}>GIRONE {g}</div>
         {gir[g].map((q, i) => { const s = spring({ frame: f - 10 - gi * 14 - i * 5, fps, config: { damping: 14, stiffness: 150 } });
-          return <div key={q.n} style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '12px 18px', marginBottom: 8, borderRadius: 14, background: i === gir[g].length - 1 ? 'rgba(214,40,57,.85)' : 'rgba(255,255,255,.08)', borderLeft: `8px solid ${i === gir[g].length - 1 ? '#ff6174' : '#3d93d6'}`, opacity: s, transform: `translateY(${(1 - s) * 30}px)` }}>
-            <b style={{ font: F(900, 26), color: '#9fd0ff', width: 30 }}>{i + 1}</b><span style={{ font: F(800, 25), color: CHIARO, flex: 1 }}>{nm(q.n)}</span><b style={{ font: F(900, 28), color: CHIARO }}>{q.pt}</b></div>; })}</div>)}</div></AbsoluteFill>; };   /* nessuna regola di qualificazione: non la scriviamo se non è nei dati */
+          return <div key={q.n} style={{ marginBottom: 8 }}><Riga pos={i + 1} nome={q.n} pt={q.pt} t="coppa" ult={i === gir[g].length - 1} s={s} mossa={`translateY(${(1 - s) * 30}px)`} conta={q.pt} /></div>; })}</div>)}</div></AbsoluteFill>; };   /* nessuna regola di qualificazione: non la scriviamo se non è nei dati */
 
 const Prossima = ({ n, big }) => { const f = useCurrentFrame(), { fps } = useVideoConfig(), s = spring({ frame: f - 8, fps, config: { damping: 10, stiffness: 110 } });
   return <AbsoluteFill><Sfondo t="lega" /><Tv t="lega" /><Titolo t="lega" k={`PROSSIMA GIORNATA · ${n + 1}ª`} tit="La partita da non perdere" />
@@ -80,9 +86,8 @@ const Intro = ({ t, n }) => { const f = useCurrentFrame(), { fps } = useVideoCon
 const Classifica = ({ n, c }) => { const f = useCurrentFrame(), { fps } = useVideoConfig(), ult = c.length - 1;
   return <AbsoluteFill><Sfondo t="lega" /><Tv t="lega" /><Titolo t="lega" k="CAMPIONATO" tit={`La classifica dopo la ${n}ª`} />
     <div style={{ position: 'relative', padding: '22px 56px', display: 'flex', flexDirection: 'column', gap: 8 }}>
-      {c.map((q, i) => { const s = spring({ frame: f - 8 - i * 3, fps, config: { damping: 14, stiffness: 150 } }), ros = i === ult, col = ['#ffd166', '#dfe6f3', '#e7a46a'][i];
-        return <div key={q.n} style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '11px 18px', borderRadius: 14, background: ros ? 'rgba(214,40,57,.85)' : 'rgba(255,255,255,.08)', borderLeft: `8px solid ${ros ? '#ff6174' : col || 'rgba(255,255,255,.18)'}`, opacity: s, transform: `translateX(${(1 - s) * 120}px)` }}>
-          <b style={{ font: F(900, 26), color: col || CHIARO, width: 34 }}>{i + 1}</b><span style={{ font: F(800, 25), color: CHIARO, flex: 1 }}>{nm(q.n)}</span><b style={{ font: F(900, 28), color: CHIARO }}><Conta a={q.pt} da={8 + i * 3} /></b></div>; })}</div></AbsoluteFill>; };
+      {c.map((q, i) => { const s = spring({ frame: f - 8 - i * 3, fps, config: { damping: 14, stiffness: 150 } });
+        return <Riga key={q.n} pos={i + 1} nome={q.n} t="lega" med={MEDAGLIE[i]} ult={i === ult} s={s} mossa={`translateX(${(1 - s) * 120}px)`} conta={<Conta a={q.pt} da={8 + i * 3} />} />; })}</div></AbsoluteFill>; };
 
 const Riquadro = ({ t, k, a, b, da }) => { const f = useCurrentFrame(), { fps } = useVideoConfig(), s = spring({ frame: f - da, fps, config: { damping: 10, stiffness: 110 } }), A = TEMA[t];
   return <div style={{ position: 'relative', margin: '0 56px 26px', padding: '26px 26px 30px', borderRadius: 24, textAlign: 'center', background: `linear-gradient(120deg,${A.acc},${A.acc2} 60%,#141d3d 130%)`, transform: `scale(${s})`, opacity: s, boxShadow: '0 24px 50px rgba(0,0,0,.4)' }}>
@@ -103,12 +108,12 @@ const Fine = () => { const f = useCurrentFrame(), { fps } = useVideoConfig(), s 
 const Tendina = ({ t }) => { const f = useCurrentFrame(), x = interpolate(f, [0, 14], [-120, 120]);
   return <AbsoluteFill style={{ transform: `translateX(${x}%) skewX(-12deg)`, background: `linear-gradient(90deg,${TEMA[t].acc} 0 70%,${ORO} 70% 78%,transparent 78%)` }} />; };
 
-const SC = [['introLega', 75], ['lega', 165], ['classifica', 160], ['introCoppa', 70], ['coppa', 150], ['gironi', 135], ['prossime', 140], ['fine', 80]];
+const SC = [['introLega', 75], ['lega', 165], ['podio', 120], ['classifica', 160], ['introCoppa', 70], ['coppa', 150], ['gironi', 135], ['prossime', 140], ['fine', 80]];
 let da = 0; const INIZI = SC.map(([k, d]) => { const s = da; da += d; return [k, s, d]; }); const TOT = da;
 const COPPA = ['introCoppa', 'coppa', 'gironi'];
 const Video = (p) => <AbsoluteFill style={{ background: '#1d2a52' }}><Caratteri />
   {INIZI.map(([k, s, d]) => <Sequence key={k} from={s} durationInFrames={d}>
-    {k === 'introLega' ? <Intro t="lega" n={p.n} /> : k === 'lega' ? <Risultati t="lega" n={p.n} m={p.m} /> : k === 'classifica' ? <Classifica n={p.n} c={p.cl} /> : k === 'introCoppa' ? <Intro t="coppa" n={p.nc} /> : k === 'coppa' ? <Risultati t="coppa" n={p.nc} m={p.mc} /> : k === 'gironi' ? <Gironi nc={p.nc} gir={p.gir} /> : k === 'prossime' ? <DaNonPerdere n={p.n} big={p.big} nc2={p.nc2} bigC={p.bigC} /> : <Fine />}</Sequence>)}
+    {k === 'introLega' ? <Intro t="lega" n={p.n} /> : k === 'lega' ? <Risultati t="lega" n={p.n} m={p.m} /> : k === 'podio' ? <Podio n={p.n} c={p.cl.slice(0, 3)} /> : k === 'classifica' ? <Classifica n={p.n} c={p.cl} /> : k === 'introCoppa' ? <Intro t="coppa" n={p.nc} /> : k === 'coppa' ? <Risultati t="coppa" n={p.nc} m={p.mc} /> : k === 'gironi' ? <Gironi nc={p.nc} gir={p.gir} /> : k === 'prossime' ? <DaNonPerdere n={p.n} big={p.big} nc2={p.nc2} bigC={p.bigC} /> : <Fine />}</Sequence>)}
   {INIZI.slice(1).map(([k, s]) => <Sequence key={'t' + k} from={s - 7} durationInFrames={15}><Tendina t={COPPA.indexOf(k) >= 0 ? 'coppa' : 'lega'} /></Sequence>)}
 </AbsoluteFill>;
 
