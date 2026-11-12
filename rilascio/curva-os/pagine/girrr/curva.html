@@ -710,13 +710,62 @@ function mfUno(a,b){
  var src=b.outerHTML;if(a.__src===src)return;a.__src=src;   /* pezzo non cambiato: non si tocca */
  var i,at;for(i=a.attributes.length-1;i>=0;i--){at=a.attributes[i].name;if(!b.hasAttribute(at))a.removeAttribute(at)}
  for(i=0;i<b.attributes.length;i++){at=b.attributes[i];if(a.getAttribute(at.name)!==at.value)a.setAttribute(at.name,at.value)}
- if(a.tagName==='TEXTAREA'||a.tagName==='INPUT'||a.tagName==='SELECT')return;   /* quello che stai scrivendo resta */
+ if(a.tagName==='TEXTAREA'||a.tagName==='INPUT'||a.tagName==='SELECT'){   /* il campo in cui stai scrivendo resta; gli altri tornano come li disegna la pagina, come prima */
+  if(a!==document.activeElement&&a.type!=='file'){if(a.tagName==='SELECT')a.selectedIndex=b.selectedIndex;else if(a.type==='checkbox'||a.type==='radio')a.checked=b.checked;else if(a.value!==b.value)a.value=b.value}
+  return}
  if(!b.firstChild&&a.firstChild&&a.classList.contains('pimg')&&a.hasAttribute('data-id'))return;   /* foto già caricata */
  mfFigli(a,b)}
+/* Bozza del coro (Claude, 12 novembre 2026): quello che scrivi resta se esci e rientri, finché non lanci il coro */
+function cvBozzaK(){return 'cv-bozza-'+(me||'')}
+function cvBozza(){try{return localStorage.getItem(cvBozzaK())||''}catch(e){return ''}}
+function cvBozzaSalva(v){try{if(v)localStorage.setItem(cvBozzaK(),v);else localStorage.removeItem(cvBozzaK())}catch(e){}}
+function cvSvuota(){var t=document.getElementById('tx');if(t)t.value='';cvBozzaSalva('')}
+/* Pillola «Nuovi cori» (Claude, 12 novembre 2026): l'aggiornamento di ogni minuto non riempie più il feed mentre lo leggi.
+   Se in cima alla scheda ci sono davvero cori nuovi e tu sei sceso, compare la pillola; toccandola il feed risale e si aggiorna.
+   Se sei già in alto (o risali da solo) si aggiorna subito, come prima. */
+var cvPend=false;
+function cvFiltro(p){var k=acc(p.a).k;return filt==='tutti'||(filt==='seguiti'&&(isFol(p.a)||p.a===meH))||(filt==='squadre'&&k==='sq')||(filt==='notizie'&&(k==='org'||k==='pro'))}
+function cvNuovi(){
+ if(vista!=='home'||window.scrollY<150){renderFermo();return}
+ var sh={},max=0;[].forEach.call(document.querySelectorAll('#vista article.post[data-k]'),function(a){sh[a.getAttribute('data-k')]=1});
+ (POSTS||[]).forEach(function(p){if(sh[p.k]&&p.ts>max)max=p.ts});
+ var L=costruisci().filter(function(p){return !sh[p.k]&&p.ts>max&&p.a!==meH&&cvFiltro(p)});
+ if(!L.length){renderFermo();return}
+ cvMostra(L)}
+function cvPillola(){var b=document.getElementById('cv-nuovi');if(!b){b=document.createElement('button');b.id='cv-nuovi';b.className='cv-nuovi';b.type='button';b.onclick=cvSali;document.body.appendChild(b)}return b}
+function cvMostra(L){var b=cvPillola(),visti={},av=[];L.forEach(function(p){if(!visti[p.a]&&av.length<3){visti[p.a]=1;av.push(AV(acc(p.a),'cvn-av'))}});
+ b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span class="cvn-avs">'+av.join('')+'</span><span>Nuovi cori</span>';
+ b.setAttribute('aria-label','Nuovi cori: torna su e aggiorna');cvPosiziona(b);cvPend=true;b.classList.add('on')}
+function cvPosiziona(b){var t=document.getElementById('top'),c=document.querySelector('.col'),rt=t?t.getBoundingClientRect():null,rc=c?c.getBoundingClientRect():null;
+ b.style.top=((rt?Math.max(rt.bottom,0):0)+10)+'px';b.style.left=(rc?rc.left+rc.width/2:innerWidth/2)+'px'}
+function cvNascondi(){var b=document.getElementById('cv-nuovi');if(b)b.classList.remove('on');cvPend=false}
+function cvSali(){cvNascondi();var lisc=!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches),fatto=false,t0=Date.now();
+ function vai(){if(fatto)return;fatto=true;render()}
+ window.scrollTo({top:0,behavior:lisc?'smooth':'auto'});if(!lisc)return vai();
+ (function aspetta(){if(window.scrollY<4||Date.now()-t0>1000)vai();else requestAnimationFrame(aspetta)})()}
+window.addEventListener('scroll',function(){if(cvPend&&window.scrollY<4){cvNascondi();render()}},{passive:true});
+window.addEventListener('resize',function(){var b=document.getElementById('cv-nuovi');if(b&&cvPend)cvPosiziona(b)});
+(function(){var s=document.createElement('style');s.textContent=
+ '.cv-nuovi{position:fixed;z-index:25;display:flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:7px 15px 7px 10px;background:var(--blu);color:#fff;font:700 14px Inter,system-ui,sans-serif;box-shadow:0 6px 18px rgba(0,0,0,.25);cursor:pointer;opacity:0;pointer-events:none;transform:translate(-50%,-14px) scale(.92);transition:opacity .25s ease,transform .35s cubic-bezier(.2,.9,.3,1.2);-webkit-tap-highlight-color:transparent}'+
+ '.cv-nuovi.on{opacity:1;pointer-events:auto;transform:translate(-50%,0)}.cv-nuovi svg{width:16px;height:16px;flex:none}'+
+ '.cvn-avs{display:flex}.cvn-avs .av{width:22px!important;height:22px!important;min-width:0!important;font-size:9px!important;border:2px solid currentColor;margin:0 0 0 -7px!important;flex:none}.cvn-avs .av:first-child{margin-left:0!important}'+
+ '.post{transition:background-color 1.4s ease}.post.cv-evidenza{background-color:color-mix(in srgb,var(--blu) 16%,transparent);transition:none}'+
+ '@media (prefers-reduced-motion:reduce){.cv-nuovi{transition:opacity .2s}}';document.head.appendChild(s)})();
+/* Link a ogni coro (Claude, 12 novembre 2026): curva.html?coro=CHIAVE apre la Curva su quel coro e lo evidenzia */
+function cvLink(k){return location.origin+location.pathname+'?coro='+encodeURIComponent(k)}
+(function(){var k=null;try{k=new URLSearchParams(location.search).get('coro')}catch(e){}if(!k)return;var n=0,t=setInterval(function(){
+ if(++n>80){clearInterval(t);return}
+ if(!POSTS||!POSTS.length||!document.querySelector('#vista article.post'))return;clearInterval(t);
+ try{var u=new URL(location.href);u.searchParams.delete('coro');history.replaceState(null,'',u.pathname+u.search+u.hash)}catch(e){}
+ var i=-1;POSTS.forEach(function(p,j){if(p.k===k)i=j});
+ if(i<0){toast('Questo coro non c\'è più');return}
+ vista='home';filt='tutti';FEED_SHOW=Math.max(FEED_SHOW,i+5);open[k]=true;render();
+ var e=document.querySelector('#vista article.post[data-k="'+(window.CSS&&CSS.escape?CSS.escape(k):k)+'"]');
+ if(e){e.scrollIntoView({block:'center'});e.classList.add('cv-evidenza');setTimeout(function(){e.classList.remove('cv-evidenza')},1800)}},300)})();
 /* Solo nel Lab: aggancio per le prove automatiche (prove/prova_curva_ferma.js) */
 window.__curvaProva={render:function(){render()},entra:function(t){me=t;code='PROVA';meH=hnd(t);render()},
- vai:function(v,n){vista=v;if(n)ntab=n;render()},notifiche:function(){return notifiche()}};
-function render(){
+ vai:function(v,n){vista=v;if(n)ntab=n;render()},notifiche:function(){return notifiche()},nuovi:function(){cvNuovi()},pubblica:function(){lancia()}};
+function render(){cvNascondi();
  var v=document.getElementById('vista'),h='';
  TR=tendenze();POSTS=costruisci();NOTI=me?notifiche():[];
  if(vista!=='notifiche')NV0=0;
@@ -772,7 +821,7 @@ function render(){
  }
  morfaIn(v,h);navR();dxR();
  if(vista==='esplora')risultati();
- var tx=document.getElementById('tx');if(tx){if(!tx.__conta){tx.__conta=1;tx.addEventListener('input',conta)};conta()}
+ var tx=document.getElementById('tx');if(tx){if(!tx.__conta){tx.__conta=1;tx.addEventListener('input',conta);tx.addEventListener('input',function(){cvBozzaSalva(tx.value)})}if(!tx.value&&cvBozza())tx.value=cvBozza();conta()}
  /* Claude, conferenze 10/11: ?scrivi=… apre la Curva con il testo già scritto (Rispondi in Curva dalla conferenza) */
  if(tx&&window.__scrivi){if(!tx.value){tx.value=window.__scrivi;conta()}if(!tx.__scr){tx.__scr=1;tx.addEventListener('input',function(){window.__scrivi=tx.value||null})};if(!window.__scrivi0){window.__scrivi0=1;try{tx.focus();tx.setSelectionRange(tx.value.length,tx.value.length)}catch(e){}}var g0=document.getElementById('go');if(g0)g0.addEventListener('click',function(){window.__scrivi=null})}
 
@@ -880,8 +929,8 @@ function condividi(k){var p=POSTS.filter(function(q){return q.k===k})[0];if(!p)r
   g.textAlign='right';g.fillStyle='#8b98ad';g.font='500 32px '+FF;g.fillText('O Fant A Girrr',W-pad,H-60);
   c.toBlob(function(b){if(!b){toast('Non riesco a creare l\'immagine');return}
    var f=new File([b],'coro-'+a.h+'.png',{type:'image/png'});
-   if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],text:nm(a)+' sulla Curva'}).catch(function(){}).then(riallinea)}
-   else{var u=URL.createObjectURL(b),l=document.createElement('a');l.href=u;l.download=f.name;document.body.appendChild(l);l.click();l.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000);toast('Immagine salvata')}
+   if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],text:nm(a)+' sulla Curva: '+cvLink(k)}).catch(function(){}).then(riallinea)}
+   else{var u=URL.createObjectURL(b),l=document.createElement('a');l.href=u;l.download=f.name;document.body.appendChild(l);l.click();l.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000);toast('Immagine salvata');try{navigator.clipboard.writeText(cvLink(k)).then(function(){toast('Immagine salvata e link del coro copiato')}).catch(function(){})}catch(e){}}
    ev1('curva/condividi','Curva: coro condiviso')},'image/png')})}
 function fixNav(){var n=document.querySelector('.nav');if(!n||window.innerWidth>=760)return;n.style.transform='';var vv=window.visualViewport,H=Math.max(window.innerHeight,vv?vv.height+vv.offsetTop:0,document.documentElement.clientHeight),g=Math.round(H-n.getBoundingClientRect().bottom);if(g>4)n.style.transform='translateY('+g+'px)'}
 (function(){var tm;function q(){clearTimeout(tm);tm=setTimeout(fixNav,120)}['resize','pageshow','focus','orientationchange','scroll'].forEach(function(e){window.addEventListener(e,q,{passive:true})});document.addEventListener('visibilitychange',q);if(window.visualViewport){window.visualViewport.addEventListener('resize',q);window.visualViewport.addEventListener('scroll',q)}})();
@@ -901,7 +950,7 @@ function lancia(){
  if(!serve())return;var tx=document.getElementById('tx'),v=maiusc(tx.value.trim());if(!v||v.length>MAX)return;
  var go=document.getElementById('go');go.disabled=true;
  var pin=Array.prototype.map.call(document.querySelectorAll('#pol .poi'),function(i){return i.value.trim()}).filter(Boolean);if(document.querySelector('#pol .poi')&&pin.length<2){toast('Servono almeno 2 risposte');go.disabled=false;return}
- var arg={p_team:me,p_code:code,p_body:v},fnr='curva_scrivi';if(pin.length){fnr='curva_sondaggio';arg.p_opts=pin}else if(pimg)arg.p_img=pimg;rpc(fnr,arg).then(function(){ev1(pin.length?'curva/sondaggio':pimg?'curva/foto':'curva/coro',pin.length?'Curva: sondaggio':pimg?'Curva: coro con foto':'Curva: coro scritto');pimg=null;if(vista!=='u'){filt='tutti'}else{ptab='cori'}return carica()}).then(function(){render();if(vista==='u')toast('Coro pubblicato')}).catch(function(e){toast(e.message);go.disabled=false});
+ var arg={p_team:me,p_code:code,p_body:v},fnr='curva_scrivi';if(pin.length){fnr='curva_sondaggio';arg.p_opts=pin}else if(pimg)arg.p_img=pimg;rpc(fnr,arg).then(function(){ev1(pin.length?'curva/sondaggio':pimg?'curva/foto':'curva/coro',pin.length?'Curva: sondaggio':pimg?'Curva: coro con foto':'Curva: coro scritto');pimg=null;cvSvuota();if(vista!=='u'){filt='tutti'}else{ptab='cori'}return carica()}).then(function(){render();if(vista==='u')toast('Coro pubblicato')}).catch(function(e){toast(e.message);go.disabled=false});
 }
 function reagisci(k,kind){if(!serve())return;
  var key=k+'|'+kind,on=!MN[key];
@@ -962,7 +1011,7 @@ document.addEventListener('click',function(e){
  if(a==='ril'){reagisci(k,'r');return}
  if(a==='del'){if(!serve())return;rpc('curva_cancella',{p_team:me,p_code:code,p_tipo:'p',p_id:p.id}).then(function(){return carica()}).then(function(){render()}).catch(function(x){toast(x.message)});return}
  if(a==='delr'){if(!serve())return;rpc('curva_cancella',{p_team:me,p_code:code,p_tipo:'r',p_id:+el.dataset.rid}).then(function(){return carica()}).then(function(){open[k]=true;render()}).catch(function(x){toast(x.message)});return}
- if(a==='invia'){if(!serve())return;var i=po.querySelector('.rf input'),t=maiusc(i.value.trim());if(!t)return;rpc('curva_rispondi',{p_team:me,p_code:code,p_k:k,p_body:t}).then(function(){ev1('curva/risposta','Curva: risposta');open[k]=true;return carica()}).then(function(){render()}).catch(function(x){toast(x.message)})}
+ if(a==='invia'){if(!serve())return;var i=po.querySelector('.rf input'),t=maiusc(i.value.trim());if(!t)return;rpc('curva_rispondi',{p_team:me,p_code:code,p_k:k,p_body:t}).then(function(){ev1('curva/risposta','Curva: risposta');i.value='';open[k]=true;return carica()}).then(function(){render()}).catch(function(x){toast(x.message)})}
 });
 document.addEventListener('input',function(e){if(e.target.id==='qs'){qs=e.target.value;risultati()}});
 
@@ -1044,7 +1093,7 @@ fetch('../formazioni.json',{cache:'no-store'}).then(function(r){return r.json()}
 function firma(){var n=0;try{n=CVB.genera(D,SQ,ST,Date.now()).length}catch(e){}return JSON.stringify([S.posts.map(function(p){return p.id}),S.replies.length,S.react,S.follow,S.prof,n,Math.floor(Date.now()/600000)])}
 function renderFermo(){var an=null,els=document.querySelectorAll('.post'),i,r;for(i=0;i<els.length;i++){r=els[i].getBoundingClientRect();if(r.bottom>0){an=[els[i].dataset.k,r.top];break}}
  render();if(an&&window.scrollY>0){var e2=document.querySelector('.post[data-k="'+an[0]+'"]');if(e2)window.scrollBy(0,e2.getBoundingClientRect().top-an[1])}}
-setInterval(function(){if(document.hidden||occupato()||rif)return;var f0=firma();carica().then(function(){if(!occupato()&&firma()!==f0)renderFermo()})},60000);
+setInterval(function(){if(document.hidden||occupato()||rif)return;var f0=firma();carica().then(function(){if(!occupato()&&firma()!==f0)cvNuovi()})},60000);
 })();
 </script>
 

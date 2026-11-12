@@ -9,6 +9,7 @@
 const { chromium, webkit, devices } = require('playwright');
 const WK = process.env.WEBKIT;   // percorso di pw_run.sh di WebKit: iPhone e iPad si provano con il motore di Safari
 const L = 'http://localhost:8771/o-girrr-registro/lab/offline/';
+const { script: BLOCCA } = require('./blocca_scritture');   // scritture bloccate dentro la pagina (in WebKit route non basta)
 const D = process.argv[2];
 const TV = 'Mozilla/5.0 (SMART-TV; Linux; Tizen 7.0) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/5.0 Chrome/94.0 TV Safari/537.36';
 const SCH = [
@@ -28,6 +29,7 @@ const ANIM = (sel, ps) => { const e = document.querySelector(sel); return e ? ge
     if (process.env.SOLO && !sn.includes(process.env.SOLO)) continue;
     const motore = att === 'ios' && bw ? 'WebKit' : 'Chromium';
     const c = await (motore === 'WebKit' ? bw : b).newContext(o);
+    await c.addInitScript(BLOCCA);
     await c.route('**/rest/v1/rpc/**', async r => { const n = r.request().url().split('/rpc/')[1].split('?')[0]; if (SCRIVE.test(n) && !/_(stato|pubblico|lista)$/.test(n)) return r.fulfill({ json: null }); return r.continue(); });
     const p = await c.newPage(); const errs = [];
     p.on('pageerror', e => errs.push(e.message.slice(0, 90)));

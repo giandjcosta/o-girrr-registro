@@ -114,6 +114,13 @@ html[data-os=ios] .lb .lbx{transition-timing-function:var(--ios-scattante)!impor
 @keyframes os-ios-sali{from{translate:0 130%}to{translate:0 0}}
 @keyframes os-ios-avviso{from{opacity:0;transform:translate(-50%,16px) scale(.9)}to{opacity:1;transform:translate(-50%,0)}}
 
+/* --- Pillola «Nuovi cori»: goccia di vetro che scende sotto le schede --- */
+html[data-os=ios] .cv-nuovi{background:color-mix(in srgb,var(--bg) 62%,transparent);color:var(--tx);
+  border:1px solid color-mix(in srgb,var(--tx) 14%,transparent);-webkit-backdrop-filter:var(--os-sfoca);backdrop-filter:var(--os-sfoca);
+  box-shadow:inset 0 0 0 .5px color-mix(in srgb,var(--tx) 10%,transparent),inset 0 0 6px rgba(255,255,255,.2),0 8px 24px rgba(0,0,0,.16);
+  transition:opacity .3s ease,transform var(--ios-elastica-durata) var(--ios-elastica)}
+html[data-os=ios] .cv-nuovi:active{transform:translate(-50%,0) scale(1.06)}
+
 /* Senza vetro nel browser, o con «Riduci trasparenza»: fondi pieni */
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
   html[data-os=ios] .tabs,html[data-os=ios] .nav::before{background:var(--bg)!important}
@@ -196,6 +203,11 @@ html[data-os=android] .lb .lbx{transition-timing-function:var(--m3-spaziale)!imp
     animation:os-and-avviso var(--m3-spaziale-durata) var(--m3-spaziale) both!important}
 }
 
+/* --- Pillola «Nuovi cori»: pulsante tonale di Material, scende con il rimbalzo --- */
+html[data-os=android] .cv-nuovi{background:var(--os-indicatore);color:var(--tx);border-radius:16px;padding:10px 16px 10px 12px;
+  box-shadow:0 3px 8px rgba(0,0,0,.18),0 1px 3px rgba(0,0,0,.12);
+  transition:opacity var(--m3-effetti-durata) var(--m3-effetti),transform var(--m3-spaziale-veloce-durata) var(--m3-spaziale-veloce)}
+
 @keyframes os-and-scivola{from{translate:var(--os-tabs-dx,0) 0;scale:var(--os-tabs-s,1) 1}to{translate:0 0;scale:1 1}}
 @keyframes os-and-asse{from{translate:calc(var(--os-dir,1) * 30px) 0}to{translate:0 0}}
 @keyframes os-and-attraverso{from{scale:.94}to{scale:1}}
@@ -219,6 +231,7 @@ html[data-os=android] .lb .lbx{transition-timing-function:var(--m3-spaziale)!imp
 @media (prefers-reduced-motion:reduce){
   html[data-os] #vista,html[data-os] #vista>.vuoto,html[data-os] .post,html[data-os] .nav,html[data-os] .nav button svg,html[data-os] .nav button::before,
   html[data-os] .tabs button::before,html[data-os] .tabs button.on:after,html[data-os] .acts .app.on svg,html[data-os] .toast{animation:none!important}
+  html[data-os] .cv-nuovi{transition:opacity .2s!important}
   html[data-os] .ptrb.sp::before,html[data-os] .ptrb.sp::after{animation-duration:2s!important}
   html[data-os] .nav,html[data-os] .tabs button::before,html[data-os] .nav button::before{transition:none!important}
   html[data-os][data-giu] .nav{scale:1}

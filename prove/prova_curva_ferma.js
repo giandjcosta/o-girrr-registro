@@ -10,6 +10,7 @@
 // Senza WEBKIT gli iPhone si provano con Chromium (e lo dice). Il database si legge soltanto: le scritture sono intercettate.
 const { chromium, webkit, devices } = require('playwright');
 const L = 'http://localhost:8771/o-girrr-registro/lab/offline/';
+const { script: BLOCCA } = require('./blocca_scritture');   // scritture bloccate dentro la pagina (in WebKit route non basta)
 const WK = process.env.WEBKIT;
 const SCH = [
   ['iPhone SE 320', 'ios', { ...devices['iPhone SE'], viewport: { width: 320, height: 568 } }], ['iPhone 15 Pro', 'ios', devices['iPhone 15 Pro']],
@@ -17,6 +18,8 @@ const SCH = [
   ['Galaxy S8', 'android', devices['Galaxy S8']], ['Pixel 7', 'android', devices['Pixel 7']], ['Galaxy Tab S4', 'android', devices['Galaxy Tab S4']],
   ['PC 1280', 'altro', { viewport: { width: 1280, height: 800 } }], ['PC 1920', 'altro', { viewport: { width: 1920, height: 1080 } }]
 ];
+// Risposta finta alle scritture con le intestazioni CORS: senza, WebKit la rifiuta (e la Curva tratta l'invio come fallito)
+const CORS = { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': '*' };
 const SCRIVE = /salva|scrivi|lancia|rispondi|vota|reagisci|registra|segui|push_|cancella|proponi/;
 (async () => {
   const bc = await chromium.launch(), bw = WK ? await webkit.launch({ executablePath: WK }) : null;
@@ -26,7 +29,8 @@ const SCRIVE = /salva|scrivi|lancia|rispondi|vota|reagisci|registra|segui|push_|
     if (process.env.SOLO && !sn.includes(process.env.SOLO)) continue;
     const motore = att === 'ios' && bw ? 'WebKit' : 'Chromium';
     const c = await (motore === 'WebKit' ? bw : bc).newContext(o);
-    await c.route('**/rest/v1/rpc/**', async r => { const n = r.request().url().split('/rpc/')[1].split('?')[0]; if (SCRIVE.test(n) && !/_(stato|pubblico|lista)$/.test(n)) return r.fulfill({ json: null }); return r.continue(); });
+    await c.addInitScript(BLOCCA);
+    await c.route('**/rest/v1/rpc/**', async r => { const n = r.request().url().split('/rpc/')[1].split('?')[0]; if (SCRIVE.test(n) && !/_(stato|pubblico|lista)$/.test(n)) return r.fulfill({ json: null, headers: CORS }); return r.continue(); });
     const p = await c.newPage(); const errs = [], pr = [];
     let fase = 'apertura';
     const interrotte = [];
@@ -90,6 +94,44 @@ const SCRIVE = /salva|scrivi|lancia|rispondi|vota|reagisci|registra|segui|push_|
         if (!/^Attività \| Menzioni\*$/.test(n1.schede) || n1.men !== n1.totMen) pr.push(pn + ': scheda Menzioni ' + JSON.stringify(n1));
         if (pn === 'Stadio' && /Pixel 7|iPhone 15/.test(sn)) console.log('   Notifiche di Oranje VC: ' + n1.totAtt + ' in Attività, ' + n1.totMen + ' in Menzioni');
         await p.evaluate(() => { __curvaProva.vai('home'); });
+
+        // 5. Pillola «Nuovi cori»: senza cori nuovi non compare; con un coro nuovo in cima (simulato togliendo il primo) compare,
+        //    e toccandola il feed risale e il coro torna al suo posto
+        fase = pn + ' pillola';
+        await p.evaluate(() => scrollTo(0, 1400)); await p.waitForTimeout(300);
+        await p.evaluate(() => __curvaProva.nuovi()); await p.waitForTimeout(400);
+        if (await p.evaluate(() => !!document.querySelector('#cv-nuovi.on'))) pr.push(pn + ': pillola senza cori nuovi');
+        const k0 = await p.evaluate(() => { const a = document.querySelector('#vista article.post'), k = a.getAttribute('data-k'); a.remove(); document.getElementById('vista').__h = null; __curvaProva.nuovi(); return k; });
+        await p.waitForTimeout(500);
+        const pil = await p.evaluate(() => { const b = document.querySelector('#cv-nuovi.on'); if (!b) return null; const r = b.getBoundingClientRect(), t = document.getElementById('top').getBoundingClientRect(); return { top: Math.round(r.top), sottoIntestazione: r.top >= t.bottom - 1, dentro: r.left >= 0 && r.right <= innerWidth, av: b.querySelectorAll('.av').length, testo: b.lastElementChild.textContent }; });
+        if (!pil || !pil.sottoIntestazione || !pil.dentro || !pil.av || pil.testo !== 'Nuovi cori') pr.push(pn + ': pillola ' + JSON.stringify(pil));
+        if (sn === 'iPhone 15 Pro' || sn === 'Pixel 7') await p.screenshot({ path: '/tmp/claude-0/prova/pillola-' + pn + '-' + sn.replace(/\W+/g, '_') + '.png' });
+        await p.click('#cv-nuovi'); await p.waitForTimeout(1600);
+        const dopo = await p.evaluate((k0) => ({ y: Math.round(scrollY), on: !!document.querySelector('#cv-nuovi.on'), primo: document.querySelector('#vista article.post').getAttribute('data-k') === k0 }), k0);
+        if (dopo.y > 4 || dopo.on || !dopo.primo) pr.push(pn + ': dopo la pillola ' + JSON.stringify(dopo));
+
+        // 6. Bozza: resta riaprendo la pagina, sparisce dopo aver lanciato il coro (la scrittura nel database è bloccata)
+        fase = pn + ' bozza';
+        await p.fill('#tx', 'Bozza di prova');
+        await p.waitForLoadState('networkidle').catch(() => {});
+        fase = 'cambio pagina'; await p.reload(); fase = pn + ' bozza';
+        await p.waitForSelector('#nav button', { timeout: 25000 }); await p.waitForTimeout(1500);
+        await p.evaluate(() => __curvaProva.entra('Oranje VC'));
+        const bz = await p.evaluate(() => document.getElementById('tx').value);
+        if (bz !== 'Bozza di prova') pr.push(pn + ': la bozza non resta (' + bz + ')');
+        await p.evaluate(() => __curvaProva.pubblica()); await p.waitForTimeout(2500);
+        const pub = await p.evaluate(() => [document.getElementById('tx').value, Object.keys(localStorage).filter(k => /^cv-bozza-/.test(k) && localStorage.getItem(k)), window.__scrittureBloccate]);
+        if (!pub[2]) pr.push(pn + ': la scrittura del coro non è stata fermata dentro la pagina');
+        if (pub[0] !== '' || pub[1].length) pr.push(pn + ': dopo il lancio il campo o la bozza restano ' + JSON.stringify(pub));
+
+        // 7. Link al coro: curva.html?coro=CHIAVE apre la Curva su quel coro (anche se è lontano) e toglie il parametro
+        fase = pn + ' link';
+        const kl = await p.evaluate(() => { const a = document.querySelectorAll('#vista article.post'); return a[Math.min(12, a.length - 1)].getAttribute('data-k'); });
+        await p.waitForLoadState('networkidle').catch(() => {});
+        fase = 'cambio pagina'; await p.goto(L + u + '?coro=' + encodeURIComponent(kl)); fase = pn + ' link';
+        await p.waitForTimeout(3500);
+        const lk = await p.evaluate((kl) => { const e = document.querySelector('#vista article.post[data-k="' + CSS.escape(kl) + '"]'); if (!e) return { trovato: false, url: location.search }; const r = e.getBoundingClientRect(); return { trovato: true, inVista: r.top < innerHeight && r.bottom > 0, url: location.search }; }, kl);
+        if (!lk.trovato || !lk.inVista || /coro=/.test(lk.url)) pr.push(pn + ': link al coro ' + JSON.stringify(lk));
         await p.waitForLoadState('networkidle').catch(() => {});   // WebKit segnala come errore le richieste interrotte cambiando pagina
       } catch (e) { pr.push(pn + ': ' + e.message.split('\n')[0].slice(0, 100)); }
     }
