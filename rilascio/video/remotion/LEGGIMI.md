@@ -8,3 +8,6 @@ Poi `node render.mjs PERCORSO_DI_CHROME_HEADLESS_SHELL`: legge `data.json` del s
 
 ## Musica
 `node render.mjs …` scrive anche `scene.json` (tempi delle scene). Poi `python3 ../musica.py scene.json VIDEO_MUTO.mp4 VIDEO.mp4` compone la musica originale (numpy, nessun servizio a pagamento) a tempo con le scene e la mette nel video.
+
+## Versione scelta (12 novembre 2026)
+Gianluca ha scelto la «B senza folla»: `rilascio/video/fai_video.sh CARTELLA_DEL_SITO USCITA.mp4` fa tutto (video con Remotion, poi `monta_musica.py` con la base calma del Campionato `musica/campionato.mp3`, «Victory» sulla Coppa `musica/coppa-victory.mp3`, ritorno al Campionato per la chiusura, effetti di `suoni/`). I tempi dei passaggi si calcolano da `scene.json`, quindi funziona anche senza «Da non perdere».

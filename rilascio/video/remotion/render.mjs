@@ -48,12 +48,12 @@ const TC = {}; cg.forEach(x => { x.m.forEach(m => { const r = m[5].split('-').ma
 const gir = {}; Object.values(TC).sort((a, b) => b.pt - a.pt || b.fp - a.fp).forEach(t => { (gir[t.g] = gir[t.g] || []).push({ n: t.n, pt: t.pt }); });
 const prossC = CU.find(x => x.n === nc + 1), bcS = prossC ? scegli(prossC.m.map(m => [m[1], m[4]]), storia(cg, m => [m[1], m[2], m[3], m[4], m[5]], m => m[0])) : null;
 const props = { cl: C.map(t => ({ n: t.n, pt: t.pt })), nc2: prossC ? prossC.n : null, bigC: bcS,  n, nc, m: g.m.map(m => ({ a: m[0], b: m[3], sc: m[4] })), mc: gc.m.map(m => ({ g: m[0], a: m[1], b: m[4], sc: m[5] })), c: C.slice(0, 3).map(t => ({ n: t.n, pt: t.pt })), gir, big: bmS };
-fs.mkdirSync('public', { recursive: true }); const LG = '/tmp/claude-0/srv/o-fant-a-girrr/assets/loghi/';
+fs.mkdirSync('public', { recursive: true }); const LG = SITO + 'assets/loghi/';
 [['logo-lega-o-fant-a-girrr.png', 'logo-lega.png'], ['logo-cup-champions-cup.png', 'logo-coppa.png'], ['logo-tv-girrr-sport-live.png', 'tv-lega.png'], ['logo-tv-cup-girrr-live.png', 'tv-coppa.png']].forEach(([a, b]) => fs.copyFileSync(LG + a, 'public/' + b));
 const browserExecutable = process.argv[2];
 const serveUrl = await bundle({ entryPoint: './src/index.jsx', publicDir: './public' });
 const composition = await selectComposition({ serveUrl, id: 'Giornata', inputProps: props, browserExecutable });
-await renderMedia({ composition, serveUrl, codec: 'h264', outputLocation: '/home/user/o-girrr-registro/lab/video-giornata/strada-b-remotion.mp4', inputProps: props, browserExecutable, crf: 22 });
+await renderMedia({ composition, serveUrl, codec: 'h264', outputLocation: process.env.USCITA || '/home/user/o-girrr-registro/lab/video-giornata/strada-b-remotion.mp4', inputProps: props, browserExecutable, crf: 22 });
 // tempi delle scene per la musica (rilascio/video/musica.py): stessa scaletta di src/index.jsx
 const SCENE = eval(/const SC = (\[.*?\]);/s.exec(fs.readFileSync('./src/index.jsx', 'utf8'))[1]).filter(([k]) => k !== 'prossime' || props.big || props.bigC);
 fs.writeFileSync('scene.json', JSON.stringify({ fps: 30, scene: SCENE, m: props.m.length, mc: props.mc.length, cl: props.cl.length, derby: !!((props.big && props.big.k === 'derby') || (props.bigC && props.bigC.k === 'derby')) }));   /* per gli effetti di monta_musica.py */

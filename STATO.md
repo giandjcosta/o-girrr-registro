@@ -1,5 +1,8 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (32) — Claude: video della giornata, scelta la «B senza folla» (Lab)
+- Gianluca tiene `lab/video-giornata/strada-b-chiusura-b.mp4`: base calma del Campionato, «Victory» sulla Coppa, ritorno al Campionato per la chiusura, effetti senza folla sul podio. Basi salvate in `rilascio/video/musica/` (`campionato.mp3`, `coppa-victory.mp3`); `rilascio/video/fai_video.sh SITO USCITA` rifà tutto (provato il passo della musica: audio identico alla versione scelta). `render.mjs` legge sito (`SITO`) e uscita (`USCITA`) da fuori. Prossimo passo: il workflow sul sito dopo ogni giornata (serve il «Vai») e la licenza dei brani per Instagram.
+
 ## 12 novembre (31) — Claude: video della giornata (B), prova con la folla che cresce sul podio (Lab)
 - Gianluca ha mandato una nuova folla (`rilascio/video/suoni/folla-podio.mp3`: cresce per circa 1 s e poi cala, diversa dal boato secco di prima). Solo in prova, con `--folla`: al massimo tra 9,4 e 9,8 s, quando l'1° arriva in cima, sotto la musica (−3/−6 dB). Video `lab/video-giornata/strada-b-chiusura-b-folla.mp4`; le versioni senza folla restano come sono.
 
