@@ -1,5 +1,8 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (25) — Claude: video della giornata (B), terza musica «Victory» (Lab)
+- Gianluca ha scelto «Victory» di maksymmalko (`maksymmalko-victory-nomination-winner-champion-music-499478`, 2:10, circa 140 BPM; il nome è quello dei file di Pixabay: licenza da confermare sulla pagina del brano). `monta_musica.py` ha `--inizio` e `--fine`: il brano parte da 12,8 s così la parte piena (a 22 s del brano) esplode quando arrivano i gradini del podio (9,2 s del video), e si ferma a 126,7 s così il colpo finale (124 s) cade a 33,8 s, su «Tutto su O Girrr». Fischio d'inizio sul logo. Video: `lab/video-giornata/strada-b-musica-3.mp4`.
+
 ## 12 novembre (24) — Claude: video della giornata (B), fischio d'inizio sul logo della lega (Lab)
 - Gianluca ha fatto il fischio dell'arbitro (`rilascio/video/suoni/fischio-inizio.mp3`, 10 s: il fischio è tra 1,1 e 2,3 s, poi brusio). `monta_musica.py` ha l'opzione `--suono FILE:DA:A@QUANDO:VOLUME`: ritaglia il pezzo, lo porta a volume pieno, sfuma la coda e abbassa un po' la musica sotto. Nei due video con la musica di Gianluca il fischio parte a 0,05 s: nella sua banda è circa 10 dB sopra la musica. Proposti altri suoni: triplice fischio finale, boato sul podio, brusio di stadio.
 

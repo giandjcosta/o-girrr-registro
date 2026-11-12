@@ -12,6 +12,9 @@ Suoni sopra la musica (fischio, folla…): --suono FILE:DA:A@QUANDO:VOLUME, per 
 (prende il pezzo DA-A secondi del file, lo porta a volume pieno per VOLUME e lo mette a QUANDO secondi del video; con
 QUANDO negativo conta dalla fine del video). Con un suono sopra, la musica si abbassa un poco per lasciarlo sentire.
 
+--inizio S fa partire il brano da S secondi (per far cadere una «esplosione» del brano su un momento del video), --fine S
+lo ferma a S secondi (per togliere il silenzio finale e far cadere il colpo finale sulla chiusura del video).
+
 Uso: python3 rilascio/video/monta_musica.py BRANO.mp3 VIDEO_MUTO.mp4 VIDEO_CON_MUSICA.mp4 [--coda SECONDI] [--suono …]
 """
 import argparse
@@ -74,10 +77,16 @@ if __name__ == '__main__':
     p.add_argument('video')
     p.add_argument('uscita')
     p.add_argument('--coda', type=float, default=8.0, help='secondi del finale vero del brano da tenere')
+    p.add_argument('--inizio', type=float, default=0.0, help='secondi del brano da cui partire')
+    p.add_argument('--fine', type=float, default=0.0, help='secondi del brano a cui fermarsi (0 = fino alla fine)')
     p.add_argument('--suono', action='append', default=[], help='FILE:DA:A@QUANDO:VOLUME')
     A = p.parse_args()
     lungo = durata(A.video)
-    y = monta(carica(A.brano), lungo, A.coda)
+    x = carica(A.brano)
+    x = x[int(A.inizio * SR):int(A.fine * SR) if A.fine else len(x)].copy()
+    if A.fine:
+        x[-int(0.3 * SR):] *= np.linspace(1, 0, int(0.3 * SR))[:, None]
+    y = monta(x, lungo, A.coda)
     y = y[:int(lungo * SR)]
     if len(y) < lungo * SR:
         y = np.concatenate([y, np.zeros((int(lungo * SR) - len(y), 2), np.float32)])
