@@ -1,5 +1,12 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre — ChatGPT: verifica delle grafiche e scelte su MVP e Derby
+
+- Verificati STATO, regole aggiornate, copia pubblicata (5.8.1), CSS condiviso e sorgenti della pagina Derby: le grafiche richieste il 1° novembre sono già state completate e pubblicate da Claude con le successive correzioni di Gianluca. Non riavviato il vecchio lavoro né ripristinate le regole superate.
+- MVP dei tifosi e classifica dei Derby risultano ancora proposte. Esistono già La mia stagione, Testa a testa e la redazione personalizzata 5.8: le nuove parti vanno integrate lì.
+- Conservate nella roadmap le indicazioni attuali: classifica dei Derby accolta come idea; simulatore escluso; squadra MVP votata da personaggi e redazione, con partecipazione degli allenatori facoltativa. Collocazione e pesi sono proposte da definire, non funzionalità attive. Aggiunto un esempio di racconto personale dell’Oranje basato sui fatti del dossier della 7ª giornata.
+- Solo documentazione: nessuna modifica all'app, al sito vero, ai processi editoriali, ai sondaggi o a Supabase. Nessuna nuova versione. Verifica di documenti e sorgenti, nessun nuovo collaudo browser; PR non unita.
+
 ## 12 novembre — ChatGPT: collaudo completo del deploy e Fiducia dell'Anteprima
 
 - La prova manuale del deploy (`43213132734`) ha trovato un errore di configurazione: `deploy-pages` richiede un ambiente. Aggiunto `environment: github-pages` al job, mantenendo ramo, hosting e sito vero invariati. Il primo giro di sola sincronizzazione era già riuscito.
