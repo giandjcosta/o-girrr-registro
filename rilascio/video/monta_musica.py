@@ -17,10 +17,15 @@ lo ferma a S secondi (per togliere il silenzio finale e far cadere il colpo fina
 --dopo FILE:INIZIO:FINE@QUANDO passa a un secondo brano a QUANDO secondi del video (per esempio dalla base calma da TV
 del Campionato a quella epica della Coppa): il primo sfuma nel mezzo secondo prima, il secondo parte da INIZIO secondi
 del suo brano (scelto in modo che la sua «esplosione» cada a QUANDO), si ferma a FINE e il suo finale vero chiude il video.
+--effetti scene.json mette gli effetti grafici (cartella suoni/) a tempo con le scene, calcolati fotogramma per fotogramma
+dalla stessa scaletta del video (vedi EFFETTI qui sotto). Ogni effetto ha il suo volume rispetto al volume medio della
+musica (in dB, negativo = più basso della musica); solo i suoni importanti (loghi, fischi, boato) abbassano un poco la musica.
 
 Uso: python3 rilascio/video/monta_musica.py BRANO.mp3 VIDEO_MUTO.mp4 VIDEO_CON_MUSICA.mp4 [--coda SECONDI] [--suono …]
 """
 import argparse
+import json
+import os
 import subprocess
 import tempfile
 import wave
@@ -48,6 +53,83 @@ def attacchi(x):  # quanto cresce il volume ogni 10 ms: i colpi di batteria
     e = np.log1p(1000 * (m[:n * HOP].reshape(n, HOP) ** 2).sum(1))
     o = np.maximum(0, np.diff(e, prepend=e[0]))
     return o - o.mean()
+
+
+SUONI = __import__('os').path.join(__import__('os').path.dirname(__import__('os').path.abspath(__file__)), 'suoni')
+# nome: (file, da, a = pezzo utile del file in secondi, picco = dove cade il colpo dentro il pezzo, dB rispetto alla musica, abbassa la musica)
+EFFETTI = {
+    'logo-lega': ('logo-lega.mp3', 0.0, 0.9, 0.10, -3, True),
+    'fischio':   ('fischio-inizio.mp3', 0.9, 3.0, 0.3, -4, True),
+    'whoosh':    ('whoosh.mp3', 0.0, 0.5, 0.25, -12, False),
+    'pop':       ('pop.mp3', 0.0, 0.15, 0.0, -15, False),
+    'cascata':   ('cascata.mp3', 0.0, 1.2, 0.0, -10, False),
+    'podio':     ('podio.mp3', 0.25, 1.2, 0.9, -10, False),
+    'boato':     ('boato.mp3', 0.0, 3.0, 0.1, -7, True),
+    'ultimo':    ('ultimo.mp3', 0.0, 0.7, 0.0, -9, False),
+    'logo-coppa': ('logo-coppa.mp3', 0.0, 1.0, 0.33, -2, True),
+    'derby':     ('derby.mp3', 0.0, 3.3, 0.0, -6, True),
+    'triplice':  ('triplice-fischio.mp3', 0.0, 2.2, 0.0, 0, True),
+    'stadio':    ('stadio.mp3', 0.0, 30.0, 0.0, -24, False),
+}
+
+
+def scaletta(S):
+    """Elenco (effetto, secondo del video in cui cade il colpo) dalla scaletta delle scene (scene.json di render.mjs).
+    Gli istanti sono quelli di src/index.jsx: le partite entrano a 14 + 9·i fotogrammi, le righe della classifica a 8 + 3·i,
+    i gradini del podio arrivano entro 1,2 s, la tendina copre il cambio di scena."""
+    fps, ini, t = S['fps'], {}, 0.0
+    for k, d in S['scene']:
+        ini[k] = t
+        t += d / fps
+    E = [('logo-lega', 0.25), ('fischio', 1.2)]
+    for k, _ in S['scene'][1:]:
+        if k == 'introCoppa':
+            E.append(('logo-coppa', ini[k]))
+        elif k != 'fine':
+            E.append(('whoosh', ini[k]))
+    for k, n in (('lega', S.get('m', 5)), ('coppa', S.get('mc', 4))):
+        E += [('pop', ini[k] + (14 + 9 * i + 3) / fps) for i in range(n)]
+    E += [('podio', ini['podio'] + 0.95), ('boato', ini['podio'] + 1.05)]
+    ncl = S.get('cl', 10)
+    E += [('cascata', ini['classifica'] + 8 / fps), ('ultimo', ini['classifica'] + (8 + 3 * (ncl - 1) + 4) / fps)]
+    if 'prossime' in ini and S.get('derby'):
+        E.append(('derby', ini['prossime'] + 0.9))
+    E.append(('triplice', ini['fine'] + 0.15))
+    E.append(('stadio', 0.0))
+    return E
+
+
+def mescola(y, cues, lungo):
+    musica = np.sqrt(np.mean(y ** 2)) + 1e-9
+    g = np.ones(len(y), np.float32)
+    agg = np.zeros_like(y)
+    cache = {}
+    for nome, quando in cues:
+        f, da, a, picco, db, abbassa = EFFETTI[nome]
+        if nome not in cache:
+            z = carica(os.path.join(SUONI, f))[int(da * SR):int(a * SR)].copy()
+            att = np.sqrt((z ** 2).mean(1))
+            rms = np.sqrt(np.mean(att[att > att.max() * 0.1] ** 2))   # volume della parte che suona davvero
+            z *= musica * 10 ** (db / 20) / (rms + 1e-9)
+            n = min(len(z) // 4, int(0.15 * SR))
+            z[-n:] *= np.linspace(1, 0, n)[:, None]
+            cache[nome] = z
+        z = cache[nome]
+        if nome == 'stadio':  # brusio sotto tutto il video, ripetuto se serve, con entrata e uscita morbide
+            z = np.tile(z, (int(np.ceil(len(y) / len(z))), 1))[:len(y)].copy()
+            n = int(1.0 * SR)
+            z[:n] *= np.linspace(0, 1, n)[:, None]
+            z[-n:] *= np.linspace(1, 0, n)[:, None]
+        i = int((quando - picco) * SR)
+        j = min(len(y), i + len(z))
+        if i < 0:
+            z, i = z[-i:], 0
+        agg[i:j] += z[:j - i]
+        if abbassa:
+            g[i:j] = np.minimum(g[i:j], 0.6)
+    g = np.convolve(g, np.ones(4800) / 4800, 'same')   # la musica scende e risale in 0,1 s
+    print('effetti: %d (%s)' % (len(cues), ', '.join(sorted(set(c[0] for c in cues)))))
+    return y * g[:, None] + agg
 
 
 def monta(x, lungo, coda):
@@ -83,6 +165,7 @@ if __name__ == '__main__':
     p.add_argument('--inizio', type=float, default=0.0, help='secondi del brano da cui partire')
     p.add_argument('--fine', type=float, default=0.0, help='secondi del brano a cui fermarsi (0 = fino alla fine)')
     p.add_argument('--dopo', default='', help='FILE:INIZIO:FINE@QUANDO')
+    p.add_argument('--effetti', default='', help='scene.json di render.mjs: effetti grafici a tempo')
     p.add_argument('--suono', action='append', default=[], help='FILE:DA:A@QUANDO:VOLUME')
     A = p.parse_args()
     lungo = durata(A.video)
@@ -127,6 +210,8 @@ if __name__ == '__main__':
         y = y * g[:, None]
         y[i:j] += z[:j - i]
         print('suono', f, 'a %.2f s' % (i / SR))
+    if A.effetti:
+        y = mescola(y, scaletta(json.load(open(A.effetti))), lungo)
     y = np.tanh(y * 1.1) / np.tanh(1.1) * 0.95
     with tempfile.NamedTemporaryFile(suffix='.wav') as t:
         w = wave.open(t.name, 'wb')

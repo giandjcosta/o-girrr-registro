@@ -1,5 +1,8 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (27) — Claude: video della giornata (B), effetti sonori di Gianluca a tempo con le grafiche (Lab)
+- Gianluca ha fatto 13 effetti con i prompt (in `rilascio/video/suoni/`, con nomi chiari e `LEGGIMI.md`). `monta_musica.py --effetti scene.json`: tempi calcolati dai fotogrammi di `src/index.jsx` (`scaletta()`), volume di ogni effetto rispetto al volume medio della musica (`EFFETTI`, in dB), solo loghi, fischi e boato abbassano la musica (a 0,6, in 0,1 s). `render.mjs` scrive in `scene.json` anche partite, righe e Derby. Nel video 24 effetti, 11 tipi; tamburi del Derby solo se c'è un Derby; contatore e fischio finale lungo non usati. Volume medio −12,3 dB con e senza effetti. Video: `lab/video-giornata/strada-b-effetti.mp4`.
+
 ## 12 novembre (26) — Claude: video della giornata (B), base calma e base epica insieme (Lab)
 - `monta_musica.py --dopo FILE:INIZIO:FINE@QUANDO`: il primo brano sfuma nel mezzo secondo prima di QUANDO e parte il secondo, che chiude con il suo finale vero. Campionato (0-17,3 s) sulla base calma da TV di Gianluca (MakeBestMusic, la (2) è la più calma: meno volume e meno colpi; c'è anche la versione con la (1)), fischio d'inizio; sotto la tendina del logo della Coppa esplode «Victory» (esplosione a 22,3 s del brano, cade a 17,3 s del video) e il suo colpo finale cade su «Tutto su O Girrr». Video: `lab/video-giornata/strada-b-insieme-2.mp4` e `strada-b-insieme-1.mp4`. Corretto anche `strada-b-musica-3.mp4` (l'esplosione cadeva 0,3 s dopo il podio). Per il workflow il QUANDO andrà preso da `scene.json` (inizio di `introCoppa`).
 

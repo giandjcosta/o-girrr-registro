@@ -56,5 +56,5 @@ const composition = await selectComposition({ serveUrl, id: 'Giornata', inputPro
 await renderMedia({ composition, serveUrl, codec: 'h264', outputLocation: '/home/user/o-girrr-registro/lab/video-giornata/strada-b-remotion.mp4', inputProps: props, browserExecutable, crf: 22 });
 // tempi delle scene per la musica (rilascio/video/musica.py): stessa scaletta di src/index.jsx
 const SCENE = eval(/const SC = (\[.*?\]);/s.exec(fs.readFileSync('./src/index.jsx', 'utf8'))[1]).filter(([k]) => k !== 'prossime' || props.big || props.bigC);
-fs.writeFileSync('scene.json', JSON.stringify({ fps: 30, scene: SCENE }));
+fs.writeFileSync('scene.json', JSON.stringify({ fps: 30, scene: SCENE, m: props.m.length, mc: props.mc.length, cl: props.cl.length, derby: !!((props.big && props.big.k === 'derby') || (props.bigC && props.bigC.k === 'derby')) }));   /* per gli effetti di monta_musica.py */
 console.log('fatto', JSON.stringify({ big: props.big, bigC: props.bigC }));
