@@ -1,5 +1,12 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (11) — Claude: Carriera, fiducia a cartellini e schede centrate (Lab)
+
+- **Segnalazioni (Gianluca, foto dal sito vero):** il numero della fiducia «resta in alto e rimane un po' buggato» nell'animazione; «Panoramica» non è centrata, «tende un po' a sinistra il rosso». Proposta sua: un'animazione «da punteggio coi cartellini».
+- **Cause (misurate in WebKit sulla copia del sito):** il numero è un testo dentro l'SVG con una ribalta in 3D: in WebKit si schiaccia verso l'alto (alto 15 px invece di 57) e il conteggio salta da 0 a 47. Le schede (`.oro-scroll`) hanno lo scroll snap che aggancia la prima scheda al bordo e si mangia i 4 px di margine: pillola a 1 px a sinistra, 5 px sopra e sotto.
+- **`rilascio/carriera/applica.py SITO`** → `rilascio/carriera/pagine/{girrr,stadio/girrr}/app.html` (dalla 5.8.1; lo specchio del Lab le serve al posto di quelle della redazione, che ne fanno parte): `.oro-scroll{scroll-padding-inline:4px}`; numero a cartellini (HTML sopra l'arco, una cifra per cartellino, ribalta a metà a ogni cambio, il testo dell'SVG resta per i lettori di schermo); conteggio un po' più lento (1,1-1,9 s) per leggere i cambi; «riduci movimento» senza ribalte.
+- **Prove** (Lab, Lega e Stadio, WebKit iPhone e Chromium Android): cartellini sempre nella stessa posizione e altezza durante l'animazione, numero che sale fino a 47, pillola a 5 px su tutti i lati, nessun errore. Video: `lab/curva-os/fiducia-cartellini.mp4`.
+
 ## 12 novembre (10) — Claude: niente «Bot» accanto ai personaggi nei commenti del sondaggio (Lab e sorgenti)
 
 - **Segnalazione (Gianluca, foto dal sito vero):** nei commenti del sondaggio della Curva compariva «Il Barista · bot», «Nonno Cesare · bot»…: «lo sappiamo ma toglie immersione».
