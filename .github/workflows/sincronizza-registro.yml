@@ -59,13 +59,13 @@ jobs:
           git push origin HEAD:main
           echo 'cambiato=true' >> "$GITHUB_OUTPUT"
       - name: Prepara sito del Registro (senza checkout esterno)
-        if: steps.salva.outputs.cambiato == 'true'
+        if: steps.salva.outputs.cambiato == 'true' || github.event_name == 'workflow_dispatch'
         run: |
           mkdir -p "$RUNNER_TEMP/pagine-registro"
           git archive HEAD | tar -x -C "$RUNNER_TEMP/pagine-registro"
       - uses: actions/upload-pages-artifact@v3
-        if: steps.salva.outputs.cambiato == 'true'
+        if: steps.salva.outputs.cambiato == 'true' || github.event_name == 'workflow_dispatch'
         with:
           path: ${{ runner.temp }}/pagine-registro
       - uses: actions/deploy-pages@v4
-        if: steps.salva.outputs.cambiato == 'true'
+        if: steps.salva.outputs.cambiato == 'true' || github.event_name == 'workflow_dispatch'
