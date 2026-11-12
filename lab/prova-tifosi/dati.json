@@ -1954,5 +1954,67 @@
         "promessa_automatica": false
       }
     ]
+  },
+  "derby_ufficiali": {
+    "stagione": "2026/27",
+    "verificato": "2026-11-12T15:29:32.935101+00:00",
+    "coppie": [
+      {
+        "a": "Apo team",
+        "b": "Grodah",
+        "n": "Il Derby della Montagna Russa",
+        "dal": "2026-10-18T14:52:26.245727+00:00",
+        "sfida_id": null
+      },
+      {
+        "a": "Apo team",
+        "b": "Oranje VC",
+        "n": "The Continental",
+        "dal": "2026-10-19T03:42:29.295978+00:00",
+        "sfida_id": 4
+      },
+      {
+        "a": "Apo team",
+        "b": "The Blue brothers",
+        "n": "Il Classico",
+        "dal": "2026-10-18T14:52:26.245727+00:00",
+        "sfida_id": null
+      },
+      {
+        "a": "Apo team",
+        "b": "WOA",
+        "n": "Il Derby dei Re",
+        "dal": "2026-10-18T14:52:26.245727+00:00",
+        "sfida_id": null
+      },
+      {
+        "a": "Grodah",
+        "b": "The Blue brothers",
+        "n": "Il Derby delle Due Finali",
+        "dal": "2026-10-18T14:52:26.245727+00:00",
+        "sfida_id": null
+      },
+      {
+        "a": "Grodah",
+        "b": "WOA",
+        "n": "Il Derby delle Due Corone",
+        "dal": "2026-10-18T14:52:26.245727+00:00",
+        "sfida_id": null
+      },
+      {
+        "a": "Oranje VC",
+        "b": "The Blue brothers",
+        "n": "Derby dell'Emma",
+        "dal": "2026-10-22T09:22:14.315427+00:00",
+        "sfida_id": 5
+      },
+      {
+        "a": "The Blue brothers",
+        "b": "WOA",
+        "n": "Il Derby del Camaleonte",
+        "dal": "2026-10-18T14:52:26.245727+00:00",
+        "sfida_id": null
+      }
+    ]
   }
 }

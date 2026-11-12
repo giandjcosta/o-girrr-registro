@@ -1,0 +1,68 @@
+{
+  "fonte": "Registro ufficiale derby_attivi e sfide accettate con nome confermato; SELECT in sola lettura, nessuna RPC",
+  "stagione": "2026/27",
+  "voti": [],
+  "sfide": [
+    {
+      "a": "Apo team",
+      "da": "Oranje VC",
+      "id": 4,
+      "nome": "The Continental",
+      "creata": "2026-10-18T13:02:39.775536+00:00",
+      "risposta": "2026-10-18T14:01:21.185233+00:00",
+      "stagione": "2026/27"
+    },
+    {
+      "a": "Oranje VC",
+      "da": "The Blue brothers",
+      "id": 5,
+      "nome": "Derby dell'Emma",
+      "creata": "2026-10-18T16:55:55.007198+00:00",
+      "risposta": "2026-10-18T19:25:53.263063+00:00",
+      "stagione": "2026/27"
+    }
+  ],
+  "attivi": [
+    {
+      "a": "Apo team",
+      "b": "Grodah",
+      "dal": "2026-10-18T14:52:26.245727+00:00"
+    },
+    {
+      "a": "Apo team",
+      "b": "Oranje VC",
+      "dal": "2026-10-19T03:42:29.295978+00:00"
+    },
+    {
+      "a": "Apo team",
+      "b": "The Blue brothers",
+      "dal": "2026-10-18T14:52:26.245727+00:00"
+    },
+    {
+      "a": "Apo team",
+      "b": "WOA",
+      "dal": "2026-10-18T14:52:26.245727+00:00"
+    },
+    {
+      "a": "Grodah",
+      "b": "The Blue brothers",
+      "dal": "2026-10-18T14:52:26.245727+00:00"
+    },
+    {
+      "a": "Grodah",
+      "b": "WOA",
+      "dal": "2026-10-18T14:52:26.245727+00:00"
+    },
+    {
+      "a": "Oranje VC",
+      "b": "The Blue brothers",
+      "dal": "2026-10-22T09:22:14.315427+00:00"
+    },
+    {
+      "a": "The Blue brothers",
+      "b": "WOA",
+      "dal": "2026-10-18T14:52:26.245727+00:00"
+    }
+  ],
+  "verificato": "2026-11-12T15:29:32.935101+00:00"
+}

@@ -97,10 +97,19 @@ with sync_playwright() as p:
                 assert page.locator('[data-ap=rec] #pt-record-season #pt-archivio').count()==1
                 page.goto(BASE+skin+'/index.html?novita=1');assert page.locator('#pt-storia-home,#pt-home').count()==0;assert page.locator('.v53-home a[href*="derby.html"]').count()==0
                 page.locator('#pt-mvp-notice').get_by_text('Letta',exact=True).wait_for(state='visible')
-                page.goto(BASE+skin+'/albo.html');page.locator('[data-at="derby"]').click();page.locator('#pt-derby-access').click();page.locator('#pt-derby').wait_for(state='visible')
+                page.goto(BASE+skin+'/albo.html');page.locator('[data-at="derby"]').click();page.locator('#pt-derby-access').wait_for()
+                styles=page.evaluate("""() => {const a=document.querySelector('[data-ap=derby] a.card'),b=document.getElementById('pt-derby-access'),props=['padding','borderRadius','borderLeftWidth','backgroundImage','fontFamily','color'];return props.map(p=>[p,getComputedStyle(a)[p],getComputedStyle(b)[p]])}""");assert all(x[1]==x[2] for x in styles),styles
+                component_photo(page,'[data-ap=derby]',PHOTO/f'menu-derby-{skin}-390.png')
+                page.locator('#pt-derby-access').click();page.locator('#pt-derby').wait_for(state='visible')
+                row=page.locator('#pt-derby tbody tr').filter(has_text='Oranje VC');assert row.locator('td').all_text_contents()[2:]==['0','1','1','2']
+                page.locator('#pt-derby details>summary').click();page.get_by_text('The Continental',exact=False).first.wait_for(state='visible')
+                page.goto(BASE+skin+'/derby.html');page.get_by_text('The Continental',exact=False).first.wait_for();assert 'Derby dell’Emma' in page.locator('body').inner_text() or "Derby dell'Emma" in page.locator('body').inner_text()
+
                 page.locator('#lg').click();page.locator('#pt-mvp-notice').wait_for(state='visible')
                 page.goto(BASE+skin+'/app.html?novita=1&squadra=Oranje%20VC&sezione=storia#carriera');page.locator('#pt-storia').wait_for(state='visible');assert page.locator('[data-ctab=st]').get_attribute('aria-pressed')=='true'
                 assert page.locator('.pt-week').count()==7
+                assert 'Un passo ritrovato, prima della capolista' in page.locator('.pt-week[data-pt-day="7"]').inner_text()
+                assert page.locator('.pt-week[data-pt-day="7"] .pt-article-copy p').count()==3
                 assert page.locator('.pt-week[open]').count()==1
                 component_photo(page,'#pt-storia',PHOTO/f'storia-{skin}-390-aperta.png')
                 page.locator('.pt-week[data-pt-day="7"]>summary').click();page.wait_for_timeout(350);assert page.locator('.pt-week[open]').count()==0

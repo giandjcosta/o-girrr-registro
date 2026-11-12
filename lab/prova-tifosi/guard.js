@@ -5,6 +5,8 @@ var nativeFetch=window.fetch.bind(window), blocked=[];
 window.PROVA_TIFOSI={blocked:blocked};
 function forbidden(url){try{var u=new URL(url,document.baseURI);return u.origin!==location.origin}catch(e){return true}}
 window.fetch=function(input,init){var url=typeof input==='string'?input:input.url, method=((init&&init.method)||(input&&input.method)||'GET').toUpperCase();
+ // Il Derby ufficiale della prova proviene dallo snapshot pubblico locale: nessuna RPC.
+ if(forbidden(url)&&/\/rpc\/derby_stato$/.test(new URL(url,document.baseURI).pathname)){blocked.push(String(url));return nativeFetch(new URL('derby-ufficiali.json',own)).then(function(r){return r.json()}).then(function(s){return new Response(JSON.stringify({voti:s.voti||[],sfide:(s.sfide||[]).filter(function(x){return (s.attivi||[]).some(function(r){return [r.a,r.b].includes(x.da)&&[r.a,r.b].includes(x.a)})}).map(function(x){return Object.assign({},x,{stato:'accettata',nome_ok:true})})}),{status:200,headers:{'Content-Type':'application/json'}})})}
  if(forbidden(url)||!['GET','HEAD'].includes(method)){blocked.push(String(url));return Promise.resolve(new Response(JSON.stringify({ok:false,prova:true,error:'Operazione non disponibile nella prova',voti:[],sfide:[],post:[],posts:[],replies:[],react:[],mine:[],follow:[],prof:{},commenti:[],eventi:[],notifiche:[]}),{status:200,headers:{'Content-Type':'application/json'}}))}
  var mapped=new URL(url,document.baseURI);if(mapped.origin===location.origin&&mapped.pathname.startsWith('/o-girrr-registro/')){var repo=new URL('../../',own);input=new URL(mapped.pathname.slice('/o-girrr-registro/'.length)+mapped.search,repo).href}return nativeFetch(input,init)};
 var open=XMLHttpRequest.prototype.open,send=XMLHttpRequest.prototype.send;

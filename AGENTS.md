@@ -50,6 +50,7 @@ O Girrr si racconta come un campionato vero, ma i dati sono quelli ufficiali di 
 - Le frasi iniziano con la maiuscola, anche dopo un punto. Nelle legende usare etichette con iniziale maiuscola e separare chiaramente i significati.
 - **Dopo il punto mediano «·» la parola comincia sempre con la maiuscola** (decisione di Gianluca, ribadita il 9 novembre 2026): «Offline · Copia delle 15:46», «Roma · Attaccante», «Campionato · Risultati della 7ª giornata». Mai «· copia», «· pagato». Vale per testi, pulsanti, avvisi, notifiche, immagini e commenti nel codice. I numeri restano numeri («· 9 novembre»).
 - "Derby" sempre con la D maiuscola. Titoli ed etichette con la maiuscola iniziale.
+- I Derby ufficiali si leggono dal registro ufficiale (compresi quelli nati da sfide accettate con nome confermato). Un indice di rivalità, per quanto alto, non sostituisce quel registro. Non escludere club con Derby ufficiali soltanto perché non sono nelle rivalità storiche.
 - I post ufficiali (Girrr Sport, Lega, Giornale) non parlano mai di scommesse.
 
 ## La mia settimana — regola editoriale permanente (Gianluca, 12 novembre 2026)
