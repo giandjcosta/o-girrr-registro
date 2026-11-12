@@ -209,7 +209,10 @@ p.lead{color:var(--mute);margin:8px 0 16px}
   window.addEventListener('online',chiedi);window.addEventListener('offline',function(){ora.disabled=true});
   navigator.serviceWorker.register('sw-prova.js',{scope:'./',updateViaCache:'none'}).then(function(r){
     reg=r;
-    function pronto(){chiedi();var w=sw();if(w&&navigator.onLine)w.postMessage({tipo:'girrr-aggiorna'})}
+    /* ?apri=sito/… (Claude, 12 novembre 2026): attiva la copia di prova e apre quella pagina (link della pagina Novità 6.0) */
+    var apri=(/[?&]apri=([^&#]+)/.exec(location.search)||[])[1];apri=apri&&decodeURIComponent(apri);if(apri&&!/^sito\/[\w\/.-]*([?#][\w=&#.-]*)?$/.test(apri))apri=null;
+    function vai(){if(apri)location.replace(apri+(/#/.test(apri)||!location.hash?'':location.hash))}
+    function pronto(){chiedi();var w=sw();if(w&&navigator.onLine)w.postMessage({tipo:'girrr-aggiorna'});if(apri){if(navigator.serviceWorker.controller)vai();else navigator.serviceWorker.addEventListener('controllerchange',vai)}}
     if(r.active)pronto();else{var x=r.installing||r.waiting;if(x)x.addEventListener('statechange',function(){if(x.state==='activated')pronto()})}
   }).catch(function(e){scrivi('no','Non è stato possibile attivare la copia.',String(e&&e.message||e))});
 })();
