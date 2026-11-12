@@ -7,8 +7,12 @@ SOURCE = ROOT / 'anteprima/pubblicata'
 for skin, directory in [('lega', 'girrr'), ('stadio', 'stadio/girrr')]:
     target = OUT / skin
     target.mkdir(exist_ok=True)
-    for page in ['index', 'curva', 'derby', 'app', 'giornale', 'albo']:
-        html = (SOURCE / directory / (page + '.html')).read_text()
+    for page in ['index', 'curva', 'derby', 'derby-stagione', 'app', 'giornale', 'albo']:
+        html = (SOURCE / directory / (('derby' if page == 'derby-stagione' else page) + '.html')).read_text()
+        if page == 'derby-stagione':
+            html = re.sub(r'<script src="derby\.js[^"]*"></script>', '', html)
+            html = html.replace('<h1>I Derby</h1>', '<h1>Derby della stagione</h1>').replace('href="index.html">‹ O Girrr', 'href="albo.html#derby">‹ I Derby')
+            html = html.replace('O Girrr · I dati arrivano dallo Spogliatoio', '2026/27 · Derby storici registrati')
         # Base relativa stabile anche per il caricamento anticipato degli asset.
         base = '<base href="../../../anteprima/pubblicata/' + directory + '/">'
         head = '<head>' + base + '<script src="' + ('../../../../' if skin == 'stadio' else '../../../') + 'lab/prova-tifosi/guard.js"></script>'
@@ -27,7 +31,7 @@ fixture = {'aggiornato': D['updated'], 'teams': [t['name'] for t in D['teams']],
            'rivalita': [r for r in N['riv'] if r['r'] >= 80],
            'dossier': json.loads((ROOT / 'redazione/dossier.json').read_text())}
 (OUT / 'dati.json').write_text(json.dumps(fixture, ensure_ascii=False, indent=2) + '\n')
-print('Prova tifosi: 12 copie native e dati locali rigenerati. Mirror invariato.')
+print('Prova tifosi: 14 copie native e dati locali rigenerati. Mirror invariato.')
 
 # Stessa UI nativa; adattate soltanto le costanti dei percorsi per le URL di ramo.
 ui = (SOURCE / 'girrr/v55/ui.js').read_text()
