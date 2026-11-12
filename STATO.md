@@ -1,5 +1,8 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (21) — Claude: video della giornata (B), niente partita da non perdere se non ce n'è una importante (Lab)
+- Tolto il ripiego della capolista: anche in Campionato la partita compare solo se rientra nei criteri. Se non rientra niente né in Campionato né in Coppa, la scena «Da non perdere» non c'è e il video passa a «Tutto su O Girrr» (durata calcolata dai dati con `calculateMetadata`: 31,8 s invece di 36,5). Provati i casi «nessuna» e «solo Coppa»: `lab/video-giornata/strada-b-casi.png`. Video con i dati veri invariato (tutte e due le partite rientrano).
+
 ## 12 novembre (20) — Claude: Impostazioni della Curva, «Della tua squadra» al posto del nome (Lab)
 - Su richiesta di Gianluca il pulsante dei colori dice «Della tua squadra» e non più «Di Oranje VC»; anche la spiegazione sotto non ha più il nome. Provato su iPhone SE (320 px): scelta salvata, nessuno scorrimento di lato, nessun errore. Foto: `lab/curva-os/colori-impostazioni.png`.
 

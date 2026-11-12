@@ -14,7 +14,7 @@ const C = Object.values(T).sort((a, b) => b.pt - a.pt || b.fp - a.fp);
 // 2. 1ª contro 2ª; 3. 3ª contro 4ª;
 // 4. l'ultima che può sorpassare: ultima da almeno 3 giornate, che ha ripreso punti (almeno 4 nelle ultime 3) e gioca contro una squadra a 3 punti o meno;
 // 5. una lunga storia: sfida con almeno 5 anni di storia (rivalità della pagina Rivalità).
-// In Champions Cup le posizioni sono quelle del girone; se nessuna partita rientra, la Coppa non va nel video. In Campionato, se nessuna rientra, la sfida della capolista.
+// In Champions Cup le posizioni sono quelle del girone. Se nessuna partita rientra, quella competizione non va nel video; se non rientra niente in tutte e due, la scena «Da non perdere» non c'è.
 global.window = {}; await import(SITO + 'girrr/novita-dati.js'); const RIV = {}; const dk = (a, b) => [a, b].map(x => String(x).toLowerCase()).sort().join('|');
 (window.NOV.riv || []).forEach(o => { RIV[dk(o.a, o.b)] = o; });
 const DV = {}, DX = {}, DN = {};
@@ -41,7 +41,7 @@ const scegli = (partite, ST) => { const P = ST[ST.length - 1], el = [];
     const o = RIV[dk(a, b)]; if (o && o.h >= 5) return el.push({ a, b, v: 1, k: 'Una lunga storia' }); });
   return el.sort((x, y) => y.v - x.v)[0] || null; };
 const STL = storia(gi.filter(x => x.n <= n), m => [m[0], m[1], m[2], m[3], m[4]], () => 'L');
-const bmS = scegli(dopo.m.map(m => [m[0], m[3]]), STL) || (m => ({ a: m[0], b: m[3], k: 'La capolista' }))(dopo.m.find(m => m[0] === C[0].n || m[3] === C[0].n) || dopo.m[0]);
+const bmS = dopo ? scegli(dopo.m.map(m => [m[0], m[3]]), STL) : null;
 // Champions Cup: l'ultima giornata giocata fino allo stesso turno di Serie A (righe: girone, A, fantapunti A, fantapunti B, B, risultato)
 const CU = D.cal.cup, cg = CU.filter(x => x.m.every(m => m[5] && m[5] !== '-') && x.sa <= g.sa), nc = cg[cg.length - 1].n, gc = cg[cg.length - 1];
 const TC = {}; cg.forEach(x => { x.m.forEach(m => { const r = m[5].split('-').map(Number); [[m[1], r[0], r[1], m[2]], [m[4], r[1], r[0], m[3]]].forEach(([s, a, b, fp]) => { const t = TC[s] = TC[s] || { n: s, g: m[0], pt: 0, fp: 0 }; t.fp += fp; t.pt += a > b ? 3 : a === b ? 1 : 0; }); }); (x.rest || []).forEach(([gr, s]) => { TC[s] = TC[s] || { n: s, g: gr, pt: 0, fp: 0 }; }); });

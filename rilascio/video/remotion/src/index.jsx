@@ -94,8 +94,8 @@ const Riquadro = ({ t, k, x, da }) => { const a = x.a, b = x.b; const f = useCur
     <div style={{ font: F(900, 18), letterSpacing: '.24em', color: t === 'lega' ? ORO : '#d6ecff' }}>{k}</div>
     <div style={{ font: F(900, 38), color: CHIARO, marginTop: 14 }}>{nm(a)}</div><div style={{ font: F(900, 20), letterSpacing: '.3em', color: t === 'lega' ? ORO : '#d6ecff', margin: '8px 0' }}>CONTRO</div><div style={{ font: F(900, 38), color: CHIARO }}>{nm(b)}</div><Motivo x={x} t={t} s={interpolate(useCurrentFrame(), [da + 14, da + 26], [0, 1], cl)} /></div>; };
 
-const DaNonPerdere = ({ n, big, nc2, bigC }) => <AbsoluteFill><Sfondo t="lega" /><Titolo t="lega" k="PROSSIMO TURNO" tit={bigC ? 'Da non perdere' : 'La partita da non perdere'} />
-  <div style={{ position: 'relative', marginTop: 34 }}><Riquadro t="lega" k={`CAMPIONATO · ${n + 1}ª GIORNATA`} x={big} da={8} />{bigC && <Riquadro t="coppa" k={`CHAMPIONS CUP · ${nc2}ª GIORNATA`} x={bigC} da={20} />}</div></AbsoluteFill>;
+const DaNonPerdere = ({ n, big, nc2, bigC }) => <AbsoluteFill><Sfondo t="lega" /><Titolo t="lega" k="PROSSIMO TURNO" tit={big && bigC ? 'Da non perdere' : 'La partita da non perdere'} />
+  <div style={{ position: 'relative', marginTop: 34 }}>{big && <Riquadro t="lega" k={`CAMPIONATO · ${n + 1}ª GIORNATA`} x={big} da={8} />}{bigC && <Riquadro t="coppa" k={`CHAMPIONS CUP · ${nc2}ª GIORNATA`} x={bigC} da={big ? 20 : 8} />}</div></AbsoluteFill>;
 
 const Fine = () => { const f = useCurrentFrame(), { fps } = useVideoConfig(), s = spring({ frame: f, fps, config: { damping: 11, stiffness: 120 } });
   return <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}><Sfondo t="lega" />
@@ -108,12 +108,13 @@ const Tendina = ({ t }) => { const f = useCurrentFrame(), x = interpolate(f, [0,
   return <AbsoluteFill style={{ transform: `translateX(${x}%) skewX(-12deg)`, background: `linear-gradient(90deg,${TEMA[t].acc} 0 70%,${ORO} 70% 78%,transparent 78%)` }} />; };
 
 const SC = [['introLega', 75], ['lega', 165], ['podio', 120], ['classifica', 160], ['introCoppa', 70], ['coppa', 150], ['gironi', 135], ['prossime', 140], ['fine', 80]];
-let da = 0; const INIZI = SC.map(([k, d]) => { const s = da; da += d; return [k, s, d]; }); const TOT = da;
+const inizi = (p) => { let da = 0; return SC.filter(([k]) => k !== 'prossime' || p.big || p.bigC).map(([k, d]) => { const s = da; da += d; return [k, s, d]; }); };
+const durata = (p) => inizi(p).reduce((t, x) => t + x[2], 0);
 const COPPA = ['introCoppa', 'coppa', 'gironi'];
-const Video = (p) => <AbsoluteFill style={{ background: '#1d2a52' }}><Caratteri />
+const Video = (p) => { const INIZI = inizi(p); return <AbsoluteFill style={{ background: '#1d2a52' }}><Caratteri />
   {INIZI.map(([k, s, d]) => <Sequence key={k} from={s} durationInFrames={d}>
     {k === 'introLega' ? <Intro t="lega" n={p.n} /> : k === 'lega' ? <Risultati t="lega" n={p.n} m={p.m} /> : k === 'podio' ? <Podio n={p.n} c={p.cl.slice(0, 3)} /> : k === 'classifica' ? <Classifica n={p.n} c={p.cl} /> : k === 'introCoppa' ? <Intro t="coppa" n={p.nc} /> : k === 'coppa' ? <Risultati t="coppa" n={p.nc} m={p.mc} /> : k === 'gironi' ? <Gironi nc={p.nc} gir={p.gir} /> : k === 'prossime' ? <DaNonPerdere n={p.n} big={p.big} nc2={p.nc2} bigC={p.bigC} /> : <Fine />}</Sequence>)}
   {INIZI.slice(1).map(([k, s]) => <Sequence key={'t' + k} from={s - 7} durationInFrames={15}><Tendina t={COPPA.indexOf(k) >= 0 ? 'coppa' : 'lega'} /></Sequence>)}
-</AbsoluteFill>;
+</AbsoluteFill>; };
 
-registerRoot(() => <Composition id="Giornata" component={Video} durationInFrames={TOT} fps={30} width={720} height={1280} defaultProps={{ n: 7, nc: 4, nc2: 5, m: [], mc: [], cl: [], gir: {}, big: { a: '', b: '', k: '' }, bigC: null }} />);
+registerRoot(() => <Composition id="Giornata" component={Video} durationInFrames={durata({ big: null, bigC: null })} calculateMetadata={({ props }) => ({ durationInFrames: durata(props) })} fps={30} width={720} height={1280} defaultProps={{ n: 7, nc: 4, nc2: 5, m: [], mc: [], cl: [], gir: {}, big: null, bigC: null }} />);
