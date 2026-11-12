@@ -30,6 +30,10 @@ self.GIRRR_SPECCHIO = (function () {
     'girrr/curva-banca.js': new URL('../../rilascio/curva-os/pagine/girrr/curva-banca.js', self.location.href).href, /* nuovi personaggi, frasi e immagini (rilascio/curva-os/banca.py) */
     'stadio/girrr/curva-banca.js': new URL('../../rilascio/curva-os/pagine/stadio/girrr/curva-banca.js', self.location.href).href,
     'girrr/v55/ui.js': new URL('../../rilascio/curva-os/pagine/girrr/v55/ui.js', self.location.href).href, /* commenti del sondaggio senza «· bot» */
+    'girrr/': new URL('../../rilascio/live/pagine/girrr/index.html', self.location.href).href, /* Home: il pallino Live lampeggia solo durante le partite (rilascio/live/applica.py) */
+    'girrr/index.html': new URL('../../rilascio/live/pagine/girrr/index.html', self.location.href).href,
+    'stadio/girrr/': new URL('../../rilascio/live/pagine/stadio/girrr/index.html', self.location.href).href,
+    'stadio/girrr/index.html': new URL('../../rilascio/live/pagine/stadio/girrr/index.html', self.location.href).href,
     'curva-os.js': new URL('../../rilascio/curva-os/curva-os.js', self.location.href).href, /* Curva: uno stile per iPhone e uno per Android */
     'curva-os.css': new URL('../../rilascio/curva-os/curva-os.css', self.location.href).href,
     'material.css': new URL('../../rilascio/liquid-glass/material.css', self.location.href).href, /* prototipo Android, Material 3, dello Stadio (?stile=android) */

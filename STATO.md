@@ -1,5 +1,11 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (14) — Claude: il pallino Live di Girrr Sport lampeggia solo durante le partite (Lab)
+
+- **Segnalazione (Gianluca):** il pallino sopra il logo di Girrr Sport (Home, riquadro Tabellone, Lega e Stadio) lampeggiava sempre, anche senza partite.
+- **`rilascio/live/applica.py SITO`** → `rilascio/live/pagine/{girrr,stadio/girrr}/index.html` (servite dallo specchio): il lampeggio solo con `.diretta`, messa da uno script quando una partita di Serie A è in corso (da 1 minuto prima a 115 minuti dopo il calcio d'inizio, orari di `data.json`, campi `sa` e `fx` delle giornate vicine a `nx`, ora di Roma), ricontrollato ogni minuto; fuori il pallino resta fermo. `?live` per provarlo.
+- **Prove** (WebKit e Chromium, Lega e Stadio, orologio spostato): adesso fermo; sabato 21/11 alle 15:30 lampeggia; alle 17:10 (tra due partite) fermo; nessun errore.
+
 ## 12 novembre (13) — Claude: reazioni dentro la barra completa del coro (Lab)
 
 - **Gianluca:** «nel coro ci deve essere spazio per il repost, per il condividi e per quanti l'hanno visualizzato».
