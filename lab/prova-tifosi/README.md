@@ -6,12 +6,14 @@ Le dodici pagine sono copie delle sei pagine native per Lega/Stadio del mirror c
 
 ## Percorsi da confrontare
 
-- **Home → Oggi al Girrr**: richiamo al voto MVP; tendina La mia settimana; collegamento Re dei Derby. Le card precedenti restano.
+- **Home → Notifiche**: una notifica MVP dopo la giornata completa, cliccabile per intero, apre il voto della Curva; la lettura si conserva solo nella prova. Tolti il racconto/riepilogo aggiunto e la scorciatoia ai Re dei Derby. Il riepilogo Oggi al Girrr originale resta.
 - **Curva → Riquadro Il sondaggio della giornata**: MVP dei tifosi, prima del sondaggio sulle partite che resta disponibile. La Curva mantiene la grafica sociale chiara/scura; nessun nuovo menu principale.
-- **Albo → Derby → Re dei Derby**: collegamento alla pagina Derby originale con classifica aggiunta e tendina delle partite conteggiate. Anche scorciatoia Home.
-- **Carriera → La mia settimana**: tendina con due risultati, punti, posizione, cammino, prossima sfida e citazione registrata. Nella Home è chiusa; nella pagina di dettaglio è aperta e richiudibile.
+- **Albo → Derby → Re dei Derby**: collegamento alla pagina Derby originale con classifica aggiunta e tendina delle partite conteggiate. Nessuna scorciatoia Home: accesso dall’Albo → Derby.
+- **Carriera → La mia settimana**: tendina con due risultati, punti, posizione, cammino, prossima sfida e citazione registrata. Rimane soltanto nella Carriera, aperta e richiudibile nel dettaglio.
 - **Giornale**: anteprima dell'articolo MVP con collegamento esatto al voto.
 - **Albo → Stagioni → MVP dei tifosi**: archivio della stagione. La pagina nativa usa attualmente l'etichetta «Stagioni», non viene rinominata. Nessun vincitore storico inventato.
+
+Solo per questa revisione, `?novita=1` mostra una targhetta **Novità rispetto a prima** con la differenza precisa in ogni nuovo modulo. Si può spegnere dalla cornice e non compare nelle visite normali. I collegamenti della mappa aprono direttamente la sezione, incluso il racconto Carriera, mantenendo il parametro nel cambio skin e nei ritorni.
 
 Il comando esterno **Prima / Con proposte** lascia la stessa pagina e la stessa skin. Il selettore esterno della squadra è uno strumento di confronto della prova: non è una scelta dell'identità sul sito reale.
 
@@ -44,6 +46,8 @@ python3 prove/prova_tifosi_browser.py
 
 Prima del sito reale: revisione estetica; approvazione delle regole del premio e dell'interpretazione club; identità verificata; voto unico/server e archivio idempotente; chiusura editoriale; storico dei Derby ufficiali; integrazione nelle sorgenti con i lavori di Claude; collaudo WebKit/Firefox e dispositivi fisici; certificazione del Lab e «Vai» di Gianluca. Il prototipo non scrive SQL, non avvia la redazione programmata e non produce audio/PDF/post reali.
 
-Esito locale finale: **264 visite, 0 problemi, 24 confronti affiancati**. Matrice iniziale di 228 visite con font di sistema; 36 visite aggiuntive a 320/390/1280 e tutte le foto ripetute con i font originali Google già usati dal sito (Inter, Lobster, Lora), conservati solo in `/tmp/tifosi-font-cache`. La cache non viene aggiunta al repository. Se esiste, il test la usa; `TIFOSI_FOTO=1` ripete queste tre misure conservando il rapporto precedente, `TIFOSI_SOLO_PERCORSI=1` ripete solo le interazioni. I due motori assenti restano non collaudati. PR #56 aperta in bozza, non unita.
+Esito della prima bozza: **264 visite, 0 problemi, 24 confronti affiancati**. Matrice iniziale di 228 visite con font di sistema; 36 visite aggiuntive a 320/390/1280 e tutte le foto ripetute con i font originali Google già usati dal sito (Inter, Lobster, Lora), conservati solo in `/tmp/tifosi-font-cache`. La cache non viene aggiunta al repository. Se esiste, il test la usa; `TIFOSI_FOTO=1` ripete queste tre misure conservando il rapporto precedente, `TIFOSI_SOLO_PERCORSI=1` ripete solo le interazioni. I due motori assenti restano non collaudati. PR #56 aperta in bozza, non unita.
 
 Verifica pubblica: Home di ramo caricata in Chromium attraverso il normale avviso «Open the page» di raw.githack, nessun errore JS/HTTP o richiesta Supabase. CI generale del Registro al commit `028f74e`: matrice Chromium/WebKit/Firefox superata sulle pagine correnti; `percorsi-e-cronache` fallito su `prove/prova_navigazione_53.py:49` (`#campo-link` atteso nascosto), fuori dalle pagine modificate. Non dichiarare tutta la CI verde e non confondere quella matrice con un test multipiattaforma del prototipo.
+
+Revisione su indicazioni di Gianluca: notifica MVP nella lista Home; nessun riepilogo personale aggiunto e nessun link Home ai Derby; racconto solo in Carriera. La mappa ora include sei link diretti con `novita=1`. Il collaudo aggiornato comprende 228 visite su 19 profili, 24 foto rigenerate e riprova separata dei percorsi/lettura/link diretti nelle due skin; esiti effettivi in `collaudo.json`. Nel primo giro delle interazioni la verifica immediata della scritta «Letta» precedeva il caricamento: il controllo ora attende l’elemento e conserva il tentativo precedente nel rapporto.

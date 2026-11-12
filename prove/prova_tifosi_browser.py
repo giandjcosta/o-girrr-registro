@@ -6,10 +6,13 @@ BASE=os.environ.get('TIFOSI_BASE','http://127.0.0.1:8765/o-girrr-registro/lab/pr
 ROOT=Path(__file__).resolve().parents[1]
 PHOTO=ROOT/'lab/prova-tifosi/foto';PHOTO.mkdir(exist_ok=True)
 TEMP=Path(tempfile.mkdtemp(prefix='tifosi-foto-'))
-PAGES=[('home','index.html','pt-home'),('mvp','curva.html','pt-mvp'),('derby','derby.html','pt-derby'),('carriera','app.html','pt-storia'),('giornale','giornale.html','pt-articolo'),('archivio','albo.html','pt-archivio')]
+PAGES=[('home','index.html','pt-mvp-notice'),('mvp','curva.html','pt-mvp'),('derby','derby.html','pt-derby'),('carriera','app.html','pt-storia'),('giornale','giornale.html','pt-articolo'),('archivio','albo.html','pt-archivio')]
 report={'motori':{},'problemi':[],'schermate':0,'visite':0,'verifiche':[]}
 if os.environ.get('TIFOSI_SOLO_PERCORSI') or os.environ.get('TIFOSI_FOTO'):
     report=json.loads((ROOT/'lab/prova-tifosi/collaudo.json').read_text())
+    if os.environ.get('TIFOSI_SOLO_PERCORSI'):
+        report['tentativi_precedenti_interazioni']=report.get('tentativi_precedenti_interazioni',[])+[x for x in report['problemi'] if '/Interazioni:' in x]
+        report['problemi']=[x for x in report['problemi'] if '/Interazioni:' not in x]
 def fonts(ctx):
     cache=Path(os.environ.get('TIFOSI_FONT_CACHE','/tmp/tifosi-font-cache'))
     if (cache/'fonts.json').exists():
@@ -45,7 +48,7 @@ with sync_playwright() as p:
             for skin in ['lega','stadio']:
                 for slug,file,target in PAGES:
                     errors.clear();bad.clear();external.clear()
-                    u=BASE+skin+'/'+file+'?squadra=Oranje%20VC'+('#carriera' if slug=='carriera' else '')
+                    u=BASE+skin+'/'+file+'?novita=1&squadra=Oranje%20VC'+('#carriera' if slug=='carriera' else '')
                     try:
                         page.goto(u,wait_until='load');page.evaluate('document.fonts.ready');page.locator('#'+target).wait_for(state='attached');page.wait_for_timeout(120)
                         if slug=='mvp':
@@ -62,7 +65,7 @@ with sync_playwright() as p:
                             page.evaluate('(id)=>{let el=document.getElementById(id);window.scrollTo(0,el.getBoundingClientRect().top+scrollY-150)}',target);page.wait_for_timeout(220)
                             after=TEMP/f'{slug}-{skin}-{w}-dopo.png';page.screenshot(path=str(after))
                             # Il comando Prima deve eliminare tutte le aggiunte conservando la pagina nativa.
-                            page.goto(u.replace('?squadra','?prima=1&squadra'),wait_until='load');page.evaluate('document.fonts.ready');page.wait_for_timeout(350)
+                            page.goto(u.replace('?novita=1','?prima=1&novita=1'),wait_until='load');page.evaluate('document.fonts.ready');page.wait_for_timeout(350)
                             assert page.locator('.pt-box').count()==0
                             before=TEMP/f'{slug}-{skin}-{w}-prima.png';page.screenshot(path=str(before))
                             # Affiancamento di screenshot integrali, senza alterare le pagine.
@@ -75,7 +78,7 @@ with sync_playwright() as p:
         ctx=browser.new_context(viewport={'width':390,'height':844});fonts(ctx);page=ctx.new_page()
         try:
             for skin in ['lega','stadio']:
-                page.goto(BASE+skin+'/index.html?squadra=Oranje%20VC');page.locator('#pt-home a').filter(has_text='Apri la votazione').click();page.locator('#pt-mvp').wait_for(state='visible')
+                page.goto(BASE+skin+'/index.html?novita=1&squadra=Oranje%20VC');page.locator('#pt-mvp-notice').click();page.locator('#pt-mvp').wait_for(state='visible')
                 assert '/prova-tifosi/'+skin+'/curva.html' in page.url
                 page.locator('[data-pt-vote="Oranje VC"]').click();assert page.locator('[data-pt-vote="Oranje VC"]').get_attribute('aria-pressed')=='true'
                 page.reload();page.locator('[data-pt-vote="Oranje VC"][aria-pressed="true"]').wait_for()
@@ -84,14 +87,23 @@ with sync_playwright() as p:
                 page.locator('#pt-mvp a').filter(has_text='Il verdetto').click();page.locator('#pt-articolo').wait_for(state='visible')
                 page.locator('#pt-articolo a').click();page.locator('#pt-mvp').wait_for(state='visible')
                 page.locator('#pt-mvp a').filter(has_text='Archivio').click();page.locator('#pt-archivio').wait_for(state='visible')
-                page.goto(BASE+skin+'/index.html');page.locator('#pt-home a').filter(has_text='Re dei Derby').click();page.locator('#pt-derby').wait_for(state='visible')
-                page.locator('#pt-derby summary').first.click();page.wait_for_timeout(500);assert not page.locator('#pt-derby details').first.evaluate('(d)=>d.open')
+                page.goto(BASE+skin+'/index.html?novita=1');assert page.locator('#pt-storia-home,#pt-home').count()==0;assert page.locator('.v53-home a[href*="derby.html"]').count()==0
+                page.locator('#pt-mvp-notice').get_by_text('Letta',exact=True).wait_for(state='visible')
                 page.goto(BASE+skin+'/albo.html');page.locator('[data-at="derby"]').click();page.locator('#pt-derby-access a').click();page.locator('#pt-derby').wait_for(state='visible')
-                page.locator('#lg').click();page.locator('#pt-home').wait_for(state='visible')
-                page.locator('#pt-storia-home summary').click();page.locator('#pt-storia-home a').click();page.locator('#pt-storia').wait_for(state='visible')
-                page.locator('#olg').click();page.locator('#pt-home').wait_for(state='visible')
-                report['verifiche'].append(engine+'/'+skin+': Home→Voto→Giornale→Voto→Archivio; Home→Derby; voto/cambio/ritiro/persistenza; tendina Derby; Albo→Derby; Home→Racconto→Carriera→Logo Home')
-        except Exception as e:report['problemi'].append(engine+'/Interazioni: '+str(e)[:500])
+                page.locator('#lg').click();page.locator('#pt-mvp-notice').wait_for(state='visible')
+                page.goto(BASE+skin+'/app.html?novita=1&squadra=Oranje%20VC#carriera');page.locator('#pt-storia').wait_for(state='visible');assert page.locator('#pt-storia .pt-revision').is_visible()
+                page.locator('#olg').click();page.locator('#pt-mvp-notice').wait_for(state='visible')
+                for _,file,target in PAGES:
+                    fragment='carriera' if file=='app.html' else target
+                    page.goto(BASE+skin+'/'+file+'?novita=1#'+fragment)
+                    selector='#pt-mvp-notice .pt-new-badge' if file=='index.html' else '#'+target+' .pt-revision'
+                    page.locator(selector).wait_for(state='visible');page.wait_for_timeout(1900)
+                    rect=page.locator(selector).bounding_box();assert rect and 0<=rect['y']<600,(file,rect)
+                report['verifiche'].append(engine+'/'+skin+': Sei link diretti con targhetta Novità nel viewport')
+                report['verifiche'].append(engine+'/'+skin+': Home→Voto→Giornale→Voto→Archivio; notifica letta; voto/cambio/ritiro/persistenza; Albo→Derby; Carriera→Logo Home; nessun riepilogo/Derby aggiunto in Home')
+        except Exception as e:
+            import traceback
+            report['problemi'].append(engine+'/Interazioni: '+traceback.format_exc()[-1800:])
         ctx.close();browser.close()
 report['verifiche']=list(dict.fromkeys(report['verifiche']))
 (ROOT/'lab/prova-tifosi/collaudo.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')

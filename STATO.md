@@ -1,5 +1,16 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre — ChatGPT: revisione dei richiami e link diretti alle novità
+
+Correzioni richieste da Gianluca sulla prova della PR #56 (non pubblicata):
+
+- **Home**: tolto tutto il blocco aggiunto con racconto/riepilogo e scorciatoia Re dei Derby; resta il riepilogo originale Oggi al Girrr. L’MVP è ora una notifica dentro la lista esistente, dopo una giornata completa: l’intera riga apre il voto della Curva e la lettura si conserva solo nel namespace locale della prova.
+- **Derby**: nessun collegamento speciale in Home; accesso dall’Albo → Derby. I link diretti nella mappa e nella consegna sono strumenti temporanei di revisione richiesti dall’utente.
+- **Revisione guidata**: `?novita=1` aggiunge «Novità rispetto a prima» e una spiegazione specifica a voto, Derby, Carriera, articolo e archivio; etichetta/differenza anche nella notifica. Fuori da quel parametro le evidenze non compaiono. Interruttore nella cornice, parametro conservato nel cambio skin e nei percorsi. Link dedicati con apertura/scorrimento alla sezione.
+- Racconto solo nella Carriera; articolo, archivio e sondaggio rimangono proposte da valutare. Nessun cambiamento alle regole o ai voti del premio. Nessuna modifica al sito vero, al database o alla logica delle notifiche personali di Claude.
+- Build Anteprima e modello superati; 228 visite Chromium sui 19 profili e 24 confronti aggiornati. Sei link diretti e interazioni nelle due skin riprovati separatamente; esito in `lab/prova-tifosi/collaudo.json` e `foto/`. Il test della scritta «Letta» ora attende il caricamento asincrono, conservando il tentativo precedente nel rapporto. Il primo avvio del collaudo non aveva il server locale attivo: errore di preparazione, rieseguito con server avviato. Rimangono i limiti dei motori/dispositivi non disponibili e del vecchio controllo Campo già documentato sotto.
+
+
 ## 12 novembre — ChatGPT: prova navigabile MVP, Re dei Derby e La mia settimana
 
 **PROTOTIPO, non pubblicato sul sito e non nuova versione.** Gianluca ha chiesto di provare tutte e tre le proposte e di vedere esattamente cambiamenti e menu. Ramo `chatgpt/prova-mvp-derby-settimana`, da `main` `1f9b84a`. PR #56 in bozza, nessun merge; revisione affidata a Claude. Le decisioni documentali precedenti rimangono anche nella PR #55.

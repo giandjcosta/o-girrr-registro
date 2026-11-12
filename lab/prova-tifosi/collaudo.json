@@ -6,12 +6,15 @@
   },
   "problemi": [],
   "schermate": 24,
-  "visite": 264,
+  "visite": 228,
   "verifiche": [
-    "chromium/lega: Home→Voto→Giornale→Voto→Archivio; Home→Derby; voto/cambio/ritiro/persistenza; tendina Derby",
-    "chromium/stadio: Home→Voto→Giornale→Voto→Archivio; Home→Derby; voto/cambio/ritiro/persistenza; tendina Derby",
-    "chromium/lega: Home→Voto→Giornale→Voto→Archivio; Home→Derby; voto/cambio/ritiro/persistenza; tendina Derby; Albo→Derby; Home→Racconto→Carriera→Logo Home",
-    "chromium/stadio: Home→Voto→Giornale→Voto→Archivio; Home→Derby; voto/cambio/ritiro/persistenza; tendina Derby; Albo→Derby; Home→Racconto→Carriera→Logo Home"
+    "chromium/lega: Home→Voto→Giornale→Voto→Archivio; notifica letta; voto/cambio/ritiro/persistenza; Albo→Derby; Carriera→Logo Home; nessun riepilogo/Derby aggiunto in Home",
+    "chromium/stadio: Home→Voto→Giornale→Voto→Archivio; notifica letta; voto/cambio/ritiro/persistenza; Albo→Derby; Carriera→Logo Home; nessun riepilogo/Derby aggiunto in Home",
+    "chromium/lega: Sei link diretti con targhetta Novità nel viewport",
+    "chromium/stadio: Sei link diretti con targhetta Novità nel viewport"
   ],
-  "font_originali": "Riprova 320/390/1280 con cache temporanea Inter, Lobster e Lora usati dal sito"
+  "tentativi_precedenti_interazioni": [
+    "chromium/Interazioni: ",
+    "chromium/Interazioni: Traceback (most recent call last):\n  File \"/workspace/o-girrr-registro/prove/prova_tifosi_browser.py\", line 101, in <module>\n    rect=page.locator(selector).bounding_box();assert rect and 0<=rect['y']<600,(file,rect)\n                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: ('app.html', {'x': 54, 'y': -138, 'width': 274, 'height': 107})\n"
+  ]
 }

@@ -25,3 +25,10 @@ body[data-v53=curva] .pt-meter{background:var(--ln)}
 body[data-v53=curva] .pt-meter span{background:var(--acc)}
 body[data-v53=curva] .pt-box a{color:var(--blu)}
 body[data-v53=curva] .pt-jury>div{border-color:var(--ln)}
+/* Evidenze temporanee richieste per questa revisione: attive solo con ?novita=1. */
+.pt-revision{padding:12px 14px;margin:0 0 16px;border:1px dashed #bfe3ff;border-radius:10px;background:#bfe3ff12;color:var(--pt-ink);font:600 12px/1.5 Inter,system-ui,sans-serif}
+.pt-revision>b,.pt-new-badge{display:inline-block;background:#ffd166;color:#141d3d;font:900 10px/1.4 Inter,system-ui,sans-serif;letter-spacing:.07em;text-transform:uppercase;padding:3px 7px;border-radius:6px}
+.pt-revision p{margin:7px 0 0;font-size:12px}.pt-new-badge{margin-bottom:5px}
+.pt-mvp-notice{border-radius:10px;min-height:56px}.pt-mvp-notice small{display:block;white-space:normal}.pt-notice-diff{margin-top:5px;opacity:.9}.pt-read-state{font-size:10px;opacity:.8;margin-top:4px}.pt-mvp-notice.pt-read .v53-dot{background:#bfe3ff;opacity:.35}
+.pt-box,.pt-mvp-notice{scroll-margin-top:140px}
+body[data-v53=curva] .pt-revision{color:var(--tx);border-color:var(--mu);background:var(--bg2)}

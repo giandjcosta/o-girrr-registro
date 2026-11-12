@@ -36,7 +36,7 @@ document.addEventListener('click',function(e){
  if(u.href.startsWith(own.href)&&!u.pathname.includes('/anteprima/'))return;
  e.preventDefault();e.stopImmediatePropagation();
  if(['index.html','curva.html','derby.html','app.html','giornale.html','albo.html'].includes(page)){
- var dest=new URL(skin+'/'+page,own);dest.search=u.search;dest.hash=u.hash;var q=new URLSearchParams(location.search);for(var k of ['prima','squadra'])if(q.has(k))dest.searchParams.set(k,q.get(k));location.href=dest.href;
+ var dest=new URL(skin+'/'+page,own);dest.search=u.search;dest.hash=u.hash;var q=new URLSearchParams(location.search);for(var k of ['prima','squadra','novita'])if(q.has(k))dest.searchParams.set(k,q.get(k));location.href=dest.href;
  }else{var msg=document.getElementById('pt-status');if(msg)msg.textContent='Questo collegamento resta fuori dalla prova: '+(a.textContent.trim()||page)}
 },true);
 })();
