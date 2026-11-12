@@ -14,6 +14,9 @@ QUANDO negativo conta dalla fine del video). Con un suono sopra, la musica si ab
 
 --inizio S fa partire il brano da S secondi (per far cadere una «esplosione» del brano su un momento del video), --fine S
 lo ferma a S secondi (per togliere il silenzio finale e far cadere il colpo finale sulla chiusura del video).
+--dopo FILE:INIZIO:FINE@QUANDO passa a un secondo brano a QUANDO secondi del video (per esempio dalla base calma da TV
+del Campionato a quella epica della Coppa): il primo sfuma nel mezzo secondo prima, il secondo parte da INIZIO secondi
+del suo brano (scelto in modo che la sua «esplosione» cada a QUANDO), si ferma a FINE e il suo finale vero chiude il video.
 
 Uso: python3 rilascio/video/monta_musica.py BRANO.mp3 VIDEO_MUTO.mp4 VIDEO_CON_MUSICA.mp4 [--coda SECONDI] [--suono …]
 """
@@ -79,6 +82,7 @@ if __name__ == '__main__':
     p.add_argument('--coda', type=float, default=8.0, help='secondi del finale vero del brano da tenere')
     p.add_argument('--inizio', type=float, default=0.0, help='secondi del brano da cui partire')
     p.add_argument('--fine', type=float, default=0.0, help='secondi del brano a cui fermarsi (0 = fino alla fine)')
+    p.add_argument('--dopo', default='', help='FILE:INIZIO:FINE@QUANDO')
     p.add_argument('--suono', action='append', default=[], help='FILE:DA:A@QUANDO:VOLUME')
     A = p.parse_args()
     lungo = durata(A.video)
@@ -86,7 +90,23 @@ if __name__ == '__main__':
     x = x[int(A.inizio * SR):int(A.fine * SR) if A.fine else len(x)].copy()
     if A.fine:
         x[-int(0.3 * SR):] *= np.linspace(1, 0, int(0.3 * SR))[:, None]
-    y = monta(x, lungo, A.coda)
+    if A.dopo:
+        sorg, q = A.dopo.rsplit('@', 1)
+        f2, i2, f2fine = sorg.rsplit(':', 2)
+        q, xf = float(q), 0.5
+        z = carica(f2)[int(float(i2) * SR):int(float(f2fine) * SR)].copy()
+        z[-int(0.3 * SR):] *= np.linspace(1, 0, int(0.3 * SR))[:, None]
+        z = monta(z, lungo - q + xf, A.coda)
+        k, n = int((q - xf) * SR), int(xf * SR)
+        y = x[:k + n].copy()
+        if len(y) < k + n:
+            y = np.concatenate([y, np.zeros((k + n - len(y), 2), np.float32)])
+        y[k:] *= np.linspace(1, 0, n)[:, None]
+        z[:n] *= np.linspace(0, 1, n)[:, None]
+        y = np.concatenate([y[:k], y[k:] + z[:n], z[n:]])
+        print('secondo brano', f2, 'da %.2f s del video' % (q - xf))
+    else:
+        y = monta(x, lungo, A.coda)
     y = y[:int(lungo * SR)]
     if len(y) < lungo * SR:
         y = np.concatenate([y, np.zeros((int(lungo * SR) - len(y), 2), np.float32)])
