@@ -1,5 +1,11 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (4) — Claude: pillola del Liquid Glass centrata nella capsula (Lab)
+
+- **Segnalazione (Gianluca):** nella Curva, in alto, la parte più scura della pillola non è centrata nella capsula: un po' più bassa e scentrata.
+- **Misure (WebKit e Chromium):** la pillola era già al centro (5 px sopra e 5 px sotto), ma l'ombra cadeva solo verso il basso (3 px) e il riflesso chiaro stava solo sul bordo alto: a occhio sembrava più bassa. Ora riflesso e ombra sono uguali su tutti i lati, nelle schede e nella barra in basso (`curva-os.src.css`, poi `costruisci.py`). Foto: `lab/curva-os/pillola-centrata.png`.
+- **Prove:** `prove/prova_curva_os.js` sugli iPhone con WebKit, tutto a posto.
+
 ## 12 novembre (3) — Claude: Curva ferma (aggiornata pezzo per pezzo), Notifiche divise, prove con WebKit, video della giornata (Lab, sito non toccato)
 
 - **Segnalazione (Gianluca):** nei video la pagina, i loghi e le grafiche si ricaricano da zero; intestazione e barra in basso devono restare ferme. «Non puoi fare il lazy loading anche nella Curva come nello Spogliatoio? Così non deve ricreare tutto ogni volta».
