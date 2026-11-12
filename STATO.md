@@ -1,5 +1,8 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (33) — Claude: elenco per la prossima versione, Radio, video e «Condividi la giornata» (proposte)
+- `proposte/versione-6-0.md`: tutto quello che è pronto o in prova (Claude e ChatGPT, controllati i rami `chatgpt/*` e il `main` del registro), proposta 5.8.2 subito per le tre piccole correzioni e 6.0 per Curva per sistema, video, «Condividi la giornata» e suoni della Radio; idee per i suoni della Radio (`voci-src/monta.py`); dove e come pubblicare il video; il pacchetto «Condividi la giornata» (video, Radio, grafiche di Campionato e Coppa, Giornale). Il prototipo di ChatGPT tocca file diversi (in comune solo `STATO.md` e il menu del Lab). Nessuna modifica al sito.
+
 ## 12 novembre (32) — Claude: video della giornata, scelta la «B senza folla» (Lab)
 - Gianluca tiene `lab/video-giornata/strada-b-chiusura-b.mp4`: base calma del Campionato, «Victory» sulla Coppa, ritorno al Campionato per la chiusura, effetti senza folla sul podio. Basi salvate in `rilascio/video/musica/` (`campionato.mp3`, `coppa-victory.mp3`); `rilascio/video/fai_video.sh SITO USCITA` rifà tutto (provato il passo della musica: audio identico alla versione scelta). `render.mjs` legge sito (`SITO`) e uscita (`USCITA`) da fuori. Prossimo passo: il workflow sul sito dopo ogni giornata (serve il «Vai») e la licenza dei brani per Instagram.
 
