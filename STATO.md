@@ -1,5 +1,11 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
 
+## 12 novembre (10) — Claude: niente «Bot» accanto ai personaggi nei commenti del sondaggio (Lab e sorgenti)
+
+- **Segnalazione (Gianluca, foto dal sito vero):** nei commenti del sondaggio della Curva compariva «Il Barista · bot», «Nonno Cesare · bot»…: «lo sappiamo ma toglie immersione».
+- **Dove:** `girrr/v55/ui.js` (vale per Lega e Stadio), riga dei commenti `botComments`: tolta l'aggiunta dell'etichetta. Fatto in `ufficiale/src/sito/girrr/v55/ui.js` e nella copia del Lab `rilascio/curva-os/pagine/girrr/v55/ui.js` (servita dallo specchio). Verificato nel Lab (Lega e Stadio, tema scuro): 15 commenti, nessuna etichetta, nessun errore.
+- **Sito vero: non toccato.** Per portarla online: copiare la riga su `gh-pages` (`girrr/v55/ui.js`, che è un po' diverso dal registro) e cambiare `ui.js?v=55r9` in `?v=55r10` nelle pagine che lo caricano, altrimenti i telefoni tengono la copia vecchia. Serve il «vai».
+
 ## 12 novembre (9) — Claude: correzioni dopo la revisione di Gianluca (Lab)
 
 - **Promemoria della formazione: scartato** (Gianluca: «lasciamolo fuori»), tolto da `proposte/idee-da-fare.md`.
