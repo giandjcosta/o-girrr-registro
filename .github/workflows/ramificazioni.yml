@@ -1,0 +1,49 @@
+name: ChatGPT - Aggiornamento delle ramificazioni
+on:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  push:
+    branches: [main]
+    paths: ['ramificazioni.py', 'ramificazioni-note.json', '.github/workflows/ramificazioni.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: ramificazioni
+  cancel-in-progress: false
+jobs:
+  aggiorna:
+    # Non parte dal ramo di preparazione della 6.0. Non pubblica GitHub Pages.
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Leggi entrambi i repository
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 ramificazioni.py --cache "$RUNNER_TEMP/grafi-git" --output "$RUNNER_TEMP/ramificazioni-dati.json"
+      - name: Conserva i dati su un ramo tecnico, senza modificare il sito
+        env:
+          SNAPSHOT: ${{ runner.temp }}/ramificazioni-dati.json
+        run: |
+          git config user.name 'ChatGPT'
+          git config user.email 'noreply@openai.com'
+          destinazione="$RUNNER_TEMP/mappa-pubblica"
+          if git ls-remote --exit-code origin refs/heads/chatgpt/dati-ramificazioni >/dev/null; then
+            git fetch origin chatgpt/dati-ramificazioni
+            git worktree add -b chatgpt/mappa-temporanea "$destinazione" FETCH_HEAD
+          else
+            git worktree add --detach "$destinazione"
+            git -C "$destinazione" switch --orphan chatgpt/mappa-temporanea
+          fi
+          cp "$SNAPSHOT" "$destinazione/ramificazioni-dati.json"
+          git -C "$destinazione" add -- ramificazioni-dati.json
+          if git -C "$destinazione" diff --cached --quiet; then exit 0; fi
+          git -C "$destinazione" commit -m 'ChatGPT: aggiorna automaticamente la mappa dei rami'
+          git -C "$destinazione" push origin HEAD:refs/heads/chatgpt/dati-ramificazioni

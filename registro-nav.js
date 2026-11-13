@@ -1,3 +1,8 @@
+/* Ingresso del Lab nel menu unico, senza modificare i prototipi generati. */
+(function(){
+  var root=new URL('./',document.currentScript.src);
+  if(window.self===window.top && !new URLSearchParams(location.search).has('nel-registro') && (location.pathname===new URL('lab/',root).pathname || location.pathname===new URL('lab/index.html',root).pathname))location.replace(new URL('registro.html#lab',root).href);
+})();
 /* I collegamenti correnti del Lab seguono la versione pubblicata, non i prototipi storici. */
 (function () {
   var root = new URL('./', document.currentScript.src);
