@@ -44,6 +44,10 @@ with sync_playwright() as p:
             page = ctx.new_page()
             page.set_default_timeout(20000)
             errors = []
+            standalone_previews = []
+            page.on('request',lambda r:standalone_previews.append(r.url) if r.is_navigation_request() and r.url.startswith(BASE+'anteprima/pubblicata/') and r.frame.parent_frame==page.main_frame else None)
+            def published(f,path=''):
+                return f.url.startswith(BASE+'anteprima/pubblicata/'+path) and f.parent_frame is not None and f.parent_frame.parent_frame==page.main_frame
             page.on('pageerror',lambda e:errors.append(str(e)))
             print('PROFILO',engine,name,flush=True)
             page.goto(BASE,wait_until='load')
@@ -66,7 +70,7 @@ with sync_playwright() as p:
             ready()
             for key in ('lab','aggiornamenti','archivio','ramificazioni','anteprima'):
                 print('SEZIONE',engine,name,key,flush=True)
-                navigation=page.expect_event('framenavigated',predicate=lambda f:f.url.startswith(BASE+'anteprima/pubblicata/'),timeout=35000) if key=='anteprima' else nullcontext()
+                navigation=page.expect_event('framenavigated',predicate=published,timeout=35000) if key=='anteprima' else nullcontext()
                 with navigation as loaded:
                     if page.locator('#sezione').is_visible(): page.locator('#sezione').select_option(key)
                     else: page.locator('#menu a[href="#'+key+'"]').click()
@@ -93,7 +97,7 @@ with sync_playwright() as p:
                     inner.wait_for_load_state('networkidle')
                     for stadio in (False,True):
                         if stadio:
-                            with page.expect_event('framenavigated',predicate=lambda f:f.url.startswith(BASE+'anteprima/pubblicata/stadio/girrr/'),timeout=35000) as changed:
+                            with page.expect_event('framenavigated',predicate=lambda f:published(f,'stadio/girrr/'),timeout=35000) as changed:
                                 page.locator('#grafica').click()
                             inner=changed.value
                             inner.wait_for_load_state('domcontentloaded')
@@ -113,7 +117,7 @@ with sync_playwright() as p:
                     page.evaluate("location.hash='archivio'")
                     expect(shell).to_have_attribute('data-src',BASE+'archivio.html?nel-registro=1')
                     ready()
-                    with page.expect_event('framenavigated',predicate=lambda f:f.url.startswith(BASE+'anteprima/pubblicata/'),timeout=35000) as returned:
+                    with page.expect_event('framenavigated',predicate=published,timeout=35000) as returned:
                         page.evaluate("location.hash='anteprima'")
                     expect(shell).to_have_attribute('data-src',BASE+'ufficiale/?nel-registro=1')
                     ready()
@@ -121,7 +125,7 @@ with sync_playwright() as p:
                     returned.value.wait_for_load_state('networkidle')
             page.wait_for_load_state('networkidle')
             # Il vecchio segnalibro Anteprima torna nello stesso portale.
-            with page.expect_event('framenavigated',predicate=lambda f:f.url.startswith(BASE+'anteprima/pubblicata/'),timeout=35000) as bookmark:
+            with page.expect_event('framenavigated',predicate=published,timeout=35000) as bookmark:
                 page.goto(BASE+'ufficiale/',wait_until='load')
             expect(page).to_have_url(BASE+'registro.html#anteprima')
             ready()
@@ -134,6 +138,7 @@ with sync_playwright() as p:
             expect(page).to_have_url(BASE+'registro.html#anteprima')
             ready()
             page.wait_for_load_state('networkidle')
+            assert not standalone_previews,(engine,name,'Caricamento prima del rinvio al portale',standalone_previews)
             assert not errors,(engine,name,errors)
             report.append({'motore':engine,'versione':b.version,'schermo':name,'esito':'PASS'})
             print('PASS',engine,name,flush=True)
