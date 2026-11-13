@@ -17,7 +17,7 @@ with sync_playwright() as pw:
         # i caricamenti remoti non servono e non vengono inoltrati.
         c.route('https://**/*', lambda r:r.fulfill(status=200,body='{}',content_type='application/json'))
         p = c.new_page(); errori = []; risposte = []
-        p.goto(ROOT+'/lab/index.html', wait_until='domcontentloaded')
+        p.goto(ROOT+'/lab/index.html?nel-registro', wait_until='domcontentloaded')
         p.get_by_role('link', name='Apri le cronache di prova', exact=True).click()
         p.on('pageerror', lambda e:errori.append(str(e)))
         p.on('response', lambda r:risposte.append(r.status) if r.status>=400 else None)

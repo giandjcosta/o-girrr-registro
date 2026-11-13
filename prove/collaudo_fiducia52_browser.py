@@ -5,7 +5,7 @@ failures=[]
 with sync_playwright() as p:
  for browser_name in ('chromium','webkit'):
   browser=getattr(p,browser_name).launch(headless=True)
-  for route in ('lab/index.html','anteprima/index.html','anteprima/attuale.html'):
+  for route in ('lab/index.html?nel-registro','anteprima/index.html','anteprima/attuale.html'):
    for width in (320,390,768,1440):
     page=browser.new_page(viewport={'width':width,'height':900})
     page.add_init_script("localStorage.setItem('fg', JSON.stringify({team:'Oranje VC',code:'TEST-ONLY'}))")
@@ -21,7 +21,7 @@ with sync_playwright() as p:
       page.locator('#cteam').select_option(label=other)
      else:
       # Nell'app si può vedere solo la propria squadra; il cambio è uno strumento di prova.
-      page.goto(base+route+'?come=Apo%20team#carriera',wait_until='domcontentloaded')
+      page.goto(base+route+('&' if '?' in route else '?')+'come=Apo%20team#carriera',wait_until='domcontentloaded')
       page.locator('.trust-visual .trust-fill').wait_for(timeout=10000)
      page.wait_for_function("old => document.querySelector('.trust-visual')?.dataset.target !== old",arg=before,timeout=10000)
      page.wait_for_timeout(1500)
