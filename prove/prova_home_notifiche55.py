@@ -33,7 +33,7 @@ with sync_playwright() as pw:
    assert p.locator('.v55-last strong').inner_text()=='0–3'
    assert p.locator('.v55-formgame b').all_text_contents()==['5–1','0–2','2–1','2–2','0–3']
    assert 'Oranje VC' in p.locator('.v55-near .v55-me').inner_text()
-   assert p.locator('.v55-header .v55-home-logo').is_visible()
+   assert p.locator('.hero img').is_visible()
    for summary in ('Le prossime tre sfide','Il rendimento degli allenatori','La storia dei tuoi allenatori','Le competizioni'):
     p.locator('.v55-more').filter(has=p.locator('summary').filter(has_text=summary)).locator('summary').click()
    assert p.locator('.v55-upcoming a').count()==3
@@ -63,9 +63,17 @@ with sync_playwright() as pw:
    p.wait_for_url('**/campo-'+skin+'.html?**');p.locator('.v55-header').wait_for()
    assert p.locator('.v55-return').get_attribute('href').split('#')[0].endswith('tabellone-'+skin+'.html')
    p.locator('#matches button').last.click()
-   p.locator('.v55-skin-link').focus()
-   assert 'partita=4' in p.locator('.v55-skin-link').get_attribute('href')
-   p.locator('.v55-home-logo').click();p.wait_for_url('**/index-'+skin+'.html')
+   # Il cambio grafica è nella cornice storica, non più nella barra del Campo.
+   p.evaluate('''([url,skin])=>{localStorage.setItem('orr_gu',url);localStorage.setItem('orr_gv',skin==='stadio'?'n':'a')}''',arg=[p.url,skin])
+   p.goto(ROOT+'/anteprima/storica55.html',wait_until='networkidle')
+   p.frame_locator('#f').locator('.pitch svg').wait_for()
+   for target in ('stadio' if skin=='lega' else 'lega',skin):
+    p.locator('#tg').click()
+    p.wait_for_function('''skin=>{const d=document.getElementById('f').contentDocument;return d?.body?.dataset.skin===skin&&d.querySelector('.pitch svg')}''',arg=target)
+    current=p.evaluate("document.getElementById('f').contentWindow.location.href")
+    assert 'partita=4' in current
+   p.goto(current,wait_until='networkidle')
+   p.get_by_role('link',name='Home O Girrr',exact=True).filter(visible=True).click();p.wait_for_url('**/index-'+skin+'.html')
    assert not err and not bad and not db,(w,skin,err,bad,db)
    esiti.append({'skin':skin,'larghezza':w,'esito':'PASS','percorso':'Home → notifica → Tabellone → Indietro → Campo → Logo → Home'})
    c.close()
@@ -115,7 +123,7 @@ with sync_playwright() as pw:
    assert p.locator('a.c').filter(has_text='Totogirrr').is_hidden()
    assert p.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
    p.locator('#v53read').click()
-   p.locator('.v55-notifications-link').click();p.locator('#v53notifstato').wait_for()
+   p.locator('.v55-notice-head a').click();p.locator('#v53notifstato').wait_for()
    assert p.locator('#v53notifstato').inner_text().startswith('Modalità ospite:')
    assert not db,('Ospite con credenziali salvate: nessuna RPC',skin,w,db)
    c.close()
