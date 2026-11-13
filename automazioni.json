@@ -1,5 +1,5 @@
 {
- "aggiornato": "2026-11-12T18:42:52Z",
+ "aggiornato": "2026-11-13T06:44:12Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
@@ -69,9 +69,9 @@
    "nome": "Controllo automatismi del mattino",
    "quando": "Ogni giorno alle 07:33",
    "stato": "attiva",
-   "prossimo": "2026-11-13T06:33:00Z",
+   "prossimo": "2026-11-14T06:33:00Z",
    "ultimo": {
-    "quando": "2026-11-12T06:33:45Z",
+    "quando": "2026-11-13T06:33:28Z",
     "esito": "riuscito"
    },
    "nota": "Avvisa solo se qualcosa è fermo da più di 2 giorni."
@@ -173,15 +173,6 @@
    "stato": "conclusa",
    "ultimo": {
     "quando": "2026-10-15T15:30:23Z",
-    "esito": "riuscito"
-   }
-  },
-  {
-   "nome": "Promemoria login Leghe",
-   "quando": "Una volta: 13 ottobre alle 18:00",
-   "stato": "conclusa",
-   "ultimo": {
-    "quando": "2026-10-13T16:00:20Z",
     "esito": "riuscito"
    }
   },
