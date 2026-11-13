@@ -19,8 +19,7 @@ def main(output, data_path=ROOT / 'ramificazioni-dati.json'):
     js = js.replace("new URL('./',document.currentScript.src)", "new URL('https://giandjcosta.github.io/o-girrr-registro/')")
     data = json.dumps(json.loads(data_path.read_text()), ensure_ascii=True).replace('</', '<\\/')
     js = js.replace('let data,busy=false;', 'let data=' + data + ',busy=false;')
-    js = js.replace('});load();setInterval(', '});draw();load();setInterval(')
-    assert 'draw();load();setInterval(' in js
+    assert 'if(data)draw();load();setInterval(' in js
     text = text.replace('<script src="ramificazioni.js" defer></script>', '')
     text = text.replace('</body>', '<script>' + js.replace('</script', '<\\/script') + '</script></body>')
     output.parent.mkdir(parents=True, exist_ok=True)

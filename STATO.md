@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 13 novembre 2026)
 
+## 13 novembre 2026 — ChatGPT: Ramificazioni ampia, tutti i rami e collegamenti compatti
+
+- Gianluca chiede una mappa più grande, tutti i rami senza trascinare a destra/sinistra, selezione collettiva e colori/linee più leggibili. Pagina rivista su tutta la larghezza, con tutti i rami inizialmente visibili, due colonne ampie sui monitor e una sui telefoni/tablet. Scorrimento solo verticale della pagina; «Seleziona tutti» globale e per repository, «Solo main», scelte singole e A−/A+ senza allargare il contenuto.
+- Ogni riga confronta la punta del ramo con il suo antenato reale in main, usando un raccordo corto. Tratto puntinato per il percorso compresso, non per un falso collegamento diretto fra commit. Storie indipendenti scollegate. Dettagli e storia dei commit apribili nella mappa; linee continue solo fra genitori reali consecutivi.
+- Palette variata per distanza percettiva, con colori diversi, simboli e codici. Colori conservati nel solo spazio locale della mappa; nuovi rami non cambiano quelli esistenti. Se sono selezionati tutti, un ramo nuovo ricevuto dal feed appare automaticamente. Una copia remota più vecchia non sostituisce dati locali più recenti.
+- Aggiornamento dati ogni 15 minuti e menu del Registro conservati. Nessun cambio al sito della lega, a MVP/Derby/racconti, allo schema o al database. Revisione sul ramo `chatgpt/ramificazioni-leggibili`, destinata al ramo 6.0 di Claude; nessuna pubblicazione.
+- Prime prove interattive Chromium/WebKit a 320 px e integrazione 6.0 Chromium a 320 px riuscite. Matrice pagina finale su Chromium/WebKit/Firefox × 16 profili in corso; risultati, foto PC/TV e copia autonoma aggiornati alla consegna.
+
 ## 13 novembre 2026 — ChatGPT: integrazione autorizzata nella preparazione 6.0, senza pubblicare
 
 - Gianluca ha visto la prova e autorizzato preparazione e merge; la pubblicazione resta a Claude. Integrazione sui due rami `claude/o-girrr-versione-6-0-mjh4ut`, senza unire i main o gh-pages, né avviare deploy. Coordinamento: [ticket #57](https://github.com/giandjcosta/o-girrr-registro/issues/57), `COORDINAMENTO-6.0.md` richiamato da `CLAUDE.md` in entrambi i repository.
