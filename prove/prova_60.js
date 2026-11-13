@@ -9,7 +9,7 @@
 const pw = require('playwright'), { devices } = pw, fs = require('fs');
 const { script: BLOCCA } = require('./blocca_scritture');
 const MOTORE = process.env.MOTORE || 'chromium', D = process.argv[2];
-const B = 'http://localhost:8771/o-fant-a-girrr/';
+const B = process.env.BASE || 'http://localhost:8771/o-fant-a-girrr/';   // BASE=https://giandjcosta.github.io/o-fant-a-girrr/ per il sito vero
 const TV = 'Mozilla/5.0 (SMART-TV; Linux; Tizen 7.0) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/5.0 Chrome/94.0 TV Safari/537.36';
 const SCH = [
   ['iPhone SE 320', 'ios', { ...devices['iPhone SE'], viewport: { width: 320, height: 568 } }], ['iPhone SE', 'ios', devices['iPhone SE']],
