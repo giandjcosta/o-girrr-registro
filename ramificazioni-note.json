@@ -1,0 +1,7 @@
+{
+  "giandjcosta/o-fant-a-girrr:main": {"title": "Calcoli e automazioni del sito", "description": "Contiene workflow e calcoli. Le pagine pubblicate della lega si trovano su gh-pages."},
+  "giandjcosta/o-fant-a-girrr:gh-pages": {"title": "Il sito pubblicato", "description": "Lega e Stadio visibili agli utenti. Un aggiornamento qui può andare online."},
+  "giandjcosta/o-girrr-registro:main": {"title": "Registro e Laboratorio pubblicati", "description": "Ramo principale del sito di prova, con Changelog, Archivio e Anteprima."},
+  "giandjcosta/o-girrr-registro:claude/o-girrr-versione-6-0-mjh4ut": {"title": "Preparazione della 6.0", "description": "Integrazione di Curva per sistema, video, condivisione e novità dei tifosi. La presenza sul ramo non equivale a un rilascio."},
+  "giandjcosta/o-fant-a-girrr:claude/o-girrr-versione-6-0-mjh4ut": {"title": "Automazioni per la 6.0", "description": "Workflow del video e preparazione server della prossima versione; attivazione affidata al rilascio di Claude."}
+}
