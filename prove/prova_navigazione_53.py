@@ -44,9 +44,10 @@ with sync_playwright() as pw:
             th=p.locator('#tab th.w').first
             assert th.is_visible()==(w>=560)
             p.screenshot(path=str(OUT/f'integrato-tabellone-{skin}-{w}.png'),full_page=True)
-            # Coppa resta navigabile con regole e risultati; Campo riguarda il Campionato.
+            # Dalla 5.5 il Campo è disponibile anche in Champions Cup.
             p.get_by_role('tab',name='Champions Cup',exact=True).click();check('Champions Cup')
-            assert p.locator('#campo-link').is_hidden()
+            assert p.locator('#campo-link').is_visible()
+            assert 'coppa=1' in p.locator('#campo-link').get_attribute('href')
             p.get_by_role('tab',name='Campionato',exact=True).click()
             p.locator('#campo-link').click();p.locator('.pitch svg').wait_for();check('Campo dal Tabellone')
             assert p.locator('.club').count()==2
@@ -56,13 +57,24 @@ with sync_playwright() as pw:
             assert 'partita=4' in p.url
             g=p.locator('#roundtitle').inner_text()
             p.locator('#prev').click();assert p.locator('#roundtitle').inner_text()!=g
-            p.get_by_role('button',name='Grafica '+('Stadio' if skin=='lega' else 'Lega'),exact=True).click()
-            assert p.locator('body').get_attribute('data-skin')!=skin
-            assert 'partita=0' in p.url and 'giornata=' in p.url
-            p.get_by_role('button',name='Grafica '+skin.title(),exact=True).click()
+            # In 5.5 il selettore locale del Campo è nascosto: il cambio sta nella cornice.
+            p.evaluate('''([url,skin])=>{localStorage.setItem('orr_gu',url);localStorage.setItem('orr_gv',skin==='stadio'?'n':'a')}''',arg=[p.url,skin])
+            p.goto(ROOT+'/anteprima/storica55.html',wait_until='networkidle')
+            campo=p.frame_locator('#f')
+            campo.locator('.pitch svg').wait_for()
+            p.locator('#tg').click()
+            p.wait_for_function("skin=>document.getElementById('f').contentDocument?.body?.dataset.skin!==skin && document.getElementById('f').contentDocument?.querySelector('.pitch svg')",arg=skin)
+            assert campo.locator('body').get_attribute('data-skin')!=skin
+            current=p.evaluate("()=>document.getElementById('f').contentWindow.location.href")
+            assert 'partita=0' in current and 'giornata=' in current
+            p.locator('#tg').click()
+            p.wait_for_function("skin=>document.getElementById('f').contentDocument?.body?.dataset.skin===skin && document.getElementById('f').contentDocument?.querySelector('.pitch svg')",arg=skin)
+            current=p.evaluate("()=>document.getElementById('f').contentWindow.location.href")
+            p.goto(current,wait_until='networkidle');p.locator('.pitch svg').wait_for()
+            assert p.locator('body').get_attribute('data-skin')==skin
             p.screenshot(path=str(OUT/f'integrato-campo-{skin}-{w}.png'),full_page=True)
-            p.locator('#ritorno-tabellone').click();p.wait_for_url('**/tabellone-'+skin+'.html#lega-*');check('Ritorno Tabellone')
-            p.locator('a.back').click();p.wait_for_url('**/5.5/index-'+skin+'.html')
+            p.get_by_role('link',name='Torna a Tabellone',exact=True).click();p.wait_for_url('**/tabellone-'+skin+'.html#lega-*');check('Ritorno Tabellone')
+            p.get_by_role('link',name='Home O Girrr',exact=True).filter(visible=True).click();p.wait_for_url('**/5.5/index-'+skin+'.html')
             p.locator('a.c').filter(has_text="Albo d'oro").click();p.locator('.oro-scroll').wait_for();check('Albo dalla Home')
             btns=p.locator('.oro-scroll button');assert btns.count()>=8
             for i in range(btns.count()):
@@ -73,7 +85,7 @@ with sync_playwright() as pw:
                 assert p.locator('.oro-scroll').evaluate('(e)=>getComputedStyle(e).flexWrap')=='nowrap'
                 assert active.evaluate('(e)=>{let a=e.getBoundingClientRect(),r=e.parentElement.getBoundingClientRect();return a.left>=r.left-2 && a.right<=r.right+2}'),(skin,w,'attivo fuori vista')
             check('Tab Albo')
-            p.locator('a.oback').click();p.wait_for_url('**/5.5/index-'+skin+'.html');check('Ritorno Home')
+            p.get_by_role('link',name='Home O Girrr',exact=True).filter(visible=True).click();p.wait_for_url('**/5.5/index-'+skin+'.html');check('Ritorno Home')
             esiti.append({'skin':skin,'larghezza':w,'percorso':'Lab → Home → Tabellone → Coppa → Campo → Tabellone → Home → Albo → Home','esito':'PASS'})
             print('PASS percorso reale',skin,w,flush=True);c.close()
     b.close()
