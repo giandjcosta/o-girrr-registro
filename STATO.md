@@ -1,5 +1,10 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 13 novembre 2026)
 
+## 13 novembre (4) — Claude: rilascio della 6.0 più sicuro, bozza del messaggio, lista dei passi
+- `rilascio/rilascio60.py`: si ferma prima di scrivere se la copia di `gh-pages` è già preparata (prima falliva a metà con un'assert); alla fine controlla il risultato (`--controlla` per farlo da solo): Curva ferma e `curva-os.js`, niente agganci di prova sul sito vero, scheda Video con la cartella giusta e niente video del Lab, `condividi.js` nelle Home e uguale al registro, archivio dei video con file e copertine presenti, tag `<script>` chiusi, nessun indirizzo `localhost`. Provato: copia per il sito vero e copia di prova «tutto a posto»; seconda esecuzione fermata; copia di prova controllata come sito vero → 2 problemi (agganci di prova), come deve.
+- `rilascio/versioni/bozza-6-0.sh`: voce 6.0 per `versioni.json` (messaggio per il gruppo e changelog per area, comprese MVP, Derby e «La tua settimana» di ChatGPT). Senza argomenti stampa e basta; da rivedere con Gianluca.
+- `rilascio/RILASCIO-6-0.md`: ordine dei passi (registro e Lab online prima, poi database, `gh-pages`, `main` del sito), controlli e come tornare indietro, anche per lo schema MVP.
+
 ## 13 novembre (3) — Claude: verifica di Ramificazioni «più leggibile» di ChatGPT (ramo `chatgpt/ramificazioni-leggibili`, `aa00ab7`)
 - **Funziona:** prova di Claude su 11 schermi (iPhone SE 320 → TV) × Chromium, Firefox e WebKit: 0 problemi. Ricerca, filtro per stato, «Seleziona tutti», «Solo main» per ogni repository, dettagli che si aprono toccando una scheda, A−/A+ e «Adatta alla pagina»; niente scorrimento di lato, nessun errore in console. Numeri controllati con Git (per esempio PR #56: 9 avanti e 3 indietro rispetto a `main`): giusti.
 - **Da sapere:** i dati sono del 13 novembre alle 01:56 (ora italiana): l'aggiornamento ogni 15 minuti parte solo quando la pagina sarà sul `main` del registro, quindi per ora mancano i rami e i commit più nuovi (il ramo 6.0 del sito risulta a `3730a7d`), anche se in alto c'è scritto «Controllo automatico ogni 15 minuti».

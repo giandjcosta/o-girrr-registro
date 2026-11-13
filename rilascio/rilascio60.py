@@ -3,6 +3,10 @@
 
 Uso: python3 rilascio/rilascio60.py CARTELLA_GH_PAGES [--lab]
   --lab: aggiunge gli agganci per le prove automatiche della Curva (window.__curvaProva). Mai sul sito vero.
+     python3 rilascio/rilascio60.py CARTELLA_GH_PAGES --controlla [--lab]
+  Solo controllo di una copia già preparata (lo fa anche alla fine del rilascio): pezzi presenti, niente agganci di prova
+  sul sito vero, video e copertine dell'archivio esistenti, condividi.js uguale al registro.
+Va eseguito una volta su una copia NUOVA di gh-pages: se la copia è già preparata si ferma prima di scrivere.
 
 Cosa mette (tutto dal registro):
   1. Curva per sistema (Liquid Glass su iPhone, Material 3 su Android), Curva ferma, Notifiche divise, pillola «Nuovi cori»,
@@ -38,7 +42,57 @@ def scrivi(p, t):
     open(p, 'w', encoding='utf-8').write(t)
 
 
+def gia_preparata(sito):
+    """La Curva per sistema e la scheda Video lasciano segni riconoscibili: se ci sono, la copia è già stata preparata."""
+    segni = []
+    for rel, segno in (('girrr/curva.html', 'function cvNuovi('), ('stadio/girrr/curva.html', 'function cvNuovi('),
+                       ('girrr/app.html', 'function spVideo('), ('stadio/girrr/app.html', 'function spVideo(')):
+        if segno in leggi(os.path.join(sito, rel)):
+            segni.append(rel)
+    return segni
+
+
+def controlla(sito, lab=False):
+    """Controlla una copia preparata. Restituisce l'elenco dei problemi (vuoto se è tutto a posto)."""
+    import json, re
+    pr = []
+    for rel, p in (('girrr/curva.html', '../'), ('stadio/girrr/curva.html', '../../')):
+        t = leggi(os.path.join(sito, rel))
+        if 'function cvNuovi(' not in t: pr.append(rel + ': manca la Curva ferma (cvNuovi)')
+        if '<script src="%scurva-os.js"></script>' % p not in t: pr.append(rel + ': non carica curva-os.js')
+        if ('window.__curvaProva' in t) != lab: pr.append(rel + (': agganci di prova presenti sul sito vero' if not lab else ': mancano gli agganci di prova'))
+    for rel, base in (('girrr/app.html', "VB='video/'"), ('stadio/girrr/app.html', "VB='../../girrr/video/'")):
+        t = leggi(os.path.join(sito, rel))
+        if 'function spVideo(' not in t: pr.append(rel + ': manca la scheda Video')
+        if base not in t.replace(' ', ''): pr.append(rel + ': cartella dei video sbagliata (attesa ' + base + ')')
+        if 'video-giornata/archivio' in t: pr.append(rel + ': legge i video del Lab')
+    for rel, p in (('girrr/index.html', '../'), ('stadio/girrr/index.html', '../../')):
+        if '<script src="%scondividi.js" defer></script>' % p not in leggi(os.path.join(sito, rel)): pr.append(rel + ': non carica condividi.js')
+    for f in ('curva-os.js', 'curva-os.css', 'condividi.js', 'girrr/curva-banca.js', 'stadio/girrr/curva-banca.js'):
+        if not os.path.isfile(os.path.join(sito, f)): pr.append(f + ': manca')
+    if os.path.isfile(os.path.join(sito, 'condividi.js')) and leggi(os.path.join(sito, 'condividi.js')) != leggi(os.path.join(R, 'rilascio/condividi/condividi.js')):
+        pr.append('condividi.js diverso da quello del registro')
+    cart = os.path.join(sito, 'girrr/video')
+    try:
+        A = json.load(open(os.path.join(cart, 'archivio.json'), encoding='utf-8'))
+        if not A: pr.append('girrr/video/archivio.json: vuoto')
+        for v in A:
+            for k in ('file', 'img'):
+                if v.get(k) and not os.path.isfile(os.path.join(cart, v[k])): pr.append('girrr/video/' + v[k] + ': manca')
+    except (OSError, ValueError) as e:
+        pr.append('girrr/video/archivio.json: ' + str(e))
+    for d in ('girrr', 'stadio/girrr'):
+        for f in ('index.html', 'app.html', 'curva.html'):
+            t = leggi(os.path.join(sito, d, f))
+            if t.count('<script') != t.count('</script>'): pr.append(d + '/' + f + ': tag <script> non chiusi')
+            if re.search(r'https?://(localhost|127\.0\.0\.1)', t): pr.append(d + '/' + f + ': indirizzo di prova (localhost)')
+    return pr
+
+
 def main(sito, lab=False):
+    segni = gia_preparata(sito)
+    if segni:
+        sys.exit('Questa copia è già preparata (' + ', '.join(segni) + '): usa una copia nuova di gh-pages. Niente è stato scritto.')
     cambiati = []
     # 1. Curva
     cos = modulo('rilascio/curva-os/applica.py')
@@ -80,7 +134,15 @@ def main(sito, lab=False):
     print('6.0 applicata a', sito, '·', len(cambiati), 'file più il modulo tifosi')
     for c in cambiati:
         print('  ', c)
+    pr = controlla(sito, lab)
+    if pr:
+        sys.exit('Controllo finale: ' + str(len(pr)) + ' problemi\n  ' + '\n  '.join(pr))
+    print('Controllo finale: tutto a posto' + (' (copia di prova, con gli agganci della Curva)' if lab else ' (copia per il sito vero)'))
 
 
 if __name__ == '__main__':
+    if '--controlla' in sys.argv:
+        pr = controlla(sys.argv[1], '--lab' in sys.argv)
+        print('Controllo: ' + ('tutto a posto' if not pr else str(len(pr)) + ' problemi\n  ' + '\n  '.join(pr)))
+        sys.exit(1 if pr else 0)
     main(sys.argv[1], '--lab' in sys.argv)
