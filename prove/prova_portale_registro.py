@@ -90,7 +90,7 @@ with sync_playwright() as p:
                     inner.wait_for_load_state('domcontentloaded')
                     inner.locator('h1').first.wait_for()
                     # Attende anche le letture asincrone della pagina prima di cambiarla.
-                    page.wait_for_load_state('networkidle')
+                    inner.wait_for_load_state('networkidle')
                     for stadio in (False,True):
                         if stadio:
                             with page.expect_event('framenavigated',predicate=lambda f:f.url.startswith(BASE+'anteprima/pubblicata/stadio/girrr/'),timeout=35000) as changed:
@@ -105,7 +105,7 @@ with sync_playwright() as p:
                         inner.locator('h1').first.wait_for()
                         assert inner.locator('html').evaluate('()=>window.__registroSolaLettura===true')
                         assert inner.locator('html').evaluate("async()=>{const r=await fetch('https://qmjqfgmvimsuxvghetgi.supabase.co/rest/v1/rpc/curva_scrivi',{method:'POST',body:'{}'});return r.status===403}")
-                        page.wait_for_load_state('networkidle')
+                        inner.wait_for_load_state('networkidle')
             if name in ('iPhone320','PC1920'):
                 # Regressione Firefox: rientri ripetuti senza riferimenti al frame precedente.
                 page.wait_for_load_state('networkidle')
@@ -118,13 +118,15 @@ with sync_playwright() as p:
                     expect(shell).to_have_attribute('data-src',BASE+'ufficiale/?nel-registro=1')
                     ready()
                     returned.value.locator('h1').first.wait_for()
-                    page.wait_for_load_state('networkidle')
+                    returned.value.wait_for_load_state('networkidle')
             page.wait_for_load_state('networkidle')
             # Il vecchio segnalibro Anteprima torna nello stesso portale.
-            page.goto(BASE+'ufficiale/',wait_until='load')
+            with page.expect_event('framenavigated',predicate=lambda f:f.url.startswith(BASE+'anteprima/pubblicata/'),timeout=35000) as bookmark:
+                page.goto(BASE+'ufficiale/',wait_until='load')
             expect(page).to_have_url(BASE+'registro.html#anteprima')
             ready()
-            page.wait_for_load_state('networkidle')
+            bookmark.value.locator('h1').first.wait_for()
+            bookmark.value.wait_for_load_state('networkidle')
             page.evaluate("location.hash='ramificazioni'")
             expect(shell).to_have_attribute('data-src',BASE+'ramificazioni.html?nel-registro=1')
             ready()
