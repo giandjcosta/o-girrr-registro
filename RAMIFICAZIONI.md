@@ -8,7 +8,7 @@ I titoli e le descrizioni provengono, in ordine, dalle note di `ramificazioni-no
 
 ## Aggiornamento automatico
 
-Il workflow `ramificazioni.yml`, una volta presente sul main, controlla entrambi i repository ogni 15 minuti e agli eventi di creazione/eliminazione rami. Gli orari delle Actions possono slittare. Non modifica la cadenza settimanale della sincronizzazione Anteprima/Archivio/Changelog di Claude.
+Il workflow `ramificazioni.yml`, una volta presente sul main, controlla entrambi i repository ogni 15 minuti, dopo modifiche al raccoglitore sul main e su avvio manuale. Anche creazioni e cancellazioni dei rami vengono rilevate nel controllo successivo. Gli orari delle Actions possono slittare. Non modifica la cadenza settimanale della sincronizzazione Anteprima/Archivio/Changelog di Claude.
 
 Lo snapshot viene conservato nel solo ramo tecnico `chatgpt/dati-ramificazioni`, escluso dal grafo: così un aggiornamento della mappa non genera un nuovo commit del codice, non si autoalimenta e non distribuisce il sito. La pagina mostra subito lo snapshot incluso, poi controlla la copia raw aggiornata ogni minuto. Non usa token nel browser. Se la rete fallisce conserva la copia già caricata. “Dati modificati” indica la data della modifica del contenuto, non una verifica remota che non sia documentata.
 

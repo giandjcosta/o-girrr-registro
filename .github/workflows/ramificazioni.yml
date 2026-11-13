@@ -5,8 +5,6 @@ on:
   push:
     branches: [main]
     paths: ['ramificazioni.py', 'ramificazioni-note.json', '.github/workflows/ramificazioni.yml']
-  create:
-  delete:
   workflow_dispatch:
 permissions:
   contents: write
@@ -16,7 +14,7 @@ concurrency:
 jobs:
   aggiorna:
     # Non parte dal ramo di preparazione della 6.0. Non pubblica GitHub Pages.
-    if: github.ref == 'refs/heads/main' || github.event_name == 'schedule' || github.event_name == 'create' || github.event_name == 'delete'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
