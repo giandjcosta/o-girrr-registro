@@ -75,7 +75,7 @@ def routes(c,db):
             if m:
                 start=int(m[1]);end=min(int(m[2]) if m[2] else len(b)-1,len(b)-1);r.fulfill(status=206,content_type=mime,headers={'Content-Range':f'bytes {start}-{end}/{len(b)}','Accept-Ranges':'bytes'},body=b[start:end+1]);return
         r.fulfill(status=200,content_type=mime,body=b)
-    c.route(re.compile(r'http://127\.0\.0\.1:876[56]/.*'),local)
+    c.route(re.compile(r'^http://127\.0\.0\.1:876[56]/.*'),local)
     live={'value':json.loads((ROOT/'ramificazioni-dati.json').read_text()),'fail':False}
     def graph(r):r.fulfill(status=503 if live['fail'] else 200,content_type='application/json',body=json.dumps(live['value']))
     c.route('https://raw.githubusercontent.com/giandjcosta/o-girrr-registro/chatgpt/dati-ramificazioni/**',graph)
@@ -101,7 +101,7 @@ def main():
                     for slug,path,target in [('home','','#pt-home-story'),('mvp','app.html?sezione=mvp#sport','#pt-mvp'),('carriera','app.html?sezione=settimana#carriera','#pt-storia'),('derby','derby.html','#pt-derby'),('curva','curva.html#pt-mvp','#pt-mvp'),('archivio','albo.html#pt-archivio','#pt-archivio'),('video','app.html#video','.vid-i'),('giornale','giornale.html','button.cd-btn'),('tabellone','tabellone.html','body')]:
                         errors.clear();bad.clear()
                         try:
-                            page.goto(BASE+folder+path,wait_until='load');page.locator(target).first.wait_for(state='visible');page.evaluate('document.fonts.ready');page.wait_for_timeout(100)
+                            page.goto(BASE+folder+path,wait_until='load');page.locator(target).first.wait_for(state='visible');page.evaluate('document.fonts.ready');page.wait_for_load_state('networkidle')
                             assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1'),'Scorrimento orizzontale'
                             assert not errors and not bad,{'js':errors,'http':bad}
                             if slug=='video':expect(page.locator('.vid-i')).to_have_count(7)
