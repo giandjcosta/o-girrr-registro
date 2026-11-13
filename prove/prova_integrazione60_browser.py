@@ -39,12 +39,14 @@ class Database:
         rows.sort(key=lambda r:(-r['total'],-r['red'],r['team'].lower()))
         return {'votazione':{'stagione':'2026/27','giornata':7,'firma':WEEK['firma'],'chiude':(dt.datetime.now(dt.timezone.utc)+dt.timedelta(days=2)).isoformat(),'chiusa':None,'classifica':rows,'redazione':red,'personaggi':bots},'archivio':[]}
     def route(self,r):
+        cors={'Access-Control-Allow-Origin':r.request.headers.get('origin','*'),'Access-Control-Allow-Methods':'GET, POST, OPTIONS','Access-Control-Allow-Headers':'apikey, authorization, content-type, x-client-info','Access-Control-Allow-Credentials':'true'}
+        if r.request.method=='OPTIONS':r.fulfill(status=204,headers=cors);return
         fn=urlsplit(r.request.url).path.split('/')[-1];body=r.request.post_data_json or {};self.calls.append((fn,body))
         if fn=='mvp_stato':j=self.state()
         elif fn=='mvp_derby':j=DERBY
         elif fn=='mvp_mio':j={'scelta':self.votes.get(body.get('p_team'))}
         elif fn=='mvp_vota':
-            if self.fail:r.fulfill(status=503,content_type='application/json',body='{"error":"Errore simulato"}');return
+            if self.fail:r.fulfill(status=503,headers=cors,content_type='application/json',body='{"error":"Errore simulato"}');return
             assert body['p_team']==TEAM and body['p_code']==CODE,'Il voto deve appartenere alla squadra autenticata'
             if body['p_scelta'] is None:self.votes.pop(TEAM,None)
             else:self.votes[TEAM]=body['p_scelta']
@@ -53,7 +55,7 @@ class Database:
             snap=json.loads((ROOT/'lab/prova-tifosi/derby-ufficiali.json').read_text());j={'ok':True,'voti':snap.get('voti',[]),'sfide':snap.get('sfide',[])}
         else:
             j={'ok':True,'posts':[],'post':[],'replies':[],'react':[],'mine':[],'follow':[],'prof':{},'commenti':[],'eventi':[],'notifiche':[],'voti':[],'sfide':[],'conf':[]}
-        r.fulfill(status=200,content_type='application/json',body=json.dumps(j))
+        r.fulfill(status=200,headers=cors,content_type='application/json',body=json.dumps(j))
 
 
 def routes(c,db):
