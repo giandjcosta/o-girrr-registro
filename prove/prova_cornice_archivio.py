@@ -88,11 +88,14 @@ with sync_playwright() as p:
             page.evaluate("location.hash='archivio'")
             # Leggiamo il documento reale: Firefox può cambiare l’identità del
             # Frame nel protocollo dopo molte navigazioni dell’iframe interno.
-            page.wait_for_function("count=>document.getElementById('contenuto').contentDocument?.querySelectorAll('.release-card').length===count",arg=len(VERSIONS))
+            page.wait_for_function("count=>{const f=document.getElementById('contenuto'),d=f.contentDocument;return !f.hasAttribute('aria-busy')&&d?.readyState==='complete'&&d.documentElement.dataset.registroCollegato==='true'&&d.querySelectorAll('.release-card').length===count}",arg=len(VERSIONS))
             archive=page.evaluate('''()=>{const d=document.getElementById('contenuto').contentDocument;return {count:d.querySelectorAll('.release-card').length,open:d.querySelectorAll('.release-card details[open]').length,latest:d.querySelector('.release-latest').innerText,fits:d.documentElement.scrollWidth<=d.defaultView.innerWidth+1,prototypes:d.querySelectorAll('.archive-prototypes a').length}}''')
             assert archive['count']==len(VERSIONS) and archive['open']==1
             assert VERSION in archive['latest'] and archive['fits'] and archive['prototypes']==4
-            point=page.evaluate('''()=>{const f=document.getElementById('contenuto'),d=f.contentDocument,s=d.querySelectorAll('.release-card summary')[1];s.scrollIntoView({block:'center',behavior:'instant'});const p=s.getBoundingClientRect(),r=f.getBoundingClientRect();return {x:r.left+p.left+p.width/2,y:r.top+p.top+p.height/2}}''')
+            if screen in ('PC1920','TV','iPhone320'):page.screenshot(path=str(OUT/(engine+'-archivio-'+screen+'.png')))
+            page.evaluate("()=>document.getElementById('contenuto').contentDocument.querySelectorAll('.release-card summary')[1].scrollIntoView({block:'center',behavior:'instant'})")
+            page.evaluate('''async()=>{const w=document.getElementById('contenuto').contentWindow;await new Promise(resolve=>w.requestAnimationFrame(()=>w.requestAnimationFrame(resolve)))}''')
+            point=page.evaluate('''()=>{const f=document.getElementById('contenuto'),d=f.contentDocument,s=d.querySelectorAll('.release-card summary')[1],p=s.getBoundingClientRect(),r=f.getBoundingClientRect();return {x:r.left+p.left+p.width/2,y:r.top+p.top+p.height/2}}''')
             page.mouse.click(point['x'],point['y'])
             page.wait_for_function("()=>document.getElementById('contenuto').contentDocument.querySelectorAll('.release-card details')[1].open")
             page.evaluate("()=>document.getElementById('contenuto').contentDocument.querySelectorAll('.release-card summary')[1].focus()")
@@ -100,7 +103,6 @@ with sync_playwright() as p:
             page.wait_for_function("()=>!document.getElementById('contenuto').contentDocument.querySelectorAll('.release-card details')[1].open")
             page.evaluate("()=>{const d=document.getElementById('contenuto').contentDocument;d.activeElement?.blur();d.defaultView.scrollTo(0,0)}")
             page.wait_for_function("()=>document.getElementById('contenuto').contentDocument.scrollingElement.scrollTop===0")
-            if screen in ('PC1920','TV','iPhone320'):page.screenshot(path=str(OUT/(engine+'-archivio-'+screen+'.png')))
             assert not errors,(engine,screen,errors)
             report.append({'motore':engine,'schermo':screen,'esito':'PASS','pagine_con_toggle':len(filenames)})
             print('PASS',engine,screen,flush=True);ctx.close()
