@@ -5,6 +5,12 @@
 - **Sito vero:** repository [o-fant-a-girrr](https://github.com/giandjcosta/o-fant-a-girrr), pubblicato su https://giandjcosta.github.io/o-fant-a-girrr/
 - **Questa repository:** https://giandjcosta.github.io/o-girrr-registro/ (Registro, Laboratorio e Anteprima)
 
+## Un solo ingresso
+
+Apri **https://giandjcosta.github.io/o-girrr-registro/**: il menu persistente riunisce Changelog, Lab, Anteprima, Aggiornamenti, Archivio e Ramificazioni. Su telefono scegli la sezione dalla tendina. Anche i vecchi indirizzi delle sezioni aprono il portale. L’Anteprima mantiene le grafiche Lega/Stadio e la protezione in sola lettura.
+
+Ramificazioni legge entrambi i repository: 6.0 in evidenza, lavori in corso ordinati per data, rami integrati nei cassetti e selezione collettiva. Il workflow raccoglie i dati ogni 15 minuti, con i possibili ritardi di GitHub; il portale conserva gli allineamenti automatici delle versioni già esistenti.
+
 ## Link utili
 
 | Cosa | Link |

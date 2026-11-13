@@ -19,7 +19,7 @@ report = []
 
 with sync_playwright() as pw:
     for motore in os.environ.get('MOTORI', 'chromium').split(','):
-        b = browser(pw) if motore == 'chromium' and not os.environ.get('PLAYWRIGHT_BROWSERS_PATH') else getattr(pw, motore).launch(headless=True)
+        b = browser(pw) if motore == 'chromium' and not os.environ.get('PLAYWRIGHT_BROWSERS_PATH') else getattr(pw, motore).launch(headless=True, **({'executable_path':os.environ['WEBKIT_PATH']} if motore=='webkit' and os.environ.get('WEBKIT_PATH') else {}))
         screens = [(n, pw.devices[n]) for n in ('iPhone SE', 'iPhone 15 Pro', 'iPhone 15 Pro Max', 'Galaxy S8', 'Pixel 7', 'Galaxy S9+', 'iPad Mini', 'iPad (gen 7) landscape', 'iPad Pro 11', 'Galaxy Tab S4', 'Galaxy Tab S4 landscape')]
         screens = [('iPhone 320', dict(pw.devices['iPhone SE'], viewport={'width':320,'height':568}))] + screens
         screens += [(f'PC {w}', {'viewport':{'width':w,'height':900}}) for w in (1280,1920,2560)]
@@ -36,12 +36,12 @@ with sync_playwright() as pw:
                 if not target.is_relative_to(R) or not target.is_file():
                     route.fulfill(status=404, body='File non trovato: '+path); return
                 route.fulfill(status=200, content_type=mimetypes.guess_type(target.name)[0] or 'application/octet-stream', body=target.read_bytes())
-            ctx.route(re.compile(r'http://127\.0\.0\.1:8765/.*'), local)
+            ctx.route(re.compile(r'^http://127\.0\.0\.1:8765/.*'), local)
             page = ctx.new_page()
             errors = []
             page.on('pageerror', lambda e: errors.append(str(e)))
             for path in ('/', '/archivio.html', '/lab/changelog.html', '/ufficiale/'):
-                page.goto(BASE + path, wait_until='networkidle', timeout=45000)
+                page.goto(BASE + path + '?nel-registro=1', wait_until='networkidle', timeout=45000)
                 assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1'), (name,path,'overflow')
                 if path == '/archivio.html': assert V in page.locator('main').inner_text()
                 if path == '/lab/changelog.html': page.locator('.vv-v').first.wait_for(timeout=10000)

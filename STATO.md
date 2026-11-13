@@ -1098,3 +1098,13 @@ Niente di questo va sul sito vero senza altro "vai" esplicito (lo SQL feed è gi
 ## 26 ottobre 2026 — Seconda revisione Fiducia 5.2
 - Eliminato il bonus riservato a capolista emergente. Ogni squadra riceve bonus **o** malus sulla fiducia in base a differenza tra posizione effettiva e posizione attesa, aumentato gradualmente con le giornate giocate e limitato a ±11 punti. Vale per Big, Emergenti e Outsider.
 - Simulazione sponsor: premi 50/75/100/125 Fantacrediti secondo difficoltà, non accreditati realmente. Solo Lab e Anteprima 5.2.
+
+
+## 13 novembre 2026 — ChatGPT: ingresso unico del Registro e Ramificazioni online
+
+- Richiesta di Gianluca: un solo link con tutte le sezioni, incluse le Ramificazioni che sul Registro pubblico restituivano 404. Portale `registro.html` con menu persistente e tendina per telefono; gli ingressi precedenti aprono la sezione corrispondente nello stesso portale.
+- Pubblicazione limitata al Registro. Recuperati dal ramo 6.0 soltanto mappa, raccolta dati e relativi test. Nessuna pagina della lega, codice delle voci, database o numero di versione modificati; il deploy 6.0 resta a Claude.
+- Anteprima dentro la cornice originale protetta, con Lega/Stadio selezionabili dal menu. Changelog conserva lo snapshot e la sincronizzazione esistente. I generatori mantengono gli ingressi anche dopo gli aggiornamenti automatici; nessun cambiamento alla cadenza settimanale o alla rilevazione delle nuove versioni.
+- Ramificazioni: workflow ogni 15 minuti sul ramo tecnico; 6.0 evidenziata, data e autore, parole leggibili, rami integrati chiusi, selezione di tutti i rami e colori distinti. Il feed continua a leggere entrambi i repository senza pubblicare il sito della lega.
+- Collaudi: sincronizzazione, passaggio alla versione successiva, idempotenza e modello della mappa superati. Matrice del portale, Anteprima protetta e Ramificazioni su Chromium/WebKit/Firefox × 16 profili collegata al workflow. Esito della matrice e della pubblicazione registrato nella PR e nel ticket #57 prima della consegna.
+- Samsung Internet e Safari su dispositivi fisici non disponibili. Le identità dei dispositivi e gli schermi sono emulati; i tre motori browser sono reali.
