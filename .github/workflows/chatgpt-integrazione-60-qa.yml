@@ -1,0 +1,89 @@
+name: ChatGPT - Integrazione 6.0 e Ramificazioni
+on:
+  pull_request:
+    branches: [claude/o-girrr-versione-6-0-mjh4ut]
+    paths: ['rilascio/**', 'calcoli/tifosi/**', 'sql/mvp-tifosi-60.sql', 'redazione/**', 'ramificazioni*', 'prove/prova*60*', 'prove/prova_ramificazioni*', 'prove/esporta_ramificazioni.py', '.github/workflows/chatgpt-integrazione-60-qa.yml']
+  push:
+    branches: [chatgpt/integrazione-6-0]
+    paths: ['rilascio/**', 'calcoli/tifosi/**', 'sql/mvp-tifosi-60.sql', 'redazione/**', 'ramificazioni*', 'prove/prova*60*', 'prove/prova_ramificazioni*', 'prove/esporta_ramificazioni.py', '.github/workflows/chatgpt-integrazione-60-qa.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: integrazione60-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  regole:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-bookworm
+        env:
+          POSTGRES_PASSWORD: solo-test-locale
+        ports: ['5432:5432']
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Modelli, redazione, chiave server e grafi Git
+        run: |
+          node prove/prova_tifosi_model.js
+          python3 prove/prova_tifosi60.py
+          python3 prove/prova_ramificazioni.py
+          python3 prove/prova_chiave_premi.py
+          cmp calcoli/tifosi/model.js rilascio/tifosi60/model.js
+      - name: Protocollo SQL su Postgres locale, mai Supabase
+        env:
+          PGHOST: 127.0.0.1
+          PGUSER: postgres
+          PGPASSWORD: solo-test-locale
+        run: python3 prove/prova_mvp60_db.py
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        motore: [chromium, webkit, firefox]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: giandjcosta/o-fant-a-girrr
+          ref: gh-pages
+          path: .site-60
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prepara una copia fresca, senza commit o pubblicazione
+        run: python3 rilascio/rilascio60.py .site-60 --lab
+      - name: Playwright
+        run: |
+          pip install playwright==1.62.0
+          python3 -m playwright install --with-deps ${{ matrix.motore }}
+      - name: Sedici schermi, due grafiche, menu e richieste simulate
+        env:
+          MOTORI: ${{ matrix.motore }}
+          SITO_60: ${{ github.workspace }}/.site-60
+        run: python3 prove/prova_integrazione60_browser.py
+      - name: Ramificazioni su sedici schermi, tutti i rami e nessuno scorrimento laterale
+        env:
+          MOTORI: ${{ matrix.motore }}
+        run: python3 prove/prova_ramificazioni_browser.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: integrazione60-${{ matrix.motore }}
+          path: |
+            qa_artifacts/integrazione60/
+            qa_artifacts/ramificazioni-leggibili/
+          retention-days: 14

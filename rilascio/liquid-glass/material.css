@@ -1,0 +1,68 @@
+/* Stile Android (Material 3 Expressive) · Prototipo per lo Stadio (Claude, 11 novembre 2026). Solo nel Lab, il sito vero non cambia.
+   Da mettere a confronto con liquid-glass.css (stile iPhone). Solo CSS semplice.
+   Come su Android: niente vetro né sfocatura, superfici piene «tonali» (un blu un po' più chiaro dello sfondo),
+   forme molto tonde, la voce attiva dentro una pillola colorata, le etichette sempre scritte sotto le icone.
+   I colori restano quelli dello Stadio: scheda attiva oro, Campionato rosso e Champions Cup azzurra. */
+
+:root{
+  --m3-superficie:#26366a;        /* superficie tonale (sopra lo sfondo #1d2a52) */
+  --m3-superficie-alta:#2e4079;
+  --m3-contorno:rgba(251,246,236,.28);
+  --m3-attivo:#ffd166;            /* oro dello Stadio */
+  --m3-su-attivo:#1d2a52;
+}
+
+/* ---------- Schede: pulsanti segmentati di Android ---------- */
+.v55-schede,.seg,.v53-pills{
+  background:var(--m3-superficie)!important;
+  border:1px solid var(--m3-contorno)!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+.v55-schede{border-radius:999px!important;padding:4px!important;gap:4px!important}
+.seg{border-radius:20px!important}
+.v53-pills{border-radius:20px!important;padding:4px}
+.v55-schede>button,.v55-schede>a,.v53-pills button{border-radius:999px!important}
+.seg button{border-radius:16px!important}
+
+/* La scheda attiva ha il segno di spunta, come i pulsanti segmentati di Android */
+.v55-schede>button[aria-selected=true]::before,
+.seg button[aria-pressed=true]::before,
+.v53-pills [aria-selected=true]::before{content:'✓\00a0';font-weight:900}
+
+/* Tocco: Android schiarisce il pulsante premuto e lo «schiaccia» un poco (molla) */
+.v55-schede>button,.v55-schede>a,.seg button,.v53-pills button{
+  transition:background-color .25s ease,color .25s ease,border-radius .35s cubic-bezier(.3,1.6,.5,1),transform .35s cubic-bezier(.3,1.6,.5,1)}
+.v55-schede>button:active,.v55-schede>a:active,.seg button:active,.v53-pills button:active{transform:scale(.95);border-radius:12px!important}
+
+/* Interruttore Campionato / Champions Cup: superficie piena e contorno, la «i» che scorre non si tocca */
+.sw{background:var(--m3-superficie)!important;border:1px solid var(--m3-contorno);box-shadow:none!important}
+
+/* Schede della Curva in alto: come le «schede principali» di Android, con la lineetta tonda sotto la scheda attiva */
+.tabs button.on:after{width:auto!important;left:22%!important;right:22%;transform:none!important;height:3px!important;border-radius:3px 3px 0 0!important}
+
+/* ---------- Barra in basso della Curva (solo telefono): barra di navigazione di Android ---------- */
+@media (max-width:759px){
+  .nav{
+    background:color-mix(in srgb,var(--bg,#1d2a52) 92%,var(--tx,#fff))!important;  /* superficie tonale, piena */
+    border-top:0!important;
+    padding:8px 4px calc(10px + env(safe-area-inset-bottom))!important;
+    -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  }
+  .nav button{flex-direction:column!important;align-items:center;gap:4px;padding:2px 0!important}
+  .nav button .t{display:block!important;font:600 12px Inter,system-ui,sans-serif;color:var(--mu,#8b98a5)}
+  .nav button.on .t{color:var(--tx,#fff);font-weight:800}
+  /* La pillola dietro l'icona attiva (in oro) */
+  .nav button svg{box-sizing:content-box;padding:4px 20px;border-radius:999px;transition:background-color .3s ease,padding .35s cubic-bezier(.3,1.6,.5,1)}
+  .nav button.on svg{background:var(--m3-attivo);color:var(--m3-su-attivo);stroke-width:2.4}
+  .nav button:active svg{padding:4px 14px}
+  .nav .bd{top:0!important;left:calc(50% + 10px)!important}
+  .nav .sito{flex-direction:column;gap:4px;padding:6px 0 2px!important}
+  .nav .sito .t{display:block!important;font:600 12px Inter,system-ui,sans-serif;color:var(--mu,#8b98a5)}
+  .col{padding-bottom:110px!important}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .v55-schede>button,.v55-schede>a,.seg button,.v53-pills button,.nav button svg{transition:none}
+  .v55-schede>button:active,.v55-schede>a:active,.seg button:active,.v53-pills button:active{transform:none}
+}

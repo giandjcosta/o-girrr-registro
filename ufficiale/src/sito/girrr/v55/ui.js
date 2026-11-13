@@ -288,7 +288,7 @@ function risultati(g,chiusa){var o=opts(g),tot=0,c=o.map(function(x,i){var k=con
  var h='<article class="v55-pollpost" data-g="'+g.n+'">'+testa(g,chiusa?'Concluso':quandoChiude(g))+'<p class="v55-pp-q">Quale sfida seguirai con più attenzione?</p><div class="poll">';
  o.forEach(function(x,i){var pc=tot?Math.round(c[i]*100/tot):0;h+='<div class="po-r v55-por'+(mio===i?' me':'')+'"><i style="width:'+pc+'%"></i><span>'+esc(x)+(mio===i?' ✓':'')+'</span><span><b>'+pc+'%</b></span></div>'});
  h+='<div class="pom">'+tot+(tot===1?' voto':' voti')+' · '+(chiusa?'Concluso':'Votazione aperta')+'</div></div>';
- var cm=botComments({day:g.n,opts:o}).map(function(t){return [t[0]+' · bot',t[1]]}).concat(commenti(g)),ap=!!aperti[g.n];
+ var cm=botComments({day:g.n,opts:o}).map(function(t){return [t[0],t[1]]}).concat(commenti(g))   /* Claude: niente etichetta «Bot» accanto ai personaggi (Gianluca: toglie immersione) */,ap=!!aperti[g.n];
  h+='<button class="v55-pp-tog" type="button" data-pp="'+g.n+'" aria-expanded="'+ap+'">'+(ap?'Chiudi i commenti':'Commenti ('+cm.length+')')+'</button>';
  if(ap){h+='<div class="v55-pp-cm">'+cm.map(function(t){return '<div class="v53-comment"><b>'+esc(t[0])+'</b><p>'+esc(t[1])+'</p></div>'}).join('')+
   (!chiusa&&(!reale||io)?'<form class="v53-field v55-pp-form" data-g="'+g.n+'"><input class="v53-input" maxlength="280" required placeholder="'+(reale?'Il tuo commento':'Il tuo commento (solo locale)')+'" aria-label="Commenta il sondaggio"><button class="v53-btn" type="submit">Commenta</button></form>':'')+
@@ -296,9 +296,19 @@ function risultati(g,chiusa){var o=opts(g),tot=0,c=o.map(function(x,i){var k=con
  return h+'</article>'}
 function scheda(g){var o=opts(g),puo=!reale||!!io;
  return '<article class="v55-pollpost" data-g="'+g.n+'">'+testa(g,quandoChiude(g))+'<p class="v55-pp-q">Quale sfida seguirai con più attenzione?</p><form id="v53vote">'+o.map(function(x,i){return '<label class="v53-poll-option"><input type="radio" name="v53choice" value="'+i+'"'+(puo?'':' disabled')+'><span>'+esc(x)+'</span></label>'}).join('')+(puo?'<button class="v53-btn" type="submit">Vota</button>':'<p class="v53-muted">Entra con la tua squadra per votare.</p>')+'</form>'+(msg?'<p class="v53-muted" role="status">'+esc(msg)+'</p>':'')+'</article>'}
-function disegna(){var h='',A=Sg.aperto,C=Sg.chiuso;
+function totVoti(g){return ((stato[g.n]||{}).voti||[]).reduce(function(t,x){return t+n(x.n)},0)}
+function recente(g){var ini=inizioGiornata(g);return !ini||Date.now()-ini.getTime()<2592e5}
+var forzato=!!n(new URLSearchParams(location.search).get('sondaggio')),archAperto=false,archCarico=false;
+function passate(){var now=new Date();return games(false).filter(function(g){if(!g.m||!g.m.length)return false;var ini=inizioGiornata(g);return g.m.every(function(m){return matchPlayed(m,false)})||(ini&&ini<=now)}).sort(function(a,b){return b.n-a.n})}
+function archivio(mostrato){var L=passate().filter(function(g){return !mostrato||g.n!==mostrato.n}),h='<details class="v55-arch"'+(archAperto?' open':'')+'><summary>Sondaggi chiusi</summary><div class="v55-arch-b">';
+ if(archAperto){
+  if(reale&&!archCarico)h+='<p class="v53-muted">Carico i sondaggi chiusi…</p>';
+  else{var R=L.filter(function(g){return !reale?n(Object.keys(get(chiave(g)+'-counts',{})).length)>0:totVoti(g)>0});h+=R.length?R.map(function(g){return risultati(g,true)}).join(''):'<p class="v53-muted">Nessun sondaggio chiuso con voti.</p>'}}
+ return h+'</div></details>'}
+function disegna(){var h='',A=Sg.aperto,C=Sg.chiuso,mostrato=null;
  if(A)h+=(mioVoto(A)===null&&(!reale||io))?scheda(A):risultati(A,false);
- if(C&&(!reale||n(((stato[C.n]||{}).voti||[]).reduce(function(t,x){return t+n(x.n)},0))>0))h+=risultati(C,true);
+ if(C&&(forzato||recente(C))&&(!reale||totVoti(C)>0)){h+=risultati(C,true);mostrato=C}
+ if(passate().some(function(g){return !mostrato||g.n!==mostrato.n}))h+=archivio(mostrato);
  host.innerHTML=h||'';SEC55.dataset.vuoto=h?'':'1';posizionaSondaggio();
  var fv=host.querySelector('#v53vote');if(fv)fv.onsubmit=function(e){e.preventDefault();var v=fv.querySelector('input:checked');if(!v)return;var i=n(v.value);
   if(!reale){var c=get(chiave(A)+'-counts',{});c[i]=n(c[i])+1;set(chiave(A)+'-counts',c);set(kv(A),i);disegna();return}
@@ -308,6 +318,8 @@ function disegna(){var h='',A=Sg.aperto,C=Sg.chiuso;
   rpcN('sondaggio_commenta',{p_team:io.team,p_code:io.code,p_giornata:g.n,p_testo:t.slice(0,280)}).then(function(r){stato[g.n]=r;disegna()}).catch(function(x){msg='Commento non pubblicato: '+x.message;disegna()})}});
  if(window.OGDest55)window.OGDest55.poll();
 }
+host.addEventListener('toggle',function(e){var d=e.target;if(!d||!d.classList||!d.classList.contains('v55-arch'))return;if(archAperto===d.open)return;archAperto=d.open;
+ if(archAperto&&reale&&!archCarico){var da=passate().filter(function(g){return !stato[g.n]});Promise.all(da.map(function(g){return rpcN('sondaggio_stato',{p_giornata:g.n}).then(function(r){stato[g.n]=r}).catch(function(){})})).then(function(){archCarico=true;disegna()})}else disegna()},true);
 host.addEventListener('click',function(e){var b=e.target.closest('[data-pp]');if(!b)return;var g=n(b.dataset.pp),post=b.closest('.v55-pollpost');aperti[g]=!aperti[g];disegna();
  if(!aperti[g]){var np=host.querySelector('.v55-pollpost[data-g="'+g+'"]');if(np&&np.getBoundingClientRect().top<0)np.scrollIntoView({behavior:CALMO?'auto':'smooth',block:'start'})}});
 disegna();

@@ -1,0 +1,61 @@
+{
+  "data": "2026-11-13",
+  "commitCollaudato": "da72bd4",
+  "workflow": "https://github.com/giandjcosta/o-girrr-registro/actions/runs/43339506523",
+  "visiteMatrice": 912,
+  "profiliPerMotore": 16,
+  "rpcBrowser": "Simulate con CORS; nessun collegamento a Supabase live",
+  "sql": "Postgres 17 locale reale; schema eseguito due volte",
+  "motori": {
+    "chromium": {
+      "motori": {
+        "chromium": "151.0.7922.34"
+      },
+      "visite": 304,
+      "problemi": [],
+      "interazioni": [
+        "chromium/girrr/: PASS · Voto/cambio/ritiro/persistenza/errore, Video conservato, Carriera e Derby nei menu, identità intatta",
+        "chromium/stadio/girrr/: PASS · Voto/cambio/ritiro/persistenza/errore, Video conservato, Carriera e Derby nei menu, identità intatta",
+        "chromium/Ramificazioni: PASS · Filtri, ramo/dettaglio, tastiera, zoom, errore di rete, nuova versione senza ricaricare"
+      ],
+      "browser_fisici": "Non disponibili: Samsung Internet, Safari su dispositivo, Chrome/Edge di marca. Schermi e identità emulati.",
+      "profili": 16
+    },
+    "webkit": {
+      "motori": {
+        "webkit": "26.5"
+      },
+      "visite": 304,
+      "problemi": [],
+      "interazioni": [
+        "webkit/girrr/: PASS · Voto/cambio/ritiro/persistenza/errore, Video conservato, Carriera e Derby nei menu, identità intatta",
+        "webkit/stadio/girrr/: PASS · Voto/cambio/ritiro/persistenza/errore, Video conservato, Carriera e Derby nei menu, identità intatta",
+        "webkit/Ramificazioni: PASS · Filtri, ramo/dettaglio, tastiera, zoom, errore di rete, nuova versione senza ricaricare"
+      ],
+      "browser_fisici": "Non disponibili: Samsung Internet, Safari su dispositivo, Chrome/Edge di marca. Schermi e identità emulati.",
+      "profili": 16
+    },
+    "firefox": {
+      "motori": {
+        "firefox": "153.0"
+      },
+      "visite": 304,
+      "problemi": [],
+      "interazioni": [
+        "firefox/girrr/: PASS · Voto/cambio/ritiro/persistenza/errore, Video conservato, Carriera e Derby nei menu, identità intatta",
+        "firefox/stadio/girrr/: PASS · Voto/cambio/ritiro/persistenza/errore, Video conservato, Carriera e Derby nei menu, identità intatta",
+        "firefox/Ramificazioni: PASS · Filtri, ramo/dettaglio, tastiera, zoom, errore di rete, nuova versione senza ricaricare"
+      ],
+      "browser_fisici": "Non disponibili: Samsung Internet, Safari su dispositivo, Chrome/Edge di marca. Schermi e identità emulati.",
+      "profili": 16
+    }
+  },
+  "tvAggiuntiva": {
+    "profili": 1,
+    "motori": 3,
+    "visite": 57,
+    "problemi": 0,
+    "identita": "Smart TV Tizen emulata; modalità tv-grande verificata"
+  },
+  "marchiFisici": "Samsung Internet, Safari su dispositivi e Chrome/Edge di marca non disponibili"
+}

@@ -32,6 +32,23 @@ Al massimo due giri per giornata, più quei due eventuali tentativi.
    con messaggio che comincia con «Claude: Redazione · …», `git pull --rebase`, push. Mai push forzati, nessun altro file.
 
 ## Cosa scrivere
+### Dalla 6.0: la settimana e l’MVP dei tifosi
+
+Questo passaggio si attiva **solo quando `versioni.json` del sito riporta la 6.0 o successiva**. Nei giri precedenti non aggiungere né pubblicare questi file.
+
+Nel giro **dopo**, insieme alla normale conferenza:
+
+1. Leggi `redazione/LA-MIA-SETTIMANA.md`. Aggiorna una copia locale di `gh-pages` e leggi il registro ufficiale con la RPC pubblica, senza effetti collaterali, `mvp_derby({p_stagione:"2026/27"})`; conserva la risposta in un file temporaneo. Non dedurre l’ufficialità dall’indice di rivalità.
+2. `python3 redazione/tifosi.py prepara --sito CARTELLA_GH_PAGES --derby REGISTRO_TEMPORANEO.json` scrive `redazione/tifosi-dossier.json`. Leggi il contesto della giornata appena completata: incontri di Campionato **e** Champions Cup della stessa `sa`, riposi, precedenti, classifica e storia della squadra.
+3. Aggiorna `redazione/tifosi.json`, conservando stagione, `avvioGiornata` e archivio. Per la nuova giornata copia l’impronta `firma` del dossier e scrivi per **tutte le dieci squadre** `{titolo, paragrafi:[p1,p2,p3]}` in `giornate[N].squadre`. Scegli un filo giornalistico specifico per ciascuna squadra. Non riciclare il testo cambiando nomi e numeri. Se l’impronta è già uguale, i testi già pubblicati restano: non riscriverli senza nuovi fatti.
+4. Aggiungi `giornate[N].redazione`, almeno un voto `{autore:"Redazione di Girrr Sport",scelta:CLUB_CANDIDATO,motivo:TESTO}` scelto fra i candidati reali del dossier, con una motivazione sportiva. I cinque personaggi votano automaticamente secondo criteri pubblici; il servizio normalizza le due giurie. Non inventare voti degli allenatori. All’ultima giornata, se manca il calendario successivo, concordare una `chiude` con fuso orario: non inventare una data.
+5. `python3 redazione/tifosi.py controlla --sito CARTELLA_GH_PAGES --derby REGISTRO_TEMPORANEO.json --pubblica CARTELLA_GH_PAGES/girrr/dati/tifosi-settimane.json`. Correggi gli errori prima della pubblicazione. Il controllo rifiuta fatti modificati, testi mancanti/duplicati, giurie fuori dalle candidature e Coppa parziale. I sei episodi storici curati dell’Oranje precedenti all’avvio restano; non attribuire premi alle settimane mai votate.
+6. Nel commit di redazione possono entrare anche `redazione/tifosi.json` e, sul sito, **soltanto** `girrr/dati/tifosi-settimane.json` oltre ai file già autorizzati sopra. Il dossier nuovo è solo contesto locale; non occorre commetterlo. Non toccare SQL, codice, workflow o altri file del sito.
+
+Nel giro **vigilia** non riaprire né cambiare candidature o preferenze già votate: il servizio chiude automaticamente al primo calcio d’inizio della giornata successiva, anche con zero allenatori. In caso di risultati corretti, rifai i racconti con l’impronta nuova; se è già iniziato il voto, segnala la necessità di revisione della votazione. Non cancellare voti né riscrivere un verdetto chiuso.
+
+La generazione usa la sessione di redazione già programmata; non creare un’attività o un’API a pagamento aggiuntiva. Il servizio MVP (`tifosi-giornata.yml`) legge il file pubblicato ogni 15 minuti: apre la nuova votazione e archivia quelle scadute senza aspettare la partecipazione umana.
+
 ### Domande della conferenza (`domande`)
 Per **ogni** squadra del dossier (chiave interna, per esempio `The Blue brothers`): 3 domande per la giornata del dossier.
 - **Domanda 1 · La situazione**: classifica, obiettivo del presidente, posizione attesa, strisce vere (`ultime`).

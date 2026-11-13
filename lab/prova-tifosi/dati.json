@@ -1,0 +1,2540 @@
+{
+  "aggiornato": "2026-11-11",
+  "teams": [
+    "The Blue brothers",
+    "Apo team",
+    "Grodah",
+    "WOA",
+    "Real Madrink",
+    "stif dc",
+    "Mariana Coneja",
+    "AFA SELECCION",
+    "Oranje VC",
+    "Atletico ma non troppo"
+  ],
+  "rounds": [
+    {
+      "n": 1,
+      "sa": 5,
+      "m": [
+        [
+          "Mariana Coneja",
+          80.5,
+          71,
+          "Grodah",
+          "3-2"
+        ],
+        [
+          "Apo team",
+          77,
+          70.5,
+          "The Blue brothers",
+          "3-1"
+        ],
+        [
+          "Atletico ma non troppo",
+          67.5,
+          89,
+          "Oranje VC",
+          "1-5"
+        ],
+        [
+          "stif dc",
+          68.5,
+          76,
+          "AFA SELECCION",
+          "1-3"
+        ],
+        [
+          "Real Madrink",
+          78,
+          74.5,
+          "WOA",
+          "3-2"
+        ]
+      ]
+    },
+    {
+      "n": 2,
+      "sa": 6,
+      "m": [
+        [
+          "The Blue brothers",
+          62.5,
+          61.5,
+          "Mariana Coneja",
+          "0-0"
+        ],
+        [
+          "AFA SELECCION",
+          74.5,
+          74,
+          "Real Madrink",
+          "2-2"
+        ],
+        [
+          "Oranje VC",
+          65.5,
+          75.5,
+          "stif dc",
+          "0-2"
+        ],
+        [
+          "Grodah",
+          74.5,
+          69.5,
+          "Atletico ma non troppo",
+          "2-1"
+        ],
+        [
+          "WOA",
+          78.5,
+          80,
+          "Apo team",
+          "3-3"
+        ]
+      ]
+    },
+    {
+      "n": 3,
+      "sa": 7,
+      "m": [
+        [
+          "Mariana Coneja",
+          86,
+          81.5,
+          "WOA",
+          "5-4"
+        ],
+        [
+          "Apo team",
+          64.5,
+          75,
+          "AFA SELECCION",
+          "0-2"
+        ],
+        [
+          "Atletico ma non troppo",
+          60.5,
+          73.5,
+          "The Blue brothers",
+          "0-2"
+        ],
+        [
+          "Grodah",
+          70,
+          72.5,
+          "Oranje VC",
+          "1-2"
+        ],
+        [
+          "Real Madrink",
+          72,
+          72,
+          "stif dc",
+          "2-2"
+        ]
+      ]
+    },
+    {
+      "n": 4,
+      "sa": 8,
+      "m": [
+        [
+          "The Blue brothers",
+          57.5,
+          83.5,
+          "Grodah",
+          "0-4"
+        ],
+        [
+          "stif dc",
+          82.5,
+          67,
+          "Apo team",
+          "4-1"
+        ],
+        [
+          "AFA SELECCION",
+          82,
+          86,
+          "Mariana Coneja",
+          "4-5"
+        ],
+        [
+          "Oranje VC",
+          72,
+          75,
+          "Real Madrink",
+          "2-2"
+        ],
+        [
+          "WOA",
+          69.5,
+          72.5,
+          "Atletico ma non troppo",
+          "1-2"
+        ]
+      ]
+    },
+    {
+      "n": 5,
+      "sa": 9,
+      "m": [
+        [
+          "Mariana Coneja",
+          66,
+          83.5,
+          "stif dc",
+          "1-4"
+        ],
+        [
+          "Apo team",
+          74,
+          73,
+          "Real Madrink",
+          "2-2"
+        ],
+        [
+          "The Blue brothers",
+          76,
+          60,
+          "Oranje VC",
+          "3-0"
+        ],
+        [
+          "Atletico ma non troppo",
+          61,
+          92,
+          "AFA SELECCION",
+          "0-6"
+        ],
+        [
+          "Grodah",
+          81,
+          75,
+          "WOA",
+          "4-2"
+        ]
+      ]
+    },
+    {
+      "n": 6,
+      "sa": 10,
+      "m": [
+        [
+          "stif dc",
+          68,
+          76.5,
+          "Atletico ma non troppo",
+          "1-3"
+        ],
+        [
+          "AFA SELECCION",
+          72,
+          76.5,
+          "Grodah",
+          "2-3"
+        ],
+        [
+          "Oranje VC",
+          68,
+          69,
+          "Apo team",
+          "1-1"
+        ],
+        [
+          "WOA",
+          81,
+          74.5,
+          "The Blue brothers",
+          "4-2"
+        ],
+        [
+          "Real Madrink",
+          63.5,
+          81.5,
+          "Mariana Coneja",
+          "0-4"
+        ]
+      ]
+    },
+    {
+      "n": 7,
+      "sa": 11,
+      "m": [
+        [
+          "Mariana Coneja",
+          77,
+          73,
+          "Apo team",
+          "3-2"
+        ],
+        [
+          "The Blue brothers",
+          67,
+          69,
+          "AFA SELECCION",
+          "1-1"
+        ],
+        [
+          "Atletico ma non troppo",
+          65,
+          68,
+          "Real Madrink",
+          "0-1"
+        ],
+        [
+          "Grodah",
+          67.5,
+          74,
+          "stif dc",
+          "1-2"
+        ],
+        [
+          "WOA",
+          66,
+          71.5,
+          "Oranje VC",
+          "1-2"
+        ]
+      ]
+    },
+    {
+      "n": 8,
+      "sa": 12,
+      "m": [
+        [
+          "Mariana Coneja",
+          0,
+          0,
+          "Oranje VC",
+          "-"
+        ],
+        [
+          "Apo team",
+          0,
+          0,
+          "Atletico ma non troppo",
+          "-"
+        ],
+        [
+          "stif dc",
+          0,
+          0,
+          "The Blue brothers",
+          "-"
+        ],
+        [
+          "AFA SELECCION",
+          0,
+          0,
+          "WOA",
+          "-"
+        ],
+        [
+          "Real Madrink",
+          0,
+          0,
+          "Grodah",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 9,
+      "sa": 13,
+      "m": [
+        [
+          "The Blue brothers",
+          0,
+          0,
+          "Real Madrink",
+          "-"
+        ],
+        [
+          "Atletico ma non troppo",
+          0,
+          0,
+          "Mariana Coneja",
+          "-"
+        ],
+        [
+          "Oranje VC",
+          0,
+          0,
+          "AFA SELECCION",
+          "-"
+        ],
+        [
+          "Grodah",
+          0,
+          0,
+          "Apo team",
+          "-"
+        ],
+        [
+          "WOA",
+          0,
+          0,
+          "stif dc",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 10,
+      "sa": 14,
+      "m": [
+        [
+          "Mariana Coneja",
+          0,
+          0,
+          "The Blue brothers",
+          "-"
+        ],
+        [
+          "Atletico ma non troppo",
+          0,
+          0,
+          "Grodah",
+          "-"
+        ],
+        [
+          "AFA SELECCION",
+          0,
+          0,
+          "stif dc",
+          "-"
+        ],
+        [
+          "Oranje VC",
+          0,
+          0,
+          "WOA",
+          "-"
+        ],
+        [
+          "Real Madrink",
+          0,
+          0,
+          "Apo team",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 11,
+      "sa": 15,
+      "m": [
+        [
+          "Apo team",
+          0,
+          0,
+          "Mariana Coneja",
+          "-"
+        ],
+        [
+          "The Blue brothers",
+          0,
+          0,
+          "Atletico ma non troppo",
+          "-"
+        ],
+        [
+          "stif dc",
+          0,
+          0,
+          "Oranje VC",
+          "-"
+        ],
+        [
+          "Grodah",
+          0,
+          0,
+          "AFA SELECCION",
+          "-"
+        ],
+        [
+          "WOA",
+          0,
+          0,
+          "Real Madrink",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 12,
+      "sa": 16,
+      "m": [
+        [
+          "Atletico ma non troppo",
+          0,
+          0,
+          "WOA",
+          "-"
+        ],
+        [
+          "AFA SELECCION",
+          0,
+          0,
+          "Oranje VC",
+          "-"
+        ],
+        [
+          "Grodah",
+          0,
+          0,
+          "The Blue brothers",
+          "-"
+        ],
+        [
+          "Apo team",
+          0,
+          0,
+          "stif dc",
+          "-"
+        ],
+        [
+          "Mariana Coneja",
+          0,
+          0,
+          "Real Madrink",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 13,
+      "sa": 17,
+      "m": [
+        [
+          "Real Madrink",
+          0,
+          0,
+          "Atletico ma non troppo",
+          "-"
+        ],
+        [
+          "WOA",
+          0,
+          0,
+          "AFA SELECCION",
+          "-"
+        ],
+        [
+          "stif dc",
+          0,
+          0,
+          "Mariana Coneja",
+          "-"
+        ],
+        [
+          "The Blue brothers",
+          0,
+          0,
+          "Apo team",
+          "-"
+        ],
+        [
+          "Oranje VC",
+          0,
+          0,
+          "Grodah",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 14,
+      "sa": 18,
+      "m": [
+        [
+          "AFA SELECCION",
+          0,
+          0,
+          "Atletico ma non troppo",
+          "-"
+        ],
+        [
+          "stif dc",
+          0,
+          0,
+          "Real Madrink",
+          "-"
+        ],
+        [
+          "Apo team",
+          0,
+          0,
+          "WOA",
+          "-"
+        ],
+        [
+          "Oranje VC",
+          0,
+          0,
+          "The Blue brothers",
+          "-"
+        ],
+        [
+          "Grodah",
+          0,
+          0,
+          "Mariana Coneja",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 15,
+      "sa": 19,
+      "m": [
+        [
+          "Atletico ma non troppo",
+          0,
+          0,
+          "stif dc",
+          "-"
+        ],
+        [
+          "Mariana Coneja",
+          0,
+          0,
+          "AFA SELECCION",
+          "-"
+        ],
+        [
+          "Real Madrink",
+          0,
+          0,
+          "Oranje VC",
+          "-"
+        ],
+        [
+          "The Blue brothers",
+          0,
+          0,
+          "WOA",
+          "-"
+        ],
+        [
+          "Apo team",
+          0,
+          0,
+          "Grodah",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 16,
+      "sa": 20,
+      "m": [
+        [
+          "Oranje VC",
+          0,
+          0,
+          "Atletico ma non troppo",
+          "-"
+        ],
+        [
+          "Real Madrink",
+          0,
+          0,
+          "The Blue brothers",
+          "-"
+        ],
+        [
+          "WOA",
+          0,
+          0,
+          "Mariana Coneja",
+          "-"
+        ],
+        [
+          "stif dc",
+          0,
+          0,
+          "Grodah",
+          "-"
+        ],
+        [
+          "AFA SELECCION",
+          0,
+          0,
+          "Apo team",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 17,
+      "sa": 21,
+      "m": [
+        [
+          "Atletico ma non troppo",
+          0,
+          0,
+          "Apo team",
+          "-"
+        ],
+        [
+          "stif dc",
+          0,
+          0,
+          "WOA",
+          "-"
+        ],
+        [
+          "AFA SELECCION",
+          0,
+          0,
+          "The Blue brothers",
+          "-"
+        ],
+        [
+          "Oranje VC",
+          0,
+          0,
+          "Mariana Coneja",
+          "-"
+        ],
+        [
+          "Grodah",
+          0,
+          0,
+          "Real Madrink",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 18,
+      "sa": 22,
+      "m": [
+        [
+          "Mariana Coneja",
+          0,
+          0,
+          "Atletico ma non troppo",
+          "-"
+        ],
+        [
+          "Apo team",
+          0,
+          0,
+          "Oranje VC",
+          "-"
+        ],
+        [
+          "The Blue brothers",
+          0,
+          0,
+          "stif dc",
+          "-"
+        ],
+        [
+          "WOA",
+          0,
+          0,
+          "Grodah",
+          "-"
+        ],
+        [
+          "Real Madrink",
+          0,
+          0,
+          "AFA SELECCION",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 19,
+      "sa": 23,
+      "m": [
+        [
+          "AFA SELECCION",
+          0,
+          0,
+          "Atletico ma non troppo",
+          "-"
+        ],
+        [
+          "Real Madrink",
+          0,
+          0,
+          "Apo team",
+          "-"
+        ],
+        [
+          "Grodah",
+          0,
+          0,
+          "Mariana Coneja",
+          "-"
+        ],
+        [
+          "WOA",
+          0,
+          0,
+          "Oranje VC",
+          "-"
+        ],
+        [
+          "The Blue brothers",
+          0,
+          0,
+          "stif dc",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 20,
+      "sa": 24,
+      "m": [
+        [
+          "Apo team",
+          0,
+          0,
+          "AFA SELECCION",
+          "-"
+        ],
+        [
+          "Oranje VC",
+          0,
+          0,
+          "The Blue brothers",
+          "-"
+        ],
+        [
+          "Mariana Coneja",
+          0,
+          0,
+          "WOA",
+          "-"
+        ],
+        [
+          "Atletico ma non troppo",
+          0,
+          0,
+          "Grodah",
+          "-"
+        ],
+        [
+          "stif dc",
+          0,
+          0,
+          "Real Madrink",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 21,
+      "sa": 25,
+      "m": [
+        [
+          "AFA SELECCION",
+          0,
+          0,
+          "stif dc",
+          "-"
+        ],
+        [
+          "Real Madrink",
+          0,
+          0,
+          "Oranje VC",
+          "-"
+        ],
+        [
+          "Grodah",
+          0,
+          0,
+          "Apo team",
+          "-"
+        ],
+        [
+          "Atletico ma non troppo",
+          0,
+          0,
+          "Mariana Coneja",
+          "-"
+        ],
+        [
+          "The Blue brothers",
+          0,
+          0,
+          "WOA",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 22,
+      "sa": 26,
+      "m": [
+        [
+          "Apo team",
+          0,
+          0,
+          "Atletico ma non troppo",
+          "-"
+        ],
+        [
+          "WOA",
+          0,
+          0,
+          "Real Madrink",
+          "-"
+        ],
+        [
+          "Oranje VC",
+          0,
+          0,
+          "AFA SELECCION",
+          "-"
+        ],
+        [
+          "Mariana Coneja",
+          0,
+          0,
+          "The Blue brothers",
+          "-"
+        ],
+        [
+          "stif dc",
+          0,
+          0,
+          "Grodah",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 23,
+      "sa": 27,
+      "m": [
+        [
+          "AFA SELECCION",
+          0,
+          0,
+          "WOA",
+          "-"
+        ],
+        [
+          "Real Madrink",
+          0,
+          0,
+          "The Blue brothers",
+          "-"
+        ],
+        [
+          "Apo team",
+          0,
+          0,
+          "Mariana Coneja",
+          "-"
+        ],
+        [
+          "Grodah",
+          0,
+          0,
+          "Oranje VC",
+          "-"
+        ],
+        [
+          "Atletico ma non troppo",
+          0,
+          0,
+          "stif dc",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 24,
+      "sa": 28,
+      "m": [
+        [
+          "WOA",
+          0,
+          0,
+          "Grodah",
+          "-"
+        ],
+        [
+          "Oranje VC",
+          0,
+          0,
+          "Atletico ma non troppo",
+          "-"
+        ],
+        [
+          "Mariana Coneja",
+          0,
+          0,
+          "Real Madrink",
+          "-"
+        ],
+        [
+          "stif dc",
+          0,
+          0,
+          "Apo team",
+          "-"
+        ],
+        [
+          "The Blue brothers",
+          0,
+          0,
+          "AFA SELECCION",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 25,
+      "sa": 29,
+      "m": [
+        [
+          "AFA SELECCION",
+          0,
+          0,
+          "Real Madrink",
+          "-"
+        ],
+        [
+          "Apo team",
+          0,
+          0,
+          "Oranje VC",
+          "-"
+        ],
+        [
+          "Grodah",
+          0,
+          0,
+          "The Blue brothers",
+          "-"
+        ],
+        [
+          "Atletico ma non troppo",
+          0,
+          0,
+          "WOA",
+          "-"
+        ],
+        [
+          "stif dc",
+          0,
+          0,
+          "Mariana Coneja",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 26,
+      "sa": 30,
+      "m": [
+        [
+          "AFA SELECCION",
+          0,
+          0,
+          "Mariana Coneja",
+          "-"
+        ],
+        [
+          "Real Madrink",
+          0,
+          0,
+          "Grodah",
+          "-"
+        ],
+        [
+          "WOA",
+          0,
+          0,
+          "Apo team",
+          "-"
+        ],
+        [
+          "Oranje VC",
+          0,
+          0,
+          "stif dc",
+          "-"
+        ],
+        [
+          "The Blue brothers",
+          0,
+          0,
+          "Atletico ma non troppo",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 27,
+      "sa": 31,
+      "m": [
+        [
+          "Apo team",
+          0,
+          0,
+          "The Blue brothers",
+          "-"
+        ],
+        [
+          "Grodah",
+          0,
+          0,
+          "AFA SELECCION",
+          "-"
+        ],
+        [
+          "Mariana Coneja",
+          0,
+          0,
+          "Oranje VC",
+          "-"
+        ],
+        [
+          "Atletico ma non troppo",
+          0,
+          0,
+          "Real Madrink",
+          "-"
+        ],
+        [
+          "stif dc",
+          0,
+          0,
+          "WOA",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 28,
+      "sa": 32,
+      "m": [
+        [
+          "AFA SELECCION",
+          0,
+          0,
+          "Apo team",
+          "-"
+        ],
+        [
+          "Grodah",
+          0,
+          0,
+          "Atletico ma non troppo",
+          "-"
+        ],
+        [
+          "Oranje VC",
+          0,
+          0,
+          "WOA",
+          "-"
+        ],
+        [
+          "Mariana Coneja",
+          0,
+          0,
+          "stif dc",
+          "-"
+        ],
+        [
+          "The Blue brothers",
+          0,
+          0,
+          "Real Madrink",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 29,
+      "sa": 33,
+      "m": [
+        [
+          "Real Madrink",
+          0,
+          0,
+          "AFA SELECCION",
+          "-"
+        ],
+        [
+          "Apo team",
+          0,
+          0,
+          "Grodah",
+          "-"
+        ],
+        [
+          "WOA",
+          0,
+          0,
+          "Mariana Coneja",
+          "-"
+        ],
+        [
+          "Atletico ma non troppo",
+          0,
+          0,
+          "Oranje VC",
+          "-"
+        ],
+        [
+          "stif dc",
+          0,
+          0,
+          "The Blue brothers",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 30,
+      "sa": 34,
+      "m": [
+        [
+          "Grodah",
+          0,
+          0,
+          "stif dc",
+          "-"
+        ],
+        [
+          "Oranje VC",
+          0,
+          0,
+          "Mariana Coneja",
+          "-"
+        ],
+        [
+          "Atletico ma non troppo",
+          0,
+          0,
+          "Apo team",
+          "-"
+        ],
+        [
+          "Real Madrink",
+          0,
+          0,
+          "WOA",
+          "-"
+        ],
+        [
+          "AFA SELECCION",
+          0,
+          0,
+          "The Blue brothers",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 31,
+      "sa": 35,
+      "m": [
+        [
+          "The Blue brothers",
+          0,
+          0,
+          "Grodah",
+          "-"
+        ],
+        [
+          "stif dc",
+          0,
+          0,
+          "Oranje VC",
+          "-"
+        ],
+        [
+          "WOA",
+          0,
+          0,
+          "AFA SELECCION",
+          "-"
+        ],
+        [
+          "Apo team",
+          0,
+          0,
+          "Real Madrink",
+          "-"
+        ],
+        [
+          "Mariana Coneja",
+          0,
+          0,
+          "Atletico ma non troppo",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 32,
+      "sa": 36,
+      "m": [
+        [
+          "Oranje VC",
+          0,
+          0,
+          "Grodah",
+          "-"
+        ],
+        [
+          "WOA",
+          0,
+          0,
+          "The Blue brothers",
+          "-"
+        ],
+        [
+          "Real Madrink",
+          0,
+          0,
+          "stif dc",
+          "-"
+        ],
+        [
+          "Mariana Coneja",
+          0,
+          0,
+          "Apo team",
+          "-"
+        ],
+        [
+          "Atletico ma non troppo",
+          0,
+          0,
+          "AFA SELECCION",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 33,
+      "sa": 37,
+      "m": [
+        [
+          "Grodah",
+          0,
+          0,
+          "WOA",
+          "-"
+        ],
+        [
+          "AFA SELECCION",
+          0,
+          0,
+          "Oranje VC",
+          "-"
+        ],
+        [
+          "The Blue brothers",
+          0,
+          0,
+          "Mariana Coneja",
+          "-"
+        ],
+        [
+          "Apo team",
+          0,
+          0,
+          "stif dc",
+          "-"
+        ],
+        [
+          "Real Madrink",
+          0,
+          0,
+          "Atletico ma non troppo",
+          "-"
+        ]
+      ]
+    },
+    {
+      "n": 34,
+      "sa": 38,
+      "m": [
+        [
+          "Mariana Coneja",
+          0,
+          0,
+          "Grodah",
+          "-"
+        ],
+        [
+          "The Blue brothers",
+          0,
+          0,
+          "Apo team",
+          "-"
+        ],
+        [
+          "stif dc",
+          0,
+          0,
+          "AFA SELECCION",
+          "-"
+        ],
+        [
+          "WOA",
+          0,
+          0,
+          "Atletico ma non troppo",
+          "-"
+        ],
+        [
+          "Oranje VC",
+          0,
+          0,
+          "Real Madrink",
+          "-"
+        ]
+      ]
+    }
+  ],
+  "rivalita": [
+    {
+      "a": "Apo team",
+      "b": "WOA",
+      "r": 94.3,
+      "h": 8,
+      "z": 2,
+      "n": "Il Derby dei Re",
+      "s": "Nel 2021/22 il Wakanda di apo vince il titolo al debutto e la WOA di ser chiude quarta con 53 punti. L'anno dopo i due si ritrovano in cima: apo campione ancora, ser secondo, a un solo gradino. Poi la storia cambia strada. Apo precipita, sesto nel 2023/24 e ultimo per due anni di fila. Ser, dopo un nono posto da dimenticare, risale e nel 2025/26 vince la Gioberti Cup con 65 punti, dieci più del secondo. Il re di ieri e il re di oggi: uno il trono lo ha lasciato, l'altro lo ha aspettato quattro anni."
+    },
+    {
+      "a": "WOA",
+      "b": "Grodah",
+      "r": 88.6,
+      "h": 8,
+      "z": 1,
+      "n": "Il Derby delle Due Corone",
+      "s": "Si sono alternati al comando, quasi mai insieme. Nel 2022/23 ser è secondo e RikyArma, con il Grodah, ultimo in un campionato a sei. Un anno dopo i ruoli si ribaltano: Riky sul podio, ser nono. Il 2025/26 è il momento in cui le strade si incrociano in cima. La WOA vince la Gioberti Cup con 65 punti, il Grodah è secondo con 55 e, come consolazione che consolazione non è, si prende anche la Coppa Campioni, battendo in finale il Mugiwara per 4-1. Un titolo da una parte, una coppa dall'altra: due corone, due modi di vincere."
+    },
+    {
+      "a": "Apo team",
+      "b": "The Blue brothers",
+      "r": 82.9,
+      "h": 8,
+      "z": 2,
+      "n": "Il Classico",
+      "s": "Nel 2021/22 il Mugiwara di Leanzino debutta da protagonista: secondo, a soli 5 punti dal Wakanda di apo, e per un anno il trono sembra a portata di mano. Passano due stagioni e la rivincita arriva. Nel 2023/24 Leanzino vince il titolo per appena 2 punti, mentre apo, che dominava la lega, è sesto. Quest'anno Leanzino non è più solo e porta con sé Mario nella The Blue Brothers, mentre apo ha cambiato casa un'altra volta, con l'Apo Team. Chi aveva perso ha vinto, chi aveva vinto ha perso: ora si vede chi ha più fame."
+    },
+    {
+      "a": "WOA",
+      "b": "The Blue brothers",
+      "r": 82.9,
+      "h": 8,
+      "z": 2,
+      "n": "Il Derby del Camaleonte",
+      "s": "Da una parte la WOA, che dal 2021/22 non ha mai cambiato né squadra né nome. Dall'altra la The Blue Brothers, che nel 2026/27 mette insieme due storie: il Mugiwara di Leanzino, secondo al debutto e campione nel 2023/24, e Mario, l'uomo dai quattro nomi, Gingleton, Barny, Pep Mariola e adesso Mario. Chi non cambia mai contro chi cambia sempre. Ser, fedele a se stesso, il titolo che aspettava lo ha vinto. La coppia ha tutto da riscrivere, a cominciare dal nome."
+    },
+    {
+      "a": "Apo team",
+      "b": "Grodah",
+      "r": 82.9,
+      "h": 8,
+      "z": 0,
+      "n": "Il Derby della Montagna Russa",
+      "s": "Due curve opposte. Apo parte dalla cima: campione nel 2021/22 e nel 2022/23, poi sesto e infine ultimo per due anni di fila. RikyArma fa il percorso inverso: settimo al debutto, ultimo nel 2022/23 in un campionato a sei, poi terzo, sesto e infine, nel 2025/26, secondo in campionato e vincitore della Coppa Campioni. Si sono incrociati a metà strada, uno in discesa e l'altro in salita. Ora che apo riparte dal basso con una nuova squadra, la domanda è chi resterà in alto."
+    },
+    {
+      "a": "Grodah",
+      "b": "The Blue brothers",
+      "r": 80,
+      "h": 8,
+      "z": 1,
+      "n": "Il Derby delle Due Finali",
+      "s": "Era l'ultima giornata del 2023/24 e il titolo si giocava tra Leanzino e Riky. Al Grodah bastava battere Real Madrink per prendersi il campionato; ma quel giorno qualcosa andò storto: le regole della lega cambiarono all'ultimo, e nessuno sa come, né perché, né chi le abbia approvate. Leanzino scrisse al gruppo, la formazione di Andrew finì in campo lo stesso e Riky non andò oltre il pareggio. Il Mugiwara chiuse a 57 punti; AleDmz con lo SdrogoCalcioFC e Riky con il Grodah si fermarono a 55, secondo e terzo. Sul campo aveva vinto Leanzino; per mezza lega, però, era lo scudetto di cartone: manovre amministrative, si dice, di un certo livello. Lui giura di non aver rubato niente. Da allora i due non si sono più sopportati, fino alla finale di Coppa Campioni 2025/26: il Grodah ha vinto 4-1 e la partita è sembrata un saldo di conti."
+    }
+  ],
+  "cupRounds": [
+    {
+      "n": 1,
+      "sa": 6,
+      "m": [
+        [
+          "A",
+          "Mariana Coneja",
+          61.5,
+          62.5,
+          "The Blue brothers",
+          "0-0"
+        ],
+        [
+          "A",
+          "stif dc",
+          75.5,
+          74,
+          "Real Madrink",
+          "2-2"
+        ],
+        [
+          "B",
+          "Grodah",
+          74.5,
+          78.5,
+          "WOA",
+          "2-3"
+        ],
+        [
+          "B",
+          "Oranje VC",
+          65.5,
+          74.5,
+          "AFA SELECCION",
+          "0-2"
+        ]
+      ],
+      "rest": [
+        [
+          "A",
+          "Apo team"
+        ],
+        [
+          "B",
+          "Atletico ma non troppo"
+        ]
+      ]
+    },
+    {
+      "n": 2,
+      "sa": 8,
+      "m": [
+        [
+          "A",
+          "Real Madrink",
+          75,
+          86,
+          "Mariana Coneja",
+          "2-5"
+        ],
+        [
+          "A",
+          "Apo team",
+          67,
+          82.5,
+          "stif dc",
+          "1-4"
+        ],
+        [
+          "B",
+          "WOA",
+          69.5,
+          72.5,
+          "Atletico ma non troppo",
+          "1-2"
+        ],
+        [
+          "B",
+          "AFA SELECCION",
+          82,
+          83.5,
+          "Grodah",
+          "4-4"
+        ]
+      ],
+      "rest": [
+        [
+          "A",
+          "The Blue brothers"
+        ],
+        [
+          "B",
+          "Oranje VC"
+        ]
+      ]
+    },
+    {
+      "n": 3,
+      "sa": 10,
+      "m": [
+        [
+          "B",
+          "Oranje VC",
+          68,
+          76.5,
+          "Atletico ma non troppo",
+          "1-3"
+        ],
+        [
+          "B",
+          "AFA SELECCION",
+          72,
+          81,
+          "WOA",
+          "2-4"
+        ],
+        [
+          "A",
+          "Mariana Coneja",
+          81.5,
+          68,
+          "stif dc",
+          "4-1"
+        ],
+        [
+          "A",
+          "The Blue brothers",
+          74.5,
+          69,
+          "Apo team",
+          "2-1"
+        ]
+      ],
+      "rest": [
+        [
+          "A",
+          "Real Madrink"
+        ],
+        [
+          "B",
+          "Grodah"
+        ]
+      ]
+    },
+    {
+      "n": 4,
+      "sa": 11,
+      "m": [
+        [
+          "A",
+          "Real Madrink",
+          68,
+          67,
+          "The Blue brothers",
+          "1-1"
+        ],
+        [
+          "A",
+          "Mariana Coneja",
+          77,
+          73,
+          "Apo team",
+          "3-2"
+        ],
+        [
+          "B",
+          "Oranje VC",
+          71.5,
+          66,
+          "WOA",
+          "2-1"
+        ],
+        [
+          "B",
+          "Atletico ma non troppo",
+          65,
+          67.5,
+          "Grodah",
+          "0-1"
+        ]
+      ],
+      "rest": [
+        [
+          "A",
+          "stif dc"
+        ],
+        [
+          "B",
+          "AFA SELECCION"
+        ]
+      ]
+    },
+    {
+      "n": 5,
+      "sa": 13,
+      "m": [
+        [
+          "A",
+          "Apo team",
+          0,
+          0,
+          "Real Madrink",
+          "-"
+        ],
+        [
+          "A",
+          "The Blue brothers",
+          0,
+          0,
+          "stif dc",
+          "-"
+        ],
+        [
+          "B",
+          "Grodah",
+          0,
+          0,
+          "Oranje VC",
+          "-"
+        ],
+        [
+          "B",
+          "AFA SELECCION",
+          0,
+          0,
+          "Atletico ma non troppo",
+          "-"
+        ]
+      ],
+      "rest": [
+        [
+          "A",
+          "Mariana Coneja"
+        ],
+        [
+          "B",
+          "WOA"
+        ]
+      ]
+    },
+    {
+      "n": 6,
+      "sa": 15,
+      "m": [
+        [
+          "A",
+          "Real Madrink",
+          0,
+          0,
+          "Apo team",
+          "-"
+        ],
+        [
+          "A",
+          "stif dc",
+          0,
+          0,
+          "The Blue brothers",
+          "-"
+        ],
+        [
+          "B",
+          "Oranje VC",
+          0,
+          0,
+          "Grodah",
+          "-"
+        ],
+        [
+          "B",
+          "Atletico ma non troppo",
+          0,
+          0,
+          "AFA SELECCION",
+          "-"
+        ]
+      ],
+      "rest": [
+        [
+          "A",
+          "Mariana Coneja"
+        ],
+        [
+          "B",
+          "WOA"
+        ]
+      ]
+    },
+    {
+      "n": 7,
+      "sa": 17,
+      "m": [
+        [
+          "A",
+          "Apo team",
+          0,
+          0,
+          "Mariana Coneja",
+          "-"
+        ],
+        [
+          "A",
+          "The Blue brothers",
+          0,
+          0,
+          "Real Madrink",
+          "-"
+        ],
+        [
+          "B",
+          "Grodah",
+          0,
+          0,
+          "Atletico ma non troppo",
+          "-"
+        ],
+        [
+          "B",
+          "WOA",
+          0,
+          0,
+          "Oranje VC",
+          "-"
+        ]
+      ],
+      "rest": [
+        [
+          "A",
+          "stif dc"
+        ],
+        [
+          "B",
+          "AFA SELECCION"
+        ]
+      ]
+    },
+    {
+      "n": 8,
+      "sa": 18,
+      "m": [
+        [
+          "A",
+          "stif dc",
+          0,
+          0,
+          "Mariana Coneja",
+          "-"
+        ],
+        [
+          "A",
+          "Apo team",
+          0,
+          0,
+          "The Blue brothers",
+          "-"
+        ],
+        [
+          "B",
+          "Atletico ma non troppo",
+          0,
+          0,
+          "Oranje VC",
+          "-"
+        ],
+        [
+          "B",
+          "WOA",
+          0,
+          0,
+          "AFA SELECCION",
+          "-"
+        ]
+      ],
+      "rest": [
+        [
+          "A",
+          "Real Madrink"
+        ],
+        [
+          "B",
+          "Grodah"
+        ]
+      ]
+    },
+    {
+      "n": 9,
+      "sa": 20,
+      "m": [
+        [
+          "A",
+          "Mariana Coneja",
+          0,
+          0,
+          "Real Madrink",
+          "-"
+        ],
+        [
+          "A",
+          "stif dc",
+          0,
+          0,
+          "Apo team",
+          "-"
+        ],
+        [
+          "B",
+          "Grodah",
+          0,
+          0,
+          "AFA SELECCION",
+          "-"
+        ],
+        [
+          "B",
+          "Atletico ma non troppo",
+          0,
+          0,
+          "WOA",
+          "-"
+        ]
+      ],
+      "rest": [
+        [
+          "A",
+          "The Blue brothers"
+        ],
+        [
+          "B",
+          "Oranje VC"
+        ]
+      ]
+    },
+    {
+      "n": 10,
+      "sa": 22,
+      "m": [
+        [
+          "A",
+          "Real Madrink",
+          0,
+          0,
+          "stif dc",
+          "-"
+        ],
+        [
+          "A",
+          "The Blue brothers",
+          0,
+          0,
+          "Mariana Coneja",
+          "-"
+        ],
+        [
+          "B",
+          "WOA",
+          0,
+          0,
+          "Grodah",
+          "-"
+        ],
+        [
+          "B",
+          "AFA SELECCION",
+          0,
+          0,
+          "Oranje VC",
+          "-"
+        ]
+      ],
+      "rest": [
+        [
+          "A",
+          "Apo team"
+        ],
+        [
+          "B",
+          "Atletico ma non troppo"
+        ]
+      ]
+    }
+  ],
+  "titoli": [
+    [
+      "2021/22",
+      "Serie A",
+      "Wakanda",
+      "apo"
+    ],
+    [
+      "2022/23",
+      "Serie A",
+      "Wakanda",
+      "apo"
+    ],
+    [
+      "2023/24",
+      "Serie A",
+      "Mugiwara",
+      "Leanzino"
+    ],
+    [
+      "2024/25",
+      "Costa Cup",
+      "PornHub FC",
+      "17peppe17"
+    ],
+    [
+      "2025/26",
+      "Gioberti Cup",
+      "WOA",
+      "ser"
+    ],
+    [
+      "2025/26",
+      "Coppa Campioni",
+      "Grodah",
+      "RikyArma"
+    ]
+  ],
+  "dossier": {
+    "aggiornato": "2026-11-10T23:54:35+00:00",
+    "giornata": 8,
+    "ultima_giocata": 7,
+    "squadre": {
+      "The Blue brothers": {
+        "squadra": "The Blues Brothers",
+        "allenatore": "Leanzino & Mario",
+        "giornata": 8,
+        "partita": "stif dc - The Blues Brothers",
+        "in_casa": false,
+        "avversario": "stif dc",
+        "derby": null,
+        "classifica": {
+          "posizione": 7,
+          "punti": 8,
+          "giocate": 7,
+          "vittorie": 2,
+          "pareggi": 2,
+          "sconfitte": 3,
+          "gol_fatti": 9,
+          "gol_subiti": 12
+        },
+        "avversario_classifica": {
+          "posizione": 2,
+          "punti": 13
+        },
+        "ultime": [
+          "V 2-0 contro Atletico ma non troppo (3ª)",
+          "P 0-4 contro Grodah (4ª)",
+          "V 3-0 contro Oranje VC (5ª)",
+          "P 2-4 contro WOA (6ª)",
+          "N 1-1 contro AFA SELECCION (7ª)"
+        ],
+        "obiettivo_presidente": "Chiudere tra le prime due",
+        "posizione_attesa": 2,
+        "obiettivo_coppa": "Tornare in finale di Champions Cup",
+        "fiducia": 37,
+        "promesse": [],
+        "ultima_conferenza": {
+          "giornata": 3,
+          "risposte": [
+            "È presto: lavoriamo e vediamo.",
+            "Atletico ma non troppo è un ottimo avversario: serve attenzione.",
+            "Chiedo tempo: i risultati arriveranno."
+          ]
+        },
+        "silenzi": [
+          5,
+          6,
+          7
+        ]
+      },
+      "Apo team": {
+        "squadra": "Apo team",
+        "allenatore": "apo",
+        "giornata": 8,
+        "partita": "Apo team - Atletico ma non troppo",
+        "in_casa": true,
+        "avversario": "Atletico ma non troppo",
+        "derby": null,
+        "classifica": {
+          "posizione": 8,
+          "punti": 6,
+          "giocate": 7,
+          "vittorie": 1,
+          "pareggi": 3,
+          "sconfitte": 3,
+          "gol_fatti": 12,
+          "gol_subiti": 16
+        },
+        "avversario_classifica": {
+          "posizione": 9,
+          "punti": 6
+        },
+        "ultime": [
+          "P 0-2 contro AFA SELECCION (3ª)",
+          "P 1-4 contro stif dc (4ª)",
+          "N 2-2 contro Real Madrink (5ª)",
+          "N 1-1 contro Oranje VC (6ª)",
+          "P 2-3 contro Mariana Coneja (7ª)"
+        ],
+        "obiettivo_presidente": "Tornare sul podio dopo gli ultimi anni",
+        "posizione_attesa": 3,
+        "obiettivo_coppa": "Vincere la Champions Cup",
+        "fiducia": 32,
+        "promesse": [
+          {
+            "giornata": 4,
+            "promessa": "Sarà sicuramente una bella partita, che vinca il migliore",
+            "esito": "tradita"
+          },
+          {
+            "giornata": 6,
+            "promessa": "Se non dovessimo vincere questa giornata probabilmente salterà qualche testa",
+            "esito": "pareggio"
+          }
+        ],
+        "ultima_conferenza": {
+          "giornata": 7,
+          "risposte": [
+            "Noi ci crediamo e non molliamo",
+            "Sarà una partita difficile contro un avversario molto forte",
+            "Chi dubita di noi é gay"
+          ]
+        },
+        "silenzi": [
+          1,
+          2
+        ]
+      },
+      "Grodah": {
+        "squadra": "Grodah",
+        "allenatore": "RikyArma",
+        "giornata": 8,
+        "partita": "Real Madrink - Grodah",
+        "in_casa": false,
+        "avversario": "Real Madrink",
+        "derby": null,
+        "classifica": {
+          "posizione": 3,
+          "punti": 12,
+          "giocate": 7,
+          "vittorie": 4,
+          "pareggi": 0,
+          "sconfitte": 3,
+          "gol_fatti": 17,
+          "gol_subiti": 12
+        },
+        "avversario_classifica": {
+          "posizione": 6,
+          "punti": 10
+        },
+        "ultime": [
+          "P 1-2 contro Oranje VC (3ª)",
+          "V 4-0 contro The Blues Brothers (4ª)",
+          "V 4-2 contro WOA (5ª)",
+          "V 3-2 contro AFA SELECCION (6ª)",
+          "P 1-2 contro stif dc (7ª)"
+        ],
+        "obiettivo_presidente": "Entrare nella metà alta",
+        "posizione_attesa": 5,
+        "obiettivo_coppa": "Difendere la Champions Cup",
+        "fiducia": 56,
+        "promesse": [],
+        "ultima_conferenza": null,
+        "silenzi": [
+          5,
+          6,
+          7
+        ]
+      },
+      "WOA": {
+        "squadra": "WOA",
+        "allenatore": "ser",
+        "giornata": 8,
+        "partita": "AFA SELECCION - WOA",
+        "in_casa": false,
+        "avversario": "AFA SELECCION",
+        "derby": null,
+        "classifica": {
+          "posizione": 10,
+          "punti": 4,
+          "giocate": 7,
+          "vittorie": 1,
+          "pareggi": 1,
+          "sconfitte": 5,
+          "gol_fatti": 17,
+          "gol_subiti": 21
+        },
+        "avversario_classifica": {
+          "posizione": 4,
+          "punti": 11
+        },
+        "ultime": [
+          "P 4-5 contro Mariana Coneja (3ª)",
+          "P 1-2 contro Atletico ma non troppo (4ª)",
+          "P 2-4 contro Grodah (5ª)",
+          "V 4-2 contro The Blues Brothers (6ª)",
+          "P 1-2 contro Oranje VC (7ª)"
+        ],
+        "obiettivo_presidente": "Ripetersi: difendere il titolo",
+        "posizione_attesa": 2,
+        "obiettivo_coppa": "Passare il girone di Champions Cup",
+        "fiducia": 25,
+        "promesse": [],
+        "ultima_conferenza": null,
+        "silenzi": [
+          5,
+          6,
+          7
+        ]
+      },
+      "Real Madrink": {
+        "squadra": "Real Madrink",
+        "allenatore": "AndrewTT",
+        "giornata": 8,
+        "partita": "Real Madrink - Grodah",
+        "in_casa": true,
+        "avversario": "Grodah",
+        "derby": null,
+        "classifica": {
+          "posizione": 6,
+          "punti": 10,
+          "giocate": 7,
+          "vittorie": 2,
+          "pareggi": 4,
+          "sconfitte": 1,
+          "gol_fatti": 12,
+          "gol_subiti": 14
+        },
+        "avversario_classifica": {
+          "posizione": 3,
+          "punti": 12
+        },
+        "ultime": [
+          "N 2-2 contro stif dc (3ª)",
+          "N 2-2 contro Oranje VC (4ª)",
+          "N 2-2 contro Apo team (5ª)",
+          "P 0-4 contro Mariana Coneja (6ª)",
+          "V 1-0 contro Atletico ma non troppo (7ª)"
+        ],
+        "obiettivo_presidente": "Entrare nella metà alta",
+        "posizione_attesa": 5,
+        "obiettivo_coppa": "Passare il girone di Champions Cup",
+        "fiducia": 48,
+        "promesse": [],
+        "ultima_conferenza": null,
+        "silenzi": [
+          5,
+          6,
+          7
+        ]
+      },
+      "stif dc": {
+        "squadra": "stif dc",
+        "allenatore": "stifson",
+        "giornata": 8,
+        "partita": "stif dc - The Blues Brothers",
+        "in_casa": true,
+        "avversario": "The Blues Brothers",
+        "derby": null,
+        "classifica": {
+          "posizione": 2,
+          "punti": 13,
+          "giocate": 7,
+          "vittorie": 4,
+          "pareggi": 1,
+          "sconfitte": 2,
+          "gol_fatti": 16,
+          "gol_subiti": 11
+        },
+        "avversario_classifica": {
+          "posizione": 7,
+          "punti": 8
+        },
+        "ultime": [
+          "N 2-2 contro Real Madrink (3ª)",
+          "V 4-1 contro Apo team (4ª)",
+          "V 4-1 contro Mariana Coneja (5ª)",
+          "P 1-3 contro Atletico ma non troppo (6ª)",
+          "V 2-1 contro Grodah (7ª)"
+        ],
+        "obiettivo_presidente": "Puntare alla parte alta",
+        "posizione_attesa": 5,
+        "obiettivo_coppa": "Non chiudere ultimi nel girone di Champions Cup",
+        "fiducia": 60,
+        "promesse": [],
+        "ultima_conferenza": null,
+        "silenzi": [
+          5,
+          6,
+          7
+        ]
+      },
+      "Mariana Coneja": {
+        "squadra": "Mariana Coneja",
+        "allenatore": "Mark Lenders",
+        "giornata": 8,
+        "partita": "Mariana Coneja - Oranje VC",
+        "in_casa": true,
+        "avversario": "Oranje VC",
+        "derby": null,
+        "classifica": {
+          "posizione": 1,
+          "punti": 16,
+          "giocate": 7,
+          "vittorie": 5,
+          "pareggi": 1,
+          "sconfitte": 1,
+          "gol_fatti": 21,
+          "gol_subiti": 16
+        },
+        "avversario_classifica": {
+          "posizione": 5,
+          "punti": 11
+        },
+        "ultime": [
+          "V 5-4 contro WOA (3ª)",
+          "V 5-4 contro AFA SELECCION (4ª)",
+          "P 1-4 contro stif dc (5ª)",
+          "V 4-0 contro Real Madrink (6ª)",
+          "V 3-2 contro Apo team (7ª)"
+        ],
+        "obiettivo_presidente": "Puntare alla parte alta",
+        "posizione_attesa": 5,
+        "obiettivo_coppa": "Non chiudere ultimi nel girone di Champions Cup",
+        "fiducia": 66,
+        "promesse": [],
+        "ultima_conferenza": null,
+        "silenzi": [
+          5,
+          6,
+          7
+        ]
+      },
+      "AFA SELECCION": {
+        "squadra": "AFA SELECCION",
+        "allenatore": "Maria",
+        "giornata": 8,
+        "partita": "AFA SELECCION - WOA",
+        "in_casa": true,
+        "avversario": "WOA",
+        "derby": null,
+        "classifica": {
+          "posizione": 4,
+          "punti": 11,
+          "giocate": 7,
+          "vittorie": 3,
+          "pareggi": 2,
+          "sconfitte": 2,
+          "gol_fatti": 20,
+          "gol_subiti": 12
+        },
+        "avversario_classifica": {
+          "posizione": 10,
+          "punti": 4
+        },
+        "ultime": [
+          "V 2-0 contro Apo team (3ª)",
+          "P 4-5 contro Mariana Coneja (4ª)",
+          "V 6-0 contro Atletico ma non troppo (5ª)",
+          "P 2-3 contro Grodah (6ª)",
+          "N 1-1 contro The Blues Brothers (7ª)"
+        ],
+        "obiettivo_presidente": "Chiudere sul podio",
+        "posizione_attesa": 3,
+        "obiettivo_coppa": "Arrivare in finale di Champions Cup",
+        "fiducia": 49,
+        "promesse": [],
+        "ultima_conferenza": null,
+        "silenzi": [
+          5,
+          6,
+          7
+        ]
+      },
+      "Oranje VC": {
+        "squadra": "Oranje VC",
+        "allenatore": "DJ Cst Brazil",
+        "giornata": 8,
+        "partita": "Mariana Coneja - Oranje VC",
+        "in_casa": false,
+        "avversario": "Mariana Coneja",
+        "derby": null,
+        "classifica": {
+          "posizione": 5,
+          "punti": 11,
+          "giocate": 7,
+          "vittorie": 3,
+          "pareggi": 2,
+          "sconfitte": 2,
+          "gol_fatti": 12,
+          "gol_subiti": 11
+        },
+        "avversario_classifica": {
+          "posizione": 1,
+          "punti": 16
+        },
+        "ultime": [
+          "V 2-1 contro Grodah (3ª)",
+          "N 2-2 contro Real Madrink (4ª)",
+          "P 0-3 contro The Blues Brothers (5ª)",
+          "N 1-1 contro Apo team (6ª)",
+          "V 2-1 contro WOA (7ª)"
+        ],
+        "obiettivo_presidente": "Chiudere tra le prime 4",
+        "posizione_attesa": 4,
+        "obiettivo_coppa": "Arrivare in finale di Champions Cup",
+        "fiducia": 47,
+        "promesse": [
+          {
+            "giornata": 4,
+            "promessa": "Chi parla di obiettivi guardi la classifica.",
+            "esito": "pareggio"
+          },
+          {
+            "giornata": 8,
+            "promessa": "Chi non crede in noi può restare a casa.",
+            "esito": "in attesa"
+          }
+        ],
+        "ultima_conferenza": {
+          "giornata": 8,
+          "risposte": [
+            "Una partita alla volta, con umiltà.",
+            "Mariana Coneja è un ottimo avversario: serve attenzione.",
+            "Chi non crede in noi può restare a casa."
+          ]
+        },
+        "silenzi": [
+          5,
+          6,
+          7
+        ]
+      },
+      "Atletico ma non troppo": {
+        "squadra": "Atletico ma non troppo",
+        "allenatore": "Riccardo",
+        "giornata": 8,
+        "partita": "Apo team - Atletico ma non troppo",
+        "in_casa": false,
+        "avversario": "Apo team",
+        "derby": null,
+        "classifica": {
+          "posizione": 9,
+          "punti": 6,
+          "giocate": 7,
+          "vittorie": 2,
+          "pareggi": 0,
+          "sconfitte": 5,
+          "gol_fatti": 7,
+          "gol_subiti": 18
+        },
+        "avversario_classifica": {
+          "posizione": 8,
+          "punti": 6
+        },
+        "ultime": [
+          "P 0-2 contro The Blues Brothers (3ª)",
+          "V 2-1 contro WOA (4ª)",
+          "P 0-6 contro AFA SELECCION (5ª)",
+          "V 3-1 contro stif dc (6ª)",
+          "P 0-1 contro Real Madrink (7ª)"
+        ],
+        "obiettivo_presidente": "Salire gradualmente verso l'alto",
+        "posizione_attesa": 6,
+        "obiettivo_coppa": "Non chiudere ultimi nel girone di Champions Cup",
+        "fiducia": 40,
+        "promesse": [],
+        "ultima_conferenza": null,
+        "silenzi": [
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    "da_giudicare": [
+      {
+        "tipo": "vigilia",
+        "chiave": "Apo team|7",
+        "squadra": "Apo team",
+        "giornata": 7,
+        "domanda": 0,
+        "risposta": "Noi ci crediamo e non molliamo",
+        "tono_automatico": "Umile",
+        "promessa_automatica": false
+      },
+      {
+        "tipo": "vigilia",
+        "chiave": "Apo team|7",
+        "squadra": "Apo team",
+        "giornata": 7,
+        "domanda": 1,
+        "risposta": "Sarà una partita difficile contro un avversario molto forte",
+        "tono_automatico": "Umile",
+        "promessa_automatica": false
+      },
+      {
+        "tipo": "vigilia",
+        "chiave": "Apo team|7",
+        "squadra": "Apo team",
+        "giornata": 7,
+        "domanda": 2,
+        "risposta": "Chi dubita di noi é gay",
+        "tono_automatico": "Umile",
+        "promessa_automatica": false
+      }
+    ]
+  },
+  "derby_ufficiali": {
+    "stagione": "2026/27",
+    "verificato": "2026-11-12T15:29:32.935101+00:00",
+    "coppie": [
+      {
+        "a": "Apo team",
+        "b": "Grodah",
+        "n": "Il Derby della Montagna Russa",
+        "dal": "2026-10-18T14:52:26.245727+00:00",
+        "sfida_id": null
+      },
+      {
+        "a": "Apo team",
+        "b": "Oranje VC",
+        "n": "The Continental",
+        "dal": "2026-10-19T03:42:29.295978+00:00",
+        "sfida_id": 4
+      },
+      {
+        "a": "Apo team",
+        "b": "The Blue brothers",
+        "n": "Il Classico",
+        "dal": "2026-10-18T14:52:26.245727+00:00",
+        "sfida_id": null
+      },
+      {
+        "a": "Apo team",
+        "b": "WOA",
+        "n": "Il Derby dei Re",
+        "dal": "2026-10-18T14:52:26.245727+00:00",
+        "sfida_id": null
+      },
+      {
+        "a": "Grodah",
+        "b": "The Blue brothers",
+        "n": "Il Derby delle Due Finali",
+        "dal": "2026-10-18T14:52:26.245727+00:00",
+        "sfida_id": null
+      },
+      {
+        "a": "Grodah",
+        "b": "WOA",
+        "n": "Il Derby delle Due Corone",
+        "dal": "2026-10-18T14:52:26.245727+00:00",
+        "sfida_id": null
+      },
+      {
+        "a": "Oranje VC",
+        "b": "The Blue brothers",
+        "n": "Derby dell'Emma",
+        "dal": "2026-10-22T09:22:14.315427+00:00",
+        "sfida_id": 5
+      },
+      {
+        "a": "The Blue brothers",
+        "b": "WOA",
+        "n": "Il Derby del Camaleonte",
+        "dal": "2026-10-18T14:52:26.245727+00:00",
+        "sfida_id": null
+      }
+    ]
+  }
+}

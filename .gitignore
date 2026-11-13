@@ -3,3 +3,10 @@ rilascio/pacchetto/
 
 qa_artifacts/
 prove/risultati-55-browser/
+
+# Artefatti locali della revisione senza commit
+.preview-site/
+consegna/
+.openai/
+
+.rami-cache/

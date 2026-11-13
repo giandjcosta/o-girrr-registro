@@ -23,8 +23,9 @@ def mix(parts, total):
         i = int(SR*off); out[i:i+len(a)] += a[:len(out)-i]
     return out
 def duck(x, t0, t1, l): x = x.copy(); x[int(t0*SR):int(t1*SR)] *= l; return x
-J = load(SU / "jingle-sport.mp3"); C = load(SU / "folla-stadio.mp3"); W = load(SU / "fischio-arbitro.mp3", ("-t", "0.9"))
-W = W / np.abs(W).max() * 0.95; W[-int(0.15*SR):] *= np.linspace(1, 0, int(0.15*SR))
+J = load(SU / "jingle-sport.mp3"); C = load(SU / "folla-stadio.mp3"); W = load(SU / "fischio-inizio.mp3", ("-ss", "1.0", "-t", "1.5"))   # fischio d'inizio di Gianluca (12 novembre 2026): nel file il fischio è tra 1,1 e 2,3 s
+T = load(SU / "triplice-fischio.mp3", ("-t", "2.2")); T = T / np.abs(T).max() * 0.95; T[-int(0.3*SR):] *= np.linspace(1, 0, int(0.3*SR))   # triplice fischio vero in chiusura
+W = W / np.abs(W).max() * 0.95; W[-int(0.3*SR):] *= np.linspace(1, 0, int(0.3*SR))
 V = load(voci_mp3)
 PRE = 2.0; t_j = 1.35 + PRE; t_voce = t_j + 7.0
 JA = seg_pre(J, 49.5, 12.2, 0.19, PRE, 0.10, 0.15, 0.05); bed = seg(C, 8.0, 6.0, 0.12, 0.3, 2.5)
@@ -32,9 +33,9 @@ JA = seg_pre(J, 49.5, 12.2, 0.19, PRE, 0.10, 0.15, 0.05); bed = seg(C, 8.0, 6.0,
 tt = np.arange(len(JA)) / SR; tv = t_voce - t_j + PRE
 env = np.interp(tt, [0, tv - 0.5, tv + 0.4, tt[-1]], [1.0, 1.0, 0.38, 0.0])
 JA = JA * env
-ap = mix([(0.0, duck(bed, 1.3, 6.0 + PRE, 0.5)), (0.3, W*0.9), (t_j - PRE, JA)], t_voce + 11.0)
+ap = mix([(0.0, duck(bed, 1.3, 6.0 + PRE, 0.5)), (0.3, W*1.3), (t_j - PRE, JA)], t_voce + 11.0)
 jc = seg_pre(J, 126.4, 9.8, 0.19, PRE, 0.10, 0.4, 0.2); bed2 = seg(C, 7.5, 6.5, 0.13, 0.8, 2.2)
-ch = mix([(0.0, duck(bed2, 2.2, 6.5, 0.5)), (0.2, W*0.85), (1.0, W*0.85), (1.8, W), (2.5, jc)], 12.4 + PRE)
+ch = mix([(0.0, duck(bed2, 2.2, 6.5, 0.5)), (0.2, T*2.0), (2.5, jc)], 12.4 + PRE)
 tot = np.zeros(int(SR*(t_voce + len(V)/SR + 0.6 + len(ch)/SR))); tot[:len(ap)] += ap
 i = int(t_voce*SR); tot[i:i+len(V)] += V
 j = i + len(V) + int(0.5*SR); tot[j:j+len(ch)] += ch[:len(tot)-j]
