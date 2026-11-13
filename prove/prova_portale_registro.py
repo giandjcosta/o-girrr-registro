@@ -83,7 +83,7 @@ with sync_playwright() as p:
                     inner.locator('h1').first.wait_for()
                     for stadio in (False,True):
                         if stadio: page.locator('#grafica').click()
-                        expect(page.locator('#grafica')).to_have_text('Grafica: '+('Stadio' if stadio else 'Lega'))
+                        expect(page.locator('#grafica')).to_have_attribute('aria-checked',str(stadio).lower())
                         page.wait_for_function('''stadio => {
                             const outer=document.getElementById('contenuto'),f=outer.contentDocument.getElementById('f');
                             return f && f.contentDocument && f.contentDocument.readyState==='complete' && f.contentWindow.location.pathname.includes('/stadio/')===stadio && f.contentWindow.__registroSolaLettura===true;

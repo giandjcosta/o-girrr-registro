@@ -4,11 +4,11 @@
 <link rel="icon" href="favicon-64.png"><link rel="stylesheet" href="registro.css"><script src="registro.js" defer></script></head>
 <body>
 <header class="portale">
-  <div class="testata"><a class="marchio" href="#changelog"><img src="logo-lega.png" alt=""><span>O Girrr <strong>Registro</strong></span></a><span id="versione">Il laboratorio della lega</span></div>
+  <div class="testata"><a class="marchio" href="#changelog"><img src="logo-lega.png" alt=""><span>O Girrr <strong>Registro</strong></span></a><div class="versione-box" aria-label="Versione dell’Anteprima di prova"><span>Anteprima di prova</span><strong id="versione" aria-live="polite">—</strong></div></div>
   <nav aria-label="Sezioni del Registro" id="menu">
     <a href="#changelog" aria-current="page">Changelog</a><a href="#lab">Lab</a><a href="#anteprima">Anteprima</a><a href="#aggiornamenti">Aggiornamenti</a><a href="#archivio">Archivio</a><a href="#ramificazioni">Ramificazioni</a>
   </nav>
-  <div class="comandi"><label class="mobile">Sezione <select id="sezione" aria-label="Sezione del Registro"><option value="changelog">Changelog</option><option value="lab">Lab</option><option value="anteprima">Anteprima</option><option value="aggiornamenti">Aggiornamenti</option><option value="archivio">Archivio</option><option value="ramificazioni">Ramificazioni</option></select></label><span id="stato" role="status" aria-live="polite"></span><button id="grafica" type="button" hidden>Grafica: Lega</button></div>
+  <div class="comandi"><label class="mobile">Sezione <select id="sezione" aria-label="Sezione del Registro"><option value="changelog">Changelog</option><option value="lab">Lab</option><option value="anteprima">Anteprima</option><option value="aggiornamenti">Aggiornamenti</option><option value="archivio">Archivio</option><option value="ramificazioni">Ramificazioni</option></select></label><span id="stato" role="status" aria-live="polite"></span><div class="grafica-control" id="scelta-grafica" hidden><span id="skin-lega">Lega</span><button class="grafica-toggle" id="grafica" type="button" role="switch" aria-checked="false" aria-label="Grafica Stadio" disabled><span aria-hidden="true"></span></button><span id="skin-stadio">Stadio</span></div></div>
 </header>
 <main><iframe id="contenuto" title="Changelog del Registro"></iframe><noscript>Per il menu interattivo attiva JavaScript. Puoi aprire <a href="index.html?nel-registro=1">Changelog</a>, <a href="lab/?nel-registro=1">Lab</a>, <a href="ufficiale/?nel-registro=1">Anteprima</a>, <a href="aggiornamenti.html?nel-registro=1">Aggiornamenti</a>, <a href="archivio.html?nel-registro=1">Archivio</a> e <a href="ramificazioni.html?nel-registro=1">Ramificazioni</a>.</noscript></main>
 </body></html>
