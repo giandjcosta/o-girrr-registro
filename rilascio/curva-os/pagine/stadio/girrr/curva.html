@@ -900,7 +900,7 @@ var MEMEPLUS={
 };
 /* Solo nel Lab: aggancio per le prove automatiche (prove/prova_curva_ferma.js) */
 window.__curvaProva={render:function(){render()},entra:function(t){me=t;code='PROVA';meH=hnd(t);render()},
- vai:function(v,n){vista=v;if(n)ntab=n;render()},notifiche:function(){return notifiche()},nuovi:function(){cvNuovi()},pubblica:function(){lancia()},dati:function(){return {D:D,SQ:SQ,ST:ST}},colore:function(s){var a=acc(hnd(s)),p=prof(a);return p.h!=null?p.h:hue(a.n)},
+ vai:function(v,n){vista=v;if(n)ntab=n;render()},notifiche:function(){return notifiche()},nuovi:function(){cvNuovi()},pubblica:function(){lancia()},dati:function(){return {D:D,SQ:SQ,ST:ST}},posts:function(){return POSTS},filtro:function(p){return cvFiltro(p)},colore:function(s){var a=acc(hnd(s)),p=prof(a);return p.h!=null?p.h:hue(a.n)},
  img:function(t,x){var c={sq:ST.cls[0].n,sq2:ST.cls[1].n,gio:'',g:ST.ult&&ST.ult.n,ris:ST.ult?ST.ult.m.map(function(m){return[m[0],m[3],m[4]]}):[],cls:ST.cls.slice(0,6).map(function(x){return[x.n,x.pt]}),gn:ST.next&&ST.next.n,prox:ST.next?ST.next.m.map(function(m){return[m[0],m[3]]}):[]};if(x)Object.keys(x).forEach(function(k){c[k]=x[k]});return memeImg({k:'prova-'+t+(x?JSON.stringify(x):''),imgt:t,cx:c})}};
 function render(){cvNascondi();cvColori();
  var v=document.getElementById('vista'),h='';
