@@ -98,4 +98,15 @@
       } catch (e) { fine(); }
     });
   }, true);   /* in cattura: si legge la pillola di prima prima che la pagina ridisegni */
+  /* all'apertura (anche da un collegamento che porta su una scheda in fondo alla fila) la pillola scelta è in vista */
+  function inVista() {
+    file().forEach(function (c) {
+      var a = attiva(c); if (!a || !scorri(c)) return;
+      var r = a.getBoundingClientRect(), e = c.getBoundingClientRect();
+      if (r.left >= e.left - 1 && r.right <= e.right + 1) return;
+      var sb = c.style.scrollBehavior; c.style.scrollBehavior = 'auto';
+      c.scrollLeft = Math.max(0, c.scrollLeft + (r.left - e.left) - (e.width - r.width) / 2); c.style.scrollBehavior = sb;
+    });
+  }
+  window.addEventListener('load', function () { inVista(); setTimeout(inVista, 900); setTimeout(inVista, 2200); });
 })();

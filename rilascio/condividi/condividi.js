@@ -424,7 +424,7 @@
           return '<label class="cd-pz"><input type="checkbox" checked data-i="' + i + '"><span class="an' + (x.largo ? ' lar' : '') + '">' + a + '</span><span class="tx"><b>' + E(x.tit) + '</b><small>' + E(x.sotto) + '</small></span><span class="cd-sp" aria-hidden="true"></span></label>';
         }).join('') + '</div><div class="cd-err" role="status"></div><div class="cd-az fis"><button type="button" class="pr" data-a="sh">Condividi</button><button type="button" class="pr" data-a="sh2" hidden>Radio e Giornale</button><button type="button" class="se" data-a="dl">Scarica</button><button type="button" class="se" data-a="x">Chiudi</button></div>';
       var err = f.box.querySelector('.cd-err'), sh = f.box.querySelector('[data-a=sh]'), sh2 = f.box.querySelector('[data-a=sh2]');
-      var testo = 'O Fant A Girrr · ' + comp + '\n' + new URL(stadio ? 'stadio/girrr/' : 'girrr/', ROOT).href;
+      var testo = 'O Fant A Girrr · ' + comp;   /* senza il collegamento alla pagina: bastano lega, coppa e giornate (Gianluca, 13 novembre 2026) */
       function scelti() { return Array.prototype.filter.call(f.box.querySelectorAll('.cd-pk input'), function (c) { return c.checked; }).map(function (c) { return P.pezzi[+c.dataset.i]; }); }
       function file(x) { try { return new File([x.blob], x.nome, { type: x.tipo }); } catch (e) { return null; } }
       /* 6.0.1: WhatsApp mostra foto e video con l'anteprima solo se arrivano da soli, senza audio, PDF o testo: se li mescoli
