@@ -27,7 +27,7 @@ const PAG = [
   ['Giornale Stadio', 'stadio/girrr/giornale.html'], ['Tabellone Lega', 'girrr/tabellone.html'], ['Tabellone Stadio', 'stadio/girrr/tabellone.html']
 ];
 // Errori che non dipendono dalla 6.0: con il codice di prova «PROVA» lo stato delle notifiche risponde 400 (anche sul sito di oggi)
-const NOTI = /notifiche_stato/;
+const NOTI = process.env.SENZA_MVP ? /notifiche_stato|rpc\/mvp_/ : /notifiche_stato/;   // SENZA_MVP=1: schema MVP non ancora applicato sul database (serve il «Vai» alla SQL)
 function nome(s) { return s.replace(/[^A-Za-z0-9]+/g, '-'); }
 async function contesto(opz) {
   const o = { ...opz };
