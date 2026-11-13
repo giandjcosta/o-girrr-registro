@@ -1,10 +1,19 @@
 name: ChatGPT - Aggiornamento delle ramificazioni
 on:
   schedule:
-    - cron: '7,22,37,52 * * * *'
+    # Registrazione rinnovata; quattro controlli all’ora, lontano dal minuto zero.
+    - cron: '8,23,38,53 * * * *'
   push:
     branches: [main]
-    paths: ['ramificazioni.py', 'ramificazioni-note.json', '.github/workflows/ramificazioni.yml']
+  workflow_run:
+    # Se GitHub ritarda i cron, aggiorna anche dopo i lavori e gli allineamenti.
+    # Il collector non è in questo elenco: il feed tecnico non crea un ciclo.
+    workflows:
+      - 'ChatGPT - Registro Chromium WebKit Firefox'
+      - 'ChatGPT - Integrazione Anteprima 5.5'
+      - 'Claude - Collaudo 5.5 telefono e PC (Chromium e WebKit)'
+      - 'ChatGPT - Allineamento automatico del Registro'
+    types: [completed]
   workflow_dispatch:
 permissions:
   contents: write
@@ -13,7 +22,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   aggiorna:
-    # Non parte dal ramo di preparazione della 6.0. Non pubblica GitHub Pages.
+    # Esegue soltanto codice del main, anche dopo collaudi di altri rami.
+    # Scrive sul ramo tecnico; non pubblica GitHub Pages.
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15

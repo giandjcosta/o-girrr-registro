@@ -43,7 +43,7 @@ with sync_playwright() as pw:
    p.locator('#campo-link').click();p.locator('.pitch svg').wait_for();check('Campo')
    p.screenshot(path=str(OUT/f'53-campo-{skin}-{w}.png'),full_page=True)
    p.locator('#matches button').last.click();assert 'partita=4' in p.url
-   p.locator('#ritorno-tabellone').click();p.locator('a.back').click()
+   p.get_by_role('link',name='Torna a Tabellone',exact=True).click();p.get_by_role('link',name='Home O Girrr',exact=True).filter(visible=True).click()
    p.locator('.cards a.c').filter(has_text="Albo d'oro").click();p.locator('.oro-scroll').wait_for()
    p.locator('[data-oro=annuario]').click();p.locator('.ann-anno').first.wait_for()
    # Le stagioni storiche compaiono prima della risposta del calendario corrente.
@@ -51,20 +51,34 @@ with sync_playwright() as pw:
    assert p.locator('.ann-anno').count()>=10
    assert p.locator('.oro-scroll').evaluate('(e)=>getComputedStyle(e).flexWrap')=='nowrap'
    check('Albo');p.screenshot(path=str(OUT/f'53-albo-{skin}-{w}.png'),full_page=True)
-   p.locator('a.oback').click();p.locator('a.cvw').click()
-   p.locator('#v53vote input').first.wait_for();p.locator('#v53vote input').first.check();p.locator('#v53vote button').click()
-   assert '1 voti di prova' in p.locator('#v53poll').inner_text()
-   p.locator('#v53vote button').click();assert '2 voti di prova' not in p.locator('#v53poll').inner_text()
-   p.locator('#v53message').fill('Una partita da seguire <b>davvero</b>');p.locator('#v53comment button').click()
-   assert '<b>davvero</b>' in p.locator('#v53usercomments').inner_text()
-   assert p.locator('#v53dialog .v53-comment').count()>=10
+   p.get_by_role('link',name='Home O Girrr',exact=True).filter(visible=True).click();p.locator('a.cvw').click()
+   p.locator('#v53vote input').first.wait_for()
+   day=p.locator('#v53vote').locator('..').get_attribute('data-g')
+   post=p.locator('.v55-pollpost[data-g="'+day+'"]')
+   p.locator('#v53vote input').first.check();p.locator('#v53vote button').click()
+   expect(post.locator('.pom')).to_have_text('1 voto · Votazione aperta')
+   # La 5.5 sostituisce il modulo con i risultati: il voto non si può ripetere,
+   # neppure riaprendo la pagina. Il conteggio deve restare esattamente uno.
+   assert p.locator('#v53vote').count()==0
+   p.reload(wait_until='networkidle')
+   expect(post.locator('.pom')).to_have_text('1 voto · Votazione aperta')
+   assert p.locator('#v53vote').count()==0
+   post.locator('[data-pp]').first.click()
+   post.get_by_role('textbox',name='Commenta il sondaggio').fill('Una partita da seguire <b>davvero</b>')
+   post.get_by_role('button',name='Commenta',exact=True).click()
+   expect(post.locator('.v53-comment').last).to_contain_text('<b>davvero</b>')
+   assert post.locator('.v53-comment p b').count()==0
+   assert post.locator('.v53-comment').count()>=10
    assert p.locator('#vista').count()==1 and p.locator('#nav').count()==1
    # Anche una chiamata costruita a mano deve restare locale.
    r=p.evaluate("""async()=>{const r=await fetch(new Request('https://qmjqfgmvimsuxvghetgi.supabase.co/rest/v1/rpc/curva_scrivi',{method:'POST',body:'{}'}));return r.status}""")
    assert r==403
    assert p.evaluate("navigator.sendBeacon('https://qmjqfgmvimsuxvghetgi.supabase.co/rest/v1/rpc/curva_scrivi','{}')")==False
    check('Curva');p.screenshot(path=str(OUT/f'53-curva-{skin}-{w}.png'),full_page=True)
-   p.get_by_role('link',name='Notifiche',exact=True).first.click();p.locator('#v53notifications article').first.wait_for()
+   # La Curva ospite rimanda alla Home; le Notifiche della Lega si aprono da lì.
+   p.get_by_role('link',name='Torna a O Girrr',exact=True).click()
+   p.locator('a[href="notifiche-'+skin+'.html"]').filter(visible=True).first.click()
+   p.locator('#v53notifications article').first.wait_for()
    body=p.locator('body').inner_text().lower();assert 'automazion' not in body and 'debug' not in body
    p.locator('#v53filters [data-f=curva]').click();assert 'Sondaggio della Curva' in p.locator('#v53notifications').inner_text()
    p.locator('#v53markread').click();assert p.locator('#v53notifications [data-read=false]').count()==0

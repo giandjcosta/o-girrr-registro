@@ -1,6 +1,12 @@
 /* Cornice dell'ultima versione pubblicata, distinta dai prototipi del Laboratorio. */
 (function () {
   'use strict';
+  // Il vecchio ingresso rimanda al portale: non avviare un iframe che sarebbe
+  // subito distrutto dal rinvio differito di registro-ingresso.js.
+  if (window.self === window.top && !new URLSearchParams(location.search).has('nel-registro')) {
+    location.replace(new URL('../registro.html#anteprima', document.currentScript.src).href);
+    return;
+  }
   var base = new URL('pubblicata/', document.currentScript.src);
   var frame = document.getElementById('f'), toggle = document.getElementById('tg'), pending, recovered = false;
   function mode(u) { return /\/stadio\/girrr\//.test(u.pathname) ? 'n' : 'a'; }

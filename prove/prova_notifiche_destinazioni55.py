@@ -51,8 +51,12 @@ with sync_playwright() as pw:
    def click(title):
     card=p.locator('.v53-notifcard').filter(has=p.locator('b',has_text=title)).first
     a=card.locator('a');box=card.bounding_box();ab=a.bounding_box()
-    assert abs(ab['width']-box['width'])<=3 and abs(ab['height']-box['height'])<=3
-    card.click(position={'x':box['width']-8,'y':box['height']-8})
+    # La banda Lega/Stadio è un bordo della scheda: confronta l'area interna.
+    borders=card.evaluate('(e)=>{let s=getComputedStyle(e);return [s.borderLeftWidth,s.borderRightWidth,s.borderTopWidth,s.borderBottomWidth].map(parseFloat)}')
+    assert abs(ab['width']-(box['width']-borders[0]-borders[1]))<=1
+    assert abs(ab['height']-(box['height']-borders[2]-borders[3]))<=1
+    assert abs(ab['x']-(box['x']+borders[0]))<=1 and abs(ab['y']-(box['y']+borders[2]))<=1
+    card.click(position={'x':ab['width']-8,'y':ab['height']-8})
    center()
    assert p.locator('#v53notifications').bounding_box()['width']<=880
    if w in (390,1440):p.screenshot(path=str(OUT/f'notifiche-compatte55-{skin}-{w}.png'),full_page=True)
