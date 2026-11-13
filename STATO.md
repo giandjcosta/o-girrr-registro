@@ -1,5 +1,12 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 13 novembre 2026)
 
+## 13 novembre (5) — Claude: **ONLINE** la 6.0 sul sito (pagine); `main` del registro e del sito ancora da unire
+- «Vai» di Gianluca al deploy dopo l'applicazione dello schema MVP da parte di ChatGPT (letture verificate da Claude: `mvp_stato` e `mvp_derby` rispondono 200).
+- **`gh-pages` `9c26f19`** (base `b84c570`): Curva per sistema (`curva-os.js` e `.css`, `curva-banca.js`, le due `curva.html`), scheda Video e `girrr/video/` (1ª-7ª), `condividi.js` e le due Home, modulo dei tifosi di ChatGPT (`girrr/v60/`, `girrr/dati/tifosi-settimane.json`, agganci su Home, app, Curva, Derby e Albo), `versioni.json` con la 6.0 (`rilascio/versioni/bozza-6-0.sh`: solo novità del sito della lega, niente Registro né Ramificazioni). Copiati solo i file cambiati, per non toccare i dati dei workflow. `rilascio60.py --controlla` sulla copia pubblicata: tutto a posto.
+- **Prove prima:** copia di rilascio con il database vero, Chromium 16/16, Firefox 16/16, WebKit 16/16 (un errore di rete isolato su `toto_pr_pubblico`, funzione vecchia del Totogirrr, su iPad Pro 11: riprovato due volte, pulito). **Dopo, sul sito vero:** Chromium iPhone SE 320, Pixel 7, PC 1920, TV; WebKit iPhone 15 Pro e Pro Max: 0 problemi. Foto in `/tmp` della sessione.
+- **Fermo:** il push del merge nel `main` del registro (`6a1b88c`, pronto) è stato bloccato dal controllo di sicurezza dell'ambiente («Production Deploy»): serve il permesso di Gianluca. Finché non c'è: Lab e Novità 6.0 online non aggiornati, Radio con i fischi vecchi, e il workflow del video del sito (che legge `rilascio/video` dal `main` del registro) non va unito al `main` del sito. Da fare dopo, nell'ordine: `main` del registro, `main` del sito (video e MVP), primo avvio di `tifosi-giornata.yml` e `video-giornata.yml`, `AGENTS.md` (sul sito la 6.0), `ufficiale/src/sito/`.
+- **Per tornare indietro:** `git revert 9c26f19` su `gh-pages` (torna la 5.8.2). Lo schema MVP resta e non dà fastidio.
+
 ## 13 novembre 2026 — ChatGPT: SCHEMA MVP APPLICATO e verificato sul progetto della lega
 
 - **Autorizzazione:** «Vai» esplicito di Gianluca, riportato nel messaggio di Claude: applicare soltanto `sql/mvp-tifosi-60.sql` dal ramo 6.0, commit `c61ad84`, sul progetto `qmjqfgmvimsuxvghetgi`. SQL verificata identica anche sul ramo remoto e applicata senza modifiche. SHA-256 `74b094f64f994aa6477b0c7bd2650d0aac0e6bb99805579054dc5f9de76ad66b`.
