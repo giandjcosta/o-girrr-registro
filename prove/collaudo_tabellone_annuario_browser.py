@@ -82,7 +82,7 @@ def main():
             page = browser.new_page(viewport={"width": width, "height": 800})
             page.on("pageerror", lambda e: errors.append(str(e)))
             page.route("**/data.json*", lambda route: route.fulfill(status=200, content_type="application/json", body=json.dumps(fixture)))
-            page.goto(f"{BASE}/lab/index.html", wait_until="domcontentloaded")
+            page.goto(f"{BASE}/lab/index.html?nel-registro", wait_until="domcontentloaded")
             page.locator('[data-tab="oro"]').first.click()
             page.locator('[data-oro="annuario"]').first.click()
             page.locator(".ann-anno").first.wait_for(timeout=10000)

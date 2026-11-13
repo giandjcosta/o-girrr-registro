@@ -92,7 +92,7 @@ async function errori(b, base, rel) {
 (async () => {
   const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1243/chrome-linux64/chrome' }).catch(() => chromium.launch());
   // 1) tab Moviola su tutti i dispositivi
-  const PAG = [['Lab', REG + 'lab/index.html#moviola', NUOVO], ['Anteprima Lega', REG + 'anteprima/attuale.html#moviola', NUOVO], ['Anteprima Stadio', REG + 'anteprima/index.html#moviola', NUOVO],
+  const PAG = [['Lab', REG + 'lab/index.html?nel-registro#moviola', NUOVO], ['Anteprima Lega', REG + 'anteprima/attuale.html#moviola', NUOVO], ['Anteprima Stadio', REG + 'anteprima/index.html#moviola', NUOVO],
                ['Sito vero Lega', NUOVO + 'girrr/app.html#moviola', NUOVO], ['Sito vero Stadio', NUOVO + 'stadio/girrr/app.html#moviola', NUOVO]];
   const ris = {};
   for (const dev of DEV) for (const [n, u, base] of PAG) ris[n + dev[0]] = await tab(b, dev, n, u, base);

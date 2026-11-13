@@ -32,7 +32,7 @@ with sync_playwright() as pw:
     context=browser.new_context(viewport={'width':320,'height':740}, device_scale_factor=1)
     # Nessuna chiamata al database di produzione, neanche in sola lettura.
     context.route(re.compile(r'https?://[^/]+\.supabase\.co/.*'),lambda route: route.fulfill(status=200,content_type='application/json',body='{"voti":[],"sfide":[]}'))
-    lab=visit(context,'/lab/index.html#oro','lab-320')
+    lab=visit(context,'/lab/index.html?nel-registro#oro','lab-320')
     lab.locator('button[data-oro="annuario"]').click()
     lab.wait_for_timeout(3000)
     width(lab)

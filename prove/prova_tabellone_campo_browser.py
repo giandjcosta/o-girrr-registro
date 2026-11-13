@@ -21,7 +21,7 @@ with sync_playwright() as pw:
             ("/lab/prova-tabellone-stadio.html","tabellone-stadio"),
             ("/lab/prova-dashboard-campo.html?skin=lega","campo-lega"),
             ("/lab/prova-dashboard-campo.html?skin=stadio","campo-stadio"),
-            ("/lab/index.html#oro","albo")
+            ("/lab/index.html?nel-registro#oro","albo")
         ]:
             p=ctx.new_page()
             errs=[]

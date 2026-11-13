@@ -23,7 +23,7 @@ with sync_playwright() as pw:
                 assert p.evaluate('document.documentElement.scrollWidth<=innerWidth+1'),(skin,w,nome,'overflow')
                 assert not errori,(skin,w,nome,errori)
                 assert not risposte,(skin,w,nome,risposte)
-            p.goto(ROOT+'/lab/index.html',wait_until='networkidle')
+            p.goto(ROOT+'/lab/index.html?nel-registro',wait_until='networkidle')
             p.get_by_role('link',name='Anteprima 5.5 · '+skin.title(),exact=True).click()
             p.wait_for_url('**/5.5/index-'+skin+'.html');p.locator('.v55-summary').wait_for();check('Home dal Lab')
             # I vecchi segnalibri arrivano alla Home corrente senza perdere la query.
