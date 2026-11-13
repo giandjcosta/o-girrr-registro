@@ -1,5 +1,10 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 13 novembre 2026)
 
+## Richiesta per la 6.0.2 — Giro di boa della squadra o del campionato
+
+- Gianluca chiede una scelta prima della condivisione del Giro di boa: **«La mia squadra»** oppure **«Tutto il campionato»**. La prima prepara il bilancio della propria squadra, la seconda quello dell’intera lega; anteprima, immagine e testo condivisi devono seguire la scelta e riferirsi allo stesso periodo.
+- Da integrare nel flusso esistente **Tabellone → Condividi → Giro di boa**, nelle grafiche Lega e Stadio. Richiesta registrata nel [ticket #72](https://github.com/giandjcosta/o-girrr-registro/issues/72), da sviluppare e mostrare nel Lab per la **6.0.2**. Questa registrazione non implementa la funzione e non pubblica una versione; il lavoro 6.0.1 di Claude rimane separato.
+
 ## ChatGPT — Ramificazioni aggiornata anche quando cambia una PR
 
 - Dopo l’autorizzazione di Gianluca, chiuse senza merge le PR #55 e #56. Il feed le mostrava ancora aperte perché il workflow non osservava i cambi di stato delle PR. Aggiunti apertura/aggiornamento/chiusura/riapertura delle PR, creazione/cancellazione dei rami e push di ramo, con esclusione del feed tecnico. Raccolta anche all’avvio dei collaudi osservati, oltre che alla fine.
