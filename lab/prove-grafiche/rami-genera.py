@@ -29,9 +29,9 @@ def albero(repo, nome, escludi=('chatgpt/dati-ramificazioni',)):
             # a parità di punto preferisci main, poi il ramo con la punta più vecchia (nato prima)
             key = (t, p in radici, -info[p]['data'])
             if best is None or key > best[0]: best = (key, p, mb)
-        if best is None:
-            mb = g(repo, 'merge-base', 'origin/' + n, 'origin/' + tronco)
-            best = ((0,), tronco, mb)
+        if best is None:   # già unito ovunque: il padre è il tronco che lo contiene; la nascita non si ricava da Git
+            dentro_in = [t for t in radici if subprocess.run(['git', '-C', repo, 'merge-base', '--is-ancestor', head[n], 'origin/' + t]).returncode == 0]
+            best = ((0,), (dentro_in or [tronco])[0], '')
         p, mb = best[1], best[2]
         dentro = any(subprocess.run(['git', '-C', repo, 'merge-base', '--is-ancestor', head[n], 'origin/' + t]).returncode == 0 for t in radici)
         av = int(g(repo, 'rev-list', '--count', 'origin/%s..origin/%s' % (p, n)) or 0)
@@ -39,8 +39,21 @@ def albero(repo, nome, escludi=('chatgpt/dati-ramificazioni',)):
                        stato='unito' if dentro else ('attivo' if time.time() - info[n]['data'] < 7 * 86400 else 'fermo'))
     return {'repo': nome, 'tronco': tronco, 'radici': radici, 'rami': sorted(info.values(), key=lambda r: r['data'])}
 out = [albero('/home/user/o-fant-a-girrr', 'o-fant-a-girrr'), albero('/home/user/o-girrr-registro', 'o-girrr-registro')]
-for r in out:
-    for b in r['rami']: b.pop('b', None)
+# ultimi commit propri di ogni ramo (quelli che non sono nel padre), con il link vero su GitHub
+def commits(repo, b):
+    rng = ('origin/%s..origin/%s' % (b['padre'], b['nome'])) if b.get('padre') else 'origin/' + b['nome']
+    righe = g(repo, 'log', '--first-parent' if not b.get('padre') else '--no-merges', '-n', '12', '--format=%H%x1f%ct%x1f%an%x1f%s', rng)
+    out = []
+    for r in righe.split('\n'):
+        if not r: continue
+        h, t, a, s2 = r.split('\x1f')
+        out.append([h, int(t), s2.split(':')[0] if ':' in s2[:20] else a, s2[:140]])
+    return out
+for r, path in zip(out, ('/home/user/o-fant-a-girrr', '/home/user/o-girrr-registro')):
+    for b in r['rami']:
+        b.pop('b', None)
+        b['commit'] = commits(path, b)
+        b['totale'] = int(g(path, 'rev-list', '--count', ('origin/%s..origin/%s' % (b['padre'], b['nome'])) if b.get('padre') else 'origin/' + b['nome']) or 0)
 json.dump(out, open(sys.argv[1], 'w'), ensure_ascii=False, indent=1)
 for r in out:
     figli = {}
