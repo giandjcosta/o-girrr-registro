@@ -124,7 +124,7 @@ def main():
                             report['visite']+=1
                         except Exception as e:report['problemi'].append(f'{engine}/{screen}/{skin}/{slug}: {e}'[:1200]);print(report['problemi'][-1],flush=True)
                 try:
-                    errors.clear();bad.clear();page.goto(REG+'ramificazioni.html',wait_until='load');expect(page.locator('.repo')).to_have_count(2);expect(page.locator('#repositories svg')).to_have_count(2)
+                    errors.clear();bad.clear();page.goto(REG+'ramificazioni.html',wait_until='load');expect(page.locator('.repo')).to_have_count(2);expect(page.locator('#repositories [data-graph]')).to_have_count(2)
                     assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1'),'Mappa fuori schermo'
                     assert not errors and not bad,{'js':errors,'http':bad}
                     if engine=='chromium' and screen in ['PC1920','TV']:
@@ -151,9 +151,9 @@ def main():
                 except Exception as e:report['problemi'].append(engine+'/'+folder+'/Interazioni: '+str(e)[:1200]);print(report['problemi'][-1],flush=True)
             try:
                 page.goto(REG+'ramificazioni.html');expect(page.locator('.repo')).to_have_count(2);page.locator('#repo-filter').select_option('registro');expect(page.locator('[data-repository=sito]')).to_be_hidden()
-                page.locator('#branch-search').fill('versione-6-0');branch=page.locator('[data-repository=registro] .branch:visible [data-branch]').first;branch.click();expect(page.locator('[data-detail=registro]')).to_contain_text('Preparazione della 6.0')
+                page.locator('#branch-search').fill('versione-6-0');branch=page.locator('[data-repository=registro] .map-branch:visible [data-branch]').first;branch.click();expect(page.locator('[data-detail=registro]')).to_contain_text('Preparazione della 6.0')
                 node=page.locator('[data-repository=registro] [data-node]').first;node.focus();node.press('Enter');expect(page.locator('[data-detail=registro]')).to_contain_text('Commit Git')
-                svg=page.locator('[data-repository=registro] svg');old=svg.bounding_box()['width'];page.locator('[data-repository=registro] [data-zoom="+"]').click();assert svg.bounding_box()['width']>old
+                title=page.locator('[data-repository=registro] .map-main strong');old=title.evaluate('(e)=>parseFloat(getComputedStyle(e).fontSize)');page.locator('[data-repository=registro] [data-zoom="+"]').click();assert title.evaluate('(e)=>parseFloat(getComputedStyle(e).fontSize)')>old
                 live['fail']=True;page.locator('#refresh').click();expect(page.locator('#update-status')).to_contain_text('ultima copia');expect(page.locator('.repo')).to_have_count(2)
                 live['fail']=False;live['value']['fingerprint']='simulazione-aggiornamento';live['value']['repositories'][1]['version']='6.1';page.locator('#refresh').click();expect(page.locator('[data-repository=registro]')).to_contain_text('6.1')
                 report['interazioni'].append(engine+'/Ramificazioni: PASS · Filtri, ramo/dettaglio, tastiera, zoom, errore di rete, nuova versione senza ricaricare')

@@ -1,0 +1,68 @@
+{
+  "commitFunzionale": "b2a752f2343b86977881b36a91fd911b7f05bb88",
+  "workflow": "https://github.com/giandjcosta/o-girrr-registro/actions/runs/43433829630",
+  "pagina": {
+    "motori": {
+      "chromium": "151.0.7922.34",
+      "webkit": "26.5",
+      "firefox": "153.0"
+    },
+    "profili": 16,
+    "visite": 48,
+    "problemi": [],
+    "interazioni": [
+      "chromium: Vista in corso ordinata, 6.0 in cima, cassetti, data/autore, parole senza codici, selezione collettiva/singola, dettagli, tastiera, A+, nuovi rami, colori e rete: PASS",
+      "webkit: Vista in corso ordinata, 6.0 in cima, cassetti, data/autore, parole senza codici, selezione collettiva/singola, dettagli, tastiera, A+, nuovi rami, colori e rete: PASS",
+      "firefox: Vista in corso ordinata, 6.0 in cima, cassetti, data/autore, parole senza codici, selezione collettiva/singola, dettagli, tastiera, A+, nuovi rami, colori e rete: PASS"
+    ],
+    "browserFisici": "Samsung Internet e Safari su dispositivo non disponibili; schermi e identità emulati."
+  },
+  "richiesteClaude": [
+    "In corso dal più recente; integrazioni in cassetti chiusi",
+    "6.0 evidenziata in cima",
+    "Data e autore dell’ultimo lavoro su ogni scheda",
+    "Frasi leggibili senza codici sintetici o conteggi +/−"
+  ],
+  "copiaAutonoma": {
+    "rami": 125,
+    "motori": [
+      "chromium",
+      "webkit",
+      "firefox"
+    ],
+    "larghezze": [
+      320,
+      1920
+    ],
+    "rete": "Disattivata",
+    "problemi": 0
+  },
+  "dimensioniIniziali": [
+    {
+      "profilo": "iPhone320",
+      "altezzaIniziale": 6525,
+      "ramiVisibili": 8,
+      "ramiDisponibili": 125
+    },
+    {
+      "profilo": "PC1920",
+      "altezzaIniziale": 3666,
+      "ramiVisibili": 8,
+      "ramiDisponibili": 125
+    },
+    {
+      "profilo": "TV",
+      "altezzaIniziale": 3668,
+      "ramiVisibili": 8,
+      "ramiDisponibili": 125
+    }
+  ],
+  "integrazioneCI": {
+    "esito": "Tutti i job riusciti",
+    "pagine6_0": 912,
+    "ramificazioni": 48,
+    "problemi": 0,
+    "run": 43433829630
+  },
+  "pubblicazione": false
+}
