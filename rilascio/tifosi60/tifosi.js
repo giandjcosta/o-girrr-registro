@@ -18,7 +18,7 @@ const box=(id,title,body,kicker='')=>'<section class="pt-box" id="'+id+'">'+(kic
 function reason(c){return (c.away?'In trasferta':'In casa')+' contro '+N(c.op)+': '+c.gf+'–'+c.gs+'.'}
 function episode(day,t=team){const entry=editoriale.giornate?.[String(day)],e=entry?.squadre?.[t];if(e&&entry.firma===signatures[day])return {title:e.titolo,paragraphs:e.paragrafi};return {title:'Il racconto è in preparazione',paragraphs:['La redazione sta preparando il capitolo della tua squadra con i risultati verificati della settimana.']}}
 function storyCard(day,compact=false,t=team){const e=episode(day,t),matches=GirrrTifosiModel.weeklyMatches(data,t,day);return '<article class="pt-article-copy"><div class="pt-result">'+matches.length+' '+(matches.length===1?'incontro giocato':'incontri giocati')+' · '+matches.map(m=>m.comp).join(' + ')+'</div><h3>'+E(e.title)+'</h3>'+e.paragraphs.map(p=>'<p>'+E(p)+'</p>').join('')+(compact?'<div class="pt-links">'+link('app.html','carriera','Rileggi la tua stagione')+'</div>':'')+'</article>'}
-function story(t=team,id='pt-storia',title='La mia settimana',intro=''){const all=GirrrTifosiModel.complete(data),rounds=all.filter(g=>g.n===all.at(-1)?.n||editoriale.giornate?.[g.n]?.squadre?.[t]).slice().reverse();return box(id,title,intro+'<p class="pt-sub">'+E(N(t))+' · Un racconto diverso per ogni giornata e per il suo percorso.</p>'+rounds.map((g,i)=>'<details class="pt-week" data-pt-day="'+g.n+'"'+(i===0?' open':'')+'><summary><span class="pt-day">'+g.n+'</span><span class="pt-week-title"><b>'+g.n+'ª giornata</b><small>'+E(episode(g.n,t).title)+'</small></span></summary><div class="pt-week-body">'+storyCard(g.n,false,t)+'</div></details>').join(''),(id==='pt-storia'?'La tua stagione':'Stagione')+' · '+data.stagione)}
+function story(t=team,id='pt-storia',title='La mia settimana',intro=''){const all=GirrrTifosiModel.complete(data),rounds=all.filter(g=>g.n===all.at(-1)?.n||editoriale.giornate?.[g.n]?.squadre?.[t]).slice().reverse();return box(id,title,intro+'<p class="pt-sub">'+E(N(t))+' · Un racconto diverso per ogni giornata e per il suo percorso.</p>'+rounds.map((g,i)=>'<details class="pt-week" data-pt-day="'+g.n+'"'+(i===0?' open':'')+'><summary><span class="pt-day">'+g.n+'</span><span class="pt-week-title"><b>'+g.n+'ª giornata</b><small>'+E(episode(g.n,t).title)+'</small></span></summary><div class="pt-week-body">'+storyCard(g.n,false,t)+'</div></details>').join(''),(identity()&&t===identity().team?'La tua stagione':'Stagione')+' · '+data.stagione)}
 function poll(){
  const b=ballot();
  if(!b?.candidates.length)return box('pt-mvp','Squadra della settimana','<p>Le candidature saranno disponibili dopo una giornata completa con squadre vincitrici.</p>');
@@ -42,19 +42,13 @@ function sport(){if(!location.hash.includes('sport'))return;const nav=[...docume
  const view=document.getElementById('view');let after=false;[...view.children].forEach(el=>{if(el===nav){after=true;return}if(after&&el.id!=='pt-mvp')el.hidden=sportMvp});
  if(sportMvp){nav.querySelectorAll('[data-sp]').forEach(b=>b.setAttribute('aria-pressed','false'));insert(view,'pt-mvp',poll())}else document.getElementById('pt-mvp')?.remove();
 }
-function career(){if(!location.hash.includes('carriera'))return;if(!team){guestWeeks();return}document.getElementById('pt-storia-tutti')?.remove();const nav=document.querySelector('#view [data-ctab]')?.closest('.seg');if(!nav)return;
+function career(){if(!location.hash.includes('carriera'))return;if(!team)return;const nav=document.querySelector('#view [data-ctab]')?.closest('.seg');if(!nav)return;
  /* «La mia settimana» prima di «Regole»: in ogni menu Regole è l'ultima voce (Gianluca, 13 novembre 2026) */
  if(!nav.querySelector('[data-pt-week]')){const reg=nav.querySelector('[data-ctab="reg"]');if(reg)reg.insertAdjacentHTML('beforebegin','<button type="button" data-pt-week aria-pressed="false">La mia settimana</button>');else nav.insertAdjacentHTML('beforeend','<button type="button" data-pt-week aria-pressed="false">La mia settimana</button>')}
  nav.querySelector('[data-pt-week]').setAttribute('aria-pressed',String(careerWeek));
  const view=document.getElementById('view');let after=false;[...view.children].forEach(el=>{if(el===nav){after=true;return}if(after&&el.id!=='pt-storia')el.hidden=careerWeek});
- if(careerWeek){nav.querySelectorAll('[data-ctab]').forEach(b=>b.setAttribute('aria-pressed','false'));insert(view,'pt-storia',story())}else document.getElementById('pt-storia')?.remove();
+ if(careerWeek){nav.querySelectorAll('[data-ctab]').forEach(b=>b.setAttribute('aria-pressed','false'));insert(view,'pt-storia',identity()?story():story(team,'pt-storia','La settimana di '+N(team)))}else document.getElementById('pt-storia')?.remove();
 }
-/* Ospite (o chi non è entrato con la squadra): sotto l'avviso della Carriera, le settimane di tutte le squadre (Gianluca, 13 novembre 2026) */
-let guestTeam=null;
-function guestBox(){const teams=(data?.teams||[]).slice().sort((a,b)=>N(a).localeCompare(N(b),'it'));if(!teams.length)return '';if(!teams.includes(guestTeam))guestTeam=teams[0];
- const pick='<div class="pt-guest-teams" role="group" aria-label="Squadra">'+teams.map(t=>'<button type="button" data-pt-guest="'+E(t)+'" aria-pressed="'+(t===guestTeam)+'">'+E(N(t))+'</button>').join('')+'</div>';
- return story(guestTeam,'pt-storia-tutti','La settimana delle squadre','<p>Il racconto di ogni squadra, giornata per giornata. Scegli una squadra.</p>'+pick)}
-function guestWeeks(){const view=document.getElementById('view');if(!view||view.querySelector('[data-ctab]'))return;const old=document.getElementById('pt-storia-tutti'),html=guestBox();if(!html)return;if(old){if(old.dataset.team!==guestTeam)old.outerHTML=html}else view.insertAdjacentHTML('beforeend',html);const n=document.getElementById('pt-storia-tutti');if(n)n.dataset.team=guestTeam}
 function section(value){const u=new URL(location.href);if(value)u.searchParams.set('sezione',value);else u.searchParams.delete('sezione');history.replaceState(null,'',u);void 0}
 function mount(){if(!data||!editoriale)return;const login=JSON.stringify(identity());if(login!==knownLogin){knownLogin=login;myVote=null;queueMicrotask(refresh)}const chosen=chosenTeam();if(team!==chosen){team=chosen;document.getElementById('pt-home-story')?.remove();document.getElementById('pt-storia')?.remove()}
  if(page==='index.html')home();
@@ -76,7 +70,6 @@ document.addEventListener('click',e=>{
  const comp=e.target.closest('[data-pt-comp]');if(comp){e.preventDefault();e.stopImmediatePropagation();competition=comp.dataset.ptComp;document.getElementById('pt-derby').outerHTML=derby();return}
  const sp=e.target.closest('[data-pt-sport]');if(sp){e.preventDefault();e.stopImmediatePropagation();sportMvp=true;section('mvp');mount();return}
  if(e.target.closest('[data-sp]')){sportMvp=false;section('');document.getElementById('pt-mvp')?.remove();document.querySelectorAll('#view>[hidden]').forEach(x=>x.hidden=false)}
- const gt=e.target.closest('[data-pt-guest]');if(gt){e.preventDefault();e.stopImmediatePropagation();guestTeam=gt.dataset.ptGuest;const o=document.getElementById('pt-storia-tutti');if(o){o.outerHTML=guestBox();const n=document.getElementById('pt-storia-tutti');if(n)n.dataset.team=guestTeam}return}
  if(e.target.closest('[data-pt-week]')){e.preventDefault();e.stopImmediatePropagation();careerWeek=true;section('settimana');mount();return}
  if(e.target.closest('[data-ctab]')){careerWeek=false;section('');document.getElementById('pt-storia')?.remove();document.querySelectorAll('#view>[hidden]').forEach(x=>x.hidden=false)}
 },true);
