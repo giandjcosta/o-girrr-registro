@@ -56,17 +56,34 @@ def main():
                     page.goto(BASE+'ramificazioni.html',wait_until='load');expect(page.locator('.repo')).to_have_count(2);page.evaluate('document.fonts.ready')
                     total=sum(len(r['branches']) for r in SNAP['repositories']);expect(page.locator('[data-map-branch]')).to_have_count(total);fits(page)
                     colors=page.locator('[data-map-branch]').evaluate_all('(es)=>es.map(e=>e.style.getPropertyValue("--branch"))');assert len(set(colors))==total,'Colori duplicati'
+                    assert page.evaluate('document.documentElement.scrollHeight')<20000,'Vista iniziale troppo lunga'
+                    if engine=='chromium' and screen in ['PC1920','TV']:
+                        page.locator('.repo').first.scroll_into_view_if_needed();page.screenshot(path=str(OUT/f'ramificazioni-{screen}.png'))
+                        page.locator('.repo').last.scroll_into_view_if_needed();page.screenshot(path=str(OUT/f'ramificazioni-registro-{screen}.png'))
                     for r in SNAP['repositories']:
                         repo=page.locator('[data-repository='+r['id']+']');count=len(r['branches'])
                         expect(repo.locator('[data-add]:checked')).to_have_count(count)
+                        expect(repo.locator('[data-drawer][open]')).to_have_count(0)
+                        expect(repo.locator('.map-release')).to_be_visible()
+                        visible_default=repo.locator('[data-map-branch]:visible').count()
+                        assert visible_default<count,'La vista iniziale mostra anche i cassetti'
+                        assert repo.locator('.map-branch:visible').first.get_attribute('class').find('map-release')>=0,'6.0 non in cima'
+                        dates=repo.locator('[data-graph]>.map-branch:not(.map-release) time').evaluate_all('(es)=>es.map(e=>Date.parse(e.dateTime))');assert dates==sorted(dates,reverse=True),'Rami non ordinati dal più recente'
+                        expect(repo.locator('.work-meta time')).to_have_count(count)
+                        assert all(repo.locator('.work-author').all_text_contents()),'Autore mancante'
+                        expect(repo.locator('.branch-code')).to_have_count(0)
+                        assert not re.search(r'\+\d+\s*/\s*[−-]\d+', ' '.join(repo.locator('.pending-changes,.branch-meta').all_text_contents())),'Conteggi in codice'
                         repo.locator('[data-select=main]').click();expect(repo.locator('[data-map-branch]')).to_have_count(1)
-                        repo.locator('[data-select=all]').click();expect(repo.locator('[data-map-branch]')).to_have_count(count)
+                        repo.locator('[data-select=all]').click();expect(repo.locator('[data-map-branch]:visible')).to_have_count(count)
+                        fits(page)
+                        repo.locator('[data-select=active]').click();expect(repo.locator('[data-map-branch]:visible')).to_have_count(visible_default)
+                        expect(repo.locator('[data-drawer][open]')).to_have_count(0)
+                        repo.locator('[data-select=all]').click()
                         old=repo.locator('.map-main strong').evaluate('(e)=>parseFloat(getComputedStyle(e).fontSize)');repo.locator('[data-zoom="+"]').click();assert repo.locator('.map-main strong').evaluate('(e)=>parseFloat(getComputedStyle(e).fontSize)')>old;fits(page)
                         repo.locator('[data-zoom=reset]').click()
                     page.locator('#select-all').click();expect(page.locator('[data-map-branch]')).to_have_count(total)
                     if engine=='chromium' and screen in ['PC1920','TV']:
-                        page.locator('.repo').first.scroll_into_view_if_needed();page.screenshot(path=str(OUT/f'ramificazioni-{screen}.png'))
-                        page.locator('.repo').last.scroll_into_view_if_needed();page.screenshot(path=str(OUT/f'ramificazioni-registro-{screen}.png'))
+                        page.locator('.repo').first.scroll_into_view_if_needed();page.screenshot(path=str(OUT/f'ramificazioni-tutti-{screen}.png'))
                     assert not errors and not bad,{'js':errors,'http':bad};result['visite']+=1
                     if screen==screens[0][0]:
                         page.locator('#repo-filter').select_option('registro');expect(page.locator('[data-repository=sito]')).to_be_hidden()
@@ -80,7 +97,7 @@ def main():
                         before_colors=repo.locator('[data-map-branch]').evaluate_all('(es)=>Object.fromEntries(es.map(e=>[e.dataset.mapBranch,e.style.getPropertyValue("--branch")]))');new=copy.deepcopy(state['data']['repositories'][1]['branches'][-1]);new['name']='chatgpt/ramo-nuovo-del-collaudo';new['title']='Nuovo ramo dal feed';state['data']['repositories'][1]['branches'].append(new);state['data']['fingerprint']='ramo-nuovo';page.locator('#refresh').click();expect(repo.locator('[data-map-branch]')).to_have_count(len(SNAP['repositories'][1]['branches'])+1);fits(page)
                         after_colors=repo.locator('[data-map-branch]').evaluate_all('(es)=>Object.fromEntries(es.map(e=>[e.dataset.mapBranch,e.style.getPropertyValue("--branch")]))');assert all(after_colors[n]==v for n,v in before_colors.items()),'Un ramo nuovo ha cambiato i colori esistenti';page.reload(wait_until='load');expect(repo.locator('[data-map-branch]')).to_have_count(len(SNAP['repositories'][1]['branches'])+1);after_reload=repo.locator('[data-map-branch]').evaluate_all('(es)=>Object.fromEntries(es.map(e=>[e.dataset.mapBranch,e.style.getPropertyValue("--branch")]))');assert after_reload==after_colors,'Colori cambiati al ricaricamento'
                         state['data']['updated']='2000-01-01T00:00:00Z';state['data']['fingerprint']='copia-vecchia';state['data']['repositories'][1]['version']='99.9';page.locator('#refresh').click();expect(page.locator('#update-status')).to_contain_text('più recente');expect(repo).not_to_contain_text('99.9');state['fail']=True;page.locator('#refresh').click();expect(page.locator('#update-status')).to_contain_text('ultima copia');expect(page.locator('.repo')).to_have_count(2)
-                        result['interazioni'].append(engine+': Tutti/Solo main, scelta singola, ricerca, dettagli, storia, tastiera, testo più grande, nuovo ramo automatico, colori persistenti, errore di rete: PASS')
+                        result['interazioni'].append(engine+': Vista in corso ordinata, 6.0 in cima, cassetti, data/autore, parole senza codici, selezione collettiva/singola, dettagli, tastiera, A+, nuovi rami, colori e rete: PASS')
                 except Exception as e:result['problemi'].append(f'{engine}/{screen}: {e!r}'[:1600]);print(result['problemi'][-1],flush=True)
                 c.close();print(engine,screen,'Visite',result['visite'],'Problemi',len(result['problemi']),flush=True)
             b.close()

@@ -82,3 +82,24 @@
 @media(max-width:1050px){.graph{grid-template-columns:minmax(0,1fr)}.detail dl{grid-template-columns:1fr 1fr}.map-main{grid-template-columns:46px minmax(0,1fr) auto}.main-symbol{width:46px;height:46px}}
 @media(max-width:600px){.ramificazioni{width:calc(100% - 20px)}.intro,.repo,.legend{padding:16px;margin:14px 0}.ramificazioni h2{font-size:27px}.controls{align-items:stretch}.controls label{flex:1 1 150px;min-width:0}.controls input{width:100%}.controls>button{flex:1 1 150px}.ramificazioni .top .back{display:none}.map-main{grid-template-columns:34px minmax(0,1fr);padding:14px;gap:12px}.main-symbol{width:34px;height:34px}.main-symbol svg{width:28px;height:28px}.main-tip{grid-column:2;justify-items:start}.map-main .branch-open strong{font-size:calc(25px * var(--map-scale))}.map-branch{grid-template-columns:59px 38px minmax(0,1fr);padding:7px 0}.branch-origin>span{font-size:9px;max-width:59px}.ramificazioni .branch-origin .commit-link{font-size:10px;padding:5px 2px}.branch-connection{padding-top:21px}.branch-card{padding:12px 10px;border-left-width:4px}.branch-open strong{font-size:calc(14px * var(--map-scale))}.branch-title{font-size:calc(12px * var(--map-scale))}.branch-meta{font-size:10px}.branch-code{gap:5px;font-size:9px;letter-spacing:0}.branch-code svg{width:17px;height:17px}.graph{gap:10px;padding:10px 6px}.readability-tools{flex-wrap:wrap}.readability-tools button{font-size:12px;padding:9px 12px}.detail{padding:16px}.detail h3{font-size:19px}.detail-heading{align-items:start}.detail dl{gap:16px 12px}.close-detail{float:none!important;margin:0 0 14px!important}.repo-stats span{font-size:12px}.branch-list{padding:6px 9px 12px}.commit-history li{padding-left:22px}}
 @media(prefers-reduced-motion:reduce){.intro,.detail{animation:none}.ramificazioni *{scroll-behavior:auto!important}}
+/* Vista iniziale compatta: lavori in corso, 6.0 in evidenza e archivio nei cassetti. */
+.branch-title-row{display:flex;align-items:start;gap:10px;min-width:0;max-width:100%}
+.branch-title-row .branch-symbol{margin-top:4px}
+.branch-title-row strong{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.branch-name{font-size:11px;color:var(--sub);line-height:1.6;overflow-wrap:anywhere}
+.work-meta{display:flex;align-items:center;gap:6px 12px;flex-wrap:wrap;margin:13px 0 8px;font-size:12px;line-height:1.6;color:#c7d8f0}
+.work-author{display:inline-block;font-weight:800;color:#f4f7ff;background:#ffffff0a;border:1px solid #ffffff1e;border-radius:20px;padding:3px 9px}
+.main-tip .work-meta{justify-content:flex-end;margin:0 0 5px}
+.pending-changes{font-size:12px;line-height:1.6;color:#d9e5f8;margin-top:6px}
+.branch-meta{margin-top:12px;color:var(--sub)}
+.map-release{grid-column:1/-1}
+.map-release .branch-card{border-top-color:#ffd16677;border-right-color:#ffd16677;border-bottom-color:#ffd16677;background:linear-gradient(110deg,#263352,#132547);box-shadow:0 0 0 1px #ffd16616}
+.map-release .branch-title-row strong{font-size:calc(22px * var(--map-scale))}
+.release-badge{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.05em;background:#ffd166;color:#19213a;border-radius:20px;padding:6px 11px;margin-bottom:10px}
+.branch-drawer{grid-column:1/-1;border:1px solid #ffffff2d;border-radius:12px;margin-top:10px;background:#0b173145;min-width:0}
+.branch-drawer>summary{font-size:15px;font-weight:800;cursor:pointer;padding:16px;min-height:50px;line-height:1.5}
+.branch-drawer>summary span{display:inline-block;margin-left:10px;color:var(--sub);font-size:12px;font-weight:500}
+.drawer-map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 24px;padding:0 14px 14px;min-width:0}
+.branch-drawer[hidden]{display:none!important}
+@media(max-width:1050px){.drawer-map{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.map-branch{grid-template-columns:70px minmax(0,1fr);grid-template-rows:58px auto;padding:3px 0}.branch-origin{grid-column:1;grid-row:1;margin:0;justify-content:start;gap:0}.branch-origin>span{max-width:70px;font-size:10px}.branch-connection{grid-column:2;grid-row:1;padding:0;width:70px;justify-self:start}.branch-connection svg{height:58px}.branch-card{grid-column:1/-1;grid-row:2;padding:14px}.branch-open strong{font-size:calc(16px * var(--map-scale))}.map-release .branch-title-row strong{font-size:calc(19px * var(--map-scale))}.branch-name{font-size:11px}.work-meta{font-size:11px;gap:5px 8px}.main-tip .work-meta{justify-content:flex-start}.pending-changes{font-size:12px}.branch-meta{font-size:11px}.drawer-map{padding:0 7px 10px;gap:12px}.branch-drawer>summary{padding:12px;font-size:14px}.branch-drawer>summary span{margin-left:5px}.branch-title-row{gap:8px}.branch-origin>b{font-size:11px;color:var(--sub);font-weight:500}}

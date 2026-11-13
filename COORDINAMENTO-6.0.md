@@ -15,7 +15,7 @@ Gianluca ha visto e approvato la prova. Il 13 novembre ha autorizzato preparazio
 
 ## Revisione di Ramificazioni del 13 novembre
 
-Gianluca ha chiesto più spazio, tutti i rami senza scorrimento orizzontale, selezione collettiva e colori/linee più leggibili. La [PR #59](https://github.com/giandjcosta/o-girrr-registro/pull/59) aggiorna la pagina già collegata ai menu, senza pubblicare. Panorama a tutta larghezza, tutti i rami inizialmente selezionati, raccordi corti con percorsi compressi dichiarati, dettagli nella mappa, palette più varia con simboli/codici e A−/A+ senza allargare il contenuto. Aggiornamento ogni 15 minuti conservato.
+Gianluca ha chiesto più spazio, tutti i rami senza scorrimento orizzontale, selezione collettiva e colori/linee più leggibili. La [PR #59](https://github.com/giandjcosta/o-girrr-registro/pull/59) aggiorna la pagina già collegata ai menu, senza pubblicare. Panorama a tutta larghezza, 6.0 evidenziata in cima, rami in corso dal più recente, rami già integrati in cassetti chiusi e selezione collettiva che li espande; data/autore e differenze in parole sulle schede. Raccordi corti con percorsi compressi dichiarati, dettagli nella mappa, palette più varia con simboli/codici e A−/A+ senza allargare il contenuto. Aggiornamento ogni 15 minuti conservato.
 
 Test pagina: 48/48 visite, Chromium/WebKit/Firefox × 16 profili, zero problemi. Copia autonoma con 125 rami verificata offline nei tre motori a 320 e 1920 px. Metodo in `RAMIFICAZIONI.md`, esiti in `prove/risultati-ramificazioni-leggibili.json`; pull aggiornato prima del deploy per includere anche questa revisione.
 
