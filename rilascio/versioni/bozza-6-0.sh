@@ -7,7 +7,13 @@
 cd "$(dirname "$0")/../.." || exit 1
 [ $# -eq 0 ] && set -- --prova
 python3 rilascio/versioni/aggiungi.py --tipo grande --titolo "La Curva del tuo telefono e il video della giornata" \
-  --messaggio "🎬 **O Girrr 6.0 è online!** La Curva cambia faccia: su iPhone ha lo stile di iPhone, su Android quello di Android, e mentre leggete non salta più, perché i cori nuovi arrivano con la pillola «Nuovi cori». Dopo ogni giornata esce il video in mezzo minuto, nella scheda Video di Girrr Sport accanto alla Radio, con tutti quelli dalla 1ª giornata. Con «Condividi la giornata» mandate al gruppo video, Radio, Tabelloni e Giornale in un tocco. E poi la Squadra MVP dei tifosi, la classifica dei Derby e «La tua settimana», il racconto della vostra squadra. Buona giornata a tutti! ⚽" \
+  --messaggio '🎬 **O Girrr 6.0 è online! La Curva cambia faccia:** una nuova grafica pensata per il vostro telefono e più tranquillità mentre leggete. I nuovi cori vi aspettano nella pillola «Nuovi cori», senza farvi perdere il punto.
+
+Ogni giornata ha anche il suo **video di 30 secondi**: lo trovate in Girrr Sport, accanto alla Radio, insieme a tutti quelli dalla 1ª giornata. Con **«Condividi la giornata»** potete mandare al gruppo video, Radio, Tabelloni e Giornale in un tocco.
+
+Arrivano anche la **Squadra MVP dei tifosi**, la **classifica dei Derby** e **«La tua settimana»**, che racconta risultati, rivalità e cammino della vostra squadra.
+
+Buona giornata a tutti! ⚽' \
   --voce "Curva: Stile di iPhone (vetro e pillole) sugli iPhone e iPad, stile Android (Material 3) sui telefoni e tablet Android; PC e TV restano come prima" \
   --voce "Curva: La pagina non si ricrea più a ogni aggiornamento: cambiano solo i cori nuovi o modificati" \
   --voce "Curva: Pillola «Nuovi cori» con le facce di chi ha scritto; toccandola si torna su" \
