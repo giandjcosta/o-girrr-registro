@@ -74,7 +74,10 @@ def main(sito, lab=False):
             assert t.count(a) == 1, rel
             scrivi(os.path.join(sito, rel), t.replace(a, a + '\n' + tag))
         cambiati.append(rel)
-    print('6.0 applicata a', sito, '·', len(cambiati), 'file')
+    # 4. Novità dei tifosi: agganci sulle pagine appena preparate, inclusa la scheda Video.
+    tifosi = modulo('rilascio/tifosi60/applica.py')
+    tifosi.main(sito, lab)
+    print('6.0 applicata a', sito, '·', len(cambiati), 'file più il modulo tifosi')
     for c in cambiati:
         print('  ', c)
 
