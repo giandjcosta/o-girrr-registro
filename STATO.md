@@ -1,5 +1,12 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 13 novembre 2026)
 
+## ChatGPT — Ramificazioni aggiornata anche quando cambia una PR
+
+- Dopo l’autorizzazione di Gianluca, chiuse senza merge le PR #55 e #56. Il feed le mostrava ancora aperte perché il workflow non osservava i cambi di stato delle PR. Aggiunti apertura/aggiornamento/chiusura/riapertura delle PR, creazione/cancellazione dei rami e push di ramo, con esclusione del feed tecnico. Raccolta anche all’avvio dei collaudi osservati, oltre che alla fine.
+- Si esegue sempre il codice del main, mai quello della PR; aggiornamento serializzato sul ramo tecnico e senza modifiche alla grafica di Claude. La pagina già aperta controlla il feed ogni minuto. Rami e commit delle PR chiuse conservati.
+- Nuova regressione con repository Git reale: chiusura e riapertura della PR cambiano il feed anche se non si muove alcun commit; una PR chiusa senza merge non diventa un ramo integrato. Controllati trigger, esclusioni e checkout del main. La cadenza programmata resta soggetta alla consegna degli eventi GitHub; le modifiche isolate del sito vengono rilevate dalla raccolta dei due repository.
+
+
 ## 13 novembre — ChatGPT: manutenzione dopo la 6.0 verificata sul main
 
 - **PR #69 unita, `3f7c867`** (13 novembre, 20:06 italiane). Conservati tutti i controlli; nessuna modifica al disegno di Ramificazioni. Il `main` ha superato **Registro Chromium/WebKit/Firefox** ([43488995871](https://github.com/giandjcosta/o-girrr-registro/actions/runs/43488995871), nove job, sedici profili per motore) e **percorsi-e-cronache** ([43488995757](https://github.com/giandjcosta/o-girrr-registro/actions/runs/43488995757), intero workflow). Verdi anche Fiducia 5.2 e il collaudo 5.5 di Claude. Tutti i passaggi successivi a Campo verificati, compresi sondaggio, PDF, Home e notifiche.
