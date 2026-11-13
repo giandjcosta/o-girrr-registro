@@ -12,10 +12,12 @@ self.GIRRR_SPECCHIO = (function () {
     'cerca.js': new URL('../../rilascio/cerca/cerca.js', self.location.href).href, /* Cerca un giocatore nello Spogliatoio */
     'versioni.js': new URL('../../rilascio/versioni/versioni.js', self.location.href).href, /* pagina Versioni */
     'versioni.json': new URL('../../rilascio/versioni/versioni.json', self.location.href).href,
-    'condividi.js': new URL('../../rilascio/condividi/condividi.js', self.location.href).href, /* Condividi come immagine */
+    'condividi.js': new URL('../../rilascio/condividi/condividi.js', self.location.href).href, /* Condividi come immagine e «Condividi la giornata» */
+    /* 6.0.1 in prova (Claude, 13 novembre 2026): in Carriera «La mia settimana» prima di «Regole» e, per l'ospite, «La settimana delle squadre».
+       Home e app.html della 6.0 sono online: lo specchio prende quelle vere. */
+    'girrr/v60/tifosi.js': new URL('../../rilascio/tifosi60/tifosi.js', self.location.href).href,
+    'girrr/v60/tifosi.css': new URL('../../rilascio/tifosi60/tifosi.css', self.location.href).href,
     'stagione.js': new URL('../../rilascio/stagione/stagione.js', self.location.href).href, /* Carriera · La mia stagione */
-    'girrr/app.html': new URL('../../rilascio/video/pagine/girrr/app.html', self.location.href).href, /* app.html del sito (5.8.2, con la Carriera a cartellini) e la scheda Video di Girrr Sport (rilascio/video/scheda/applica.py --lab) */
-    'stadio/girrr/app.html': new URL('../../rilascio/video/pagine/stadio/girrr/app.html', self.location.href).href,
     'girrr/dati/redazione.json': new URL('../redazione/redazione.json', self.location.href).href, /* scritto da Claude e controllato da redazione/controlla.py */
     'conferenze.js': new URL('../../rilascio/conferenze/conferenze.js', self.location.href).href,
     'tv.js': new URL('../../rilascio/conferenze/tv.js', self.location.href).href, /* testo più grande solo sulla TV (?tv per provarlo dal PC) */
@@ -28,10 +30,6 @@ self.GIRRR_SPECCHIO = (function () {
     'girrr/curva-banca.js': new URL('../../rilascio/curva-os/pagine/girrr/curva-banca.js', self.location.href).href, /* nuovi personaggi, frasi e immagini (rilascio/curva-os/banca.py) */
     'stadio/girrr/curva-banca.js': new URL('../../rilascio/curva-os/pagine/stadio/girrr/curva-banca.js', self.location.href).href,
     'girrr/v55/ui.js': new URL('../../rilascio/curva-os/pagine/girrr/v55/ui.js', self.location.href).href, /* commenti del sondaggio senza «· bot» */
-    'girrr/': new URL('../../rilascio/condividi/pagine/girrr/index.html', self.location.href).href, /* Home del sito (5.8.2, con il pallino Live) e «Condividi la giornata» (rilascio/condividi/applica.py) */
-    'girrr/index.html': new URL('../../rilascio/condividi/pagine/girrr/index.html', self.location.href).href,
-    'stadio/girrr/': new URL('../../rilascio/condividi/pagine/stadio/girrr/index.html', self.location.href).href,
-    'stadio/girrr/index.html': new URL('../../rilascio/condividi/pagine/stadio/girrr/index.html', self.location.href).href,
     'curva-os.js': new URL('../../rilascio/curva-os/curva-os.js', self.location.href).href, /* Curva: uno stile per iPhone e uno per Android */
     'curva-os.css': new URL('../../rilascio/curva-os/curva-os.css', self.location.href).href,
     'material.css': new URL('../../rilascio/liquid-glass/material.css', self.location.href).href, /* prototipo Android, Material 3, dello Stadio (?stile=android) */

@@ -50,3 +50,10 @@ body[data-v53=curva] .pt-revision{color:var(--tx);border-color:var(--mu);backgro
 html[data-pt-skin=stadio] .pt-box h3{font-family:Lobster,Inter,serif;font-weight:400;letter-spacing:0;text-transform:none}#pt-derby{border-left-color:#d62839}#pt-derby[data-pt-competition=cup]{border-left-color:#3d93d6}
 
 .pt-box .pt-status{color:var(--pt-sub)}.pt-box button[disabled]{cursor:wait;opacity:.6}
+/* Ospite: scelta della squadra per «La settimana delle squadre» (Claude, 13 novembre 2026) */
+.pt-guest-teams{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.pt-guest-teams button{flex:0 0 auto;font:800 13px/1.2 Inter,system-ui,sans-serif;padding:8px 13px;border-radius:999px;border:1px solid #ffffff29;background:#ffffff12;color:var(--pt-ink);cursor:pointer;transition:background-color .25s,border-color .25s,color .25s}
+.pt-guest-teams button:hover{background:#ffffff22}
+.pt-guest-teams button[aria-pressed=true]{background:var(--pt-accent);border-color:var(--pt-accent);color:#fff}
+[data-pt-skin=stadio] .pt-guest-teams button[aria-pressed=true]{color:#18233e}
+@media (prefers-reduced-motion:reduce){.pt-guest-teams button{transition:none}}
