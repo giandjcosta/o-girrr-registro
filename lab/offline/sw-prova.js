@@ -13,6 +13,7 @@ self.GIRRR_SPECCHIO = (function () {
     'versioni.js': new URL('../../rilascio/versioni/versioni.js', self.location.href).href, /* pagina Versioni */
     'versioni.json': new URL('../../rilascio/versioni/versioni.json', self.location.href).href,
     'condividi.js': new URL('../../rilascio/condividi/condividi.js', self.location.href).href, /* Condividi come immagine e «Condividi la giornata» */
+    'pillole.js': new URL('../../rilascio/pillole/pillole.js', self.location.href).href, /* 6.0.1: pillole fluide in app, Albo d'oro e Totogirrr */
     /* 6.0.1 in prova (Claude, 13 novembre 2026): in Carriera «La mia settimana» prima di «Regole» e, per l'ospite, «La settimana delle squadre».
        Home e app.html della 6.0 sono online: lo specchio prende quelle vere. */
     'girrr/v60/tifosi.js': new URL('../../rilascio/tifosi60/tifosi.js', self.location.href).href,
@@ -32,11 +33,13 @@ self.GIRRR_SPECCHIO = (function () {
     'girrr/rivalita.html': new URL('../../rilascio/r601/pagine/girrr/rivalita.html', self.location.href).href,
     'girrr/novita.js': new URL('../../rilascio/r601/pagine/girrr/novita.js', self.location.href).href,
     'girrr/albo.html': new URL('../../rilascio/r601/pagine/girrr/albo.html', self.location.href).href,
+    'girrr/totogirrr.html': new URL('../../rilascio/r601/pagine/girrr/totogirrr.html', self.location.href).href,
     'stadio/girrr/derby.html': new URL('../../rilascio/r601/pagine/stadio/girrr/derby.html', self.location.href).href,
     'stadio/girrr/derby.js': new URL('../../rilascio/r601/pagine/stadio/girrr/derby.js', self.location.href).href,
     'stadio/girrr/rivalita.html': new URL('../../rilascio/r601/pagine/stadio/girrr/rivalita.html', self.location.href).href,
     'stadio/girrr/novita.js': new URL('../../rilascio/r601/pagine/stadio/girrr/novita.js', self.location.href).href,
     'stadio/girrr/albo.html': new URL('../../rilascio/r601/pagine/stadio/girrr/albo.html', self.location.href).href,
+    'stadio/girrr/totogirrr.html': new URL('../../rilascio/r601/pagine/stadio/girrr/totogirrr.html', self.location.href).href,
     'stagione.js': new URL('../../rilascio/stagione/stagione.js', self.location.href).href, /* Carriera · La mia stagione */
     'girrr/dati/redazione.json': new URL('../redazione/redazione.json', self.location.href).href, /* scritto da Claude e controllato da redazione/controlla.py */
     'conferenze.js': new URL('../../rilascio/conferenze/conferenze.js', self.location.href).href,

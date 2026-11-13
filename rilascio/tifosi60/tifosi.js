@@ -6,6 +6,7 @@ const E=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt
 const N=t=>t==='The Blue brothers'?'The Blues Brothers':t==='stif dc'?'STIF DC':t;
 let data,editoriale,config,mvp={votazione:null,archivio:[]},myVote=null,pollError='',busyVote=false,derbyReady=false,knownLogin=null,refreshId=0,factsVersion='';
 let team=null,competition='lega',sportMvp=q.get('sezione')==='mvp',careerWeek=q.get('sezione')==='settimana',signatures={};
+window.GirrrSportMvp=()=>sportMvp; /* 6.0.1: app.html disegna da sola la scheda «Squadra della settimana» */
 function identity(){try{const f=JSON.parse(localStorage.getItem('fg')||'null');return f&&f.team&&f.code?f:null}catch(e){return null}}
 function chosenTeam(){const candidates=[document.getElementById('cteam')?.value,q.get('come'),identity()?.team,document.getElementById('v53team')?.value];return candidates.find(t=>data?.teams.includes(t))||null}
 function url(file,hash='',other=skin){const u=new URL((other==='stadio'?'stadio/girrr/':'girrr/')+file,root);if(file==='app.html'&&team)u.searchParams.set('come',team);if(file==='app.html'&&hash.replace(/^#/,'')==='sport')u.searchParams.set('sezione','mvp');if(file==='app.html'&&hash.replace(/^#/,'')==='carriera')u.searchParams.set('sezione','settimana');u.hash=hash;return u.href}

@@ -19,6 +19,12 @@ Non fa commit. Si ferma se una pagina non è quella attesa (copia già preparata
 5. Derby: in Albo › Derby direttamente tre schede, «Derby della Lega», «Le rivalità» e «Classifica dei Derby»
    (il lavoro lasciato a metà da ChatGPT, rifatto da Claude), senza cambiare pagina (derby.js dentro albo.html).
    derby.html e rivalita.html portano lì, sulla scheda giusta (derby.html#pt-derby apre la Classifica).
+6. Condividi la giornata (condividi.js da rilascio/condividi/): foto e video insieme, senza testo, così WhatsApp li mostra
+   con l'anteprima in un album; poi, con un secondo tocco, Radio e Giornale. Il Giornale è il PDF intero (tutte le pagine,
+   nitido) e non più la copertina sgranata; lo stesso per «Condividi l'ultimo numero».
+7. Pillole fluide (pillole.js da rilascio/pillole/, nella radice): in app.html, Albo d'oro e Totogirrr il colore scivola dalla
+   pillola di prima alla nuova, la fila non torna indietro, il contenuto entra con una dissolvenza. Girrr Sport: «Squadra della
+   settimana» nel menu fin dall'inizio (la fila non salta più). Totogirrr: niente salto in cima né pagina che sparisce.
 """
 import os
 import shutil
@@ -69,6 +75,28 @@ APP = [
      "return '<div class=\"row\" style=\"align-items:flex-start;gap:10px;flex-wrap:wrap;padding:9px 0;border-top:1px solid var(--line)\"><img class=\"sp-logo\" src=\"'+esc(SPIMG[premio.sponsor]||SPIMG._neutro)+'\" alt=\"'+esc(premio.sponsor)+'\"><div class=\"grow\" style=\"min-width:0;flex:1 1 160px\"><b style=\"display:block\">'+esc(premio.sponsor)+'</b>"),
     # la barra di scorrimento non sposta la pagina quando arrivano i dati
     ("</head>", "<style>html{scrollbar-gutter:stable}</style></head>"),
+    # Girrr Sport: «Squadra della settimana» nel menu fin dall'inizio. Prima la aggiungeva tifosi.js dopo il disegno: a ogni tocco
+    # la pagina ridisegnava le schede spostate di un posto, la toglieva e la rimetteva, e la fila saltava indietro.
+    ("h+='<div class=\"seg\" role=\"group\" aria-label=\"Sezioni di Girrr Sport\">'+tabs.map(function(t){return '<button data-sp=\"'+t[0]+'\" aria-pressed=\"'+(sp===t[0])+'\">'+t[1]+'</button>'}).join('')+'</div>';",
+     "var MVP=!!(window.GirrrSportMvp&&window.GirrrSportMvp());"
+     "h+='<div class=\"seg\" role=\"group\" aria-label=\"Sezioni di Girrr Sport\">'+tabs.map(function(t){return '<button data-sp=\"'+t[0]+'\" aria-pressed=\"'+(sp===t[0]&&!MVP)+'\">'+t[1]+'</button>'+(t[0]==='giornale'?'<button type=\"button\" data-pt-sport=\"mvp\" aria-pressed=\"'+MVP+'\">Squadra della settimana</button>':'')}).join('')+'</div>';"),
+    # e le pillole di Girrr Sport tornano a sfumare (questa regola serviva solo per il menu ridisegnato)
+    ("#view .seg button[data-sp][aria-pressed=false]{transition:none}", ""),
+]
+
+TOTO = [
+    # cambio di menu senza salti: niente salto in cima (solo fino al menu, con calma) e altezza tenuta mentre arrivano i dati
+    ("tab=b.getAttribute('data-tab');render();window.scrollTo(0,0);",
+     "var pv=document.querySelector('.pane'),ph=pv?pv.offsetHeight:0;tab=b.getAttribute('data-tab');render();cambioTab(ph);"),
+    ("function navPre(){",
+     "/* 6.0.1 · Cambio di menu senza salti (Gianluca, 13 novembre 2026): prima la pagina saltava in cima e il contenuto cambiava di colpo,\n"
+     "   due volte per Prestiti, Movimenti e Probabilità (prima «Carico…», poi i dati). Ora si sale solo fino al menu, con calma, e la\n"
+     "   pagina tiene l'altezza finché arrivano i dati; la dissolvenza del contenuto la fa pillole.js. */\n"
+     "var MINT=0;function cambioTab(ph){var pn=document.querySelector('.pane'),nv=document.querySelector('nav');"
+     "if(pn&&ph){pn.style.minHeight=Math.min(ph,innerHeight)+'px';clearTimeout(MINT);MINT=setTimeout(function(){var p2=document.querySelector('.pane');if(p2)p2.style.minHeight=''},1500)}"
+     # il menu resta attaccato in alto: si riporta all'inizio del contenuto nuovo, appena sotto il menu, solo se è più su
+     "if(pn){var nh=nv?nv.offsetHeight:0,y=pn.getBoundingClientRect().top+scrollY-nh-12;if(scrollY>y+1){var rid=false;try{rid=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}window.scrollTo({top:Math.max(0,y),behavior:rid?'auto':'smooth'})}}}\n"
+     "function navPre(){"),
 ]
 
 SPOGLIATOIO = [
@@ -149,6 +177,22 @@ def main(sito):
             t = sost(t, a, b, rel)
         scrivi(os.path.join(sito, rel), t)
         print('ok', rel)
+    # 7. Pillole fluide (pillole.js nella radice) su app, Albo d'oro e Totogirrr; Totogirrr senza salti
+    shutil.copyfile(os.path.join(R, 'rilascio/pillole/pillole.js'), os.path.join(sito, 'pillole.js'))
+    for pre, su in (('girrr/', '../'), ('stadio/girrr/', '../../')):
+        for pag in ('app.html', 'albo.html', 'totogirrr.html'):
+            t = leggi(os.path.join(sito, pre + pag))
+            if pag == 'totogirrr.html':
+                for a, b in TOTO:
+                    t = sost(t, a, b, pre + pag)
+            off = '<script src="' + su + 'offline.js" defer></script>'
+            t = sost(t, off, '<script src="' + su + 'pillole.js?v=1" defer></script>' + off, pre + pag)
+            scrivi(os.path.join(sito, pre + pag), t)
+        print('ok', pre + 'app.html, albo.html, totogirrr.html con pillole.js')
+    print('ok pillole.js')
+    # 6. Condividi la giornata: foto e video in un album (anteprime su WhatsApp), poi Radio e Giornale; Giornale in PDF intero
+    shutil.copyfile(os.path.join(R, 'rilascio/condividi/condividi.js'), os.path.join(sito, 'condividi.js'))
+    print('ok condividi.js')
     for f in ('tifosi.js', 'tifosi.css'):
         shutil.copyfile(os.path.join(R, 'rilascio/tifosi60', f), os.path.join(sito, 'girrr/v60', f))
         print('ok girrr/v60/' + f)
