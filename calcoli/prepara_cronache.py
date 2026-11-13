@@ -87,6 +87,10 @@ def prepara(sito, eventi, testi, uscita, scripts_pdf=None):
                 scripts.mkdir(exist_ok=True)
                 for name in ('pdf_giornale.py', 'pdf_settimana.py', 'toto_quote.py'):
                     shutil.copyfile(Path(scripts_pdf)/name, scripts/name)
+                # Il renderer pubblicato dalla 6.0 legge anche le aspettative editoriali.
+                attese_pdf=Path(scripts_pdf)/'aspettative.json'
+                if attese_pdf.is_file():
+                    shutil.copyfile(attese_pdf,scripts/attese_pdf.name)
                 subprocess.run([sys.executable, str(R/'calcoli/render_giornale_prova.py'), str(dest)], check=True)
                 manifest['pdf'] = True
             posts = leggi(dest/'post-curva.json')
