@@ -86,7 +86,7 @@ def routes(c,db):
 def main():
     report={'motori':{},'visite':0,'problemi':[],'interazioni':[],'browser_fisici':'Non disponibili: Samsung Internet, Safari su dispositivo, Chrome/Edge di marca. Schermi e identità emulati.'}
     with sync_playwright() as p:
-        screens=[('iPhone320',dict(p.devices['iPhone SE'],viewport={'width':320,'height':568}))]+[(n,p.devices[n]) for n in ['iPhone SE','iPhone 15 Pro','iPhone 15 Pro Max','Galaxy S8','Pixel 7','Galaxy S9+','iPad Mini','iPad (gen 7) landscape','iPad Pro 11','Galaxy Tab S4','Galaxy Tab S4 landscape']]+[(f'PC{w}',{'viewport':{'width':w,'height':900}}) for w in [1280,1920,2560]]+[('TV',{'viewport':{'width':1920,'height':1080},'device_scale_factor':2})]
+        screens=[('iPhone320',dict(p.devices['iPhone SE'],viewport={'width':320,'height':568}))]+[(n,p.devices[n]) for n in ['iPhone SE','iPhone 15 Pro','iPhone 15 Pro Max','Galaxy S8','Pixel 7','Galaxy S9+','iPad Mini','iPad (gen 7) landscape','iPad Pro 11','Galaxy Tab S4','Galaxy Tab S4 landscape']]+[(f'PC{w}',{'viewport':{'width':w,'height':900}}) for w in [1280,1920,2560]]+[('TV',{'viewport':{'width':1920,'height':1080},'device_scale_factor':2,'user_agent':'Mozilla/5.0 (SMART-TV; Linux; Tizen 7.0) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/5.0 Chrome/94.0 TV Safari/537.36'})]
         if os.environ.get('SCHERMI'):screens=[s for s in screens if s[0] in os.environ['SCHERMI'].split(',')]
         report['profili']=len(screens)
         for engine in os.environ.get('MOTORI','chromium,webkit,firefox').split(','):
@@ -104,6 +104,7 @@ def main():
                             page.goto(BASE+folder+path,wait_until='load');page.locator(target).first.wait_for(state='visible');page.evaluate('document.fonts.ready');page.wait_for_load_state('networkidle')
                             assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1'),'Scorrimento orizzontale'
                             assert not errors and not bad,{'js':errors,'http':bad}
+                            if screen=='TV':assert 'tv-grande' in (page.locator('html').get_attribute('class') or ''),'Modalità TV non attiva'
                             if slug=='video':expect(page.locator('.vid-i')).to_have_count(7)
                             if slug=='curva':
                                 ua=options.get('user_agent','');expected='ios' if any(n in ua for n in ['iPhone','iPad']) else 'android' if 'Android' in ua else 'altro'

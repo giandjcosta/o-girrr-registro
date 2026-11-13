@@ -1,6 +1,6 @@
 # Prova integrata: settimana, MVP dei tifosi e Derby
 
-Preview locale da rivedere prima del commit. Non assegna una versione, non pubblica e non cambia database, premi, video o attività di Claude.
+Preview approvata da Gianluca e conservata nella preparazione della 6.0. Il pacchetto reale è in `rilascio/tifosi60/`, con il coordinamento in `COORDINAMENTO-6.0.md` alla radice. Non assegna una versione, non pubblica e non cambia database, premi, video o attività di Claude.
 
 ## Percorsi da provare
 

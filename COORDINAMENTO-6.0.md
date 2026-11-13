@@ -2,6 +2,10 @@
 
 Gianluca ha visto e approvato la prova. Il 13 novembre ha autorizzato preparazione e merge, **senza pubblicazione**. La 6.0 verrà pubblicata da Claude. Coordinamento tracciato in https://github.com/giandjcosta/o-girrr-registro/issues/57.
 
+- Registro: [PR #58](https://github.com/giandjcosta/o-girrr-registro/pull/58), verso il ramo 6.0 di Claude.
+- Server: [PR #9](https://github.com/giandjcosta/o-fant-a-girrr/pull/9), **già unita** al ramo 6.0, merge `19b8ec2027106b0e40d655b54c56b57a68de674c`.
+- Nessuno di questi merge distribuisce Pages. Il messaggio finale nel ticket contiene stato del Registro ed esiti del collaudo.
+
 ## Contenuti
 
 - Squadra MVP dei tifosi in Girrr Sport, richiamo Home, voto anche in Curva, archivio dei verdetti in Albo/Record. Redazione e personaggi partecipano sempre. Gli allenatori possono votare, cambiare e ritirare il voto; un solo voto per squadra, verificato con il codice della Curva. Pesi 40/40/20 con voti umani, 50/50 senza.
