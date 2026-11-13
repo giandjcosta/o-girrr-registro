@@ -84,6 +84,10 @@ with sync_playwright() as p:
                     for stadio in (False,True):
                         if stadio: page.locator('#grafica').click()
                         expect(page.locator('#grafica')).to_have_text('Grafica: '+('Stadio' if stadio else 'Lega'))
+                        page.wait_for_function('''stadio => {
+                            const outer=document.getElementById('contenuto'),f=outer.contentDocument.getElementById('f');
+                            return f && f.contentDocument && f.contentDocument.readyState==='complete' && f.contentWindow.location.pathname.includes('/stadio/')===stadio && f.contentWindow.__registroSolaLettura===true;
+                        }''',arg=stadio,timeout=35000)
                         inner.locator('h1').first.wait_for()
                         assert inner.locator('html').evaluate('()=>window.__registroSolaLettura===true')
                         assert inner.locator('html').evaluate("async()=>{const r=await fetch('https://qmjqfgmvimsuxvghetgi.supabase.co/rest/v1/rpc/curva_scrivi',{method:'POST',body:'{}'});return r.status===403}")
