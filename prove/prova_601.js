@@ -17,7 +17,7 @@ async function ctx(o0) { const o = { ...o0, serviceWorkers: 'block' }; /* senza 
     await p.goto(B + sk + 'app.html' + q + '#carriera'); await p.waitForTimeout(2600); await lato(sk + ' Carriera');
     const menu = await p.evaluate(() => [...document.querySelectorAll('#view .seg button')].filter(b => b.dataset.ctab || b.hasAttribute('data-pt-week')).map(b => b.textContent));
     if (chi === 'squadra') { if (menu.join('|') !== 'Panoramica|Stagione|Obiettivi|Fiducia|Promesse|Storia|La mia settimana|Regole') pr.push(sk + ' menu squadra: ' + menu.join('|')); }
-    else { if (menu.join('|') !== 'Panoramica|Stagione|Obiettivi|Fiducia|La mia settimana') pr.push(chi + ' ' + sk + ' menu: ' + menu.join('|'));
+    else { if (menu.join('|') !== 'Panoramica|Stagione|Obiettivi|Fiducia|Promesse|Storia|La mia settimana|Regole') pr.push(chi + ' ' + sk + ' menu: ' + menu.join('|'));   // l'ospite vede tutte le schede (Gianluca, 13 novembre, sera)
      const sel = p.locator('#cteam'); if (!(await sel.count())) pr.push(chi + ' ' + sk + ': manca la scelta della squadra');
      else { await sel.selectOption({ index: 3 }); await p.waitForTimeout(800); const v = await sel.inputValue(); const tot = await p.evaluate(() => !!document.querySelector('.bolla52') || [...document.querySelectorAll('#view a')].some(a => /Vai a Totogirrr/.test(a.textContent)));
       if (tot) pr.push(chi + ' ' + sk + ': premi o Totogirrr visibili');
@@ -28,12 +28,15 @@ async function ctx(o0) { const o = { ...o0, serviceWorkers: 'block' }; /* senza 
     // Obiettivi: linea del tempo e loghi degli sponsor
     await p.click('[data-ctab="ob"]'); await p.waitForTimeout(900);
     const ob = await p.evaluate(() => { const l = document.querySelector('.ob-timeline'); const h = [...document.querySelectorAll('.card h3')].find(x => /Premi sponsor/.test(x.textContent)); return { primo: l ? l.children[1] && l.children[1].textContent.trim() : '', loghi: h ? h.closest('.card').querySelectorAll('img.sp-logo').length : -1 }; });
-    if (!/^1ª\s*L.inizio/.test(ob.primo)) pr.push(chi + ' ' + sk + ' linea del tempo: ' + ob.primo); if (ob.loghi < 1) pr.push(chi + ' ' + sk + ' premi sponsor senza loghi ' + ob.loghi);
+    if (!/^1ª\s*L.inizio/.test(ob.primo)) pr.push(chi + ' ' + sk + ' linea del tempo: ' + ob.primo); if (chi === 'squadra' && ob.loghi < 1) pr.push(chi + ' ' + sk + ' premi sponsor senza loghi ' + ob.loghi);
+    if (chi !== 'squadra' && await p.evaluate(() => /Premi sponsor/.test(document.getElementById('view').innerText))) pr.push(chi + ' ' + sk + ': vede i premi degli sponsor');
     await lato(sk + ' Obiettivi'); if (FOTO && /PC 1280|SE/.test(sn) && M === 'chromium') await p.screenshot({ path: FOTO + '/601-' + sn.replace(/\W+/g, '') + '-' + chi + '-' + sk.replace(/\W+/g, '') + '-obiettivi.png', fullPage: true });
     // Home
     await p.goto(B + sk + q); await p.waitForTimeout(1800); await lato(sk + ' Home');
     const home = await p.evaluate(() => { const L = [...document.querySelectorAll('.cards > *')].filter(e => e.offsetParent); return { n: L.length, col: new Set(L.map(e => Math.round(e.getBoundingClientRect().left))).size, spog: L.some(e => /Spogliatoio/.test(e.textContent)) }; });
-    if (!home.spog) pr.push(chi + ' ' + sk + ' Home senza Spogliatoio'); if (sk === 'girrr/' && home.col !== 1) pr.push(chi + ' Home Lega in ' + home.col + ' colonne');
+    if (!home.spog) pr.push(chi + ' ' + sk + ' Home senza Spogliatoio');
+    const gm = await p.evaluate(() => ({ gm: document.querySelectorAll('.osp-gm').length, banda: document.querySelectorAll('.osp').length }));
+    if (gm.banda || gm.gm !== (chi === 'ospite' ? 1 : 0)) pr.push(chi + ' ' + sk + ' Home: Guest Mode ' + gm.gm + ', bande ' + gm.banda); if (sk === 'girrr/' && home.col !== 1) pr.push(chi + ' Home Lega in ' + home.col + ' colonne');
     if (FOTO && /PC 1280|SE/.test(sn) && M === 'chromium' && chi !== 'anonimo') { const el = await p.$('.cards'); if (el) await el.screenshot({ path: FOTO + '/601-' + sn.replace(/\W+/g, '') + '-' + chi + '-' + sk.replace(/\W+/g, '') + '-home.png' }); }
    }
    // Spogliatoio senza codice

@@ -48,7 +48,9 @@ def sost(t, a, b, rel):
     return t.replace(a, b)
 
 
-PUBBLICHE = "['pan','stag','ob','fid']"
+# l'ospite vede tutte le schede, come il sito di un campionato vero (Gianluca, 13 novembre 2026, sera): niente richieste
+# degli sponsor e niente premi da riscuotere, ma la fiducia di tutti, Promesse, Storia e Regole
+PUBBLICHE = "['pan','stag','ob','fid','prom','st','reg']"
 
 APP = [
     # ospite: la Carriera c'è, con la scelta della squadra
@@ -58,7 +60,7 @@ APP = [
      "if(GUEST&&" + PUBBLICHE + ".indexOf(S.ctab)<0)S.ctab='pan';"
      "var t=(CARSCELTA||GUEST)?S.cteam:ME,"),
     ("h+=(CARSCELTA?'<select id=\"cteam\"",
-     "h+=(GUEST?'<p class=\"sm mut\" style=\"margin:0 0 8px\">Modalità ospite: scegli una squadra e guarda la sua Carriera.</p>':'')+((CARSCELTA||GUEST)?'<select id=\"cteam\""),
+     "h+=((CARSCELTA||GUEST)?'<select id=\"cteam\""),
     ("+'</p>')+bolla52(t)+carTabs();", "+'</p>')+(GUEST?'':bolla52(t))+carTabs();"),
     ("[['pan','Panoramica'],['stag','Stagione'],['ob','Obiettivi'],['fid','Fiducia'],['prom','Promesse'],['st','Storia'],['reg','Regole']].map(",
      "[['pan','Panoramica'],['stag','Stagione'],['ob','Obiettivi'],['fid','Fiducia'],['prom','Promesse'],['st','Storia'],['reg','Regole']].filter(function(x){return !GUEST||" + PUBBLICHE + ".indexOf(x[0])>=0}).map("),
@@ -66,6 +68,14 @@ APP = [
      "document.addEventListener('click',function(e){var b=e.target.closest('[data-ctab]');if(!b)return;S.ctab=b.dataset.ctab;render()});"
      "document.addEventListener('change',function(e){if(e.target&&e.target.id==='cteam'){S.cteam=e.target.value;render()}});"),
     ("(daRisc?'<a class=\"btn\" href=\"'+esc(torna)+'\"", "(daRisc&&!GUEST?'<a class=\"btn\" href=\"'+esc(torna)+'\""),
+    # ospite: Panoramica con la fiducia di tutte le squadre al posto di reputazione e premi sponsor
+    ("else h+=cGauge+vCarRiassunto(t,C)+cRep;", "else h+=cGauge+vCarRiassunto(t,C)+(GUEST?cLega:cRep);"),
+    # ospite: negli Obiettivi solo quelli del presidente, senza le richieste degli sponsor e senza i premi sponsor
+    ("[0,1,3].map(function(i){return riga(C.o[i],", "(GUEST?[0,1]:[0,1,3]).map(function(i){return riga(C.o[i],"),
+    ("riga(C.o[4],'entro la fine del girone')", "(GUEST?'':riga(C.o[4],'entro la fine del girone'))"),
+    ("return linea+stag+cup+sponsor;", "return linea+stag+cup+(GUEST?'':sponsor);"),
+    # ospite: il Borsino dei giocatori è pubblico (non dipende dalla squadra)
+    ("function vBors(){return GUEST?lvGate('Il Borsino della tua squadra'):vBorsL()}", "function vBors(){return vBorsL()}"),
     # Linea del tempo dalla 1ª giornata
     ("var scadenze=[2,6,8,10,18,26,34]", "var scadenze=[1,2,6,8,10,18,26,34]"),
     ("var nomi=function(n){var a=[];if(n===8)", "var nomi=function(n){var a=[];if(n===1)a.push('L\\'inizio');if(n===8)"),
@@ -204,8 +214,26 @@ def main(sito):
     for rel, sel in (('girrr/ospite.js', 'a[href="../index.html"],'), ('stadio/girrr/ospite.js', 'a[href="../../index.html"],')):
         t = sost(leggi(os.path.join(sito, rel)), sel, '', rel)
         t = t.replace('Sola lettura: niente Spogliatoio, scambi e Totogirrr.', 'Sola lettura: dello Spogliatoio solo le schede pubbliche; niente scambi né Totogirrr.')
+        # una sola etichetta «Guest Mode», piccola, nella Home (Gianluca, 13 novembre 2026, sera): prima una banda oro in cima a ogni
+        # pagina, doppia dove lo script era caricato due volte
+        t = sost(t, 'window.OSPITE=true;', 'if(window.OSPITE)return;window.OSPITE=true;', rel)
+        t = sost(t, '.osp{position:sticky;top:0;z-index:99;background:#ffd166;color:#1d2a52;font:800 12px/1.3 Inter,system-ui,sans-serif;letter-spacing:.14em;text-align:center;padding:7px 10px;text-transform:uppercase}',
+                 '.osp-gm{display:block;width:max-content;max-width:100%;margin:10px auto 6px;background:#ffd166;color:#1d2a52;font:800 11px/1 Inter,system-ui,sans-serif;letter-spacing:.12em;padding:6px 12px;border-radius:999px;text-transform:uppercase}', rel)
+        t = sost(t, "var b=document.createElement('div');b.className='osp';b.textContent='Modalità ospite · Sola lettura';document.body.insertBefore(b,document.body.firstChild);",
+                 "if(!/\\/girrr\\/(index\\.html)?$/.test(location.pathname)||document.querySelector('.osp-gm'))return;"
+                 "var b=document.createElement('div');b.className='osp-gm';b.textContent='Guest Mode';"
+                 "var h=document.querySelector('header.top')||document.querySelector('.top');if(h&&h.parentNode)h.parentNode.insertBefore(b,h.nextSibling);else document.body.insertBefore(b,document.body.firstChild);", rel)
         scrivi(os.path.join(sito, rel), t)
         print('ok', rel)
+    # girrr/v55/ui.js (Curva, Notifiche, Tabellone, Campo, Home, app di Lega e Stadio) creava una seconda banda oro: tolta.
+    # E non nasconde più all'ospite il collegamento allo Spogliatoio, che ora ha le schede pubbliche.
+    rel = 'girrr/v55/ui.js'
+    t = leggi(os.path.join(sito, rel))
+    t = sost(t, "a[href$=\"o-fant-a-girrr/index.html\"],a[href*=\"totogirrr\"]", "a[href*=\"totogirrr\"]", rel)
+    t = sost(t, "document.head.appendChild(st);var b=document.createElement('div');b.className='osp';b.textContent='Modalità ospite · Sola lettura';\n var v=document.querySelector('.v53-banner');if(v&&v.parentNode)v.parentNode.insertBefore(b,v.nextSibling);else document.body.insertBefore(b,document.body.firstChild)}",
+             "document.head.appendChild(st)}", rel)
+    scrivi(os.path.join(sito, rel), t)
+    print('ok', rel)
     t = leggi(os.path.join(sito, 'girrr/index.html'))
     if '6.0.1 · Lega: i riquadri grandi' not in t:
         t = sost(t, '</head>', HOME_LEGA, 'girrr/index.html')
