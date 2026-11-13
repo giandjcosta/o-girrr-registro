@@ -1,0 +1,109 @@
+"""Portale completo: vecchi indirizzi, menu persistente, grafica e sola lettura.
+
+Tre motori reali, 16 profili ciascuno; nessuna chiamata al database reale.
+"""
+import json
+import mimetypes
+import os
+from pathlib import Path
+import re
+from urllib.parse import unquote, urlsplit
+from playwright.sync_api import sync_playwright, expect
+from rete_browser import installa
+
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / 'qa_artifacts/portale-registro'
+OUT.mkdir(parents=True, exist_ok=True)
+BASE = 'http://127.0.0.1:8793/o-girrr-registro/'
+expect.set_options(timeout=35000)
+report = []
+with sync_playwright() as p:
+    screens = [('iPhone320', dict(p.devices['iPhone SE'], viewport={'width':320,'height':568}))]
+    screens += [(n, dict(p.devices[n])) for n in ('iPhone SE','iPhone 15 Pro','iPhone 15 Pro Max','Galaxy S8','Pixel 7','Galaxy S9+','iPad Mini','iPad (gen 7) landscape','iPad Pro 11','Galaxy Tab S4','Galaxy Tab S4 landscape')]
+    screens += [(f'PC{w}', {'viewport':{'width':w,'height':900}}) for w in (1280,1920,2560)]
+    screens += [('TV', {'viewport':{'width':1920,'height':1080},'device_scale_factor':2,'user_agent':'Mozilla/5.0 (SMART-TV; Linux; Tizen 7.0) AppleWebKit/537.36 Chrome/94.0 TV Safari/537.36'})]
+    if os.environ.get('SCHERMI'): screens = [s for s in screens if s[0] in os.environ['SCHERMI'].split(',')]
+    for engine in os.environ.get('MOTORI','chromium,webkit,firefox').split(','):
+        options = {'executable_path':os.environ['WEBKIT_PATH']} if engine=='webkit' and os.environ.get('WEBKIT_PATH') else {}
+        b = getattr(p,engine).launch(**options)
+        for name, config in screens:
+            config = dict(config)
+            config.pop('default_browser_type',None)
+            if engine=='firefox': config.pop('is_mobile',None)
+            ctx = b.new_context(**config, service_workers='block')
+            installa(ctx)
+            ctx.route('https://raw.githubusercontent.com/giandjcosta/o-girrr-registro/chatgpt/dati-ramificazioni/**', lambda r:r.fulfill(status=200,content_type='application/json',headers={'Access-Control-Allow-Origin':'*'},body=(ROOT/'ramificazioni-dati.json').read_bytes()))
+            def local(r):
+                rel = unquote(urlsplit(r.request.url).path).removeprefix('/o-girrr-registro/')
+                target = (ROOT/rel).resolve()
+                if target.is_dir(): target /= 'index.html'
+                if not target.is_relative_to(ROOT) or not target.is_file(): r.fulfill(status=404,body='Non trovato'); return
+                r.fulfill(status=200,content_type=mimetypes.guess_type(target.name)[0] or 'application/octet-stream',body=target.read_bytes())
+            ctx.route(re.compile(r'^http://127\.0\.0\.1:8793/.*'),local)
+            page = ctx.new_page()
+            page.set_default_timeout(20000)
+            errors = []
+            page.on('pageerror',lambda e:errors.append(str(e)))
+            print('PROFILO',engine,name,flush=True)
+            page.goto(BASE,wait_until='load')
+            expect(page).to_have_url(BASE+'registro.html#changelog')
+            shell = page.locator('#contenuto')
+            def ready():
+                expect(shell).not_to_have_attribute('aria-busy','true')
+                assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
+                # Dopo history.back Firefox può conservare il documento ma sostituire
+                # l'identità del Frame nel protocollo di automazione. Controlliamo
+                # il documento effettivamente mostrato, anche la sua destinazione.
+                page.wait_for_function('''() => {
+                    const f=document.getElementById('contenuto'),d=f.contentDocument;
+                    return d && d.readyState==='complete' && d.documentElement.dataset.registroCollegato==='true' && d.location.href===f.dataset.src;
+                }''',timeout=35000)
+                assert page.evaluate('''() => {
+                    const f=document.getElementById('contenuto');
+                    return f.contentDocument.documentElement.scrollWidth<=f.contentWindow.innerWidth+1;
+                }'''),(engine,name,page.url)
+            ready()
+            for key in ('lab','aggiornamenti','archivio','ramificazioni','anteprima'):
+                print('SEZIONE',engine,name,key,flush=True)
+                if page.locator('#sezione').is_visible(): page.locator('#sezione').select_option(key)
+                else: page.locator('#menu a[href="#'+key+'"]').click()
+                expect(shell).to_have_attribute('data-src',re.compile(re.escape({'lab':'lab/','aggiornamenti':'aggiornamenti.html','archivio':'archivio.html','ramificazioni':'ramificazioni.html','anteprima':'ufficiale/'}[key])+r'\?nel-registro=1$'))
+                ready()
+                expect(page.locator('#menu a[aria-current]')).to_have_attribute('href','#'+key)
+                if key=='ramificazioni':
+                    content = page.frame_locator('#contenuto')
+                    expect(content.locator('.repo')).to_have_count(2)
+                    content.locator('#select-all').click()
+                    assert content.locator('[data-map-branch]:visible').count()>20
+                    ready()
+                    if name in ('PC1920','TV'):
+                        page.screenshot(path=str(OUT/(engine+'-'+name+'.png')))
+                if key=='anteprima':
+                    inner = page.frame_locator('#contenuto').frame_locator('#f')
+                    inner.locator('h1').first.wait_for()
+                    for stadio in (False,True):
+                        if stadio: page.locator('#grafica').click()
+                        expect(page.locator('#grafica')).to_have_text('Grafica: '+('Stadio' if stadio else 'Lega'))
+                        page.wait_for_function('''stadio => {
+                            const outer=document.getElementById('contenuto'),f=outer.contentDocument.getElementById('f');
+                            return f && f.contentDocument && f.contentDocument.readyState==='complete' && f.contentWindow.location.pathname.includes('/stadio/')===stadio && f.contentWindow.__registroSolaLettura===true;
+                        }''',arg=stadio,timeout=35000)
+                        inner.locator('h1').first.wait_for()
+                        assert inner.locator('html').evaluate('()=>window.__registroSolaLettura===true')
+                        assert inner.locator('html').evaluate("async()=>{const r=await fetch('https://qmjqfgmvimsuxvghetgi.supabase.co/rest/v1/rpc/curva_scrivi',{method:'POST',body:'{}'});return r.status===403}")
+            # Il vecchio segnalibro Anteprima torna nello stesso portale.
+            page.goto(BASE+'ufficiale/',wait_until='load')
+            expect(page).to_have_url(BASE+'registro.html#anteprima')
+            ready()
+            page.evaluate("location.hash='ramificazioni'")
+            expect(shell).to_have_attribute('data-src',BASE+'ramificazioni.html?nel-registro=1')
+            ready()
+            page.evaluate('history.back()')
+            expect(page).to_have_url(BASE+'registro.html#anteprima')
+            ready()
+            assert not errors,(engine,name,errors)
+            report.append({'motore':engine,'versione':b.version,'schermo':name,'esito':'PASS'})
+            print('PASS',engine,name,flush=True)
+            ctx.close()
+        b.close()
+(OUT/('esiti-'+os.environ.get('MOTORI','tutti')+'.json')).write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')

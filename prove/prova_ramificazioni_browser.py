@@ -53,7 +53,7 @@ def main():
                 c=b.new_context(**options,service_workers='block');state=routes(c);page=c.new_page();page.set_default_timeout(12000);errors=[];bad=[]
                 page.on('pageerror',lambda e:errors.append(str(e)));page.on('response',lambda r:bad.append(str(r.status)+' '+r.url) if r.status>=400 else None)
                 try:
-                    page.goto(BASE+'ramificazioni.html',wait_until='load');expect(page.locator('.repo')).to_have_count(2);page.evaluate('document.fonts.ready')
+                    page.goto(BASE+'ramificazioni.html?nel-registro=1',wait_until='load');expect(page.locator('.repo')).to_have_count(2);page.evaluate('document.fonts.ready')
                     total=sum(len(r['branches']) for r in SNAP['repositories']);expect(page.locator('[data-map-branch]')).to_have_count(total);fits(page)
                     colors=page.locator('[data-map-branch]').evaluate_all('(es)=>es.map(e=>e.style.getPropertyValue("--branch"))');assert len(set(colors))==total,'Colori duplicati'
                     assert page.evaluate('document.documentElement.scrollHeight')<20000,'Vista iniziale troppo lunga'

@@ -1386,3 +1386,21 @@ Niente di questo va sul sito vero senza altro "vai" esplicito (lo SQL feed è gi
 ## 26 ottobre 2026 — Seconda revisione Fiducia 5.2
 - Eliminato il bonus riservato a capolista emergente. Ogni squadra riceve bonus **o** malus sulla fiducia in base a differenza tra posizione effettiva e posizione attesa, aumentato gradualmente con le giornate giocate e limitato a ±11 punti. Vale per Big, Emergenti e Outsider.
 - Simulazione sponsor: premi 50/75/100/125 Fantacrediti secondo difficoltà, non accreditati realmente. Solo Lab e Anteprima 5.2.
+
+
+## 13 novembre 2026 — ChatGPT: ingresso unico del Registro e Ramificazioni online
+
+- Richiesta di Gianluca: un solo link con tutte le sezioni, incluse le Ramificazioni che sul Registro pubblico restituivano 404. Portale `registro.html` con menu persistente e tendina per telefono; gli ingressi precedenti aprono la sezione corrispondente nello stesso portale.
+- Pubblicazione limitata al Registro. Recuperati dal ramo 6.0 soltanto mappa, raccolta dati e relativi test. Nessuna pagina della lega, codice delle voci, database o numero di versione modificati; il deploy 6.0 resta a Claude.
+- Anteprima dentro la cornice originale protetta, con Lega/Stadio selezionabili dal menu. Changelog conserva lo snapshot e la sincronizzazione esistente. I generatori mantengono gli ingressi anche dopo gli aggiornamenti automatici; nessun cambiamento alla cadenza settimanale o alla rilevazione delle nuove versioni.
+- Ramificazioni: workflow ogni 15 minuti sul ramo tecnico; 6.0 evidenziata, data e autore, parole leggibili, rami integrati chiusi, selezione di tutti i rami e colori distinti. Il feed continua a leggere entrambi i repository senza pubblicare il sito della lega.
+- Collaudi: sincronizzazione, passaggio alla versione successiva, idempotenza e modello della mappa superati. Matrice del portale, Anteprima protetta e Ramificazioni su Chromium/WebKit/Firefox × 16 profili collegata al workflow. Esito della matrice e della pubblicazione registrato nella PR e nel ticket #57 prima della consegna.
+- Samsung Internet e Safari su dispositivi fisici non disponibili. Le identità dei dispositivi e gli schermi sono emulati; i tre motori browser sono reali.
+
+
+### Verifica del portale pubblico e controllo Firefox
+
+- Portale pubblicato con PR #62, merge `f873036`. Primo aggiornamento automatico dei rami riuscito (`43460259041`, 13 novembre alle 17:12 a Roma). Durante il lavoro Claude ha pubblicato la 6.0 su `gh-pages` (`9c26f19`): il Registro si è allineato da solo (`f1d2e13`) conservando il menu.
+- Tutte le sei sezioni verificate sul sito pubblico in Chromium a 320 e 1920 px, comprese la selezione collettiva della mappa, i vecchi indirizzi, Lega/Stadio e le RPC mutanti bloccate. Collaudo locale completo: 16 profili per Chromium 151, WebKit 26.5 e Firefox 153. Prima CI `43459265408` interamente verde; sul merge anche Chromium e Firefox verdi nel run `43460259282`.
+- Un giro intermedio ha trovato un errore intermittente del riferimento al Frame di Playwright dopo Indietro in Firefox (`43460028216`). Il controllo del layout ora legge direttamente il documento della cornice, aspettando anche URL esatto, caricamento completo e collegamento del menu: conserva la stessa verifica di overflow e aggiunge verifiche sul documento mostrato. Riprova dei due profili interessati, iPad Pro 11 e PC 1920, riuscita. Nessuna modifica al comportamento del sito in questa correzione del collaudo.
+- Samsung Internet e Safari su dispositivi fisici non disponibili. Foto PC/TV in `qa_artifacts/portale-registro/`; indicazioni per conservare il portale nel futuro merge della 6.0 nel ticket #57.

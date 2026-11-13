@@ -26,7 +26,7 @@ def pagina(titolo, body):
     return ('<!doctype html><html lang="it"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             '<meta name="robots" content="noindex"><link rel="stylesheet" href="stile.css">'
             '<style>*{box-sizing:border-box}body{margin:0;padding:20px;font-family:Inter,system-ui,sans-serif;color:#fbf6ec;background:#1d2a52}main{max-width:900px;margin:auto}nav{display:flex;flex-wrap:wrap;gap:16px}a{color:#ffd166}article{margin:18px 0;padding:18px;border:1px solid #7888a8;border-radius:12px}h1{font-size:clamp(26px,6vw,42px)}h2{overflow-wrap:anywhere}li{margin:8px 0}</style>'
-            '<title>' + html.escape(titolo) + ' · O Girrr</title><main><nav><a href="./">Changelog</a><a href="aggiornamenti.html">Aggiornamenti</a><a href="ufficiale/">Anteprima</a><a href="archivio.html">Archivio</a><a href="lab/">Laboratorio</a><a href="ramificazioni.html">Ramificazioni</a></nav>' + body + '</main></html>\n')
+            '<script src="registro-ingresso.js" data-sezione="archivio" defer></script><title>' + html.escape(titolo) + ' · O Girrr</title><main><nav><a href="./">Changelog</a><a href="aggiornamenti.html">Aggiornamenti</a><a href="ufficiale/">Anteprima</a><a href="archivio.html">Archivio</a><a href="lab/">Laboratorio</a></nav>' + body + '</main></html>\n')
 
 def sincronizza(site):
     versions_text = (site / 'versioni.json').read_text(encoding='utf-8')

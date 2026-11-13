@@ -5,6 +5,12 @@
 - **Sito vero:** repository [o-fant-a-girrr](https://github.com/giandjcosta/o-fant-a-girrr), pubblicato su https://giandjcosta.github.io/o-fant-a-girrr/
 - **Questa repository:** https://giandjcosta.github.io/o-girrr-registro/ (Registro, Laboratorio e Anteprima)
 
+## Un solo ingresso
+
+Apri **https://giandjcosta.github.io/o-girrr-registro/**: il menu persistente riunisce Changelog, Lab, Anteprima, Aggiornamenti, Archivio e Ramificazioni. Su telefono scegli la sezione dalla tendina. Anche i vecchi indirizzi delle sezioni aprono il portale. L’Anteprima mantiene le grafiche Lega/Stadio e la protezione in sola lettura.
+
+Ramificazioni legge entrambi i repository: 6.0 in evidenza, lavori in corso ordinati per data, rami integrati nei cassetti e selezione collettiva. Il workflow raccoglie i dati ogni 15 minuti, con i possibili ritardi di GitHub; il portale conserva gli allineamenti automatici delle versioni già esistenti.
+
 ## Link utili
 
 | Cosa | Link |
@@ -23,7 +29,7 @@
 | Stato del progetto (cosa è online, cosa è in prova) | [STATO.md](STATO.md) |
 | Collaudo automatico su telefono e PC, Chromium e WebKit (Safari) | https://github.com/giandjcosta/o-girrr-registro/actions/workflows/claude-collaudo-55.yml |
 
-Versione online sul sito vero: **5.8.2**. Anteprima corrente: copia in sola lettura della stessa versione; i prototipi restano nel Laboratorio. Allineamento automatico dopo le modifiche al Lab e sincronizzazione ogni 7 giorni, subito se esce una versione nuova (gli orari GitHub possono slittare).
+Versione online sul sito vero: **6.0**. Anteprima corrente: copia in sola lettura della stessa versione; i prototipi restano nel Laboratorio. Allineamento automatico dopo le modifiche al Lab e sincronizzazione ogni 7 giorni, subito se esce una versione nuova (gli orari GitHub possono slittare).
 
 Per riprendere il lavoro in una chat nuova: "Leggi STATO.md nel repo o-girrr-registro e continuiamo da lì". In `STATO.md` c'è cosa è online, cosa è in prova e cosa resta da fare.
 

@@ -1,8 +1,11 @@
+/* Ingresso del Lab nel menu unico, senza modificare i prototipi generati. */
+(function(){
+  var root=new URL('./',document.currentScript.src);
+  if(window.self===window.top && !new URLSearchParams(location.search).has('nel-registro') && (location.pathname===new URL('lab/',root).pathname || location.pathname===new URL('lab/index.html',root).pathname))location.replace(new URL('registro.html#lab',root).href);
+})();
 /* I collegamenti correnti del Lab seguono la versione pubblicata, non i prototipi storici. */
 (function () {
   var root = new URL('./', document.currentScript.src);
-  var nav=document.querySelector('.tabs');
-  if(nav&&!nav.querySelector('[data-ramificazioni]')){var a=document.createElement('a');a.dataset.ramificazioni='';a.href=new URL('ramificazioni.html',root);a.textContent='Ramificazioni';nav.append(a);}
   fetch(new URL('registro-stato.json', root), {cache: 'no-cache'}).then(function (r) {
     if (!r.ok) throw new Error(r.status);
     return r.json();

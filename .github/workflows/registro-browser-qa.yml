@@ -1,7 +1,7 @@
 name: ChatGPT - Registro Chromium WebKit Firefox
 on:
   push:
-    paths: ['anteprima/**', 'prove/prova_registro_corrente.py', 'registro-stato.json', 'archivio.html', '.github/workflows/registro-browser-qa.yml']
+    paths: ['registro*', 'ramificazioni*', 'prove/prova_portale_registro.py', 'prove/prova_ramificazioni*', 'anteprima/**', 'prove/prova_registro_corrente.py', 'registro-stato.json', 'archivio.html', '.github/workflows/registro-browser-qa.yml']
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -28,8 +28,14 @@ jobs:
           MOTORI: ${{ matrix.motore }}
           CHROMIUM_PATH: /browser-playwright
         run: python3 prove/prova_registro_corrente.py
+      - name: Portale e ramificazioni su 16 schermi
+        env:
+          MOTORI: ${{ matrix.motore }}
+        run: |
+          python3 prove/prova_portale_registro.py
+          python3 prove/prova_ramificazioni_browser.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: registro-${{ matrix.motore }}
-          path: qa_artifacts/registro-corrente/
+          path: qa_artifacts/
