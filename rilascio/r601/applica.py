@@ -60,7 +60,7 @@ APP = [
     # Linea del tempo dalla 1ª giornata
     ("var scadenze=[2,6,8,10,18,26,34]", "var scadenze=[1,2,6,8,10,18,26,34]"),
     ("var nomi=function(n){var a=[];if(n===8)", "var nomi=function(n){var a=[];if(n===1)a.push('L\\'inizio');if(n===8)"),
-    ("display:flex;min-width:630px;width:100%;align-items:flex-start", "display:flex;min-width:700px;width:100%;align-items:flex-start"),
+    ("display:flex;min-width:630px;width:100%;align-items:flex-start", "display:flex;min-width:500px;width:100%;align-items:flex-start"),
     # Premi sponsor con il logo
     ("return '<div class=\"row\" style=\"align-items:flex-start;gap:10px;flex-wrap:wrap;padding:9px 0;border-top:1px solid var(--line)\"><div class=\"grow\" style=\"min-width:0;flex:1 1 160px\"><b style=\"display:block\">'+esc(premio.sponsor)+'</b>",
      "return '<div class=\"row\" style=\"align-items:flex-start;gap:10px;flex-wrap:wrap;padding:9px 0;border-top:1px solid var(--line)\"><img class=\"sp-logo\" src=\"'+esc(SPIMG[premio.sponsor]||SPIMG._neutro)+'\" alt=\"'+esc(premio.sponsor)+'\"><div class=\"grow\" style=\"min-width:0;flex:1 1 160px\"><b style=\"display:block\">'+esc(premio.sponsor)+'</b>"),

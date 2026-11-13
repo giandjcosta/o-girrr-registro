@@ -1018,7 +1018,7 @@ function vCarObiettivi(t,C){
   var nomi=function(n){var a=[];if(n===1)a.push('L\'inizio');if(n===8)a.push('Vittorie');if(n===spDl)a.push('Sponsor');if(n===34)a.push('Posizione finale');return a.join(' · ')||'—'};
   var linea='<div class="card" style="min-width:0;overflow:hidden"><h3>Linea del tempo</h3>'+
     '<div class="ob-timeline-scroll" role="region" aria-label="Scadenze della stagione" tabindex="0" style="max-width:100%;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;padding:12px 2px 8px">'+
-    '<div class="ob-timeline" style="position:relative;display:flex;min-width:700px;width:100%;align-items:flex-start">'+
+    '<div class="ob-timeline" style="position:relative;display:flex;min-width:500px;width:100%;align-items:flex-start">'+
     '<div aria-hidden="true" style="position:absolute;left:7%;right:7%;height:2px;top:11px;background:var(--line)"></div>'+
     scadenze.map(function(n){var passato=n<=giocata,successivo=n===prossima;
       return '<div'+(successivo?' data-ob-next="1"':'')+' style="position:relative;z-index:1;flex:1 1 0;min-width:0;text-align:center;padding:0 4px">'+
