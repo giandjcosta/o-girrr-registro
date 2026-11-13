@@ -1,7 +1,7 @@
 name: ChatGPT - Registro Chromium WebKit Firefox
 on:
   push:
-    paths: ['registro*', 'ramificazioni*', 'prove/prova_portale_registro.py', 'prove/prova_filtri_panorama.py', 'index.html', 'prove/prova_ramificazioni*', 'anteprima/**', 'prove/prova_registro_corrente.py', 'registro-stato.json', 'archivio.html', '.github/workflows/registro-browser-qa.yml']
+    paths: ['registro*', 'ramificazioni*', 'prove/prova_portale_registro.py', 'prove/prova_filtri_panorama.py', 'index.html', 'prove/prova_ramificazioni*', 'anteprima/**', 'prove/prova_registro_corrente.py', 'registro-stato.json', 'archivio.html', 'archivio.css', 'sincronizza.py', 'prove/prova_cornice_archivio.py', 'prove/prova_link_anteprima.py', '.github/workflows/registro-browser-qa.yml']
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -64,3 +64,29 @@ jobs:
         with:
           name: filtri-panorama-${{ matrix.motore }}
           path: qa_artifacts/filtri-panorama/
+
+  cornice-archivio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        motore: [chromium, webkit, firefox]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: |
+          pip install playwright==1.62.0
+          python3 -m playwright install --with-deps ${{ matrix.motore }}
+      - run: python3 prove/prova_link_anteprima.py
+      - name: Versione, grafica e Archivio su 16 schermi
+        env:
+          MOTORI: ${{ matrix.motore }}
+        run: python3 prove/prova_cornice_archivio.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cornice-archivio-${{ matrix.motore }}
+          path: qa_artifacts/cornice-archivio/

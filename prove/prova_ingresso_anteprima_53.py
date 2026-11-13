@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Regressione della cornice storica 5.5; l'ingresso corrente è provato da prova_registro_corrente.py."""
 import json
+import re
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 from rete_browser import installa,browser
@@ -43,22 +44,26 @@ with sync_playwright() as pw:
             assert frame().locator('#tab tbody tr').count()==10
             page.screenshot(path=str(OUT/f'ingresso-tabellone-{grafica}-{width}.png'))
         frame().locator('#campo-link').click();frame().locator('.pitch svg').wait_for();check('Campo')
-        frame().locator('#matches button').last.click();frame().locator('#prev').click()
+        frame().locator('#matches button').last.click()
+        current_round=int(re.search(r'\d+',frame().locator('#roundtitle').inner_text()).group())
+        assert current_round>1
+        expected_round='Giornata '+str(current_round-1)
+        frame().locator('#prev').click()
         for grafica in ('lega','stadio'):
             skin(grafica)
             frame().locator('.pitch svg').wait_for()
             page.wait_for_function('(s)=>document.getElementById("f").contentWindow.document.body.dataset.skin===s',arg=grafica)
-            assert frame().locator('#roundtitle').inner_text()=='Giornata 4'
+            assert frame().locator('#roundtitle').inner_text()==expected_round
             check('Campo '+grafica)
             page.screenshot(path=str(OUT/f'ingresso-campo-{grafica}-{width}.png'))
-        frame().locator('#ritorno-tabellone').click();frame().locator('#tab .numpos').first.wait_for()
-        frame().locator('a.back').click();frame().locator('a.c').filter(has_text="Albo d'oro").click()
+        frame().get_by_role('link',name='Torna a Tabellone',exact=True).click();frame().locator('#tab .numpos').first.wait_for()
+        frame().get_by_role('link',name='Home O Girrr',exact=True).filter(visible=True).click();frame().locator('a.c').filter(has_text="Albo d'oro").click()
         frame().locator('[data-oro=annuario]').click()
         for grafica in ('lega','stadio'):
             skin(grafica);frame().locator('.oro-scroll').wait_for();check('Albo '+grafica)
             assert frame().locator('.oro-scroll').evaluate('(e)=>getComputedStyle(e).flexWrap')=='nowrap'
             assert frame().locator('[data-oro=annuario]').get_attribute('aria-pressed')=='true'
-        frame().locator('a.oback').click();frame().locator('a.c').filter(has_text='Tabellone').wait_for()
+        frame().get_by_role('link',name='Home O Girrr',exact=True).filter(visible=True).click();frame().locator('a.c').filter(has_text='Tabellone').wait_for()
         # Riapertura della cornice: conserva la Home e la grafica correnti.
         page.reload(wait_until='networkidle');frame().locator('a.c').filter(has_text='Tabellone').wait_for();check('Riapertura')
         report.append({'larghezza':width,'esito':'PASS','ingresso':'Registro → Anteprima 5.5 → Home → Tabellone → Campo → Albo → Home','grafiche':['lega','stadio'],'memoria_vecchio_ingresso':'migrata'})

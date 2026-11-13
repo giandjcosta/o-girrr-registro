@@ -20,7 +20,7 @@ Toccando una scheda si aprono i dettagli nella stessa mappa: titolo, descrizione
 
 ## Aggiornamento automatico
 
-Il workflow `ramificazioni.yml`, una volta presente sul main, controlla entrambi i repository ogni 15 minuti, dopo modifiche al raccoglitore sul main e su avvio manuale. Anche creazioni e cancellazioni dei rami vengono rilevate nel controllo successivo. Gli orari delle Actions possono slittare. Non modifica la cadenza settimanale della sincronizzazione Anteprima/Archivio/Changelog di Claude.
+Il workflow `ramificazioni.yml` controlla entrambi i repository ogni 15 minuti (minuti UTC 8, 23, 38 e 53), dopo ogni push sul main, al termine dei collaudi del Registro e degli allineamenti, e su avvio manuale. Le esecuzioni successive ai collaudi leggono sempre il codice del main. Il workflow stesso non è fra quelli osservati: non si crea un ciclo. Anche creazioni e cancellazioni dei rami vengono rilevate nel controllo successivo. Gli orari delle Actions possono slittare. Non modifica la cadenza settimanale della sincronizzazione Anteprima/Archivio/Changelog di Claude.
 
 Lo snapshot viene conservato nel solo ramo tecnico `chatgpt/dati-ramificazioni`, escluso dal grafo: così un aggiornamento della mappa non genera un nuovo commit del codice, non si autoalimenta e non distribuisce il sito. La pagina mostra subito lo snapshot incluso, poi controlla la copia raw aggiornata ogni minuto. Non usa token nel browser. Se la rete fallisce conserva la copia già caricata. Una copia remota più vecchia non sostituisce una fotografia locale più recente. “Dati modificati” indica la data della modifica del contenuto, non una verifica remota che non sia documentata.
 
@@ -33,4 +33,4 @@ python3 ramificazioni.py --cache /tmp/girrr-grafi
 python3 prove/prova_ramificazioni.py
 ```
 
-Durante la preparazione della 6.0 il workflow non viene attivato sul main. La nuova pagina e lo snapshot statico restano nel ramo di rilascio fino al deploy di Claude.
+La pagina è sul main dalla 6.0. Il 13 novembre GitHub non aveva consegnato alcun evento programmato a questo workflow, pur attivo: nessun job cron fallito o in coda. Riaffermata l’attivazione e risalvata la schedulazione; i trigger dopo modifiche e collaudi riducono la dipendenza dal solo cron. L’avvio manuale serve anche alla verifica del raccoglitore, ma non certifica il servizio di schedulazione GitHub.

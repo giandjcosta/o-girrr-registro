@@ -21,7 +21,7 @@ def leggi(url):
     with urllib.request.urlopen(url,timeout=30) as r:return r.read()
 for name in ('data.json','girrr/dati/lab-dati.json'):
     (SITE/name).write_bytes(leggi('https://giandjcosta.github.io/o-fant-a-girrr/'+name))
-for name in ('pdf_giornale.py','pdf_settimana.py','toto_quote.py'):
+for name in ('pdf_giornale.py','pdf_settimana.py','toto_quote.py','aspettative.json'):
     (SRC/'scripts'/name).write_bytes(leggi('https://raw.githubusercontent.com/giandjcosta/o-fant-a-girrr/gh-pages/scripts/'+name))
 (SRC/'eventi.json').write_text('[]')
 (SRC/'testi.json').write_text(json.dumps({'titolone':'Il punto della classifica','classifiche':'Il commento della redazione.'}))

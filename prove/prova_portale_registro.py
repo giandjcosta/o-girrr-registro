@@ -3,6 +3,7 @@
 Tre motori reali, 16 profili ciascuno; nessuna chiamata al database reale.
 """
 import json
+from contextlib import nullcontext
 import mimetypes
 import os
 from pathlib import Path
@@ -43,6 +44,10 @@ with sync_playwright() as p:
             page = ctx.new_page()
             page.set_default_timeout(20000)
             errors = []
+            standalone_previews = []
+            page.on('request',lambda r:standalone_previews.append(r.url) if r.is_navigation_request() and r.url.startswith(BASE+'anteprima/pubblicata/') and r.frame.parent_frame==page.main_frame else None)
+            def published(f,path=''):
+                return f.url.startswith(BASE+'anteprima/pubblicata/'+path) and f.parent_frame is not None and f.parent_frame.parent_frame==page.main_frame
             page.on('pageerror',lambda e:errors.append(str(e)))
             print('PROFILO',engine,name,flush=True)
             page.goto(BASE,wait_until='load')
@@ -65,8 +70,10 @@ with sync_playwright() as p:
             ready()
             for key in ('lab','aggiornamenti','archivio','ramificazioni','anteprima'):
                 print('SEZIONE',engine,name,key,flush=True)
-                if page.locator('#sezione').is_visible(): page.locator('#sezione').select_option(key)
-                else: page.locator('#menu a[href="#'+key+'"]').click()
+                navigation=page.expect_event('framenavigated',predicate=published,timeout=35000) if key=='anteprima' else nullcontext()
+                with navigation as loaded:
+                    if page.locator('#sezione').is_visible(): page.locator('#sezione').select_option(key)
+                    else: page.locator('#menu a[href="#'+key+'"]').click()
                 expect(shell).to_have_attribute('data-src',re.compile(re.escape({'lab':'lab/','aggiornamenti':'aggiornamenti.html','archivio':'archivio.html','ramificazioni':'ramificazioni.html','anteprima':'ufficiale/'}[key])+r'\?nel-registro=1$'))
                 ready()
                 expect(page.locator('#menu a[aria-current]')).to_have_attribute('href','#'+key)
@@ -79,11 +86,22 @@ with sync_playwright() as p:
                     if name in ('PC1920','TV'):
                         page.screenshot(path=str(OUT/(engine+'-'+name+'.png')))
                 if key=='anteprima':
-                    inner = page.frame_locator('#contenuto').frame_locator('#f')
+                    page.wait_for_function('''()=>{
+                        const outer=document.getElementById('contenuto'),f=outer.contentDocument?.getElementById('f');
+                        return f?.contentDocument?.readyState==='complete' && f.contentDocument.querySelector('h1') && f.contentWindow.__registroSolaLettura===true;
+                    }''',timeout=35000)
+                    inner=loaded.value
+                    inner.wait_for_load_state('domcontentloaded')
                     inner.locator('h1').first.wait_for()
+                    # Attende anche le letture asincrone della pagina prima di cambiarla.
+                    inner.wait_for_load_state('networkidle')
                     for stadio in (False,True):
-                        if stadio: page.locator('#grafica').click()
-                        expect(page.locator('#grafica')).to_have_text('Grafica: '+('Stadio' if stadio else 'Lega'))
+                        if stadio:
+                            with page.expect_event('framenavigated',predicate=lambda f:published(f,'stadio/girrr/'),timeout=35000) as changed:
+                                page.locator('#grafica').click()
+                            inner=changed.value
+                            inner.wait_for_load_state('domcontentloaded')
+                        expect(page.locator('#grafica')).to_have_attribute('aria-checked',str(stadio).lower())
                         page.wait_for_function('''stadio => {
                             const outer=document.getElementById('contenuto'),f=outer.contentDocument.getElementById('f');
                             return f && f.contentDocument && f.contentDocument.readyState==='complete' && f.contentWindow.location.pathname.includes('/stadio/')===stadio && f.contentWindow.__registroSolaLettura===true;
@@ -91,16 +109,36 @@ with sync_playwright() as p:
                         inner.locator('h1').first.wait_for()
                         assert inner.locator('html').evaluate('()=>window.__registroSolaLettura===true')
                         assert inner.locator('html').evaluate("async()=>{const r=await fetch('https://qmjqfgmvimsuxvghetgi.supabase.co/rest/v1/rpc/curva_scrivi',{method:'POST',body:'{}'});return r.status===403}")
+                        inner.wait_for_load_state('networkidle')
+            if name in ('iPhone320','PC1920'):
+                # Regressione Firefox: rientri ripetuti senza riferimenti al frame precedente.
+                page.wait_for_load_state('networkidle')
+                for _ in range(3):
+                    page.evaluate("location.hash='archivio'")
+                    expect(shell).to_have_attribute('data-src',BASE+'archivio.html?nel-registro=1')
+                    ready()
+                    with page.expect_event('framenavigated',predicate=published,timeout=35000) as returned:
+                        page.evaluate("location.hash='anteprima'")
+                    expect(shell).to_have_attribute('data-src',BASE+'ufficiale/?nel-registro=1')
+                    ready()
+                    returned.value.locator('h1').first.wait_for()
+                    returned.value.wait_for_load_state('networkidle')
+            page.wait_for_load_state('networkidle')
             # Il vecchio segnalibro Anteprima torna nello stesso portale.
-            page.goto(BASE+'ufficiale/',wait_until='load')
+            with page.expect_event('framenavigated',predicate=published,timeout=35000) as bookmark:
+                page.goto(BASE+'ufficiale/',wait_until='load')
             expect(page).to_have_url(BASE+'registro.html#anteprima')
             ready()
+            bookmark.value.locator('h1').first.wait_for()
+            bookmark.value.wait_for_load_state('networkidle')
             page.evaluate("location.hash='ramificazioni'")
             expect(shell).to_have_attribute('data-src',BASE+'ramificazioni.html?nel-registro=1')
             ready()
             page.evaluate('history.back()')
             expect(page).to_have_url(BASE+'registro.html#anteprima')
             ready()
+            page.wait_for_load_state('networkidle')
+            assert not standalone_previews,(engine,name,'Caricamento prima del rinvio al portale',standalone_previews)
             assert not errors,(engine,name,errors)
             report.append({'motore':engine,'versione':b.version,'schermo':name,'esito':'PASS'})
             print('PASS',engine,name,flush=True)
