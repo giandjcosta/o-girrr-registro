@@ -1,4 +1,12 @@
-# Stato del progetto O Girrr (ultimi giorni — aggiornato 10 novembre 2026)
+# Stato del progetto O Girrr (ultimi giorni — aggiornato 13 novembre 2026)
+
+## 13 novembre 2026 — ChatGPT: integrazione autorizzata nella preparazione 6.0, senza pubblicare
+
+- Gianluca ha visto la prova e autorizzato preparazione e merge; la pubblicazione resta a Claude. Integrazione sui due rami `claude/o-girrr-versione-6-0-mjh4ut`, senza unire i main o gh-pages, né avviare deploy. Coordinamento: [ticket #57](https://github.com/giandjcosta/o-girrr-registro/issues/57), `COORDINAMENTO-6.0.md` richiamato da `CLAUDE.md` in entrambi i repository.
+- Pacchetto reale del sito: MVP con redazione/personaggi e voto facoltativo autenticato degli allenatori, archivio dei verdetti, punti Derby 3/1 e racconti per squadra/settimana con Campionato e Coppa. Agganci additivi sulle pagine appena preparate da Claude, senza sostituire Video, Radio o Curva. Inclusi i Tabelloni ufficiali di Condividi del suo aggiornamento `3b85b41`.
+- Schema MVP nuovo preparato e collaudato due volte su Postgres 17 locale; nessuna SQL o modifica dei dati eseguita su Supabase della lega. Nuovo workflow server limitato al main e inattivo finché non è pubblicata la 6.0; dipendenza del controllo chiave inclusa nel pacchetto server. I premi sponsor esistenti restano sul loro workflow.
+- Ramificazioni: pagina nei menu del Registro e nel Lab, due grafi Git con colori stabili, rami selezionabili, filtri, zoom, dettagli/PR e storie indipendenti preservate. Aggiornamento ogni 15 minuti su ramo tecnico, senza ridistribuire Pages. La sincronizzazione Anteprima/Changelog/Archivio rimane settimanale o alla nuova versione, come deciso con Claude.
+- Preparazione verificata con modelli, firme editoriali, chiave server, ricostruzione Git e schema SQL. Il collaudo browser finale della copia combinata è in corso su tre motori × sedici profili. Prove Supabase simulate nel browser, protocollo SQL su database locale reale. Samsung Internet e Safari su dispositivi non disponibili.
 
 ## 12 novembre 2026 — ChatGPT: revisione locale di MVP, Derby e settimana personale
 

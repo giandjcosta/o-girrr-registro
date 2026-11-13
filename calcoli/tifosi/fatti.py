@@ -29,4 +29,3 @@ def deadline(raw,day,season):
         dd,mm,hh,mi=map(int,m.groups())
         parsed.append(dt.datetime(start if mm>=7 else start+1,mm,dd,hh,mi,tzinfo=ZoneInfo('Europe/Rome')))
     return min(parsed).astimezone(dt.timezone.utc).isoformat() if parsed else None
-

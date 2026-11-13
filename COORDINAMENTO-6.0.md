@@ -13,9 +13,11 @@ Gianluca ha visto e approvato la prova. Il 13 novembre ha autorizzato preparazio
 
 `rilascio/rilascio60.py` conserva tutti i passaggi di Claude e, alla fine, richiama `rilascio/tifosi60/applica.py`. L’aggancio lavora sulle pagine appena preparate: **non copiare i quattordici HTML della vecchia prova sul sito**. Il modulo aggiunge CSS/JS a Home, app, Curva, Derby e Albo nelle due grafiche. Video, Radio, condivisione e Curva per sistema rimangono quelli di Claude.
 
+Integrati anche i Tabelloni ufficiali di «Condividi la giornata» dell’ultimo ramo di Claude (`3b85b41`): il pacchetto conserva i suoi cinque elementi.
+
 Il modulo tifosi è idempotente. Lo script complessivo di Claude va eseguito **una volta su una copia fresca di gh-pages**: la seconda applicazione della patch Curva incontra le sue assert originarie. Non usarlo due volte sulla stessa directory.
 
-Il ramo server contiene `calcoli/tifosi/` e `.github/workflows/tifosi-giornata.yml`. La logica del modello è identica a quella distribuita al browser. Si riusa la chiave server già prevista dai premi, tramite il suo controllo del tipo/progetto; nessun nuovo segreto viene esposto al client. La nuova automazione rifiuta l’attivazione finché sul sito non è pubblicata la 6.0.
+Il ramo server contiene `calcoli/tifosi/` e `.github/workflows/tifosi-giornata.yml`. La logica del modello è identica a quella distribuita al browser. Si riusa la chiave server già prevista dai premi, tramite il suo controllo del tipo/progetto (copia identica di `calcoli/premi/registra_premi.py` inclusa anche nel pacchetto server); nessun nuovo segreto viene esposto al client. La nuova automazione rifiuta l’attivazione finché sul sito non è pubblicata la 6.0.
 
 ## Ordine per Claude al deploy
 

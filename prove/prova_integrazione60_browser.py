@@ -110,7 +110,7 @@ def main():
                                 assert page.locator('html').get_attribute('data-os')==expected,'Stile Curva non coerente con il sistema'
                             if slug=='giornale':expect(page.locator('button.cd-btn')).to_have_count(2)
                             if slug=='home':
-                                page.locator('#big .cd-gio').click();expect(page.locator('.cd-pz')).to_have_count(7);page.wait_for_timeout(750)
+                                page.locator('#big .cd-gio').click();expect(page.locator('.cd-pz')).to_have_count(5);page.wait_for_function("()=>{const b=document.querySelector('.cd-box');return b&&getComputedStyle(b).transform==='none'}");page.wait_for_timeout(400)
                                 assert page.locator('.cd-box').evaluate('(e)=>e.scrollWidth<=e.clientWidth+1'),'Condividi: scorrimento orizzontale'
                                 assert page.locator('.cd-az.fis').evaluate('(e)=>{let r=e.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight+1}'),'Condividi: azioni fuori schermo'
                                 page.keyboard.press('Escape')
