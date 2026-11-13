@@ -51,7 +51,17 @@ with sync_playwright() as p:
             def ready():
                 expect(shell).not_to_have_attribute('aria-busy','true')
                 assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
-                assert page.frame_locator('#contenuto').locator('html').evaluate('(e)=>e.scrollWidth<=innerWidth+1'),(engine,name,page.url)
+                # Dopo history.back Firefox può conservare il documento ma sostituire
+                # l'identità del Frame nel protocollo di automazione. Controlliamo
+                # il documento effettivamente mostrato, anche la sua destinazione.
+                page.wait_for_function('''() => {
+                    const f=document.getElementById('contenuto'),d=f.contentDocument;
+                    return d && d.readyState==='complete' && d.documentElement.dataset.registroCollegato==='true' && d.location.href===f.dataset.src;
+                }''',timeout=35000)
+                assert page.evaluate('''() => {
+                    const f=document.getElementById('contenuto');
+                    return f.contentDocument.documentElement.scrollWidth<=f.contentWindow.innerWidth+1;
+                }'''),(engine,name,page.url)
             ready()
             for key in ('lab','aggiornamenti','archivio','ramificazioni','anteprima'):
                 print('SEZIONE',engine,name,key,flush=True)
