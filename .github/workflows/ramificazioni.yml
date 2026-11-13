@@ -4,7 +4,12 @@ on:
     # Registrazione rinnovata; quattro controlli all’ora, lontano dal minuto zero.
     - cron: '8,23,38,53 * * * *'
   push:
-    branches: [main]
+    branches-ignore: [chatgpt/dati-ramificazioni]
+  pull_request_target:
+    # Legge solo metadati; checkout esplicito del main, mai del codice della PR.
+    types: [opened, reopened, closed, synchronize, edited, ready_for_review, converted_to_draft]
+  create:
+  delete:
   workflow_run:
     # Se GitHub ritarda i cron, aggiorna anche dopo i lavori e gli allineamenti.
     # Il collector non è in questo elenco: il feed tecnico non crea un ciclo.
@@ -13,7 +18,7 @@ on:
       - 'ChatGPT - Integrazione Anteprima 5.5'
       - 'Claude - Collaudo 5.5 telefono e PC (Chromium e WebKit)'
       - 'ChatGPT - Allineamento automatico del Registro'
-    types: [completed]
+    types: [requested, completed]
   workflow_dispatch:
 permissions:
   contents: write
@@ -22,9 +27,12 @@ concurrency:
   cancel-in-progress: false
 jobs:
   aggiorna:
-    # Esegue soltanto codice del main, anche dopo collaudi di altri rami.
+    # Rami e PR di qualsiasi base: esegue sempre e soltanto codice del main.
+    # Esclude creazione/cancellazione del feed tecnico e gli eventi sui tag.
     # Scrive sul ramo tecnico; non pubblica GitHub Pages.
-    if: github.ref == 'refs/heads/main'
+    if: >-
+      (github.event_name != 'create' && github.event_name != 'delete') ||
+      (github.event.ref_type == 'branch' && github.event.ref != 'chatgpt/dati-ramificazioni')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
