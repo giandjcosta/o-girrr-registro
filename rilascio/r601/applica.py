@@ -16,6 +16,9 @@ Non fa commit. Si ferma se una pagina non è quella attesa (copia già preparata
    (da ospite niente «Entra»). Statistiche resta solo per Oranje VC. ospite.js non nasconde più lo Spogliatoio.
 4. Home della Lega (girrr/index.html): i riquadri grandi uno sotto l'altro, dritti come le partite del Tabellone
    (regola della Lega del 1° novembre); lo Stadio resta in griglia.
+5. Derby: in Albo › Derby direttamente tre schede, «Derby della Lega», «Le rivalità» e «Classifica dei Derby»
+   (il lavoro lasciato a metà da ChatGPT, rifatto da Claude), senza cambiare pagina (derby.js dentro albo.html).
+   derby.html e rivalita.html portano lì, sulla scheda giusta (derby.html#pt-derby apre la Classifica).
 """
 import os
 import shutil
@@ -100,6 +103,45 @@ html body .wrap .cards>.c .go{grid-area:go;margin:0;white-space:nowrap}}
 </style></head>"""
 
 
+DERBY_JS = [
+    ("var TAB=null;",
+     "var TAB=null;\n"
+     "/* 6.0.1 · Tre schede: Derby della Lega, Le rivalità, Classifica dei Derby (Gianluca, 13 novembre 2026) */\n"
+     "var SEZ=[['lega','Derby della Lega'],['rivalita','Le rivalità'],['classifica','Classifica dei Derby']],SZ=null,STA=/\\/stadio\\//.test(location.pathname),ALBO=/\\/albo\\.html$/.test(location.pathname);\n"
+     "/* In Albo › Derby le tre schede stanno dentro il riquadro #der-root (novita.js): niente cambio di pagina */\n"
+     "function ROOT(){return document.getElementById('der-root')||document.getElementById('al')}\n"
+     "function pronto(f){if(!ALBO||document.getElementById('der-root'))return f();var mo=new MutationObserver(function(){if(document.getElementById('der-root')){mo.disconnect();f()}});mo.observe(document.body,{childList:true,subtree:true})}\n"
+     "var stT=document.createElement('style');stT.textContent='.dtab{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px;margin:0 0 12px}.dtab::-webkit-scrollbar{display:none}.dtab button:first-child{margin-left:auto}.dtab button:last-child{margin-right:auto}.dtab button{flex:none;height:34px;padding:0 14px;border-radius:17px;border:2px solid transparent;background:rgba(255,255,255,.08);color:inherit;font:800 13px Inter,system-ui,sans-serif;cursor:pointer;opacity:.6;transition:background .25s,opacity .25s,color .25s}.dtab button[aria-selected=true]{background:'+(STA?'#ffd166;color:#1d2a52':'var(--acc,#d62839);color:#fff')+';opacity:1}.dtab button:focus-visible{outline:2px solid var(--hi);outline-offset:2px}.dpan{animation:dIn .35s ease}@keyframes dIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}#der-cls:empty::before{content:\"Carico la Classifica dei Derby…\";display:block;padding:16px;color:var(--sub);font-weight:700}@media (prefers-reduced-motion:reduce){.dpan{animation:none}.dtab button{transition:none}}';document.head.appendChild(stT);\n"
+     "function sezIniziale(){var q=new URLSearchParams(location.search).get('sez'),h=ALBO?(q||''):(location.hash||'').slice(1);if(h==='pt-derby')return 'classifica';if(SEZ.some(function(x){return x[0]===h}))return h;return window.PAGINA==='rivalita'?'rivalita':'lega'}\n"
+     "function sezioni(HL,HR){if(!SZ)SZ=sezIniziale();var al=ROOT(),box=document.getElementById('pt-derby');\n"
+     "  al.innerHTML='<div class=\"dtab\" role=\"tablist\" aria-label=\"Sezioni dei Derby\">'+SEZ.map(function(x){return '<button type=\"button\" role=\"tab\" data-dsez=\"'+x[0]+'\" aria-selected=\"'+(SZ===x[0])+'\">'+x[1]+'</button>'}).join('')+'</div>'\n"
+     "   +'<div class=\"dpan\" role=\"tabpanel\" data-dp=\"lega\"'+(SZ==='lega'?'':' hidden')+'>'+HL+'</div><div class=\"dpan\" role=\"tabpanel\" data-dp=\"rivalita\"'+(SZ==='rivalita'?'':' hidden')+'>'+HR+'</div><div class=\"dpan\" role=\"tabpanel\" data-dp=\"classifica\" id=\"der-cls\"'+(SZ==='classifica'?'':' hidden')+'></div>';\n"
+     "  if(box)document.getElementById('der-cls').appendChild(box)}\n"
+     "document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-dsez]');if(!b)return;SZ=b.getAttribute('data-dsez');\n"
+     "  document.querySelectorAll('[data-dsez]').forEach(function(z){z.setAttribute('aria-selected',z===b)});document.querySelectorAll('[data-dp]').forEach(function(z){z.hidden=z.getAttribute('data-dp')!==SZ});\n"
+     "  try{history.replaceState(null,'',ALBO?'?sez='+SZ+'#derby':'#'+SZ)}catch(_){}b.scrollIntoView({block:'nearest',inline:'center',behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})});\n"
+     "window.addEventListener('hashchange',function(){if(ALBO)return;var k=sezIniziale(),b=document.querySelector('[data-dsez=\"'+k+'\"]');if(b&&k!==SZ)b.click()});"),
+    ("var RIV=window.PAGINA==='rivalita',r=prossima(),h='';\n  if(!RIV){", "var r=prossima(),h='',HL;\n  {"),
+    ("  }else{\n    h+='<div class=\"card\"><h3>Giornata '+r.n+'</h3><p class=\"nt\" style=\"margin:0 0 6px\">Le rivalità",
+     "  }HL=h;h='';{\n    h+='<div class=\"card\"><h3>Giornata '+r.n+'</h3><p class=\"nt\" style=\"margin:0 0 6px\">Le rivalità"),
+    ("  document.getElementById('al').innerHTML=h;\n}", "  sezioni(HL,h);\n}"),
+    ("document.getElementById('lg').onclick=function(){location.href='index.html'};", "if(!ALBO)document.getElementById('lg').onclick=function(){location.href='index.html'};"),
+    ("D=d;classifica();render();caricaDb().then(render);document.getElementById('foot').textContent=",
+     "D=d;classifica();pronto(render);caricaDb().then(function(){pronto(render)});if(!ALBO)document.getElementById('foot').textContent="),
+    (".catch(function(e){document.getElementById('al').innerHTML=", ".catch(function(e){ROOT().innerHTML="),
+]
+
+NOVITA_DERBY = (
+    "h+='<a class=\"card\" href=\"derby.html\" style=\"display:block;text-decoration:none;color:inherit\"><h3>I Derby della Lega<span class=\"nt-nv\">NOVITÀ</span></h3><div style=\"font-weight:700;font-size:14px\">I Derby con il loro nome, la storia e il Derby della giornata →</div></a><a class=\"card\" href=\"rivalita.html\" style=\"display:block;text-decoration:none;color:inherit\"><h3>Le rivalità<span class=\"nt-nv\">NOVITÀ</span></h3><div style=\"font-weight:700;font-size:14px\">Le rivalità forti e le sfide decisive →</div></a>';",
+    "h+='<div id=\"der-root\"><div class=\"vuoto\">Carico i Derby…</div></div>';")
+
+
+def rinvio(sez):
+    """derby.html e rivalita.html portano in Albo › Derby, sulla scheda giusta (i vecchi collegamenti restano buoni)."""
+    return ('<head><script>(function(){var h=(location.hash||"").slice(1),s=' + sez + ';'
+            'location.replace("albo.html?sez="+s+"#derby")})()</script>')
+
+
 def main(sito):
     for rel in ('girrr/app.html', 'stadio/girrr/app.html'):
         t = leggi(os.path.join(sito, rel))
@@ -125,7 +167,25 @@ def main(sito):
         t = sost(t, '</head>', HOME_LEGA, 'girrr/index.html')
     scrivi(os.path.join(sito, 'girrr/index.html'), t)
     print('ok girrr/index.html')
-
+    # 5. Derby in tre schede, direttamente in Albo › Derby
+    for pre in ('girrr/', 'stadio/girrr/'):
+        t = leggi(os.path.join(sito, pre + 'derby.js'))
+        for a, b in DERBY_JS:
+            t = sost(t, a, b, pre + 'derby.js')
+        scrivi(os.path.join(sito, pre + 'derby.js'), t)
+        t = sost(leggi(os.path.join(sito, pre + 'novita.js')), NOVITA_DERBY[0], NOVITA_DERBY[1], pre + 'novita.js')
+        scrivi(os.path.join(sito, pre + 'novita.js'), t)
+        t = leggi(os.path.join(sito, pre + 'albo.html'))
+        t = sost(t, 'novita.js?v=1793700000', 'novita.js?v=1793800000', pre + 'albo.html')
+        t = sost(t, '</body>', '<script src="derby.js?v=1793800000"></script></body>', pre + 'albo.html')
+        scrivi(os.path.join(sito, pre + 'albo.html'), t)
+        t = leggi(os.path.join(sito, pre + 'derby.html'))
+        t = sost(t, '<title>I derby · O Girrr</title>', '<title>I Derby · O Girrr</title>', pre + 'derby.html')
+        t = sost(t, '<head>', rinvio('h==="pt-derby"||h==="classifica"?"classifica":h==="rivalita"?"rivalita":"lega"'), pre + 'derby.html')
+        scrivi(os.path.join(sito, pre + 'derby.html'), t)
+        t = sost(leggi(os.path.join(sito, pre + 'rivalita.html')), '<head>', rinvio('"rivalita"'), pre + 'rivalita.html')
+        scrivi(os.path.join(sito, pre + 'rivalita.html'), t)
+        print('ok', pre + 'derby.js, novita.js, albo.html, derby.html, rivalita.html')
 
 if __name__ == '__main__':
     main(sys.argv[1])

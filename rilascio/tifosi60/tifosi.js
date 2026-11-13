@@ -53,7 +53,7 @@ function section(value){const u=new URL(location.href);if(value)u.searchParams.s
 function mount(){if(!data||!editoriale)return;const login=JSON.stringify(identity());if(login!==knownLogin){knownLogin=login;myVote=null;queueMicrotask(refresh)}const chosen=chosenTeam();if(team!==chosen){team=chosen;document.getElementById('pt-home-story')?.remove();document.getElementById('pt-storia')?.remove()}
  if(page==='index.html')home();
  if(page==='curva.html')insert(document.getElementById('v53sondaggio'),'pt-mvp',poll(),true);
- if(page==='derby.html')insert(document.getElementById('al'),'pt-derby',derby(),true);
+ {const cls=document.getElementById('der-cls');if(cls)insert(cls,'pt-derby',derby());else if(page==='derby.html')insert(document.getElementById('al'),'pt-derby',derby(),true)}
  if(page==='derby-stagione.html')insert(document.getElementById('al'),'pt-derby',derby(),true);
  if(page==='app.html'){
   sport();
@@ -61,7 +61,7 @@ function mount(){if(!data||!editoriale)return;const login=JSON.stringify(identit
  }
  if(page==='albo.html'){
   insert(document.querySelector('[data-ap="rec"]'),'pt-archivio',archive());
-  insert(document.querySelector('[data-ap="derby"]'),'pt-derby-access','<a class="card" id="pt-derby-access" href="'+E(url('derby.html','pt-derby'))+'" style="display:block;text-decoration:none;color:inherit"><h3>Classifica dei Derby</h3><div style="font-weight:700;font-size:14px">I punti conquistati contro i rivali ufficiali →</div></a>');
+  /* 6.0.1: la Classifica dei Derby è una delle tre schede della pagina Derby, con il suo riquadro in Albo › Derby (novita.js) */
   if(location.hash==='#pt-archivio'){const b=document.querySelector('[data-at="rec"]');if(b&&b.getAttribute('aria-selected')!=='true')setTimeout(()=>{if(b.isConnected&&b.getAttribute('aria-selected')!=='true')b.click()},0)}
  }
 }

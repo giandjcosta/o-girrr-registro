@@ -27,6 +27,16 @@ self.GIRRR_SPECCHIO = (function () {
     'girrr/index.html': new URL('../../rilascio/r601/pagine/girrr/index.html', self.location.href).href,
     'girrr/ospite.js': new URL('../../rilascio/r601/pagine/girrr/ospite.js', self.location.href).href,
     'stadio/girrr/ospite.js': new URL('../../rilascio/r601/pagine/stadio/girrr/ospite.js', self.location.href).href,
+    'girrr/derby.html': new URL('../../rilascio/r601/pagine/girrr/derby.html', self.location.href).href, /* 6.0.1: Albo › Derby con tre schede, Derby della Lega, Le rivalità e Classifica dei Derby */
+    'girrr/derby.js': new URL('../../rilascio/r601/pagine/girrr/derby.js', self.location.href).href,
+    'girrr/rivalita.html': new URL('../../rilascio/r601/pagine/girrr/rivalita.html', self.location.href).href,
+    'girrr/novita.js': new URL('../../rilascio/r601/pagine/girrr/novita.js', self.location.href).href,
+    'girrr/albo.html': new URL('../../rilascio/r601/pagine/girrr/albo.html', self.location.href).href,
+    'stadio/girrr/derby.html': new URL('../../rilascio/r601/pagine/stadio/girrr/derby.html', self.location.href).href,
+    'stadio/girrr/derby.js': new URL('../../rilascio/r601/pagine/stadio/girrr/derby.js', self.location.href).href,
+    'stadio/girrr/rivalita.html': new URL('../../rilascio/r601/pagine/stadio/girrr/rivalita.html', self.location.href).href,
+    'stadio/girrr/novita.js': new URL('../../rilascio/r601/pagine/stadio/girrr/novita.js', self.location.href).href,
+    'stadio/girrr/albo.html': new URL('../../rilascio/r601/pagine/stadio/girrr/albo.html', self.location.href).href,
     'stagione.js': new URL('../../rilascio/stagione/stagione.js', self.location.href).href, /* Carriera · La mia stagione */
     'girrr/dati/redazione.json': new URL('../redazione/redazione.json', self.location.href).href, /* scritto da Claude e controllato da redazione/controlla.py */
     'conferenze.js': new URL('../../rilascio/conferenze/conferenze.js', self.location.href).href,
