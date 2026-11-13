@@ -1108,3 +1108,11 @@ Niente di questo va sul sito vero senza altro "vai" esplicito (lo SQL feed è gi
 - Ramificazioni: workflow ogni 15 minuti sul ramo tecnico; 6.0 evidenziata, data e autore, parole leggibili, rami integrati chiusi, selezione di tutti i rami e colori distinti. Il feed continua a leggere entrambi i repository senza pubblicare il sito della lega.
 - Collaudi: sincronizzazione, passaggio alla versione successiva, idempotenza e modello della mappa superati. Matrice del portale, Anteprima protetta e Ramificazioni su Chromium/WebKit/Firefox × 16 profili collegata al workflow. Esito della matrice e della pubblicazione registrato nella PR e nel ticket #57 prima della consegna.
 - Samsung Internet e Safari su dispositivi fisici non disponibili. Le identità dei dispositivi e gli schermi sono emulati; i tre motori browser sono reali.
+
+
+### Verifica del portale pubblico e controllo Firefox
+
+- Portale pubblicato con PR #62, merge `f873036`. Primo aggiornamento automatico dei rami riuscito (`43460259041`, 13 novembre alle 17:12 a Roma). Durante il lavoro Claude ha pubblicato la 6.0 su `gh-pages` (`9c26f19`): il Registro si è allineato da solo (`f1d2e13`) conservando il menu.
+- Tutte le sei sezioni verificate sul sito pubblico in Chromium a 320 e 1920 px, comprese la selezione collettiva della mappa, i vecchi indirizzi, Lega/Stadio e le RPC mutanti bloccate. Collaudo locale completo: 16 profili per Chromium 151, WebKit 26.5 e Firefox 153. Prima CI `43459265408` interamente verde; sul merge anche Chromium e Firefox verdi nel run `43460259282`.
+- Un giro intermedio ha trovato un errore intermittente del riferimento al Frame di Playwright dopo Indietro in Firefox (`43460028216`). Il controllo del layout ora legge direttamente il documento della cornice, aspettando anche URL esatto, caricamento completo e collegamento del menu: conserva la stessa verifica di overflow e aggiunge verifiche sul documento mostrato. Riprova dei due profili interessati, iPad Pro 11 e PC 1920, riuscita. Nessuna modifica al comportamento del sito in questa correzione del collaudo.
+- Samsung Internet e Safari su dispositivi fisici non disponibili. Foto PC/TV in `qa_artifacts/portale-registro/`; indicazioni per conservare il portale nel futuro merge della 6.0 nel ticket #57.
