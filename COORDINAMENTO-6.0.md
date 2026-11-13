@@ -13,6 +13,12 @@ Gianluca ha visto e approvato la prova. Il 13 novembre ha autorizzato preparazio
 - Settimana personale in Oggi al Girrr e archivio in Carriera. Dieci racconti della settimana iniziale, sei episodi storici dell’Oranje già curati, niente premi retroattivi. Il resto si aggiorna nella redazione già programmata: `redazione/ISTRUZIONI.md` e `LA-MIA-SETTIMANA.md`.
 - Pagina Ramificazioni nel Registro, con i due grafi reali, colori, PR, commit, dettagli e aggiornamento automatico: `RAMIFICAZIONI.md`.
 
+## Revisione di Ramificazioni del 13 novembre
+
+Gianluca ha chiesto più spazio, tutti i rami senza scorrimento orizzontale, selezione collettiva e colori/linee più leggibili. La [PR #59](https://github.com/giandjcosta/o-girrr-registro/pull/59) aggiorna la pagina già collegata ai menu, senza pubblicare. Panorama a tutta larghezza, tutti i rami inizialmente selezionati, raccordi corti con percorsi compressi dichiarati, dettagli nella mappa, palette più varia con simboli/codici e A−/A+ senza allargare il contenuto. Aggiornamento ogni 15 minuti conservato.
+
+Test pagina: 48/48 visite, Chromium/WebKit/Firefox × 16 profili, zero problemi. Copia autonoma con 125 rami verificata offline nei tre motori a 320 e 1920 px. Metodo in `RAMIFICAZIONI.md`, esiti in `prove/risultati-ramificazioni-leggibili.json`; pull aggiornato prima del deploy per includere anche questa revisione.
+
 ## Pacchetto di rilascio
 
 `rilascio/rilascio60.py` conserva tutti i passaggi di Claude e, alla fine, richiama `rilascio/tifosi60/applica.py`. L’aggancio lavora sulle pagine appena preparate: **non copiare i quattordici HTML della vecchia prova sul sito**. Il modulo aggiunge CSS/JS a Home, app, Curva, Derby e Albo nelle due grafiche. Video, Radio, condivisione e Curva per sistema rimangono quelli di Claude.
