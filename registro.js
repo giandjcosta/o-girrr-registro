@@ -21,7 +21,7 @@
     });
   }
   frame.addEventListener('load',function(){
-    try{var doc=frame.contentDocument;if(!doc||doc.location.href==='about:blank')return;connect(doc);
+    try{var doc=frame.contentDocument;if(!doc||doc.location.href==='about:blank'||(frame.hasAttribute('aria-busy')&&doc.location.href!==frame.dataset.src))return;connect(doc);
       var style=doc.createElement('style');style.textContent='body>.w>.g.top,body>main.w>header.g.top,body>.w>.tabs,body>main.w>.tabs{display:none!important}';
       if(current==='archivio')style.textContent+='main>nav{display:none!important}';
       if(current==='anteprima'&&doc.getElementById('tg')){

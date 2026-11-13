@@ -44,15 +44,17 @@ with sync_playwright() as p:
             page.set_default_timeout(20000)
             errors = []
             page.on('pageerror',lambda e:errors.append(str(e)))
+            print('PROFILO',engine,name,flush=True)
             page.goto(BASE,wait_until='load')
             expect(page).to_have_url(BASE+'registro.html#changelog')
             shell = page.locator('#contenuto')
             def ready():
                 expect(shell).not_to_have_attribute('aria-busy','true')
                 assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
-                assert page.frame_locator('#contenuto').locator('html').evaluate('(e)=>e.scrollWidth<=innerWidth+1')
+                assert page.frame_locator('#contenuto').locator('html').evaluate('(e)=>e.scrollWidth<=innerWidth+1'),(engine,name,page.url)
             ready()
             for key in ('lab','aggiornamenti','archivio','ramificazioni','anteprima'):
+                print('SEZIONE',engine,name,key,flush=True)
                 if page.locator('#sezione').is_visible(): page.locator('#sezione').select_option(key)
                 else: page.locator('#menu a[href="#'+key+'"]').click()
                 expect(shell).to_have_attribute('data-src',re.compile(re.escape({'lab':'lab/','aggiornamenti':'aggiornamenti.html','archivio':'archivio.html','ramificazioni':'ramificazioni.html','anteprima':'ufficiale/'}[key])+r'\?nel-registro=1$'))
