@@ -11,6 +11,8 @@ Apri **https://giandjcosta.github.io/o-girrr-registro/**: il menu persistente ri
 
 Ramificazioni legge entrambi i repository: 6.0 in evidenza, lavori in corso ordinati per data, rami integrati nei cassetti e selezione collettiva. Il workflow raccoglie i dati ogni 15 minuti, con i possibili ritardi di GitHub; il portale conserva gli allineamenti automatici delle versioni già esistenti.
 
+Il Changelog ha filtri compatti combinabili: ricerca, menu Area e calendario Data; «Azzera filtri» ripristina l’elenco completo. Le date seguono l’ora di Roma anche per i commit vicini a mezzanotte. In Ramificazioni, «Il ramo completo» raccoglie tutte le diramazioni di ogni repository in un disegno, sopra le schede già esistenti.
+
 ## Link utili
 
 | Cosa | Link |
