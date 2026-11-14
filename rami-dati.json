@@ -1,5 +1,5 @@
 {
- "generato": 1794681954,
+ "generato": 1794682005,
  "versione": "6.1",
  "repository": [
   {
@@ -6922,17 +6922,50 @@
      "totale": 3
     },
     {
+     "nome": "chatgpt/nome-competizioni-61",
+     "punta": "f5b83f4",
+     "data": 1794681954,
+     "titolo": "ChatGPT: rifinisce il nome delle due competizioni nel Lab",
+     "autore": "ChatGPT",
+     "padre": "chatgpt/esito-lab-61",
+     "nascita": "a03eefd",
+     "dataNascita": 1794673516,
+     "avanti": 3,
+     "stato": "unito",
+     "commit": [
+      [
+       "f5b83f426f3de44ea9eb1a9db7304fd4330e2373",
+       1794681954,
+       "ChatGPT",
+       "ChatGPT: rifinisce il nome delle due competizioni nel Lab"
+      ],
+      [
+       "d29fd094945c4245e3d3d159e1726e7d37660afd",
+       1794681768,
+       "Registro",
+       "Registro: elenco attività aggiornato"
+      ]
+     ],
+     "totale": 3
+    },
+    {
      "nome": "main",
-     "punta": "d29fd09",
-     "data": 1794681768,
-     "titolo": "Registro: elenco attività aggiornato",
-     "autore": "Registro",
+     "punta": "0717b6e",
+     "data": 1794682005,
+     "titolo": "ChatGPT: mostra nel Lab Campionato & Champions Cup",
+     "autore": "ChatGPT",
      "padre": null,
      "nascita": null,
      "avanti": 0,
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "0717b6e495b63c6903568415e527fe12d56ff4c1",
+       1794682005,
+       "ChatGPT",
+       "ChatGPT: mostra nel Lab Campionato & Champions Cup"
+      ],
       [
        "d29fd094945c4245e3d3d159e1726e7d37660afd",
        1794681768,
@@ -6998,36 +7031,9 @@
        1794651803,
        "ChatGPT",
        "ChatGPT: aggiorna lo stato delle anteprime 6.0.2 certificate"
-      ],
-      [
-       "ab4a23c9fd2e0260ae4db3387eabe38d12edc7c5",
-       1794651476,
-       "ChatGPT",
-       "ChatGPT: pubblica nel Lab le nuove anteprime 6.0.2 e la Carriera corretta"
       ]
      ],
-     "totale": 1189
-    },
-    {
-     "nome": "chatgpt/nome-competizioni-61",
-     "punta": "f5b83f4",
-     "data": 1794681954,
-     "titolo": "ChatGPT: rifinisce il nome delle due competizioni nel Lab",
-     "autore": "ChatGPT",
-     "padre": "main",
-     "nascita": "d29fd09",
-     "dataNascita": 1794681768,
-     "avanti": 1,
-     "stato": "attivo",
-     "commit": [
-      [
-       "f5b83f426f3de44ea9eb1a9db7304fd4330e2373",
-       1794681954,
-       "ChatGPT",
-       "ChatGPT: rifinisce il nome delle due competizioni nel Lab"
-      ]
-     ],
-     "totale": 1
+     "totale": 1191
     }
    ]
   }
