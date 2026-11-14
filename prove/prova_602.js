@@ -7,7 +7,7 @@ const { script: BLOCCA } = require('./blocca_scritture');
 const M = process.env.MOTORE || 'chromium', B = process.env.BASE || 'http://localhost:8773/o-fant-a-girrr/', D = process.argv[2];
 const SCH = [['iPhone SE 320', { ...devices['iPhone SE'], viewport: { width: 320, height: 568 } }], ['iPhone 15 Pro', devices['iPhone 15 Pro']], ['PC 1280', { viewport: { width: 1280, height: 800 } }]];
 (async () => {
-  const br = await pw[M].launch(); let ko = 0;
+  const br = await require('./browser_certificato').browser(M); let ko = 0;
   for (const [sn, o0] of SCH) for (const chi of ['ospite', 'squadra']) for (const g of ['girrr/', 'stadio/girrr/']) {
     const o = { ...o0, serviceWorkers: 'block' }; delete o.defaultBrowserType;
     const c = await br.newContext(o); await c.addInitScript(BLOCCA);

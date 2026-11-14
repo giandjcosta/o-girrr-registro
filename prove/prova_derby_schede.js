@@ -8,7 +8,7 @@ const { script: BLOCCA } = require('./blocca_scritture');
 const B = process.env.BASE || 'http://localhost:8772/o-fant-a-girrr/', MOTORE = process.env.MOTORE || 'chromium', D = process.argv[2];
 const SCH = [['iPhone SE 320', { viewport: { width: 320, height: 568 } }], ['Pixel 7', { viewport: { width: 412, height: 915 } }], ['iPad', { viewport: { width: 820, height: 1180 } }], ['PC 1920', { viewport: { width: 1920, height: 1080 } }], ['Smart TV', { viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 2 }]];
 (async () => {
-  const br = await pw[MOTORE].launch(); let ko = 0;
+  const br = await require('./browser_certificato').browser(MOTORE); let ko = 0;
   for (const [sn, o] of SCH) for (const g of ['girrr/', 'stadio/girrr/']) {
     const c = await br.newContext(o); await c.addInitScript(BLOCCA); const p = await c.newPage(), pr = [];
     p.on('pageerror', e => pr.push('errore: ' + e.message.slice(0, 100)));

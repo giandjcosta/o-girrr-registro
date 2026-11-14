@@ -13,6 +13,7 @@ Non fa commit. Si ferma se una pagina non è quella attesa.
    di Campionato con la forma) e il «Giro di boa» di qualsiasi squadra (dalla 17ª giornata, come prima).
 """
 import os
+import re
 import shutil
 import sys
 
@@ -27,9 +28,9 @@ def scrivi(p, t):
     open(p, 'w', encoding='utf-8').write(t)
 
 
-def sost(t, a, b, rel):
+def sost(t, a, b, rel, attese=1):
     n = t.count(a)
-    if n != 1:
+    if n != attese:
         sys.exit('%s: trovato %d volte «%s…»: la pagina non è quella attesa (serve la 6.0.1 già applicata).' % (rel, n, a[:70]))
     return t.replace(a, b)
 
@@ -37,12 +38,42 @@ def sost(t, a, b, rel):
 def main(sito):
     shutil.copyfile(os.path.join(R, 'rilascio/condividi/condividi.js'), os.path.join(sito, 'condividi.js'))
     print('ok condividi.js')
+    for nome in ('giro-di-boa.js', 'giro-di-boa.css'):
+        shutil.copyfile(os.path.join(R, 'rilascio/r602', nome), os.path.join(sito, nome))
+    # La 6.0.1 pubblicata da Claude precede il fix del caricamento ritardato di Cerca.
+    # Applicabile anche alla copia 6.0 + r601: lì il marcatore è già presente.
+    root=os.path.join(sito,'index.html');home=leggi(root)
+    marcatore="document.getElementById('tabs').dataset.pubblico=ok?'0':'1';"
+    if marcatore not in home:
+        home=sost(home,"document.getElementById('tabs').hidden=false;","document.getElementById('tabs').hidden=false;"+marcatore,'index.html')
+        scrivi(root,home)
+    shutil.copyfile(os.path.join(R,'rilascio/cerca/cerca.js'),os.path.join(sito,'cerca.js'))
     for pre, su, voci in (('girrr/', '../', 'voci/'), ('stadio/girrr/', '../../', '../../girrr/voci/')):
         rel = pre + 'app.html'
         t = leggi(os.path.join(sito, rel))
+        inizio=t.index('function fidTab(el,v){');fine=t.index('function animaFiducia(t,v){',inizio)
+        t=t[:inizio]+leggi(os.path.join(R,'rilascio/r602/cartellini.js'))+'\n'+t[fine:]
+        stile=re.search(r'<style id="cartellini-fiducia">.*?</style>',t,re.S)
+        if not stile:sys.exit(rel+': manca il tabellone della fiducia atteso')
+        t=t[:stile.start()]+'<style id="cartellini-fiducia">'+leggi(os.path.join(R,'rilascio/r602/cartellini.css'))+'</style>'+t[stile.end():]
+        if 'var scadenze=[1,2,6,8,10,18,26,34]' not in t:
+            sys.exit(rel+': la linea degli Obiettivi non parte dalla 1ª giornata')
+        # La prima tappa deve essere anche visibile, senza salto alla prossima scadenza.
+        auto="setTimeout(function(){var sc=document.querySelector('#view .ob-timeline-scroll'),nx=sc&&sc.querySelector('[data-ob-next]');if(sc&&nx)sc.scrollLeft=Math.max(0,nx.offsetLeft-(sc.clientWidth-nx.offsetWidth)/2)},0);"
+        t=sost(t,auto,"setTimeout(function(){var sc=document.querySelector('#view .ob-timeline-scroll');if(sc)sc.scrollLeft=0},0);",rel)
+        t=t.replace('/* sul telefono la linea scorre da sola fino alla prossima scadenza */','/* La linea si apre dalla 1ª giornata; le altre tappe restano scorribili. */')
+        # Il ridisegno dei dati non deve cancellare i cartellini aggiunti dal conteggio.
+        nodo="    if(a.nodeType!==1)continue;"
+        conserva="    if(a.classList.contains('trust-visual')&&b.classList.contains('trust-visual')){a.dataset.target=b.dataset.target;continue;}"
+        t=sost(t,nodo,nodo+'\n'+conserva,rel)
         # condividi.js anche in app.html (prima di pillole.js)
         t = sost(t, '<script src="' + su + 'pillole.js?v=1" defer></script>',
                  '<script src="' + su + 'condividi.js?v=602" defer></script><script src="' + su + 'pillole.js?v=1" defer></script>', rel)
+        t = sost(t, '</head>', '<script src="' + su + 'giro-di-boa.js?v=602" defer></script></head>', rel)
+        t = sost(t, "['stag','Stagione']", "['stag','Stagione'],['boa','Giro di boa']", rel)
+        # Anche gli ospiti possono leggere tutte le squadre senza autenticarsi.
+        t = sost(t, "['pan','stag','ob','fid','prom','st','reg']", "['pan','stag','boa','ob','fid','prom','st','reg']", rel, attese=2)
+        t = sost(t, "else if(S.ctab==='prom')", "else if(S.ctab==='boa')h+=(window.GirrrGiroDiBoa?window.GirrrGiroDiBoa(t):'');\n  else if(S.ctab==='prom')", rel)
         # Radio: «Condividi la puntata» sotto ogni puntata
         a = '<audio controls preload="none" src="' + voci + '\'+esc(x.file)+\'" style="width:100%;margin:8px 0"></audio>\''
         t = sost(t, a, a + '+\'<button type="button" class="cd-btn cd-sf" data-cd-file="' + voci + '\'+esc(x.file)+\'" '

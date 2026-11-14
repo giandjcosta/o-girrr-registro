@@ -68,7 +68,7 @@ with sync_playwright() as p:
                     return f.contentDocument.documentElement.scrollWidth<=f.contentWindow.innerWidth+1;
                 }'''),(engine,name,page.url)
             ready()
-            for key in ('lab','aggiornamenti','archivio','ramificazioni','anteprima'):
+            for key in os.environ.get('SEZIONI','lab,aggiornamenti,archivio,ramificazioni,anteprima').split(','):
                 print('SEZIONE',engine,name,key,flush=True)
                 navigation=page.expect_event('framenavigated',predicate=published,timeout=35000) if key=='anteprima' else nullcontext()
                 with navigation as loaded:
@@ -97,19 +97,17 @@ with sync_playwright() as p:
                     inner.wait_for_load_state('networkidle')
                     for stadio in (False,True):
                         if stadio:
-                            with page.expect_event('framenavigated',predicate=lambda f:published(f,'stadio/girrr/'),timeout=35000) as changed:
-                                page.locator('#grafica').click()
-                            inner=changed.value
-                            inner.wait_for_load_state('domcontentloaded')
+                            page.locator('#grafica').click()
                         expect(page.locator('#grafica')).to_have_attribute('aria-checked',str(stadio).lower())
                         page.wait_for_function('''stadio => {
                             const outer=document.getElementById('contenuto'),f=outer.contentDocument.getElementById('f');
-                            return f && f.contentDocument && f.contentDocument.readyState==='complete' && f.contentWindow.location.pathname.includes('/stadio/')===stadio && f.contentWindow.__registroSolaLettura===true;
+                            const h=f?.contentDocument?.querySelector('h1');
+                            return h && h.getClientRects().length>0 && f.contentDocument.readyState==='complete' && f.contentWindow.location.pathname.includes('/stadio/')===stadio && f.contentWindow.__registroSolaLettura===true;
                         }''',arg=stadio,timeout=35000)
-                        inner.locator('h1').first.wait_for()
-                        assert inner.locator('html').evaluate('()=>window.__registroSolaLettura===true')
-                        assert inner.locator('html').evaluate("async()=>{const r=await fetch('https://qmjqfgmvimsuxvghetgi.supabase.co/rest/v1/rpc/curva_scrivi',{method:'POST',body:'{}'});return r.status===403}")
-                        inner.wait_for_load_state('networkidle')
+                        # Firefox può sostituire il frame: si controlla quello effettivamente visibile.
+                        assert page.evaluate("()=>document.getElementById('contenuto').contentDocument.getElementById('f').contentWindow.__registroSolaLettura===true")
+                        assert page.evaluate("async()=>{const w=document.getElementById('contenuto').contentDocument.getElementById('f').contentWindow;const r=await w.fetch('https://qmjqfgmvimsuxvghetgi.supabase.co/rest/v1/rpc/curva_scrivi',{method:'POST',body:'{}'});return r.status===403}")
+                        page.wait_for_load_state('networkidle')
             if name in ('iPhone320','PC1920'):
                 # Regressione Firefox: rientri ripetuti senza riferimenti al frame precedente.
                 page.wait_for_load_state('networkidle')

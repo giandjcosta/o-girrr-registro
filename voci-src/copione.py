@@ -147,6 +147,10 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
     # --- percentuali solo nei momenti buoni
     gap = t1["pts"] - t2["pts"]
     quarto = T[3]["pts"] if len(T) > 3 else None
+    # I fatti del bilancio arrivano dallo stesso JSON letto da pagina e album.
+    from segmento_giro_boa import segmento
+    for voce, testo, tono in segmento(D.get('giro_di_boa'), n):
+        add(voce, testo, tono)
     metà = n in (18, 19, 20)
     if gap >= 9 and (not cronache_attive or (not zona and n % 4 == 0)):
         add("B", f"{t1['t']} ha {gap} punti sul secondo! Secondo i nostri calcoli ha il {pct(P[t1['t']]['s'][-1])} per cento di vincere lo scudetto!", "urlo")

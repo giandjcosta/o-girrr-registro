@@ -1,0 +1,74 @@
+name: ChatGPT - Giro di boa 6.0.2
+on:
+  pull_request:
+    branches: [main]
+    paths: ['calcoli/giro_di_boa.py', 'rilascio/r602/**', 'rilascio/r601/**', 'rilascio/cerca/**', 'rilascio/condividi/**', 'voci-src/**', 'prove/*giro_di_boa*', 'prove/browser_certificato.js', 'prove/server_range.py', 'prove/prova_cerca_pubblica.js', 'prove/prova_cartellini_602.js', '.github/workflows/giro-boa-602-qa.yml']
+  workflow_dispatch:
+concurrency:
+  group: giro-boa-602-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  certificazione:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        motore: [chromium, webkit, firefox]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Copia della 6.0.1 pubblicata, mai modificata dalla prova
+        uses: actions/checkout@v4
+        with:
+          repository: giandjcosta/o-fant-a-girrr
+          ref: e9124d905464ddb1d2a9d0ae7bd54bbd0867431d
+          path: qa-site
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Motore reale e profilo dei certificati Firefox
+        run: |
+          npm install --no-save playwright@1.62.0
+          npx playwright install --with-deps ${{ matrix.motore }}
+          sudo apt-get install -y libnss3-tools
+          mkdir -p "$RUNNER_TEMP/firefox-ca"
+          certutil -N --empty-password -d "sql:$RUNNER_TEMP/firefox-ca"
+          for cert in /usr/local/share/ca-certificates/*.crt; do
+            [ -f "$cert" ] || continue
+            certutil -A -d "sql:$RUNNER_TEMP/firefox-ca" -n "$(basename "$cert")" -t 'C,,' -i "$cert"
+          done
+      - name: Calcolo e testo Radio, senza servizi vocali
+        run: python3 prove/prova_giro_di_boa.py
+      - name: Preparo la 6.0.2 sulla copia della 6.0.1
+        run: |
+          python3 rilascio/r602/applica.py qa-site
+          python3 calcoli/giro_di_boa.py qa-site
+          mkdir -p "$RUNNER_TEMP/boa-web"
+          ln -s "$GITHUB_WORKSPACE/qa-site" "$RUNNER_TEMP/boa-web/o-fant-a-girrr"
+          python3 prove/server_range.py --directory "$RUNNER_TEMP/boa-web" --port 8890 > "$RUNNER_TEMP/server-range.log" 2>&1 &
+      - name: Cerca pubblica, anche con caricamento ritardato
+        env:
+          MOTORE: ${{ matrix.motore }}
+          FIREFOX_CERT_PROFILE: ${{ runner.temp }}/firefox-ca
+          BASE: http://127.0.0.1:8890/o-fant-a-girrr/
+        run: node prove/prova_cerca_pubblica.js
+      - name: Sedici schermi, due grafiche, album e casi futuri
+        env:
+          MOTORE: ${{ matrix.motore }}
+          FIREFOX_CERT_PROFILE: ${{ runner.temp }}/firefox-ca
+          BASE: http://127.0.0.1:8890/o-fant-a-girrr/
+          FOTO: qa-artifacts
+        run: |
+          node prove/prova_giro_di_boa_browser.js
+          node prove/prova_giro_di_boa_tv.js
+          node prove/prova_cartellini_602.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: giro-di-boa-${{ matrix.motore }}
+          path: qa-artifacts/
