@@ -1,5 +1,6 @@
 {
- "generato": 1794673042,
+ "generato": 1794673265,
+ "versione": "6.1",
  "repository": [
   {
    "repo": "o-fant-a-girrr",
@@ -1368,10 +1369,10 @@
      "data": 1794649720,
      "titolo": "Claude: AGENTS.md, sul sito la 6.0.1",
      "autore": "Claude",
-     "padre": "chatgpt/giro-boa-calcoli-602",
-     "nascita": "ff29fa2",
-     "dataNascita": 1794587335,
-     "avanti": 1,
+     "padre": "claude/o-girrr-versione-6-0-mjh4ut",
+     "nascita": "bc34e95",
+     "dataNascita": 1794587316,
+     "avanti": 2,
      "stato": "unito",
      "commit": [
       [
@@ -1381,52 +1382,7 @@
        "Claude: AGENTS.md, sul sito la 6.0.1"
       ]
      ],
-     "totale": 1
-    },
-    {
-     "nome": "chatgpt/giro-boa-calcoli-602",
-     "punta": "7d6edf1",
-     "data": 1794665938,
-     "titolo": "ChatGPT: prepara i bilanci 6.1 per periodo e competizione",
-     "autore": "ChatGPT",
-     "padre": "main",
-     "nascita": "ff29fa2",
-     "dataNascita": 1794587335,
-     "avanti": 5,
-     "stato": "attivo",
-     "commit": [
-      [
-       "7d6edf1f749572b4c9eab3653923716e11484ab5",
-       1794665938,
-       "ChatGPT",
-       "ChatGPT: prepara i bilanci 6.1 per periodo e competizione"
-      ],
-      [
-       "00975bd9608a3ee5190a139d467ab6cf74115e5c",
-       1794650061,
-       "ChatGPT",
-       "ChatGPT: conserva nel bilancio le voci verificate di redazione e Curva"
-      ],
-      [
-       "8f8bf19eb831fffd22d3f92c584b90cfde1e632d",
-       1794620580,
-       "ChatGPT",
-       "ChatGPT: distingue gironi e traguardi della fase finale di Champions Cup"
-      ],
-      [
-       "85165de7c540c3cebc8057c6e18397734b3a7bca",
-       1794620413,
-       "ChatGPT",
-       "ChatGPT: prepara il JSON dal ramo dedicato e aggiorna gli MVP senza nuovi turni"
-      ],
-      [
-       "5076e42e6947c00a0147f5ba1f49c1d92aa1c2b4",
-       1794620165,
-       "ChatGPT",
-       "ChatGPT: aggiorna il Giro di boa nel workflow con avvio senza scritture DB"
-      ]
-     ],
-     "totale": 5
+     "totale": 2
     },
     {
      "nome": "chatgpt/rilascio-6-1",
@@ -1600,17 +1556,74 @@
      "totale": 2
     },
     {
+     "nome": "chatgpt/giro-boa-calcoli-602",
+     "punta": "0873dcc",
+     "data": 1794673046,
+     "titolo": "ChatGPT: registra la 6.1 pubblicata nelle istruzioni del sito",
+     "autore": "ChatGPT",
+     "padre": "claude/avvisa-ramificazioni",
+     "nascita": "0f0cc3d",
+     "dataNascita": 1794649740,
+     "avanti": 7,
+     "stato": "unito",
+     "commit": [
+      [
+       "0873dcc7ca30e8916632b5ac7f8cbcbdaa291985",
+       1794673046,
+       "ChatGPT",
+       "ChatGPT: registra la 6.1 pubblicata nelle istruzioni del sito"
+      ],
+      [
+       "7d6edf1f749572b4c9eab3653923716e11484ab5",
+       1794665938,
+       "ChatGPT",
+       "ChatGPT: prepara i bilanci 6.1 per periodo e competizione"
+      ],
+      [
+       "00975bd9608a3ee5190a139d467ab6cf74115e5c",
+       1794650061,
+       "ChatGPT",
+       "ChatGPT: conserva nel bilancio le voci verificate di redazione e Curva"
+      ],
+      [
+       "8f8bf19eb831fffd22d3f92c584b90cfde1e632d",
+       1794620580,
+       "ChatGPT",
+       "ChatGPT: distingue gironi e traguardi della fase finale di Champions Cup"
+      ],
+      [
+       "85165de7c540c3cebc8057c6e18397734b3a7bca",
+       1794620413,
+       "ChatGPT",
+       "ChatGPT: prepara il JSON dal ramo dedicato e aggiorna gli MVP senza nuovi turni"
+      ],
+      [
+       "5076e42e6947c00a0147f5ba1f49c1d92aa1c2b4",
+       1794620165,
+       "ChatGPT",
+       "ChatGPT: aggiorna il Giro di boa nel workflow con avvio senza scritture DB"
+      ]
+     ],
+     "totale": 7
+    },
+    {
      "nome": "main",
-     "punta": "8f6e6a9",
-     "data": 1794673042,
-     "titolo": "Merge pull request #16 from giandjcosta/claude/avvisa-ramificazioni",
-     "autore": "giandjcosta",
+     "punta": "b5a6b88",
+     "data": 1794673265,
+     "titolo": "ChatGPT: attiva i calcoli dei bilanci della stagione 6.1",
+     "autore": "ChatGPT",
      "padre": null,
      "nascita": null,
      "avanti": 0,
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "b5a6b88c6729dde20603a151827de51ff98250b1",
+       1794673265,
+       "ChatGPT",
+       "ChatGPT: attiva i calcoli dei bilanci della stagione 6.1"
+      ],
       [
        "8f6e6a9a9f57b9a2cf8955c72e62d0e751dd456c",
        1794673042,
@@ -1676,15 +1689,9 @@
        1794266942,
        "Claude",
        "Claude: AGENTS.md, sul sito c'è la 5.6.2"
-      ],
-      [
-       "618d6753a9bd22e133eb74ba641511818c52580f",
-       1794263174,
-       "Claude",
-       "Claude: AGENTS.md, sul sito la 5.6.1"
       ]
      ],
-     "totale": 92
+     "totale": 100
     }
    ]
   },
@@ -6856,37 +6863,55 @@
     },
     {
      "nome": "claude/ramificazioni-aggiornamento-immediato",
-     "punta": "d7f0945",
-     "data": 1794673020,
-     "titolo": "Claude: Ramificazioni, Sito Registro o Entrambi, versione online e aggiornamento immediato dal sito (repositor",
+     "punta": "49df58a",
+     "data": 1794673057,
+     "titolo": "Merge remote-tracking branch 'origin/main' into claude/ramificazioni-aggiornamento-immediato",
      "autore": "Claude",
-     "padre": "main",
-     "nascita": "a4ed781",
-     "dataNascita": 1794672440,
-     "avanti": 1,
-     "stato": "attivo",
+     "padre": "claude/ramificazioni-tre-viste",
+     "nascita": "8fd79f5",
+     "dataNascita": 1794672246,
+     "avanti": 5,
+     "stato": "unito",
      "commit": [
+      [
+       "a74d0244ea448b7476b7c3d82c6627c772a50d54",
+       1794673039,
+       "ChatGPT",
+       "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
+      ],
       [
        "d7f09454cbc2fdedda4f9ac3ca55fd1989c4605c",
        1794673020,
        "Claude",
        "Claude: Ramificazioni, Sito Registro o Entrambi, versione online e aggiornamento immediato dal sito (repository_dispatch)"
+      ],
+      [
+       "a4ed78128dfde56a084e171c2a0d4b3db4fd5ec2",
+       1794672440,
+       "ChatGPT",
+       "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
       ]
      ],
-     "totale": 1
+     "totale": 5
     },
     {
      "nome": "main",
-     "punta": "a74d024",
-     "data": 1794673039,
-     "titolo": "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio",
-     "autore": "ChatGPT",
+     "punta": "4e16d57",
+     "data": 1794673063,
+     "titolo": "Merge pull request #84 from giandjcosta/claude/ramificazioni-aggiornamento-immediato",
+     "autore": "giandjcosta",
      "padre": null,
      "nascita": null,
      "avanti": 0,
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "4e16d5715a6869008dd85ddfe51caab3e8557e4d",
+       1794673063,
+       "giandjcosta",
+       "Merge pull request #84 from giandjcosta/claude/ramificazioni-aggiornamento-immediato"
+      ],
       [
        "a74d0244ea448b7476b7c3d82c6627c772a50d54",
        1794673039,
@@ -6952,15 +6977,9 @@
        1794649767,
        "ChatGPT",
        "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
-      ],
-      [
-       "057a202b08afb1dd030ad3a394b1f19c1b2f6e44",
-       1794649737,
-       "giandjcosta",
-       "Merge pull request #77 from giandjcosta/claude/rilascio-601"
       ]
      ],
-     "totale": 1182
+     "totale": 1185
     }
    ]
   }
