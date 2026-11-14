@@ -69,7 +69,7 @@ def main(sito):
         # condividi.js anche in app.html (prima di pillole.js)
         t = sost(t, '<script src="' + su + 'pillole.js?v=1" defer></script>',
                  '<script src="' + su + 'condividi.js?v=602" defer></script><script src="' + su + 'pillole.js?v=1" defer></script>', rel)
-        t = sost(t, '</head>', '<script src="' + su + 'giro-di-boa.js?v=602" defer></script></head>', rel)
+        t = sost(t, '</head>', '<script src="' + su + 'giro-di-boa.js?v=602-colori1" defer></script></head>', rel)
         t = sost(t, "['stag','Stagione']", "['stag','Stagione'],['boa','Giro di boa']", rel)
         # Anche gli ospiti possono leggere tutte le squadre senza autenticarsi.
         t = sost(t, "['pan','stag','ob','fid','prom','st','reg']", "['pan','stag','boa','ob','fid','prom','st','reg']", rel, attese=2)
