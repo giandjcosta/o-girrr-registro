@@ -43,7 +43,7 @@ self.GIRRR_SPECCHIO = (function () {
     'stadio/girrr/novita.js': new URL('../../rilascio/r601/pagine/stadio/girrr/novita.js', self.location.href).href,
     'stadio/girrr/albo.html': new URL('../../rilascio/r601/pagine/stadio/girrr/albo.html', self.location.href).href,
     'stadio/girrr/totogirrr.html': new URL('../../rilascio/r601/pagine/stadio/girrr/totogirrr.html', self.location.href).href,
-    'stagione.js': new URL('../../rilascio/stagione/stagione.js?v=611-1', self.location.href).href, /* Carriera · La mia stagione */
+    'stagione.js': new URL('../../rilascio/stagione/stagione.js?v=611-pc1', self.location.href).href, /* Carriera · La mia stagione */
     'girrr/dati/redazione.json': new URL('../redazione/redazione.json', self.location.href).href, /* scritto da Claude e controllato da redazione/controlla.py */
     'conferenze.js': new URL('../../rilascio/conferenze/conferenze.js', self.location.href).href,
     'tv.js': new URL('../../rilascio/conferenze/tv.js', self.location.href).href, /* testo più grande solo sulla TV (?tv per provarlo dal PC) */

@@ -111,6 +111,7 @@
       '.ms-c{min-width:0;display:flex;flex-direction:column;padding:14px 16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);' +
       (stadio ? 'border-left:6px solid ' + ACC + ';border-radius:12px' : 'border-left:8px solid ' + ACC + ';border-radius:4px 14px 14px 4px') + '}' +
       '@media(min-width:600px){.ms-classifica{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);column-gap:24px;align-items:start}.ms-classifica>.ms-graf{grid-column:2;grid-row:1/6;margin-top:0}.ms-classifica>.ms-graf svg{max-height:216px}.ms-classifica>.ms-txt{margin-top:0;align-self:end}.ms-classifica>.ms-big{font-size:64px}}' +
+      '@media(min-width:1000px){.ms-posizioni>span:last-child{white-space:nowrap}}' +
       '.ms-k{font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:' + (stadio ? ACC : '#ffd166') + '}' +
       '.ms-big{font-weight:900;font-size:clamp(32px,9vw,44px);line-height:1.05;margin:10px 0 4px;color:#fbf6ec;overflow-wrap:anywhere' + (stadio ? ';font-family:Lobster,cursive;font-weight:400' : '') + '}' +
       '.ms-sub{font-weight:800;font-size:15px;color:#fbf6ec}.ms-txt{margin-top:auto;padding-top:12px;font-size:15px;font-weight:600;line-height:1.5;color:#fbf6ec}.ms-nota{font-size:14px;color:#fbf6ec;margin-top:8px}' +
@@ -154,7 +155,7 @@
     return '<p class="ms-intro">La stagione di ' + E(t) + ' finora.</p><div class="ms-scorri">' + S.map(function (s) {
       return '<section class="ms-c' + (s.graf ? ' ms-classifica' : '') + '"><div class="ms-k">' + E(s.k) + '</div><div class="ms-big">' + E(s.big) + '</div><div class="ms-sub">' + E(s.sub) + '</div>' +
         (s.graf ? grafico(s.graf) : '') + (s.forma ? '<div class="ms-forma">' + s.forma.map(function (f) { return '<i class="' + f + '">' + f + '</i>'; }).join('') + '</div>' : '') +
-        (s.txt ? '<div class="ms-txt">' + E(s.txt) + (s.nota ? '<div class="ms-nota">' + E(s.nota) + '</div>' : '') + '</div>' : '') + '</section>';
+        (s.txt ? '<div class="ms-txt' + (s.graf ? ' ms-posizioni' : '') + '">' + (s.graf ? '<span>' + E(s.txt).replace('. Peggiore:', '.</span> <span>Peggiore:') + '</span>' : E(s.txt)) + (s.nota ? '<div class="ms-nota">' + E(s.nota) + '</div>' : '') + '</div>' : '') + '</section>';
     }).join('') + '</div>';
   };
   carica();
