@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 14 novembre 2026)
 
+## 14 novembre (7) — ChatGPT: nome delle competizioni più pulito, in prova nel Lab
+
+- Ramo `chatgpt/nome-competizioni-61`: proposta «Campionato & Champions Cup» al posto del “+”, nei selettori, nelle etichette della Curva e nelle intestazioni/piedi delle immagini. Restano i colori distinti del Campionato e della Coppa; nessun cambiamento a periodi, dati o calcoli.
+- Solo Lab e sorgente del modulo in prova: riferimenti aggiornati per scaricare il testo nuovo. Sorgenti ufficiali del sito e versione 6.1 pubblicata preservate; nessun numero di versione aggiunto.
+- Verifica locale: **96 visite, zero problemi**, Chromium/WebKit/Firefox × 16 schermi × Lega/Stadio. Controllati anche il selettore dell’album e sei album di tre PNG 1080×1350, con il testo realmente passato al disegno Canvas: presente “&”, assente la vecchia etichetta col “+”. Nessun nuovo errore JavaScript o scorrimento laterale. Foto PC in entrambe le grafiche salvate per la revisione; dispositivi fisici non disponibili.
+- Credenziale Git locale scaduta; repository aggiornato e pubblicazione del ramo tramite il connettore GitHub, con controllo del main corrente e aggiornamenti senza forzare la storia.
+
+
 ## 14 novembre (6) — ChatGPT: 6.1 pubblicata sul sito, calcoli automatici attivi
 
 - **Vai esplicito di Gianluca al Registro e poi al sito vero.** Lab PR #82 unita in `1d273ff`; sito PR #15 unita su `gh-pages` in **`a6fcf03c50da1fd762e49e1096e5e2146a4a7f54`**. Dopo il controllo del sito, backend PR #13 unita sul `main` in **`b5a6b88c6729dde20603a151827de51ff98250b1`**. Ordine rispettato: pagine → Controllo online → main. Nessuna versione 6.0.2 aggiunta.

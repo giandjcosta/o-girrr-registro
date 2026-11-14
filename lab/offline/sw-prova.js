@@ -12,7 +12,7 @@ self.GIRRR_SPECCHIO = (function () {
     'cerca.js': new URL('../../rilascio/cerca/cerca.js', self.location.href).href, /* Cerca un giocatore nello Spogliatoio */
     'versioni.js': new URL('../../rilascio/versioni/versioni.js', self.location.href).href, /* pagina Versioni */
     'versioni.json': new URL('../../rilascio/versioni/versioni.json', self.location.href).href,
-    'giro-di-boa.js': new URL('../../rilascio/r602/giro-di-boa.js?v=61-periodi1', self.location.href).href,
+    'giro-di-boa.js': new URL('../../rilascio/r602/giro-di-boa.js?v=61-nome1', self.location.href).href,
     'giro-di-boa.css': new URL('../../rilascio/r602/giro-di-boa.css?v=61-periodi1', self.location.href).href,
     'girrr/dati/giro-di-boa.json': new URL('../giro-di-boa-602/esempio.json', self.location.href).href, /* Esempio reale generato, nessuna scrittura sul sito */
     'condividi.js': new URL('../../rilascio/condividi/condividi.js?v=61-periodi1', self.location.href).href, /* Condividi come immagine e «Condividi la giornata» */
