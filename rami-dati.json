@@ -1,5 +1,5 @@
 {
- "generato": 1794691128,
+ "generato": 1794691286,
  "versione": "6.1",
  "repository": [
   {
@@ -6949,10 +6949,37 @@
      "totale": 3
     },
     {
+     "nome": "chatgpt/carriera-curva-611",
+     "punta": "ccc1f5d",
+     "data": 1794691128,
+     "titolo": "ChatGPT: rende bianchi e più leggibili i dettagli della Stagione",
+     "autore": "ChatGPT",
+     "padre": "chatgpt/nome-competizioni-61",
+     "nascita": "f5b83f4",
+     "dataNascita": 1794681954,
+     "avanti": 3,
+     "stato": "unito",
+     "commit": [
+      [
+       "ccc1f5df20ad898dfd4dc91094b1d5102c525340",
+       1794691128,
+       "ChatGPT",
+       "ChatGPT: rende bianchi e più leggibili i dettagli della Stagione"
+      ],
+      [
+       "ea50ca1e1a6611df026e05d1799e8844ce5d20dc",
+       1794690851,
+       "ChatGPT",
+       "ChatGPT: prepara nel Lab la 6.1.1 con posizione chiara e Curva più rapida"
+      ]
+     ],
+     "totale": 3
+    },
+    {
      "nome": "main",
-     "punta": "0717b6e",
-     "data": 1794682005,
-     "titolo": "ChatGPT: mostra nel Lab Campionato & Champions Cup",
+     "punta": "f959d2f",
+     "data": 1794691286,
+     "titolo": "ChatGPT: integra nel Lab l’anteprima 6.1.1",
      "autore": "ChatGPT",
      "padre": null,
      "nascita": null,
@@ -6960,6 +6987,12 @@
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "f959d2f69bda69ff8952969f4c862d38a65996d3",
+       1794691286,
+       "ChatGPT",
+       "ChatGPT: integra nel Lab l’anteprima 6.1.1"
+      ],
       [
        "0717b6e495b63c6903568415e527fe12d56ff4c1",
        1794682005,
@@ -7025,42 +7058,9 @@
        1794654091,
        "ChatGPT",
        "ChatGPT: aggiorna nel Lab centratura e colori del Giro di boa"
-      ],
-      [
-       "898f7c699f2377827c9111f4935b057e58da9a85",
-       1794651803,
-       "ChatGPT",
-       "ChatGPT: aggiorna lo stato delle anteprime 6.0.2 certificate"
       ]
      ],
-     "totale": 1191
-    },
-    {
-     "nome": "chatgpt/carriera-curva-611",
-     "punta": "ccc1f5d",
-     "data": 1794691128,
-     "titolo": "ChatGPT: rende bianchi e più leggibili i dettagli della Stagione",
-     "autore": "ChatGPT",
-     "padre": "main",
-     "nascita": "0717b6e",
-     "dataNascita": 1794682005,
-     "avanti": 2,
-     "stato": "attivo",
-     "commit": [
-      [
-       "ccc1f5df20ad898dfd4dc91094b1d5102c525340",
-       1794691128,
-       "ChatGPT",
-       "ChatGPT: rende bianchi e più leggibili i dettagli della Stagione"
-      ],
-      [
-       "ea50ca1e1a6611df026e05d1799e8844ce5d20dc",
-       1794690851,
-       "ChatGPT",
-       "ChatGPT: prepara nel Lab la 6.1.1 con posizione chiara e Curva più rapida"
-      ]
-     ],
-     "totale": 2
+     "totale": 1194
     }
    ]
   }
