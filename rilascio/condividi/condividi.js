@@ -243,6 +243,7 @@
       '.cd-sq{display:flex;align-items:center;gap:10px;margin:14px 0 8px;font-weight:800;font-size:13px;color:#bfe3ff}.cd-sq select{flex:1;min-width:0;font:inherit;font-weight:800;color:#fbf6ec;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:10px 12px}.cd-sq option{color:#141d3d}' +
       '.cd-ic{display:grid;place-items:center;height:120px;color:' + ACC + '}.cd-ic svg{width:56px;height:56px}' +
       '.cd-sf{margin:8px 0 0}' +
+      '.cd-btn.cd-sf[data-cd-nome^="radio-"]{display:flex;justify-content:center;width:fit-content;max-width:100%;min-height:44px;margin:8px auto 0;text-align:center;white-space:normal;line-height:1.35}' +
       '.cd-sc button[hidden]{display:none}' +
       '.cd-velo .cd-box h3{color:#fbf6ec}' +
       '.cd-pk{display:grid;gap:8px}.cd-pz{display:flex;align-items:center;gap:12px;padding:10px 12px;cursor:pointer;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);transition:opacity .25s,background-color .25s;' + (stadio ? 'border-radius:12px' : 'border-radius:4px 14px 14px 4px') + '}' +
