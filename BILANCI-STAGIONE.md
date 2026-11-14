@@ -1,6 +1,6 @@
 # Bilanci della stagione · Regole della 6.1
 
-Richieste di Gianluca del 14 novembre 2026. La prossima versione è **6.1**; la 6.0.2 era una bozza, non un rilascio. Online resta la versione indicata da `registro-stato.json`. Pubblicare il Lab non pubblica il sito della lega.
+Richieste di Gianluca del 14 novembre 2026. La versione pubblicata è **6.1**; la 6.0.2 era una bozza, non un rilascio. Online resta la versione indicata da `registro-stato.json`. Pubblicare il Lab non pubblica il sito della lega.
 
 - **Periodo:** «Fino ad ora» è la scelta iniziale. Le tappe sono cumulative dalla 1ª giornata: inizio (1), ogni cinque giornate (5, 10, 15, 20, 25, 30), metà (17) e fine (34). Si sbloccano solo con risultati completi e pubblicati, rispettando l’attesa di un’ora dei risultati. Una giornata incompleta blocca anche le successive. Le tappe passate restano disponibili. Il ritorno, separato, resta disponibile dalla 18ª.
 - **Competizione:** Campionato rosso; Champions Cup azzurra; entrambe con i due colori. Le tappe seguono le giornate del Campionato; la Coppa comprende i risultati pubblicati fino alla stessa giornata di Serie A. Nessuna somma di punti né classifica unica: i punti del Campionato e dei gironi della Coppa restano separati. Nella fase a eliminazione i risultati non danno punti di classifica.
