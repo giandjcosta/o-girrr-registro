@@ -1,5 +1,5 @@
 {
- "generato": 1794672940,
+ "generato": 1794673042,
  "repository": [
   {
    "repo": "o-fant-a-girrr",
@@ -1384,93 +1384,6 @@
      "totale": 1
     },
     {
-     "nome": "main",
-     "punta": "0f0cc3d",
-     "data": 1794649740,
-     "titolo": "Merge pull request #14 from giandjcosta/claude/sito-601",
-     "autore": "giandjcosta",
-     "padre": null,
-     "nascita": null,
-     "avanti": 0,
-     "indietro": 0,
-     "stato": "principale",
-     "commit": [
-      [
-       "0f0cc3dea79632ca5c00b923db26c760566ac136",
-       1794649740,
-       "giandjcosta",
-       "Merge pull request #14 from giandjcosta/claude/sito-601"
-      ],
-      [
-       "ff29fa200671f0bc06e43c70018ae9359317890b",
-       1794587335,
-       "Claude",
-       "Claude: AGENTS.md, sul sito la 6.0 (#11)"
-      ],
-      [
-       "da338dcddd03cc54c41d574e2a80a4bd5996bc4c",
-       1794587023,
-       "Claude",
-       "Claude: 6.0 nel main del sito, workflow del video e dell'MVP (#10)"
-      ],
-      [
-       "22da7aa2c6486344bf5d671896f7191e0c2b68aa",
-       1794496372,
-       "Claude",
-       "Claude: AGENTS.md, sul sito la 5.8.2"
-      ],
-      [
-       "ad578e5811440ed92af8fd7c90700487f22ae07c",
-       1794483831,
-       "ChatGPT",
-       "ChatGPT: integra il controllo preliminare dei premi autorizzato da Gianluca"
-      ],
-      [
-       "e4465da0b41b556c6daf75f05c2d7ac040e9d270",
-       1794369002,
-       "Claude",
-       "Claude: 5.8 · aspettano il giudizio solo le conferenze delle giornate su cui lavora la redazione"
-      ],
-      [
-       "4b74020cb4f81be666dbf4d3a06a0d4d62048cd7",
-       1794368980,
-       "Claude",
-       "Claude: versione 5.8 · calcoli con i giudizi della redazione di Girrr Sport"
-      ],
-      [
-       "48767169a1921994f7a00b9a5ed8623be96fd301",
-       1794354678,
-       "Claude",
-       "Claude: AGENTS.md, sul sito c'è la 5.7"
-      ],
-      [
-       "c05cf9fe18199340ace3396110a10c7a7bbbca29",
-       1794354563,
-       "Claude",
-       "Claude: versione 5.7 · calcoli (post delle conferenze con partita, allenatore e tag; dopo partita; tono nella fiducia)"
-      ],
-      [
-       "0885382164a5e4f57d266f0755f94f3fd13d58ff",
-       1794266942,
-       "Claude",
-       "Claude: AGENTS.md, sul sito c'è la 5.6.2"
-      ],
-      [
-       "618d6753a9bd22e133eb74ba641511818c52580f",
-       1794263174,
-       "Claude",
-       "Claude: AGENTS.md, sul sito la 5.6.1"
-      ],
-      [
-       "31de485ffbd90535fb2a084c58df514ab8d574b9",
-       1794261138,
-       "Claude",
-       "Claude: AGENTS.md, sul sito la 5.6"
-      ]
-     ],
-     "totale": 90
-    },
-    {
      "nome": "chatgpt/giro-boa-calcoli-602",
      "punta": "7d6edf1",
      "data": 1794665938,
@@ -1664,6 +1577,114 @@
       ]
      ],
      "totale": 653
+    },
+    {
+     "nome": "claude/avvisa-ramificazioni",
+     "punta": "39df3fb",
+     "data": 1794673023,
+     "titolo": "Claude: avvisa le Ramificazioni del Registro a ogni push, ramo e Pull Request del sito",
+     "autore": "Claude",
+     "padre": "claude/sito-601",
+     "nascita": "6a9d187",
+     "dataNascita": 1794649720,
+     "avanti": 2,
+     "stato": "unito",
+     "commit": [
+      [
+       "39df3fb2ce79f625074f410435e9122929ce228a",
+       1794673023,
+       "Claude",
+       "Claude: avvisa le Ramificazioni del Registro a ogni push, ramo e Pull Request del sito"
+      ]
+     ],
+     "totale": 2
+    },
+    {
+     "nome": "main",
+     "punta": "8f6e6a9",
+     "data": 1794673042,
+     "titolo": "Merge pull request #16 from giandjcosta/claude/avvisa-ramificazioni",
+     "autore": "giandjcosta",
+     "padre": null,
+     "nascita": null,
+     "avanti": 0,
+     "indietro": 0,
+     "stato": "principale",
+     "commit": [
+      [
+       "8f6e6a9a9f57b9a2cf8955c72e62d0e751dd456c",
+       1794673042,
+       "giandjcosta",
+       "Merge pull request #16 from giandjcosta/claude/avvisa-ramificazioni"
+      ],
+      [
+       "0f0cc3dea79632ca5c00b923db26c760566ac136",
+       1794649740,
+       "giandjcosta",
+       "Merge pull request #14 from giandjcosta/claude/sito-601"
+      ],
+      [
+       "ff29fa200671f0bc06e43c70018ae9359317890b",
+       1794587335,
+       "Claude",
+       "Claude: AGENTS.md, sul sito la 6.0 (#11)"
+      ],
+      [
+       "da338dcddd03cc54c41d574e2a80a4bd5996bc4c",
+       1794587023,
+       "Claude",
+       "Claude: 6.0 nel main del sito, workflow del video e dell'MVP (#10)"
+      ],
+      [
+       "22da7aa2c6486344bf5d671896f7191e0c2b68aa",
+       1794496372,
+       "Claude",
+       "Claude: AGENTS.md, sul sito la 5.8.2"
+      ],
+      [
+       "ad578e5811440ed92af8fd7c90700487f22ae07c",
+       1794483831,
+       "ChatGPT",
+       "ChatGPT: integra il controllo preliminare dei premi autorizzato da Gianluca"
+      ],
+      [
+       "e4465da0b41b556c6daf75f05c2d7ac040e9d270",
+       1794369002,
+       "Claude",
+       "Claude: 5.8 · aspettano il giudizio solo le conferenze delle giornate su cui lavora la redazione"
+      ],
+      [
+       "4b74020cb4f81be666dbf4d3a06a0d4d62048cd7",
+       1794368980,
+       "Claude",
+       "Claude: versione 5.8 · calcoli con i giudizi della redazione di Girrr Sport"
+      ],
+      [
+       "48767169a1921994f7a00b9a5ed8623be96fd301",
+       1794354678,
+       "Claude",
+       "Claude: AGENTS.md, sul sito c'è la 5.7"
+      ],
+      [
+       "c05cf9fe18199340ace3396110a10c7a7bbbca29",
+       1794354563,
+       "Claude",
+       "Claude: versione 5.7 · calcoli (post delle conferenze con partita, allenatore e tag; dopo partita; tono nella fiducia)"
+      ],
+      [
+       "0885382164a5e4f57d266f0755f94f3fd13d58ff",
+       1794266942,
+       "Claude",
+       "Claude: AGENTS.md, sul sito c'è la 5.6.2"
+      ],
+      [
+       "618d6753a9bd22e133eb74ba641511818c52580f",
+       1794263174,
+       "Claude",
+       "Claude: AGENTS.md, sul sito la 5.6.1"
+      ]
+     ],
+     "totale": 92
     }
    ]
   },
@@ -6834,9 +6855,30 @@
      "totale": 3
     },
     {
+     "nome": "claude/ramificazioni-aggiornamento-immediato",
+     "punta": "d7f0945",
+     "data": 1794673020,
+     "titolo": "Claude: Ramificazioni, Sito Registro o Entrambi, versione online e aggiornamento immediato dal sito (repositor",
+     "autore": "Claude",
+     "padre": "main",
+     "nascita": "a4ed781",
+     "dataNascita": 1794672440,
+     "avanti": 1,
+     "stato": "attivo",
+     "commit": [
+      [
+       "d7f09454cbc2fdedda4f9ac3ca55fd1989c4605c",
+       1794673020,
+       "Claude",
+       "Claude: Ramificazioni, Sito Registro o Entrambi, versione online e aggiornamento immediato dal sito (repository_dispatch)"
+      ]
+     ],
+     "totale": 1
+    },
+    {
      "nome": "main",
-     "punta": "a4ed781",
-     "data": 1794672440,
+     "punta": "a74d024",
+     "data": 1794673039,
      "titolo": "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio",
      "autore": "ChatGPT",
      "padre": null,
@@ -6845,6 +6887,12 @@
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "a74d0244ea448b7476b7c3d82c6627c772a50d54",
+       1794673039,
+       "ChatGPT",
+       "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
+      ],
       [
        "a4ed78128dfde56a084e171c2a0d4b3db4fd5ec2",
        1794672440,
@@ -6910,15 +6958,9 @@
        1794649737,
        "giandjcosta",
        "Merge pull request #77 from giandjcosta/claude/rilascio-601"
-      ],
-      [
-       "52a852e0422e3facd013e726bca1be9066e5c811",
-       1794638570,
-       "Registro",
-       "Registro: elenco attività aggiornato"
       ]
      ],
-     "totale": 1181
+     "totale": 1182
     }
    ]
   }
