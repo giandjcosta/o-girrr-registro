@@ -93,7 +93,12 @@ class Giro(unittest.TestCase):
         out=calcola(d)['periodi']['finora']['squadre']
         self.assertEqual(out['A']['coppa']['qualificazione'],'Qualificata ai quarti')
         d['cal']['cup'].append({'n':11,'sa':16,'m':[['QF','A',76,66,'B','3-1']]})
-        self.assertEqual(calcola(d)['periodi']['finora']['squadre']['B']['coppa']['qualificazione'],'Eliminata')
+        self.assertEqual(calcola(d)['periodi']['finora']['squadre']['B']['coppa']['qualificazione'],'Eliminata ai quarti')
+        d['cal']['cup'].append({'n':12,'sa':17,'m':[['A','A',76,66,'C','3-1']]})
+        c=calcola(d)['periodi']['finora']['squadre']['A']['coppa']
+        self.assertEqual(c['qualificazione'],'Qualificata in finale');self.assertEqual(c['punti_girone'],12)
+        d['cal']['cup'].append({'n':13,'sa':18,'m':[['A','A',66,76,'D','1-3']]})
+        self.assertEqual(calcola(d)['periodi']['finora']['squadre']['A']['coppa']['qualificazione'],'Finalista')
 
     def test_record_e_zona_ultimo_posto(self):
         p=calcola(dati())['periodi']['finora'];s=p['squadre']['A']

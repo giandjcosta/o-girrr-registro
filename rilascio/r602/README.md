@@ -14,7 +14,7 @@ Su copia fresca della **6.0**, applicare una volta `r601/applica.py`; per la 6.0
 
 `python3 rilascio/r602/prepara_server.py COPIA_MAIN_SITO` copia il nuovo calcolo e aggiunge il passo al workflow corrente. Rifiuta ancoraggi cambiati. Le sorgenti Radio rimangono nel Registro, letto da radio-giornata.yml. La copia `server/dopo-giornata.yml` serve alla revisione.
 
-L'ingresso manuale `solo_giro_di_boa=true` salta chiusure, post, promesse, duelli e tutte le operazioni DB. Esegue solo le due letture pubbliche MVP/Derby e salva il JSON su gh-pages. Usarlo per il primo popolamento; niente generazione manuale di dati pubblicati.
+L'ingresso manuale `solo_giro_di_boa=true` salta chiusure, post, promesse, duelli e tutte le operazioni DB. Esegue solo le due letture pubbliche MVP/Derby e salva il JSON su gh-pages. Usarlo sul ramo dedicato per il primo popolamento prima del merge sul main; niente generazione manuale di dati pubblicati. Ai controlli programmati il bilancio rilegge anche gli MVP chiusi senza una nuova giornata; a firma invariata non crea commit.
 
 ## Prove riproducibili
 
@@ -37,6 +37,6 @@ Le condivisioni nei test sono simulate e i file vengono verificati per numero, M
 
 ## Pubblicazione e ritorno indietro
 
-Gianluca ha autorizzato il deploy della 6.0.2 il 14 novembre, dopo le verifiche. Prima Lab, poi backend e JSON generato dal workflow, quindi 6.0.1 e 6.0.2. Usare `rilascio/versioni/aggiungi.py --tipo minore` per ciascuna, con messaggi e changelog che parlano delle novità del sito. Sincronizzare il Registro con il workflow ordinario dopo la pubblicazione.
+Gianluca ha autorizzato il deploy della 6.0.2 il 14 novembre, dopo le verifiche. Prima Lab e JSON generato dal workflow dal ramo dedicato, poi 6.0.1 e 6.0.2 e controllo del sito; infine merge del backend sul main, rispettando l’ordine gh-pages → Controllo → main. Usare `rilascio/versioni/aggiungi.py --tipo minore` per ciascuna, con messaggi e changelog che parlano delle novità del sito. Sincronizzare il Registro con il workflow ordinario dopo la pubblicazione.
 
 Gli hash effettivi e i comandi di `git revert` saranno annotati in STATO.md al termine. Nessun push forzato; pull con rebase prima di ogni push.
