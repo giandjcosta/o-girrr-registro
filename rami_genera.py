@@ -1,9 +1,11 @@
-# Claude, 13 novembre 2026: albero dei rami per lab/prove-grafiche/rami-alternative.html. Uso: python3 rami-genera.py USCITA.json (con i due repository clonati accanto)
+# Claude, 13-14 novembre 2026: albero dei rami per rami.html (in cima a Ramificazioni).
+# Uso: python3 rami_genera.py USCITA.json [COPIA_DEL_SITO COPIA_DEL_REGISTRO]  (copie Git con i rami remoti in origin/*;
+# senza percorsi usa /home/user/o-fant-a-girrr e /home/user/o-girrr-registro). Lo lancia ramificazioni.yml ogni 15 minuti.
 # Albero dei rami da Git: per ogni ramo, il ramo da cui è nato (il punto di separazione più recente), data, autore, stato.
 import subprocess, json, sys, time
 def g(repo, *a): return subprocess.run(['git', '-C', repo, *a], capture_output=True, text=True).stdout.strip()
 def albero(repo, nome, escludi=('chatgpt/dati-ramificazioni',)):
-    refs = [r for r in g(repo, 'for-each-ref', '--format=%(refname:short)', 'refs/remotes/origin').split('\n') if r and r != 'origin/HEAD' and not r.endswith(escludi)]
+    refs = [r for r in g(repo, 'for-each-ref', '--format=%(refname:short)', 'refs/remotes/origin').split('\n') if r.startswith('origin/') and r != 'origin/HEAD' and not r.endswith(escludi)]   # in una copia appena clonata origin/HEAD si chiama «origin»
     names = [r[len('origin/'):] for r in refs]
     head = {n: g(repo, 'rev-parse', 'origin/' + n) for n in names}
     ts = lambda sha: int(g(repo, 'show', '-s', '--format=%ct', sha))
@@ -38,7 +40,8 @@ def albero(repo, nome, escludi=('chatgpt/dati-ramificazioni',)):
         info[n].update(padre=p, nascita=mb[:7] if mb else None, dataNascita=ts(mb) if mb else None, avanti=av,
                        stato='unito' if dentro else ('attivo' if time.time() - info[n]['data'] < 7 * 86400 else 'fermo'))
     return {'repo': nome, 'tronco': tronco, 'radici': radici, 'rami': sorted(info.values(), key=lambda r: r['data'])}
-out = [albero('/home/user/o-fant-a-girrr', 'o-fant-a-girrr'), albero('/home/user/o-girrr-registro', 'o-girrr-registro')]
+SITO, REG = (sys.argv[2], sys.argv[3]) if len(sys.argv) > 3 else ('/home/user/o-fant-a-girrr', '/home/user/o-girrr-registro')
+out = [albero(SITO, 'o-fant-a-girrr'), albero(REG, 'o-girrr-registro')]
 # ultimi commit propri di ogni ramo (quelli che non sono nel padre), con il link vero su GitHub
 def commits(repo, b):
     rng = ('origin/%s..origin/%s' % (b['padre'], b['nome'])) if b.get('padre') else 'origin/' + b['nome']
@@ -49,12 +52,14 @@ def commits(repo, b):
         h, t, a, s2 = r.split('\x1f')
         out.append([h, int(t), s2.split(':')[0] if ':' in s2[:20] else a, s2[:140]])
     return out
-for r, path in zip(out, ('/home/user/o-fant-a-girrr', '/home/user/o-girrr-registro')):
+for r, path in zip(out, (SITO, REG)):
     for b in r['rami']:
         b.pop('b', None)
         b['commit'] = commits(path, b)
         b['totale'] = int(g(path, 'rev-list', '--count', ('origin/%s..origin/%s' % (b['padre'], b['nome'])) if b.get('padre') else 'origin/' + b['nome']) or 0)
-json.dump(out, open(sys.argv[1], 'w'), ensure_ascii=False, indent=1)
+# «generato» è la data dell'ultimo lavoro fra tutti i rami: se nessun ramo cambia, il file resta uguale e il workflow non fa commit
+gen = max([b['data'] for r in out for b in r['rami']] or [int(time.time())])
+json.dump({'generato': gen, 'repository': out}, open(sys.argv[1], 'w'), ensure_ascii=False, indent=1)
 for r in out:
     figli = {}
     for b in r['rami']:

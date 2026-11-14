@@ -66,6 +66,9 @@ Gianluca ha chiesto una revisione della 6.0.2: tabellone della fiducia stabile d
 - Specchio offline: Chromium e Firefox riaprono senza rete (4 casi per motore). WebKit nell'ambiente dà un errore interno al reload offline **anche con un service worker minimo indipendente dal progetto**; prima apertura online verificata, limite dell'emulazione distinto dalla pagina. WhatsApp da iPhone, Safari/Samsung Internet e TV fisici restano da provare sui dispositivi.
 - Rilascio previsto: certificare e verificare il Lab online, generare il JSON nel workflow dal ramo dedicato in sola lettura, pubblicare **6.0.1 e poi 6.0.2 sulla stessa copia**, verificare il sito e solo dopo integrare il backend nel main, aggiornare il Registro dal sito pubblicato. Hash e ritorno indietro con git revert saranno aggiunti al termine. Coordinamento nel ticket #57.
 
+## 14 novembre (2) — Claude: i tre disegni dei rami in cima a Ramificazioni
+Gianluca: «tutti e 3 i disegni». `rami.html` (era `lab/prove-grafiche/rami-alternative.html`, che ora porta lì) è in cima a `ramificazioni.html`: Albero, Linea del tempo e Ventaglio, interattivi; sotto resta la mappa di ChatGPT. Dati aggiornati da `ramificazioni.yml` con `rami_genera.py` sul ramo tecnico (ogni 15 minuti), riletti dalla pagina ogni minuto. Dettagli in `RAMIFICAZIONI.md`. Prove `prove/prova_rami_tre_viste.js`: Chromium, WebKit e Firefox 0 problemi (320 px, iPad, PC, TV; da sola e dentro il portale del Registro). Solo Registro: il sito della lega non cambia.
+
 ## 14 novembre (1) — Claude: **ONLINE** la 6.0.1
 «Vai» di Gianluca («Rilascia la 6.0.1»), correzione minore. Solo pagine: niente `main` del sito, niente database.
 - Copia nuova di `gh-pages` (`9d8eeaf`) + `python3 rilascio/r601/applica.py` + voce 6.0.1 in `versioni.json` (`aggiungi.py --tipo minore`, messaggio solo con le novità del sito). 23 file, nessun file dei dati.

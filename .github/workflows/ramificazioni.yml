@@ -46,6 +46,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: python3 ramificazioni.py --cache "$RUNNER_TEMP/grafi-git" --output "$RUNNER_TEMP/ramificazioni-dati.json"
+      - name: Claude - Dati dei tre disegni (Albero, Linea del tempo, Ventaglio)
+        # rami.html, in cima a Ramificazioni (Gianluca, 14 novembre 2026). Copie Git senza file, solo storia e rami.
+        # Se non riesce, la mappa di sopra si aggiorna lo stesso.
+        continue-on-error: true
+        run: |
+          git clone -q --no-checkout --filter=blob:none https://github.com/giandjcosta/o-fant-a-girrr.git "$RUNNER_TEMP/rami-sito"
+          git clone -q --no-checkout --filter=blob:none https://github.com/giandjcosta/o-girrr-registro.git "$RUNNER_TEMP/rami-registro"
+          python3 rami_genera.py "$RUNNER_TEMP/rami-dati.json" "$RUNNER_TEMP/rami-sito" "$RUNNER_TEMP/rami-registro"
       - name: Conserva i dati su un ramo tecnico, senza modificare il sito
         env:
           SNAPSHOT: ${{ runner.temp }}/ramificazioni-dati.json
@@ -62,6 +70,7 @@ jobs:
           fi
           cp "$SNAPSHOT" "$destinazione/ramificazioni-dati.json"
           git -C "$destinazione" add -- ramificazioni-dati.json
+          if [ -s "$RUNNER_TEMP/rami-dati.json" ]; then cp "$RUNNER_TEMP/rami-dati.json" "$destinazione/rami-dati.json"; git -C "$destinazione" add -- rami-dati.json; fi
           if git -C "$destinazione" diff --cached --quiet; then exit 0; fi
           git -C "$destinazione" commit -m 'ChatGPT: aggiorna automaticamente la mappa dei rami'
           git -C "$destinazione" push origin HEAD:refs/heads/chatgpt/dati-ramificazioni
