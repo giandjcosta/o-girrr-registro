@@ -1,0 +1,551 @@
+{
+  "versione_in_prova": "6.1",
+  "commit_funzioni": [
+    "0ba47b0",
+    "24af602"
+  ],
+  "backend_in_bozza": "7d6edf1",
+  "modello": {
+    "prove": 21,
+    "problemi": 0
+  },
+  "filtri_periodo_competizione_ambito": {
+    "visite": 96,
+    "problemi": 0,
+    "motori": [
+      {
+        "motore": "chromium",
+        "visite": 32,
+        "problemi": 0,
+        "record": [
+          {
+            "schermo": "iPhone320",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone320",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone SE",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone SE",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone 15 Pro",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone 15 Pro",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone 15 Pro Max",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone 15 Pro Max",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy S8",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy S8",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "Pixel 7",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "Pixel 7",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy S9+",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy S9+",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "iPad Mini",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPad Mini",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "iPad (gen 7) landscape",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPad (gen 7) landscape",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "iPad Pro 11",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPad Pro 11",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy Tab S4",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy Tab S4",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy Tab S4 landscape",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy Tab S4 landscape",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "PC1280",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "PC1280",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "PC1920",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "PC1920",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "PC2560",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "PC2560",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "TV",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "TV",
+            "grafica": "stadio",
+            "problemi": []
+          }
+        ]
+      },
+      {
+        "motore": "webkit",
+        "visite": 32,
+        "problemi": 0,
+        "record": [
+          {
+            "schermo": "iPhone320",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone320",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone SE",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone SE",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone 15 Pro",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone 15 Pro",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone 15 Pro Max",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone 15 Pro Max",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy S8",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy S8",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "Pixel 7",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "Pixel 7",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy S9+",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy S9+",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "iPad Mini",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPad Mini",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "iPad (gen 7) landscape",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPad (gen 7) landscape",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "iPad Pro 11",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPad Pro 11",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy Tab S4",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy Tab S4",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy Tab S4 landscape",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy Tab S4 landscape",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "PC1280",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "PC1280",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "PC1920",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "PC1920",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "PC2560",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "PC2560",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "TV",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "TV",
+            "grafica": "stadio",
+            "problemi": []
+          }
+        ]
+      },
+      {
+        "motore": "firefox",
+        "visite": 32,
+        "problemi": 0,
+        "record": [
+          {
+            "schermo": "iPhone320",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone320",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone SE",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone SE",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone 15 Pro",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone 15 Pro",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone 15 Pro Max",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPhone 15 Pro Max",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy S8",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy S8",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "Pixel 7",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "Pixel 7",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy S9+",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy S9+",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "iPad Mini",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPad Mini",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "iPad (gen 7) landscape",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPad (gen 7) landscape",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "iPad Pro 11",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "iPad Pro 11",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy Tab S4",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy Tab S4",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy Tab S4 landscape",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "Galaxy Tab S4 landscape",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "PC1280",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "PC1280",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "PC1920",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "PC1920",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "PC2560",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "PC2560",
+            "grafica": "stadio",
+            "problemi": []
+          },
+          {
+            "schermo": "TV",
+            "grafica": "lega",
+            "problemi": []
+          },
+          {
+            "schermo": "TV",
+            "grafica": "stadio",
+            "problemi": []
+          }
+        ]
+      }
+    ]
+  },
+  "tabellone_lega_stadio_campionato_coppa": {
+    "casi": 12,
+    "motori": [
+      "chromium",
+      "webkit",
+      "firefox"
+    ],
+    "problemi": 0
+  },
+  "specchio_senza_rete": {
+    "casi": 8,
+    "motori": [
+      "chromium",
+      "firefox"
+    ],
+    "problemi": 0
+  },
+  "tv_tizen_emulata": {
+    "casi": 6,
+    "motori": [
+      "chromium",
+      "webkit",
+      "firefox"
+    ],
+    "problemi": 0
+  },
+  "limiti": [
+    "Schermi e identità emulati, motori reali",
+    "Condivisioni come soli file verificate con simulazione; WhatsApp e dispositivi fisici da provare",
+    "WebKit senza rete ha il limite ambientale già documentato; non certificato come Safari su iPhone"
+  ],
+  "ci_estesa": "Workflow 43604608396 sul commit 24af602, ancora in corso alla raccolta. Controlli precedenti mantenuti."
+}
