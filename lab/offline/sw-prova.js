@@ -12,6 +12,9 @@ self.GIRRR_SPECCHIO = (function () {
     'cerca.js': new URL('../../rilascio/cerca/cerca.js', self.location.href).href, /* Cerca un giocatore nello Spogliatoio */
     'versioni.js': new URL('../../rilascio/versioni/versioni.js', self.location.href).href, /* pagina Versioni */
     'versioni.json': new URL('../../rilascio/versioni/versioni.json', self.location.href).href,
+    'giro-di-boa.js': new URL('../../rilascio/r602/giro-di-boa.js', self.location.href).href,
+    'giro-di-boa.css': new URL('../../rilascio/r602/giro-di-boa.css', self.location.href).href,
+    'girrr/dati/giro-di-boa.json': new URL('../giro-di-boa-602/esempio.json', self.location.href).href, /* Esempio reale generato, nessuna scrittura sul sito */
     'condividi.js': new URL('../../rilascio/condividi/condividi.js', self.location.href).href, /* Condividi come immagine e «Condividi la giornata» */
     'pillole.js': new URL('../../rilascio/pillole/pillole.js', self.location.href).href, /* 6.0.1: pillole fluide in app, Albo d'oro e Totogirrr */
     /* 6.0.1 in prova (Claude, 13 novembre 2026): in Carriera «La mia settimana» prima di «Regole» e, per l'ospite, «La settimana delle squadre».
@@ -72,8 +75,11 @@ self.GIRRR_SPECCHIO = (function () {
       if (href.indexOf(sito) === 0) {
         var rel = href.slice(sito.length).split('#')[0], p = rel.split('?')[0]; /* nelle navigazioni l'indirizzo arriva con il #: senza toglierlo la pagina di prova non si riconosceva */
         if (locali[p]) { dest = locali[p]; loc = true; } else dest = origine + rel;
+        // Dopo il rilascio legge il JSON del workflow; prima usa l'esempio generato del Lab.
+        if (p === 'girrr/dati/giro-di-boa.json') { dest = origine + rel; loc = false; }
       }
       return fetch(dest, { cache: init.cache || 'default', credentials: 'same-origin' }).then(function (r) {
+        if (!r.ok && p === 'girrr/dati/giro-di-boa.json') return fetch(locali[p], { cache: 'no-cache' });
         var ct = r.headers.get('content-type') || '';
         if (!r.ok || !/text\/html|javascript|json|text\/css|manifest/.test(ct)) return r;
         return r.text().then(function (t) {

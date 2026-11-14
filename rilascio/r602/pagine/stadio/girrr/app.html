@@ -251,7 +251,7 @@ svg text{fill:var(--mute);font-family:var(--fb)}
 @keyframes fl-a{from{transform:rotateX(0)}to{transform:rotateX(-90deg)}}
 @keyframes fl-b{from{transform:rotateX(90deg)}to{transform:rotateX(0)}}
 @media (prefers-reduced-motion:reduce){.tab-fid .fl.gira .a,.tab-fid .fl.gira .b{animation:none;visibility:hidden}}
-</style><link rel="stylesheet" href="../../girrr/v60/tifosi.css" data-girrr-tifosi><style>html{scrollbar-gutter:stable}</style></head><body data-v53="albo" data-v53-skin="stadio"><div class="col">
+</style><link rel="stylesheet" href="../../girrr/v60/tifosi.css" data-girrr-tifosi><style>html{scrollbar-gutter:stable}</style><script src="../../giro-di-boa.js?v=602" defer></script></head><body data-v53="albo" data-v53-skin="stadio"><div class="col">
   <div class="top">
     <img id="lg" alt="">
     <div>
@@ -978,7 +978,7 @@ function bolla52(t){var a=PREMI52?premi52(t):premiDBattesa().map(function(x){ret
 /* ---------- Carriera a tab: Panoramica (Claude), Obiettivi (ChatGPT), Fiducia (Claude), Storia (Grok) ----------
    Ogni tab è una funzione che riceve la squadra t e restituisce HTML. Piano e regole: proposte/carriera-tab-piano.md */
 S.ctab=S.ctab||'pan';S.ob=S.ob||{};S.st=S.st||{};
-function carTabs(){return '<div class="seg oro-scroll" role="group" aria-label="Sezioni della Carriera" style="margin-bottom:12px">'+[['pan','Panoramica'],['stag','Stagione'],['ob','Obiettivi'],['fid','Fiducia'],['prom','Promesse'],['st','Storia'],['reg','Regole']].filter(function(x){return !GUEST||['pan','stag','ob','fid','prom','st','reg'].indexOf(x[0])>=0}).map(function(x){return '<button data-ctab="'+x[0]+'" aria-pressed="'+(S.ctab===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>'}
+function carTabs(){return '<div class="seg oro-scroll" role="group" aria-label="Sezioni della Carriera" style="margin-bottom:12px">'+[['pan','Panoramica'],['stag','Stagione'],['boa','Giro di boa'],['ob','Obiettivi'],['fid','Fiducia'],['prom','Promesse'],['st','Storia'],['reg','Regole']].filter(function(x){return !GUEST||['pan','stag','boa','ob','fid','prom','st','reg'].indexOf(x[0])>=0}).map(function(x){return '<button data-ctab="'+x[0]+'" aria-pressed="'+(S.ctab===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>'}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-ctab]');if(!b)return;S.ctab=b.dataset.ctab;render()});document.addEventListener('change',function(e){if(e.target&&e.target.id==='cteam'){S.cteam=e.target.value;render()}});
 /* Gianluca, 2 novembre: reputazione da 0 a 100. Partenza 50; posizione da +20 (primo) a −20 (ultimo); obiettivi del presidente ±10 fino a fine stagione; sponsor ±1 per sempre. Ognuno con i suoi obiettivi */
 function repCalcolo(t,o){var r=row(t),n=Math.max(2,D.teams.length),pp=Math.round(20-(r.pos-1)*40/(n-1)),pr=0,sp=0;o.forEach(function(x){var v=x[4]==='Fatto'?1:x[4]==='Mancato'?-1:0;if(x[0])pr+=10*v;else sp+=v});return {pos:r.pos,pp:pp,pr:pr,sp:sp,tot:Math.max(0,Math.min(100,50+pp+pr+sp))}}
@@ -1139,7 +1139,7 @@ function vCarRegole(t){var sp=sponsorDi(t),spc=sponsorCoppa(t),fa=fascia(t);
    +sez('Cosa non conta',['Nessun obiettivo del tipo «metti tre giovani»: solo classifica, vittorie, punti e gol, che l\'app calcola da sola.'])}
 function vCarL(){
   premiDB();
-  if(GUEST&&!S.cteamOsp){S.cteamOsp=1;S.cteam=D.teams.slice().sort(function(a,b){return row(a).pos-row(b).pos})[0]}if(GUEST&&['pan','stag','ob','fid','prom','st','reg'].indexOf(S.ctab)<0)S.ctab='pan';var t=(CARSCELTA||GUEST)?S.cteam:ME,r=row(t),e=EXP[t]||5,f=fid(t),mp=maxPts(t);
+  if(GUEST&&!S.cteamOsp){S.cteamOsp=1;S.cteam=D.teams.slice().sort(function(a,b){return row(a).pos-row(b).pos})[0]}if(GUEST&&['pan','stag','boa','ob','fid','prom','st','reg'].indexOf(S.ctab)<0)S.ctab='pan';var t=(CARSCELTA||GUEST)?S.cteam:ME,r=row(t),e=EXP[t]||5,f=fid(t),mp=maxPts(t);
   var stat=f>=70?'Il presidente è entusiasta.':f>=45?'Il presidente è soddisfatto, per ora.':f>=25?'Il presidente comincia a perdere la pazienza.':'Il presidente sta cercando un sostituto.';
   var h=where('Spogliatoio','Carriera')+'<h2>Carriera da allenatore</h2><p class="lead">Poche cose, tutte misurabili. A inizio stagione il presidente dice dove ti aspetta, e un paio di obiettivi arrivano da lui e dallo sponsor. Se rendi meno del previsto la fiducia scende, e sotto una soglia arriva un esonero a titolo simbolico.</p>';
   h+=((CARSCELTA||GUEST)?'<select id="cteam" aria-label="Allenatore" style="margin-bottom:12px">'+D.teams.map(function(x){return '<option'+(x===t?' selected':'')+'>'+esc(x)+'</option>'}).join('')+'</select>':'<p style="font-weight:800;margin:0 0 12px">'+esc(t)+'</p>')+(GUEST?'':bolla52(t))+carTabs();
@@ -1172,6 +1172,7 @@ function vCarL(){
   else if(S.ctab==='st')h+=vCarStoria(t);
   else if(S.ctab==='reg')h+=vCarRegole(t);
    else if(S.ctab==='stag')h+=(window.GirrrStagione?window.GirrrStagione(t):'');
+  else if(S.ctab==='boa')h+=(window.GirrrGiroDiBoa?window.GirrrGiroDiBoa(t):'');
   else if(S.ctab==='prom')h+=(window.GirrrPromesse?window.GirrrPromesse(t):'');
   else h+=cGauge+vCarRiassunto(t,C)+(GUEST?cLega:cRep);
   return h+'<p class="note">Nessun obiettivo del tipo "metti tre giovani". Solo classifica, vittorie e punti, che l\'app calcola da sola.</p>';

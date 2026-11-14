@@ -27,9 +27,9 @@ def scrivi(p, t):
     open(p, 'w', encoding='utf-8').write(t)
 
 
-def sost(t, a, b, rel):
+def sost(t, a, b, rel, attese=1):
     n = t.count(a)
-    if n != 1:
+    if n != attese:
         sys.exit('%s: trovato %d volte «%s…»: la pagina non è quella attesa (serve la 6.0.1 già applicata).' % (rel, n, a[:70]))
     return t.replace(a, b)
 
@@ -37,12 +37,19 @@ def sost(t, a, b, rel):
 def main(sito):
     shutil.copyfile(os.path.join(R, 'rilascio/condividi/condividi.js'), os.path.join(sito, 'condividi.js'))
     print('ok condividi.js')
+    for nome in ('giro-di-boa.js', 'giro-di-boa.css'):
+        shutil.copyfile(os.path.join(R, 'rilascio/r602', nome), os.path.join(sito, nome))
     for pre, su, voci in (('girrr/', '../', 'voci/'), ('stadio/girrr/', '../../', '../../girrr/voci/')):
         rel = pre + 'app.html'
         t = leggi(os.path.join(sito, rel))
         # condividi.js anche in app.html (prima di pillole.js)
         t = sost(t, '<script src="' + su + 'pillole.js?v=1" defer></script>',
                  '<script src="' + su + 'condividi.js?v=602" defer></script><script src="' + su + 'pillole.js?v=1" defer></script>', rel)
+        t = sost(t, '</head>', '<script src="' + su + 'giro-di-boa.js?v=602" defer></script></head>', rel)
+        t = sost(t, "['stag','Stagione']", "['stag','Stagione'],['boa','Giro di boa']", rel)
+        # Anche gli ospiti possono leggere tutte le squadre senza autenticarsi.
+        t = sost(t, "['pan','stag','ob','fid','prom','st','reg']", "['pan','stag','boa','ob','fid','prom','st','reg']", rel, attese=2)
+        t = sost(t, "else if(S.ctab==='prom')", "else if(S.ctab==='boa')h+=(window.GirrrGiroDiBoa?window.GirrrGiroDiBoa(t):'');\n  else if(S.ctab==='prom')", rel)
         # Radio: «Condividi la puntata» sotto ogni puntata
         a = '<audio controls preload="none" src="' + voci + '\'+esc(x.file)+\'" style="width:100%;margin:8px 0"></audio>\''
         t = sost(t, a, a + '+\'<button type="button" class="cd-btn cd-sf" data-cd-file="' + voci + '\'+esc(x.file)+\'" '

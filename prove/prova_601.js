@@ -4,7 +4,8 @@ const pw = require('playwright'), { devices } = pw, fs = require('fs');
 const M = process.env.MOTORE || 'chromium', B = process.env.BASE || 'http://localhost:8771/o-fant-a-girrr/', FOTO = process.env.FOTO;
 const { script: BLOCCA } = require('./blocca_scritture');
 const SCH = [['iPhone SE 320', { ...devices['iPhone SE'], viewport: { width: 320, height: 568 } }], ['iPhone 15 Pro', devices['iPhone 15 Pro']], ['Pixel 7', devices['Pixel 7']], ['iPad', devices['iPad Mini']], ['PC 1280', { viewport: { width: 1280, height: 850 } }], ['PC 1920', { viewport: { width: 1920, height: 1080 } }], ['TV', { viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 2 }]].filter(s => !process.env.SOLO || s[0].includes(process.env.SOLO));
-async function ctx(o0) { const o = { ...o0, serviceWorkers: 'block' }; /* senza la copia offline: le prove vedono sempre la pagina appena servita */ delete o.defaultBrowserType; if (M === 'firefox') { delete o.isMobile; const d = fs.mkdtempSync('/tmp/ffp-'); if (process.env.FIREFOX_PROFILO) fs.cpSync(process.env.FIREFOX_PROFILO, d, { recursive: true }); const c = await pw.firefox.launchPersistentContext(d, { executablePath: process.env.FIREFOX, ...o }); return [c, () => c.close()]; } const b = await pw[M].launch(); return [await b.newContext(o), () => b.close()]; }
+const MENU = process.env.VERSIONE === '602' ? 'Panoramica|Stagione|Giro di boa|Obiettivi|Fiducia|Promesse|Storia|La mia settimana|Regole' : 'Panoramica|Stagione|Obiettivi|Fiducia|Promesse|Storia|La mia settimana|Regole';
+async function ctx(o0) { const o={...o0,serviceWorkers:'block'};delete o.defaultBrowserType;const b=await require('./browser_certificato').browser(M);return [await b.newContext(o),()=>b.close()]; }
 (async () => { let ko = 0;
  for (const [sn, o] of SCH) { const pr = [];
   for (const chi of ['squadra', 'ospite', 'anonimo']) { const [c, chiudi] = await ctx(o); await c.addInitScript(BLOCCA);
@@ -16,8 +17,8 @@ async function ctx(o0) { const o = { ...o0, serviceWorkers: 'block' }; /* senza 
     // Carriera
     await p.goto(B + sk + 'app.html' + q + '#carriera'); await p.waitForTimeout(2600); await lato(sk + ' Carriera');
     const menu = await p.evaluate(() => [...document.querySelectorAll('#view .seg button')].filter(b => b.dataset.ctab || b.hasAttribute('data-pt-week')).map(b => b.textContent));
-    if (chi === 'squadra') { if (menu.join('|') !== 'Panoramica|Stagione|Obiettivi|Fiducia|Promesse|Storia|La mia settimana|Regole') pr.push(sk + ' menu squadra: ' + menu.join('|')); }
-    else { if (menu.join('|') !== 'Panoramica|Stagione|Obiettivi|Fiducia|Promesse|Storia|La mia settimana|Regole') pr.push(chi + ' ' + sk + ' menu: ' + menu.join('|'));   // l'ospite vede tutte le schede (Gianluca, 13 novembre, sera)
+    if (chi === 'squadra') { if (menu.join('|') !== MENU) pr.push(sk + ' menu squadra: ' + menu.join('|')); }
+    else { if (menu.join('|') !== MENU) pr.push(chi + ' ' + sk + ' menu: ' + menu.join('|'));   // l'ospite vede tutte le schede (Gianluca, 13 novembre, sera)
      const sel = p.locator('#cteam'); if (!(await sel.count())) pr.push(chi + ' ' + sk + ': manca la scelta della squadra');
      else { await sel.selectOption({ index: 3 }); await p.waitForTimeout(800); const v = await sel.inputValue(); const tot = await p.evaluate(() => !!document.querySelector('.bolla52') || [...document.querySelectorAll('#view a')].some(a => /Vai a Totogirrr/.test(a.textContent)));
       if (tot) pr.push(chi + ' ' + sk + ': premi o Totogirrr visibili');

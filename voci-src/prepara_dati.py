@@ -19,6 +19,12 @@ def carica(p, d=None):
     try: return json.loads(Path(p).read_text(encoding="utf-8"))
     except Exception: return d
 
+def versione_boa(sito):
+    """L'unione del Lab non attiva il segmento prima del rilascio del sito 6.0.2."""
+    v = carica(sito / 'versioni.json', {}).get('versioni', [])
+    nums = tuple(map(int,re.findall(r'\d+', str(v[0].get('v',''))))) if v else ()
+    return (nums + (0,0,0))[:3] >= (6,0,2)
+
 def chiusa(d, cronache=False):
     if cronache:
         sys.path.insert(0, str(QUI.parent / "calcoli"))
@@ -36,6 +42,7 @@ def main(argv=None):
     p.add_argument('--segna', action='store_true')
     p.add_argument('--rifai', action='store_true', help="rifà la puntata anche se la giornata è già in archivio (la nuova sostituisce la vecchia)")
     p.add_argument('--cronache-classifica', action='store_true', help='Attiva esplicitamente le nuove cronache')
+    p.add_argument('--giro-di-boa', action='store_true', help='Forza il segmento nella preparazione locale del Lab, senza generare voci')
     p.add_argument('--uscita', type=Path, help='Directory separata per la preparazione di prova')
     args = p.parse_args(argv)
     SITO, EV = args.sito, args.eventi
@@ -81,6 +88,13 @@ def main(argv=None):
         # nemmeno se un vecchio snapshot contenesse i campi della prova.
         for key in ('cronache_classifica_attive', 'zona_classifica', 'cronaca_classifica'):
             dati.pop(key, None)
+    # Una sola fonte per Radio, pagina e album: mai ricalcolare qui le statistiche.
+    dati.pop('giro_di_boa', None)
+    if n in (17, 19) and (args.giro_di_boa or versione_boa(SITO)):
+        boa = carica(SITO / 'girrr/dati/giro-di-boa.json')
+        if not boa or boa.get('ultima_pubblicata') != n:
+            raise RuntimeError('Giro di boa non allineato: attendere Calcoli dopo la giornata')
+        dati['giro_di_boa'] = boa
     dest.mkdir(parents=True, exist_ok=True)
     (dest / "dati.json").write_text(json.dumps(dati, ensure_ascii=False), encoding="utf-8")
     conf = [e for e in ev if e.get("tipo") == "conferenza" and e.get("giornata") == n]
