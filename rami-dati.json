@@ -1,5 +1,5 @@
 {
- "generato": 1794673635,
+ "generato": 1794681768,
  "versione": "6.1",
  "repository": [
   {
@@ -6923,16 +6923,22 @@
     },
     {
      "nome": "main",
-     "punta": "f619634",
-     "data": 1794673635,
-     "titolo": "ChatGPT: conserva nel main il rilascio 6.1 verificato",
-     "autore": "ChatGPT",
+     "punta": "d29fd09",
+     "data": 1794681768,
+     "titolo": "Registro: elenco attività aggiornato",
+     "autore": "Registro",
      "padre": null,
      "nascita": null,
      "avanti": 0,
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "d29fd094945c4245e3d3d159e1726e7d37660afd",
+       1794681768,
+       "Registro",
+       "Registro: elenco attività aggiornato"
+      ],
       [
        "f6196348538c64a6fade067d4f3d7339484e642f",
        1794673635,
@@ -6998,15 +7004,9 @@
        1794651476,
        "ChatGPT",
        "ChatGPT: pubblica nel Lab le nuove anteprime 6.0.2 e la Carriera corretta"
-      ],
-      [
-       "2676d1b5def3080c1454800412a0fb92946e6e97",
-       1794650364,
-       "giandjcosta",
-       "Merge pull request #78 from giandjcosta/claude/rilascio-601-esiti"
       ]
      ],
-     "totale": 1188
+     "totale": 1189
     }
    ]
   }
