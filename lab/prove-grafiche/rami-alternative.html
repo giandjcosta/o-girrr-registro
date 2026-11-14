@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex">
+<title>Rami e sotto-rami · O Girrr</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&family=Inter:wght@500;600;700;800;900&display=swap">
+<style>
+/* Prova di Claude (13 novembre 2026): tre disegni interattivi di rami e sotto-rami per Ramificazioni.
+   Tocca un pallino: la vista si avvicina a quel ramo e si apre la scheda con i dettagli e i commit veri su GitHub.
+   Dati da Git (rami-dati.json, generato da rami-genera.py). */
+:root{--bg:#0d1630;--card:#172654;--line:#2c3f73;--text:#f5f6fb;--muted:#b6c3e0;--oro:#ffd166;--rosso:#d62839}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:radial-gradient(ellipse at 70% -10%,#25407c 0,transparent 55%),var(--bg);color:var(--text);font:15px/1.45 Inter,system-ui,sans-serif}
+a{color:var(--oro)}
+.w{max-width:1380px;margin:0 auto;padding:16px}
+h1{font-family:Lobster,cursive;font-weight:400;font-size:clamp(30px,6vw,44px);margin:6px 0 4px}
+.k{font-size:11px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:var(--oro)}
+.lead{color:var(--muted);max-width:780px;margin:0 0 14px}
+.barra{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 10px}
+.seg{display:inline-flex;flex-wrap:wrap;background:rgba(255,255,255,.07);border:1px solid var(--line);border-radius:999px;padding:3px}
+.seg button{font:inherit;font-weight:800;font-size:13px;color:var(--muted);background:none;border:0;border-radius:999px;padding:8px 13px;cursor:pointer;transition:background-color .25s,color .25s}
+.seg button[aria-pressed=true]{background:var(--rosso);color:#fff}.seg.oro button[aria-pressed=true]{background:var(--oro);color:#1a1405}
+input[type=search]{font:inherit;font-size:14px;color:var(--text);background:#111c40;border:1px solid var(--line);border-radius:999px;padding:9px 14px;min-width:0;flex:1 1 180px}
+.legenda{display:flex;flex-wrap:wrap;gap:12px;font-size:12.5px;color:var(--muted);margin:0 0 12px}
+.legenda i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+.lay{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;align-items:start}
+@media(min-width:960px){.lay.aperto{grid-template-columns:minmax(0,1fr) 380px}}
+.card{background:linear-gradient(160deg,var(--card),#111d42);border:1px solid var(--line);border-radius:18px;padding:16px;overflow:hidden;min-width:0}
+.card h2{margin:0 0 4px;font-size:19px}.card .sub{margin:0 0 12px;color:var(--muted);font-size:13.5px}
+.vista{transition:opacity .25s}.vista.esce{opacity:0}
+.comandi{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
+.comandi button{font:inherit;font-weight:800;font-size:13px;color:var(--text);background:rgba(255,255,255,.08);border:1px solid var(--line);border-radius:999px;padding:7px 12px;cursor:pointer}
+.comandi button:hover{background:rgba(255,255,255,.14)}
+/* tela delle viste a disegno: si trascina, si ingrandisce con la rotella o con due dita */
+.tela{position:relative;width:100%;height:min(72vh,760px);border-radius:12px;background:rgba(5,10,30,.35);border:1px solid rgba(255,255,255,.06);touch-action:none;cursor:grab;overflow:hidden}
+.tela:active{cursor:grabbing}.tela svg{display:block;width:100%;height:100%}
+.tela .aiuto{position:absolute;left:10px;bottom:8px;font-size:11.5px;color:var(--muted);pointer-events:none;background:rgba(13,22,48,.7);padding:3px 8px;border-radius:999px}
+svg text{font-family:Inter,system-ui,sans-serif;pointer-events:none}.tela svg path,.tela svg line{pointer-events:none}
+.nodo-s{cursor:pointer}.nodo-s:focus{outline:none}.nodo-s:focus-visible circle.p{stroke:#fff;stroke-width:3}
+.nodo-s circle.alone{opacity:0;transition:opacity .25s}.nodo-s:hover circle.alone,.nodo-s.sel circle.alone{opacity:.35}
+.spento{opacity:.18;transition:opacity .3s}.acceso{opacity:1;transition:opacity .3s}
+/* Albero */
+.briciole{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin:0 0 10px;font-size:13px}
+.briciole button{font:inherit;font-weight:800;color:var(--oro);background:none;border:0;padding:2px 4px;cursor:pointer;border-radius:6px}
+.briciole span{color:var(--muted)}
+.albero ul{list-style:none;margin:0;padding-left:20px;border-left:2px solid rgba(255,255,255,.12)}
+.albero>ul{padding-left:0;border:0}
+.albero li{position:relative;margin:5px 0}
+.albero ul ul>li::before{content:'';position:absolute;left:-20px;top:20px;width:16px;border-top:2px solid rgba(255,255,255,.12)}
+.riga{display:flex;align-items:center;gap:10px;padding:6px 10px 6px 6px;border-radius:12px;background:rgba(255,255,255,.05);border-left:4px solid var(--c);min-width:0;transition:background-color .25s,transform .3s}
+.riga.sel{background:rgba(255,209,102,.12);box-shadow:0 0 0 1px rgba(255,209,102,.45)}
+.pallino{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--c);background:var(--c);cursor:pointer;display:grid;place-items:center;color:#0d1630;font-weight:900;font-size:13px;transition:transform .2s}
+.pallino.vuoto{background:transparent;color:var(--c)}.pallino:hover{transform:scale(1.12)}.pallino:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.riga .t{display:flex;flex-direction:column;min-width:0;flex:1;cursor:pointer}
+.riga b{font-size:13.5px;overflow-wrap:anywhere}.riga small{color:var(--muted);font-size:12px;overflow-wrap:anywhere}
+.chip{flex:none;font-size:10.5px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:#164a35;color:#9ff0c6}
+.chip.unito,.chip.fermo{background:rgba(255,255,255,.1);color:var(--muted)}.chip.main{background:var(--rosso);color:#fff}
+.freccia{flex:none;width:28px;height:28px;border:0;border-radius:8px;background:rgba(255,255,255,.07);color:var(--muted);cursor:pointer;font-size:14px;transition:transform .25s}
+.chiuso>.riga .freccia{transform:rotate(-90deg)}.chiuso>ul{display:none}
+.zoom-in{animation:zoomin .45s cubic-bezier(.2,.8,.2,1)}@keyframes zoomin{from{transform:scale(.92);opacity:.2}to{transform:none;opacity:1}}
+/* Scheda dei dettagli: di lato sul PC, dal basso sul telefono */
+.dettagli{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}
+.dettagli[hidden]{display:none}
+@media(max-width:959px){.dettagli{position:fixed;left:0;right:0;bottom:0;top:auto;max-height:78vh;border-radius:20px 20px 0 0;z-index:20;box-shadow:0 -16px 40px rgba(0,0,0,.5);animation:su .35s cubic-bezier(.2,.8,.2,1);padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}}
+@keyframes su{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.dettagli .testa{display:flex;gap:10px;align-items:flex-start}.dettagli .testa i{flex:none;width:16px;height:16px;border-radius:50%;margin-top:5px}
+.dettagli h3{margin:0;font-size:17px;overflow-wrap:anywhere}.dettagli .chiudi{margin-left:auto;flex:none;font:inherit;font-weight:900;border:0;border-radius:999px;background:rgba(255,255,255,.1);color:var(--text);width:34px;height:34px;cursor:pointer}
+.dettagli dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:12px 0;font-size:13.5px}.dettagli dt{color:var(--muted)}.dettagli dd{margin:0;overflow-wrap:anywhere}
+.dettagli dd button,.dettagli .figli button{font:inherit;color:var(--oro);background:none;border:0;padding:0;cursor:pointer;text-align:left;font-weight:700;overflow-wrap:anywhere}
+.figli{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}.figli button{background:rgba(255,255,255,.07);border-radius:999px;padding:4px 10px;font-size:12.5px}
+.link{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.link a{font-weight:800;font-size:13px;text-decoration:none;padding:8px 12px;border-radius:999px;background:var(--oro);color:#1a1405}.link a.se{background:rgba(255,255,255,.1);color:var(--text)}
+.commit{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+.commit li{position:relative;padding:4px 0 10px 14px}.commit li::before{content:'';position:absolute;left:-6px;top:9px;width:10px;height:10px;border-radius:50%;background:var(--c)}
+.commit .q{font-size:11.5px;color:var(--muted)}.commit a{display:block;font-size:13px;color:var(--text);text-decoration:none;overflow-wrap:anywhere}.commit a:hover{text-decoration:underline}
+.commit code{font-size:11px;color:var(--oro)}
+footer{color:var(--muted);font-size:12.5px;padding:18px 0}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style></head>
+<body><div class="w">
+<div class="k">Registro · Prova di Claude</div><h1>Rami e sotto-rami</h1>
+<p class="lead">Tre modi di disegnare gli stessi rami, con i dati veri di Git. Ogni ramo parte dal ramo da cui è nato davvero. <b>Tocca un pallino</b>: la vista si avvicina a quel ramo e si aprono i dettagli, con i commit e i link a GitHub.</p>
+<div class="barra">
+ <div class="seg" id="vista" role="group" aria-label="Disegno"><button data-v="albero">Albero</button><button data-v="metro">Linea del tempo</button><button data-v="ventaglio">Ventaglio</button></div>
+ <div class="seg oro" id="repo" role="group" aria-label="Repository"><button data-r="0">Sito</button><button data-r="1">Registro</button></div>
+ <div class="seg oro" id="stato" role="group" aria-label="Stato"><button data-s="attivi">Attivi</button><button data-s="aperti">Non uniti</button><button data-s="tutti">Tutti</button></div>
+ <input type="search" id="cerca" placeholder="Cerca un ramo, un assistente o una novità" aria-label="Cerca">
+</div>
+<div class="legenda" id="legenda"></div>
+<div class="lay" id="lay"><div class="card vista" id="box"></div><aside class="card dettagli" id="det" hidden aria-live="polite"></aside></div>
+<footer id="piede"></footer>
+</div>
+<script>
+(function(){
+'use strict';
+var GH={'o-fant-a-girrr':'https://github.com/giandjcosta/o-fant-a-girrr','o-girrr-registro':'https://github.com/giandjcosta/o-girrr-registro'};
+var COL={Claude:'#f0a35e',ChatGPT:'#3fd29b',Grok:'#a78bfa',Gianluca:'#ffd166',VSCode:'#5aa9ff',Altro:'#8fa0c4'};
+var FERMO=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function aut(x){var a=(typeof x==='string'?x:x.autore)||'';for(var k in COL)if(a.toLowerCase().indexOf(k.toLowerCase())===0)return k;
+ if(typeof x!=='string'){if(/^claude\//.test(x.nome))return 'Claude';if(/^chatgpt\//.test(x.nome))return 'ChatGPT';if(/^grok\//.test(x.nome))return 'Grok';if(/^vscode\//.test(x.nome))return 'VSCode'}return 'Altro'}
+function E(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function giorno(t,ora){return t?new Date(t*1000).toLocaleString('it-IT',ora?{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}:{day:'numeric',month:'short',year:'numeric'}):'Dato non conservato'}
+function ramoUrl(R,n){return GH[R.repo]+'/tree/'+n.split('/').map(encodeURIComponent).join('/')}
+var D=null,X=null,S={v:'albero',r:0,s:'aperti',q:'',sel:null,fuoco:null};
+try{var x=JSON.parse(localStorage.getItem('og:rami-prova')||'{}');['v','r','s'].forEach(function(k){if(x[k]!=null)S[k]=x[k]})}catch(e){}
+var h=/ramo=([^&]+)/.exec(location.hash);if(h)S.sel=decodeURIComponent(h[1]);var hr=/repo=(\d)/.exec(location.hash);if(hr)S.r=+hr[1];
+document.getElementById('legenda').innerHTML=Object.keys(COL).map(function(k){return '<span><i style="background:'+COL[k]+'"></i>'+k+'</span>'}).join('')+'<span><i style="background:transparent;border:2px solid #8fa0c4"></i>Unito o fermo</span><span>Attivo: lavoro negli ultimi 7 giorni</span>';
+
+/* ---------- dati della vista: rami da mostrare, figli, ordine ---------- */
+function prepara(){var R=D[S.r],q=S.q.toLowerCase(),by={},keep={};R.rami.forEach(function(b){by[b.nome]=b});
+ R.rami.forEach(function(b){var rad=R.radici.indexOf(b.nome)>=0,ok=rad||b.nome===S.sel||((S.s==='tutti'||(S.s==='aperti'&&b.stato!=='unito')||(S.s==='attivi'&&b.stato==='attivo'))&&(!q||(b.nome+' '+b.titolo+' '+b.autore).toLowerCase().indexOf(q)>=0));
+  if(ok){var n=b.nome;while(n&&by[n]&&!keep[n]){keep[n]=1;n=by[n].padre}}});
+ var figli={},tutti={};R.rami.forEach(function(b){if(b.padre)(tutti[b.padre]=tutti[b.padre]||[]).push(b);if(keep[b.nome]&&b.padre)(figli[b.padre]=figli[b.padre]||[]).push(b)});
+ [figli,tutti].forEach(function(F){Object.keys(F).forEach(function(k){F[k].sort(function(a,b){return (a.dataNascita||0)-(b.dataNascita||0)})})});
+ var ordine=[];R.radici.forEach(function(n){(function rec(b,d){ordine.push({b:b,d:d});(figli[b.nome]||[]).forEach(function(f){rec(f,d+1)})})(by[n],0)});
+ return {R:R,by:by,keep:keep,figli:figli,tutti:tutti,ordine:ordine,n:Object.keys(keep).length}}
+function colore(b){return X.R.radici.indexOf(b.nome)>=0?'#d62839':COL[aut(b)]}
+function antenati(n){var a={};while(n&&X.by[n]){a[n]=1;n=X.by[n].padre}return a}
+
+/* ---------- scheda dei dettagli ---------- */
+function dettagli(){var det=document.getElementById('det'),lay=document.getElementById('lay'),b=S.sel&&X.by[S.sel];
+ if(!b){det.hidden=true;lay.classList.remove('aperto');return}
+ var R=X.R,c=colore(b),rad=R.radici.indexOf(b.nome)>=0,f=X.tutti[b.nome]||[],stato=rad?(b.nome==='main'?'Principale':'Sito pubblicato'):b.stato==='unito'?'Unito':b.stato==='attivo'?'Attivo':'Fermo';
+ det.innerHTML='<div class="testa"><i style="background:'+c+'"></i><div><div class="k" style="color:var(--muted)">'+E(aut(b))+' · '+stato+'</div><h3>'+E(b.nome)+'</h3></div><button class="chiudi" type="button" aria-label="Chiudi i dettagli" data-chiudi>×</button></div>'+
+  '<p style="margin:8px 0 0;color:var(--muted);font-size:13.5px">'+E(b.titolo)+'</p>'+
+  '<dl>'+(b.padre?'<dt>Nato da</dt><dd><button type="button" data-vai="'+E(b.padre)+'">'+E(b.padre)+'</button></dd><dt>Nato il</dt><dd>'+giorno(b.dataNascita)+'</dd>':'')+
+  '<dt>Ultimo lavoro</dt><dd>'+giorno(b.data,1)+'</dd><dt>'+(rad?'Commit':'Commit propri')+'</dt><dd>'+(b.totale||0)+(b.padre?' rispetto a '+E(b.padre):'')+'</dd>'+
+  '<dt>Sotto-rami</dt><dd>'+(f.length||'Nessuno')+'</dd></dl>'+
+  (f.length?'<div class="figli">'+f.map(function(x){return '<button type="button" data-vai="'+E(x.nome)+'" style="border-left:3px solid '+colore(x)+'">'+E(x.nome)+'</button>'}).join('')+'</div>':'')+
+  '<div class="link"><a href="'+ramoUrl(R,b.nome)+'" target="_blank" rel="noopener">Apri il ramo su GitHub ↗</a>'+(b.padre?'<a class="se" href="'+GH[R.repo]+'/compare/'+encodeURIComponent(b.padre)+'...'+encodeURIComponent(b.nome)+'" target="_blank" rel="noopener">Confronta con '+E(b.padre)+' ↗</a>':'')+'</div>'+
+  '<div class="k" style="margin:0 0 8px">Ultimi commit</div>'+(b.commit&&b.commit.length?'<ol class="commit">'+b.commit.map(function(k){return '<li style="--c:'+COL[aut(k[2])]+'"><div class="q">'+giorno(k[1],1)+' · '+E(k[2])+' · <code>'+k[0].slice(0,7)+'</code></div><a href="'+GH[R.repo]+'/commit/'+k[0]+'" target="_blank" rel="noopener">'+E(k[3])+' ↗</a></li>'}).join('')+'</ol>'+((b.totale||0)>b.commit.length?'<p class="q" style="color:var(--muted);font-size:12px">Gli ultimi '+b.commit.length+' di '+b.totale+'.</p>':''):'<p style="color:var(--muted);font-size:13px">Nessun commit proprio: il ramo coincide con quello da cui è nato.</p>');
+ det.hidden=false;lay.classList.add('aperto');
+ try{history.replaceState(null,'','#repo='+S.r+'&ramo='+encodeURIComponent(b.nome))}catch(e){}}
+function scegli(n,zoom){S.sel=n;if(S.v==='albero'&&zoom!==false)S.fuoco=n;dettagli();evidenzia();if(zoom!==false&&cam)vaiA(n)}
+document.getElementById('det').addEventListener('click',function(e){var t=e.target.closest('[data-vai],[data-chiudi]');if(!t)return;
+ if(t.dataset.chiudi!=null){S.sel=null;S.fuoco=null;try{history.replaceState(null,'',location.pathname)}catch(er){}dettagli();if(S.v==='albero')disegnaVista();else{evidenzia();if(cam)cam.anima(cam.tutto())}return}
+ var n=t.dataset.vai;if(!X.keep[n]){S.sel=n;X=prepara()}if(S.v==='albero'){S.sel=n;S.fuoco=n;disegnaVista();dettagli()}else{disegnaVista();scegli(n)}});
+
+/* ---------- Albero: il pallino entra nel ramo (zoom), la freccia apre e chiude ---------- */
+function albero(){var radici=S.fuoco&&X.by[S.fuoco]?[S.fuoco]:X.R.radici,b0=S.fuoco&&X.by[S.fuoco];
+ function rec(b,liv){var f=X.figli[b.nome]||[],c=colore(b),rad=X.R.radici.indexOf(b.nome)>=0,stato=rad?(b.nome==='main'?'Principale':'Sito pubblicato'):b.stato==='unito'?'Unito':b.stato==='attivo'?'Attivo':'Fermo';
+  return '<li'+(liv>2&&!S.fuoco?' class="chiuso"':'')+'><div class="riga'+(b.nome===S.sel?' sel':'')+'" style="--c:'+c+'"><button type="button" class="pallino'+(b.stato==='attivo'||rad?'':' vuoto')+'" data-zoom="'+E(b.nome)+'" aria-label="Avvicina '+E(b.nome)+'">'+(f.length||'')+'</button>'+
+   '<span class="t" data-info="'+E(b.nome)+'"><b>'+E(b.nome)+'</b><small>'+E(b.titolo)+' · '+giorno(b.data)+'</small></span><span class="chip'+(rad?' main':' '+b.stato)+'">'+stato+'</span>'+
+   (f.length?'<button type="button" class="freccia" data-apri aria-label="Apri o chiudi i sotto-rami">▾</button>':'')+'</div>'+(f.length?'<ul>'+f.map(function(x){return rec(x,liv+1)}).join('')+'</ul>':'')+'</li>'}
+ var bric='';if(b0){var cat=[],n=b0.nome;while(n){cat.unshift(n);n=X.by[n]&&X.by[n].padre}
+  bric='<nav class="briciole" aria-label="Percorso"><button type="button" data-zoom="">Tutti i rami</button>'+cat.map(function(n,i){return '<span>›</span>'+(i<cat.length-1?'<button type="button" data-zoom="'+E(n)+'">'+E(n.split('/').pop())+'</button>':'<b>'+E(n.split('/').pop())+'</b>')}).join('')+'</nav>'}
+ return '<h2>Albero</h2><p class="sub">Tocca un pallino per entrare in quel ramo: restano lui e i suoi sotto-rami, con i dettagli a fianco. Il numero nel pallino dice quanti sotto-rami ha. La freccia apre e chiude.</p>'+bric+'<div class="albero'+(b0?' zoom-in':'')+'"><ul>'+radici.map(function(n){return rec(X.by[n],0)}).join('')+'</ul></div>'}
+document.getElementById('box').addEventListener('click',function(e){if(S.v!=='albero')return;var z=e.target.closest('[data-zoom]'),a=e.target.closest('[data-apri]'),inf=e.target.closest('[data-info]');
+ if(a){a.closest('li').classList.toggle('chiuso');return}
+ if(z){var n=z.dataset.zoom;S.fuoco=n||null;S.sel=n||null;disegnaVista();dettagli();window.scrollTo({top:document.getElementById('box').getBoundingClientRect().top+scrollY-12,behavior:FERMO?'auto':'smooth'});return}
+ if(inf){S.sel=inf.dataset.info;dettagli();[].forEach.call(document.querySelectorAll('.riga.sel'),function(r){r.classList.remove('sel')});inf.parentNode.classList.add('sel')}});
+
+/* ---------- viste a disegno: telecamera con zoom e trascinamento ---------- */
+var cam=null;
+function Telecamera(svg,W,H){var v={x:0,y:0,w:W,h:H},t=null;
+ function metti(){svg.setAttribute('viewBox',v.x+' '+v.y+' '+v.w+' '+v.h)}
+ function tutto(){return {x:0,y:0,w:W,h:H}}
+ function limita(o){var r=svg.clientWidth/Math.max(1,svg.clientHeight);o.w=Math.max(W/12,Math.min(o.w,W*1.05));o.h=o.w/r;o.x=Math.max(-o.w*.4,Math.min(o.x,W-o.w*.6));o.y=Math.max(-o.h*.4,Math.min(o.y,H-o.h*.6));return o}
+ function anima(o,ms){o=limita(o);cancelAnimationFrame(t);if(FERMO){v=o;metti();return}var a={x:v.x,y:v.y,w:v.w,h:v.h},t0=performance.now(),d=ms||550;
+  (function passo(now){var k=Math.min(1,(now-t0)/d),e=1-Math.pow(1-k,3);['x','y','w','h'].forEach(function(p){v[p]=a[p]+(o[p]-a[p])*e});metti();if(k<1)t=requestAnimationFrame(passo)})(t0)}
+ function zoom(f,cx,cy){var p=punto(cx,cy);anima({w:v.w/f,h:v.h/f,x:p.x-(p.x-v.x)/f,y:p.y-(p.y-v.y)/f},250)}
+ function punto(cx,cy){var r=svg.getBoundingClientRect();return {x:v.x+(cx-r.left)/r.width*v.w,y:v.y+(cy-r.top)/r.height*v.h}}
+ // all'inizio: tutta la larghezza, dall'alto
+ var r0=svg.clientWidth/Math.max(1,svg.clientHeight);v={x:0,y:0,w:W,h:W/r0};metti();
+ var punti={},trascina=null,pizzico=null;
+ svg.addEventListener('pointerdown',function(e){punti[e.pointerId]={x:e.clientX,y:e.clientY};var k=Object.keys(punti);
+  if(k.length===1)trascina={x:e.clientX,y:e.clientY,v:{x:v.x,y:v.y,w:v.w,h:v.h},mosso:0};
+  if(k.length===2){var a=punti[k[0]],b=punti[k[1]];pizzico={d:Math.hypot(a.x-b.x,a.y-b.y),w:v.w};trascina=null}});
+ svg.addEventListener('pointermove',function(e){if(!punti[e.pointerId])return;punti[e.pointerId]={x:e.clientX,y:e.clientY};var k=Object.keys(punti);
+  if(pizzico&&k.length===2){var a=punti[k[0]],b=punti[k[1]],d=Math.hypot(a.x-b.x,a.y-b.y),f=d/pizzico.d,c=punto((a.x+b.x)/2,(a.y+b.y)/2),nw=pizzico.w/f;cancelAnimationFrame(t);
+   var o=limita({w:nw,h:0,x:c.x-(c.x-v.x)*nw/v.w,y:c.y-(c.y-v.y)*nw/v.w});v=o;metti();return}
+  if(trascina){var r=svg.getBoundingClientRect(),dx=(e.clientX-trascina.x)/r.width*trascina.v.w,dy=(e.clientY-trascina.y)/r.height*trascina.v.h;trascina.mosso=Math.max(trascina.mosso,Math.abs(e.clientX-trascina.x)+Math.abs(e.clientY-trascina.y));
+   if(trascina.mosso>4){svg.setPointerCapture&&svg.setPointerCapture(e.pointerId);cancelAnimationFrame(t);v=limita({x:trascina.v.x-dx,y:trascina.v.y-dy,w:trascina.v.w,h:trascina.v.h});metti()}}});
+ function su(e){delete punti[e.pointerId];if(Object.keys(punti).length<2)pizzico=null;if(!Object.keys(punti).length)setTimeout(function(){trascina=null},0)}
+ svg.addEventListener('pointerup',su);svg.addEventListener('pointercancel',su);
+ svg.addEventListener('wheel',function(e){e.preventDefault();zoom(e.deltaY<0?1.25:0.8,e.clientX,e.clientY)},{passive:false});
+ return {anima:anima,tutto:tutto,zoom:function(f){var r=svg.getBoundingClientRect();zoom(f,r.left+r.width/2,r.top+r.height/2)},
+  su:function(x,y,ingr){var r=svg.clientWidth/Math.max(1,svg.clientHeight),w=W/(ingr||3);anima({w:w,h:w/r,x:x-w/2,y:y-w/r/2})},mosso:function(){return trascina&&trascina.mosso>4}}}
+var POS={};
+function vaiA(n){var p=POS[n];if(p&&cam)cam.su(p.x,p.y,S.v==='metro'?2.6:2.4)}
+function evidenzia(){var svg=document.querySelector('.tela svg');if(!svg)return;var a=S.sel?antenati(S.sel):null,disc={};
+ if(S.sel)(function rec(n){disc[n]=1;(X.figli[n]||[]).forEach(function(f){rec(f.nome)})})(S.sel);
+ [].forEach.call(svg.querySelectorAll('[data-r]'),function(el){var n=el.getAttribute('data-r'),on=!S.sel||a[n]||disc[n];el.classList.toggle('spento',!on);el.classList.toggle('acceso',!!on)});
+ [].forEach.call(svg.querySelectorAll('.nodo-s'),function(el){el.classList.toggle('sel',el.getAttribute('data-n')===S.sel)});
+ var k=svg.querySelector('#commit-sel');if(k)k.innerHTML=S.v==='metro'?puntiCommit():''}
+function nodoSvg(b,x,y,rr,c,u){return '<g class="nodo-s" data-n="'+E(b.nome)+'" data-r="'+E(b.nome)+'" role="button" tabindex="0" aria-label="'+E(b.nome)+'"><circle class="alone" cx="'+x+'" cy="'+y+'" r="'+(rr+9)+'" fill="'+c+'"/><circle class="p" cx="'+x+'" cy="'+y+'" r="'+rr+'" fill="'+(u?'#172654':c)+'" stroke="'+c+'" stroke-width="2.5"/><circle cx="'+x+'" cy="'+y+'" r="'+(rr+12)+'" fill="transparent"/></g>'}
+function tela(titolo,sub,W,H,dentro){return '<h2>'+titolo+'</h2><p class="sub">'+sub+'</p><div class="comandi"><button type="button" data-cam="piu" aria-label="Avvicina">+</button><button type="button" data-cam="meno" aria-label="Allontana">−</button><button type="button" data-cam="tutto">Vista intera</button></div>'+
+ '<div class="tela"><svg role="img" aria-label="'+titolo+' dei rami" preserveAspectRatio="xMinYMin meet">'+dentro+'</svg><span class="aiuto">Trascina per muoverti · Rotella o due dita per lo zoom · Tocca un pallino</span></div>'}
+
+/* Linea del tempo */
+var T={};
+function metro(){var L=X.ordine,W=1400,lab=330,riga=30,H=L.length*riga+50,s='',pal='';POS={};
+ var t0=Math.min.apply(null,L.slice(1).map(function(o){return o.b.dataNascita||o.b.data}).concat([L[0].b.data])),t1=Math.max.apply(null,L.map(function(o){return o.b.data})),
+  xs=function(t){return lab+16+(W-lab-40)*((t-t0)/Math.max(1,t1-t0))},y={};T={xs:xs,y:y};
+ L.forEach(function(o,i){y[o.b.nome]=24+i*riga});
+ for(var d=new Date(t0*1000);d.getTime()/1000<=t1;d.setDate(d.getDate()+1)){var gx=xs(d.getTime()/1000);s+='<line x1="'+gx+'" y1="10" x2="'+gx+'" y2="'+(H-22)+'" stroke="rgba(255,255,255,.05)"/>'+(d.getDate()%2===0?'<text x="'+gx+'" y="'+(H-6)+'" fill="#8fa0c4" font-size="10" text-anchor="middle">'+d.getDate()+'/'+(d.getMonth()+1)+'</text>':'')}
+ L.forEach(function(o){var b=o.b,c=colore(b),yy=y[b.nome],x0=o.d?xs(b.dataNascita||b.data):lab+16,x1=Math.max(x0+4,xs(b.data)),u=b.stato!=='attivo'&&o.d,g='';
+  if(o.d){var py=y[b.padre];g+='<path d="M'+x0+' '+py+' C'+(x0+14)+' '+py+' '+x0+' '+yy+' '+(x0+14)+' '+yy+'" fill="none" stroke="'+c+'" stroke-width="2" opacity="'+(u?.5:.95)+'"/>';x0+=14}
+  g+='<line x1="'+x0+'" y1="'+yy+'" x2="'+Math.max(x0,x1)+'" y2="'+yy+'" stroke="'+c+'" stroke-width="'+(o.d?3:5)+'" stroke-linecap="round" opacity="'+(u?.5:1)+'"/>';
+  var nome=b.nome.length>34?b.nome.slice(0,33)+'…':b.nome;
+  g+='<text x="'+(8+Math.min(o.d,8)*9)+'" y="'+(yy+4)+'" fill="'+(u?'#8fa0c4':'#f5f6fb')+'" font-size="12.5" font-weight="'+(o.d?600:900)+'">'+E(nome)+'</text>';
+  s+='<g data-r="'+E(b.nome)+'">'+g+'</g>';pal+=nodoSvg(b,Math.max(x0,x1),yy,o.d?5:7,c,u);POS[b.nome]={x:Math.max(x0,x1),y:yy}});
+ s+=pal;   // i pallini sopra tutte le linee, così il tocco arriva sempre al ramo giusto
+ return tela('Linea del tempo','Ogni riga è un ramo, dal giorno in cui nasce al suo ultimo lavoro; la curva parte dal ramo da cui è nato. Tocca un pallino: lo zoom porta su quel ramo e sulla sua riga compaiono i commit, ognuno con il suo link.',W,H,s+'<g id="commit-sel"></g>')+'<!--'+W+'x'+H+'-->'}
+function puntiCommit(){var b=S.sel&&X.by[S.sel];if(!b||!T.xs||T.y[b.nome]==null)return '';var R=X.R;
+ return (b.commit||[]).map(function(k){var x=T.xs(k[1]),y=T.y[b.nome];return '<a href="'+GH[R.repo]+'/commit/'+k[0]+'" target="_blank" rel="noopener"><title>'+E(giorno(k[1],1)+' · '+k[3])+'</title><circle cx="'+x+'" cy="'+y+'" r="4" fill="#fff" stroke="'+COL[aut(k[2])]+'" stroke-width="2.5" style="cursor:pointer"/></a>'}).join('')}
+/* Ventaglio */
+function ventaglio(){var L=X.ordine,W=1400,maxd=Math.max.apply(null,L.map(function(o){return o.d})),passo=Math.max(110,Math.min(170,(W-260)/(maxd+1))),riga=30,y={},foglie=0,s='';POS={};
+ function pos(b){var f=X.figli[b.nome]||[];if(!f.length){y[b.nome]=26+(foglie++)*riga;return y[b.nome]}var a=f.map(pos);y[b.nome]=(Math.min.apply(null,a)+Math.max.apply(null,a))/2;return y[b.nome]}
+ X.R.radici.forEach(function(n,i){if(i)foglie++;pos(X.by[n])});
+ var H=26+foglie*riga+20,dx=function(o){return 30+o.d*passo},Wv=Math.max(W,30+(maxd+1)*passo+260),dep={};L.forEach(function(o){dep[o.b.nome]=o.d});
+ L.forEach(function(o){if(!o.d)return;var b=o.b,p=X.by[b.padre],c=colore(b),x0=30+dep[p.nome]*passo,x1=dx(o),u=b.stato!=='attivo';
+  s+='<path data-r="'+E(b.nome)+'" d="M'+x0+' '+y[p.nome]+' C'+(x0+passo*.55)+' '+y[p.nome]+' '+(x1-passo*.55)+' '+y[b.nome]+' '+x1+' '+y[b.nome]+'" fill="none" stroke="'+c+'" stroke-width="2.5" opacity="'+(u?.5:.95)+'"/>'});
+ L.forEach(function(o){var b=o.b,c=colore(b),u=b.stato!=='attivo'&&o.d,x=dx(o),foglia=!(X.figli[b.nome]||[]).length,nome=foglia||!o.d?b.nome:b.nome.split('/').pop();
+  if(!foglia&&o.d&&nome.length>16)nome=nome.slice(0,15)+'…';
+  s+='<text data-r="'+E(b.nome)+'" x="'+(x+(foglia?12:o.d?0:-10))+'" y="'+(y[b.nome]+(foglia?4:o.d?-11:-15))+'" text-anchor="'+(foglia||!o.d?'start':'middle')+'" fill="'+(u?'#8fa0c4':'#f5f6fb')+'" font-size="12" font-weight="'+(o.d?600:900)+'">'+E(nome)+'</text>';
+  s+=nodoSvg(b,x,y[b.nome],o.d?6:9,c,u);POS[b.nome]={x:x,y:y[b.nome]}});
+ return tela('Ventaglio','Da main i rami si aprono verso destra: ogni passo è un livello di sotto-ramificazione. Tocca un pallino: lo zoom porta su quel ramo, si accendono lui, la sua strada fino a main e i suoi sotto-rami.',Wv,H,s)+'<!--'+Wv+'x'+H+'-->'}
+
+/* ---------- disegno ---------- */
+function disegnaVista(){var box=document.getElementById('box');X=prepara();
+ var html=S.v==='albero'?albero():S.v==='metro'?metro():ventaglio();box.innerHTML=html;cam=null;
+ var m=/<!--(\d+)x(\d+)-->/.exec(html),svg=box.querySelector('.tela svg');
+ if(svg&&m){cam=Telecamera(svg,+m[1],+m[2]);evidenzia();if(S.sel&&POS[S.sel])setTimeout(function(){vaiA(S.sel)},60)}
+ document.getElementById('piede').textContent=X.R.repo+' · '+(X.n-X.R.radici.length)+' rami mostrati su '+(X.R.rami.length-X.R.radici.length)+' · Dati di Git del '+new Date(D.generato*1000).toLocaleString('it-IT',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
+ [['vista','v'],['repo','r'],['stato','s']].forEach(function(p){[].forEach.call(document.querySelectorAll('#'+p[0]+' button'),function(bt){bt.setAttribute('aria-pressed',String(bt.dataset[p[1]]==String(S[p[1]])))})});
+ try{localStorage.setItem('og:rami-prova',JSON.stringify({v:S.v,r:S.r,s:S.s}))}catch(e){}}
+function ridisegna(){var box=document.getElementById('box');box.classList.add('esce');setTimeout(function(){disegnaVista();dettagli();box.classList.remove('esce')},FERMO?0:140)}
+document.getElementById('box').addEventListener('click',function(e){var c=e.target.closest('[data-cam]');if(c&&cam){if(c.dataset.cam==='piu')cam.zoom(1.5);else if(c.dataset.cam==='meno')cam.zoom(1/1.5);else cam.anima(cam.tutto());return}
+ var n=e.target.closest('.nodo-s');if(n&&cam&&!cam.mosso())scegli(n.getAttribute('data-n'))});
+document.getElementById('box').addEventListener('keydown',function(e){var n=e.target.closest&&e.target.closest('.nodo-s');if(n&&(e.key==='Enter'||e.key===' ')){e.preventDefault();scegli(n.getAttribute('data-n'))}});
+[['vista','v'],['repo','r'],['stato','s']].forEach(function(p){document.getElementById(p[0]).addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var v=p[1]==='r'?+b.dataset.r:b.dataset[p[1]];if(v===S[p[1]])return;S[p[1]]=v;if(p[1]==='r'){S.sel=null;S.fuoco=null}if(p[1]==='v'&&v!=='albero')S.fuoco=null;ridisegna()})});
+var tc;document.getElementById('cerca').addEventListener('input',function(e){clearTimeout(tc);tc=setTimeout(function(){S.q=e.target.value;S.fuoco=null;ridisegna()},180)});
+addEventListener('keydown',function(e){if(e.key==='Escape'&&S.sel){S.sel=null;S.fuoco=null;dettagli();if(S.v==='albero')disegnaVista();else{evidenzia();if(cam)cam.anima(cam.tutto())}}});
+fetch('rami-dati.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(j){D=j.repository;D.generato=j.generato;if(S.sel&&S.v==='albero')S.fuoco=S.sel;disegnaVista();dettagli()}).catch(function(){document.getElementById('box').textContent='Dati non caricati.'});
+})();
+</script>
+</body></html>
