@@ -1,5 +1,5 @@
 {
- "generato": 1794673265,
+ "generato": 1794673516,
  "versione": "6.1",
  "repository": [
   {
@@ -6980,6 +6980,33 @@
       ]
      ],
      "totale": 1185
+    },
+    {
+     "nome": "chatgpt/esito-lab-61",
+     "punta": "a03eefd",
+     "data": 1794673516,
+     "titolo": "ChatGPT: conserva sorgenti e verifica della 6.1 pubblicata",
+     "autore": "ChatGPT",
+     "padre": "main",
+     "nascita": "4e16d57",
+     "dataNascita": 1794673063,
+     "avanti": 2,
+     "stato": "attivo",
+     "commit": [
+      [
+       "a03eefd4f5d79deb4508c07427675b6ed87f956c",
+       1794673516,
+       "ChatGPT",
+       "ChatGPT: conserva sorgenti e verifica della 6.1 pubblicata"
+      ],
+      [
+       "ae10752d78032fa1528be229f2f395e244870d92",
+       1794673156,
+       "ChatGPT",
+       "ChatGPT: aggiorna i riferimenti dei moduli al rilascio 6.1"
+      ]
+     ],
+     "totale": 2
     }
    ]
   }
