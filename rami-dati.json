@@ -1,5 +1,5 @@
 {
- "generato": 1794691698,
+ "generato": 1794691732,
  "versione": "6.1",
  "repository": [
   {
@@ -6976,10 +6976,37 @@
      "totale": 3
     },
     {
+     "nome": "chatgpt/esito-611-lab",
+     "punta": "804a36e",
+     "data": 1794691698,
+     "titolo": "ChatGPT: registra CI e verifica pubblica dell’anteprima 6.1.1",
+     "autore": "ChatGPT",
+     "padre": "chatgpt/carriera-curva-611",
+     "nascita": "ccc1f5d",
+     "dataNascita": 1794691128,
+     "avanti": 3,
+     "stato": "unito",
+     "commit": [
+      [
+       "804a36e950b4bd200d6ad5361b6ac21ac82b2864",
+       1794691698,
+       "ChatGPT",
+       "ChatGPT: registra CI e verifica pubblica dell’anteprima 6.1.1"
+      ],
+      [
+       "35573fa60d277ff630b4b68a84acdabfec2b0e12",
+       1794691510,
+       "ChatGPT",
+       "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
+      ]
+     ],
+     "totale": 3
+    },
+    {
      "nome": "main",
-     "punta": "35573fa",
-     "data": 1794691510,
-     "titolo": "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio",
+     "punta": "c427c75",
+     "data": 1794691732,
+     "titolo": "ChatGPT: aggiorna STATO con la verifica dell’anteprima 6.1.1",
      "autore": "ChatGPT",
      "padre": null,
      "nascita": null,
@@ -6987,6 +7014,12 @@
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "c427c75ba6a6bd1226e0642e11257ef4fd233080",
+       1794691732,
+       "ChatGPT",
+       "ChatGPT: aggiorna STATO con la verifica dell’anteprima 6.1.1"
+      ],
       [
        "35573fa60d277ff630b4b68a84acdabfec2b0e12",
        1794691510,
@@ -7052,36 +7085,9 @@
        1794671598,
        "ChatGPT",
        "ChatGPT: pubblica nel Lab i bilanci della stagione 6.1"
-      ],
-      [
-       "300cf2b07026d034df16fd291c5871c3e30ab107",
-       1794658497,
-       "ChatGPT",
-       "ChatGPT: aggiorna nel Lab il pulsante centrato della Radio"
       ]
      ],
-     "totale": 1195
-    },
-    {
-     "nome": "chatgpt/esito-611-lab",
-     "punta": "804a36e",
-     "data": 1794691698,
-     "titolo": "ChatGPT: registra CI e verifica pubblica dell’anteprima 6.1.1",
-     "autore": "ChatGPT",
-     "padre": "main",
-     "nascita": "35573fa",
-     "dataNascita": 1794691510,
-     "avanti": 1,
-     "stato": "attivo",
-     "commit": [
-      [
-       "804a36e950b4bd200d6ad5361b6ac21ac82b2864",
-       1794691698,
-       "ChatGPT",
-       "ChatGPT: registra CI e verifica pubblica dell’anteprima 6.1.1"
-      ]
-     ],
-     "totale": 1
+     "totale": 1197
     }
    ]
   }
