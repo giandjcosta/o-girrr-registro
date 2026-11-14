@@ -28,6 +28,11 @@
 - Nessuna modifica ai dati, al database o al sito vero, che rimane alla 6.0.1 di Claude. Valgono i limiti sui dispositivi fisici e WebKit offline già annotati sotto. Aggiornamento grafico da rivedere nel Lab prima del rilascio 6.0.2.
 
 
+## 14 novembre (3) — Claude: Ramificazioni con «Entrambi» e aggiornamento immediato anche dal sito
+- `rami.html`: pulsante **Entrambi** (sito e registro insieme nelle tre viste), versione online in fondo («Sul sito la 6.0.1», da `versioni.json`); i dati portano anche `versione`.
+- `ramificazioni.yml` risponde anche a `repository_dispatch` (`ramificazioni`); nel sito `.github/workflows/avvisa-ramificazioni.yml` lo manda a ogni push (tranne `gh-pages`), ramo nuovo o cancellato e PR. **Da fare per Gianluca:** creare il segreto `REGISTRO_AVVISO` nel repository del sito (vedi `RAMIFICAZIONI.md`); fino ad allora i cambi del sito arrivano entro 15 minuti, quelli del Registro subito.
+- Prove `prove/prova_rami_tre_viste.js` (con Entrambi): Chromium, WebKit e Firefox 0 problemi; `prova_ramificazioni.py` OK.
+
 ## 14 novembre (2) — ChatGPT: nuove anteprime 6.0.2 online nel Lab, certificazione conclusa
 
 - **Solo Registro/Lab**, PR #76 unita in **`ab4a23c`**, codice certificato **`450fb6a`**. La 6.0.2 non è pubblicata sul sito della lega: resta la **6.0.1 di Claude** (`e9124d9`). Backend sito PR #13 ancora in bozza, `00975bd`; nessun workflow di bootstrap eseguito e nessuna mutazione Supabase.

@@ -20,6 +20,10 @@ on:
       - 'ChatGPT - Allineamento automatico del Registro'
     types: [requested, completed]
   workflow_dispatch:
+  # Claude, 14 novembre 2026: avviso immediato dal sito della lega (o-fant-a-girrr, avvisa-ramificazioni.yml) a ogni push,
+  # ramo nuovo o cancellato e Pull Request: senza aspettare il controllo dei 15 minuti.
+  repository_dispatch:
+    types: [ramificazioni]
 permissions:
   contents: write
 concurrency:

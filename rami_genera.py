@@ -59,7 +59,12 @@ for r, path in zip(out, (SITO, REG)):
         b['totale'] = int(g(path, 'rev-list', '--count', ('origin/%s..origin/%s' % (b['padre'], b['nome'])) if b.get('padre') else 'origin/' + b['nome']) or 0)
 # «generato» è la data dell'ultimo lavoro fra tutti i rami: se nessun ramo cambia, il file resta uguale e il workflow non fa commit
 gen = max([b['data'] for r in out for b in r['rami']] or [int(time.time())])
-json.dump({'generato': gen, 'repository': out}, open(sys.argv[1], 'w'), ensure_ascii=False, indent=1)
+# la versione online del sito, da versioni.json di gh-pages (come la pagina Versioni)
+try:
+    ver = json.loads(g(SITO, 'show', 'origin/gh-pages:versioni.json'))['versioni'][0]['v']
+except Exception:
+    ver = None
+json.dump({'generato': gen, 'versione': ver, 'repository': out}, open(sys.argv[1], 'w'), ensure_ascii=False, indent=1)
 for r in out:
     figli = {}
     for b in r['rami']:

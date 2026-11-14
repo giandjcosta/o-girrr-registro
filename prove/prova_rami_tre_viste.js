@@ -10,7 +10,7 @@ const SCH = [['iPhone SE 320', { viewport: { width: 320, height: 568 }, isMobile
   for (const [sn, o] of SCH) {
     const c = await br.newContext(o), p = await c.newPage(), pr = [];
     p.on('pageerror', e => pr.push('errore: ' + e.message.slice(0, 100)));
-    p.on('console', m => { if (m.type() === 'error' && !/Failed to load resource|raw\.githubusercontent/.test(m.text())) pr.push('console: ' + m.text().slice(0, 100)); });
+    p.on('console', m => { if (m.type() === 'error' && !/Failed to load resource|raw\.githubusercontent|CORS request did not succeed/.test(m.text())) pr.push('console: ' + m.text().slice(0, 100)); });
     // da sola
     await p.goto(B + 'rami.html', { waitUntil: 'load' }); await p.waitForTimeout(1500);
     for (const v of ['albero', 'metro', 'ventaglio']) {
@@ -19,6 +19,18 @@ const SCH = [['iPhone SE 320', { viewport: { width: 320, height: 568 }, isMobile
       if (n < 3) pr.push(v + ': ' + n + ' rami disegnati');
       if (await p.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1)) pr.push(v + ': scorre di lato');
     }
+    // Entrambi: sito e registro insieme, in tutte e tre le viste
+    await p.click('#repo [data-r="2"]'); await p.waitForTimeout(600);
+    for (const v of ['albero', 'metro', 'ventaglio']) {
+      await p.click('#vista [data-v=' + v + ']'); await p.waitForTimeout(700);
+      const e = await p.evaluate(() => ({ n: document.querySelectorAll('#box .nodo-s, #box .riga').length, t: document.getElementById('box').innerText, piede: document.getElementById('piede').textContent, lato: document.documentElement.scrollWidth > innerWidth + 1 }));
+      if (e.n < 6) pr.push('Entrambi ' + v + ': ' + e.n + ' rami');
+      if (v === 'albero' && !(/Sito › main/.test(e.t) && /Registro › main/.test(e.t))) pr.push('Entrambi: mancano i due main');
+      if (!/^Sul sito la \d/.test(e.piede)) pr.push('piè di pagina: ' + e.piede.slice(0, 60));
+      if (e.lato) pr.push('Entrambi ' + v + ': scorre di lato');
+    }
+    await p.click('#vista [data-v=albero]'); await p.waitForTimeout(400);
+    const lk = p.locator('#box .riga').nth(3); if (await lk.count()) { await lk.click(); await p.waitForTimeout(600); const h = await p.evaluate(() => [...document.querySelectorAll('.dettagli a')].map(a => a.href).join(' ')); if (/%E2%80%BA|›/.test(h)) pr.push('link a GitHub con «›» nel nome: ' + h.slice(0, 120)); }
     await p.click('#repo [data-r="1"]'); await p.waitForTimeout(600);
     await p.click('#vista [data-v=albero]'); await p.waitForTimeout(500);
     const nodo = p.locator('#box .riga, #box .nodo-s').nth(1); if (await nodo.count()) { await nodo.click(); await p.waitForTimeout(700); if (!(await p.evaluate(() => /commit|Commit/.test((document.querySelector('.dettagli') || {}).innerText || '')))) pr.push('dettagli del ramo non aperti'); }
