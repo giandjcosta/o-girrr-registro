@@ -2,7 +2,7 @@ name: ChatGPT - Giro di boa 6.0.2
 on:
   pull_request:
     branches: [main]
-    paths: ['calcoli/giro_di_boa.py', 'rilascio/r602/**', 'rilascio/r601/**', 'rilascio/cerca/**', 'rilascio/condividi/**', 'voci-src/**', 'prove/*giro_di_boa*', 'prove/browser_certificato.js', 'prove/server_range.py', 'prove/prova_cerca_pubblica.js', '.github/workflows/giro-boa-602-qa.yml']
+    paths: ['calcoli/giro_di_boa.py', 'rilascio/r602/**', 'rilascio/r601/**', 'rilascio/cerca/**', 'rilascio/condividi/**', 'voci-src/**', 'prove/*giro_di_boa*', 'prove/browser_certificato.js', 'prove/server_range.py', 'prove/prova_cerca_pubblica.js', 'prove/prova_cartellini_602.js', '.github/workflows/giro-boa-602-qa.yml']
   workflow_dispatch:
 concurrency:
   group: giro-boa-602-${{ github.ref }}
@@ -67,6 +67,7 @@ jobs:
         run: |
           node prove/prova_giro_di_boa_browser.js
           node prove/prova_giro_di_boa_tv.js
+          node prove/prova_cartellini_602.js
       - uses: actions/upload-artifact@v4
         if: always()
         with:

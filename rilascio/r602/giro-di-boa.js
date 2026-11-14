@@ -5,6 +5,7 @@
   if (window.GirrrBoa) return;
   const script = document.currentScript;
   const ROOT = new URL('./', script.src).href;
+  const viste = new Map();
   const scelte = new Map(); // Conserva la scelta anche se Carriera si ridisegna dopo una lettura.
   const ND = 'Dato non conservato', E = s => String(s == null ? ND : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const N = v => v == null ? ND : Number(v).toLocaleString('it-IT', { maximumFractionDigits: 3 });
@@ -50,18 +51,46 @@
     const a = s.andamento, x = i => 32 + i * 636 / Math.max(1,a.length-1), y = p => 22 + (p-1)*18;
     return `<svg class="gb-grafico" viewBox="0 0 700 210" role="img" aria-label="Posizione giornata per giornata"><path d="${a.map((v,i)=>(i?'L':'M')+x(i)+' '+y(v.posizione)).join(' ')}" fill="none" stroke="currentColor" stroke-width="4"/>${a.map((v,i)=>`<circle cx="${x(i)}" cy="${y(v.posizione)}" r="5"/><title>${v.giornata}ª giornata: ${v.posizione}ª posizione</title>`).join('')}</svg><div class="gb-storia">${a.map(v=>`<span><small>${v.giornata}ª giornata</small><b>${v.posizione}ª</b></span>`).join('')}</div>`;
   }
-  function scheda(s) {
+  function dettagli(s) {
     return `<h3>${E(nome(s.squadra))}</h3><div class="gb-fatti">${sezioni(s).map(([a,b])=>`<div><h4>${a}</h4><p>${E(b)}</p></div>`).join('')}</div>
-      <details open><summary>Andamento in classifica</summary>${andamento(s)}</details>
+      <details><summary>Andamento in classifica</summary>${andamento(s)}</details>
       <details><summary>Tutte le partite di Campionato</summary><ul>${s.partite.map(p=>`<li>${E(match(p))} · ${p.casa?'In casa':'In trasferta'}</li>`).join('')}</ul></details>
       <details><summary>Risultati dei Derby</summary><p>${E(s.derby.criterio)}</p><ul>${s.derby.disponibile ? s.derby.partite.map(p=>`<li>${E(p.nome_derby)} · ${E(match(p))}</li>`).join('') || '<li>Nessun Derby giocato</li>' : '<li>'+ND+'</li>'}</ul></details>
       <details><summary>Percorso in Champions Cup</summary><ul>${s.coppa.partite.map(p=>`<li>${E(match(p))} · ${E(p.gruppo)}</li>`).join('') || '<li>Nessuna partita nel periodo</li>'}</ul></details>
       <details><summary>Le conferenze</summary><ul>${s.promesse.disponibile ? s.promesse.partite.map(p=>`<li>${p.giornata}ª giornata: ${E(p.promessa)} · ${{v:'Mantenuta',s:'Pari',p:'Tradita'}[p.esito]||'Da valutare'}</li>`).join('') || '<li>Nessuna promessa conservata nel periodo</li>' : '<li>'+ND+'</li>'}</ul></details>
       <details><summary>I numeri</summary><p>Totale: ${N(s.numeri.totali)} Fantapunti · Media: ${N(s.numeri.media)} Fantapunti<br>Sul filo: scarto in Fantapunti non superiore a ${N(s.numeri.soglia_sul_filo_fantapunti)}, con un gol di differenza.</p><ul>${s.sul_filo.map(p=>`<li>${E(match(p))} · ${N(p.fantapunti)} contro ${N(p.fantapunti_avversario)} Fantapunti</li>`).join('') || '<li>Nessuna partita entro la soglia</li>'}</ul></details>`;
   }
+  const COLORI={V:'#61dbb2',N:'#c2cede',P:'#ff7b85'};
+  const ESITI={V:'Vittoria',N:'Pareggio',P:'Sconfitta'};
+  function pallini(partite,limite=5) {
+    return `<div class="gb-forma" aria-label="Ultimi risultati">${partite.slice(-limite).map(m=>`<span class="gb-esito gb-${m.esito}" title="${E(match(m))}" aria-label="${E(match(m))} · ${ESITI[m.esito]}">${m.esito}</span>`).join('')}</div>`;
+  }
+  const legenda=()=>'<p class="gb-legenda"><span class="gb-V">V</span> Vittoria <span class="gb-N">N</span> Pareggio <span class="gb-P">P</span> Sconfitta</p>';
+  function traccia(s) {
+    if(!s.andamento.length)return '<p>'+ND+'</p>';
+    const a=s.andamento,x=i=>36+i*628/Math.max(1,a.length-1),y=n=>24+(n-1)*15.5;
+    return `<svg class="gb-grafico" viewBox="0 0 700 205" role="img" aria-label="Posizione dalla ${a[0].giornata}ª alla ${a.at(-1).giornata}ª giornata. ${a.map(v=>v.giornata+'ª: '+v.posizione+'ª').join('; ')}"><line x1="36" x2="664" y1="24" y2="24" stroke="#ffffff25"/><line x1="36" x2="664" y1="163.5" y2="163.5" stroke="#ffffff25"/><text x="2" y="29" fill="#bfe3ff" font-size="15">1ª</text><text x="0" y="169" fill="#bfe3ff" font-size="15">10ª</text><path d="${a.map((v,i)=>(i?'L':'M')+x(i)+' '+y(v.posizione)).join(' ')}" fill="none" stroke="#bfe3ff" stroke-width="3"/>${a.map((v,i)=>`<circle cx="${x(i)}" cy="${y(v.posizione)}" r="${a.length>17?4:7}" style="fill:${COLORI[s.partite.find(m=>m.giornata===v.giornata)?.esito]||'#ffd166'}"><title>${v.giornata}ª giornata · ${v.posizione}ª posizione</title></circle>`).join('')}<text x="36" y="197" fill="#bfe3ff" font-size="15">${a[0].giornata}ª giornata</text><text x="664" y="197" text-anchor="end" fill="#bfe3ff" font-size="15">${a.at(-1).giornata}ª giornata</text></svg>`;
+  }
+  function voceHTML(v,curva=false) {
+    return v?`<blockquote class="gb-voce ${curva?'gb-curva':''}"><small>${curva?'Dalla Curva':'Girrr Sport · Redazione'}</small>${v.titolo?'<h4>'+E(v.titolo)+'</h4>':''}<p>«${E(v.testo)}»</p><cite>${E(nome(v.autore))}${v.giornata?' · '+v.giornata+'ª giornata':v.data?' · '+new Date(v.data).toLocaleDateString('it-IT',{day:'numeric',month:'long',timeZone:'Europe/Rome'}):''}</cite></blockquote>`:`<p class="gb-assente">${ND}</p>`;
+  }
+  function vociSquadra(s) {
+    const v=s.voci||{};
+    return `<div class="gb-voci">${voceHTML(v.redazione)}${voceHTML(v.curva?.[0],true)}</div><div class="gb-mini"><div><small>Derby</small><strong>${s.derby.disponibile?s.derby.giocate:ND}</strong><span>Giocati nel periodo</span></div><div><small>Champions Cup</small><strong>${s.coppa.punti_girone??'—'}</strong><span>Punti nel girone</span></div><div><small>Fiducia del presidente</small><strong>${s.dirigenza.fiducia??'—'}<small>/100</small></strong><span>${E(s.dirigenza.giudizio)}</span></div></div>`;
+  }
+  function tavole(prima,seconda) {
+    return `<div class="gb-viste" aria-label="Le due pagine del bilancio"><button type="button" data-gb-vista="0" aria-pressed="true">1 · Colpo d’occhio</button><button type="button" data-gb-vista="1" aria-pressed="false">2 · Voci e bilancio</button></div><section class="gb-tavola" data-gb-pagina="0">${prima}</section><section class="gb-tavola" data-gb-pagina="1" hidden>${seconda}</section>`;
+  }
+  function scheda(s) {
+    const kpi=`<div class="gb-kpi"><div><strong>${s.posizione}<small>ª</small></strong><span>Posizione</span></div><div><strong>${s.punti_classifica}</strong><span>Punti in classifica</span></div><div><strong>${s.bilancio.gol_fatti}<small> : ${s.bilancio.gol_subiti}</small></strong><span>Gol fatti : Subiti</span></div></div>`;
+    const casa=[['In casa',s.casa],['In trasferta',s.trasferta]].map(([n,b])=>`<div><span>${n}</span><strong>${b.punti} punti</strong><div class="gb-barra"><i style="width:${b.giocate?100*b.punti/(3*b.giocate):0}%"></i></div><small>${b.giocate} partite</small></div>`).join('');
+    return `<h3>${E(nome(s.squadra))}</h3>${tavole(kpi+`<div class="gb-riquadro"><h4>La corsa in classifica</h4>${traccia(s)}${legenda()}</div><div class="gb-riquadro"><h4>Le ultime partite</h4>${pallini(s.partite,7)}<p class="gb-bilancio"><b>${s.bilancio.vittorie}</b> Vittorie <b>${s.bilancio.pareggi}</b> Pareggi <b>${s.bilancio.sconfitte}</b> Sconfitte</p></div><div class="gb-casa">${casa}</div>`,vociSquadra(s))}<details class="gb-dati"><summary>Tutti i dati della squadra</summary>${dettagli(s)}</details>`;
+  }
   function lega(p) {
-    const c = p.campionato;
-    return `<h3>Il campionato</h3><p class="gb-lead">${c.campione_inverno ? 'Campione d’inverno: ' : 'In vetta: '}${E(nome(c.campione_inverno||c.capolista))}</p><p>${c.partite} partite · ${c.gol} gol del risultato</p><div class="gb-classifica">${p.classifica.map(r=>`<div><b>${r.posizione}.</b><span>${E(nome(r.squadra))}</span><strong>${r.punti}<small> punti</small></strong><small>${r.gol_fatti} GF / ${r.gol_subiti} GS</small></div>`).join('')}</div><p>Miglior attacco: ${E(c.miglior_attacco.map(nome).join(', '))}<br>Miglior difesa: ${E(c.miglior_difesa.map(nome).join(', '))}</p><p>Sopra le attese: ${E(c.sopra_le_attese.map(nome).join(', ')||'Nessuna squadra di almeno due posizioni')}<br>Sotto le attese: ${E(c.sotto_le_attese.map(nome).join(', ')||'Nessuna squadra di almeno due posizioni')}</p><div class="gb-tutte">${p.classifica.map(r=>`<details><summary>${E(nome(r.squadra))} · ${r.posizione}ª · ${r.punti} punti</summary>${scheda(p.squadre[r.squadra])}</details>`).join('')}</div>`;
+    const c=p.campionato,prima=`<div class="gb-leader"><small>${c.campione_inverno?'Campione d’inverno':'In vetta'}</small><strong>${E(nome(c.campione_inverno||c.capolista))}</strong><span>${c.partite} partite · ${c.gol} gol nel periodo</span></div><div class="gb-classifica">${p.classifica.map(r=>`<div><b>${r.posizione}.</b><span>${E(nome(r.squadra))}<i class="gb-barra"><i style="width:${100*r.punti/Math.max(1,p.classifica[0].punti)}%"></i></i></span><strong>${r.punti}<small> punti</small></strong>${pallini(p.squadre[r.squadra].partite)}</div>`).join('')}</div>${legenda()}`;
+    const v=p.voci||{},red=(v.redazione||[]).find(v=>v.squadra===c.capolista)||(v.redazione||[])[0];
+    const seconda=`<div class="gb-voci">${voceHTML(red)}${voceHTML(v.curva?.[0],true)}</div><div class="gb-primati"><div><small>Miglior attacco</small><strong>${E(c.miglior_attacco.map(nome).join(', '))}</strong></div><div><small>Miglior difesa</small><strong>${E(c.miglior_difesa.map(nome).join(', '))}</strong></div></div>`;
+    return `<h3>Il campionato</h3>${tavole(prima,seconda)}<div class="gb-tutte"><h4>Il dossier di ogni squadra</h4>${p.classifica.map(r=>`<details><summary>${E(nome(r.squadra))} · ${r.posizione}ª · ${r.punti} punti</summary>${dettagli(p.squadre[r.squadra])}</details>`).join('')}</div>`;
   }
   function stile() {
     if (document.getElementById('gb-stile')) return;
@@ -73,7 +102,7 @@
     try {
       const j = await carica(root);
       if (!host.isConnected) return;
-      host.innerHTML=`<header><small class="gb-versione">6.0.2 · Giro di boa</small><h2 data-gb-tit></h2><p>La tua squadra o tutto il campionato. Gli stessi fatti nelle immagini e in Radio.</p></header><div class="gb-controlli"><label>Contenuto<select data-gb-ambito><option value="squadra">La squadra</option><option value="lega">Tutto il campionato</option></select></label><label data-gb-scelta>Squadra<select data-gb-squadra>${j.periodi.finora.classifica.map(r=>`<option value="${E(r.squadra)}"${r.squadra===team?' selected':''}>${E(nome(r.squadra))}</option>`).join('')}</select></label><label>Periodo<select data-gb-periodo>${opzioni(j)}</select></label></div><button type="button" class="gb-bottone" data-gb-album>Prepara le tre foto</button><div data-gb-contenuto></div><p class="gb-fonte">Dopo l’ultima giornata pubblicata. Posizione e punti sono quelli in classifica; i bilanci riguardano il periodo scelto. A pari punti valgono le regole del Tabellone. La zona retrocessione corrisponde all’ultimo posto.</p>`;
+      host.innerHTML=`<header><small class="gb-versione">6.0.2 · Giro di boa</small><h2 data-gb-tit></h2><p>La tua squadra o tutto il campionato. Gli stessi fatti nelle immagini e in Radio.</p></header><div class="gb-controlli"><label>Contenuto<select data-gb-ambito><option value="squadra">La squadra</option><option value="lega">Tutto il campionato</option></select></label><label data-gb-scelta>Squadra<select data-gb-squadra>${j.periodi.finora.classifica.map(r=>`<option value="${E(r.squadra)}"${r.squadra===team?' selected':''}>${E(nome(r.squadra))}</option>`).join('')}</select></label><label>Periodo<select data-gb-periodo>${opzioni(j)}</select></label></div><button type="button" class="gb-bottone" data-gb-album>Prepara le due foto</button><div data-gb-contenuto></div><p class="gb-fonte">Dopo l’ultima giornata pubblicata. Posizione e punti sono quelli in classifica; i bilanci riguardano il periodo scelto. A pari punti valgono le regole del Tabellone. La zona retrocessione corrisponde all’ultimo posto.</p>`;
       const q = s=>host.querySelector(s);
       const precedente=scelte.get(team);
       if(precedente){for(const [sel,val] of Object.entries(precedente)){const el=q(sel);if([...el.options].some(o=>o.value===val))el.value=val;}}
@@ -81,66 +110,77 @@
         const k=q('[data-gb-periodo]').value,p=periodo(j,k),t=q('[data-gb-squadra]').value,all=q('[data-gb-ambito]').value==='lega';
         q('[data-gb-tit]').textContent=titolo(j,k);q('[data-gb-scelta]').hidden=all;
         q('[data-gb-contenuto]').innerHTML=all?lega(p):scheda(p.squadre[t]);
+        const vista=viste.get(team)||'0';q('[data-gb-vista="'+vista+'"]')?.click();
         scelte.set(team,{'[data-gb-periodo]':k,'[data-gb-squadra]':t,'[data-gb-ambito]':all?'lega':'squadra'});
       }
+      host.addEventListener('click',e=>{const b=e.target.closest('[data-gb-vista]');if(!b)return;const scope=b.closest('[data-gb-contenuto]');viste.set(team,b.dataset.gbVista);scope.querySelectorAll('[data-gb-vista]').forEach(v=>v.setAttribute('aria-pressed',String(v===b)));scope.querySelectorAll('[data-gb-pagina]').forEach(v=>v.hidden=v.dataset.gbPagina!==b.dataset.gbVista);});
       host.querySelectorAll('select').forEach(s=>s.addEventListener('change',aggiorna));aggiorna();
       q('[data-gb-album]').onclick=()=>apri({j,root,squadra:q('[data-gb-squadra]').value,ambito:q('[data-gb-ambito]').value,k:q('[data-gb-periodo]').value});
       host.dataset.pronto='1';
     } catch(e) { host.innerHTML=`<p role="status">${E(e.message)}</p><button type="button" class="gb-bottone">Riprova</button>`;host.querySelector('button').onclick=()=>monta(host,team,root); }
-  }
-  function righeAlbum(j, k, ambito, team) {
-    const p=periodo(j,k),s=p.squadre[team],c=p.campionato;
-    if (ambito==='lega') {
-      const tavola=[['La corsa',`${c.campione_inverno?'Campione d’inverno':'Capolista'}: ${nome(c.campione_inverno||c.capolista)}`],...p.classifica.map(r=>[`${r.posizione}. ${nome(r.squadra)}`,`${r.punti} punti · ${r.gol_fatti} gol fatti · ${r.gol_subiti} subiti`]),['I primati',`Attacco: ${c.miglior_attacco.map(nome).join(', ')}. Difesa: ${c.miglior_difesa.map(nome).join(', ')}.`]];
-      const storie=p.classifica.map(r=>{const t=p.squadre[r.squadra];return [nome(r.squadra),`${B(t.bilancio)}. ${t.dirigenza.giudizio}; attesa ${t.dirigenza.attesa??ND}ª. Fiducia: ${N(t.dirigenza.fiducia)}. Champions Cup: ${t.coppa.qualificazione}. Derby: ${t.derby.disponibile?t.derby.giocate+' giocati':ND}. MVP: ${t.mvp.disponibile?t.mvp.ricevuti:ND}.`];});
-      return [{tit:'La classifica',righe:tavola},{tit:'Cinque storie',righe:storie.slice(0,5)},{tit:'Altre cinque storie',righe:storie.slice(5)}];
-    }
-    if (!s) throw new Error('Squadra non disponibile nel bilancio');
-    const all=sezioni(s);
-    return [
-      {tit:'La stagione',righe:all.slice(0,12)},
-      {tit:'Le storie',righe:[...all.slice(12),['Derby, risultati',s.derby.disponibile?s.derby.partite.slice(0,3).map(match).join('; ') + (s.derby.partite.length>3?' · Tutti i risultati nella scheda':'')||'Nessun Derby giocato':ND],['I numeri',`${N(s.numeri.totali)} Fantapunti totali · ${N(s.numeri.media)} Fantapunti di media · Soglia sul filo: ${N(s.numeri.soglia_sul_filo_fantapunti)} Fantapunti`]]},
-      {tit:'Partita per partita',righe:s.partite.map(p=>[`${p.giornata}ª · ${p.casa?'Casa':'Trasferta'} · ${p.gol_fatti}-${p.gol_subiti} (${p.esito})`,nome(p.avversario)])}
-    ];
   }
   function linee(ctx, s, max) {
     const words=text(s).split(/\s+/),out=[];let line='';
     words.forEach(w=>{if(ctx.measureText((line?line+' ':'')+w).width>max&&line){out.push(line);line=w;}else line+=(line?' ':'')+w;});if(line)out.push(line);return out;
   }
   async function album(j,{k='finora',ambito='squadra',squadra,stadio=/\/stadio\//.test(location.pathname)||document.documentElement.dataset.skin==='stadio'}={}) {
-    if(document.fonts?.ready) await document.fonts.ready;
-    const pagine=righeAlbum(j,k,ambito,squadra),files=[];
-    for(let idx=0;idx<pagine.length;idx++) {
-      const page=pagine[idx],cv=document.createElement('canvas');cv.width=1080;cv.height=1350;
-      const ctx=cv.getContext('2d'),accent=stadio?'#ffd166':'#d62839',colonna=page.righe.length>14;
-      const g=ctx.createLinearGradient(0,0,700,1350);g.addColorStop(0,'#2c3f7c');g.addColorStop(1,'#141d3d');ctx.fillStyle=g;ctx.fillRect(0,0,1080,1350);
-      ctx.fillStyle=accent;ctx.beginPath();if(stadio&&ctx.roundRect)ctx.roundRect(0,0,12,1350,[0,12,12,0]);else ctx.rect(0,0,16,1350);ctx.fill();
-      ctx.textBaseline='top';ctx.fillStyle='#bfe3ff';ctx.font='800 24px Inter, system-ui';ctx.fillText('O FANT A GIRRR · '+j.stagione.toUpperCase(),60,45);
-      ctx.fillStyle='#fbf6ec';let ts=44;const title=titolo(j,k);while(ts>28){ctx.font=`900 ${ts}px Inter, system-ui`;if(ctx.measureText(title).width<=960)break;ts-=2;}ctx.fillText(title,60,90);
-      ctx.font=stadio?'42px Lobster, cursive':'900 36px Inter, system-ui';ctx.fillStyle='#ffd166';
-      const top=ambito==='lega'?'Tutto il campionato':nome(squadra);ctx.fillText(top,60,155,960);
-      ctx.font='700 26px Inter, system-ui';ctx.fillStyle='#bfe3ff';ctx.fillText(page.tit+' · '+(idx+1)+'/3',60,213);
-      const rows=page.righe,cols=colonna?[rows.slice(0,Math.ceil(rows.length/2)),rows.slice(Math.ceil(rows.length/2))]:[rows],width=colonna?450:960;
-      for(let ci=0;ci<cols.length;ci++) {
-        let size=colonna?30:38,measure=[];
-        for(;size>=20;size--) {
-          measure=cols[ci].map(([a,b])=>{ctx.font=`800 ${size}px Inter, system-ui`;const aa=linee(ctx,a,width-36);ctx.font=`600 ${size}px Inter, system-ui`;return {a:aa,b:linee(ctx,b,width-36)};});
-          if(measure.reduce((v,r)=>v+(colonna?4:18)+(r.a.length+r.b.length)*(size+6),0)<=1010)break;
+    if(document.fonts?.ready)await document.fonts.ready;
+    const p=periodo(j,k),s=p.squadre[squadra],c=p.campionato,files=[];
+    if(ambito!=='lega'&&!s)throw Error('Squadra non disponibile nel bilancio');
+    for(let idx=0;idx<2;idx++){
+      const cv=document.createElement('canvas');cv.width=1080;cv.height=1350;
+      const ctx=cv.getContext('2d'),accent=stadio?'#ffd166':'#ef5263',ink='#fbf6ec',mute='#b8cae6';
+      const grad=ctx.createLinearGradient(0,0,1080,1350);grad.addColorStop(0,stadio?'#163d47':'#253b70');grad.addColorStop(1,'#111d35');ctx.fillStyle=grad;ctx.fillRect(0,0,1080,1350);
+      // Motivo da campo, volutamente tenue dietro ai contenuti.
+      ctx.strokeStyle='#ffffff08';ctx.lineWidth=2;ctx.strokeRect(780,60,240,220);ctx.beginPath();ctx.arc(900,170,55,0,Math.PI*2);ctx.stroke();
+      function txt(t,x,y,size=28,col=ink,weight=600,max=960){ctx.textBaseline='top';ctx.fillStyle=col;ctx.font=`${weight} ${size}px Inter,system-ui,sans-serif`;ctx.fillText(text(t),x,y,max);}
+      function wrap(t,x,y,width,size=30,col=ink,limit=8){ctx.font=`600 ${size}px Inter,system-ui,sans-serif`;const a=linee(ctx,t,width);if(a.length>limit)throw Error('Testo troppo lungo per la tavola');a.forEach((l,i)=>txt(l,x,y+i*(size+12),size,col,600,width));return y+a.length*(size+12);}
+      function box(x,y,w,h){ctx.fillStyle='#ffffff0a';ctx.beginPath();if(ctx.roundRect)ctx.roundRect(x,y,w,h,stadio?24:[5,20,20,5]);else ctx.rect(x,y,w,h);ctx.fill();ctx.fillStyle=accent;ctx.fillRect(x,y,stadio?6:8,h);}
+      function dot(es,x,y,r=20){ctx.fillStyle=COLORI[es];ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.textAlign='center';txt(es,x,y-r+5,r+3,'#11243a',900,r*2);ctx.textAlign='left';}
+      function legend(y){[['V','Vittoria'],['N','Pareggio'],['P','Sconfitta']].forEach(([es,n],i)=>{dot(es,80+i*310,y+16,16);txt(n,110+i*310,y,23,mute);});}
+      function quote(v,y,curva=false){box(60,y,960,curva?315:355);txt(curva?'DALLA CURVA':'GIRRR SPORT · REDAZIONE',90,y+25,23,accent,800);let at=y+70;
+        if(v){if(v.titolo)at=wrap(v.titolo,90,at,900,29,ink,3)+12;at=wrap('«'+v.testo+'»',90,at,900,31,ink,6);txt(nome(v.autore)+(v.giornata?' · '+v.giornata+'ª giornata':v.data?' · '+new Date(v.data).toLocaleDateString('it-IT',{day:'numeric',month:'long',timeZone:'Europe/Rome'}):''),90,y+(curva?266:305),23,mute,600,890);}else txt(ND,90,at,31,mute);}
+      txt('O FANT A GIRRR',60,44,24,accent,900);ctx.textAlign='right';txt(j.stagione,1020,44,24,mute,700);ctx.textAlign='left';
+      txt(titolo(j,k),60,98,30,mute,700);
+      const team=ambito==='lega'?'Tutto il campionato':nome(squadra);
+      let titleSize=stadio?52:48,lines;do{ctx.font=stadio?titleSize+'px Lobster,cursive':'900 '+titleSize+'px Inter,system-ui';lines=linee(ctx,team,960);if(lines.length<=2)break;titleSize-=2;}while(titleSize>=28);if(lines.length>2)throw Error('Nome della squadra troppo lungo');ctx.fillStyle=ink;ctx.textBaseline='top';lines.forEach((v,i)=>ctx.fillText(v,60,152+i*53,960));
+      txt(idx===0?'01 / IL COLPO D’OCCHIO':'02 / VOCI E BILANCIO',60,266,23,accent,800);
+      if(idx===0&&ambito==='squadra'){
+        [[s.posizione+'ª','Posizione'],[String(s.punti_classifica),'Punti in classifica'],[s.bilancio.gol_fatti+' : '+s.bilancio.gol_subiti,'Gol fatti : Subiti']].forEach(([v,n],i)=>{box(60+i*330,320,300,165);txt(v,84+i*330,340,v.length>5?63:85,ink,900,252);txt(n,84+i*330,442,21,mute,700,255);});
+        txt('LA CORSA IN CLASSIFICA',60,532,23,mute,800);
+        const a=s.andamento,x=i=>105+i*875/Math.max(1,a.length-1),y=pos=>605+(pos-1)*18;
+        [1,5,10].forEach(pos=>{ctx.strokeStyle='#ffffff14';ctx.beginPath();ctx.moveTo(105,y(pos));ctx.lineTo(980,y(pos));ctx.stroke();txt(pos+'ª',60,y(pos)-12,20,mute);});
+        ctx.beginPath();a.forEach((v,i)=>{if(i)ctx.lineTo(x(i),y(v.posizione));else ctx.moveTo(x(i),y(v.posizione));});ctx.strokeStyle='#c0dbed';ctx.lineWidth=4;ctx.stroke();
+        a.forEach((v,i)=>{ctx.fillStyle=COLORI[s.partite.find(m=>m.giornata===v.giornata)?.esito]||accent;ctx.beginPath();ctx.arc(x(i),y(v.posizione),a.length>17?6:10,0,Math.PI*2);ctx.fill();});
+        txt(a[0]?.giornata+'ª giornata',105,795,21,mute);ctx.textAlign='right';txt(a.at(-1)?.giornata+'ª giornata',980,795,21,mute);ctx.textAlign='left';
+        txt('LE ULTIME CINQUE',60,858,23,mute,800);
+        const recent=s.partite.slice(-5),ww=960/recent.length;
+        recent.forEach((m,i)=>{const xx=60+i*ww;dot(m.esito,xx+24,933,23);txt(m.gol_fatti+'–'+m.gol_subiti,xx+60,910,38,ink,900,ww-64);txt(m.giornata+'ª · '+(m.casa?'Casa':'Fuori'),xx,976,20,mute,600,ww-12);});
+        legend(1030);
+        [['IN CASA',s.casa],['IN TRASFERTA',s.trasferta]].forEach(([n,b],i)=>{const xx=60+i*500;txt(n,xx,1110,22,mute,800);txt(b.punti+' punti',xx,1149,40,ink,800);txt(b.giocate+' partite',xx+230,1164,22,mute);ctx.fillStyle='#ffffff14';ctx.fillRect(xx,1215,460,10);ctx.fillStyle=accent;ctx.fillRect(xx,1215,b.giocate?460*b.punti/(3*b.giocate):0,10);});
+      }else if(idx===0){
+        box(60,320,960,100);txt(c.campione_inverno?'CAMPIONE D’INVERNO':'IN VETTA',85,340,20,accent,800);txt(nome(c.campione_inverno||c.capolista),85,372,31,ink,900,900);
+        txt('SQUADRA',105,449,20,mute,800);txt('PUNTI',740,449,20,mute,800);txt('ULTIME 5',865,449,20,mute,800);
+        p.classifica.forEach((r,i)=>{const yy=494+i*67;txt(r.posizione+'.',60,yy,26,mute,800);txt(nome(r.squadra),105,yy,28,ink,800,590);txt(r.punti,755,yy,30,ink,900,70);ctx.fillStyle='#ffffff12';ctx.fillRect(105,yy+40,585,4);ctx.fillStyle=accent;ctx.fillRect(105,yy+40,585*r.punti/Math.max(1,p.classifica[0].punti),4);p.squadre[r.squadra].partite.slice(-5).forEach((m,i)=>dot(m.esito,867+i*33,yy+15,13));});
+        legend(1200);
+      }else{
+        const v=ambito==='lega'?p.voci||{}:s.voci||{},red=ambito==='lega'?(v.redazione||[]).find(v=>v.squadra===c.capolista)||(v.redazione||[])[0]:v.redazione;
+        quote(red,320);quote(v.curva?.[0],710,true);
+        if(ambito==='lega'){
+          [['MIGLIOR ATTACCO',c.miglior_attacco],['MIGLIOR DIFESA',c.miglior_difesa]].forEach(([n,tt],i)=>{txt(n,60+i*500,1080,21,accent,800);wrap(tt.map(nome).join(', '),60+i*500,1122,450,27,ink,4);});
+        }else{
+          [['DERBY',s.derby.disponibile?s.derby.giocate:'—','Giocati'],['CHAMPIONS CUP',s.coppa.punti_girone??'—','Punti nel girone'],['FIDUCIA',s.dirigenza.fiducia??'—','Su 100']].forEach(([n,val,unita],i)=>{txt(n,60+i*330,1080,21,accent,800);txt(val,60+i*330,1122,64,ink,900);txt(unita,60+i*330,1201,22,mute);});
         }
-        if(size<20)throw new Error('I contenuti dell’album richiedono una revisione di impaginazione');
-        let y=270;const x=60+ci*510;
-        measure.forEach(r=>{ctx.fillStyle=accent;ctx.fillRect(x,y,stadio?6:8,Math.max(48,(r.a.length+r.b.length)*(size+6)));ctx.fillStyle='#ffd166';ctx.font=`800 ${size}px Inter, system-ui`;r.a.forEach(v=>{ctx.fillText(v,x+20,y,width-24);y+=size+6;});ctx.fillStyle='#fbf6ec';ctx.font=`600 ${size}px Inter, system-ui`;r.b.forEach(v=>{ctx.fillText(v,x+20,y,width-24);y+=size+6;});y+=colonna?4:18;});
       }
-      ctx.fillStyle='#bfe3ff';ctx.font='600 20px Inter, system-ui';ctx.fillText('Campionato · Giornate '+periodo(j,k).dalla_giornata+'–'+periodo(j,k).alla_giornata+' · Risultati ufficiali',60,1304);
-      const blob=await new Promise(ok=>cv.toBlob(ok,'image/png'));if(!blob)throw new Error('Impossibile preparare la foto');
-      const slug=(ambito==='lega'?'campionato':squadra).toLowerCase().replace(/[^a-z0-9]+/g,'-');
-      files.push({file:new File([blob],`o-girrr-${slug}-${k}-${idx+1}.png`,{type:'image/png'}),url:URL.createObjectURL(blob),canvas:cv});
+      ctx.strokeStyle='#ffffff25';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(60,1275);ctx.lineTo(1020,1275);ctx.stroke();txt('Campionato · Giornate '+p.dalla_giornata+'–'+p.alla_giornata,60,1300,21,mute);ctx.textAlign='right';txt((idx+1)+' / 2',1020,1300,21,mute);ctx.textAlign='left';
+      const blob=await new Promise(ok=>cv.toBlob(ok,'image/png'));if(!blob)throw Error('Impossibile preparare la foto');
+      const slug=(ambito==='lega'?'campionato':squadra).toLowerCase().replace(/[^a-z0-9]+/g,'-');files.push({file:new File([blob],`o-girrr-${slug}-${k}-${idx+1}.png`,{type:'image/png'}),url:URL.createObjectURL(blob),canvas:cv});
     }
     return files;
   }
   async function apri(o={}) {
     stile();const focus=document.activeElement,d=document.createElement('dialog');d.className='gb gb-dialogo'+(/\/stadio\//.test(location.pathname)?' gb-stadio':'');d.setAttribute('aria-label','Condividi il bilancio');
-    d.innerHTML='<button class="gb-bottone gb-chiudi" type="button">Chiudi ×</button><h2>Le tre foto per il gruppo</h2><p role="status">Preparo l’album…</p>';document.body.append(d);d.showModal();
+    d.innerHTML='<button class="gb-bottone gb-chiudi" type="button">Chiudi ×</button><h2>Le due foto per il gruppo</h2><p role="status">Preparo l’album…</p>';document.body.append(d);d.showModal();
     let files=[];const clean=()=>{files.forEach(v=>URL.revokeObjectURL(v.url));d.remove();focus?.focus();};d.addEventListener('close',clean);d.querySelector('button').onclick=()=>d.close();
     try {
       const j=o.j||await carica(o.root||ROOT),k=o.k||(j.periodi.andata?'andata':'finora'),sq=o.squadra||j.periodi.finora.classifica[0].squadra;
@@ -151,13 +191,13 @@
         const nuovi=await album(j,{k:area.querySelector('[data-gb-k]').value,ambito:area.querySelector('[data-gb-a]').value,squadra:sq});
         if(!d.isConnected||current!==seq){nuovi.forEach(v=>URL.revokeObjectURL(v.url));return;}
         files.forEach(v=>URL.revokeObjectURL(v.url));files=nuovi;
-        area.querySelector('.gb-album').innerHTML=files.map((v,i)=>`<figure><a href="${v.url}" target="_blank" rel="noopener" aria-label="Apri grande la foto ${i+1}"><img src="${v.url}" alt="Foto ${i+1} di 3 del bilancio"></a><figcaption>Foto ${i+1} di 3</figcaption><a class="gb-bottone" href="${v.url}" download="${v.file.name}">Scarica foto ${i+1}</a></figure>`).join('');
-        status.textContent='Tre foto insieme, senza testo aggiunto.';
+        area.querySelector('.gb-album').innerHTML=files.map((v,i)=>`<figure><a href="${v.url}" target="_blank" rel="noopener" aria-label="Apri grande la foto ${i+1}"><img src="${v.url}" alt="Foto ${i+1} di 2 del bilancio"></a><figcaption>Foto ${i+1} di 2</figcaption><a class="gb-bottone" href="${v.url}" download="${v.file.name}">Scarica foto ${i+1}</a></figure>`).join('');
+        status.textContent='Due foto insieme, senza testo aggiunto.';
         const condivisibili=files.map(v=>v.file);
         if(navigator.share&&navigator.canShare?.({files:condivisibili})) {
-          const b=document.createElement('button');b.type='button';b.className='gb-bottone';b.textContent='Condividi le tre foto';b.dataset.gbInvia='1';az.append(b);
+          const b=document.createElement('button');b.type='button';b.className='gb-bottone';b.textContent='Condividi le due foto';b.dataset.gbInvia='1';az.append(b);
           b.onclick=()=>navigator.share({files:condivisibili}).catch(e=>{if(e.name!=='AbortError')status.textContent='Condivisione non riuscita. Puoi scaricare le foto.';});
-        } else status.textContent='Tre foto pronte. Su questo browser puoi scaricarle una per una.';
+        } else status.textContent='Due foto pronte. Su questo browser puoi scaricarle una per una.';
       }
       area.querySelectorAll('select').forEach(s=>s.onchange=()=>aggiorna().catch(e=>{d.querySelector('[role=status]').textContent=e.message;}));await aggiorna();
     }catch(e){if(d.isConnected)d.querySelector('[role=status]').textContent=e.message;}

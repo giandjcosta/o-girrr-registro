@@ -7,7 +7,7 @@ const OUT=process.argv[2]||'lab/giro-di-boa-602/foto';
   await p.evaluate(s=>document.documentElement.dataset.skin=s,skin);
   for(const ambito of ['squadra','lega']){
    await p.selectOption('[data-gb-ambito]','squadra');await p.selectOption('[data-gb-squadra]','Oranje VC');await p.selectOption('[data-gb-ambito]',ambito);await p.click('[data-gb-album]');
-   await p.waitForFunction(()=>document.querySelectorAll('.gb-album img').length===3&&[...document.querySelectorAll('.gb-album img')].every(i=>i.complete));
+   await p.waitForFunction(()=>document.querySelectorAll('.gb-album img').length===2&&[...document.querySelectorAll('.gb-album img')].every(i=>i.complete));
    const encoded=await p.locator('.gb-album img').evaluateAll(es=>es.map(e=>{const c=document.createElement('canvas');c.width=e.naturalWidth;c.height=e.naturalHeight;c.getContext('2d').drawImage(e,0,0);return c.toDataURL('image/jpeg',0.92).split(',')[1];}));
    for(let i=0;i<encoded.length;i++)fs.writeFileSync(path.join(OUT,`${ambito}-${skin}-${i+1}.jpg`),Buffer.from(encoded[i],'base64'));
    await p.screenshot({path:path.join(OUT,`pc-${ambito}-${skin}.jpg`),quality:85});

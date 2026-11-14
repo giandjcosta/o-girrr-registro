@@ -1,7 +1,7 @@
 /* O Girrr · Condividi come immagine (Claude, 9 novembre 2026, richiesta di Gianluca).
    Va nella radice del sito (/o-fant-a-girrr/condividi.js), incluso da Tabellone e Giornale di Lega e Stadio.
    - Tabellone: pulsante «Condividi» → La mia partita, Risultati della giornata, Classifica (solo Campionato)
-     e il bilancio della stagione, letto dal calcolo condiviso: squadra o Campionato, in un album di tre foto.
+     e il bilancio della stagione, letto dal calcolo condiviso: squadra o Campionato, in un album di due foto.
      L'immagine (1080×1350, adatta a WhatsApp) si disegna nel telefono con la grafica della pagina: Lega rossa, Stadio oro.
    - Giornale: «Condividi l'ultimo numero» → la copertina con il titolo.
    - «Condividi la giornata» (Claude, 12 novembre 2026, versione 6.0): in Home (riquadro del Giornale) e nel Giornale. Un pacchetto
@@ -305,7 +305,7 @@
         '<div class="cd-sc">' +
         '<button type="button" data-t="mia" data-sq="1"><b data-tit="partita"></b><small>Risultato della ' + v.g.n + 'ª giornata e posizione in classifica</small></button>' +
         '<button type="button" data-t="ultime5" data-sq="1"><b>Le ultime 5</b><small>Le ultime cinque partite di Campionato, con vittorie, pareggi e sconfitte</small></button>' +
-        '<button type="button" data-t="girone" data-sq="1"><b>Il punto sulla stagione</b><small>Tre foto: la squadra o tutto il campionato</small></button>' +
+        '<button type="button" data-t="girone" data-sq="1"><b>Il punto sulla stagione</b><small>Due foto: la squadra o tutto il campionato</small></button>' +
         '</div><div class="cd-err" role="status"></div><div class="cd-az"><button type="button" class="se" data-a="x">Chiudi</button></div>';
       var sel = f.box.querySelector('.cd-sq select'), bp = f.box.querySelector('[data-tit=partita]');
       function nomi() { var s = sel.value; bp.textContent = s === mio ? 'La mia partita' : 'La partita di ' + s; }

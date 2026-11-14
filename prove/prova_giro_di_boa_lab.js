@@ -8,7 +8,7 @@ const M=process.env.MOTORE||'chromium',B=process.env.REGISTRO||'http://127.0.0.1
   const p=await c.newPage();p.on('pageerror',e=>errori.push(e.message));
   await p.goto(B+'lab/giro-di-boa-602/');await p.waitForSelector('[data-pronto="1"]');
   assert.match(await p.locator('[data-gb-tit]').textContent(),/7ª/);await p.click('#grafica');assert.equal(await p.locator('html').getAttribute('data-skin'),'stadio');
-  await p.click('[data-gb-album]');await p.waitForFunction(()=>document.querySelectorAll('.gb-album img').length===3);await p.keyboard.press('Escape');
+  await p.click('[data-gb-album]');await p.waitForFunction(()=>document.querySelectorAll('.gb-album img').length===2);await p.keyboard.press('Escape');
   for(const skin of ['girrr/','stadio/girrr/']){
    await p.goto(B+'lab/offline/?apri='+encodeURIComponent('sito/'+skin+'app.html?boa=1')+'#carriera');
    await p.waitForSelector('[data-pronto="1"]',{timeout:45000});assert.match(p.url(),/offline\/sito\//);
@@ -17,7 +17,7 @@ const M=process.env.MOTORE||'chromium',B=process.env.REGISTRO||'http://127.0.0.1
    await p.waitForLoadState('networkidle');
    await p.waitForFunction(async()=>{const files=(await Promise.all((await caches.keys()).map(async k=>(await(await caches.open(k)).keys()).map(r=>r.url)))).flat();return ['giro-di-boa.js','giro-di-boa.css','giro-di-boa.json','app.html'].every(x=>files.some(u=>u.split('?')[0].endsWith(x)));},{},{timeout:30000});
    await c.setOffline(true);await p.reload({waitUntil:'domcontentloaded'});await p.waitForSelector('[data-pronto="1"]',{timeout:45000});
-   await p.click('[data-gb-album]');await p.waitForFunction(()=>document.querySelectorAll('.gb-album img').length===3);
+   await p.click('[data-gb-album]');await p.waitForFunction(()=>document.querySelectorAll('.gb-album img').length===2);
    await p.keyboard.press('Escape');await c.setOffline(false);n++;
   }
   await c.close();

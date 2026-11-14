@@ -8,6 +8,6 @@ const M=process.env.MOTORE||'chromium',B=process.env.BASE||'http://127.0.0.1:889
  assert(await p.locator('html').evaluate(e=>e.classList.contains('tv-grande')));assert.equal(await p.locator('html').evaluate(e=>getComputedStyle(e).zoom),'1.3');
  await p.selectOption('[data-gb-squadra]','Oranje VC');assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
  if(M==='chromium'&&process.env.FOTO){fs.mkdirSync(process.env.FOTO,{recursive:true});await p.screenshot({path:path.join(process.env.FOTO,`tv-${skin[0]==='s'?'stadio':'lega'}.jpg`),quality:85});}
- await p.click('[data-gb-album]');await p.waitForFunction(()=>document.querySelectorAll('.gb-album img').length===3);assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+ await p.click('[data-gb-album]');await p.waitForFunction(()=>document.querySelectorAll('.gb-album img').length===2);assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
  if(M==='chromium'&&process.env.FOTO)await p.screenshot({path:path.join(process.env.FOTO,`tv-${skin[0]==='s'?'stadio':'lega'}-album.jpg`),quality:85});await c.close();
 }await br.close();console.log(M+': TV emulata, Lega e Stadio, 0 problemi');})().catch(e=>{console.error(e);process.exitCode=1;});

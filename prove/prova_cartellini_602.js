@@ -1,0 +1,28 @@
+// Prima apertura reale, ripetizione, riduzione del movimento e G1 visibile.
+const fs=require('fs'),path=require('path'),assert=require('assert/strict'),{devices}=require('playwright'),{browser}=require('./browser_certificato'),{script}=require('./blocca_scritture');
+const M=process.env.MOTORE||'chromium',B=process.env.BASE||'http://127.0.0.1:8890/o-fant-a-girrr/',F=process.env.FOTO||'/tmp/cartellini-602';
+const schermi=[['iPhone320',{...devices['iPhone SE'],viewport:{width:320,height:568}}],...['iPhone SE','iPhone 15 Pro','iPhone 15 Pro Max','Galaxy S8','Pixel 7','Galaxy S9+','iPad Mini','iPad (gen 7) landscape','iPad Pro 11','Galaxy Tab S4','Galaxy Tab S4 landscape'].map(n=>[n,devices[n]]),...[1280,1920,2560].map(w=>['PC'+w,{viewport:{width:w,height:1080}}]),['TV',{viewport:{width:1920,height:1080},deviceScaleFactor:2}]];
+(async()=>{const b=await browser(M),report=[];fs.mkdirSync(F,{recursive:true});
+ for(const [n,o] of schermi.filter(([n])=>!process.env.SCHERMI||process.env.SCHERMI.split(',').includes(n)))for(const skin of ['girrr/','stadio/girrr/']){
+ const c=await b.newContext({...o,serviceWorkers:'block'});await c.addInitScript(script);await c.addInitScript(()=>{sessionStorage.setItem('ospite','1');localStorage.removeItem('orr_fid_anim');window.__flip={starts:0,ends:0,samples:[]};
+ document.addEventListener('animationstart',e=>{if(e.animationName==='fid-su')__flip.starts++});document.addEventListener('animationend',e=>{if(e.animationName==='fid-giu')__flip.ends++});
+ setInterval(()=>{const el=document.querySelector('.trust-visual'),tab=el?.querySelector('.tab-fid');if(!tab)return;const r=el.getBoundingClientRect(),t=tab.getBoundingClientRect();__flip.samples.push({cy:(t.top+t.height/2-r.top)/r.height,inside:t.top>=r.top&&t.bottom<=r.bottom,clock:performance.now()});},30);
+ });await c.route('https://*.supabase.co/**',r=>r.fulfill({status:200,contentType:'application/json',headers:{'access-control-allow-origin':'*'},body:'{"votazione":null,"archivio":[],"coppie":[],"voti":[],"sfide":[]}'}));
+ const p=await c.newPage(),errori=[];p.on('pageerror',e=>errori.push(e.message));
+ try{await p.goto(B+skin+'app.html#carriera',{waitUntil:'domcontentloaded'});await p.waitForSelector('.tab-fid .fl');
+ await p.waitForFunction(()=>{const el=document.querySelector('.trust-visual');return el&&Number(el.dataset.target)>0&&el.querySelector('.tab-fid')&&[...el.querySelectorAll('.fl')].map(f=>f.dataset.v).join('')===String(el.dataset.target).padStart(2,'0')&&![...el.querySelectorAll('.fl')].some(f=>f._busy)&&Number(el.querySelector('.trust-fill').getAttribute('stroke-dasharray').split(' ')[0])===Number(el.dataset.target);});
+ await p.waitForTimeout(450);const f=await p.evaluate(()=>__flip);assert(f.starts>0,'Il tabellone non ha animato la prima apertura');assert(await p.locator('.tab-fid .fl').evaluateAll(es=>es.every(e=>[...e.querySelectorAll('b')].every(b=>b.textContent===e.dataset.v))),'Le due metà non mostrano il numero finale');assert(f.starts<40,'Animazione riavviata troppo spesso');assert(f.samples.length>5);assert(f.samples.every(x=>x.inside&&Math.abs(x.cy-.625)<.015),'Cifre fuori posizione nel conteggio');
+ await p.evaluate(()=>window.__cartellinoPrima=document.querySelector('.tab-fid'));
+ await p.selectOption('#cteam',await p.locator('#cteam').inputValue());
+ assert(await p.evaluate(()=>window.__cartellinoPrima===document.querySelector('.tab-fid')),'Il ridisegno ha cancellato il tabellone');
+ assert(await p.locator('.fl').evaluateAll(es=>es.every(e=>{const a=e.querySelector('.su b').getBoundingClientRect(),b=e.querySelector('.giu b').getBoundingClientRect();return Math.abs(a.top-b.top)<1&&Math.abs(a.height-b.height)<1;})),'Le due metà delle cifre non sono allineate');
+ await p.locator('.seg [data-ctab=ob]').dispatchEvent('click');await p.waitForSelector('.ob-timeline');await p.waitForTimeout(250);
+ assert.equal(await p.locator('.ob-timeline-scroll').evaluate(e=>e.scrollLeft),0);
+ const g1=p.locator('.ob-timeline [aria-label^="Giornata 1,"]');assert.equal(await g1.count(),1);assert(await g1.evaluate(e=>{const r=e.getBoundingClientRect(),p=e.closest('.ob-timeline-scroll').getBoundingClientRect();return r.left>=p.left&&r.right<=p.right;}),'1ª giornata fuori dal riquadro');
+ if(n==='PC1920'&&M==='chromium')await p.screenshot({path:path.join(F,'obiettivi-'+(skin[0]==='s'?'stadio':'lega')+'.jpg')});
+ await p.locator('.seg [data-ctab=pan]').dispatchEvent('click');await p.waitForSelector('.tab-fid .fl');await p.waitForTimeout(600);assert(await p.locator('.tab-fid .fl.gira').count()===0,'Riapertura con cartellini bloccati');
+ await p.emulateMedia({reducedMotion:'reduce'});await p.selectOption('#cteam','Oranje VC');await p.waitForTimeout(600);assert.equal(await p.locator('.fl.gira').count(),0);assert.equal(await p.locator('.tab-fid').evaluate(e=>[...e.children].map(f=>f.dataset.v).join('')),await p.locator('.trust-visual').getAttribute('data-target').then(x=>x.padStart(2,'0')));assert.deepEqual(errori,[]);
+ if(n==='PC1920'&&M==='chromium')await p.screenshot({path:path.join(F,'carriera-'+(skin[0]==='s'?'stadio':'lega')+'.jpg')});report.push({schermo:n,grafica:skin,problemi:[],ribalte:f.starts});console.log('OK '+M+' '+n+' '+skin);
+ }catch(e){report.push({schermo:n,grafica:skin,problemi:[e.message,...errori]});console.log('KO '+M+' '+n+' '+skin+' '+e.message);}await c.close();
+ }await b.close();const problemi=report.filter(r=>r.problemi.length).length;fs.writeFileSync(path.join(F,'cartellini-'+(process.env.SCHERMI?'mirato-':'')+M+'.json'),JSON.stringify({motore:M,visite:report.length,problemi,report},null,2));console.log(M+': '+problemi+' problemi');process.exitCode=problemi?1:0;
+})().catch(e=>{console.error(e);process.exitCode=1});

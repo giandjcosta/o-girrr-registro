@@ -1,5 +1,17 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 13 novembre 2026)
 
+## 14 novembre — ChatGPT: rilascio sospeso dopo il riscontro sulle anteprime
+
+Gianluca ha chiesto una revisione della 6.0.2: tabellone della fiducia stabile dalla prima apertura, Obiettivi dalla 1ª giornata, Giro di boa in due tavole meno dense con grafici, risultati colorati e voci editoriali/Curva pertinenti. Le tre tavole precedenti non sono approvate. Nessuna pubblicazione sul sito vero da questo lavoro: resta la 6.0. PR Registro #76 e sito #13 in bozza. Il Lab di Claude è integrato (#75, e11e363), il ramo di Claude resta invariato. Nuove anteprime e prove prima del rilascio.
+
+- Revisione sul ramo `chatgpt/giro-boa-completo-602`: due tavole per squadra e campionato. Numeri grandi, grafico della posizione, pallini V/N/P, barre casa/trasferta; seconda pagina con estratti reali della redazione e della Curva. I 19 gruppi di statistiche rimangono nei dettagli richiudibili. Condivisione di due PNG 1080×1350 insieme, senza testo.
+- Unico modello Python ampliato con racconti della settimana verificati sulla firma dei risultati e commenti pubblici della Curva pertinenti alla squadra e al periodo, con autore e data; fonti assenti dichiarate. Non sono state inventate voci televisive né generati audio.
+- Carriera: cartellini fissati alle due metà, una ribalta alla volta con l’ultimo valore in coda. Il ridisegno asincrono conserva il tabellone. Obiettivi aveva già la G1 nel codice 6.0.1, ma il salto automatico alla prossima scadenza la nascondeva sul telefono: nella 6.0.2 la linea si apre da G1.
+- Portale Firefox: il cambio di grafica verifica il documento annidato realmente visibile, senza dipendere dall’identità del frame precedente; conservati h1 visibile, destinazione, stato dell’interruttore, sola lettura e rifiuto 403 delle scritture. Modalità mirata facoltativa; tutti i controlli restano predefiniti.
+- Calcolo: 17 prove riuscite senza rete né voci a pagamento. Nuova matrice dei browser e foto in aggiornamento; i rapporti precedenti a questa revisione descrivono le tre tavole scartate e non certificano il nuovo disegno. La pubblicazione del sito resta sospesa, anche dopo l’aggiornamento del Lab.
+
+
+
 ## 14 novembre — ChatGPT: Giro di boa completo 6.0.2, preparazione e via al deploy
 
 - Letti AGENTS, COORDINAMENTO-6.0 e le voci di Claude del 13 novembre (8), (9), (10). Ripresa da `a87c8eb`, merge del main `0d24821` conservando tutto STATO in `566399b`, senza modificare il ramo di Claude.

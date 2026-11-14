@@ -26,6 +26,30 @@ def dati(n=3):
 
 
 class Giro(unittest.TestCase):
+    def test_voci_firmate_pertinenti_non_inventate(self):
+        from giro_di_boa import firma_settimana, giornate_pubblicate
+        d=dati();ora=dt.datetime(2026,11,14,tzinfo=dt.timezone.utc).timestamp()
+        firma=firma_settimana(d,giornate_pubblicate(d,ora),3,'2026/27',ora)
+        ed={'stagione':'2026/27','giornate':{'3':{'firma':firma,'squadre':{'A':{'titolo':'La corsa di A','paragrafi':['A ritrova la vittoria.']}}}}}
+        feed={'posts':[{'id':1,'team':'B','body':'Complimenti alla A per la partita e per questa vittoria in campionato.','ts':(ora-10)*1000},
+                       {'id':2,'team':'A','body':'La maglia presentata questa settimana ha tre colori.','ts':(ora-5)*1000},
+                       {'id':3,'team':'A','body':'Domani vinciamo questa partita con la squadra A.','ts':(ora+100)*1000}],
+              'replies':[],'react':[]}
+        out=calcola(d,ora=ora,edizione=ed,curva=feed)['periodi']['finora']['squadre']['A']['voci']
+        self.assertEqual(out['redazione']['testo'],'A ritrova la vittoria.')
+        self.assertEqual([p['id'] for p in out['curva']],['p1'])
+        self.assertEqual(out['curva'][0]['autore'],'B')
+        ed['giornate']['3']['firma']='obsoleta'
+        self.assertIsNone(calcola(d,ora=ora,edizione=ed)['periodi']['finora']['squadre']['A']['voci']['redazione'])
+
+    def test_voci_storiche_non_includono_commenti_futuri(self):
+        d=dati(19);ora=dt.datetime(2026,11,14,tzinfo=dt.timezone.utc).timestamp()
+        d['votiTs']={'21':'2026-11-01T18:00:00Z'} # 17ª giornata
+        feed={'posts':[{'id':1,'team':'A','body':'La squadra A risponde con una grande vittoria in campionato.','ts':(ora-100)*1000}]}
+        p=calcola(d,ora=ora,curva=feed)['periodi']
+        self.assertEqual(len(p['finora']['squadre']['A']['voci']['curva']),1)
+        self.assertEqual(p['andata']['squadre']['A']['voci']['curva'],[])
+
     def test_risultati_unita_casa_trasferta_serie(self):
         s=calcola(dati())['periodi']['finora']['squadre']['A']
         self.assertEqual((s['punti_classifica'],s['posizione']),(4,3))

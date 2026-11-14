@@ -28,12 +28,12 @@ async function rete(c){
 }
 async function noLato(p){assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'La pagina scorre di lato');}
 async function invia(p){
- await p.waitForFunction(()=>document.querySelectorAll('.gb-album img').length===3);
+ await p.waitForFunction(()=>document.querySelectorAll('.gb-album img').length===2);
  await p.waitForFunction(()=>[...document.querySelectorAll('.gb-album img')].every(e=>e.complete&&e.naturalWidth>0));
- assert.deepEqual(await p.locator('.gb-album img').evaluateAll(es=>es.map(e=>[e.naturalWidth,e.naturalHeight])),[[1080,1350],[1080,1350],[1080,1350]]);
+ assert.deepEqual(await p.locator('.gb-album img').evaluateAll(es=>es.map(e=>[e.naturalWidth,e.naturalHeight])),[[1080,1350],[1080,1350]]);
  await noLato(p);await p.click('[data-gb-invia]');
- const a=await p.evaluate(()=>window.__albumInviati.at(-1));assert.deepEqual(a.keys,['files']);assert.equal(a.files.length,3);
- assert(a.files.every(f=>f.tipo==='image/png'&&f.byte>10000));assert.equal(new Set(a.files.map(f=>f.nome)).size,3);
+ const a=await p.evaluate(()=>window.__albumInviati.at(-1));assert.deepEqual(a.keys,['files']);assert.equal(a.files.length,2);
+ assert(a.files.every(f=>f.tipo==='image/png'&&f.byte>10000));assert.equal(new Set(a.files.map(f=>f.nome)).size,2);
 }
 (async()=>{
  fs.mkdirSync(F,{recursive:true});const br=await browser(M);
@@ -49,12 +49,19 @@ async function invia(p){
    await p.selectOption('[data-gb-squadra]','Oranje VC');
    assert.match(await p.locator('[data-gb-contenuto]').textContent(),/11 punti in classifica/);
    assert.match(await p.locator('[data-gb-contenuto]').textContent(),/Dato non conservato/);
+   assert.equal(await p.locator('.gb-kpi>div').count(),3);assert(await p.locator('.gb-dati').evaluate(e=>!e.open));
+   await p.click('[data-gb-vista="1"]');assert(await p.locator('[data-gb-pagina="0"]').isHidden());assert(await p.locator('[data-gb-pagina="1"]').isVisible());
+   const voci=await p.evaluate(async()=>{const j=await GirrrBoa.carica();return j.periodi.finora.squadre['Oranje VC'].voci;});
+   const racconto=await p.locator('[data-gb-pagina="1"]').textContent();
+   if(voci?.redazione)assert(racconto.includes(voci.redazione.testo));else assert(racconto.includes('Dato non conservato'));
+   if(voci?.curva?.length)assert(racconto.includes(voci.curva[0].testo));
+   await p.click('[data-gb-vista="0"]');await p.locator('.gb-dati>summary').click();
    assert.equal(await p.locator('.gb-fatti>div').count(),19);await noLato(p);
    const style=await p.locator('.gb-fatti>div').first().evaluate(e=>[getComputedStyle(e).borderLeftWidth,getComputedStyle(e).borderLeftColor]);
    // Il testo TV usa zoom: il motore può quantizzare il bordo al pixel fisico.
    assert(Math.abs(parseFloat(style[0])-(skin[0]==='s'?6:8))<0.5,'Spessore della banda fuori tolleranza');
    assert.equal(style[1],skin[0]==='s'?'rgb(255, 209, 102)':'rgb(214, 40, 57)');
-   for(const d of await p.locator('[data-gb-contenuto]>details').all()){await d.locator('summary').click();await noLato(p);}
+   for(const d of await p.locator('.gb-dati>details').all()){await d.locator('summary').click();await noLato(p);}
    await p.click('[data-gb-album]');await invia(p);await p.keyboard.press('Escape');
    await p.selectOption('[data-gb-squadra]','Atletico ma non troppo');assert.equal(await p.locator('[data-gb-contenuto]>h3').textContent(),'Atletico ma non troppo');
    await p.selectOption('[data-gb-ambito]','lega');assert.equal(await p.locator('.gb-classifica>div').count(),10);
@@ -84,10 +91,10 @@ async function invia(p){
   for(const n of [16,17,19,34]){
    const j=JSON.parse(fs.readFileSync(path.join(FIXTURE,'giornata-'+n+'.json')));
    const res=await p.evaluate(async j=>{const all=[];for(const k of Object.keys(j.periodi))for(const stadio of [false,true]){const a=await GirrrBoa.album(j,{k,squadra:'A',stadio});all.push(a.length);a.forEach(v=>URL.revokeObjectURL(v.url));}return {all,tit:GirrrBoa.titolo(j,j.periodi.andata?'andata':'finora')};},j);
-   assert(res.all.every(x=>x===3));assert.match(res.tit,n<17?/Il punto dopo/:/Giro di boa/);
+   assert(res.all.every(x=>x===2));assert.match(res.tit,n<17?/Il punto dopo/:/Giro di boa/);
   }
   const lungo=JSON.parse(fs.readFileSync(path.join(FIXTURE,'nomi-lunghi.json')));
-  assert.equal(await p.evaluate(async j=>{let n=0;for(const k of Object.keys(j.periodi))for(const squadra of Object.keys(j.periodi[k].squadre))for(const stadio of [false,true]){const a=await GirrrBoa.album(j,{k,squadra,stadio});assertAlbum(a);n++;}return n;function assertAlbum(a){if(a.length!==3)throw Error('Album incompleto');a.forEach(v=>URL.revokeObjectURL(v.url));}},lungo),60);
+  assert.equal(await p.evaluate(async j=>{let n=0;for(const k of Object.keys(j.periodi))for(const squadra of Object.keys(j.periodi[k].squadre))for(const stadio of [false,true]){const a=await GirrrBoa.album(j,{k,squadra,stadio});assertAlbum(a);n++;}return n;function assertAlbum(a){if(a.length!==2)throw Error('Album incompleto');a.forEach(v=>URL.revokeObjectURL(v.url));}},lungo),60);
  }catch(e){ko++;record.push({motore:M,caso:'Squadra, Tabellone e confini 16/17/19/34',problemi:[e.stack]});console.log('KO confini:',e.message);}
  await c.close();await br.close();fs.writeFileSync(path.join(F,`${process.env.SOLO_EXTRA?'extra':'risultati'}-${M}.json`),JSON.stringify({motore:M,profili:process.env.SOLO_EXTRA?0:16,visite:process.env.SOLO_EXTRA?0:32,album_stress:60,problemi:ko,record},null,2));fs.rmSync(FIXTURE,{recursive:true,force:true});console.log(M+': '+ko+' problemi');process.exitCode=ko?1:0;
 })().catch(e=>{console.error(e);process.exitCode=1;});
