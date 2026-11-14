@@ -94,8 +94,8 @@ async function invia(p){
    assert(res.all.every(x=>x===2));assert.match(res.tit,n<17?/Il punto dopo/:/Giro di boa/);
   }
   const lungo=JSON.parse(fs.readFileSync(path.join(FIXTURE,'nomi-lunghi.json')));
-  stress=Object.values(lungo.periodi).reduce((n,p)=>n+Object.keys(p.squadre).length*2,0);
-  assert.equal(await p.evaluate(async j=>{let n=0;for(const k of Object.keys(j.periodi))for(const squadra of Object.keys(j.periodi[k].squadre))for(const stadio of [false,true]){const a=await GirrrBoa.album(j,{k,squadra,stadio});assertAlbum(a);n++;}return n;function assertAlbum(a){if(a.length!==2)throw Error('Album incompleto');a.forEach(v=>URL.revokeObjectURL(v.url));}},lungo),stress);
+  stress=Object.entries(lungo.periodi).filter(([k])=>['finora','andata','ritorno'].includes(k)).reduce((n,[k,p])=>n+Object.keys(p.squadre).length*2,0);
+  assert.equal(await p.evaluate(async j=>{let n=0;for(const k of ['finora','andata','ritorno'].filter(k=>j.periodi[k]))for(const squadra of Object.keys(j.periodi[k].squadre))for(const stadio of [false,true]){const a=await GirrrBoa.album(j,{k,squadra,stadio});assertAlbum(a);n++;}return n;function assertAlbum(a){if(a.length!==2)throw Error('Album incompleto');a.forEach(v=>URL.revokeObjectURL(v.url));}},lungo),stress);
  }catch(e){ko++;record.push({motore:M,caso:'Squadra, Tabellone e confini 16/17/19/34',problemi:[e.stack]});console.log('KO confini:',e.message);}
  await c.close();await br.close();fs.writeFileSync(path.join(F,`${process.env.SOLO_EXTRA?'extra':'risultati'}-${M}.json`),JSON.stringify({motore:M,profili:process.env.SOLO_EXTRA?0:16,visite:process.env.SOLO_EXTRA?0:32,album_stress:stress,problemi:ko,record},null,2));fs.rmSync(FIXTURE,{recursive:true,force:true});console.log(M+': '+ko+' problemi');process.exitCode=ko?1:0;
 })().catch(e=>{console.error(e);process.exitCode=1;});

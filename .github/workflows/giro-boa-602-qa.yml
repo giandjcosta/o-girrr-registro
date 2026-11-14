@@ -67,6 +67,7 @@ jobs:
         run: |
           node prove/prova_giro_di_boa_browser.js
           node prove/prova_giro_di_boa_filtri_61.js
+          node prove/prova_giro_di_boa_tabellone_61.js
           node prove/prova_giro_di_boa_tv.js
           node prove/prova_giro_di_boa_grafica.js
           node prove/prova_cartellini_602.js

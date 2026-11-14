@@ -198,11 +198,11 @@
     return 'Le ultime ' + R.length + ' di ' + mio + ' in Campionato: ' + riep;
   }
 
-  /* Giro di boa 6.0.2: un solo calcolo del workflow per scheda, album e Radio. */
+  /* Bilanci della stagione 6.1: un solo calcolo del workflow per scheda, album e Radio. */
   function moduloBoa() {
     if (window.GirrrBoa) return Promise.resolve(window.GirrrBoa);
     return new Promise(function (ok, ko) {
-      var s = document.createElement('script'); s.src = ROOT + 'giro-di-boa.js?v=602';
+      var s = document.createElement('script'); s.src = ROOT + 'giro-di-boa.js?v=61-periodi1';
       s.onload = function () { ok(window.GirrrBoa); }; s.onerror = function () { ko(new Error('Bilancio non disponibile. Riprova più tardi.')); }; document.head.appendChild(s);
     });
   }
@@ -306,7 +306,7 @@
         '<div class="cd-sc">' +
         '<button type="button" data-t="mia" data-sq="1"><b data-tit="partita"></b><small>Risultato della ' + v.g.n + 'ª giornata e posizione in classifica</small></button>' +
         '<button type="button" data-t="ultime5" data-sq="1"><b>Le ultime 5</b><small>Le ultime cinque partite di Campionato, con vittorie, pareggi e sconfitte</small></button>' +
-        '<button type="button" data-t="girone" data-sq="1"><b>Il punto sulla stagione</b><small>Due foto: la squadra o tutto il campionato</small></button>' +
+        '<button type="button" data-t="girone" data-sq="1"><b>Il punto sulla stagione</b><small>Due o tre foto: scegli periodo, competizione e squadra o lega</small></button>' +
         '</div><div class="cd-err" role="status"></div><div class="cd-az"><button type="button" class="se" data-a="x">Chiudi</button></div>';
       var sel = f.box.querySelector('.cd-sq select'), bp = f.box.querySelector('[data-tit=partita]');
       function nomi() { var s = sel.value; bp.textContent = s === mio ? 'La mia partita' : 'La partita di ' + s; }
@@ -314,7 +314,7 @@
       f.box.querySelector('[data-a=x]').onclick = f.chiudi;
       /* il Tabellone ufficiale compare se c'è; il Giro di boa dalla 17ª giornata pubblicata (nel Lab sempre, per provarlo) */
       blob(ROOT + uff).then(function (b) { if (/^image\//.test(b.type || 'image/png')) { var u = f.box.querySelector('[data-t=ufficiale]'); u.hidden = false; u._blob = b; } }).catch(function () {});
-      moduloBoa().then(function (m) { return m.carica(ROOT).then(function (j) { f.box.querySelector('[data-t=girone] b').textContent = m.titolo(j, j.periodi.andata ? 'andata' : 'finora'); }); }).catch(function () {});
+      moduloBoa().then(function (m) { return m.carica(ROOT).then(function (j) { f.box.querySelector('[data-t=girone] b').textContent = m.titolo(j, 'finora'); }); }).catch(function () {});
       Array.prototype.forEach.call(f.box.querySelectorAll('.cd-sc button'), function (b) {
         b.onclick = function () {
           var err = f.box.querySelector('.cd-err'), tit = b.querySelector('b').textContent; err.textContent = 'Preparo l\'immagine…';
@@ -324,7 +324,7 @@
           }
           var s = b.dataset.sq ? sel.value : null;
           if (b.dataset.t === 'girone') {
-            moduloBoa().then(function (m) { f.chiudi(); return m.apri({ root: ROOT, squadra: s }); }).catch(function (e) { err.textContent = e.message; });
+            moduloBoa().then(function (m) { f.chiudi(); return m.apri({ root: ROOT, squadra: s, competizione: v.coppa ? 'coppa' : 'campionato' }); }).catch(function (e) { err.textContent = e.message; });
             return;
           }
           disegna(b.dataset.t, d, null, v, s).then(function (r) { anteprima(f, r, tit); })
