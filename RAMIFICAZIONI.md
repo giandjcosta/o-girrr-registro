@@ -1,5 +1,13 @@
 # Ramificazioni
 
+## In cima: i tre disegni dei rami (Claude, 14 novembre 2026)
+Su richiesta di Gianluca («tutti e 3 i disegni») la pagina si apre con **Rami e sotto-rami**: `rami.html`, incorporata con `?dentro` (senza titolo; comunica la sua altezza a `ramificazioni.html`), oppure a tutta pagina. Tre viste degli stessi dati: **Albero** (ogni ramo sotto il ramo da cui è nato), **Linea del tempo** (una riga per ramo, dalla nascita all'ultimo lavoro) e **Ventaglio** (da main verso destra). Toccando un pallino la vista si avvicina e si aprono i dettagli con gli ultimi commit e i link a GitHub.
+- Dati: `rami-dati.json`, scritto da `rami_genera.py` (Git: per ogni ramo il ramo padre = quello nato prima con il punto di separazione più recente; radici `main` e `gh-pages`; stato attivo, fermo o unito). Il workflow `ramificazioni.yml` lo rifà a ogni giro (ogni 15 minuti e dopo gli eventi) con due copie Git senza file e lo conserva sul ramo tecnico `chatgpt/dati-ramificazioni`, accanto a `ramificazioni-dati.json`; se fallisce, la mappa di sotto si aggiorna lo stesso. «generato» è la data dell'ultimo lavoro: se nessun ramo cambia non c'è commit.
+- La pagina legge la copia del ramo tecnico e la ricontrolla ogni minuto; se la rete non risponde usa `rami-dati.json` del main. Il vecchio indirizzo `lab/prove-grafiche/rami-alternative.html` porta a `rami.html`.
+- Prova: `prove/prova_rami_tre_viste.js` (da sola e dentro il portale, 4 schermi, Chromium, WebKit e Firefox).
+
+## La mappa del confronto con main (ChatGPT)
+
 In cima a ogni repository c’è **Il ramo completo**: un unico disegno con main e tutti i rami, compresi quelli nei cassetti delle schede. Rimane completo anche quando si filtra o si riduce l’elenco sottostante. I colori coincidono con quelli delle schede. Una punta si può toccare; la tendina «Esplora un ramo» permette una scelta precisa anche su telefono e con la tastiera. I dettagli si aprono sotto il disegno, nella stessa sezione.
 
 È uno schema del confronto con main: le curve tratteggiate collegano antenato comune e punta comprimendo i commit intermedi; i quadratini sono riferimenti a punte già presenti in main. Non si deduce il ramo da cui un lavoro è stato creato, né una scala temporale. Le storie senza antenato comune sono disegnate a parte, senza collegamenti. Il feed automatico ricostruisce anche la panoramica quando cambiano i rami.
