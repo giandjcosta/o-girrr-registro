@@ -1,5 +1,5 @@
 {
- "generato": 1794691732,
+ "generato": 1794698620,
  "versione": "6.1",
  "repository": [
   {
@@ -7088,6 +7088,27 @@
       ]
      ],
      "totale": 1197
+    },
+    {
+     "nome": "chatgpt/posizione-riga-unica-611",
+     "punta": "88362fa",
+     "data": 1794698620,
+     "titolo": "ChatGPT: tiene unita sul PC la frase della posizione peggiore",
+     "autore": "ChatGPT",
+     "padre": "main",
+     "nascita": "c427c75",
+     "dataNascita": 1794691732,
+     "avanti": 1,
+     "stato": "attivo",
+     "commit": [
+      [
+       "88362fa6b33985355e0b72d064f69b82bc066827",
+       1794698620,
+       "ChatGPT",
+       "ChatGPT: tiene unita sul PC la frase della posizione peggiore"
+      ]
+     ],
+     "totale": 1
     }
    ]
   }
