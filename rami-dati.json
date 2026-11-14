@@ -1,5 +1,5 @@
 {
- "generato": 1794682005,
+ "generato": 1794691128,
  "versione": "6.1",
  "repository": [
   {
@@ -1448,93 +1448,6 @@
      "totale": 9
     },
     {
-     "nome": "gh-pages",
-     "punta": "a6fcf03",
-     "data": 1794672940,
-     "titolo": "ChatGPT: pubblica O Girrr 6.1, la stagione da raccontare",
-     "autore": "ChatGPT",
-     "padre": null,
-     "nascita": null,
-     "avanti": 0,
-     "indietro": 0,
-     "stato": "principale",
-     "commit": [
-      [
-       "a6fcf03c50da1fd762e49e1096e5e2146a4a7f54",
-       1794672940,
-       "ChatGPT",
-       "ChatGPT: pubblica O Girrr 6.1, la stagione da raccontare"
-      ],
-      [
-       "8621e3a0d81c40e414100b680f202a62b60056c2",
-       1794671981,
-       "github-actions[bot]",
-       "Calcoli dopo la giornata"
-      ],
-      [
-       "e7342491468e152e67461b18481a4820b295de6f",
-       1794665855,
-       "github-actions[bot]",
-       "Aggiorna statistiche e voti in automatico"
-      ],
-      [
-       "e9124d905464ddb1d2a9d0ae7bd54bbd0867431d",
-       1794648661,
-       "Claude",
-       "Claude: Rilascio 6.0.1, Derby in tre schede nell'Albo d'oro, Condividi la giornata con anteprime e Giornale in PDF, schede fluide, Totogirrr"
-      ],
-      [
-       "9d8eeafd74faba140aefef2fb9e44768e15500a6",
-       1794623423,
-       "github-actions[bot]",
-       "Aggiorna statistiche e voti in automatico"
-      ],
-      [
-       "5752f4efaabbe7f866455cef236d6abf94b8fa05",
-       1794607323,
-       "github-actions[bot]",
-       "Aggiorna statistiche e voti in automatico"
-      ],
-      [
-       "1e06510ae31f196ee8315acd5db11faf77783602",
-       1794591011,
-       "ChatGPT",
-       "ChatGPT: pubblica il messaggio 6.0 approvato"
-      ],
-      [
-       "9c26f1996e8f9576faec91f4fc96a007c4264354",
-       1794585062,
-       "Claude",
-       "Claude: Rilascio 6.0, Curva per iPhone e Android, video della giornata in Girrr Sport, Condividi la giornata, Squadra MVP dei tifosi, classi"
-      ],
-      [
-       "b84c570b3600399e9b3bbc30c8a213fc6e1e2619",
-       1794572835,
-       "github-actions[bot]",
-       "Aggiorna statistiche e voti in automatico"
-      ],
-      [
-       "5aa475ae8a9d728303edd14d01d82e1d5cd4694c",
-       1794537762,
-       "github-actions[bot]",
-       "Aggiorna statistiche e voti in automatico"
-      ],
-      [
-       "b0c5f45a66ead8f3b59fb7d54830f2a849e81380",
-       1794499361,
-       "github-actions[bot]",
-       "Aggiorna statistiche e voti in automatico"
-      ],
-      [
-       "648d1725e560f545989ff13091110ecdbf660487",
-       1794495794,
-       "Claude",
-       "Claude: Rilascio 5.8.2, niente «· bot» nei commenti della Curva, pallino Live solo durante le partite, Carriera con il numero a cartellini e"
-      ]
-     ],
-     "totale": 653
-    },
-    {
      "nome": "claude/avvisa-ramificazioni",
      "punta": "39df3fb",
      "data": 1794673023,
@@ -1692,6 +1605,93 @@
       ]
      ],
      "totale": 100
+    },
+    {
+     "nome": "gh-pages",
+     "punta": "58ceccf",
+     "data": 1794689281,
+     "titolo": "Aggiorna statistiche e voti in automatico",
+     "autore": "github-actions[bot]",
+     "padre": null,
+     "nascita": null,
+     "avanti": 0,
+     "indietro": 0,
+     "stato": "principale",
+     "commit": [
+      [
+       "58ceccfce577427f769d9d3ebb45e558e2f9514b",
+       1794689281,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
+      [
+       "a6fcf03c50da1fd762e49e1096e5e2146a4a7f54",
+       1794672940,
+       "ChatGPT",
+       "ChatGPT: pubblica O Girrr 6.1, la stagione da raccontare"
+      ],
+      [
+       "8621e3a0d81c40e414100b680f202a62b60056c2",
+       1794671981,
+       "github-actions[bot]",
+       "Calcoli dopo la giornata"
+      ],
+      [
+       "e7342491468e152e67461b18481a4820b295de6f",
+       1794665855,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
+      [
+       "e9124d905464ddb1d2a9d0ae7bd54bbd0867431d",
+       1794648661,
+       "Claude",
+       "Claude: Rilascio 6.0.1, Derby in tre schede nell'Albo d'oro, Condividi la giornata con anteprime e Giornale in PDF, schede fluide, Totogirrr"
+      ],
+      [
+       "9d8eeafd74faba140aefef2fb9e44768e15500a6",
+       1794623423,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
+      [
+       "5752f4efaabbe7f866455cef236d6abf94b8fa05",
+       1794607323,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
+      [
+       "1e06510ae31f196ee8315acd5db11faf77783602",
+       1794591011,
+       "ChatGPT",
+       "ChatGPT: pubblica il messaggio 6.0 approvato"
+      ],
+      [
+       "9c26f1996e8f9576faec91f4fc96a007c4264354",
+       1794585062,
+       "Claude",
+       "Claude: Rilascio 6.0, Curva per iPhone e Android, video della giornata in Girrr Sport, Condividi la giornata, Squadra MVP dei tifosi, classi"
+      ],
+      [
+       "b84c570b3600399e9b3bbc30c8a213fc6e1e2619",
+       1794572835,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
+      [
+       "5aa475ae8a9d728303edd14d01d82e1d5cd4694c",
+       1794537762,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
+      [
+       "b0c5f45a66ead8f3b59fb7d54830f2a849e81380",
+       1794499361,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ]
+     ],
+     "totale": 654
     }
    ]
   },
@@ -7034,6 +7034,33 @@
       ]
      ],
      "totale": 1191
+    },
+    {
+     "nome": "chatgpt/carriera-curva-611",
+     "punta": "ccc1f5d",
+     "data": 1794691128,
+     "titolo": "ChatGPT: rende bianchi e più leggibili i dettagli della Stagione",
+     "autore": "ChatGPT",
+     "padre": "main",
+     "nascita": "0717b6e",
+     "dataNascita": 1794682005,
+     "avanti": 2,
+     "stato": "attivo",
+     "commit": [
+      [
+       "ccc1f5df20ad898dfd4dc91094b1d5102c525340",
+       1794691128,
+       "ChatGPT",
+       "ChatGPT: rende bianchi e più leggibili i dettagli della Stagione"
+      ],
+      [
+       "ea50ca1e1a6611df026e05d1799e8844ce5d20dc",
+       1794690851,
+       "ChatGPT",
+       "ChatGPT: prepara nel Lab la 6.1.1 con posizione chiara e Curva più rapida"
+      ]
+     ],
+     "totale": 2
     }
    ]
   }
