@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 14 novembre 2026)
 
+## 14 novembre (4) — ChatGPT: Radio, Condividi la puntata centrato
+
+- Ramo `chatgpt/radio-condividi-centrato-602`, solo Lab e pacchetto 6.0.2. Il comando di ogni puntata ora è centrato rispetto al lettore audio, con testo centrato, larghezza contenuta e altezza minima di 44 px. Correzione limitata ai pulsanti della Radio; logica di condivisione invariata.
+- **96 visite, 16 profili × Chromium/WebKit/Firefox × Lega/Stadio, 0 problemi.** Misurata la centratura di tutti i pulsanti, verificati assenza di scorrimento laterale e comandi della finestra, condivisione simulata di un solo audio/mpeg con nome corretto e senza testo o URL. Pagine delle due grafiche isolate nella prova per evitare che le letture MVP interrotte dalla navigazione precedente producano falsi errori WebKit; mantenuto il controllo degli errori JavaScript.
+- Foto Radio aggiornate nel Lab, comprese PC e TV; richiami ai file aggiornati per evitare copie precedenti nella cache. Nuovo controllo in `prove/prova_condividi_radio_602.js`, rapporto `prove/risultati-radio-condividi-602.json`; aggiunto alla CI senza rimuovere prove.
+- Nessun audio generato, nessuna modifica al database o al sito vero. Condivisione WhatsApp/iPhone, Samsung Internet e TV fisici restano da verificare. La 6.0.2 rimane nel Lab; sito alla 6.0.1.
+
+
 ## 14 novembre (3) — ChatGPT: Giro di boa, lettere centrate e colori delle scritte distinti dalle bande
 
 - Ramo `chatgpt/giro-boa-colori-602`, solo Lab e pacchetto della 6.0.2. V/N/P centrate sul glifo reale sia nella pagina sia nei PNG; lettere sempre leggibili anche senza distinguere i colori.
