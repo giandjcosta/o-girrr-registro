@@ -174,7 +174,7 @@
     R.forEach(function (x, i) {
       var y = y0 + i * (h + gap), casa = x.p.a === mio, avv = casa ? x.p.b : x.p.a;
       var m = /^(\d+)\s*-\s*(\d+)$/.exec(x.p.s) || [0, 0, 0], noi = +(casa ? m[1] : m[2]), loro = +(casa ? m[2] : m[1]);
-      var es = noi > loro ? 'V' : noi === loro ? 'N' : 'P'; forma.push(es);
+      var es = noi > loro ? 'V' : noi === loro ? 'N' : 'P'; forma.push(es);   /* V vittoria, N pareggio, P sconfitta: il pallino a destra */
       riquadro(ctx, 70, y, W - 140, h, false);
       ctx.fillStyle = '#bfe3ff'; ctx.font = '800 24px Inter, system-ui, sans-serif';
       ctx.fillText(x.n + 'ª giornata · ' + (casa ? 'In casa' : 'In trasferta'), 112, y + 42);
@@ -189,10 +189,13 @@
     c.forEach(function (t, i) { if (t.n === mio) { pos = i + 1; pt = t.pt; } });
     ctx.textAlign = 'center'; ctx.fillStyle = '#ffd166'; ctx.font = '800 38px Inter, system-ui, sans-serif';
     var y1 = y0 + R.length * (h + gap) + 40;
-    ctx.fillText('Forma: ' + forma.join(' '), W / 2, y1);
+    /* niente sigle tipo «PVVVP» (Gianluca): il riepilogo a parole, dalla più vecchia alla più recente come le righe sopra */
+    var nv = forma.filter(function (x) { return x === 'V'; }).length, nn = forma.filter(function (x) { return x === 'N'; }).length, np = forma.length - nv - nn;
+    var pl = function (x, s, m) { return x + ' ' + (x === 1 ? s : m); }, riep = pl(nv, 'vittoria', 'vittorie') + ' · ' + pl(nn, 'pareggio', 'pareggi') + ' · ' + pl(np, 'sconfitta', 'sconfitte');
+    ctx.fillText(riep, W / 2, y1);
     if (pos) { ctx.fillStyle = '#bfe3ff'; ctx.font = '700 32px Inter, system-ui, sans-serif'; ctx.fillText('In classifica: ' + pos + 'ª con ' + pt + ' punti', W / 2, y1 + 54); }
     ctx.textAlign = 'left';
-    return 'Le ultime ' + R.length + ' di ' + mio + ' in Campionato: ' + forma.join(' ');
+    return 'Le ultime ' + R.length + ' di ' + mio + ' in Campionato: ' + riep;
   }
 
   /* ---------- Giro di boa (Claude, 10 novembre 2026, Gianluca: «Sì, prova») ----------
@@ -382,7 +385,7 @@
         '</div><label class="cd-sq"><span>Squadra</span><select aria-label="Squadra">' + squadre.map(function (x) { return '<option' + (x === sq ? ' selected' : '') + '>' + E(x) + '</option>'; }).join('') + '</select></label>' +
         '<div class="cd-sc">' +
         '<button type="button" data-t="mia" data-sq="1"><b data-tit="partita"></b><small>Risultato della ' + v.g.n + 'ª giornata e posizione in classifica</small></button>' +
-        '<button type="button" data-t="ultime5" data-sq="1"><b>Le ultime 5</b><small>Le ultime cinque partite di Campionato, con la forma</small></button>' +
+        '<button type="button" data-t="ultime5" data-sq="1"><b>Le ultime 5</b><small>Le ultime cinque partite di Campionato, con vittorie, pareggi e sconfitte</small></button>' +
         '<button type="button" data-t="girone" data-sq="1" hidden><b>Giro di boa</b><small>La pagella di metà stagione</small></button>' +
         '</div><div class="cd-err" role="status"></div><div class="cd-az"><button type="button" class="se" data-a="x">Chiudi</button></div>';
       var sel = f.box.querySelector('.cd-sq select'), bp = f.box.querySelector('[data-tit=partita]');
