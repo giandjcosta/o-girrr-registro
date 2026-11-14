@@ -1,5 +1,5 @@
 {
- "generato": 1794672383,
+ "generato": 1794672440,
  "repository": [
   {
    "repo": "o-fant-a-girrr",
@@ -6805,16 +6805,22 @@
     },
     {
      "nome": "main",
-     "punta": "5d6adda",
-     "data": 1794672267,
-     "titolo": "Merge pull request #83 from giandjcosta/claude/ramificazioni-tre-viste",
-     "autore": "giandjcosta",
+     "punta": "a4ed781",
+     "data": 1794672440,
+     "titolo": "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio",
+     "autore": "ChatGPT",
      "padre": null,
      "nascita": null,
      "avanti": 0,
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "a4ed78128dfde56a084e171c2a0d4b3db4fd5ec2",
+       1794672440,
+       "ChatGPT",
+       "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
+      ],
       [
        "5d6adda1f40f32d8c00f7c52f145d1bea2a2e672",
        1794672267,
@@ -6880,15 +6886,9 @@
        1794638570,
        "Registro",
        "Registro: elenco attività aggiornato"
-      ],
-      [
-       "85313e2bf09672171c16dc3d33655f1eef5c23f9",
-       1794619279,
-       "ChatGPT",
-       "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
       ]
      ],
-     "totale": 1180
+     "totale": 1181
     }
    ]
   }
