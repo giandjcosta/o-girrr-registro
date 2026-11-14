@@ -902,9 +902,11 @@ var MEMEPLUS={
 window.__curvaProva={render:function(){render()},entra:function(t){me=t;code='PROVA';meH=hnd(t);render()},
  vai:function(v,n){vista=v;if(n)ntab=n;render()},notifiche:function(){return notifiche()},nuovi:function(){cvNuovi()},pubblica:function(){lancia()},dati:function(){return {D:D,SQ:SQ,ST:ST}},posts:function(){return POSTS},filtro:function(p){return cvFiltro(p)},colore:function(s){var a=acc(hnd(s)),p=prof(a);return p.h!=null?p.h:hue(a.n)},
  img:function(t,x){var c={sq:ST.cls[0].n,sq2:ST.cls[1].n,gio:'',g:ST.ult&&ST.ult.n,ris:ST.ult?ST.ult.m.map(function(m){return[m[0],m[3],m[4]]}):[],cls:ST.cls.slice(0,6).map(function(x){return[x.n,x.pt]}),gn:ST.next&&ST.next.n,prox:ST.next?ST.next.m.map(function(m){return[m[0],m[3]]}):[]};if(x)Object.keys(x).forEach(function(k){c[k]=x[k]});return memeImg({k:'prova-'+t+(x?JSON.stringify(x):''),imgt:t,cx:c})}};
-function render(){cvNascondi();cvColori();
+/* ChatGPT · 6.1.1: la navigazione riusa il modello; dati e reazioni lo ricostruiscono. */
+var cvModelloTs=0;
+function render(soloVista){cvNascondi();cvColori();
  var v=document.getElementById('vista'),h='';
- TR=tendenze();POSTS=costruisci();NOTI=me?notifiche():[];
+ if(!soloVista||!cvModelloTs||Date.now()-cvModelloTs>=60000){TR=tendenze();POSTS=costruisci();NOTI=me?notifiche():[];cvModelloTs=Date.now()}
  if(vista!=='notifiche')NV0=0;
  if(vista==='profilo'){if(!me){vista='home'}else{vista='u';vprof=meH}}
  if(vista==='home'){
@@ -914,7 +916,9 @@ function render(){cvNascondi();cvColori();
    h+=compHTML(m)}
   else h+='<div class="ban2"><b>Stai guardando come ospite.</b><br>Per scrivere cori, rispondere e mettere applausi entra con il codice della tua squadra.<br><a class="btn" href="../../index.html">Entra</a></div>';
   var L=POSTS.filter(function(p){var k=acc(p.a).k;return filt==='tutti'||(filt==='seguiti'&&(isFol(p.a)||p.a===meH))||(filt==='squadre'&&k==='sq')||(filt==='notizie'&&(k==='org'||k==='pro'))});
+  h+='<div class="cv-flusso">';
   h+=(filt==='seguiti'&&!L.length)?'<div class="vuoto">Non segui ancora nessuno.<br>Cerca in Esplora gli account da seguire.</div>':feed(L.slice(0,FEED_SHOW))+(L.length>FEED_SHOW||FEED_MORE?'<div class="vuoto" id="piu-feed" role="status" style="padding:20px;color:var(--mu)">Scorri per altri cori…</div>':'');
+  h+='</div>';
  }else if(vista==='notifiche'){
   topR('Notifiche','','<button data-nf="tutte" class="'+(ntab==='tutte'?'on':'')+'">Attività</button><button data-nf="men" class="'+(ntab==='men'?'on':'')+'">Menzioni</button>');
   var NL=NOTI.filter(function(o){return ntab==='tutte'?o.tp!=='men':o.tp==='men'});
@@ -954,7 +958,7 @@ function render(){cvNascondi();cvColori();
   if(mio&&edit)h+='<div class="edav"><b>Scegli la tua icona</b><div class="emo">'+EMO.map(function(e){return '<button data-emo="'+e+'" class="'+(pf.e===e?'on':'')+'">'+e+'</button>'}).join('')+'<button data-emo="" class="'+(!pf.e?'on':'')+'" style="font-size:12px;font-weight:800">Sigla</button></div>'+(S.v>=3?'<b>Bio</b><textarea id="bioe" rows="2" maxlength="100" placeholder="Scrivi la bio della squadra (max 100 caratteri). Resta sotto la riga con posizione e punti." style="width:100%;margin:6px 0 12px;padding:10px;border-radius:12px;border:1px solid var(--ln);background:var(--bg2);color:var(--tx);font:500 15px Inter;resize:none">'+esc(pf.bio||'')+'</textarea>':'')+'<b>Colore dell\'avatar</b><input type="range" id="hue" min="0" max="359" value="'+hh+'">'+(S.v>=2?'<div class="edi"><button class="btn out" data-a="pfoto">Foto profilo</button><button class="btn out" data-a="pfoto0">Togli foto</button></div><b>Colore dello sfondo</b><input type="range" id="bhue" min="0" max="359" value="'+bh2+'"><div class="edi"><button class="btn out" data-a="bfoto">Immagine di sfondo</button><button class="btn out" data-a="bfoto0">Togli immagine</button></div><input type="file" id="fpa" accept="image/*" hidden><input type="file" id="fpb" accept="image/*" hidden>':'')+(S.v>=3?'':'<div style="margin-top:10px;font-size:12px;color:var(--mu)">Bio, foto e sfondo non sono ancora attivi: il feed del database risponde con la versione '+(S.v||1)+' invece della 3. Controlla l\'SQL v2 su Supabase.</div>')+'<button class="btn" data-a="salvaav" style="margin-top:10px">Salva</button></div>';
   if(mio&&!edit&&me)h+=compHTML(nomeMio());
   h+='<div class="tabs ptabs"><button data-pt="cori" class="'+(ptab==='cori'?'on':'')+'">Cori</button><button data-pt="risp" class="'+(ptab==='risp'?'on':'')+'">Risposte</button></div>';
-  h+=ptab==='risp'?rispHTML(rispostePosts(a)):feed(profiloPosts(a));
+  h+='<div class="cv-flusso">'+(ptab==='risp'?rispHTML(rispostePosts(a)):feed(profiloPosts(a)))+'</div>';
  }
  morfaIn(v,h);navR();dxR();
  if(vista==='esplora')risultati();
@@ -977,6 +981,7 @@ function render(){cvNascondi();cvColori();
  POSTS.forEach(function(p){SEEN[p.k]=1});
  caricaImg();osserva();if(new URLSearchParams(location.search).has('notifica'))setTimeout(function(){document.dispatchEvent(new Event('og:curva-render'))},0);
  try{var mx=POSTS.length?POSTS[0].ts:0;localStorage.setItem('cv-ultimo',String(mx))}catch(e){}
+ document.dispatchEvent(new Event('og:curva-disegnata'));
 }
 /* Ponte di sola navigazione, incluso nella chiusura della Curva dalla build. */
 window.OGCurva55={
@@ -1110,13 +1115,13 @@ document.addEventListener('click',function(e){
  if(d.q!==undefined){e.stopPropagation();qs=d.q;vista='esplora';scrollTo(0,0);render();return}
  if(d.v==='seg'){vseg=d.w||meH}
  if(d.v){if(d.v==='scrivi'){if(!me){toast('Entra con il codice della tua squadra per partecipare');return}vista='home';filt='tutti';render();var t=document.getElementById('tx');if(t)t.focus();return}if(d.v==='home'&&vista==='home'){if(window.scrollY>4)window.scrollTo({top:0,behavior:'smooth'});else rinfresca();return}
- if((d.v==='profilo'||d.v==='notifiche')&&!me){toast('Entra con il codice della tua squadra');return}if(d.v==='notifiche'){ntab='tutte'}vista=d.v;ptab='cori';scrollTo(0,0);if(d.v==='esplora')qs='';render();return}
+ if((d.v==='profilo'||d.v==='notifiche')&&!me){toast('Entra con il codice della tua squadra');return}if(d.v==='notifiche'){ntab='tutte'}vista=d.v;ptab='cori';scrollTo(0,0);if(d.v==='esplora')qs='';render(true);return}
  if(d.u){vprof=d.u;vista='u';edit=false;ptab='cori';scrollTo(0,0);render();return}
  if(d.mn){var el3=MNEL;if(el3){var vv=el3.value,ps=el3.selectionStart,bf=vv.slice(0,ps).replace(/@\w{0,20}$/,'@'+d.mn+' ');el3.value=bf+vv.slice(ps);el3.focus();try{el3.setSelectionRange(bf.length,bf.length)}catch(e){}el3.dispatchEvent(new Event('input',{bubbles:true}));var bx=el3.parentNode.querySelector('.mnl');if(bx)bx.remove()}return}
- if(d.nf){ntab=d.nf;render();return}
+ if(d.nf){ntab=d.nf;render(true);return}
  if(d.nk){nSegna(d.nk);vprof=d.nu;vista='u';edit=false;ptab='cori';open[d.nk]=true;scrollTo(0,0);render();var e2=document.querySelector('article.post[data-k="'+d.nk+'"]');if(e2)e2.scrollIntoView({block:'center'});return}
- if(d.pt){ptab=d.pt;render();return}
- if(d.f){filt=d.f;FEED_SHOW=20;scrollTo(0,0);render();return}
+ if(d.pt){ptab=d.pt;render(true);return}
+ if(d.f){filt=d.f;FEED_SHOW=20;scrollTo(0,0);render(true);return}
  if(d.emo!==undefined){sel.e=d.emo;document.querySelectorAll('.emo button').forEach(function(b){b.classList.toggle('on',b.dataset.emo===d.emo)});var av=document.querySelector('.av.xl');if(av){av.textContent=d.emo||sigla(me);av.className='av xl'+(d.emo?' e':'')}return}
  if(d.seg){if(!serve())return;rpc('curva_segui',{p_team:me,p_code:code,p_h:d.seg}).then(function(){return carica()}).then(function(){render()}).catch(function(x){toast(x.message)});return}
  var a=d.a;
@@ -1184,7 +1189,7 @@ document.addEventListener('touchstart',function(e){if(vista!=='home'||!e.target.
 document.addEventListener('touchend',function(e){if(tx0===null)return;var t=e.changedTouches[0],dx=t.clientX-tx0,dy=t.clientY-ty0;tx0=null;
  if(Math.abs(dx)<60||Math.abs(dx)<Math.abs(dy)*1.5)return;
  var i=TF.indexOf(filt),n=i+(dx<0?1:-1);if(n<0||n>=TF.length)return;
- filt=TF[n];FEED_SHOW=20;render();var v=document.getElementById('vista');v.classList.add(dx<0?'sl-l':'sl-r');setTimeout(function(){v.classList.remove('sl-l','sl-r')},320)},{passive:true});
+ filt=TF[n];FEED_SHOW=20;render(true);var v=document.getElementById('vista');v.classList.add(dx<0?'sl-l':'sl-r');setTimeout(function(){v.classList.remove('sl-l','sl-r')},320)},{passive:true});
 document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.matches&&e.target.matches('.rf input')){e.target.closest('.post').querySelector('[data-a=invia]').click()}});
 /* Caricamento incrementale: mostra 20 elementi; richiede altri post alla RPC solo dopo quelli gia' ricevuti. */
 function altriCori(){

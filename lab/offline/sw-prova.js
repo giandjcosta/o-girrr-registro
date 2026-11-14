@@ -43,21 +43,21 @@ self.GIRRR_SPECCHIO = (function () {
     'stadio/girrr/novita.js': new URL('../../rilascio/r601/pagine/stadio/girrr/novita.js', self.location.href).href,
     'stadio/girrr/albo.html': new URL('../../rilascio/r601/pagine/stadio/girrr/albo.html', self.location.href).href,
     'stadio/girrr/totogirrr.html': new URL('../../rilascio/r601/pagine/stadio/girrr/totogirrr.html', self.location.href).href,
-    'stagione.js': new URL('../../rilascio/stagione/stagione.js', self.location.href).href, /* Carriera · La mia stagione */
+    'stagione.js': new URL('../../rilascio/stagione/stagione.js?v=611-1', self.location.href).href, /* Carriera · La mia stagione */
     'girrr/dati/redazione.json': new URL('../redazione/redazione.json', self.location.href).href, /* scritto da Claude e controllato da redazione/controlla.py */
     'conferenze.js': new URL('../../rilascio/conferenze/conferenze.js', self.location.href).href,
     'tv.js': new URL('../../rilascio/conferenze/tv.js', self.location.href).href, /* testo più grande solo sulla TV (?tv per provarlo dal PC) */
     'notifiche-lette.js': new URL('../../rilascio/notifiche/notifiche-lette.js', self.location.href).href, /* lette rimpicciolite */
-    'girrr/curva.html': new URL('../../rilascio/curva-os/pagine/girrr/curva.html', self.location.href).href, /* Curva del sito (5.8.1) aggiornata pezzo per pezzo e Notifiche divise in Attività e Menzioni (rilascio/curva-os/applica.py) */
-    'stadio/girrr/curva.html': new URL('../../rilascio/curva-os/pagine/stadio/girrr/curva.html', self.location.href).href,
+    'girrr/curva.html': new URL('../../rilascio/curva-os/pagine/girrr/curva.html?v=611-1', self.location.href).href, /* Curva del sito (5.8.1) aggiornata pezzo per pezzo e Notifiche divise in Attività e Menzioni (rilascio/curva-os/applica.py) */
+    'stadio/girrr/curva.html': new URL('../../rilascio/curva-os/pagine/stadio/girrr/curva.html?v=611-1', self.location.href).href,
     'push.js': new URL('../../rilascio/push/push.js', self.location.href).href, /* notifiche sul telefono */
     'apri.html': new URL('../../rilascio/scorciatoie/apri.html', self.location.href).href,
     'liquid-glass.css': new URL('../../rilascio/liquid-glass/liquid-glass.css', self.location.href).href, /* prototipo Liquid Glass dello Stadio (?stile=vetro) */
     'girrr/curva-banca.js': new URL('../../rilascio/curva-os/pagine/girrr/curva-banca.js', self.location.href).href, /* nuovi personaggi, frasi e immagini (rilascio/curva-os/banca.py) */
     'stadio/girrr/curva-banca.js': new URL('../../rilascio/curva-os/pagine/stadio/girrr/curva-banca.js', self.location.href).href,
     'girrr/v55/ui.js': new URL('../../rilascio/r601/pagine/girrr/v55/ui.js', self.location.href).href, /* 6.0.1: senza la seconda banda dell'ospite (prima: commenti del sondaggio senza «· bot») */
-    'curva-os.js': new URL('../../rilascio/curva-os/curva-os.js', self.location.href).href, /* Curva: uno stile per iPhone e uno per Android */
-    'curva-os.css': new URL('../../rilascio/curva-os/curva-os.css', self.location.href).href,
+    'curva-os.js': new URL('../../rilascio/curva-os/curva-os.js?v=611-1', self.location.href).href, /* Curva: uno stile per iPhone e uno per Android */
+    'curva-os.css': new URL('../../rilascio/curva-os/curva-os.css?v=611-1', self.location.href).href,
     'material.css': new URL('../../rilascio/liquid-glass/material.css', self.location.href).href, /* prototipo Android, Material 3, dello Stadio (?stile=android) */
     'manifest.webmanifest': new URL('../../rilascio/scorciatoie/manifest.webmanifest', self.location.href).href /* con le scorciatoie */
   };
@@ -86,6 +86,7 @@ self.GIRRR_SPECCHIO = (function () {
           if (!loc || /\.html$/.test(dest.split('?')[0])) t = riscrivi(t); /* le pagine del sito preparate qui si riscrivono come le altre */
           /* La Carriera e la Conferenza leggono lab-dati.json con una richiesta sincrona, che il browser non fa passare dal
              service worker: nello specchio andrebbe persa e la pagina userebbe i dati incorporati, vecchi. Va diretta al sito. */
+          if (/text\/html/.test(ct)) t = t.replace(/<body([^>]*)>/i, '<body$1><a href="' + qui + '../novita-6-1-1.html" style="display:block;text-align:center;padding:10px;background:#ffd166;color:#172448;font:800 16px system-ui;text-decoration:none;position:relative;z-index:90">Anteprima 6.1.1 · In prova nel Lab</a>');
           if (/text\/html/.test(ct)) t = t.replace(/x\.open\('GET','(?:\.\.\/\.\.\/girrr\/|)dati\/lab-dati\.json\?'/g, "x.open('GET','" + origine + "girrr/dati/lab-dati.json?'");
           if (/text\/html/.test(ct) && t.indexOf('tv.js') < 0) t = t.replace(/<head[^>]*>/i, function (h) { return h + '<script src="' + sito + 'tv.js"></script>'; }); /* testo grande sulla TV, su ogni pagina */
           if (/text\/html/.test(ct) && t.indexOf('offline.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'offline.js" defer></script></head>');

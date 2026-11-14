@@ -1,0 +1,28 @@
+chromium iPhone 320
+chromium iPhone SE
+chromium iPhone 15 Pro
+chromium iPhone 15 Pro Max
+chromium Galaxy S8
+chromium Pixel 7
+chromium Galaxy S9+
+chromium iPad Mini
+chromium iPad (gen 7) landscape
+chromium iPad Pro 11
+chromium Galaxy Tab S4
+chromium Galaxy Tab S4 landscape
+chromium PC1280
+chromium PC1920
+chromium PC2560
+chromium TV
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+0 !== 1
+
+    at /workspace/registro-periodi-602/prove/prova_611.js:82:21 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
