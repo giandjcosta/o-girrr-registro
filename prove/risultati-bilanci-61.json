@@ -547,5 +547,239 @@
     "Condivisioni come soli file verificate con simulazione; WhatsApp e dispositivi fisici da provare",
     "WebKit senza rete ha il limite ambientale già documentato; non certificato come Safari su iPhone"
   ],
-  "ci_estesa": "Workflow 43604608396 sul commit 24af602, ancora in corso alla raccolta. Controlli precedenti mantenuti."
+  "ci_estesa": {
+    "commit": "c9e01e4abbb2d9de507035db92910d7f5eabdb62",
+    "bilanci": {
+      "run": 43605810035,
+      "esito": "success",
+      "motori": [
+        "chromium",
+        "webkit",
+        "firefox"
+      ]
+    },
+    "registro": {
+      "run": 43605809988,
+      "esito": "success"
+    },
+    "integrazione": {
+      "run": 43605810036,
+      "esito": "success"
+    }
+  },
+  "pubblicazione": {
+    "versione": "6.1",
+    "pagine": "a6fcf03c50da1fd762e49e1096e5e2146a4a7f54",
+    "backend": "b5a6b88c6729dde20603a151827de51ff98250b1",
+    "lab": "1d273ff9704344d38e09acee9221473e6a3c70f2",
+    "dati_generati_dal_workflow": {
+      "run": 43613116734,
+      "commit": "8621e3a0d81c40e414100b680f202a62b60056c2"
+    },
+    "verifica_workflow_dal_main": {
+      "run": 43615266623,
+      "esito": "success",
+      "solo_giro_di_boa": true
+    }
+  },
+  "sito_pubblicato": {
+    "casi": 18,
+    "problemi": 0,
+    "motori": [
+      {
+        "motore": "chromium",
+        "casi": 6,
+        "problemi": 0,
+        "report": [
+          {
+            "width": 320,
+            "skin": "girrr/",
+            "periodi": [
+              "finora",
+              "inizio",
+              "tappa_5"
+            ],
+            "problemi": []
+          },
+          {
+            "width": 320,
+            "skin": "stadio/girrr/",
+            "periodi": [
+              "finora",
+              "inizio",
+              "tappa_5"
+            ],
+            "problemi": []
+          },
+          {
+            "width": 1920,
+            "skin": "girrr/",
+            "periodi": [
+              "finora",
+              "inizio",
+              "tappa_5"
+            ],
+            "problemi": []
+          },
+          {
+            "width": 1920,
+            "skin": "stadio/girrr/",
+            "periodi": [
+              "finora",
+              "inizio",
+              "tappa_5"
+            ],
+            "problemi": []
+          },
+          {
+            "schermo": "TV Tizen emulata",
+            "skin": "girrr/",
+            "problemi": []
+          },
+          {
+            "schermo": "TV Tizen emulata",
+            "skin": "stadio/girrr/",
+            "problemi": []
+          }
+        ]
+      },
+      {
+        "motore": "webkit",
+        "casi": 6,
+        "problemi": 0,
+        "report": [
+          {
+            "width": 320,
+            "skin": "girrr/",
+            "periodi": [
+              "finora",
+              "inizio",
+              "tappa_5"
+            ],
+            "problemi": []
+          },
+          {
+            "width": 320,
+            "skin": "stadio/girrr/",
+            "periodi": [
+              "finora",
+              "inizio",
+              "tappa_5"
+            ],
+            "problemi": []
+          },
+          {
+            "width": 1920,
+            "skin": "girrr/",
+            "periodi": [
+              "finora",
+              "inizio",
+              "tappa_5"
+            ],
+            "problemi": []
+          },
+          {
+            "width": 1920,
+            "skin": "stadio/girrr/",
+            "periodi": [
+              "finora",
+              "inizio",
+              "tappa_5"
+            ],
+            "problemi": []
+          },
+          {
+            "schermo": "TV Tizen emulata",
+            "skin": "girrr/",
+            "problemi": []
+          },
+          {
+            "schermo": "TV Tizen emulata",
+            "skin": "stadio/girrr/",
+            "problemi": []
+          }
+        ]
+      },
+      {
+        "motore": "firefox",
+        "casi": 6,
+        "problemi": 0,
+        "report": [
+          {
+            "width": 320,
+            "skin": "girrr/",
+            "periodi": [
+              "finora",
+              "inizio",
+              "tappa_5"
+            ],
+            "problemi": []
+          },
+          {
+            "width": 320,
+            "skin": "stadio/girrr/",
+            "periodi": [
+              "finora",
+              "inizio",
+              "tappa_5"
+            ],
+            "problemi": []
+          },
+          {
+            "width": 1920,
+            "skin": "girrr/",
+            "periodi": [
+              "finora",
+              "inizio",
+              "tappa_5"
+            ],
+            "problemi": []
+          },
+          {
+            "width": 1920,
+            "skin": "stadio/girrr/",
+            "periodi": [
+              "finora",
+              "inizio",
+              "tappa_5"
+            ],
+            "problemi": []
+          },
+          {
+            "schermo": "TV Tizen emulata",
+            "skin": "girrr/",
+            "problemi": []
+          },
+          {
+            "schermo": "TV Tizen emulata",
+            "skin": "stadio/girrr/",
+            "problemi": []
+          }
+        ]
+      }
+    ]
+  },
+  "compatibilita_rilascio": {
+    "cerca": {
+      "casi_per_motore": 9,
+      "problemi": 0
+    },
+    "tabellone": {
+      "casi_per_motore": 4,
+      "problemi": 0
+    },
+    "derby": {
+      "casi_per_motore": 10,
+      "problemi": 0
+    },
+    "condivisioni_claude": {
+      "chromium": 0,
+      "firefox": 0,
+      "webkit": "Controlli funzionali riusciti; un avviso preesistente della lettura mvp_stato interrotta al cambio pagina, già documentato dalla 6.0."
+    },
+    "cartellini_webkit_galaxy_s8_mirato": {
+      "casi": 2,
+      "problemi": 0
+    }
+  }
 }
