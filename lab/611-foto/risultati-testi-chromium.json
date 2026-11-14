@@ -1,0 +1,177 @@
+{
+  "motore": "chromium",
+  "visite": 34,
+  "problemi": 0,
+  "report": [
+    {
+      "schermo": "iPhone 320",
+      "grafica": "girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "iPhone 320",
+      "grafica": "stadio/girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "iPhone SE",
+      "grafica": "girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "iPhone SE",
+      "grafica": "stadio/girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "iPhone 15 Pro",
+      "grafica": "girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "iPhone 15 Pro",
+      "grafica": "stadio/girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "iPhone 15 Pro Max",
+      "grafica": "girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "iPhone 15 Pro Max",
+      "grafica": "stadio/girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "Galaxy S8",
+      "grafica": "girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "Galaxy S8",
+      "grafica": "stadio/girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "Pixel 7",
+      "grafica": "girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "Pixel 7",
+      "grafica": "stadio/girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "Galaxy S9+",
+      "grafica": "girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "Galaxy S9+",
+      "grafica": "stadio/girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "iPad Mini",
+      "grafica": "girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "iPad Mini",
+      "grafica": "stadio/girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "iPad (gen 7) landscape",
+      "grafica": "girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "iPad (gen 7) landscape",
+      "grafica": "stadio/girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "iPad Pro 11",
+      "grafica": "girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "iPad Pro 11",
+      "grafica": "stadio/girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "Galaxy Tab S4",
+      "grafica": "girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "Galaxy Tab S4",
+      "grafica": "stadio/girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "Galaxy Tab S4 landscape",
+      "grafica": "girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "Galaxy Tab S4 landscape",
+      "grafica": "stadio/girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "PC1280",
+      "grafica": "girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "PC1280",
+      "grafica": "stadio/girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "PC1920",
+      "grafica": "girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "PC1920",
+      "grafica": "stadio/girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "PC2560",
+      "grafica": "girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "PC2560",
+      "grafica": "stadio/girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "TV",
+      "grafica": "girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "TV",
+      "grafica": "stadio/girrr",
+      "problemi": []
+    },
+    {
+      "schermo": "Caso limite 1 giornate, 14 squadre",
+      "grafica": "Modulo",
+      "problemi": []
+    },
+    {
+      "schermo": "Caso limite 34 giornate, 14 squadre",
+      "grafica": "Modulo",
+      "problemi": []
+    }
+  ]
+}

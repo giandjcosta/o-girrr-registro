@@ -11,6 +11,17 @@
 html[data-os]{
 @@MOLLE@@
 }
+/* ChatGPT · 6.1.1: un solo contenitore, solo opacità e trasformazione, anche su PC/TV.
+   Le card non ripartono una a una; la bozza rimane ferma fuori da .cv-flusso. */
+html[data-curva-fluida] #vista,
+html[data-curva-fluida] #vista .cv-flusso,
+html[data-curva-fluida] #vista .fx-in,
+html[data-curva-fluida] #vista .post,
+html[data-curva-fluida] #vista .vuoto{animation:none!important}
+html[data-curva-fluida][data-cambio-tabs] .tabs button.on::before,
+html[data-curva-fluida][data-cambio-tabs] .tabs button.on::after,
+html[data-curva-fluida][data-cambio-nav] #nav button.on::before,
+html[data-curva-fluida][data-cambio-nav] #nav button.on svg{animation-duration:180ms!important;animation-timing-function:cubic-bezier(.2,.8,.2,1)!important}
 /* Browser senza linear(): curve classiche che ci somigliano */
 @supports not (animation-timing-function:linear(0,1)){
   html[data-os]{

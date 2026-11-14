@@ -36,8 +36,8 @@ p.lead{color:var(--mute);margin:8px 0 16px}
 <div class="col">
   <a class="back" href="../">‹ Torna al Lab</a>
   <h1>Novità in prova</h1>
-  <span class="proto">Prova · 6.1</span>
-  <p class="lead">La copia offline e le scorciatoie sono già sul sito vero. Qui si provano le novità successive sulle pagine vere: <b>notifiche sul telefono</b> e <b>Cerca un giocatore</b> nello Spogliatoio.</p>
+  <span class="proto">Prova · 6.1.1</span>
+  <p><a href="../novita-6-1-1.html" style="font-size:24px;font-weight:900;color:var(--gold)">Anteprima 6.1.1 · Tutte le correzioni</a></p><p class="lead">La copia offline e le scorciatoie sono già sul sito vero. Qui si provano le novità successive sulle pagine vere: <b>notifiche sul telefono</b> e <b>Cerca un giocatore</b> nello Spogliatoio.</p>
 
   <div class="card">
     <h2>Notifiche sul telefono · Novità</h2>
@@ -213,7 +213,9 @@ p.lead{color:var(--mute);margin:8px 0 16px}
     var apri=(/[?&]apri=([^&#]+)/.exec(location.search)||[])[1];apri=apri&&decodeURIComponent(apri);if(apri&&!/^sito\/[\w\/.-]*([?#][\w=&#.-]*)?$/.test(apri))apri=null;
     function vai(){if(apri)location.replace(apri+(/#/.test(apri)||!location.hash?'':location.hash))}
     function pronto(){chiedi();var w=sw();if(w&&navigator.onLine)w.postMessage({tipo:'girrr-aggiorna'});if(apri){if(navigator.serviceWorker.controller)vai();else navigator.serviceWorker.addEventListener('controllerchange',vai)}}
-    if(r.active)pronto();else{var x=r.installing||r.waiting;if(x)x.addEventListener('statechange',function(){if(x.state==='activated')pronto()})}
+    /* Prima di aprire la 6.1.1 aspetta anche l'aggiornamento di una copia già installata. */
+    function attendi(){var x=r.installing||r.waiting;if(x&&x.state!=='activated'){x.addEventListener('statechange',function(){if(x.state==='activated')pronto();else if(x.state==='redundant'&&r.active)pronto()})}else if(r.active)pronto()}
+    if(r.installing||r.waiting)attendi();else r.update().then(attendi,attendi);
   }).catch(function(e){scrivi('no','Non è stato possibile attivare la copia.',String(e&&e.message||e))});
 })();
 </script>
