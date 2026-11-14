@@ -1240,7 +1240,50 @@
       "casi": 4,
       "problemi": 0
     },
-    "firefox": "In verifica",
+    "firefox": {
+      "casi": 4,
+      "problemi": 0
+    },
     "webkit": "Limite dell’ambiente già riprodotto con SW minimo; non certificato offline"
+  },
+  "ci_finale": {
+    "commit": "450fb6adc4d61ea0b430f45bea354278a90fa034",
+    "giro": {
+      "run": 43583317474,
+      "esito": "success",
+      "motori": 3
+    },
+    "registro": {
+      "run": 43583317477,
+      "esito": "success",
+      "job": 9
+    },
+    "percorsi_cronache": {
+      "run": 43583317431,
+      "esito": "success"
+    }
+  },
+  "verifica_online": {
+    "merge": "ab4a23c",
+    "versione_sito": "6.0.1",
+    "controlli": [
+      {
+        "pagina": "Novità 6.0.2",
+        "status": 200
+      },
+      {
+        "pagina": "Giro interattivo e album due foto",
+        "status": 200
+      },
+      {
+        "pagina": "Specchio Carriera, G1 e Giro · girrr/",
+        "status": 200
+      },
+      {
+        "pagina": "Specchio Carriera, G1 e Giro · stadio/girrr/",
+        "status": 200
+      }
+    ],
+    "errori": []
   }
 }
