@@ -582,5 +582,13 @@
     "Identità e schermi emulati; tre motori reali",
     "Condivisioni e database non modificati"
   ],
-  "notaChromium": "Le 32 visite della matrice sono passate. Il primo caso con 34 giornate ha richiesto una visibilità esplicita del punto selezionato; uniformata e riprovata con i due casi limite e due visite PC, tutti passati. Log iniziale conservato."
+  "notaChromium": "Le 32 visite della matrice sono passate. Il primo caso con 34 giornate ha richiesto una visibilità esplicita del punto selezionato; uniformata e riprovata con i due casi limite e due visite PC, tutti passati. Log iniziale conservato.",
+  "correzioneTesti": {
+    "schermi": 96,
+    "casiLimite": 6,
+    "problemi": 0,
+    "coloreDettagli": "#fbf6ec",
+    "carattereMinimoDettagli": 15,
+    "note": "Ulteriore matrice su tre motori dopo la richiesta di Gianluca; font e impaginazione verificati."
+  }
 }

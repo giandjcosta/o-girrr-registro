@@ -39,8 +39,10 @@ async function noLato(p){assert(await p.evaluate(()=>document.documentElement.sc
     await p.selectOption('.ms-giornata','0');assert.match(await p.locator('.ms-lettura').textContent(),/Dopo la 1ª giornata: 1ª posizione/);
     await p.locator('.ms-giornata').press('ArrowDown');assert.match(await p.locator('.ms-lettura').textContent(),/Dopo la 2ª giornata:/);
     await p.selectOption('.ms-giornata',String(graf.n-1));await noLato(p);
+    const leggibile=await p.locator('.ms-classifica .ms-txt').evaluate(e=>({colore:getComputedStyle(e).color,px:parseFloat(getComputedStyle(e).fontSize)}));assert.equal(leggibile.colore,'rgb(251, 246, 236)');assert(leggibile.px>=15);
     if(M==='chromium'&&['PC1920','TV','iPhone 320'].includes(nome)){await p.locator('.ms-graf').scrollIntoViewIfNeeded();await p.screenshot({path:path.join(F,(nome==='iPhone 320'?'telefono':nome==='TV'?'tv':'pc')+'-'+(skin==='girrr'?'lega':'stadio')+'.jpg'),quality:84});}
     await p.close();
+    if(process.env.SOLO_STAGIONE){assert.deepEqual(errori,[]);report.push({schermo:nome,grafica:skin,problemi:[]});continue;}
     const q=await c.newPage();q.on('pageerror',e=>errori.push(e.message));
     await q.goto(B+skin+'/curva.html',{waitUntil:'domcontentloaded'});await q.waitForFunction(()=>window.__curvaProva&&window.__curvaProva.posts().length>20);await q.waitForTimeout(900);
     const modello=await q.evaluate(()=>window.__modelli);
