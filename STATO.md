@@ -1,8 +1,8 @@
-# Stato del progetto O Girrr (ultimi giorni — aggiornato 13 novembre 2026)
+# Stato del progetto O Girrr (ultimi giorni — aggiornato 14 novembre 2026)
 
 ## 14 novembre — ChatGPT: rilascio sospeso dopo il riscontro sulle anteprime
 
-Gianluca ha chiesto una revisione della 6.0.2: tabellone della fiducia stabile dalla prima apertura, Obiettivi dalla 1ª giornata, Giro di boa in due tavole meno dense con grafici, risultati colorati e voci editoriali/Curva pertinenti. Le tre tavole precedenti non sono approvate. Nessuna pubblicazione sul sito vero da questo lavoro: resta la 6.0. PR Registro #76 e sito #13 in bozza. Il Lab di Claude è integrato (#75, e11e363), il ramo di Claude resta invariato. Nuove anteprime e prove prima del rilascio.
+Gianluca ha chiesto una revisione della 6.0.2: tabellone della fiducia stabile dalla prima apertura, Obiettivi dalla 1ª giornata, Giro di boa in due tavole meno dense con grafici, risultati colorati e voci editoriali/Curva pertinenti. Le tre tavole precedenti non sono approvate. Nessuna pubblicazione sul sito vero da questo lavoro. Nel frattempo Claude ha pubblicato la 6.0.1 (`e9124d9`, PR Registro #77); i suoi aggiornamenti sono conservati e la 6.0.2 resta nel Lab. PR Registro #76 e sito #13 in bozza. Il Lab di Claude è integrato (#75, e11e363), il ramo di Claude resta invariato. Nuove anteprime e prove prima del rilascio.
 
 - Revisione sul ramo `chatgpt/giro-boa-completo-602`: due tavole per squadra e campionato. Numeri grandi, grafico della posizione, pallini V/N/P, barre casa/trasferta; seconda pagina con estratti reali della redazione e della Curva. I 19 gruppi di statistiche rimangono nei dettagli richiudibili. Condivisione di due PNG 1080×1350 insieme, senza testo.
 - Unico modello Python ampliato con racconti della settimana verificati sulla firma dei risultati e commenti pubblici della Curva pertinenti alla squadra e al periodo, con autore e data; fonti assenti dichiarate. Non sono state inventate voci televisive né generati audio.
@@ -25,6 +25,13 @@ Gianluca ha chiesto una revisione della 6.0.2: tabellone della fiducia stabile d
 - Specchio offline: Chromium e Firefox riaprono senza rete (4 casi per motore). WebKit nell'ambiente dà un errore interno al reload offline **anche con un service worker minimo indipendente dal progetto**; prima apertura online verificata, limite dell'emulazione distinto dalla pagina. WhatsApp da iPhone, Safari/Samsung Internet e TV fisici restano da provare sui dispositivi.
 - Rilascio previsto: certificare e verificare il Lab online, generare il JSON nel workflow dal ramo dedicato in sola lettura, pubblicare **6.0.1 e poi 6.0.2 sulla stessa copia**, verificare il sito e solo dopo integrare il backend nel main, aggiornare il Registro dal sito pubblicato. Hash e ritorno indietro con git revert saranno aggiunti al termine. Coordinamento nel ticket #57.
 
+## 14 novembre (1) — Claude: **ONLINE** la 6.0.1
+«Vai» di Gianluca («Rilascia la 6.0.1»), correzione minore. Solo pagine: niente `main` del sito, niente database.
+- Copia nuova di `gh-pages` (`9d8eeaf`) + `python3 rilascio/r601/applica.py` + voce 6.0.1 in `versioni.json` (`aggiungi.py --tipo minore`, messaggio solo con le novità del sito). 23 file, nessun file dei dati.
+- Prove sulla copia, scritture bloccate: `prova_601.js` Chromium, WebKit e Firefox 0 problemi; `prova_derby_schede.js` Chromium e WebKit a posto; `prova_60.js` (16 schermi) WebKit e Firefox 0 problemi, Chromium solo le risposte 400 di `mvp_mio` al codice finto «PROVA» (come `notifiche_stato`: dalla 6.0 lo schema MVP è attivo; la prova ora le ignora).
+- **Pubblicato:** `gh-pages` `e9124d9`; online dopo 40 secondi (`versioni.json` 6.0.1, `pillole.js` 200). Sul sito vero: prove 6.0.1 e Derby (esito sotto), foto PC e TV mandate a Gianluca.
+- **Tornare indietro:** `git revert e9124d9` su `gh-pages` (torna la 6.0 in un minuto).
+- Registro: `ufficiale/src/sito/` allineato ai file pubblicati (più `pillole.js`); `AGENTS.md` con la 6.0.1. La 6.0.2 (`rilascio/r602/applica.py`) resta in prova nel Lab: serve il suo «Vai».
 
 ## 13 novembre (10) — Claude: 6.0.2 in prova (Lab), ogni pezzo condivisibile da solo e squadra a scelta anche per l'ospite
 Richiesta di Gianluca della sera del 13 novembre («questa sarà la 6.0.2»). `rilascio/r602/applica.py`, da lanciare **dopo** `rilascio/r601/applica.py` sulla stessa copia di `gh-pages`. La 6.0.1 usa ora una copia congelata di `condividi.js` (`rilascio/r601/pagine/condividi.js`); `rilascio/condividi/condividi.js` è quello della 6.0.2. Nel Lab si vedono 6.0.1 e 6.0.2 insieme (app.html da `rilascio/r602/pagine/`). **Niente online.**
