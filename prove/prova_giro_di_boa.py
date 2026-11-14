@@ -26,6 +26,72 @@ def dati(n=3):
 
 
 class Giro(unittest.TestCase):
+    def test_tappe_sbloccate_solo_con_risultati_pubblicati(self):
+        for n in (0,1,4,5,9,10,16,17,19,33,34):
+            j=calcola(dati(n));p=j['periodi']
+            for soglia,k in [(1,'inizio'),(5,'tappa_5'),(10,'tappa_10'),(17,'andata'),(34,'fine')]:
+                self.assertEqual(k in p,n>=soglia,(n,k))
+            for k,v in p.items():
+                self.assertLessEqual(v['alla_giornata'],n)
+                if k!='ritorno':self.assertEqual(v['dalla_giornata'],1)
+            if n<34:self.assertGreater(j['prossima_tappa']['giornata'],n)
+            else:self.assertIsNone(j['prossima_tappa'])
+        d=dati(10);d['cal']['lega'][4]['m'][0][4]='-'
+        self.assertNotIn('tappa_5',calcola(d)['periodi'])
+        self.assertEqual(calcola(dati(5))['periodi']['tappa_5'],calcola(dati(10))['periodi']['tappa_5'])
+
+    def test_coppa_e_misto_separano_gol_punti_e_gironi(self):
+        d=dati(5);d['cal']['cup']=[{'n':1,'sa':5,'m':[['A','A',80,60,'B','4-0']]},
+            {'n':2,'sa':6,'m':[['A','B',66,71,'C','1-2']]},
+            {'n':3,'sa':50,'m':[['A','C',80,60,'A','5-0']]}]
+        j=calcola(d);p=j['periodi']['finora'];cup=p['competizioni']['coppa'];mix=p['competizioni']['entrambe']
+        self.assertEqual(cup['classifica'],[])
+        self.assertEqual(len(cup['gironi'][0]['classifica']),3)
+        self.assertEqual(cup['squadre']['A']['punti_classifica'],3)
+        self.assertIsNone(cup['squadre']['A']['bilancio']['punti'])
+        for t,s in mix['squadre'].items():
+            for v in ('gol_fatti','gol_subiti','giocate'):
+                self.assertEqual(s['bilancio'][v],p['squadre'][t]['bilancio'][v]+cup['squadre'][t]['bilancio'][v])
+            self.assertIsNone(s['bilancio']['punti'])
+        self.assertEqual(cup['riepilogo']['primati']['attacco'],{'gol':4,'squadre':['A']})
+        # Alla prima tappa C riposa: presente nel girone, esclusa dai primati.
+        c1=j['periodi']['inizio']['competizioni']['coppa']
+        self.assertEqual(len(c1['gironi'][0]['classifica']),3)
+        self.assertNotIn('C',c1['riepilogo']['primati']['difesa']['squadre'])
+        self.assertEqual(c1['squadre']['C']['bilancio']['giocate'],0)
+
+    def test_editoriali_e_curva_seguono_competizione_squadra_e_periodo(self):
+        ora=dt.datetime(2026,11,14,tzinfo=dt.timezone.utc).timestamp();d=dati(5)
+        d['cal']['cup']=[{'n':1,'sa':6,'m':[['A','A',80,60,'B','4-0'],['B','C',66,66,'D','1-1']]}]
+        d['votiTs']={'5':'2026-11-01T18:00:00Z'}
+        testi=[('A','Abbiamo vinto con la squadra A in campionato, ora guardiamo avanti.'),
+               ('B','La squadra A in Champions Cup è fortissima, complimenti per i quattro gol.'),
+               ('C','In campionato la vetta della classifica è ancora aperta, lotta serrata.'),
+               ('D','Nel girone di coppa la lotta è ancora apertissima per il primo posto.'),
+               ('C','In campionato C e D hanno una bella squadra, ci aspetta una lunga stagione.')]
+        feed={'posts':[{'id':i+1,'team':t,'body':txt,'ts':(ora-100+i)*1000} for i,(t,txt) in enumerate(testi)]}
+        p=calcola(d,curva=feed,ora=ora)['periodi']['finora'];cp=p['competizioni']['coppa'];mx=p['competizioni']['entrambe']
+        self.assertEqual(p['squadre']['A']['voci']['curva'][0]['id'],'p1')
+        self.assertEqual(cp['squadre']['A']['voci']['curva'][0]['id'],'p2')
+        self.assertEqual(p['voci']['curva'][0]['id'],'p3')
+        self.assertEqual(cp['voci']['curva'][0]['id'],'p4')
+        self.assertEqual({x['id'] for x in mx['squadre']['A']['voci']['curva']},{'p1','p2'})
+        self.assertNotIn('Champions',p['squadre']['A']['voci']['redazione']['testo'])
+        self.assertNotIn('vetta',cp['squadre']['A']['voci']['redazione']['testo'])
+        self.assertIn('4 gol fatti',cp['squadre']['A']['voci']['redazione']['testo'])
+        self.assertIn('In coda',mx['voci']['redazione'][0]['testo'])
+        self.assertIn('Girone A',mx['voci']['redazione'][0]['testo'])
+        self.assertEqual(calcola(d,curva=feed,ora=ora)['periodi']['inizio']['squadre']['A']['voci']['curva'],[])
+
+    def test_editoriale_racconta_fuga_parita_e_coda_dai_risultati(self):
+        d=dati(5)
+        for g in d['cal']['lega']:g['m']=[['A',80,60,'B','4-0'],['C',66,66,'D','1-1']]
+        v=calcola(d)['periodi']['finora']['voci']['redazione'][0]
+        self.assertEqual(v['titolo'],'Fuga in vetta');self.assertIn('10 in più',v['testo']);self.assertIn('B ha 0 punti',v['testo'])
+        d=dati(1);d['cal']['lega'][0]['m']=[['A',66,66,'B','1-1'],['C',66,66,'D','1-1']]
+        v=calcola(d)['periodi']['finora']['voci']['redazione'][0]
+        self.assertEqual(v['titolo'],'Testa a testa in vetta');self.assertIn('a pari punti',v['testo'])
+
     def test_voci_firmate_pertinenti_non_inventate(self):
         from giro_di_boa import firma_settimana, giornate_pubblicate
         d=dati();ora=dt.datetime(2026,11,14,tzinfo=dt.timezone.utc).timestamp()
@@ -36,11 +102,12 @@ class Giro(unittest.TestCase):
                        {'id':3,'team':'A','body':'Domani vinciamo questa partita con la squadra A.','ts':(ora+100)*1000}],
               'replies':[],'react':[]}
         out=calcola(d,ora=ora,edizione=ed,curva=feed)['periodi']['finora']['squadre']['A']['voci']
-        self.assertEqual(out['redazione']['testo'],'A ritrova la vittoria.')
+        self.assertEqual(out['archivio_redazione']['testo'],'A ritrova la vittoria.')
+        self.assertIn('4 punti',out['redazione']['testo'])
         self.assertEqual([p['id'] for p in out['curva']],['p1'])
         self.assertEqual(out['curva'][0]['autore'],'B')
         ed['giornate']['3']['firma']='obsoleta'
-        self.assertIsNone(calcola(d,ora=ora,edizione=ed)['periodi']['finora']['squadre']['A']['voci']['redazione'])
+        self.assertIsNone(calcola(d,ora=ora,edizione=ed)['periodi']['finora']['squadre']['A']['voci']['archivio_redazione'])
 
     def test_voci_storiche_non_includono_commenti_futuri(self):
         d=dati(19);ora=dt.datetime(2026,11,14,tzinfo=dt.timezone.utc).timestamp()
@@ -153,7 +220,7 @@ class Giro(unittest.TestCase):
         mod=importlib.util.module_from_spec(sp);sp.loader.exec_module(mod)
         with tempfile.TemporaryDirectory() as tmp:
             p=Path(tmp)
-            for v,attivo in [('6.0',False),('6.0.1',False),('6.0.2',True),('6.1',True)]:
+            for v,attivo in [('6.0',False),('6.0.1',False),('6.0.2',False),('6.0.9',False),('6.1',True)]:
                 (p/'versioni.json').write_text(json.dumps({'versioni':[{'v':v}]}))
                 self.assertEqual(mod.versione_boa(p),attivo)
 

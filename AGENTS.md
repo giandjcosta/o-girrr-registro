@@ -8,6 +8,8 @@ Qui ci sono il Lab, l'Anteprima, le sorgenti delle pagine del sito vero e lo sta
 
 - **Ramificazioni (Gianluca, 13 novembre 2026):** mantenere `ramificazioni.html` collegata ai menu del Registro. Il grafo dei due repository si aggiorna con `ramificazioni.yml` ogni 15 minuti, su un ramo tecnico senza pubblicare il sito. Fonte e limiti in `RAMIFICAZIONI.md`; non ricostruire rami o versioni per ipotesi.
 
+- **Bilanci della stagione (Gianluca, 14 novembre 2026):** prossima versione **6.1**. Periodi sbloccabili con risultati pubblicati, Campionato/Coppa/entrambi e commenti coerenti con squadra e ambito: regole permanenti in `BILANCI-STAGIONE.md`. Non pubblicare una 6.0.2 fittizia.
+
 ## Come è fatto
 - `lab/index.html`: il Lab, dove si provano le novità. Dopo ogni modifica al Lab rigenera l'Anteprima con `python3 anteprima/build.py` (scrive `anteprima/index.html` per lo Stadio e `anteprima/attuale.html` per la Lega).
 - `ufficiale/src/sito/`: sorgenti delle pagine del sito vero (Lega in `girrr/`, Stadio in `stadio/girrr/`). Devono restare uguali a quello che c'è su `gh-pages` del sito.

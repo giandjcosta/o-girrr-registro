@@ -20,10 +20,10 @@ def carica(p, d=None):
     except Exception: return d
 
 def versione_boa(sito):
-    """L'unione del Lab non attiva il segmento prima del rilascio del sito 6.0.2."""
+    """L'unione del Lab non attiva il segmento prima del rilascio del sito 6.1."""
     v = carica(sito / 'versioni.json', {}).get('versioni', [])
     nums = tuple(map(int,re.findall(r'\d+', str(v[0].get('v',''))))) if v else ()
-    return (nums + (0,0,0))[:3] >= (6,0,2)
+    return (nums + (0,0,0))[:3] >= (6,1,0)
 
 def chiusa(d, cronache=False):
     if cronache:

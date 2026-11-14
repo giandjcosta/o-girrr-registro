@@ -22,9 +22,14 @@ def segmento(dati, giornata):
             'Giro di boa, il ritorno. Facciamo il punto sulle prime due giornate del girone di ritorno.', 'urlo')]
     if c.get('campione_inverno'):
         out.append(('G', f"Il campione d’inverno è {nome(c['campione_inverno'])}.", None))
-    out.append(('B', f"Nel periodo si sono giocate {c['partite']} partite, con {c['gol']} gol. "
-                f"Miglior attacco: {', '.join(map(nome,c['miglior_attacco']))}. "
-                f"Miglior difesa: {', '.join(map(nome,c['miglior_difesa']))}.", None))
+    att=c.get('primati',{}).get('attacco',{}).get('gol');dif=c.get('primati',{}).get('difesa',{}).get('gol')
+    out.append(('B', f"In Campionato, nel periodo si sono giocate {c['partite']} partite, con {c['gol']} gol. "
+                f"Miglior attacco: {', '.join(map(nome,c['miglior_attacco']))}, {att if att is not None else 'Dato non conservato'} gol fatti. "
+                f"Miglior difesa: {', '.join(map(nome,c['miglior_difesa']))}, {dif if dif is not None else 'Dato non conservato'} gol subiti.", None))
+    cp=p.get('competizioni',{}).get('coppa',{})
+    if cp.get('riepilogo',{}).get('partite'):
+        for v in cp.get('voci',{}).get('redazione',[]):
+            out.append(('G','Champions Cup. '+v['testo'],None))
     for i, r in enumerate(p['classifica']):
         s = p['squadre'][r['squadra']];b = s['bilancio'];f = s['dirigenza'];cp = s['coppa'];de = s['derby'];pr = s['promesse'];mv = s['mvp']
         frasi = [f"{nome(s['squadra'])}: posizione {s['posizione']}, {s['punti_classifica']} punti in classifica, a {s['distacco_vetta']} dalla vetta.",
