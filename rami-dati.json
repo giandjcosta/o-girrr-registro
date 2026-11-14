@@ -1,5 +1,5 @@
 {
- "generato": 1794673516,
+ "generato": 1794673635,
  "versione": "6.1",
  "repository": [
   {
@@ -6895,17 +6895,50 @@
      "totale": 5
     },
     {
+     "nome": "chatgpt/esito-lab-61",
+     "punta": "a03eefd",
+     "data": 1794673516,
+     "titolo": "ChatGPT: conserva sorgenti e verifica della 6.1 pubblicata",
+     "autore": "ChatGPT",
+     "padre": "claude/ramificazioni-aggiornamento-immediato",
+     "nascita": "49df58a",
+     "dataNascita": 1794673057,
+     "avanti": 3,
+     "stato": "unito",
+     "commit": [
+      [
+       "a03eefd4f5d79deb4508c07427675b6ed87f956c",
+       1794673516,
+       "ChatGPT",
+       "ChatGPT: conserva sorgenti e verifica della 6.1 pubblicata"
+      ],
+      [
+       "ae10752d78032fa1528be229f2f395e244870d92",
+       1794673156,
+       "ChatGPT",
+       "ChatGPT: aggiorna i riferimenti dei moduli al rilascio 6.1"
+      ]
+     ],
+     "totale": 3
+    },
+    {
      "nome": "main",
-     "punta": "4e16d57",
-     "data": 1794673063,
-     "titolo": "Merge pull request #84 from giandjcosta/claude/ramificazioni-aggiornamento-immediato",
-     "autore": "giandjcosta",
+     "punta": "f619634",
+     "data": 1794673635,
+     "titolo": "ChatGPT: conserva nel main il rilascio 6.1 verificato",
+     "autore": "ChatGPT",
      "padre": null,
      "nascita": null,
      "avanti": 0,
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "f6196348538c64a6fade067d4f3d7339484e642f",
+       1794673635,
+       "ChatGPT",
+       "ChatGPT: conserva nel main il rilascio 6.1 verificato"
+      ],
       [
        "4e16d5715a6869008dd85ddfe51caab3e8557e4d",
        1794673063,
@@ -6971,42 +7004,9 @@
        1794650364,
        "giandjcosta",
        "Merge pull request #78 from giandjcosta/claude/rilascio-601-esiti"
-      ],
-      [
-       "936fa964f54dcff8e89e8fdb6541ad1a5373273d",
-       1794649767,
-       "ChatGPT",
-       "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
       ]
      ],
-     "totale": 1185
-    },
-    {
-     "nome": "chatgpt/esito-lab-61",
-     "punta": "a03eefd",
-     "data": 1794673516,
-     "titolo": "ChatGPT: conserva sorgenti e verifica della 6.1 pubblicata",
-     "autore": "ChatGPT",
-     "padre": "main",
-     "nascita": "4e16d57",
-     "dataNascita": 1794673063,
-     "avanti": 2,
-     "stato": "attivo",
-     "commit": [
-      [
-       "a03eefd4f5d79deb4508c07427675b6ed87f956c",
-       1794673516,
-       "ChatGPT",
-       "ChatGPT: conserva sorgenti e verifica della 6.1 pubblicata"
-      ],
-      [
-       "ae10752d78032fa1528be229f2f395e244870d92",
-       1794673156,
-       "ChatGPT",
-       "ChatGPT: aggiorna i riferimenti dei moduli al rilascio 6.1"
-      ]
-     ],
-     "totale": 2
+     "totale": 1188
     }
    ]
   }
