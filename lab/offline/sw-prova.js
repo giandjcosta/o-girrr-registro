@@ -20,8 +20,8 @@ self.GIRRR_SPECCHIO = (function () {
     'girrr/v60/tifosi.css': new URL('../../rilascio/tifosi60/tifosi.css', self.location.href).href,
     /* 6.0.1 in prova (Claude, 13 novembre 2026): Carriera e Spogliatoio pubblici per l'ospite, linea del tempo dalla 1ª giornata,
        loghi dei premi sponsor, Home della Lega con i riquadri uno sotto l'altro (rilascio/r601/applica.py) */
-    'girrr/app.html': new URL('../../rilascio/r601/pagine/girrr/app.html', self.location.href).href,
-    'stadio/girrr/app.html': new URL('../../rilascio/r601/pagine/stadio/girrr/app.html', self.location.href).href,
+    'girrr/app.html': new URL('../../rilascio/r602/pagine/girrr/app.html', self.location.href).href, /* 6.0.1 e 6.0.2 insieme (rilascio/r602/applica.py dopo la 6.0.1) */
+    'stadio/girrr/app.html': new URL('../../rilascio/r602/pagine/stadio/girrr/app.html', self.location.href).href,
     '': new URL('../../rilascio/r601/pagine/index.html', self.location.href).href, /* lo Spogliatoio è la radice del sito */
     'index.html': new URL('../../rilascio/r601/pagine/index.html', self.location.href).href,
     'girrr/': new URL('../../rilascio/r601/pagine/girrr/index.html', self.location.href).href,

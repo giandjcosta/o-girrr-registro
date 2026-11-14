@@ -16,7 +16,7 @@
   var stadio = /\/stadio\//.test(location.pathname);
   var ACC = stadio ? '#ffd166' : '#d62839', ACC_INK = stadio ? '#1d2a52' : '#ffffff';
   var TIT = stadio ? 'Lobster, "Brush Script MT", cursive' : 'Inter, system-ui, sans-serif';
-  var pagina = /giornale\.html$/.test(location.pathname) ? 'giornale' : /tabellone\.html$/.test(location.pathname) ? 'tabellone' : 'home';
+  var pagina = /giornale\.html$/.test(location.pathname) ? 'giornale' : /tabellone\.html$/.test(location.pathname) ? 'tabellone' : /app\.html$/.test(location.pathname) ? 'app' : 'home';
   var ridotto = false; try { ridotto = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
   var W = 1080, H = 1350, COPPA = '#3d93d6', banda = ACC;   /* banda: rossa (oro nello Stadio) in Campionato, azzurra in Champions Cup */
 
@@ -157,6 +157,44 @@
     return 'Classifica del Campionato dopo ' + art(v.g.n) + v.g.n + 'ª giornata';
   }
 
+  /* ---------- Le ultime 5 (Claude, 13 novembre 2026, versione 6.0.2): le ultime cinque partite di Campionato di una squadra ---------- */
+  function ultime5(ctx, d, v, mio) {
+    var fino = v.coppa ? 99 : v.g.n, R = [];
+    (d.cal.lega || []).forEach(function (g) {
+      if (g.n > fino || !giocata(g) || !pubblicato(d, g)) return;
+      partite(g, false).forEach(function (p) { if (p.a === mio || p.b === mio) R.push({ n: g.n, p: p }); });
+    });
+    R = R.slice(-5); if (!R.length) return null;
+    var COL = { V: '#3ecf8e', N: '#ffd166', P: '#ff6b7a' }, forma = [];
+    ctx.textAlign = 'center'; ctx.fillStyle = '#fbf6ec';
+    adatta(ctx, mio, W / 2, 330, W - 200, stadio ? 66 : 58, stadio ? '400' : '900', TIT);
+    ctx.fillStyle = '#bfe3ff'; ctx.font = '800 34px Inter, system-ui, sans-serif';
+    ctx.fillText('Le ultime ' + R.length + ' in Campionato', W / 2, 390); ctx.textAlign = 'left';
+    var y0 = 430, h = 120, gap = 16;
+    R.forEach(function (x, i) {
+      var y = y0 + i * (h + gap), casa = x.p.a === mio, avv = casa ? x.p.b : x.p.a;
+      var m = /^(\d+)\s*-\s*(\d+)$/.exec(x.p.s) || [0, 0, 0], noi = +(casa ? m[1] : m[2]), loro = +(casa ? m[2] : m[1]);
+      var es = noi > loro ? 'V' : noi === loro ? 'N' : 'P'; forma.push(es);
+      riquadro(ctx, 70, y, W - 140, h, false);
+      ctx.fillStyle = '#bfe3ff'; ctx.font = '800 24px Inter, system-ui, sans-serif';
+      ctx.fillText(x.n + 'ª giornata · ' + (casa ? 'In casa' : 'In trasferta'), 112, y + 42);
+      ctx.fillStyle = '#fbf6ec'; adatta(ctx, 'Contro ' + avv, 112, y + 90, 560, 40, '800', 'Inter, system-ui, sans-serif');
+      ctx.textAlign = 'right'; ctx.fillStyle = '#fbf6ec'; ctx.font = '900 56px Inter, system-ui, sans-serif';
+      ctx.fillText(noi + ' – ' + loro, W - 200, y + h / 2 + 20);
+      ctx.textAlign = 'center'; ctx.fillStyle = COL[es]; ctx.beginPath(); ctx.arc(W - 135, y + h / 2, 34, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#141d3d'; ctx.font = '900 38px Inter, system-ui, sans-serif'; ctx.fillText(es, W - 135, y + h / 2 + 14);
+      ctx.textAlign = 'left';
+    });
+    var c = classifica(d, fino === 99 ? R[R.length - 1].n : fino), pos = 0, pt = 0;
+    c.forEach(function (t, i) { if (t.n === mio) { pos = i + 1; pt = t.pt; } });
+    ctx.textAlign = 'center'; ctx.fillStyle = '#ffd166'; ctx.font = '800 38px Inter, system-ui, sans-serif';
+    var y1 = y0 + R.length * (h + gap) + 40;
+    ctx.fillText('Forma: ' + forma.join(' '), W / 2, y1);
+    if (pos) { ctx.fillStyle = '#bfe3ff'; ctx.font = '700 32px Inter, system-ui, sans-serif'; ctx.fillText('In classifica: ' + pos + 'ª con ' + pt + ' punti', W / 2, y1 + 54); }
+    ctx.textAlign = 'left';
+    return 'Le ultime ' + R.length + ' di ' + mio + ' in Campionato: ' + forma.join(' ');
+  }
+
   /* ---------- Giro di boa (Claude, 10 novembre 2026, Gianluca: «Sì, prova») ----------
      Il girone d'andata della tua squadra (prime 17 giornate) come pagella: posizione, punti e gol, il voto della dirigenza
      (posizione rispetto all'attesa del presidente), la Champions Cup nello stesso periodo, i Derby e le promesse in conferenza.
@@ -247,19 +285,19 @@
     return 'Giro di boa · ' + mio + ': ' + pos + 'ª con ' + s.pt + ' punti ' + (fin ? 'dopo il girone d\'andata' : 'dopo ' + art(n) + n + 'ª giornata');
   }
 
-  function disegna(tipo, d, ex, scelta) {
+  function disegna(tipo, d, ex, scelta, squadra) {
     var v = scelta || giornataVista(d); if (!v.g) return Promise.reject(new Error('Nessuna giornata da condividere'));
-    var mio = chi();
+    var mio = squadra || chi(), mia = mio && mio === chi();   /* 6.0.2: si sceglie la squadra (anche l'ospite) */
     return Promise.all([caratteri(), img(ROOT + 'assets/loghi/logo-lega-o-fant-a-girrr.png')]).then(function (x) {
       banda = v.coppa ? COPPA : ACC;
       var c = document.createElement('canvas'); c.width = W; c.height = H;
       var ctx = c.getContext('2d');
       var piede = 'O Fant A Girrr · ' + (v.coppa && tipo !== 'classifica' ? 'Champions Cup' : 'Campionato') + ' 2026/27';
-      if (tipo === 'girone') piede = 'O Fant A Girrr · Campionato 2026/27';
-      base(ctx, x[1], 'O Fant A Girrr · 2026/27', tipo === 'girone' ? 'Giro di boa' : tipo === 'classifica' ? 'Classifica' : tipo === 'mia' ? 'La mia partita' : (art(v.g.n).replace(/^./, function (z) { return z.toUpperCase(); }) + v.g.n + 'ª giornata'), piede);
-      var testo = tipo === 'girone' ? giroDiBoa(ctx, d, mio, ex || {}) : tipo === 'mia' ? laMiaPartita(ctx, d, v, mio) : tipo === 'classifica' ? tabella(ctx, d, v, mio) : risultati(ctx, d, v, mio);
-      if (!testo) throw new Error('La tua squadra non gioca in questa giornata');
-      return new Promise(function (ok) { c.toBlob(function (b) { ok({ blob: b, testo: testo, nome: 'o-girrr-' + (v.coppa ? 'coppa-' : '') + tipo + '-' + (tipo === 'girone' ? 'andata' : v.g.n) + '.png', url: c.toDataURL('image/png') }); }, 'image/png'); });
+      if (tipo === 'girone' || tipo === 'ultime5') piede = 'O Fant A Girrr · Campionato 2026/27';
+      base(ctx, x[1], 'O Fant A Girrr · 2026/27', tipo === 'girone' ? 'Giro di boa' : tipo === 'classifica' ? 'Classifica' : tipo === 'ultime5' ? 'Le ultime 5' : tipo === 'mia' ? (mia ? 'La mia partita' : 'La partita') : (art(v.g.n).replace(/^./, function (z) { return z.toUpperCase(); }) + v.g.n + 'ª giornata'), piede);
+      var testo = tipo === 'girone' ? giroDiBoa(ctx, d, mio, ex || {}) : tipo === 'ultime5' ? ultime5(ctx, d, v, mio) : tipo === 'mia' ? laMiaPartita(ctx, d, v, mio) : tipo === 'classifica' ? tabella(ctx, d, v, mio) : risultati(ctx, d, v, mio);
+      if (!testo) throw new Error((mia ? 'La tua squadra' : mio) + ' non gioca in questa giornata');
+      return new Promise(function (ok) { c.toBlob(function (b) { ok({ blob: b, testo: testo, nome: 'o-girrr-' + (v.coppa && tipo !== 'ultime5' ? 'coppa-' : '') + tipo + '-' + (tipo === 'girone' ? 'andata' : tipo === 'ultime5' ? String(mio || '').toLowerCase().replace(/[^a-z0-9]+/g, '-') : v.g.n) + '.png', url: c.toDataURL('image/png') }); }, 'image/png'); });
     });
   }
 
@@ -280,6 +318,11 @@
       '.cd-box .cd-az.fis{position:sticky;bottom:calc(-18px - env(safe-area-inset-bottom,0px));margin:12px -16px calc(-18px - env(safe-area-inset-bottom,0px));padding:12px 16px calc(14px + env(safe-area-inset-bottom,0px));background:linear-gradient(rgba(29,42,82,0),#1d2a52 14px)}' +
       '.cd-az .pr{background:' + ACC + ';color:' + ACC_INK + '}.cd-az .se{background:rgba(255,255,255,.1);color:#fbf6ec;border:1px solid rgba(255,255,255,.2)}' +
       '.cd-err{color:#ff8a95;font-weight:700;font-size:13px;margin-top:10px}' +
+      '.cd-sq{display:flex;align-items:center;gap:10px;margin:14px 0 8px;font-weight:800;font-size:13px;color:#bfe3ff}.cd-sq select{flex:1;min-width:0;font:inherit;font-weight:800;color:#fbf6ec;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:10px 12px}.cd-sq option{color:#141d3d}' +
+      '.cd-ic{display:grid;place-items:center;height:120px;color:' + ACC + '}.cd-ic svg{width:56px;height:56px}' +
+      '.cd-sf{margin:8px 0 0}' +
+      '.cd-sc button[hidden]{display:none}' +
+      '.cd-velo .cd-box h3{color:#fbf6ec}' +
       '.cd-pk{display:grid;gap:8px}.cd-pz{display:flex;align-items:center;gap:12px;padding:10px 12px;cursor:pointer;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);transition:opacity .25s,background-color .25s;' + (stadio ? 'border-radius:12px' : 'border-radius:4px 14px 14px 4px') + '}' +
       '.cd-pz input{position:absolute;opacity:0;pointer-events:none}.cd-pz .an{flex:none;width:52px;height:64px;display:grid;place-items:center;border-radius:8px;overflow:hidden;background:rgba(255,255,255,.1);color:' + ACC + '}' +
       '.cd-pz .an img{width:100%;height:100%;object-fit:cover;display:block}.cd-pz .vv{position:relative;display:block;width:100%;height:100%}.cd-pz .vv i{position:absolute;inset:0;display:grid;place-items:center;color:#fff;background:rgba(0,0,0,.25)}' +
@@ -321,27 +364,75 @@
   }
 
   function apriTabellone() {
+    /* 6.0.2 (Gianluca, 13 novembre 2026): ogni pezzo si condivide anche da solo, nella sua pagina. Qui il Tabellone ufficiale della
+       giornata che stai guardando (Campionato o Champions Cup), e per la squadra scelta (anche dall'ospite) la partita, le ultime 5
+       e il Giro di boa. */
     var f = finestra(), mio = chi();
-    f.box.innerHTML = '<h3>Condividi</h3><p>Un\'immagine pronta per il gruppo, con la giornata che stai guardando.</p><div class="cd-sc">' +
-      (mio ? '<button type="button" data-t="mia"><b>La mia partita</b><small>' + E(mio) + ': risultato e posizione in classifica</small></button>' : '') +
-      '<button type="button" data-t="risultati"><b>Risultati della giornata</b><small>Tutte le partite, la tua in evidenza</small></button>' +
-      '<button type="button" data-t="classifica"><b>Classifica</b><small>Campionato, con vittorie, pareggi, sconfitte e punti</small></button>' +
-      (mio ? '<button type="button" data-t="girone" hidden><b>Il mio girone d\'andata</b><small>Giro di boa: la pagella di metà stagione di ' + E(mio) + '</small></button>' : '') +
-      '</div><div class="cd-err" role="status"></div>';
-    /* il Giro di boa compare dalla 17ª giornata pubblicata (nel Lab sempre, per provarlo) */
-    var bg = f.box.querySelector('[data-t=girone]');
-    if (bg) json('data.json').then(function (d) { if (window.CVPUB) d = window.CVPUB(d); if (laboratorio() || ultimaAndata(d) >= ANDATA) bg.hidden = false; }).catch(function () {});
-    Array.prototype.forEach.call(f.box.querySelectorAll('.cd-sc button'), function (b) {
-      b.onclick = function () {
-        f.box.querySelector('.cd-err').textContent = 'Preparo l\'immagine…';
-        Promise.all([json('data.json'), b.dataset.t === 'girone' ? datiGirone() : null]).then(function (x) {
-          var d = x[0]; if (window.CVPUB) d = window.CVPUB(d);
-          return disegna(b.dataset.t, d, x[1]);
-        }).then(function (r) { anteprima(f, r, b.querySelector('b').textContent); })
-          .catch(function (e) { f.box.querySelector('.cd-err').textContent = e.message; });
-      };
-    });
+    f.box.innerHTML = '<h3>Condividi</h3><div class="cd-err" role="status">Preparo…</div>';
+    json('data.json').then(function (d) {
+      if (window.CVPUB) d = window.CVPUB(d);
+      var v = giornataVista(d); if (!v.g) throw new Error('Nessuna giornata da condividere');
+      var comp = v.coppa ? 'Champions Cup' : 'Campionato', due = function (x) { return (x < 10 ? '0' : '') + x; };
+      var squadre = classifica(d, 99).map(function (x) { return x.n; }), sq = mio && squadre.indexOf(mio) >= 0 ? mio : squadre[0];
+      var uff = 'riepiloghi/tabellone-' + (v.coppa ? 'coppa' : 'lega') + '-' + due(v.g.n) + '.png';
+      f.box.innerHTML = '<h3>Condividi</h3><p>' + E(comp + ' · ' + v.g.n + 'ª giornata') + '. Un\'immagine pronta per il gruppo.</p><div class="cd-sc">' +
+        '<button type="button" data-t="ufficiale" hidden><b>Tabellone ufficiale</b><small>' + E(comp) + ' · Risultati e ' + (v.coppa ? 'gironi' : 'classifica') + ' della ' + v.g.n + 'ª giornata, la grafica della Curva</small></button>' +
+        '<button type="button" data-t="risultati"><b>Risultati della giornata</b><small>Tutte le partite' + (mio ? ', la tua in evidenza' : '') + '</small></button>' +
+        '<button type="button" data-t="classifica"><b>Classifica</b><small>Campionato, con vittorie, pareggi, sconfitte e punti</small></button>' +
+        '</div><label class="cd-sq"><span>Squadra</span><select aria-label="Squadra">' + squadre.map(function (x) { return '<option' + (x === sq ? ' selected' : '') + '>' + E(x) + '</option>'; }).join('') + '</select></label>' +
+        '<div class="cd-sc">' +
+        '<button type="button" data-t="mia" data-sq="1"><b data-tit="partita"></b><small>Risultato della ' + v.g.n + 'ª giornata e posizione in classifica</small></button>' +
+        '<button type="button" data-t="ultime5" data-sq="1"><b>Le ultime 5</b><small>Le ultime cinque partite di Campionato, con la forma</small></button>' +
+        '<button type="button" data-t="girone" data-sq="1" hidden><b>Giro di boa</b><small>La pagella di metà stagione</small></button>' +
+        '</div><div class="cd-err" role="status"></div><div class="cd-az"><button type="button" class="se" data-a="x">Chiudi</button></div>';
+      var sel = f.box.querySelector('.cd-sq select'), bp = f.box.querySelector('[data-tit=partita]');
+      function nomi() { var s = sel.value; bp.textContent = s === mio ? 'La mia partita' : 'La partita di ' + s; }
+      sel.onchange = nomi; nomi();
+      f.box.querySelector('[data-a=x]').onclick = f.chiudi;
+      /* il Tabellone ufficiale compare se c'è; il Giro di boa dalla 17ª giornata pubblicata (nel Lab sempre, per provarlo) */
+      blob(ROOT + uff).then(function (b) { if (/^image\//.test(b.type || 'image/png')) { var u = f.box.querySelector('[data-t=ufficiale]'); u.hidden = false; u._blob = b; } }).catch(function () {});
+      if (laboratorio() || ultimaAndata(d) >= ANDATA) f.box.querySelector('[data-t=girone]').hidden = false;
+      Array.prototype.forEach.call(f.box.querySelectorAll('.cd-sc button'), function (b) {
+        b.onclick = function () {
+          var err = f.box.querySelector('.cd-err'), tit = b.querySelector('b').textContent; err.textContent = 'Preparo l\'immagine…';
+          if (b.dataset.t === 'ufficiale') {
+            var nome = 'o-girrr-tabellone-' + (v.coppa ? 'coppa' : 'lega') + '-' + due(v.g.n) + '.png';
+            return anteprima(f, { blob: b._blob, url: URL.createObjectURL(b._blob), nome: nome, testo: 'O Fant A Girrr · ' + comp + ' · ' + v.g.n + 'ª giornata' }, tit);
+          }
+          var s = b.dataset.sq ? sel.value : null;
+          (b.dataset.t === 'girone' ? datiGirone() : Promise.resolve(null)).then(function (ex) {
+            return disegna(b.dataset.t, d, ex, v, s);
+          }).then(function (r) { anteprima(f, r, tit); })
+            .catch(function (e) { err.textContent = e.message; });
+        };
+      });
+    }).catch(function (e) { f.box.innerHTML = '<h3>Condividi</h3><div class="cd-err">' + E(e.message) + '</div><div class="cd-az"><button type="button" class="se" data-a="x">Chiudi</button></div>'; f.box.querySelector('[data-a=x]').onclick = f.chiudi; });
   }
+
+  /* ---------- Un file da solo: una puntata della Radio, un video (6.0.2) ----------
+     Nelle pagine: <button data-cd-file="voci/puntata-g07.mp3" data-cd-nome="radio-girrr-07.mp3" data-cd-tit="Radio Girrr · 7ª giornata">.
+     Prima si prepara il file, poi si tocca «Condividi»: su iPhone la condivisione deve partire subito dal tocco. */
+  function apriFile(b) {
+    var f = finestra(), tit = b.getAttribute('data-cd-tit') || 'Condividi', u = new URL(b.getAttribute('data-cd-file'), location.href).href;
+    var nome = b.getAttribute('data-cd-nome') || u.split('/').pop().split('?')[0], img = b.getAttribute('data-cd-img');
+    f.box.innerHTML = '<h3>' + E(tit) + '</h3><div class="cd-err" role="status">Preparo il file…</div>';
+    blob(u).then(function (x) {
+      var tipo = x.type || (/\.mp4$/i.test(nome) ? 'video/mp4' : /\.mp3$/i.test(nome) ? 'audio/mpeg' : 'application/octet-stream');
+      var file = null; try { file = new File([x], nome, { type: tipo }); } catch (e) {}
+      var puo = file && navigator.canShare && navigator.canShare({ files: [file] }), su = URL.createObjectURL(x);
+      var ant = img ? '<div class="cd-ant"><img alt="" src="' + E(new URL(img, location.href).href) + '"></div>' : '<div class="cd-ant cd-ic">' + (ICONA[/^audio/.test(tipo) ? 'radio' : 'video'] || '') + '</div>';
+      f.box.innerHTML = '<h3>' + E(tit) + '</h3>' + ant + '<div class="cd-az">' + (puo ? '<button type="button" class="pr" data-a="sh">Condividi</button>' : '') +
+        '<a class="' + (puo ? 'se' : 'pr') + '" download="' + E(nome) + '" href="' + su + '">Scarica</a><button type="button" class="se" data-a="x">Chiudi</button></div><div class="cd-err" role="status"></div>';
+      var sh = f.box.querySelector('[data-a=sh]');
+      if (sh) sh.onclick = function () {   /* solo il file, senza testo né collegamento: WhatsApp lo mostra con l'anteprima */
+        navigator.share({ files: [file], title: 'O Girrr' }).catch(function (e) { if (e && e.name !== 'AbortError') f.box.querySelector('.cd-err').textContent = 'Condivisione non riuscita: usa «Scarica».'; });
+      };
+      f.box.querySelector('[data-a=x]').onclick = f.chiudi;
+    }).catch(function () { f.box.innerHTML = '<h3>' + E(tit) + '</h3><div class="cd-err">Il file non si è caricato. Riprova tra poco.</div><div class="cd-az"><button type="button" class="se" data-a="x">Chiudi</button></div>'; f.box.querySelector('[data-a=x]').onclick = f.chiudi; });
+  }
+  document.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('[data-cd-file]'); if (!b) return; e.preventDefault(); apriFile(b); });
+  window.girrrCondividiFile = apriFile;
+
   function apriGiornale() {
     var f = finestra();
     f.box.innerHTML = '<h3>Condividi il Giornale</h3><div class="cd-err" role="status">Preparo la copertina…</div>';
@@ -479,6 +570,7 @@
   var SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 8 5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>';
   function avvia() {
     stile();
+    if (pagina === 'app') return;   /* Girrr Sport: i pulsanti «Condividi» di Radio e Video li disegna app.html (data-cd-file) */
     if (pagina === 'home') {   /* Home: nel riquadro del Giornale, accanto a «Leggi il giornale» */
       var bt = document.querySelector('#big .bt'); if (!bt) return;
       var a = document.createElement('a'); a.href = '#'; a.className = 's cd-gio'; a.setAttribute('role', 'button');

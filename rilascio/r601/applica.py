@@ -202,7 +202,8 @@ def main(sito):
         print('ok', pre + 'app.html, albo.html, totogirrr.html con pillole.js')
     print('ok pillole.js')
     # 6. Condividi la giornata: foto e video in un album (anteprime su WhatsApp), poi Radio e Giornale; Giornale in PDF intero
-    shutil.copyfile(os.path.join(R, 'rilascio/condividi/condividi.js'), os.path.join(sito, 'condividi.js'))
+    # la copia congelata della 6.0.1: rilascio/condividi/condividi.js va avanti con la 6.0.2
+    shutil.copyfile(os.path.join(R, 'rilascio/r601/pagine/condividi.js'), os.path.join(sito, 'condividi.js'))
     print('ok condividi.js')
     for f in ('tifosi.js', 'tifosi.css'):
         shutil.copyfile(os.path.join(R, 'rilascio/tifosi60', f), os.path.join(sito, 'girrr/v60', f))
