@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 14 novembre 2026)
 
+## 14 novembre (3) — ChatGPT: Giro di boa, lettere centrate e colori delle scritte distinti dalle bande
+
+- Ramo `chatgpt/giro-boa-colori-602`, solo Lab e pacchetto della 6.0.2. V/N/P centrate sul glifo reale sia nella pagina sia nei PNG; lettere sempre leggibili anche senza distinguere i colori.
+- Lega: titoli celesti e testi principali chiari, bande rosse. Stadio: titoli verde acqua e testi principali chiari, bande oro. Etichette Redazione e Curva differenziate. Stessi colori nelle schede della squadra, del campionato e nelle due foto condivisibili.
+- Verifica grafica: **96 visite, 16 profili × 3 motori × 2 grafiche, 0 problemi**. Controllati anche i pixel dei glifi nel DOM e nei PNG, nelle tre taglie dei pallini. Rapporto `prove/risultati-giro-boa-grafica-602.json`. Foto PC/TV aggiornate; richiami agli asset aggiornati per evitare di mostrare copie precedenti nella cache.
+- Nessuna modifica ai dati, al database o al sito vero, che rimane alla 6.0.1 di Claude. Valgono i limiti sui dispositivi fisici e WebKit offline già annotati sotto. Aggiornamento grafico da rivedere nel Lab prima del rilascio 6.0.2.
+
+
 ## 14 novembre (2) — ChatGPT: nuove anteprime 6.0.2 online nel Lab, certificazione conclusa
 
 - **Solo Registro/Lab**, PR #76 unita in **`ab4a23c`**, codice certificato **`450fb6a`**. La 6.0.2 non è pubblicata sul sito della lega: resta la **6.0.1 di Claude** (`e9124d9`). Backend sito PR #13 ancora in bozza, `00975bd`; nessun workflow di bootstrap eseguito e nessuna mutazione Supabase.

@@ -50,6 +50,7 @@ jobs:
           python3 calcoli/giro_di_boa.py qa-site
           mkdir -p "$RUNNER_TEMP/boa-web"
           ln -s "$GITHUB_WORKSPACE/qa-site" "$RUNNER_TEMP/boa-web/o-fant-a-girrr"
+          ln -s "$GITHUB_WORKSPACE" "$RUNNER_TEMP/boa-web/o-girrr-registro"
           python3 prove/server_range.py --directory "$RUNNER_TEMP/boa-web" --port 8890 > "$RUNNER_TEMP/server-range.log" 2>&1 &
       - name: Cerca pubblica, anche con caricamento ritardato
         env:
@@ -66,6 +67,7 @@ jobs:
         run: |
           node prove/prova_giro_di_boa_browser.js
           node prove/prova_giro_di_boa_tv.js
+          node prove/prova_giro_di_boa_grafica.js
           node prove/prova_cartellini_602.js
       - uses: actions/upload-artifact@v4
         if: always()
