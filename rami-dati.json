@@ -1,5 +1,5 @@
 {
- "generato": 1794672440,
+ "generato": 1794672940,
  "repository": [
   {
    "repo": "o-fant-a-girrr",
@@ -1516,17 +1516,86 @@
      "totale": 5
     },
     {
+     "nome": "chatgpt/rilascio-6-1",
+     "punta": "2536af2",
+     "data": 1794672383,
+     "titolo": "ChatGPT: aggiorna il modulo condiviso anche nelle pagine del Giornale",
+     "autore": "ChatGPT",
+     "padre": "chatgpt/messaggio-60-approvato",
+     "nascita": "df52e20",
+     "dataNascita": 1794590770,
+     "avanti": 9,
+     "stato": "unito",
+     "commit": [
+      [
+       "2536af28e788d3b299e8c7625294099b50a84a1d",
+       1794672383,
+       "ChatGPT",
+       "ChatGPT: aggiorna il modulo condiviso anche nelle pagine del Giornale"
+      ],
+      [
+       "0e6b4d9751055081710fb7f5b141f5e934564a58",
+       1794672367,
+       "ChatGPT",
+       "ChatGPT: aggiorna i riferimenti dei moduli condivisi per la 6.1"
+      ],
+      [
+       "452b332fcb25a23789805aee953f94da55ab6b36",
+       1794672106,
+       "ChatGPT",
+       "ChatGPT: prepara la 6.1 con bilanci della stagione e condivisioni"
+      ],
+      [
+       "8621e3a0d81c40e414100b680f202a62b60056c2",
+       1794671981,
+       "github-actions[bot]",
+       "Calcoli dopo la giornata"
+      ],
+      [
+       "e7342491468e152e67461b18481a4820b295de6f",
+       1794665855,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
+      [
+       "e9124d905464ddb1d2a9d0ae7bd54bbd0867431d",
+       1794648661,
+       "Claude",
+       "Claude: Rilascio 6.0.1, Derby in tre schede nell'Albo d'oro, Condividi la giornata con anteprime e Giornale in PDF, schede fluide, Totogirrr"
+      ],
+      [
+       "9d8eeafd74faba140aefef2fb9e44768e15500a6",
+       1794623423,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
+      [
+       "5752f4efaabbe7f866455cef236d6abf94b8fa05",
+       1794607323,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ]
+     ],
+     "totale": 9
+    },
+    {
      "nome": "gh-pages",
-     "punta": "8621e3a",
-     "data": 1794671981,
-     "titolo": "Calcoli dopo la giornata",
-     "autore": "github-actions[bot]",
+     "punta": "a6fcf03",
+     "data": 1794672940,
+     "titolo": "ChatGPT: pubblica O Girrr 6.1, la stagione da raccontare",
+     "autore": "ChatGPT",
      "padre": null,
      "nascita": null,
      "avanti": 0,
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "a6fcf03c50da1fd762e49e1096e5e2146a4a7f54",
+       1794672940,
+       "ChatGPT",
+       "ChatGPT: pubblica O Girrr 6.1, la stagione da raccontare"
+      ],
       [
        "8621e3a0d81c40e414100b680f202a62b60056c2",
        1794671981,
@@ -1592,48 +1661,9 @@
        1794495794,
        "Claude",
        "Claude: Rilascio 5.8.2, niente «· bot» nei commenti della Curva, pallino Live solo durante le partite, Carriera con il numero a cartellini e"
-      ],
-      [
-       "1207012cdff1a2d9a773c7189e7bfa482f48c99e",
-       1794488439,
-       "github-actions[bot]",
-       "Aggiorna statistiche e voti in automatico"
       ]
      ],
-     "totale": 649
-    },
-    {
-     "nome": "chatgpt/rilascio-6-1",
-     "punta": "2536af2",
-     "data": 1794672383,
-     "titolo": "ChatGPT: aggiorna il modulo condiviso anche nelle pagine del Giornale",
-     "autore": "ChatGPT",
-     "padre": "gh-pages",
-     "nascita": "8621e3a",
-     "dataNascita": 1794671981,
-     "avanti": 3,
-     "stato": "attivo",
-     "commit": [
-      [
-       "2536af28e788d3b299e8c7625294099b50a84a1d",
-       1794672383,
-       "ChatGPT",
-       "ChatGPT: aggiorna il modulo condiviso anche nelle pagine del Giornale"
-      ],
-      [
-       "0e6b4d9751055081710fb7f5b141f5e934564a58",
-       1794672367,
-       "ChatGPT",
-       "ChatGPT: aggiorna i riferimenti dei moduli condivisi per la 6.1"
-      ],
-      [
-       "452b332fcb25a23789805aee953f94da55ab6b36",
-       1794672106,
-       "ChatGPT",
-       "ChatGPT: prepara la 6.1 con bilanci della stagione e condivisioni"
-      ]
-     ],
-     "totale": 3
+     "totale": 653
     }
    ]
   },
