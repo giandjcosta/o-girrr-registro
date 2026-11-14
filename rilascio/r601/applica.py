@@ -113,7 +113,7 @@ SPOGLIATOIO = [
     ('<button role="tab" data-t="rosa" aria-selected="true">Rosa</button>',
      '<button role="tab" data-t="entra" aria-selected="false" hidden>Entra</button>\n<button role="tab" data-t="rosa" aria-selected="true">Rosa</button>'),
     ("var ok=authed();document.getElementById('tabs').hidden=!ok;",
-     "var ok=authed(),PUB={inj:1,fa:1,lega:1},OSP=false;try{OSP=sessionStorage.getItem('ospite')==='1'||/[?&]ospite\\b/.test(location.search)}catch(e){}document.getElementById('tabs').hidden=false;"),
+     "var ok=authed(),PUB={inj:1,fa:1,lega:1},OSP=false;try{OSP=sessionStorage.getItem('ospite')==='1'||/[?&]ospite\\b/.test(location.search)}catch(e){}document.getElementById('tabs').hidden=false;document.getElementById('tabs').dataset.pubblico=ok?'0':'1';"),
     ("if(!ok){app.innerHTML=vGate();return}",
      "if(!ok){/* senza codice: Infortunati, Svincolati e Calendario sono pubblici (Gianluca, 13 novembre 2026) */"
      "if(!PUB[tab]&&!(tab==='entra'&&!OSP))tab=OSP?'inj':'entra';"
@@ -205,6 +205,8 @@ def main(sito):
     # la copia congelata della 6.0.1: rilascio/condividi/condividi.js va avanti con la 6.0.2
     shutil.copyfile(os.path.join(R, 'rilascio/r601/pagine/condividi.js'), os.path.join(sito, 'condividi.js'))
     print('ok condividi.js')
+    # Cerca si monta anche con script lento: rispetta le tre schede pubbliche dell'ospite.
+    shutil.copyfile(os.path.join(R, 'rilascio/cerca/cerca.js'), os.path.join(sito, 'cerca.js'))
     for f in ('tifosi.js', 'tifosi.css'):
         shutil.copyfile(os.path.join(R, 'rilascio/tifosi60', f), os.path.join(sito, 'girrr/v60', f))
         print('ok girrr/v60/' + f)
