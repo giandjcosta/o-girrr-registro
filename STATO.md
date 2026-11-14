@@ -4,7 +4,7 @@
 «Vai» di Gianluca («Rilascia la 6.0.1»), correzione minore. Solo pagine: niente `main` del sito, niente database.
 - Copia nuova di `gh-pages` (`9d8eeaf`) + `python3 rilascio/r601/applica.py` + voce 6.0.1 in `versioni.json` (`aggiungi.py --tipo minore`, messaggio solo con le novità del sito). 23 file, nessun file dei dati.
 - Prove sulla copia, scritture bloccate: `prova_601.js` Chromium, WebKit e Firefox 0 problemi; `prova_derby_schede.js` Chromium e WebKit a posto; `prova_60.js` (16 schermi) WebKit e Firefox 0 problemi, Chromium solo le risposte 400 di `mvp_mio` al codice finto «PROVA» (come `notifiche_stato`: dalla 6.0 lo schema MVP è attivo; la prova ora le ignora).
-- **Pubblicato:** `gh-pages` `e9124d9`; online dopo 40 secondi (`versioni.json` 6.0.1, `pillole.js` 200). Sul sito vero: prove 6.0.1 e Derby (esito sotto), foto PC e TV mandate a Gianluca.
+- **Pubblicato:** `gh-pages` `e9124d9`; online dopo 40 secondi (`versioni.json` 6.0.1, `pillole.js` 200). Sul sito vero: `prova_601.js` Chromium (7 schermi × squadra, ospite e anonimo) a posto tranne la scheda «Cerca un giocatore» dello Spogliatoio senza codice, che è `cerca.js` già online e mostra dati pubblici (lasciata; la prova ora la accetta); WebKit 0 problemi; `prova_derby_schede.js` Chromium 10 su 10. Foto PC e TV mandate a Gianluca. PR #77 (registro) e #14 (sito, `AGENTS.md`) unite.
 - **Tornare indietro:** `git revert e9124d9` su `gh-pages` (torna la 6.0 in un minuto).
 - Registro: `ufficiale/src/sito/` allineato ai file pubblicati (più `pillole.js`); `AGENTS.md` con la 6.0.1. La 6.0.2 (`rilascio/r602/applica.py`) resta in prova nel Lab: serve il suo «Vai».
 
