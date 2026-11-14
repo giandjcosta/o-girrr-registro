@@ -83,7 +83,7 @@ footer{color:var(--muted);font-size:12.5px;padding:18px 0}
 <p class="lead">Tre modi di disegnare gli stessi rami, con i dati veri di Git. Ogni ramo parte dal ramo da cui è nato davvero. <b>Tocca un pallino</b>: la vista si avvicina a quel ramo e si aprono i dettagli, con i commit e i link a GitHub.</p>
 <div class="barra">
  <div class="seg" id="vista" role="group" aria-label="Disegno"><button data-v="albero">Albero</button><button data-v="metro">Linea del tempo</button><button data-v="ventaglio">Ventaglio</button></div>
- <div class="seg oro" id="repo" role="group" aria-label="Repository"><button data-r="0">Sito</button><button data-r="1">Registro</button></div>
+ <div class="seg oro" id="repo" role="group" aria-label="Repository"><button data-r="0">Sito</button><button data-r="1">Registro</button><button data-r="2">Entrambi</button></div>
  <div class="seg oro" id="stato" role="group" aria-label="Stato"><button data-s="attivi">Attivi</button><button data-s="aperti">Non uniti</button><button data-s="tutti">Tutti</button></div>
  <input type="search" id="cerca" placeholder="Cerca un ramo, un assistente o una novità" aria-label="Cerca">
 </div>
@@ -101,14 +101,19 @@ function aut(x){var a=(typeof x==='string'?x:x.autore)||'';for(var k in COL)if(a
  if(typeof x!=='string'){if(/^claude\//.test(x.nome))return 'Claude';if(/^chatgpt\//.test(x.nome))return 'ChatGPT';if(/^grok\//.test(x.nome))return 'Grok';if(/^vscode\//.test(x.nome))return 'VSCode'}return 'Altro'}
 function E(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function giorno(t,ora){return t?new Date(t*1000).toLocaleString('it-IT',ora?{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}:{day:'numeric',month:'short',year:'numeric'}):'Dato non conservato'}
-function ramoUrl(R,n){return GH[R.repo]+'/tree/'+n.split('/').map(encodeURIComponent).join('/')}
+function ramoUrl(R,n,b){return GH[(b&&b.repoVero)||R.repo]+'/tree/'+((b&&b.vero)||n).split('/').map(encodeURIComponent).join('/')}
 var D=null,X=null,S={v:'albero',r:0,s:'aperti',q:'',sel:null,fuoco:null};
 try{var x=JSON.parse(localStorage.getItem('og:rami-prova')||'{}');['v','r','s'].forEach(function(k){if(x[k]!=null)S[k]=x[k]})}catch(e){}
 var h=/ramo=([^&]+)/.exec(location.hash);if(h)S.sel=decodeURIComponent(h[1]);var hr=/repo=(\d)/.exec(location.hash);if(hr)S.r=+hr[1];
 document.getElementById('legenda').innerHTML=Object.keys(COL).map(function(k){return '<span><i style="background:'+COL[k]+'"></i>'+k+'</span>'}).join('')+'<span><i style="background:transparent;border:2px solid #8fa0c4"></i>Unito o fermo</span><span>Attivo: lavoro negli ultimi 7 giorni</span>';
 
 /* ---------- dati della vista: rami da mostrare, figli, ordine ---------- */
-function prepara(){var R=D[S.r],q=S.q.toLowerCase(),by={},keep={};R.rami.forEach(function(b){by[b.nome]=b});
+/* Entrambi (Gianluca, 14 novembre 2026): sito e registro insieme; ogni ramo ha davanti «Sito ›» o «Registro ›» */
+var UNITI=null;function unisci(){if(UNITI&&UNITI.d===D)return UNITI.R;var P={'o-fant-a-girrr':'Sito','o-girrr-registro':'Registro'},rami=[],radici=[];
+ D.forEach(function(Q){var pre=P[Q.repo]+' › ';Q.rami.forEach(function(b){var c={};for(var k in b)c[k]=b[k];c.vero=b.nome;c.repoVero=Q.repo;c.padreVero=b.padre;c.nome=pre+b.nome;c.padre=b.padre?pre+b.padre:null;rami.push(c)});
+  Q.radici.forEach(function(n){radici.push(pre+n)})});
+ rami.sort(function(a,b){return a.data-b.data});UNITI={d:D,R:{repo:'sito e registro',tronco:radici[0],radici:radici,rami:rami}};return UNITI.R}
+function prepara(){var R=S.r===2?unisci():D[S.r],q=S.q.toLowerCase(),by={},keep={};R.rami.forEach(function(b){by[b.nome]=b});
  R.rami.forEach(function(b){var rad=R.radici.indexOf(b.nome)>=0,ok=rad||b.nome===S.sel||((S.s==='tutti'||(S.s==='aperti'&&b.stato!=='unito')||(S.s==='attivi'&&b.stato==='attivo'))&&(!q||(b.nome+' '+b.titolo+' '+b.autore).toLowerCase().indexOf(q)>=0));
   if(ok){var n=b.nome;while(n&&by[n]&&!keep[n]){keep[n]=1;n=by[n].padre}}});
  var figli={},tutti={};R.rami.forEach(function(b){if(b.padre)(tutti[b.padre]=tutti[b.padre]||[]).push(b);if(keep[b.nome]&&b.padre)(figli[b.padre]=figli[b.padre]||[]).push(b)});
@@ -128,8 +133,8 @@ function dettagli(){var det=document.getElementById('det'),lay=document.getEleme
   '<dt>Ultimo lavoro</dt><dd>'+giorno(b.data,1)+'</dd><dt>'+(rad?'Commit':'Commit propri')+'</dt><dd>'+(b.totale||0)+(b.padre?' rispetto a '+E(b.padre):'')+'</dd>'+
   '<dt>Sotto-rami</dt><dd>'+(f.length||'Nessuno')+'</dd></dl>'+
   (f.length?'<div class="figli">'+f.map(function(x){return '<button type="button" data-vai="'+E(x.nome)+'" style="border-left:3px solid '+colore(x)+'">'+E(x.nome)+'</button>'}).join('')+'</div>':'')+
-  '<div class="link"><a href="'+ramoUrl(R,b.nome)+'" target="_blank" rel="noopener">Apri il ramo su GitHub ↗</a>'+(b.padre?'<a class="se" href="'+GH[R.repo]+'/compare/'+encodeURIComponent(b.padre)+'...'+encodeURIComponent(b.nome)+'" target="_blank" rel="noopener">Confronta con '+E(b.padre)+' ↗</a>':'')+'</div>'+
-  '<div class="k" style="margin:0 0 8px">Ultimi commit</div>'+(b.commit&&b.commit.length?'<ol class="commit">'+b.commit.map(function(k){return '<li style="--c:'+COL[aut(k[2])]+'"><div class="q">'+giorno(k[1],1)+' · '+E(k[2])+' · <code>'+k[0].slice(0,7)+'</code></div><a href="'+GH[R.repo]+'/commit/'+k[0]+'" target="_blank" rel="noopener">'+E(k[3])+' ↗</a></li>'}).join('')+'</ol>'+((b.totale||0)>b.commit.length?'<p class="q" style="color:var(--muted);font-size:12px">Gli ultimi '+b.commit.length+' di '+b.totale+'.</p>':''):'<p style="color:var(--muted);font-size:13px">Nessun commit proprio: il ramo coincide con quello da cui è nato.</p>');
+  '<div class="link"><a href="'+ramoUrl(R,b.nome,b)+'" target="_blank" rel="noopener">Apri il ramo su GitHub ↗</a>'+(b.padre?'<a class="se" href="'+GH[b.repoVero||R.repo]+'/compare/'+encodeURIComponent(b.padreVero||b.padre)+'...'+encodeURIComponent(b.vero||b.nome)+'" target="_blank" rel="noopener">Confronta con '+E(b.padre)+' ↗</a>':'')+'</div>'+
+  '<div class="k" style="margin:0 0 8px">Ultimi commit</div>'+(b.commit&&b.commit.length?'<ol class="commit">'+b.commit.map(function(k){return '<li style="--c:'+COL[aut(k[2])]+'"><div class="q">'+giorno(k[1],1)+' · '+E(k[2])+' · <code>'+k[0].slice(0,7)+'</code></div><a href="'+GH[b.repoVero||R.repo]+'/commit/'+k[0]+'" target="_blank" rel="noopener">'+E(k[3])+' ↗</a></li>'}).join('')+'</ol>'+((b.totale||0)>b.commit.length?'<p class="q" style="color:var(--muted);font-size:12px">Gli ultimi '+b.commit.length+' di '+b.totale+'.</p>':''):'<p style="color:var(--muted);font-size:13px">Nessun commit proprio: il ramo coincide con quello da cui è nato.</p>');
  det.hidden=false;lay.classList.add('aperto');
  try{history.replaceState(null,'','#repo='+S.r+'&ramo='+encodeURIComponent(b.nome))}catch(e){}}
 function scegli(n,zoom){S.sel=n;if(S.v==='albero'&&zoom!==false)S.fuoco=n;dettagli();evidenzia();if(zoom!==false&&cam)vaiA(n)}
@@ -204,7 +209,7 @@ function metro(){var L=X.ordine,W=1400,lab=330,riga=30,H=L.length*riga+50,s='',p
  s+=pal;   // i pallini sopra tutte le linee, così il tocco arriva sempre al ramo giusto
  return tela('Linea del tempo','Ogni riga è un ramo, dal giorno in cui nasce al suo ultimo lavoro; la curva parte dal ramo da cui è nato. Tocca un pallino: lo zoom porta su quel ramo e sulla sua riga compaiono i commit, ognuno con il suo link.',W,H,s+'<g id="commit-sel"></g>')+'<!--'+W+'x'+H+'-->'}
 function puntiCommit(){var b=S.sel&&X.by[S.sel];if(!b||!T.xs||T.y[b.nome]==null)return '';var R=X.R;
- return (b.commit||[]).map(function(k){var x=T.xs(k[1]),y=T.y[b.nome];return '<a href="'+GH[R.repo]+'/commit/'+k[0]+'" target="_blank" rel="noopener"><title>'+E(giorno(k[1],1)+' · '+k[3])+'</title><circle cx="'+x+'" cy="'+y+'" r="4" fill="#fff" stroke="'+COL[aut(k[2])]+'" stroke-width="2.5" style="cursor:pointer"/></a>'}).join('')}
+ return (b.commit||[]).map(function(k){var x=T.xs(k[1]),y=T.y[b.nome];return '<a href="'+GH[b.repoVero||R.repo]+'/commit/'+k[0]+'" target="_blank" rel="noopener"><title>'+E(giorno(k[1],1)+' · '+k[3])+'</title><circle cx="'+x+'" cy="'+y+'" r="4" fill="#fff" stroke="'+COL[aut(k[2])]+'" stroke-width="2.5" style="cursor:pointer"/></a>'}).join('')}
 /* Ventaglio */
 function ventaglio(){var L=X.ordine,W=1400,maxd=Math.max.apply(null,L.map(function(o){return o.d})),passo=Math.max(110,Math.min(170,(W-260)/(maxd+1))),riga=30,y={},foglie=0,s='';POS={};
  function pos(b){var f=X.figli[b.nome]||[];if(!f.length){y[b.nome]=26+(foglie++)*riga;return y[b.nome]}var a=f.map(pos);y[b.nome]=(Math.min.apply(null,a)+Math.max.apply(null,a))/2;return y[b.nome]}
@@ -223,7 +228,7 @@ function disegnaVista(){var box=document.getElementById('box');X=prepara();
  var html=S.v==='albero'?albero():S.v==='metro'?metro():ventaglio();box.innerHTML=html;cam=null;
  var m=/<!--(\d+)x(\d+)-->/.exec(html),svg=box.querySelector('.tela svg');
  if(svg&&m){cam=Telecamera(svg,+m[1],+m[2]);evidenzia();if(S.sel&&POS[S.sel])setTimeout(function(){vaiA(S.sel)},60)}
- document.getElementById('piede').textContent=X.R.repo+' · '+(X.n-X.R.radici.length)+' rami mostrati su '+(X.R.rami.length-X.R.radici.length)+' · Dati di Git del '+new Date(D.generato*1000).toLocaleString('it-IT',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
+ document.getElementById('piede').textContent=((VERS||D.versione)?'Sul sito la '+(VERS||D.versione)+' · ':'')+X.R.repo+' · '+(X.n-X.R.radici.length)+' rami mostrati su '+(X.R.rami.length-X.R.radici.length)+' · Dati di Git del '+new Date(D.generato*1000).toLocaleString('it-IT',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
  [['vista','v'],['repo','r'],['stato','s']].forEach(function(p){[].forEach.call(document.querySelectorAll('#'+p[0]+' button'),function(bt){bt.setAttribute('aria-pressed',String(bt.dataset[p[1]]==String(S[p[1]])))})});
  try{localStorage.setItem('og:rami-prova',JSON.stringify({v:S.v,r:S.r,s:S.s}))}catch(e){}}
 function ridisegna(){var box=document.getElementById('box');box.classList.add('esce');setTimeout(function(){disegnaVista();dettagli();box.classList.remove('esce')},FERMO?0:140)}
@@ -234,8 +239,11 @@ document.getElementById('box').addEventListener('keydown',function(e){var n=e.ta
 var tc;document.getElementById('cerca').addEventListener('input',function(e){clearTimeout(tc);tc=setTimeout(function(){S.q=e.target.value;S.fuoco=null;ridisegna()},180)});
 addEventListener('keydown',function(e){if(e.key==='Escape'&&S.sel){S.sel=null;S.fuoco=null;dettagli();if(S.v==='albero')disegnaVista();else{evidenzia();if(cam)cam.anima(cam.tutto())}}});
 /* dati: prima la copia aggiornata dal workflow (ramo tecnico), se non risponde quella qui accanto; poi un controllo ogni minuto */
+/* la versione online, dalla stessa fonte della pagina Versioni del sito */
+var VERS=null;function versione(){return fetch('https://giandjcosta.github.io/o-fant-a-girrr/versioni.json?t='+Date.now(),{cache:'no-cache'}).then(function(r){return r.json()}).then(function(j){var v=j.versioni&&j.versioni[0]&&j.versioni[0].v;if(v&&v!==VERS){VERS=v;if(D)disegnaVista()}}).catch(function(){})}
+versione();setInterval(function(){if(!document.hidden)versione()},300000);
 var FRESCO='https://raw.githubusercontent.com/giandjcosta/o-girrr-registro/chatgpt/dati-ramificazioni/rami-dati.json',VISTO=0;
-function usa(j){if(!j||!j.repository||j.generato<=VISTO)return false;VISTO=j.generato;D=j.repository;D.generato=j.generato;
+function usa(j){if(!j||!j.repository||(j.generato<=VISTO&&(!D||j.versione===D.versione)))return false;VISTO=j.generato;D=j.repository;D.generato=j.generato;D.versione=j.versione;
  if(S.sel&&!D.some(function(R){return R.rami.some(function(b){return b.nome===S.sel})})){S.sel=null;S.fuoco=null}
  if(S.sel&&S.v==='albero')S.fuoco=S.sel;disegnaVista();dettagli();return true}
 function leggi(u){return fetch(u,{cache:'no-cache'}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
