@@ -1,5 +1,5 @@
 {
- "generato": 1794698620,
+ "generato": 1794698680,
  "versione": "6.1",
  "repository": [
   {
@@ -7003,10 +7003,31 @@
      "totale": 3
     },
     {
+     "nome": "chatgpt/posizione-riga-unica-611",
+     "punta": "88362fa",
+     "data": 1794698620,
+     "titolo": "ChatGPT: tiene unita sul PC la frase della posizione peggiore",
+     "autore": "ChatGPT",
+     "padre": "chatgpt/esito-611-lab",
+     "nascita": "804a36e",
+     "dataNascita": 1794691698,
+     "avanti": 2,
+     "stato": "unito",
+     "commit": [
+      [
+       "88362fa6b33985355e0b72d064f69b82bc066827",
+       1794698620,
+       "ChatGPT",
+       "ChatGPT: tiene unita sul PC la frase della posizione peggiore"
+      ]
+     ],
+     "totale": 2
+    },
+    {
      "nome": "main",
-     "punta": "c427c75",
-     "data": 1794691732,
-     "titolo": "ChatGPT: aggiorna STATO con la verifica dell’anteprima 6.1.1",
+     "punta": "93b4752",
+     "data": 1794698680,
+     "titolo": "ChatGPT: corregge nel Lab la riga Peggiore sul PC",
      "autore": "ChatGPT",
      "padre": null,
      "nascita": null,
@@ -7014,6 +7035,12 @@
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "93b4752b16484bc29c3ec2fbbf04449ea712d5c0",
+       1794698680,
+       "ChatGPT",
+       "ChatGPT: corregge nel Lab la riga Peggiore sul PC"
+      ],
       [
        "c427c75ba6a6bd1226e0642e11257ef4fd233080",
        1794691732,
@@ -7079,36 +7106,9 @@
        1794671637,
        "ChatGPT",
        "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
-      ],
-      [
-       "1d273ff9704344d38e09acee9221473e6a3c70f2",
-       1794671598,
-       "ChatGPT",
-       "ChatGPT: pubblica nel Lab i bilanci della stagione 6.1"
       ]
      ],
-     "totale": 1197
-    },
-    {
-     "nome": "chatgpt/posizione-riga-unica-611",
-     "punta": "88362fa",
-     "data": 1794698620,
-     "titolo": "ChatGPT: tiene unita sul PC la frase della posizione peggiore",
-     "autore": "ChatGPT",
-     "padre": "main",
-     "nascita": "c427c75",
-     "dataNascita": 1794691732,
-     "avanti": 1,
-     "stato": "attivo",
-     "commit": [
-      [
-       "88362fa6b33985355e0b72d064f69b82bc066827",
-       1794698620,
-       "ChatGPT",
-       "ChatGPT: tiene unita sul PC la frase della posizione peggiore"
-      ]
-     ],
-     "totale": 1
+     "totale": 1199
     }
    ]
   }
