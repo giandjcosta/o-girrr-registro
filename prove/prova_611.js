@@ -40,6 +40,9 @@ async function noLato(p){assert(await p.evaluate(()=>document.documentElement.sc
     await p.locator('.ms-giornata').press('ArrowDown');assert.match(await p.locator('.ms-lettura').textContent(),/Dopo la 2ª giornata:/);
     await p.selectOption('.ms-giornata',String(graf.n-1));await noLato(p);
     const leggibile=await p.locator('.ms-classifica .ms-txt').evaluate(e=>({colore:getComputedStyle(e).color,px:parseFloat(getComputedStyle(e).fontSize)}));assert.equal(leggibile.colore,'rgb(251, 246, 236)');assert(leggibile.px>=15);
+    const posizioni=await p.locator('.ms-posizioni').evaluate(e=>({testo:e.textContent,righe:[...e.children].map(s=>{const r=document.createRange();r.selectNodeContents(s);return {righe:r.getClientRects().length,w:s.getBoundingClientRect().width,max:e.clientWidth,spazi:getComputedStyle(s).whiteSpace}})}));
+    assert.match(posizioni.testo,/Migliore posizione: .*Peggiore: /);assert.equal(posizioni.righe.length,2);
+    for(const [i,z] of posizioni.righe.entries()){if(o.viewport.width>=1000&&i===1){assert.equal(z.righe,1,'Posizione peggiore a capo sul PC');assert(z.w<=z.max+1,'Peggiore fuori dal riquadro');}if(o.viewport.width<1000)assert.equal(z.spazi,'normal','Visualizzazione mobile modificata');}
     if(M==='chromium'&&['PC1920','TV','iPhone 320'].includes(nome)){await p.locator('.ms-graf').scrollIntoViewIfNeeded();await p.screenshot({path:path.join(F,(nome==='iPhone 320'?'telefono':nome==='TV'?'tv':'pc')+'-'+(skin==='girrr'?'lega':'stadio')+'.jpg'),quality:84});}
     await p.close();
     if(process.env.SOLO_STAGIONE){assert.deepEqual(errori,[]);report.push({schermo:nome,grafica:skin,problemi:[]});continue;}

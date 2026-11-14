@@ -1,6 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 14 novembre 2026)
 
 
+## 14 novembre (9) — ChatGPT: «Peggiore» resta su una riga sul PC
+
+- Chiarimento di Gianluca: il problema è sul PC, dove il «5ª» di «Peggiore: 6ª (dopo la 5ª)» rimaneva isolato sotto. La frase è ora un’unità che non si spezza dai 1000 px; testo, colore e dimensioni sono gli stessi. Visualizzazione su cellulare preservata, compresa la lettura della giornata selezionata. Nessuna abbreviazione introdotta.
+- Ramo `chatgpt/posizione-riga-unica-611`, base `c427c75`. Solo Lab della 6.1.1: riferimento del modulo aggiornato nello specchio, quattro foto PC/TV aggiornate con un indirizzo nuovo per la cache. Le foto del cellulare restano quelle precedenti. Sito vero e database non modificati.
+- Verifica su 16 schermi × due grafiche × Chromium/WebKit/Firefox reali: 96 visite e casi prima/34ª giornata. Il controllo iniziale sul tablet 1024 ha richiesto di limitare il vincolo alla sola frase Peggiore; profilo riprovato sui tre motori, due grafiche, senza problemi. Misurata una sola riga, senza ritagli o sbordamenti, e confermata la disposizione normale sotto i 1000 px. Rapporto `prove/risultati-posizione-pc-611.json`; dispositivi fisici non disponibili.
+
+
 ## 14 novembre (8) — ChatGPT: proposta 6.1.1, posizione leggibile e Curva più rapida
 
 - **Lab pubblico aggiornato:** PR #87 unita in `f959d2f69bda69ff8952969f4c862d38a65996d3`, codice finale `ccc1f5df20ad898dfd4dc91094b1d5102c525340`. https://giandjcosta.github.io/o-girrr-registro/lab/novita-6-1-1.html verificata online, sei foto rispondono 200 e il modulo pubblico contiene i testi bianchi da 15 px. Specchio pubblico: Carriera e Curva riuscite in Lega e Stadio, due casi con scritture bloccate. Sito della lega ancora alla 6.1; la 6.1.1 è solo in prova.
