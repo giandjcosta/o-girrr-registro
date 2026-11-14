@@ -1,5 +1,5 @@
 {
- "generato": 1794691510,
+ "generato": 1794691698,
  "versione": "6.1",
  "repository": [
   {
@@ -7061,6 +7061,27 @@
       ]
      ],
      "totale": 1195
+    },
+    {
+     "nome": "chatgpt/esito-611-lab",
+     "punta": "804a36e",
+     "data": 1794691698,
+     "titolo": "ChatGPT: registra CI e verifica pubblica dell’anteprima 6.1.1",
+     "autore": "ChatGPT",
+     "padre": "main",
+     "nascita": "35573fa",
+     "dataNascita": 1794691510,
+     "avanti": 1,
+     "stato": "attivo",
+     "commit": [
+      [
+       "804a36e950b4bd200d6ad5361b6ac21ac82b2864",
+       1794691698,
+       "ChatGPT",
+       "ChatGPT: registra CI e verifica pubblica dell’anteprima 6.1.1"
+      ]
+     ],
+     "totale": 1
     }
    ]
   }
