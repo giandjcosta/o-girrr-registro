@@ -1,5 +1,5 @@
 {
- "generato": 1794681768,
+ "generato": 1794681954,
  "versione": "6.1",
  "repository": [
   {
@@ -7007,6 +7007,27 @@
       ]
      ],
      "totale": 1189
+    },
+    {
+     "nome": "chatgpt/nome-competizioni-61",
+     "punta": "f5b83f4",
+     "data": 1794681954,
+     "titolo": "ChatGPT: rifinisce il nome delle due competizioni nel Lab",
+     "autore": "ChatGPT",
+     "padre": "main",
+     "nascita": "d29fd09",
+     "dataNascita": 1794681768,
+     "avanti": 1,
+     "stato": "attivo",
+     "commit": [
+      [
+       "f5b83f426f3de44ea9eb1a9db7304fd4330e2373",
+       1794681954,
+       "ChatGPT",
+       "ChatGPT: rifinisce il nome delle due competizioni nel Lab"
+      ]
+     ],
+     "totale": 1
     }
    ]
   }
