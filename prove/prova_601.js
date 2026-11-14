@@ -41,7 +41,7 @@ async function ctx(o0) { const o = { ...o0, serviceWorkers: 'block' }; /* senza 
    }
    // Spogliatoio senza codice
    await p.goto(B + 'index.html' + q); await p.waitForTimeout(2200); await lato('Spogliatoio');
-   const tabs = await p.evaluate(() => [...document.querySelectorAll('#tabs button')].filter(b => !b.hidden && b.offsetParent).map(b => b.dataset.t).join(','));
+   const tabs = await p.evaluate(() => [...document.querySelectorAll('#tabs button')].filter(b => !b.hidden && b.offsetParent).map(b => b.dataset.t).filter(x => x !== 'cerca').join(','));   // «Cerca un giocatore» (cerca.js, dati pubblici) può comparire anche senza codice
    const atteso = chi === 'ospite' ? 'fa,inj,lega' : 'entra,fa,inj,lega'; if (tabs !== atteso) pr.push(chi + ' Spogliatoio schede: ' + tabs);
    for (const t of ['inj', 'fa', 'lega']) { await p.click('#tabs [data-t="' + t + '"]'); await p.waitForTimeout(700); const txt = await p.evaluate(() => document.getElementById('app').innerText.slice(0, 200)); if (!txt.trim() || /Entra con la tua squadra/.test(txt)) pr.push(chi + ' Spogliatoio ' + t + ' vuoto'); if (t === 'inj' && /I tuoi/.test(await p.evaluate(() => document.getElementById('app').innerText))) pr.push(chi + ' Infortunati con «I tuoi»'); await lato('Spogliatoio ' + t);
     if (FOTO && /PC 1280|SE/.test(sn) && M === 'chromium' && t === 'inj') await p.screenshot({ path: FOTO + '/601-' + sn.replace(/\W+/g, '') + '-' + chi + '-spogliatoio.png' }); }

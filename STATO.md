@@ -1,5 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 13 novembre 2026)
 
+## 14 novembre (1) — Claude: **ONLINE** la 6.0.1
+«Vai» di Gianluca («Rilascia la 6.0.1»), correzione minore. Solo pagine: niente `main` del sito, niente database.
+- Copia nuova di `gh-pages` (`9d8eeaf`) + `python3 rilascio/r601/applica.py` + voce 6.0.1 in `versioni.json` (`aggiungi.py --tipo minore`, messaggio solo con le novità del sito). 23 file, nessun file dei dati.
+- Prove sulla copia, scritture bloccate: `prova_601.js` Chromium, WebKit e Firefox 0 problemi; `prova_derby_schede.js` Chromium e WebKit a posto; `prova_60.js` (16 schermi) WebKit e Firefox 0 problemi, Chromium solo le risposte 400 di `mvp_mio` al codice finto «PROVA» (come `notifiche_stato`: dalla 6.0 lo schema MVP è attivo; la prova ora le ignora).
+- **Pubblicato:** `gh-pages` `e9124d9`; online dopo 40 secondi (`versioni.json` 6.0.1, `pillole.js` 200). Sul sito vero: prove 6.0.1 e Derby (esito sotto), foto PC e TV mandate a Gianluca.
+- **Tornare indietro:** `git revert e9124d9` su `gh-pages` (torna la 6.0 in un minuto).
+- Registro: `ufficiale/src/sito/` allineato ai file pubblicati (più `pillole.js`); `AGENTS.md` con la 6.0.1. La 6.0.2 (`rilascio/r602/applica.py`) resta in prova nel Lab: serve il suo «Vai».
+
 ## 13 novembre (10) — Claude: 6.0.2 in prova (Lab), ogni pezzo condivisibile da solo e squadra a scelta anche per l'ospite
 Richiesta di Gianluca della sera del 13 novembre («questa sarà la 6.0.2»). `rilascio/r602/applica.py`, da lanciare **dopo** `rilascio/r601/applica.py` sulla stessa copia di `gh-pages`. La 6.0.1 usa ora una copia congelata di `condividi.js` (`rilascio/r601/pagine/condividi.js`); `rilascio/condividi/condividi.js` è quello della 6.0.2. Nel Lab si vedono 6.0.1 e 6.0.2 insieme (app.html da `rilascio/r602/pagine/`). **Niente online.**
 - **Tabellone › Condividi:** «Tabellone ufficiale» della giornata che stai guardando (Campionato o Champions Cup: la grafica della Curva, `riepiloghi/tabellone-lega|coppa-NN.png`), poi Risultati e Classifica come prima; sotto, la **scelta della squadra** (anche per l'ospite, di partenza la tua o la capolista): «La mia partita» / «La partita di …», **«Le ultime 5»** (immagine nuova: ultime cinque partite di Campionato con casa/trasferta, risultato, pallino V/N/P, «3 vittorie · 0 pareggi · 2 sconfitte» e posizione; niente sigle tipo «PVVVP») e «Giro di boa» di qualsiasi squadra (dalla 17ª giornata pubblicata, come prima; nel Lab sempre).
