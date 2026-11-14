@@ -1,6 +1,6 @@
 {
   "calcolo": {
-    "controlli": 15,
+    "controlli": 17,
     "problemi": 0
   },
   "matrice": [
@@ -8,8 +8,8 @@
       "motore": "chromium",
       "profili": 16,
       "visite": 32,
-      "problemi": 0,
       "album_stress": 60,
+      "problemi": 0,
       "record": [
         {
           "motore": "chromium",
@@ -209,8 +209,8 @@
       "motore": "webkit",
       "profili": 16,
       "visite": 32,
-      "problemi": 0,
       "album_stress": 60,
+      "problemi": 0,
       "record": [
         {
           "motore": "webkit",
@@ -410,8 +410,8 @@
       "motore": "firefox",
       "profili": 16,
       "visite": 32,
-      "problemi": 0,
       "album_stress": 60,
+      "problemi": 0,
       "record": [
         {
           "motore": "firefox",
@@ -614,5 +614,633 @@
     "Condivisione simulata: WhatsApp/iPhone da provare",
     "Samsung Internet e TV fisici non disponibili",
     "WebKit: errore interno al reload offline, riprodotto anche su service worker minimo indipendente"
-  ]
+  ],
+  "revisione": "14 novembre: due tavole, grafici e voci reali; sostituisce la bozza a tre foto",
+  "carriera": [
+    {
+      "motore": "chromium",
+      "visite": 32,
+      "problemi": 0,
+      "report": [
+        {
+          "schermo": "iPhone320",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "iPhone320",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "iPhone SE",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "iPhone SE",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "iPhone 15 Pro",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "iPhone 15 Pro",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "iPhone 15 Pro Max",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "iPhone 15 Pro Max",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "Galaxy S8",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "Galaxy S8",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "Pixel 7",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "Pixel 7",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "Galaxy S9+",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "Galaxy S9+",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "iPad Mini",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 7
+        },
+        {
+          "schermo": "iPad Mini",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "iPad (gen 7) landscape",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "iPad (gen 7) landscape",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "iPad Pro 11",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "iPad Pro 11",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "Galaxy Tab S4",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "Galaxy Tab S4",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "Galaxy Tab S4 landscape",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "Galaxy Tab S4 landscape",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "PC1280",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "PC1280",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "PC1920",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "PC1920",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "PC2560",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "PC2560",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "TV",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "TV",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 9
+        }
+      ]
+    },
+    {
+      "motore": "webkit",
+      "visite": 32,
+      "problemi": 0,
+      "report": [
+        {
+          "schermo": "iPhone320",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 7
+        },
+        {
+          "schermo": "iPhone320",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "iPhone SE",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "iPhone SE",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "iPhone 15 Pro",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 7
+        },
+        {
+          "schermo": "iPhone 15 Pro",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 7
+        },
+        {
+          "schermo": "iPhone 15 Pro Max",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 5
+        },
+        {
+          "schermo": "iPhone 15 Pro Max",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 6
+        },
+        {
+          "schermo": "Galaxy S8",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 7
+        },
+        {
+          "schermo": "Galaxy S8",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 7
+        },
+        {
+          "schermo": "Pixel 7",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 7
+        },
+        {
+          "schermo": "Pixel 7",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 7
+        },
+        {
+          "schermo": "Galaxy S9+",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 5
+        },
+        {
+          "schermo": "Galaxy S9+",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 6
+        },
+        {
+          "schermo": "iPad Mini",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 7
+        },
+        {
+          "schermo": "iPad Mini",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 7
+        },
+        {
+          "schermo": "iPad (gen 7) landscape",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 7
+        },
+        {
+          "schermo": "iPad (gen 7) landscape",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 7
+        },
+        {
+          "schermo": "iPad Pro 11",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 5
+        },
+        {
+          "schermo": "iPad Pro 11",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 7
+        },
+        {
+          "schermo": "Galaxy Tab S4",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 4
+        },
+        {
+          "schermo": "Galaxy Tab S4",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 2
+        },
+        {
+          "schermo": "Galaxy Tab S4 landscape",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 5
+        },
+        {
+          "schermo": "Galaxy Tab S4 landscape",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 5
+        },
+        {
+          "schermo": "PC1280",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "PC1280",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 7
+        },
+        {
+          "schermo": "PC1920",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 7
+        },
+        {
+          "schermo": "PC1920",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 7
+        },
+        {
+          "schermo": "PC2560",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 6
+        },
+        {
+          "schermo": "PC2560",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 7
+        },
+        {
+          "schermo": "TV",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 3
+        },
+        {
+          "schermo": "TV",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 3
+        }
+      ]
+    },
+    {
+      "motore": "firefox",
+      "visite": 32,
+      "problemi": 0,
+      "report": [
+        {
+          "schermo": "iPhone320",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "iPhone320",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "iPhone SE",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "iPhone SE",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "iPhone 15 Pro",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "iPhone 15 Pro",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "iPhone 15 Pro Max",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "iPhone 15 Pro Max",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "Galaxy S8",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "Galaxy S8",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 9
+        },
+        {
+          "schermo": "Pixel 7",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "Pixel 7",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "Galaxy S9+",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "Galaxy S9+",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 7
+        },
+        {
+          "schermo": "iPad Mini",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "iPad Mini",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "iPad (gen 7) landscape",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "iPad (gen 7) landscape",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "iPad Pro 11",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "iPad Pro 11",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "Galaxy Tab S4",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "Galaxy Tab S4",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "Galaxy Tab S4 landscape",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "Galaxy Tab S4 landscape",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "PC1280",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 6
+        },
+        {
+          "schermo": "PC1280",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "PC1920",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 7
+        },
+        {
+          "schermo": "PC1920",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 6
+        },
+        {
+          "schermo": "PC2560",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 6
+        },
+        {
+          "schermo": "PC2560",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 7
+        },
+        {
+          "schermo": "TV",
+          "grafica": "girrr/",
+          "problemi": [],
+          "ribalte": 8
+        },
+        {
+          "schermo": "TV",
+          "grafica": "stadio/girrr/",
+          "problemi": [],
+          "ribalte": 7
+        }
+      ]
+    }
+  ],
+  "visite_giro": 96,
+  "visite_carriera": 96,
+  "base_aggiuntiva": {
+    "versione": "6.0.1",
+    "commit": "e9124d9",
+    "applica": "Solo r602",
+    "app_identiche": true,
+    "cerca_chromium": {
+      "casi": 9,
+      "problemi": 0
+    }
+  },
+  "portale_firefox": {
+    "profili": [
+      "PC1920",
+      "PC2560"
+    ],
+    "sezioni": "Anteprima, due grafiche, ingressi ripetuti e segnalibro",
+    "problemi": 0
+  },
+  "offline_nuovo": {
+    "chromium": {
+      "casi": 4,
+      "problemi": 0
+    },
+    "firefox": "In verifica",
+    "webkit": "Limite dell’ambiente già riprodotto con SW minimo; non certificato offline"
+  }
 }

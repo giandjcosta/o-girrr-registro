@@ -16,7 +16,7 @@ Il tabellone della fiducia completa ogni ribalta prima della successiva. Le cifr
 
 ## Preparazione
 
-Su copia fresca della **6.0**, applicare una volta `r601/applica.py`; per la 6.0.2 continuare con `r602/applica.py` sulla stessa copia. Il condividi.js della 6.0.1 rimane congelato. R601 include la correzione del montaggio ritardato di Cerca: rispetta le tre schede pubbliche previste, indipendentemente dal browser.
+Claude ha pubblicato la **6.0.1** (`e9124d9`) durante la revisione: sulla sua copia fresca applicare **solo `r602/applica.py`**. Per riprodurre la sequenza da una vecchia 6.0: r601 una volta, poi r602 sulla stessa copia. Le due app risultanti hanno gli stessi hash. Il condividi.js della 6.0.1 rimane congelato. R602 porta anche nella 6.0.1 pubblicata la correzione del montaggio ritardato di Cerca già preparata nel Lab: rispetta le tre schede pubbliche previste, indipendentemente dal browser.
 
 `python3 rilascio/r602/prepara_server.py COPIA_MAIN_SITO` copia il nuovo calcolo e aggiunge il passo al workflow corrente. Rifiuta ancoraggi cambiati. Le sorgenti Radio rimangono nel Registro, letto da radio-giornata.yml. La copia `server/dopo-giornata.yml` serve alla revisione.
 

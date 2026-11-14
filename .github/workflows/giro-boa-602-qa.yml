@@ -19,11 +19,11 @@ jobs:
         motore: [chromium, webkit, firefox]
     steps:
       - uses: actions/checkout@v4
-      - name: Copia della base 6.0, mai modificata dalla prova
+      - name: Copia della 6.0.1 pubblicata, mai modificata dalla prova
         uses: actions/checkout@v4
         with:
           repository: giandjcosta/o-fant-a-girrr
-          ref: 5752f4efaabbe7f866455cef236d6abf94b8fa05
+          ref: e9124d905464ddb1d2a9d0ae7bd54bbd0867431d
           path: qa-site
       - uses: actions/setup-python@v5
         with:
@@ -44,9 +44,8 @@ jobs:
           done
       - name: Calcolo e testo Radio, senza servizi vocali
         run: python3 prove/prova_giro_di_boa.py
-      - name: Preparo 6.0.1 e 6.0.2 sulla stessa copia
+      - name: Preparo la 6.0.2 sulla copia della 6.0.1
         run: |
-          python3 rilascio/r601/applica.py qa-site
           python3 rilascio/r602/applica.py qa-site
           python3 calcoli/giro_di_boa.py qa-site
           mkdir -p "$RUNNER_TEMP/boa-web"

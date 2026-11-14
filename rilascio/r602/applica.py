@@ -40,6 +40,14 @@ def main(sito):
     print('ok condividi.js')
     for nome in ('giro-di-boa.js', 'giro-di-boa.css'):
         shutil.copyfile(os.path.join(R, 'rilascio/r602', nome), os.path.join(sito, nome))
+    # La 6.0.1 pubblicata da Claude precede il fix del caricamento ritardato di Cerca.
+    # Applicabile anche alla copia 6.0 + r601: lì il marcatore è già presente.
+    root=os.path.join(sito,'index.html');home=leggi(root)
+    marcatore="document.getElementById('tabs').dataset.pubblico=ok?'0':'1';"
+    if marcatore not in home:
+        home=sost(home,"document.getElementById('tabs').hidden=false;","document.getElementById('tabs').hidden=false;"+marcatore,'index.html')
+        scrivi(root,home)
+    shutil.copyfile(os.path.join(R,'rilascio/cerca/cerca.js'),os.path.join(sito,'cerca.js'))
     for pre, su, voci in (('girrr/', '../', 'voci/'), ('stadio/girrr/', '../../', '../../girrr/voci/')):
         rel = pre + 'app.html'
         t = leggi(os.path.join(sito, rel))
