@@ -1,8 +1,8 @@
-name: ChatGPT - Giro di boa 6.0.2
+name: ChatGPT - Bilanci della stagione 6.1
 on:
   pull_request:
     branches: [main]
-    paths: ['calcoli/giro_di_boa.py', 'rilascio/r602/**', 'rilascio/r601/**', 'rilascio/cerca/**', 'rilascio/condividi/**', 'voci-src/**', 'prove/*giro_di_boa*', 'prove/browser_certificato.js', 'prove/server_range.py', 'prove/prova_cerca_pubblica.js', 'prove/prova_cartellini_602.js', 'prove/prova_condividi_radio_602.js', '.github/workflows/giro-boa-602-qa.yml']
+    paths: ['calcoli/giro_di_boa.py', 'rilascio/r602/**', 'rilascio/r61/**', 'lab/giro-di-boa-61/**', 'lab/giro-di-boa-602/**', 'rilascio/r601/**', 'rilascio/cerca/**', 'rilascio/condividi/**', 'voci-src/**', 'prove/*giro_di_boa*', 'prove/browser_certificato.js', 'prove/server_range.py', 'prove/prova_cerca_pubblica.js', 'prove/prova_cartellini_602.js', 'prove/prova_condividi_radio_602.js', '.github/workflows/giro-boa-602-qa.yml']
   workflow_dispatch:
 concurrency:
   group: giro-boa-602-${{ github.ref }}
@@ -44,9 +44,9 @@ jobs:
           done
       - name: Calcolo e testo Radio, senza servizi vocali
         run: python3 prove/prova_giro_di_boa.py
-      - name: Preparo la 6.0.2 sulla copia della 6.0.1
+      - name: Preparo la 6.1 sulla copia della 6.0.1
         run: |
-          python3 rilascio/r602/applica.py qa-site
+          python3 rilascio/r61/applica.py qa-site
           python3 calcoli/giro_di_boa.py qa-site
           mkdir -p "$RUNNER_TEMP/boa-web"
           ln -s "$GITHUB_WORKSPACE/qa-site" "$RUNNER_TEMP/boa-web/o-fant-a-girrr"
@@ -66,6 +66,7 @@ jobs:
           FOTO: qa-artifacts
         run: |
           node prove/prova_giro_di_boa_browser.js
+          node prove/prova_giro_di_boa_filtri_61.js
           node prove/prova_giro_di_boa_tv.js
           node prove/prova_giro_di_boa_grafica.js
           node prove/prova_cartellini_602.js

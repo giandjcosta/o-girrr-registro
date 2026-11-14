@@ -13,7 +13,7 @@ const SCH=[
  ['PC 1280',{viewport:{width:1280,height:800}}],['PC 1920',{viewport:{width:1920,height:1080}}],
  ['Monitor 2560',{viewport:{width:2560,height:1440}}],['Smart TV 4K',{viewport:{width:1920,height:1080},deviceScaleFactor:2}]
 ];
-const record=[];let ko=0;
+const record=[];let ko=0,stress=0;
 const FIXTURE=fs.mkdtempSync(path.join(os.tmpdir(),'girrr-boa-fixture-'));
 require('child_process').execFileSync('python3',[path.join(__dirname,'fixture_giro_di_boa.py'),FIXTURE]);
 async function rete(c){
@@ -94,7 +94,8 @@ async function invia(p){
    assert(res.all.every(x=>x===2));assert.match(res.tit,n<17?/Il punto dopo/:/Giro di boa/);
   }
   const lungo=JSON.parse(fs.readFileSync(path.join(FIXTURE,'nomi-lunghi.json')));
-  assert.equal(await p.evaluate(async j=>{let n=0;for(const k of Object.keys(j.periodi))for(const squadra of Object.keys(j.periodi[k].squadre))for(const stadio of [false,true]){const a=await GirrrBoa.album(j,{k,squadra,stadio});assertAlbum(a);n++;}return n;function assertAlbum(a){if(a.length!==2)throw Error('Album incompleto');a.forEach(v=>URL.revokeObjectURL(v.url));}},lungo),60);
+  stress=Object.values(lungo.periodi).reduce((n,p)=>n+Object.keys(p.squadre).length*2,0);
+  assert.equal(await p.evaluate(async j=>{let n=0;for(const k of Object.keys(j.periodi))for(const squadra of Object.keys(j.periodi[k].squadre))for(const stadio of [false,true]){const a=await GirrrBoa.album(j,{k,squadra,stadio});assertAlbum(a);n++;}return n;function assertAlbum(a){if(a.length!==2)throw Error('Album incompleto');a.forEach(v=>URL.revokeObjectURL(v.url));}},lungo),stress);
  }catch(e){ko++;record.push({motore:M,caso:'Squadra, Tabellone e confini 16/17/19/34',problemi:[e.stack]});console.log('KO confini:',e.message);}
- await c.close();await br.close();fs.writeFileSync(path.join(F,`${process.env.SOLO_EXTRA?'extra':'risultati'}-${M}.json`),JSON.stringify({motore:M,profili:process.env.SOLO_EXTRA?0:16,visite:process.env.SOLO_EXTRA?0:32,album_stress:60,problemi:ko,record},null,2));fs.rmSync(FIXTURE,{recursive:true,force:true});console.log(M+': '+ko+' problemi');process.exitCode=ko?1:0;
+ await c.close();await br.close();fs.writeFileSync(path.join(F,`${process.env.SOLO_EXTRA?'extra':'risultati'}-${M}.json`),JSON.stringify({motore:M,profili:process.env.SOLO_EXTRA?0:16,visite:process.env.SOLO_EXTRA?0:32,album_stress:stress,problemi:ko,record},null,2));fs.rmSync(FIXTURE,{recursive:true,force:true});console.log(M+': '+ko+' problemi');process.exitCode=ko?1:0;
 })().catch(e=>{console.error(e);process.exitCode=1;});

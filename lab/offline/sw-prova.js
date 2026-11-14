@@ -12,10 +12,10 @@ self.GIRRR_SPECCHIO = (function () {
     'cerca.js': new URL('../../rilascio/cerca/cerca.js', self.location.href).href, /* Cerca un giocatore nello Spogliatoio */
     'versioni.js': new URL('../../rilascio/versioni/versioni.js', self.location.href).href, /* pagina Versioni */
     'versioni.json': new URL('../../rilascio/versioni/versioni.json', self.location.href).href,
-    'giro-di-boa.js': new URL('../../rilascio/r602/giro-di-boa.js?v=602-colori1', self.location.href).href,
-    'giro-di-boa.css': new URL('../../rilascio/r602/giro-di-boa.css?v=602-colori1', self.location.href).href,
+    'giro-di-boa.js': new URL('../../rilascio/r602/giro-di-boa.js?v=61-periodi1', self.location.href).href,
+    'giro-di-boa.css': new URL('../../rilascio/r602/giro-di-boa.css?v=61-periodi1', self.location.href).href,
     'girrr/dati/giro-di-boa.json': new URL('../giro-di-boa-602/esempio.json', self.location.href).href, /* Esempio reale generato, nessuna scrittura sul sito */
-    'condividi.js': new URL('../../rilascio/condividi/condividi.js?v=602-radio1', self.location.href).href, /* Condividi come immagine e «Condividi la giornata» */
+    'condividi.js': new URL('../../rilascio/condividi/condividi.js?v=61-periodi1', self.location.href).href, /* Condividi come immagine e «Condividi la giornata» */
     'pillole.js': new URL('../../rilascio/pillole/pillole.js', self.location.href).href, /* 6.0.1: pillole fluide in app, Albo d'oro e Totogirrr */
     /* 6.0.1 in prova (Claude, 13 novembre 2026): in Carriera «La mia settimana» prima di «Regole» e, per l'ospite, «La settimana delle squadre».
        Home e app.html della 6.0 sono online: lo specchio prende quelle vere. */
@@ -23,8 +23,8 @@ self.GIRRR_SPECCHIO = (function () {
     'girrr/v60/tifosi.css': new URL('../../rilascio/tifosi60/tifosi.css', self.location.href).href,
     /* 6.0.1 in prova (Claude, 13 novembre 2026): Carriera e Spogliatoio pubblici per l'ospite, linea del tempo dalla 1ª giornata,
        loghi dei premi sponsor, Home della Lega con i riquadri uno sotto l'altro (rilascio/r601/applica.py) */
-    'girrr/app.html': new URL('../../rilascio/r602/pagine/girrr/app.html?v=602-radio1', self.location.href).href, /* 6.0.1 e 6.0.2 insieme (rilascio/r602/applica.py dopo la 6.0.1) */
-    'stadio/girrr/app.html': new URL('../../rilascio/r602/pagine/stadio/girrr/app.html?v=602-radio1', self.location.href).href,
+    'girrr/app.html': new URL('../../rilascio/r602/pagine/girrr/app.html?v=61-periodi1', self.location.href).href, /* 6.0.1 e 6.0.2 insieme (rilascio/r602/applica.py dopo la 6.0.1) */
+    'stadio/girrr/app.html': new URL('../../rilascio/r602/pagine/stadio/girrr/app.html?v=61-periodi1', self.location.href).href,
     '': new URL('../../rilascio/r601/pagine/index.html', self.location.href).href, /* lo Spogliatoio è la radice del sito */
     'index.html': new URL('../../rilascio/r601/pagine/index.html', self.location.href).href,
     'girrr/': new URL('../../rilascio/r601/pagine/girrr/index.html', self.location.href).href,

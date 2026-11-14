@@ -24,7 +24,7 @@ const schermi=[['iPhone320',{...devices['iPhone SE'],viewport:{width:320,height:
    await p.click('[data-gb-vista="1"]');const voci=await p.locator('.gb-voce>small').evaluateAll(es=>es.map(e=>getComputedStyle(e).color));assert.equal(voci[0],skin==='lega'?'rgb(166, 220, 255)':'rgb(197, 221, 255)');assert.equal(voci[1],'rgb(162, 237, 205)');assert(voci.every(x=>x!==st.bordo));
    await p.selectOption('[data-gb-ambito]','lega');await p.click('[data-gb-vista="0"]');assert.equal(await p.locator('.gb-classifica>div').count(),10);assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
    if(nome==='iPhone320'){
-    const res=await p.evaluate(async stadio=>{const j=await GirrrBoa.carica(new URL('esempio.json',location.href).href),out=[];
+    const res=await p.evaluate(async stadio=>{const j=await GirrrBoa.carica(new URL('../giro-di-boa-602/esempio.json',location.href).href),out=[];
      for(const ambito of ['squadra','lega']){const a=await GirrrBoa.album(j,{squadra:'Oranje VC',ambito,stadio});const cv=a[0].canvas;
       // Tre taglie reali: risultati, legenda e classifica. La legenda garantisce tutte le lettere V/N/P.
       const centri=ambito==='squadra'?[[84,933,23],[276,933,23],[468,933,23],[80,1046,16],[390,1046,16],[700,1046,16]]:[[867,509,13],[900,509,13],[933,509,13],[80,1216,16],[390,1216,16],[700,1216,16]];

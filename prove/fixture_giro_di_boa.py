@@ -9,7 +9,7 @@ from giro_di_boa import calcola
 from prova_giro_di_boa import dati
 
 dest=Path(sys.argv[1]);dest.mkdir(parents=True,exist_ok=True)
-for n in (16,17,19,34):
+for n in (0,1,4,5,9,10,16,17,19,33,34):
     (dest/f'giornata-{n}.json').write_text(json.dumps(calcola(dati(n))))
 d=json.loads((Path(__file__).resolve().parents[1]/'anteprima/pubblicata/data.json').read_text())
 for g in d['cal']['lega']:
