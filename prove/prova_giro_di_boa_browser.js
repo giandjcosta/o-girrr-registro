@@ -21,8 +21,8 @@ async function rete(c){
  await c.route('https://*.supabase.co/**',r=>{
    const fn=(r.request().url().match(/rpc\/([^?]+)/)||[])[1];
    if(!fn||!/(?:_stato|_pubblico|_lista)$/.test(fn)&&!['mvp_derby','mvp_mio'].includes(fn))throw new Error('RPC non di lettura nella prova: '+fn);
-   // mvp_mio legge il voto personale (SQL STABLE), non esprime un voto.
-   return r.fulfill({status:200,contentType:'application/json',headers:{'access-control-allow-origin':'*'},body:JSON.stringify(fn==='mvp_stato'?{votazione:null,archivio:[]}:fn==='mvp_mio'?{voto:null}:{voti:[],sfide:[],coppie:[]})});
+   // mvp_mio verifica il codice e legge scelta; non esprime un voto.
+   return r.fulfill({status:200,contentType:'application/json',headers:{'access-control-allow-origin':'*'},body:JSON.stringify(fn==='mvp_stato'?{votazione:null,archivio:[]}:fn==='mvp_mio'?{scelta:null}:{voti:[],sfide:[],coppie:[]})});
  });
  await c.addInitScript(()=>{window.__albumInviati=[];navigator.canShare=()=>true;navigator.share=x=>{window.__albumInviati.push({keys:Object.keys(x),files:x.files.map(f=>({nome:f.name,tipo:f.type,byte:f.size}))});return Promise.resolve();};});
 }
