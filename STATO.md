@@ -2,6 +2,15 @@
 
 
 
+
+## 15 novembre (3) — ChatGPT: pubblicazione 6.2 fermata, grafica rifiutata
+
+- Dopo il Vai al solo Lab, Gianluca ha rifiutato esplicitamente la nuova impaginazione del Giornale e la grafica delle anteprime 6.2. Queste bozze **non sono approvate e non devono essere pubblicate né usate come grafica finale**. Il Vai precedente non autorizza queste proposte rifiutate.
+- PR #92 ancora **in bozza, aperta, non unita** (`mergedAt: null` verificato). Nessun merge di questa proposta sul Registro, nessun rilascio del sito vero, nessuna modifica Supabase o generazione audio.
+- Si conservano grafica e impaginazione correnti di sito e Giornale. I cambi richiesti devono essere integrati nelle pagine esistenti, senza una nuova veste grafica. Il PDF a tre A4 della bozza, benché controllato tecnicamente, è **rifiutato sul piano grafico** e non costituisce un risultato approvato.
+- Rimossi dagli ingressi del Lab e delle Anteprime i collegamenti aggiunti alla proposta rifiutata, ripristinando i file del main corrente. Artefatti di bozza conservati sul ramo per tracciabilità, senza cancellazioni. Occorre una nuova proposta fedele alla grafica attuale prima di riprendere la pubblicazione.
+
+
 ## 15 novembre (2) — ChatGPT: proposta 6.2, votazioni condivise e racconto coordinato
 
 - PR di revisione [#92](https://github.com/giandjcosta/o-girrr-registro/pull/92), in bozza. Codice della proposta `0cbe4bb6d6d1dffdfe85e4cf98094db8f16b0377`, registrazione delle verifiche `fd6c1c7`. Ramo `chatgpt/coordinamento-62`, base Registro `410f975d0aaf525b99978cba1d84bcebf2bf4a73`. Sito letto: main `40837e6`, fotografia gh-pages `ad341cd`. PR aperte e rami controllati prima del lavoro e nuovamente alla consegna: nessun lavoro corrente di Claude sugli stessi file. Correzioni 6.1.1 e Ramificazioni preservate.

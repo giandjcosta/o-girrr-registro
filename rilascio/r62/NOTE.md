@@ -1,4 +1,6 @@
-# ChatGPT: coordinamento 6.2 — proposta nel Lab
+# ChatGPT: coordinamento 6.2 — grafica rifiutata, pubblicazione ferma
+
+**Aggiornamento vincolante del 15 novembre:** Gianluca ha rifiutato il PDF e la grafica delle anteprime qui conservate. Non pubblicare questa versione. Il precedente Vai al solo Lab non si applica alle bozze rifiutate. La PR #92 resta in bozza, senza merge. Conservare la grafica e l’impaginazione attuali del sito e del Giornale; integrare lì le sole funzioni e i contenuti richiesti. I controlli tecnici descritti sotto non equivalgono ad approvazione grafica.
 
 Richiesta di Gianluca del 15 novembre 2026, con rettifica Radio che prevale sul punto 5 del testo iniziale.
 
