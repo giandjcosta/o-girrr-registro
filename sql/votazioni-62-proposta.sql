@@ -112,7 +112,15 @@ declare sid text; risultato jsonb;
 begin
  perform public.curva_chk(p_team,p_code);
  select id into sid from votazioni62_private.sondaggi where origine='sfida' and giornata=p_giornata order by aperto desc limit 1;
- if sid is null then raise exception 'Catalogo 6.2 non pronto: voto sospeso'; end if;
+ if sid is null then
+   -- Compatibilità transitoria: la 6.1 continua a registrare il primo voto
+   -- anche prima dell'inizializzazione del catalogo 6.2.
+   if p_scelta is null or length(btrim(p_scelta)) not between 1 and 120 then raise exception 'Scelta non valida'; end if;
+   insert into sondaggio_private.voti(giornata,team,scelta)
+     values(p_giornata,p_team,btrim(p_scelta))
+     on conflict(giornata,team) do nothing;
+   return public.sondaggio_stato(p_giornata);
+ end if;
  risultato=public.v62_vota(sid,p_team,p_code,p_scelta);
  -- Compatibilità con i client precedenti: specchio, mai sovrascrittura.
  insert into sondaggio_private.voti(giornata,team,scelta) values(p_giornata,p_team,risultato->>'mia_scelta') on conflict do nothing;
