@@ -99,6 +99,12 @@
      "dataNascita": 1791404923,
      "avanti": 37,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792680268,
+      "commit": "a9d217b",
+      "titolo": "Curva: post nuovi"
+     },
      "commit": [
       [
        "043e902ba2d5042881462faa9b4f900e8fc9751a",
@@ -186,6 +192,12 @@
      "dataNascita": 1791404923,
      "avanti": 443,
      "stato": "unito",
+     "unione": {
+      "in": "gh-pages",
+      "data": 1792923821,
+      "commit": "e1cab3c",
+      "titolo": "Aggiorna il riepilogo della giornata"
+     },
      "commit": [
       [
        "f1263a02f330f2f26c78ad27d3f5993bb528cdb4",
@@ -300,6 +312,12 @@
      "dataNascita": 1792661719,
      "avanti": 10,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793041086,
+      "commit": "9fcb1b8",
+      "titolo": "ChatGPT: integra prefissi autore obbligatori (#1)"
+     },
      "commit": [
       [
        "44a4aecefaf3f06a848a4fea33be7baf2994aad9",
@@ -375,6 +393,12 @@
      "dataNascita": 1792923665,
      "avanti": 20,
      "stato": "unito",
+     "unione": {
+      "in": "gh-pages",
+      "data": 1793010093,
+      "commit": "78ef90c",
+      "titolo": "Aggiorna statistiche e voti in automatico"
+     },
      "commit": [
       [
        "ddd468889fe8c937b164c08b3a68d8ca972c81a7",
@@ -462,6 +486,12 @@
      "dataNascita": 1791404923,
      "avanti": 469,
      "stato": "unito",
+     "unione": {
+      "in": "gh-pages",
+      "data": 1793017234,
+      "commit": "566b597",
+      "titolo": "ChatGPT: pubblica Carriera responsive, Lazy Loading e Infinite Scroll"
+     },
      "commit": [
       [
        "5105c0bf6d235602d873a2135842034233b20eab",
@@ -549,6 +579,12 @@
      "dataNascita": 1791404923,
      "avanti": 473,
      "stato": "unito",
+     "unione": {
+      "in": "gh-pages",
+      "data": 1793017895,
+      "commit": "0d51bbe",
+      "titolo": "ChatGPT: pubblica correzione definitiva sponsor Carriera mobile e desktop"
+     },
      "commit": [
       [
        "85f0ca0b048b008841c1f6e99c0fce4e76cc3843",
@@ -636,6 +672,12 @@
      "dataNascita": 1791404923,
      "avanti": 478,
      "stato": "unito",
+     "unione": {
+      "in": "gh-pages",
+      "data": 1793021076,
+      "commit": "f03640e",
+      "titolo": "ChatGPT: pubblica colori dinamici Fiducia e semicerchio multicolore"
+     },
      "commit": [
       [
        "519a2740097ddb9fbb3cea936f2adf4ebbe95471",
@@ -723,6 +765,12 @@
      "dataNascita": 1793020771,
      "avanti": 20,
      "stato": "unito",
+     "unione": {
+      "in": "gh-pages",
+      "data": 1793129686,
+      "commit": "bcce7b2",
+      "titolo": "ChatGPT: rilascia Carriera 5.2 milestone e premi sponsor da riscuotere"
+     },
      "commit": [
       [
        "e3b5faca57cf0d8b768c38cba949b3fc0e178ee0",
@@ -810,6 +858,12 @@
      "dataNascita": 1793129564,
      "avanti": 26,
      "stato": "unito",
+     "unione": {
+      "in": "gh-pages",
+      "data": 1793376115,
+      "commit": "ae07c00",
+      "titolo": "Claude: rilascio 5.2, Carriera a tab con premi sponsor e Tabellone con più dati e Regole"
+     },
      "commit": [
       [
        "7eb00646de6f7433865782d5e267f1b630f36232",
@@ -897,6 +951,12 @@
      "dataNascita": 1792968134,
      "avanti": 6,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793384055,
+      "commit": "c619feb",
+      "titolo": "Claude: radio automatica dopo ogni giornata (PR 6)"
+     },
      "commit": [
       [
        "341cf945a9286d28c32373003536c2ae3ffba415",
@@ -969,6 +1029,12 @@
      "dataNascita": 1793396009,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793548001,
+      "commit": "1b1d3a0",
+      "titolo": "Claude: regole sui contenuti con i tre livelli di scrittura (decisione di Gianluca)"
+     },
      "commit": [
       [
        "aba24067efe17f2a4ba4c0714031f8192a63a3aa",
@@ -996,6 +1062,12 @@
      "dataNascita": 1793467771,
      "avanti": 14,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794266942,
+      "commit": "0885382",
+      "titolo": "Claude: AGENTS.md, sul sito c'è la 5.6.2"
+     },
      "commit": [
       [
        "618d6753a9bd22e133eb74ba641511818c52580f",
@@ -1083,6 +1155,12 @@
      "dataNascita": 1793129564,
      "avanti": 136,
      "stato": "unito",
+     "unione": {
+      "in": "gh-pages",
+      "data": 1794438900,
+      "commit": "97f0697",
+      "titolo": "Claude: Rilascio 5.8.1, Curva più ordinata (Sondaggi chiusi allineato, tolte le righe a tutta larghezza)"
+     },
      "commit": [
       [
        "23ff55995da705343cd0e529993dc22464afd1d1",
@@ -1170,6 +1248,12 @@
      "dataNascita": 1794263174,
      "avanti": 7,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794483831,
+      "commit": "ad578e5",
+      "titolo": "ChatGPT: integra il controllo preliminare dei premi autorizzato da Gianluca"
+     },
      "commit": [
       [
        "e721990ab0828b6e6a5c1f064327b8c892ebf121",
@@ -1227,6 +1311,12 @@
      "dataNascita": 1794482826,
      "avanti": 5,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794529747,
+      "commit": "2b92751",
+      "titolo": "ChatGPT: esclude la cache Python dagli artefatti server"
+     },
      "commit": [
       [
        "2b927517412587c5ad1fad3d00773c176f84b436",
@@ -1266,6 +1356,12 @@
      "dataNascita": 1794529747,
      "avanti": 3,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794587335,
+      "commit": "ff29fa2",
+      "titolo": "Claude: AGENTS.md, sul sito la 6.0 (#11)"
+     },
      "commit": [
       [
        "bc34e95f3dee82cbc05303ee1175f8007bf596b2",
@@ -1287,6 +1383,12 @@
      "dataNascita": 1793020771,
      "avanti": 164,
      "stato": "unito",
+     "unione": {
+      "in": "gh-pages",
+      "data": 1794591011,
+      "commit": "1e06510",
+      "titolo": "ChatGPT: pubblica il messaggio 6.0 approvato"
+     },
      "commit": [
       [
        "df52e20a883c0fddaf42c24fd5c3f4cb310989e4",
@@ -1374,6 +1476,12 @@
      "dataNascita": 1794587316,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794649740,
+      "commit": "0f0cc3d",
+      "titolo": "Merge pull request #14 from giandjcosta/claude/sito-601"
+     },
      "commit": [
       [
        "6a9d187a00de0c82d186037e84a460fff35acd1c",
@@ -1395,6 +1503,12 @@
      "dataNascita": 1794590770,
      "avanti": 9,
      "stato": "unito",
+     "unione": {
+      "in": "gh-pages",
+      "data": 1794672940,
+      "commit": "a6fcf03",
+      "titolo": "ChatGPT: pubblica O Girrr 6.1, la stagione da raccontare"
+     },
      "commit": [
       [
        "2536af28e788d3b299e8c7625294099b50a84a1d",
@@ -1458,6 +1572,12 @@
      "dataNascita": 1794649720,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794673042,
+      "commit": "8f6e6a9",
+      "titolo": "Merge pull request #16 from giandjcosta/claude/avvisa-ramificazioni"
+     },
      "commit": [
       [
        "39df3fb2ce79f625074f410435e9122929ce228a",
@@ -1479,6 +1599,12 @@
      "dataNascita": 1794649740,
      "avanti": 7,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794673265,
+      "commit": "b5a6b88",
+      "titolo": "ChatGPT: attiva i calcoli dei bilanci della stagione 6.1"
+     },
      "commit": [
       [
        "0873dcc7ca30e8916632b5ac7f8cbcbdaa291985",
@@ -1713,6 +1839,12 @@
      "dataNascita": null,
      "avanti": 0,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792778489,
+      "commit": "f5b7a4f",
+      "titolo": "Merge branch 'moviola-lab'"
+     },
      "commit": [],
      "totale": 0
     },
@@ -1727,6 +1859,12 @@
      "dataNascita": 1792778171,
      "avanti": 3,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792780023,
+      "commit": "603567a",
+      "titolo": "Moviola: episodi decisi una volta sola da calcoli/moviola.py, il Lab legge moviola.json"
+     },
      "commit": [
       [
        "603567ac2f55e7147540fb9b7b285f351b9b1c49",
@@ -1775,6 +1913,12 @@
      "dataNascita": 1792780023,
      "avanti": 4,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792781329,
+      "commit": "c24decf",
+      "titolo": "Merge branch 'moviola-verdetti'"
+     },
      "commit": [
       [
        "061bc0b4ff7a6a7b9137faa0c140bef93a96c876",
@@ -1808,6 +1952,12 @@
      "dataNascita": 1792781041,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792782015,
+      "commit": "10b0a07",
+      "titolo": "Merge branch 'claude/moviola-manuale-step-3-7qapus'"
+     },
      "commit": [
       [
        "4dac3bb3a2e2fc34e5b2a0fa85c079cc1e024de7",
@@ -1829,6 +1979,12 @@
      "dataNascita": 1792781723,
      "avanti": 8,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792824220,
+      "commit": "3e5c740",
+      "titolo": "Unisce moviola-curva: Moviola passo 4 online"
+     },
      "commit": [
       [
        "52858cb8f3ab6050547148a25525b719da6ac26c",
@@ -1886,6 +2042,12 @@
      "dataNascita": 1792824219,
      "avanti": 6,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792829998,
+      "commit": "82256d8",
+      "titolo": "Unisce moviola-gol: gol, assist e cambi decisivi online"
+     },
      "commit": [
       [
        "d42f65679d515bf736918d91473683d66b98c1bc",
@@ -1931,6 +2093,12 @@
      "dataNascita": 1792829996,
      "avanti": 16,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792862926,
+      "commit": "163052d",
+      "titolo": "Selettore Lega/Stadio: fondo scuro solo sullo Stadio, tornano le strisce della Lega"
+     },
      "commit": [
       [
        "163052db082243e3d601ce9f39ca5268c01d1da9",
@@ -2018,6 +2186,12 @@
      "dataNascita": 1792862926,
      "avanti": 4,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792863555,
+      "commit": "4209207",
+      "titolo": "STATO: selettore Lega/Stadio online sul sito (gh-pages 27487c0)"
+     },
      "commit": [
       [
        "42092071983c4035de32753a652965375c9a600b",
@@ -2045,6 +2219,12 @@
      "dataNascita": 1792863555,
      "avanti": 8,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792866284,
+      "commit": "6ac2d97",
+      "titolo": "Unisce main: STATO con la storia della Lega (VS Code) e la card dell'allenatore"
+     },
      "commit": [
       [
        "373ebd0726f503751d3fa19ba743a321b0563c92",
@@ -2090,6 +2270,12 @@
      "dataNascita": 1792866284,
      "avanti": 7,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792868248,
+      "commit": "614981e",
+      "titolo": "STATO: storia del Derby dell'Emma online (gh-pages a489393)"
+     },
      "commit": [
       [
        "614981e7c16242e5786e691ea0dfc3e9f0a5bf79",
@@ -2135,6 +2321,12 @@
      "dataNascita": 1792868248,
      "avanti": 4,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792884796,
+      "commit": "6e37744",
+      "titolo": "Storia della Lega (bozza): nomi come su Leghe, anni del sito, Grande Silenzio corretto"
+     },
      "commit": [
       [
        "6e377448e7ab1b6e7cd9a3d29bf350e9a5968bed",
@@ -2162,6 +2354,12 @@
      "dataNascita": 1792884577,
      "avanti": 1,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792885514,
+      "commit": "c4180b3",
+      "titolo": "Derby: tolta la riga \"In palio\" dal riquadro del Lab (Anteprima rigenerata)"
+     },
      "commit": [
       [
        "c4180b3903decb3e1d81303bf17f9ca6fc1291b4",
@@ -2183,6 +2381,12 @@
      "dataNascita": 1792885514,
      "avanti": 6,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792885855,
+      "commit": "4b2fe61",
+      "titolo": "Unisce main nel ramo della correzione apo-DJ Cst Brazil"
+     },
      "commit": [
       [
        "497b07a8f0e47c315565cd26887025472ff7d8e4",
@@ -2216,6 +2420,12 @@
      "dataNascita": 1792885855,
      "avanti": 5,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792887225,
+      "commit": "cb744d3",
+      "titolo": "Merge pull request #6 from giandjcosta/claude/derby-tabellone"
+     },
      "commit": [
       [
        "bdd86c607138e4cb048fa9e0bb5332c1e99f698d",
@@ -2243,6 +2453,12 @@
      "dataNascita": 1792887202,
      "avanti": 5,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792887266,
+      "commit": "a002eb6",
+      "titolo": "Merge pull request #10 from giandjcosta/claude/scheda-storia"
+     },
      "commit": [
       [
        "c8f0acb0bb81ce48b9bf8eee8aad489463802923",
@@ -2270,6 +2486,12 @@
      "dataNascita": 1792887253,
      "avanti": 4,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792887894,
+      "commit": "b253c33",
+      "titolo": "Merge pull request #11 from giandjcosta/claude/gracious-meitner-lmt0ny"
+     },
      "commit": [
       [
        "cfe57ce5a1a6e94d82c88cfe937d3bb234398fde",
@@ -2297,6 +2519,12 @@
      "dataNascita": 1792887883,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792888089,
+      "commit": "ae86d8c",
+      "titolo": "Merge pull request #12 from giandjcosta/claude/ere-pallino"
+     },
      "commit": [
       [
        "588cb3ab0cc1ec92366fe7a882ee4ed7ef27e012",
@@ -2318,6 +2546,12 @@
      "dataNascita": 1792886530,
      "avanti": 1,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792888565,
+      "commit": "91f2933",
+      "titolo": "Intreccia le descrizioni nei racconti delle Ere"
+     },
      "commit": [
       [
        "91f29336a4a598b32de126bc96403598b9fe87e1",
@@ -2339,6 +2573,12 @@
      "dataNascita": 1792887966,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792897809,
+      "commit": "3c0432a",
+      "titolo": "Merge pull request #13 from giandjcosta/claude/tabellone-punteggi"
+     },
      "commit": [
       [
        "2260367fd551829381abbbbaf509c6728dbd9399",
@@ -2360,6 +2600,12 @@
      "dataNascita": 1792897794,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792898386,
+      "commit": "b701f0c",
+      "titolo": "Merge pull request #14 from giandjcosta/claude/stato-rilascio-5-1"
+     },
      "commit": [
       [
        "2e1fadb741e6a2b9550ccb13872c90d53a4f0909",
@@ -2381,6 +2627,12 @@
      "dataNascita": 1792898374,
      "avanti": 4,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792925420,
+      "commit": "0d350ac",
+      "titolo": "Merge pull request #15 from giandjcosta/claude/ere-intrecci"
+     },
      "commit": [
       [
        "ae73068e3cc40b25ccc9c5b41600bc525a2e43e1",
@@ -2429,6 +2681,12 @@
      "dataNascita": 1792925420,
      "avanti": 3,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792960633,
+      "commit": "b5aa734",
+      "titolo": "Merge pull request #16 from giandjcosta/claude/ere-leggenda"
+     },
      "commit": [
       [
        "518505a798f45238c22af7a58717291596eff505",
@@ -2462,6 +2720,12 @@
      "dataNascita": 1792931436,
      "avanti": 3,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792961115,
+      "commit": "8adaa9d",
+      "titolo": "Merge pull request #17 from giandjcosta/claude/stato-ere-online"
+     },
      "commit": [
       [
        "6a4d2af20f34b4ae8a78b161b0c16b8a9d010d8a",
@@ -2489,6 +2753,12 @@
      "dataNascita": 1792961095,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792961695,
+      "commit": "4baea56",
+      "titolo": "Merge pull request #18 from giandjcosta/vscode/sposta-stagioni-silenzio"
+     },
      "commit": [
       [
        "940d2d374df403507576bed7c47283b010c56f00",
@@ -2510,6 +2780,12 @@
      "dataNascita": 1792961654,
      "avanti": 12,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792963093,
+      "commit": "912a27d",
+      "titolo": "Merge pull request #19 from giandjcosta/claude/obiettivi-scadenza"
+     },
      "commit": [
       [
        "463eefb322be78e404e3dc2fa63bcb9ad64500e2",
@@ -2591,6 +2867,12 @@
      "dataNascita": 1792962976,
      "avanti": 6,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792963513,
+      "commit": "b5de189",
+      "titolo": "Merge pull request #20 from giandjcosta/claude/changelog-archivio-5-1"
+     },
      "commit": [
       [
        "4b66896df43fa5bd0a836f7ce674745c1d3e3419",
@@ -2630,6 +2912,12 @@
      "dataNascita": 1792963504,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792964550,
+      "commit": "4582756",
+      "titolo": "Merge pull request #22 from giandjcosta/grok/curva-infinite-scroll"
+     },
      "commit": [
       [
        "f972444462b336bc0dffba5e8072399e3dee78ae",
@@ -2651,6 +2939,12 @@
      "dataNascita": 1792963513,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792964429,
+      "commit": "25ac53b",
+      "titolo": "Merge pull request #21 from giandjcosta/claude/stato-curva-ripristino"
+     },
      "commit": [
       [
        "e7dd42d384fc08b5be0afab158956896c9487650",
@@ -2678,6 +2972,12 @@
      "dataNascita": 1792964419,
      "avanti": 4,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792964930,
+      "commit": "d5b73ef",
+      "titolo": "Merge pull request #23 from giandjcosta/claude/curva-320"
+     },
      "commit": [
       [
        "fee1eedb60877310e51fc92b181ada98cb706e25",
@@ -2705,6 +3005,12 @@
      "dataNascita": 1792964840,
      "avanti": 8,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792967933,
+      "commit": "78935a1",
+      "titolo": "Grok: sincronizza il lazy loading completo nel Laboratorio"
+     },
      "commit": [
       [
        "78935a1d1b10976d9d2bbeb8087c71c4e4e98fab",
@@ -2762,6 +3068,12 @@
      "dataNascita": 1792965661,
      "avanti": 1,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793041094,
+      "commit": "e386a0d",
+      "titolo": "ChatGPT: integra prefissi autore obbligatori (#24)"
+     },
      "commit": [
       [
        "4ed5a67bbb6fed77d67995133af8aa6dbd302979",
@@ -2783,6 +3095,12 @@
      "dataNascita": 1792967933,
      "avanti": 15,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792973664,
+      "commit": "edcafa8",
+      "titolo": "ChatGPT: unisce collaudo Lazy Loading Spogliatoio nel Lab"
+     },
      "commit": [
       [
        "30f65a7bb27792a9b04aaddaa9eba029aa1c554a",
@@ -2870,6 +3188,12 @@
      "dataNascita": 1792973462,
      "avanti": 7,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792973780,
+      "commit": "a0b699a",
+      "titolo": "ChatGPT: unisce collaudo Infinite Scroll Curva nel Lab"
+     },
      "commit": [
       [
        "9f8ac6024fc3e3bd7d98aa89f5f45bbc531ed895",
@@ -2909,6 +3233,12 @@
      "dataNascita": 1792973763,
      "avanti": 6,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1792973838,
+      "commit": "35c54ae",
+      "titolo": "ChatGPT: unisce correzione Carriera nel Lab"
+     },
      "commit": [
       [
        "89f5570c9e7954d0741c8f165b26120cd4a5d8f5",
@@ -2948,6 +3278,12 @@
      "dataNascita": 1792973827,
      "avanti": 3,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793002468,
+      "commit": "376b4a3",
+      "titolo": "Unisco lo stato della giornata 4"
+     },
      "commit": [
       [
        "258543194aeb5520f8819cd2e750a60ea3e60b3d",
@@ -2975,6 +3311,12 @@
      "dataNascita": 1792996947,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793002468,
+      "commit": "940b244",
+      "titolo": "Unisco la Radio della giornata 4"
+     },
      "commit": [
       [
        "998ed46d2d7f9819e31ec117becae31123cd93db",
@@ -3002,6 +3344,12 @@
      "dataNascita": 1793002420,
      "avanti": 8,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793008067,
+      "commit": "290fc15",
+      "titolo": "ChatGPT: pubblica fix leggibilità Carriera nel Laboratorio"
+     },
      "commit": [
       [
        "8d1d1688e981ed8ae9346e8e448b6c2a1148e437",
@@ -3128,6 +3476,12 @@
      "dataNascita": 1793008067,
      "avanti": 6,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793021912,
+      "commit": "79bc269",
+      "titolo": "ChatGPT: aggiorna Anteprima 5.2 e rifinisce indicatore Fiducia"
+     },
      "commit": [
       [
        "3882a8307db2911e3a8c6a30ad080a443f16ba31",
@@ -3179,6 +3533,12 @@
      "dataNascita": 1793021852,
      "avanti": 16,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793037818,
+      "commit": "864726f",
+      "titolo": "ChatGPT: pubblica nella sola Anteprima 5.2 animazioni Fiducia e simulazione premi"
+     },
      "commit": [
       [
        "f1d48d6bd4b2207b8d64cea43b0c0b9db7c76191",
@@ -3266,6 +3626,12 @@
      "dataNascita": 1793037621,
      "avanti": 12,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793038499,
+      "commit": "3231c48",
+      "titolo": "ChatGPT: Anteprima 5.2 fiducia universale e sponsor 50-125 Fantacrediti"
+     },
      "commit": [
       [
        "17950d290cb72d2edc7b578ff8b9309d50389c71",
@@ -3347,6 +3713,12 @@
      "dataNascita": 1793038440,
      "avanti": 15,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793041720,
+      "commit": "a4b42fb",
+      "titolo": "Anteprima 5.2: premi Totogirrr simulati e milestone Carriera dinamiche"
+     },
      "commit": [
       [
        "4eaf766f1e04926c0d69dd02b89c158be6ad433d",
@@ -3434,6 +3806,12 @@
      "dataNascita": 1793041654,
      "avanti": 10,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793126457,
+      "commit": "dd96256",
+      "titolo": "ChatGPT: pubblica Anteprima interattiva Totogirrr 5.2"
+     },
      "commit": [
       [
        "a27fe47684d98767d189305bd5e55eed03467b24",
@@ -3551,6 +3929,12 @@
      "dataNascita": 1793136888,
      "avanti": 54,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793333725,
+      "commit": "944cb18",
+      "titolo": "Claude: unisce il tab Obiettivi di ChatGPT"
+     },
      "commit": [
       [
        "bc3abb79972337cf16529545cca1a46f5a8fcea3",
@@ -3683,6 +4067,12 @@
      "dataNascita": 1793327134,
      "avanti": 8,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793348365,
+      "commit": "95532b3",
+      "titolo": "Claude: unisce il tab Storia ricostruito da ChatGPT"
+     },
      "commit": [
       [
        "6c4c231846c5bdbb95f2a27c28de1879419f7bb6",
@@ -3740,6 +4130,12 @@
      "dataNascita": 1793345538,
      "avanti": 20,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793377978,
+      "commit": "08c27d8",
+      "titolo": "Claude: dati della radio aggiornati alla 5a giornata (con il vai di Gianluca)"
+     },
      "commit": [
       [
        "67c97f812e606f8d437f2a27614e241af18243d5",
@@ -3827,6 +4223,12 @@
      "dataNascita": 1793376283,
      "avanti": 29,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793461110,
+      "commit": "0556f48",
+      "titolo": "ChatGPT: registra in STATO i collaudi riusciti a 320 e 1280 px"
+     },
      "commit": [
       [
        "0556f4870ff36548a60ca7492e8a1b3dcba2c028",
@@ -4001,6 +4403,12 @@
      "dataNascita": 1793385788,
      "avanti": 3,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793472151,
+      "commit": "23ef406",
+      "titolo": "Registro: elenco attività aggiornato"
+     },
      "commit": [
       [
        "665ecb15abca1b3f906764bda54015e900f2ce01",
@@ -4034,6 +4442,12 @@
      "dataNascita": 1793461110,
      "avanti": 12,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793468706,
+      "commit": "03a2a9f",
+      "titolo": "ChatGPT: documenta in STATO.md la QA 5.3 verde e i limiti UX"
+     },
      "commit": [
       [
        "03a2a9f4be64243f6e3ec811851e74052ae4038d",
@@ -4121,6 +4535,12 @@
      "dataNascita": 1793458914,
      "avanti": 33,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793468768,
+      "commit": "3fd7e40",
+      "titolo": "ChatGPT: documenta integrazioni mancanti e prepara il prompt per la prossima chat"
+     },
      "commit": [
       [
        "3fd7e40be46b39cc32c9c2ba2713d3196fac602f",
@@ -4208,6 +4628,12 @@
      "dataNascita": 1793468768,
      "avanti": 6,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793470343,
+      "commit": "70a0b58",
+      "titolo": "ChatGPT: collega la PR e documenta il limite della verifica pubblica"
+     },
      "commit": [
       [
        "70a0b58da875957a633d72895a03f332feafb1ae",
@@ -4259,6 +4685,12 @@
      "dataNascita": 1793468112,
      "avanti": 13,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793483285,
+      "commit": "8c3df4a",
+      "titolo": "Claude: unisce a main la 5.3 online, la numerazione 5.5, i premi e la Radio (ramo claude/coppe-simboli-ere-des"
+     },
      "commit": [
       [
        "bc37f08ee7cc79f34a0938edc946b1da88f0a08e",
@@ -4346,6 +4778,12 @@
      "dataNascita": 1793481252,
      "avanti": 74,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793483518,
+      "commit": "e195569",
+      "titolo": "Claude: STATO, tutto su main e Anteprima 5.5, dove si trova il Campo"
+     },
      "commit": [
       [
        "af8b091d9c2615f75dfeddc9ad98bf56d36cb84d",
@@ -4433,6 +4871,12 @@
      "dataNascita": 1793481026,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793533740,
+      "commit": "4a07208",
+      "titolo": "Claude: unisce il Campo di ChatGPT (stile Lega/Stadio del sito, stemma, ui.css unico) tenendo le formazioni ne"
+     },
      "commit": [
       [
        "9137c1f6ccc4f55455d950117a5fa104ea614fe4",
@@ -4460,6 +4904,12 @@
      "dataNascita": 1793528358,
      "avanti": 22,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793537282,
+      "commit": "54a952e",
+      "titolo": "Claude: notifiche personali da Supabase nell'Anteprima 5.5 e puntini della Home sistemati"
+     },
      "commit": [
       [
        "5f1079c03abbabd67a9641e4a99acd0b6755659d",
@@ -4547,6 +4997,12 @@
      "dataNascita": 1793533740,
      "avanti": 1,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793537384,
+      "commit": "a8774c8",
+      "titolo": "Merge remote-tracking branch 'origin/chatgpt/verifica-55-claude' into claude/campo-grafico-maiuscole"
+     },
      "commit": [
       [
        "54a952e4b6255ffbd39d7370d30a93296aea073d",
@@ -4568,6 +5024,12 @@
      "dataNascita": 1793537282,
      "avanti": 7,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793537829,
+      "commit": "1c5783b",
+      "titolo": "Claude: Campo, grafico dei punti pronto per tutta la stagione (scala che cresce, etichette diradate)"
+     },
      "commit": [
       [
        "5d12cdc2da10a69afdfaa2b13696ec62730544ae",
@@ -4619,6 +5081,12 @@
      "dataNascita": 1793537107,
      "avanti": 4,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793539294,
+      "commit": "bddbdf6",
+      "titolo": "ChatGPT: rende consultabili cronache e PDF nel Lab e documenta la consegna"
+     },
      "commit": [
       [
        "bddbdf67edd3ead0cd52167070fc8a5eebb6892c",
@@ -4658,6 +5126,12 @@
      "dataNascita": 1793539294,
      "avanti": 9,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793539990,
+      "commit": "5f97a72",
+      "titolo": "ChatGPT: integra le cronache di prova nella 5.5 (#45)"
+     },
      "commit": [
       [
        "ab9cbdadd848874c0209cc8bc12b60922f18aa92",
@@ -4715,6 +5189,12 @@
      "dataNascita": 1793539955,
      "avanti": 4,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793544474,
+      "commit": "9c47af9",
+      "titolo": "Claude: legenda del Campo in una tendina chiusa, schede dell'Albo alle misure del sito vero"
+     },
      "commit": [
       [
        "6a1d7f4bc960d319b0fc165dfc062e1ce97f3ac6",
@@ -4748,6 +5228,12 @@
      "dataNascita": 1793543243,
      "avanti": 1,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793544897,
+      "commit": "b8fe729",
+      "titolo": "ChatGPT: prepara le cronache per il futuro rilascio 5.5 (#46)"
+     },
      "commit": [
       [
        "a10a4e253f2ba7accd198781bd3cde10300cc979",
@@ -4790,6 +5276,12 @@
      "dataNascita": 1793544474,
      "avanti": 5,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793545052,
+      "commit": "09b8c3d",
+      "titolo": "ChatGPT: rende confrontabili le bozze di Oggi al Girrr nel Lab (#47)"
+     },
      "commit": [
       [
        "f217b76960d8df88c84c62a92437175ec685aa17",
@@ -4823,6 +5315,12 @@
      "dataNascita": 1793544937,
      "avanti": 5,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793548734,
+      "commit": "b452add",
+      "titolo": "Claude: prova nel Lab dei riquadri della Home in modalità ospite (Lega 2+2, Stadio 4 in riga)"
+     },
      "commit": [
       [
        "adbada2d18f6ecf277b18250561193d3e5442a4b",
@@ -4862,6 +5360,12 @@
      "dataNascita": 1793547996,
      "avanti": 13,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793550122,
+      "commit": "67a8b17",
+      "titolo": "ChatGPT: integra Home, notifiche dirette e navigazione nella prova 5.5"
+     },
      "commit": [
       [
        "4a14139d168bc771015520b4fcf533d4fb809295",
@@ -4937,6 +5441,12 @@
      "dataNascita": 1793550085,
      "avanti": 6,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793551419,
+      "commit": "3af3dfd",
+      "titolo": "ChatGPT: Home a tendina e riepilogo della propria squadra nella prova 5.5"
+     },
      "commit": [
       [
        "ee434432d35ec0ad3942b3b5763a3e9897ee4ccb",
@@ -4982,6 +5492,12 @@
      "dataNascita": 1793551390,
      "avanti": 7,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793554692,
+      "commit": "46eb6eb",
+      "titolo": "Claude: unisce la PR 50 di ChatGPT (notifiche compatte e collegamenti al contenuto preciso)"
+     },
      "commit": [
       [
        "9fe13f36856c75bc9f5c96015c303c86bd02564e",
@@ -5027,6 +5543,12 @@
      "dataNascita": 1793553607,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793555112,
+      "commit": "559c1b2",
+      "titolo": "Claude: versione B del Tabellone come il Brasileirão (classifica grande a sinistra, partite a destra); STATO c"
+     },
      "commit": [
       [
        "ea325aacdf1d19116391a5298b9cf8cfc3269356",
@@ -5048,6 +5570,12 @@
      "dataNascita": 1793554692,
      "avanti": 5,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793560587,
+      "commit": "523857e",
+      "titolo": "Claude: Tabellone C con Campo anche in Coppa, schede uguali e azzurre in coppa, fase finale a tabellone di ten"
+     },
      "commit": [
       [
        "4a59ccff5ac4921dfedcf35e0cdcd49d1a3863f6",
@@ -5093,6 +5621,12 @@
      "dataNascita": 1793559177,
      "avanti": 1,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793562418,
+      "commit": "b2d2baf",
+      "titolo": "Claude: grafiche Lega e Stadio su tutta la 5.5, Stadio più oro, Spogliatoio con grafica Stadio e menu delle gr"
+     },
      "commit": [
       [
        "523857eed6c12d811b3c04b6cde0faca7c352264",
@@ -5114,6 +5648,12 @@
      "dataNascita": 1793560587,
      "avanti": 1,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793563765,
+      "commit": "0257260",
+      "titolo": "Claude: Tabellone C definitivo, cinque partite tre a sinistra e due a destra su PC, regola della pagina novità"
+     },
      "commit": [
       [
        "b2d2baf0ffca1dd9829559661861d4894163af6c",
@@ -5135,6 +5675,12 @@
      "dataNascita": 1793562418,
      "avanti": 1,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793564266,
+      "commit": "ea81698",
+      "titolo": "Claude: Campo senza scelta della grafica, entrata in dissolvenza di Campo e Tabellone quando sono pronti"
+     },
      "commit": [
       [
        "0257260ae7afa8b3e8f80a14eda5242f3310f6cd",
@@ -5156,6 +5702,12 @@
      "dataNascita": 1793563765,
      "avanti": 1,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793564997,
+      "commit": "42a464e",
+      "titolo": "Claude: Campo sul telefono senza doppioni, fila delle partite che scorre col dito"
+     },
      "commit": [
       [
        "ea816987a6fa7e5b184f2ad2618fab3b9c9624dc",
@@ -5177,6 +5729,12 @@
      "dataNascita": 1793564266,
      "avanti": 1,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793569053,
+      "commit": "eaacf8e",
+      "titolo": "Claude: Carriera, grafico della fiducia con scala, valori, giornate e tabella dei risultati; «E se…» spiegato"
+     },
      "commit": [
       [
        "42a464e8c2a3e08948c639ed93885acc42c90828",
@@ -5198,6 +5756,12 @@
      "dataNascita": 1793564997,
      "avanti": 1,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793570713,
+      "commit": "8f71c88",
+      "titolo": "Claude: rilascio 5.5 sul sito vero — script di rilascio, modalità sito in ui.js, sondaggio della Curva nel dat"
+     },
      "commit": [
       [
        "eaacf8e3d9a41b20ae1d302b1361ddd6d6b140d9",
@@ -5219,6 +5783,12 @@
      "dataNascita": 1793569053,
      "avanti": 1,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793601827,
+      "commit": "c1d787a",
+      "titolo": "Registro: elenco attività aggiornato"
+     },
      "commit": [
       [
        "8f71c88733e0a48b56374e7a5bc53e7e39ee51a1",
@@ -5240,6 +5810,12 @@
      "dataNascita": 1793570713,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793615280,
+      "commit": "6b4cad1",
+      "titolo": "Claude: Curva con il sondaggio come post e senza barra, commenti che si chiudono, barra con solo logo e indiet"
+     },
      "commit": [
       [
        "f4d61ee68447f21b23c88c154b80c8cf22021594",
@@ -5267,6 +5843,12 @@
      "dataNascita": 1793614074,
      "avanti": 1,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793617256,
+      "commit": "83bfe66",
+      "titolo": "Claude: Home con i riquadri di prima nell'Anteprima e Totogirrr su una riga; rilascio sul sito in attesa del p"
+     },
      "commit": [
       [
        "6b4cad15c9e1b51c8335e7ea6e288f6b403d5af2",
@@ -5288,6 +5870,12 @@
      "dataNascita": 1793615280,
      "avanti": 1,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793617469,
+      "commit": "50a7d41",
+      "titolo": "Claude: Home Stadio con i riquadri di informazioni più tondi e più oro (Anteprima e sorgenti pronte)"
+     },
      "commit": [
       [
        "83bfe66dc55f37ede470d9281f837ae2c0e663fb",
@@ -5309,6 +5897,12 @@
      "dataNascita": 1793617256,
      "avanti": 1,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793618111,
+      "commit": "f486379",
+      "titolo": "Claude: Home con i riquadri di prima e Stadio più oro, online su gh-pages 983481d"
+     },
      "commit": [
       [
        "50a7d41ab665f2726321ee9d2df2b459c842f6db",
@@ -5330,6 +5924,12 @@
      "dataNascita": 1793617469,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793619689,
+      "commit": "415e52b",
+      "titolo": "Claude: Campo con il simbolo della scheda attiva visibile e pillola di aggiornamento trasparente (Anteprima; s"
+     },
      "commit": [
       [
        "97f9669f5edfe2cbe01dde0324a34911c3b98914",
@@ -5357,6 +5957,12 @@
      "dataNascita": 1793619487,
      "avanti": 1,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793620334,
+      "commit": "78f1f38",
+      "titolo": "Claude: correzioni del Campo e della pillola di aggiornamento online su gh-pages f6d234b"
+     },
      "commit": [
       [
        "415e52bb88aa538c3a8964e1e6566e71db808675",
@@ -5378,6 +5984,12 @@
      "dataNascita": 1793619689,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793643797,
+      "commit": "ff64765",
+      "titolo": "Claude: prima apertura più veloce online su gh-pages e485848, controllo grafico identico"
+     },
      "commit": [
       [
        "a395c81b5b6a8a9f85fd946dd21ddff685129be6",
@@ -5405,6 +6017,12 @@
      "dataNascita": 1793636652,
      "avanti": 9,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1793688140,
+      "commit": "abeb02d",
+      "titolo": "Registro: elenco attività aggiornato"
+     },
      "commit": [
       [
        "c094c13ce15efa1f4a832a262e7239ac51ec0b93",
@@ -5474,6 +6092,12 @@
      "dataNascita": 1793686817,
      "avanti": 70,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794304364,
+      "commit": "ef69c03",
+      "titolo": "Merge branch 'claude/offline-mode-sync-5vmvdd'"
+     },
      "commit": [
       [
        "db73fbd04e60f73016f37beb1b10ce50efd7e676",
@@ -5561,6 +6185,12 @@
      "dataNascita": 1794304361,
      "avanti": 30,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794385140,
+      "commit": "4b89140",
+      "titolo": "Merge branch 'claude/conferenze-stampa-punteggio-pe4qga' (STATO della 5.8)"
+     },
      "commit": [
       [
        "e29eea7931dbd4bffef94813c82a1e59d47d0669",
@@ -5648,6 +6278,12 @@
      "dataNascita": 1794385138,
      "avanti": 7,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794483822,
+      "commit": "efae25b",
+      "titolo": "ChatGPT: integra il controllo della chiave premi autorizzato da Gianluca"
+     },
      "commit": [
       [
        "e3ca2305ffc0a00e530ff2a6418b6da51a89ab7e",
@@ -5693,6 +6329,12 @@
      "dataNascita": 1794482501,
      "avanti": 6,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794484231,
+      "commit": "48ba482",
+      "titolo": "ChatGPT: attiva l’allineamento automatico del Registro autorizzato da Gianluca"
+     },
      "commit": [
       [
        "81799e3278ffe258c04d15eb8c40637e134e53df",
@@ -5732,6 +6374,12 @@
      "dataNascita": 1794484186,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794484447,
+      "commit": "0b84490",
+      "titolo": "ChatGPT: completa la verifica dell’allineamento del Registro autorizzato"
+     },
      "commit": [
       [
        "90a7f7ce800931ea93b7a41e78aacc56bfabe087",
@@ -5753,6 +6401,12 @@
      "dataNascita": 1794484411,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794484606,
+      "commit": "1f9b84a",
+      "titolo": "ChatGPT: completa le correzioni dell’Anteprima e del deploy autorizzate"
+     },
      "commit": [
       [
        "51e0d8e1c0ba8c4fd72e3fffc6828b22f8a8088c",
@@ -5801,6 +6455,12 @@
      "dataNascita": 1794438909,
      "avanti": 43,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794497705,
+      "commit": "dd3ba22",
+      "titolo": "Claude: scheda Video in Girrr Sport con tutti i video della giornata (Lab), video dalla 1ª alla 7ª, fischi nuo"
+     },
      "commit": [
       [
        "dd3ba22e64ed1f60613abf73cafa716b6258ed80",
@@ -5957,6 +6617,12 @@
      "dataNascita": 1794497705,
      "avanti": 36,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794531245,
+      "commit": "3a35e4d",
+      "titolo": "ChatGPT: certifica i collaudi e consegna la preparazione 6.0 a Claude"
+     },
      "commit": [
       [
        "3a35e4d6144ec8e3e119827aedede5f349747f7d",
@@ -6044,6 +6710,12 @@
      "dataNascita": 1794531245,
      "avanti": 10,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794577182,
+      "commit": "c60b0ea",
+      "titolo": "ChatGPT: certifica la vista compatta richiesta con Claude"
+     },
      "commit": [
       [
        "c60b0ea3614a14f81415e3065683cc2601b94f89",
@@ -6101,6 +6773,12 @@
      "dataNascita": 1794577182,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794582239,
+      "commit": "024ab26",
+      "titolo": "ChatGPT: registra lo schema MVP applicato e le verifiche live"
+     },
      "commit": [
       [
        "024ab26a580c942e1fa0deacf2c87601d6bb0150",
@@ -6122,6 +6800,12 @@
      "dataNascita": 1794524566,
      "avanti": 3,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794586309,
+      "commit": "f873036",
+      "titolo": "ChatGPT: pubblica il portale unico del Registro e Ramificazioni"
+     },
      "commit": [
       [
        "fc5117ba11e1ccb12bb155e81947666ece9b8d00",
@@ -6155,6 +6839,12 @@
      "dataNascita": 1794586224,
      "avanti": 4,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794586913,
+      "commit": "d778b66",
+      "titolo": "ChatGPT: rende preciso il collaudo del portale dopo la navigazione"
+     },
      "commit": [
       [
        "c8a52c648bde6c3201a9d25780d5927263af7d36",
@@ -6188,6 +6878,12 @@
      "dataNascita": 1794586878,
      "avanti": 82,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794588035,
+      "commit": "30f941e",
+      "titolo": "ChatGPT: ripristina le prove dirette del Lab nel portale"
+     },
      "commit": [
       [
        "9ef37aba765ea0ce23e0494bed78323ed885037d",
@@ -6275,6 +6971,12 @@
      "dataNascita": 1794587777,
      "avanti": 6,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794588557,
+      "commit": "babac5f",
+      "titolo": "ChatGPT: pubblica filtri compatti e il disegno completo dei rami"
+     },
      "commit": [
       [
        "a44673dc8a4b0f152691aadcd7fcc8ca2744287b",
@@ -6314,6 +7016,12 @@
      "dataNascita": 1794588304,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794592480,
+      "commit": "75eb39b",
+      "titolo": "ChatGPT: ripristina l’apertura dell’Anteprima e il cambio grafica"
+     },
      "commit": [
       [
        "0f7b58cc79f9d6d9cb2bf049919f976055636810",
@@ -6335,6 +7043,12 @@
      "dataNascita": 1794592402,
      "avanti": 7,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794593203,
+      "commit": "ec3223c",
+      "titolo": "ChatGPT: pubblica versione evidente, toggle e Archivio aggiornato"
+     },
      "commit": [
       [
        "e2090373143f7b2998b704be725355fb219b39aa",
@@ -6380,6 +7094,12 @@
      "dataNascita": 1794593135,
      "avanti": 7,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794596773,
+      "commit": "3f7c867",
+      "titolo": "ChatGPT: ripristina gli aggiornamenti della mappa e i collaudi del Registro"
+     },
      "commit": [
       [
        "7eb6a3a5b9ae9fe9e541af490e48c18f4300246d",
@@ -6431,6 +7151,12 @@
      "dataNascita": 1794596749,
      "avanti": 3,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794609686,
+      "commit": "ec8fc91",
+      "titolo": "ChatGPT: documenta le verifiche finali e il coordinamento 6.0.1"
+     },
      "commit": [
       [
        "0e1d3ce5fd1dca8073e99942d80eb799a80100e7",
@@ -6458,6 +7184,12 @@
      "dataNascita": 1794609639,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794613056,
+      "commit": "fe2a651",
+      "titolo": "ChatGPT: aggiorna automaticamente la mappa anche dopo le chiusure delle PR"
+     },
      "commit": [
       [
        "a915ffd81ebe388757f2416f23f48a9a78757148",
@@ -6479,6 +7211,12 @@
      "dataNascita": 1794613010,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794613931,
+      "commit": "0d24821",
+      "titolo": "ChatGPT: pianifica le due condivisioni del Giro di boa nella 6.0.2"
+     },
      "commit": [
       [
        "f7d3f637b9df6e214a1369807bddef9f72fb71c0",
@@ -6500,6 +7238,12 @@
      "dataNascita": 1794596773,
      "avanti": 13,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794614791,
+      "commit": "a87c8eb",
+      "titolo": "Claude: 6.0.2, Le ultime 5 senza la sigla della forma: vittorie, pareggi e sconfitte a parole"
+     },
      "commit": [
       [
        "a87c8ebd748cbca584dc84c35a12f2205672938f",
@@ -6581,6 +7325,12 @@
      "dataNascita": 1794614791,
      "avanti": 7,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794619238,
+      "commit": "e11e363",
+      "titolo": "ChatGPT: integra nel Lab la 6.0.1 e la 6.0.2 di Claude"
+     },
      "commit": [
       [
        "f7d3f637b9df6e214a1369807bddef9f72fb71c0",
@@ -6614,6 +7364,12 @@
      "dataNascita": 1794615394,
      "avanti": 4,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794649737,
+      "commit": "057a202",
+      "titolo": "Merge pull request #77 from giandjcosta/claude/rilascio-601"
+     },
      "commit": [
       [
        "882e6e73b98483c3084888bbd4960f3001772f5e",
@@ -6647,6 +7403,12 @@
      "dataNascita": 1794649707,
      "avanti": 3,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794650364,
+      "commit": "2676d1b",
+      "titolo": "Merge pull request #78 from giandjcosta/claude/rilascio-601-esiti"
+     },
      "commit": [
       [
        "10dac318bab8882065b1c28104b565e304a64558",
@@ -6674,6 +7436,12 @@
      "dataNascita": 1794649767,
      "avanti": 9,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794651476,
+      "commit": "ab4a23c",
+      "titolo": "ChatGPT: pubblica nel Lab le nuove anteprime 6.0.2 e la Carriera corretta"
+     },
      "commit": [
       [
        "450fb6adc4d61ea0b430f45bea354278a90fa034",
@@ -6737,6 +7505,12 @@
      "dataNascita": 1794650513,
      "avanti": 4,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794651803,
+      "commit": "898f7c6",
+      "titolo": "ChatGPT: aggiorna lo stato delle anteprime 6.0.2 certificate"
+     },
      "commit": [
       [
        "bc60af9f9cab744a0ea256ba0dda7b27d446699f",
@@ -6764,6 +7538,12 @@
      "dataNascita": 1794651690,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794654091,
+      "commit": "5881bc5",
+      "titolo": "ChatGPT: aggiorna nel Lab centratura e colori del Giro di boa"
+     },
      "commit": [
       [
        "229dc4f12dd8c5267741f328200cb3dd343f6822",
@@ -6785,6 +7565,12 @@
      "dataNascita": 1794653963,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794658497,
+      "commit": "300cf2b",
+      "titolo": "ChatGPT: aggiorna nel Lab il pulsante centrato della Radio"
+     },
      "commit": [
       [
        "b6a85d4b5a56f2cbcac79819cf04d508f0759b7a",
@@ -6806,6 +7592,12 @@
      "dataNascita": 1794658432,
      "avanti": 5,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794671598,
+      "commit": "1d273ff",
+      "titolo": "ChatGPT: pubblica nel Lab i bilanci della stagione 6.1"
+     },
      "commit": [
       [
        "c9e01e4abbb2d9de507035db92910d7f5eabdb62",
@@ -6845,6 +7637,12 @@
      "dataNascita": 1794667022,
      "avanti": 3,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794672267,
+      "commit": "5d6adda",
+      "titolo": "Merge pull request #83 from giandjcosta/claude/ramificazioni-tre-viste"
+     },
      "commit": [
       [
        "8fd79f58fdd73719cbd1b2e34c0cd006eab61aae",
@@ -6872,6 +7670,12 @@
      "dataNascita": 1794672246,
      "avanti": 5,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794673063,
+      "commit": "4e16d57",
+      "titolo": "Merge pull request #84 from giandjcosta/claude/ramificazioni-aggiornamento-immediato"
+     },
      "commit": [
       [
        "a74d0244ea448b7476b7c3d82c6627c772a50d54",
@@ -6905,6 +7709,12 @@
      "dataNascita": 1794673057,
      "avanti": 3,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794673635,
+      "commit": "f619634",
+      "titolo": "ChatGPT: conserva nel main il rilascio 6.1 verificato"
+     },
      "commit": [
       [
        "a03eefd4f5d79deb4508c07427675b6ed87f956c",
@@ -6932,6 +7742,12 @@
      "dataNascita": 1794673516,
      "avanti": 3,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794682005,
+      "commit": "0717b6e",
+      "titolo": "ChatGPT: mostra nel Lab Campionato & Champions Cup"
+     },
      "commit": [
       [
        "f5b83f426f3de44ea9eb1a9db7304fd4330e2373",
@@ -6959,6 +7775,12 @@
      "dataNascita": 1794681954,
      "avanti": 3,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794691286,
+      "commit": "f959d2f",
+      "titolo": "ChatGPT: integra nel Lab l’anteprima 6.1.1"
+     },
      "commit": [
       [
        "ccc1f5df20ad898dfd4dc91094b1d5102c525340",
@@ -6986,6 +7808,12 @@
      "dataNascita": 1794691128,
      "avanti": 3,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794691732,
+      "commit": "c427c75",
+      "titolo": "ChatGPT: aggiorna STATO con la verifica dell’anteprima 6.1.1"
+     },
      "commit": [
       [
        "804a36e950b4bd200d6ad5361b6ac21ac82b2864",
@@ -7013,6 +7841,12 @@
      "dataNascita": 1794691698,
      "avanti": 2,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794698680,
+      "commit": "93b4752",
+      "titolo": "ChatGPT: corregge nel Lab la riga Peggiore sul PC"
+     },
      "commit": [
       [
        "88362fa6b33985355e0b72d064f69b82bc066827",
@@ -7034,6 +7868,12 @@
      "dataNascita": 1794698620,
      "avanti": 3,
      "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794751499,
+      "commit": "e9da729",
+      "titolo": "Merge pull request #90 from giandjcosta/claude/ramificazioni-pagina-piena"
+     },
      "commit": [
       [
        "16207d19503d8f0aedaf87ab0a30ef3caac92e83",
