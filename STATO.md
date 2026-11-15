@@ -6,6 +6,12 @@
 
 
 
+
+## 15 novembre (9) — Claude: Albo › Record tutto con la stessa grafica
+
+- Gianluca: non due grafiche diverse nella stessa pagina. «MVP dei tifosi» (archivio), «Corsa all’MVP del campionato» e «La partita più seguita» ora usano la grafica dei «Record della lega»: scheda dell’Albo con righe a icona, etichetta, squadra, dettaglio e numero a destra, in Lega e Stadio. Il riquadro della 6.0 non compare più; resta il segnaposto `#pt-archivio` per i link «Archivio del premio». Corretto anche un controllo su un attributo vuoto, che faceva ricomparire il riquadro vecchio. Nomi con la maiuscola iniziale come nei Record.
+- Prove con Chromium: 12 casi (Lega/Stadio × 320/1280 × dati veri, esempio, fine stagione), zero errori, nessuno scorrimento laterale.
+
 ## 15 novembre (8) — Claude: Albo › Record con MVP del campionato e partita più seguita (lavoro diviso con ChatGPT)
 
 - Richiesta di Gianluca: gli MVP restano nell’Albo; a fine anno l’MVP del campionato (chi ha più MVP) e la partita più seguita (più voti ai sondaggi delle partite, con anche redazione e personaggi). Lavoro diviso: **ChatGPT** fa dati, SQL, voti di giuria e la RPC `v62_albo` (ramo `chatgpt/albo-62`, prompt nella risposta a Gianluca). **Claude** fa Albo, Lab e simulatore.
