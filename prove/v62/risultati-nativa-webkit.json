@@ -48,7 +48,9 @@
     {
       "schermo": "iPhone 15 Pro Max",
       "grafica": "girrr",
-      "errore": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'rgb(86, 130, 189)'\n- 'rgb(61, 147, 214)'\n       ^\n\n    at /workspace/integrazione62/prove/v62/native-browser.cjs:13:101"
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
     },
     {
       "schermo": "iPhone 15 Pro Max",

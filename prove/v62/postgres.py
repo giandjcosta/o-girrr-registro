@@ -63,6 +63,10 @@ c.execute("select public.v62_finestre_prepara('2026/27','vigilia',8,clock_timest
 c.execute("insert into public.conf_risposta(team,giornata,risposte) values('Oranje VC',8,'[]')")
 try:c.execute("update public.conf_risposta set risposte='[{}]' where giornata=8");raise AssertionError('Conferenza sovrascritta')
 except psycopg.errors.RaiseException:report.append('Conferenza pubblicata immutabile anche sul server')
+c.execute("with t as (select clock_timestamp()-interval '1 hour' a) select public.v62_finestre_prepara('2026/27','dopo',8,a,a+interval '48 hours') from t")
+c.execute("insert into public.conf_dopo(team,giornata,risposta) values('Oranje VC',8,'{\"t\":\"Testo pubblicato\"}')")
+try:c.execute("update public.conf_dopo set risposta='{}' where giornata=8");raise AssertionError('Dopo partita sovrascritto')
+except psycopg.errors.RaiseException:report.append('Dopo partita pubblicato immutabile anche sul server')
 with psycopg.connect(**connargs) as anon:
  anon.execute('set role anon')
  try:anon.execute('select * from votazioni62_private.sondaggi');raise AssertionError('Accesso diretto consentito')

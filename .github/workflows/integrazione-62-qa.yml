@@ -94,6 +94,7 @@ jobs:
         run: |
           npm ci --prefix prove/v62
           SITO62="$RUNNER_TEMP/site-62" PORT=8896 node prove/v62/native-server.cjs > "$RUNNER_TEMP/native-server.log" 2>&1 &
+          node prove/v62/attendi.cjs http://127.0.0.1:8896/o-fant-a-girrr/girrr/campo.html
       - name: Integrazione nativa, sedici profili e funzioni condivise
         env:
           MOTORE: ${{ matrix.motore }}
@@ -112,6 +113,7 @@ jobs:
         run: |
           python3 rilascio/r62/preview.py "$RUNNER_TEMP/site-62" --out "$RUNNER_TEMP/lab62"
           python3 -m http.server 8901 --bind 127.0.0.1 --directory "$RUNNER_TEMP" > "$RUNNER_TEMP/lab62-server.log" 2>&1 &
+          node prove/v62/attendi.cjs http://127.0.0.1:8901/lab62/index.html
           node prove/v62/preview.cjs
       - name: Ramificazioni, tre viste nel portale e autonome
         env:

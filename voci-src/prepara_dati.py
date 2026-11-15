@@ -60,7 +60,9 @@ def main(argv=None):
         k = {f"derby:{e['k']}" for e in ev if e.get("tipo") == "derby"}
         preparati = carica(dest / 'dati.json', {})
         premio = preparati.get('mvp_tifosi') or {}
-        if args.mvp_tifosi and premio.get('chiusa') and premio.get('risultato') and preparati.get('aw', [{}])[-1].get('n') == n:
+        from mvp_editoriale62 import frase as frase_mvp
+        detto = frase_mvp(premio, [x[4:] for x in carica(ANN, []) if x.startswith('mvp:')], giornata_puntata=n)
+        if args.mvp_tifosi and detto and premio.get('chiusa') and premio.get('risultato') and preparati.get('aw', [{}])[-1].get('n') == n:
             k.add(f"mvp:{premio['stagione']}:{premio['giornata']}")
         ANN.write_text(json.dumps(sorted(k | set(carica(ANN, []))), indent=1), encoding="utf-8")
         print(f"giornata={n}"); return
