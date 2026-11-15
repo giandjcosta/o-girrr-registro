@@ -9,6 +9,15 @@
 
 
 
+## 15 novembre (13) — ChatGPT: proposta dati verificabili per Albo › Record
+
+- **Draft PR [#107](https://github.com/giandjcosta/o-girrr-registro/pull/107)**, base `main` `2c856aa`. Non modifica frontend o documenti del Giornale e non esegue SQL su Supabase.
+- `sql/albo-62-proposta.sql` introduce `v62_albo(p_stagione)` nel contratto richiesto alla voce «15 novembre (8)», con MVP e classifica ricavati esclusivamente da verdetti già chiusi; `stagione_conclusa` è un flag confermato dal servizio e non indovinato.
+- Redazione/personaggi sulle sfide: registrazione server-only con scelta esistente, autore e motivo verificabile, prima scelta conservata, niente falsi dati. Fino a dossier reale e giurie complete `partite:null` mostra «Dato non disponibile». I voti `sondaggio_private.voti` non hanno stagione: l'Albo NON li trasferisce alle stagioni successive al 2026/27.
+- `rilascio/r62/server/giuria62.py` valida un futuro dossier redazionale senza rete; chiamare `--vai` è possibile soltanto con versione ufficiale 6.2 e permessi di servizio, **non eseguito**. L'integrazione nel giro automatico e il dossier effettivo devono ancora essere prodotti. `rilascio/r62/ALBO-DATI.md` chiarisce provenienza, limiti e attivazione.
+- `prove/v62/postgres_albo.py`: test isolato su PostgreSQL, idempotenza schema, privilegi/RLS, giurie immutabili, conteggi, MVP, stagioni e finale. **PASS** nella run [43771149900](https://github.com/giandjcosta/o-girrr-registro/actions/runs/43771149900). La matrice browser non è ancora considerata certificazione della nuova parte.
+- **Limiti**: proposta SQL mai applicata a Supabase, dati di redazione reali assenti, nessun merge o deploy. Il Giornale mantiene «Serie A, 11ª giornata».
+
 ## 15 novembre (11) — Claude: MVP nel Giornale e in Radio come deciso da Gianluca
 
 - **Giornale** (`rilascio/r62/editoriale/mvp_giornale62.py`, `giornale_mvp.py`): niente data di chiusura.
