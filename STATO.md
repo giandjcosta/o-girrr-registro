@@ -1,14 +1,14 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 15 novembre 2026)
 
 
-## 15 novembre (4) — ChatGPT: integrazione nativa 6.2 nella PR #96, certificazione finale in corso
+## 15 novembre (4) — ChatGPT: integrazione nativa 6.2 nella PR #96, bozza integrata pronta, pubblicazione ferma
 
 - Ramo `chatgpt/integrazione-62-completa`, commit di preparazione `8d81a8e`, `a1e6670`, `b80680c`, `2d3f346`. Nessun merge o rilascio; sito e `versioni.json` restano alla **6.1**. Base gh-pages `98c0add`, main sito letto `40837e6`; cartellini già online preservati.
 - Funzioni integrate nelle pagine originali: sondaggi condivisi, anche nei post del feed con conteggi reali; caricamento dello stato personale, primo voto conservato, Precedenti per squadra/giornata. A/B entrambe navigabili; nessun nuovo menu Storici. 6.1.1 incorporata, parte di Claude conservata.
 - Giornale originale a **quattro A4**, prove 6ª e 7ª: nessuna modifica ai font/CSS e stessi adattamenti della base. Radio preparata esclusivamente come copione: una sola nuova battuta dalla prossima puntata normale, chiusura integrale, nessun audio.
 - SQL soltanto proposta e testata in PostgreSQL 17 locale con sessioni concorrenti; finestre nuove senza modifica retroattiva della scadenza MVP 7ª. Nessun accesso di scrittura a Supabase. Backend preparabile in una copia separata, automazioni mai eseguite.
 - Preview integrata in `lab/integrata-62/`, A/B in `lab/confronto-62.html`, PDF in `lab/giornale-62/`, Radio testuale in `lab/radio-62-copione.html`. Non pubblicate sul Lab online: attendono il successivo Vai. Le bozze rifiutate della PR #92 non vengono ripristinate.
-- Prove e limiti in `rilascio/r62/QA.md`; matrice finale Chromium/WebKit/Firefox ancora da completare. Non certificare la 6.2 prima dell'esito reale. Ramificazioni lette dal ramo automatico senza riscriverne gli snapshot; il badge continua a indicare 6.1.
+- Prove e limiti in `rilascio/r62/QA.md`; suite completa Chromium/WebKit/Firefox superata nella run 43742212017, commit 2d3f346; ripetizioni sui commit successivi ancora in corso, non dichiarate concluse. Anteprime e foto in 98b90cc; testi e backend finale in 44dd624. La bozza è pronta da rivedere, il rilascio resta fermo. Ramificazioni lette dal ramo automatico senza riscriverne gli snapshot; il badge continua a indicare 6.1.
 - Per tornare indietro dal lavoro di ramo usare `git revert` dei singoli commit `ChatGPT:`; nessun hash di pubblicazione esiste ancora. Dopo un eventuale rilascio annotare gli hash effettivi e i revert nel consueto ordine gh-pages → controllo online → main → sincronizzazione sorgenti.
 
 
