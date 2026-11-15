@@ -10,6 +10,7 @@ const dati={stagione:'2026/27',mvp:[{giornata:7,team:'stif dc',chiusa:'2026-11-2
  const p=await c.newPage(),errs=[];p.on('pageerror',e=>errs.push(e.message));
  try{
   await p.goto(BASE+skin+'/albo.html',{waitUntil:'domcontentloaded'});
+  await p.locator('[data-at="rec"]').click(); // Record è una scheda nascosta finché non viene aperta
   await p.waitForSelector('#al-mvp-campionato',{timeout:15000});
   await p.waitForSelector('#al-partita-seguita',{timeout:15000});
   assert.equal(await p.locator('#al-mvp').count(),1);
