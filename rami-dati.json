@@ -1,5 +1,5 @@
 {
- "generato": 1794708335,
+ "generato": 1794724968,
  "versione": "6.1",
  "repository": [
   {
@@ -7025,16 +7025,22 @@
     },
     {
      "nome": "main",
-     "punta": "93b4752",
-     "data": 1794698680,
-     "titolo": "ChatGPT: corregge nel Lab la riga Peggiore sul PC",
-     "autore": "ChatGPT",
+     "punta": "5ee6ad5",
+     "data": 1794724968,
+     "titolo": "Registro: elenco attività aggiornato",
+     "autore": "Registro",
      "padre": null,
      "nascita": null,
      "avanti": 0,
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "5ee6ad57164eed50a4851789b978761d23f06fa1",
+       1794724968,
+       "Registro",
+       "Registro: elenco attività aggiornato"
+      ],
       [
        "93b4752b16484bc29c3ec2fbbf04449ea712d5c0",
        1794698680,
@@ -7100,15 +7106,9 @@
        1794672267,
        "giandjcosta",
        "Merge pull request #83 from giandjcosta/claude/ramificazioni-tre-viste"
-      ],
-      [
-       "952e5a08c1381c3715f1b001c8ebc708de80eee5",
-       1794671637,
-       "ChatGPT",
-       "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
       ]
      ],
-     "totale": 1199
+     "totale": 1200
     }
    ]
   }
