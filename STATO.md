@@ -9,6 +9,17 @@
 
 
 
+## 15 novembre (12) — ChatGPT: correzioni pre-rilascio SQL e compatibilità 6.2
+
+- **Draft PR [#106](https://github.com/giandjcosta/o-girrr-registro/pull/106)**, basata su `main` `2c856aa`, nessun merge/pubblicazione/Supabase.
+- `sql/finestre-62-proposta.sql`: una conferenza non viene più bloccata quando la finestra non è inizializzata; il trigger seleziona la stagione esatta (colonna esplicita, se disponibile, altrimenti stagione sportiva corrente a Roma). Il limite strutturale resta: nelle due tabelle storiche non è presente la colonna stagione.
+- `sql/votazioni-62-proposta.sql`: la vecchia `sondaggio_vota` registra ancora il primo voto prima della preparazione del catalogo; nessun reset dei voti.
+- `rilascio/r62/server/catalogo62.py`: flag operativo esplicito `--prima-del-rilascio`, combinabile solo con `--vai`, per preparare il catalogo mentre la copia gh-pages è ancora alla 6.1. Questa operazione richiede il futuro Vai separato per Supabase; **non è stata eseguita**.
+- `rilascio/r62/SICUREZZA-SQL.md`: procedura e limiti di attivazione, continuità della 6.1, rollback, migrazione stagionale futura.
+- `prove/v62/postgres.py`: regressioni sul catalogo non pronto, tabella finestre vuota, due stagioni e finestre concluse; CI PostgreSQL **PASS** (run [43770392220](https://github.com/giandjcosta/o-girrr-registro/actions/runs/43770392220), e run [43771449312](https://github.com/giandjcosta/o-girrr-registro/actions/runs/43771449312)).
+- `prove/v62/funzioni.cjs`: aspettativa A/B superata rimossa; Gianluca vuole gli ultimi due risultati in **entrambi** Curva e Girrr Sport. Nella vecchia run 43770392220 Chromium falliva sulla riga 12 con l'attesa A/B: non era una certificazione verde. **Tre browser sul nuovo commit da ricontrollare** (run 43771449312).
+- **Restano fuori** le modifiche di Claude a `backend.py`, `testi.py`, `sondaggi.js`, al Giornale, Radio e Albo grafico; la correzione del post MVP e il voto nel Tabellone sono da completare in un passaggio separato. La dicitura «Serie A, 11ª giornata» nel Giornale resta invariata.
+
 ## 15 novembre (11) — Claude: MVP nel Giornale e in Radio come deciso da Gianluca
 
 - **Giornale** (`rilascio/r62/editoriale/mvp_giornale62.py`, `giornale_mvp.py`): niente data di chiusura.
