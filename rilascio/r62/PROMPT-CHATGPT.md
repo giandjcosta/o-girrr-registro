@@ -106,8 +106,17 @@ Frase proposta per il messaggio (da fondere con le tue novità):
 
 Prima di scrivere, mandami messaggio e changelog completi per l'approvazione.
 
-## Ancora aperto, non fare senza di me
+## Cartellini
 
-Cartellini (🟨 🟥), gol decisivo e assist da fermo: non sono in `data.json`. Servirebbe cambiare `scripts/aggiorna_dati.py` sul sito, ma aspetta il mio sì.
+Claude ha aperto [giandjcosta/o-fant-a-girrr#17](https://github.com/giandjcosta/o-fant-a-girrr/pull/17) verso `gh-pages`: `scripts/aggiorna_dati.py` legge ammonizioni ed espulsioni (classi `yellow-card` e `red-card` della pagina dei voti) e le aggiunge anche alle giornate già salvate, senza cambiare altro. `pdf_giornale.py` le esclude dalle pagelle. Prove sulle pagine vere nella PR.
+
+Controllala:
+- dopo l'unione la Moviola potrà mostrare espulsioni anche nelle giornate passate;
+- uniscila insieme alla 6.2 solo con il mio «Vai».
+
+Voce di changelog da aggiungere:
+- `Campo: Accanto ai giocatori anche ammonizioni 🟨 ed espulsioni 🟥, con la legenda.`
+
+Gol decisivo e assist da fermo non sono nella pagina dei voti: restano fuori.
 
 ---
