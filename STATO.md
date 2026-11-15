@@ -1,6 +1,15 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 15 novembre 2026)
 
 
+
+## 15 novembre (4) — Claude: la 6.2 completa di ChatGPT entra nel Lab
+
+- Richiesta di Gianluca: «Finisci il lavoro di chat e mettilo nel lab così lo provo». PR [#96](https://github.com/giandjcosta/o-girrr-registro/pull/96) di ChatGPT (`chatgpt/integrazione-62-completa`, 6.1.1 dentro la 6.2, votazioni e Precedenti nelle pagine originali, Giornale a quattro pagine, Radio solo testo, confronto A/B) unita in `main` come `931b6d0`. Solo Lab: **sito vero alla 6.1, Supabase non toccato, nessuna SQL applicata, nessun audio, niente in `versioni.json`**.
+- Prove automatiche sul commit `13b7223`: certificazione Chromium e Firefox, PostgreSQL, logica, collaudo, 6.1.1 e browser della 6.2 riusciti. Due fallimenti singoli rilanciati una volta e poi **riusciti**: Radio su WebKit TV Stadio (run 43746086158) e Anteprima 5.5 (run 43746086147; l’ultimo commit non tocca l’Anteprima, e sullo stesso workflow `main` passava). Resta rosso il gruppo «browser» del portale del Registro (`prova_portale_registro.py` riga 82, sezione Ramificazioni che cerca la vecchia mappa a due riquadri, più limite di richieste dell’API GitHub): già presente su `main`, non riguarda la 6.2. I 16 schermi del Registro passano.
+- Unione provata in locale prima del merge: nessun conflitto con `main` (`58c38d2`).
+- Dopo la pubblicazione del Lab: 12 pagine (novità, confronto A/B, anteprima integrata Lega e Stadio: Home, Curva, app, Campo, Tabellone) × telefono 320 e PC 1920 con Chromium, 24 visite, zero errori nuovi e nessuno scorrimento laterale.
+- Ancora da decidere con Gianluca: A o B per i risultati chiusi, testo dell’annuncio (`rilascio/r62/ANNUNCIO-BOZZA.md`), poi «Vai, pubblica» e, separatamente, il «Vai» per la SQL su Supabase.
+
 ## 15 novembre — ChatGPT: rettifica MVP e simboli dei portieri
 
 - Decisione successiva di Gianluca: MVP fuori dal Coro della Curva, in una rubrica autonoma del Giornale. Solo i tre candidati della giornata appena conclusa, con motivazioni giornalistiche fondate sui dati; nessun richiamo al vincitore del turno precedente. Coro invariato. Quattro pagine, stessi caratteri e stessi livelli/scale di adattamento; in pagina 2 spazi più compatti e Top/Flop su quattro colonne, senza perdere contenuti.
