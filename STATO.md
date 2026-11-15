@@ -1,13 +1,20 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 15 novembre 2026)
 
 
-
-## 15 novembre — Claude: proposta 6.2, Campo con Campionato e Champions Cup (solo Lab)
+## 15 novembre (2) — Claude: proposta 6.2, Campo con Campionato e Champions Cup (solo Lab)
 
 - Richiesta di Gianluca per la 6.2: nel Campo anche le partite della Coppa, con interruttore fluido e bande che passano dal colore del Campionato all'azzurro. Poi: la tua partita per prima (contorno oro) e cerchio dei giocatori di casa rosso in Campionato e azzurro in Coppa.
 - Script `rilascio/r62/campo_coppa.py`, pagine di prova `rilascio/r62/pagine/`, specchio del Lab aggiornato (`lab/offline/sw-prova.js`), pagina `lab/novita-6-2.html` con foto in `lab/62-foto/`, collegata dal Lab. Dettagli e prove in `rilascio/r62/NOTE.md`.
 - Sito vero, `ufficiale/src/sito/` e database **non toccati**. Serve certificazione nel Lab e «Vai». Il cartello in cima alle pagine dello specchio dice ancora «Anteprima 6.1.1»: da allineare quando si decide cosa entra nella 6.2.
 - Da fare (richiesta di Gianluca, in attesa di conferma dell'elenco): squadra di chi entra col codice per prima e in leggero oro in tutti i menu dell'app (non nella Storia; nell'Albo con la scritta in leggero oro).
+
+## 15 novembre (1) — Claude: Ramificazioni a tutta pagina, con le unioni e senza spostamenti oltre l'inizio
+Richieste di Gianluca: la pagina grande come principale, la Linea del tempo che non deve andare a sinistra oltre l'inizio, disegni più comprensibili, unioni visibili, Ventaglio grande anche con Tutti ed Entrambi.
+- Il menu «Ramificazioni» del portale apre `rami.html` (`registro.js`); la mappa di ChatGPT resta in `ramificazioni.html`, collegata in fondo, con il ritorno ai rami.
+- `rami_genera.py`: `unione` per ogni ramo rientrato (139 su 156 nei dati di prova). Disegnate in tutte e tre le viste.
+- Vista bloccata all'inizio, rotella che scorre, nomi e date fissi nella Linea del tempo, «Oggi», blocchi separati nel Ventaglio; corretti in Firefox il ramo scelto per errore a fine trascinamento e il puntatore trattenuto quando si rilascia fuori dalla finestra; aperta da sola la pagina non legge i dati prima di entrare nel portale.
+- Prove `prove/prova_rami_tre_viste.js` (con unioni e trascinamento): Chromium, WebKit e Firefox 0 problemi; `prova_ramificazioni.py` OK.
+- Sul sito c'è la **6.1** di ChatGPT (14 novembre, `gh-pages` `a6fcf03`): la 6.0.2 di Claude (`rilascio/r602/`, condivisione singola, «Le ultime 5», squadra a scelta per l'ospite) è confluita lì e non va pubblicata da sola. Le Ramificazioni leggono la versione da `versioni.json` e mostrano già «Sul sito la 6.1».
 
 ## 14 novembre (9) — ChatGPT: «Peggiore» resta su una riga sul PC
 
@@ -68,13 +75,6 @@
 - Foto Radio aggiornate nel Lab, comprese PC e TV; richiami ai file aggiornati per evitare copie precedenti nella cache. Nuovo controllo in `prove/prova_condividi_radio_602.js`, rapporto `prove/risultati-radio-condividi-602.json`; aggiunto alla CI senza rimuovere prove.
 - Nessun audio generato, nessuna modifica al database o al sito vero. Condivisione WhatsApp/iPhone, Samsung Internet e TV fisici restano da verificare. La 6.0.2 rimane nel Lab; sito alla 6.0.1.
 
-
-## 15 novembre (1) — Claude: Ramificazioni a tutta pagina, con le unioni e senza spostamenti oltre l'inizio
-Richieste di Gianluca: la pagina grande come principale, la Linea del tempo che non deve andare a sinistra oltre l'inizio, disegni più comprensibili, unioni visibili, Ventaglio grande anche con Tutti ed Entrambi.
-- Il menu «Ramificazioni» del portale apre `rami.html` (`registro.js`); la mappa di ChatGPT resta in `ramificazioni.html`, collegata in fondo, con il ritorno ai rami.
-- `rami_genera.py`: `unione` per ogni ramo rientrato (139 su 156 nei dati di prova). Disegnate in tutte e tre le viste.
-- Vista bloccata all'inizio, rotella che scorre, nomi e date fissi nella Linea del tempo, «Oggi», blocchi separati nel Ventaglio; corretti in Firefox il ramo scelto per errore a fine trascinamento e il puntatore trattenuto quando si rilascia fuori dalla finestra; aperta da sola la pagina non legge i dati prima di entrare nel portale.
-- Prove `prove/prova_rami_tre_viste.js` (con unioni e trascinamento): Chromium, WebKit e Firefox 0 problemi; `prova_ramificazioni.py` OK.
 
 ## 14 novembre (3) — ChatGPT: Giro di boa, lettere centrate e colori delle scritte distinti dalle bande
 
