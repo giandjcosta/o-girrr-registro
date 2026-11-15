@@ -6,6 +6,7 @@
 - Albo › La Storia (girrr/novita.js e stadio/girrr/novita.js): i Padri Fondatori solo con il nome, tutti in fila,
   senza la squadra di oggi. Il testo della Storia non cambia.
 - Tabellone › Risultati: la tua partita per prima con un leggero velo oro, senza contorno.
+- Tabellone dello Stadio: interruttore Campionato / Champions Cup oro in tutte e due le posizioni.
 
 Uso come campo_coppa.py:  python3 rilascio/r62/testi.py COPIA_DI_GH_PAGES   oppure   --lab
 """
@@ -33,12 +34,16 @@ TAB_CSS_NEW = ("<style>/* 6.2: la tua partita per prima, con un leggero velo oro
                "#board>.m.tua{position:relative;background-image:linear-gradient(90deg,rgba(255,209,102,.17),rgba(255,209,102,.05))!important}"
                "#board>.m.tua::before{content:'La tua partita';position:absolute;top:6px;left:18px;font:900 9px/1 Inter,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#ffd166}"
                "</style></head>")
+SW_OLD = "background:var(--acc);transition:transform .55s"
+SW_NEW = "background:#ffd166;transition:transform .55s"  # 6.2: nello Stadio l'interruttore è oro in Campionato e in Coppa (regola di Gianluca, 15 novembre)
+SWT_OLD = "</head>"
+SWT_NEW = "<style>/* 6.2: testo scuro sulla parte oro dell'interruttore */.sw button[aria-selected=true]{color:#1d2a52;transition:color .3s ease .15s}</style></head>"
 LAVORI = {
     'girrr/v55/ui.js': [(POS_OLD, POS_NEW)],
     'girrr/novita.js': [(PF_OLD, PF_NEW), (CSS_OLD, CSS_NEW)],
     'stadio/girrr/novita.js': [(PF_OLD, PF_NEW), (CSS_OLD, CSS_NEW)],
     'girrr/tabellone.html': [(TAB_GIRO_OLD, TAB_GIRO_NEW), (TAB_M_OLD, TAB_M_NEW), (TAB_CSS_OLD, TAB_CSS_NEW)],
-    'stadio/girrr/tabellone.html': [(TAB_GIRO_OLD, TAB_GIRO_NEW), (TAB_M_OLD, TAB_M_NEW), (TAB_CSS_OLD, TAB_CSS_NEW)],
+    'stadio/girrr/tabellone.html': [(TAB_GIRO_OLD, TAB_GIRO_NEW), (TAB_M_OLD, TAB_M_NEW), (TAB_CSS_OLD, TAB_CSS_NEW), (SW_OLD, SW_NEW), (SWT_OLD, SWT_NEW)],
 }
 
 
