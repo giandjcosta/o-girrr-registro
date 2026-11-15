@@ -8233,6 +8233,26 @@
      "totale": 21
     },
     {
+     "nome": "chatgpt/controllo-62",
+     "punta": "2c856aa",
+     "data": 1794781146,
+     "titolo": "Merge pull request #105 from giandjcosta/claude/fervent-thompson-rwlwrh",
+     "autore": "giandjcosta",
+     "padre": "claude/fervent-thompson-rwlwrh",
+     "nascita": "fc08236",
+     "dataNascita": 1794781140,
+     "avanti": 1,
+     "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794781146,
+      "commit": "2c856aa",
+      "titolo": "Merge pull request #105 from giandjcosta/claude/fervent-thompson-rwlwrh"
+     },
+     "commit": [],
+     "totale": 1
+    },
+    {
      "nome": "main",
      "punta": "2c856aa",
      "data": 1794781146,
