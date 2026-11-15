@@ -1,5 +1,5 @@
 {
- "generato": 1794755134,
+ "generato": 1794755466,
  "versione": "6.1",
  "repository": [
   {
@@ -8006,16 +8006,22 @@
     },
     {
      "nome": "claude/fervent-thompson-rwlwrh",
-     "punta": "8948a6d",
-     "data": 1794755134,
-     "titolo": "Claude: proposta 6.2, immagini prima/dopo della tua squadra in risalto (Tabellone e Albo)",
+     "punta": "b25acc1",
+     "data": 1794755466,
+     "titolo": "Claude: Campo 6.2 con cerchio oro solo al migliore in campo e simboli di tutti i bonus e malus; «= Stessa posi",
      "autore": "Claude",
      "padre": "main",
      "nascita": "410f975",
      "dataNascita": 1794753341,
-     "avanti": 5,
+     "avanti": 6,
      "stato": "attivo",
      "commit": [
+      [
+       "b25acc11c33333a649f12466443ed3f2c00280e1",
+       1794755466,
+       "Claude",
+       "Claude: Campo 6.2 con cerchio oro solo al migliore in campo e simboli di tutti i bonus e malus; «= Stessa posizione»; Padri Fondatori solo c"
+      ],
       [
        "8948a6d5b43846415b5eb0b400b940c47afe3645",
        1794755134,
@@ -8041,7 +8047,7 @@
        "Claude: proposta 6.2, Campo con Campionato e Champions Cup (solo Lab)"
       ]
      ],
-     "totale": 5
+     "totale": 6
     }
    ]
   }
