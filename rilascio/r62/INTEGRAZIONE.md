@@ -42,3 +42,12 @@ Prevale su tutto ciò che è scritto sopra sul Giornale. Gianluca vuole il Giorn
 ## Rettifica successiva di Gianluca
 
 Prevale sui riferimenti precedenti al Coro: rubrica autonoma MVP con tre candidati della giornata appena conclusa, senza premio precedente. Coro intatto. In pagina 2 si compattano gli spazi e si dispongono Top/Flop su quattro colonne per mantenere quattro A4 e gli stessi caratteri. Portieri: icone laterali, pallone con piccola X per i gol subiti. Prova mirata Chromium su telefono/PC/TV, entrambe le grafiche; tre motori ancora da certificare per questa rettifica.
+
+## Votazioni: decisione di Gianluca (15 novembre 2026, sera)
+
+Prevale sul confronto A/B e sul «primo voto immutabile»:
+- **A e B insieme:** gli ultimi due risultati chiusi sono sia in Girrr Sport sia nella Curva.
+- **Voto unico condiviso** fra Curva e Girrr Sport, per sondaggi e MVP: conta una volta sola e da tutte e due le parti si vede «Hai già votato».
+- **«Cambia il mio voto»:** un pulsante piccolo lo permette finché la votazione è aperta. Una seconda richiesta normale non cambia nulla. «Ritira il mio voto» resta tolto.
+- File toccati: `sondaggi.js`, `nativa.py` per la scheda MVP, `lab62.js` e la proposta SQL (`p_cambia` in `v62_vota` e `mvp_vota`, `votazioni62_private.cambia_post`). Prove: `prove/v62/postgres_cambio.py`, 12 casi su PostgreSQL 16 locale; `prove/v62/postgres.py` resta verde.
+- **Verdetto MVP nella Curva:** `calcoli/leggi_eventi.py` crea l'evento `mvp` dall'ultimo verdetto chiuso (`mvp_stato`, lettura pubblica). `calcoli/post_curva.py` scrive il post del profilo ufficiale di Girrr Sport, che tagga la squadra scelta: notifica solo per lei, tramite le menzioni. Esce con la normale catena `pubblica_curva.py`, una volta sola, e senza post retroattivi.

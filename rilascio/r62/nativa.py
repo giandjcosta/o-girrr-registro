@@ -27,6 +27,17 @@ def prepara(base):
         marker='async function start(){'
         hooks="const votoCanale=typeof BroadcastChannel==='function'?new BroadcastChannel('girrr-voti62'):null;\nwindow.addEventListener('og:voto62',()=>votoCanale?.postMessage('rileggi'));if(votoCanale)votoCanale.onmessage=()=>{readyVote=false;redrawPoll();refresh()};\nfunction rileggiVoto(){readyVote=false;redrawPoll();refresh()}window.addEventListener('focus',rileggiVoto);window.addEventListener('pageshow',rileggiVoto);document.addEventListener('visibilitychange',()=>{if(!document.hidden)rileggiVoto()});setInterval(()=>{if(!document.hidden)refresh()},15000);\n"
         s=sost(s,marker,hooks+marker)
+    if 'cambioMvp' not in s:
+        # Claude, 15 novembre 2026 (Gianluca): un solo voto, condiviso fra Curva e Girrr Sport, ma con un pulsante
+        # piccolo «Cambia il mio voto». Vale solo l'ultimo voto; «Ritira il mio voto» resta tolto.
+        s=sost(s,"myVote=null,readyVote=false,pollError=''","myVote=null,readyVote=false,cambioMvp=false,pollError=''")
+        s=sost(s,"!closed&&id&&readyVote&&!myVote?'<button","!closed&&id&&readyVote&&(!myVote||cambioMvp)?'<button")
+        s=sost(s,"'Hai già votato: '+N(mine[id.team])","(cambioMvp?'Scegli il nuovo voto: vale solo l’ultimo.':'Hai già votato: '+N(mine[id.team]))")
+        s=sost(s,"(false?'<button type=\"button\" data-pt-withdraw'+(busyVote?' disabled':'')+'>Ritira il mio voto</button>':'')",
+               "(!closed&&id&&readyVote&&myVote?'<button type=\"button\" class=\"v62-cambia\" data-pt-cambia'+(busyVote?' disabled':'')+'>'+(cambioMvp?'Annulla':'Cambia il mio voto')+'</button>':'')")
+        s=sost(s,"p_scelta:choice});mvp=result;","p_scelta:choice,p_cambia:cambioMvp});mvp=result;")
+        s=sost(s,"busyVote=false;readyVote=!!myVote;","busyVote=false;cambioMvp=false;readyVote=!!myVote;")
+        s=sost(s,marker,"document.addEventListener('click',e=>{if(e.target.closest('[data-pt-cambia]')){cambioMvp=!cambioMvp;redrawPoll()}});\n"+marker)
     out[p]=s
     for skin in ('girrr','stadio/girrr'):
         prefix='../' if skin=='girrr' else '../../'

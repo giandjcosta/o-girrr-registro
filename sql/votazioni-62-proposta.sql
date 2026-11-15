@@ -56,7 +56,21 @@ begin
  'chiusi',coalesce((select jsonb_agg(dati order by chiude desc,id) from (select * from righe where concluso order by chiude desc,id limit 2) z),'[]'::jsonb)));
 end $$;
 
-create or replace function public.v62_vota(p_id text,p_team text,p_code text,p_scelta text)
+-- Claude, 15 novembre 2026 (Gianluca): un solo voto, condiviso fra Curva e Girrr Sport. Una seconda richiesta
+-- normale non lo cambia («Hai già votato»); lo cambia solo il pulsante «Cambia il mio voto» (p_cambia=true),
+-- finché la votazione è aperta e con una scelta valida. Il voto resta uno per squadra.
+create or replace function votazioni62_private.cambia_post(p_team text,p_post bigint,p_opt integer)
+returns void language plpgsql security definer set search_path='' as $$
+declare op text[]; t timestamptz;
+begin
+ select po.opts,p.created into op,t from public.curva_poll po join public.curva_post p on p.id=po.post_id where po.post_id=p_post for update of po;
+ if not found then raise exception 'Sondaggio non trovato'; end if;
+ if clock_timestamp()>=votazioni62_private.post_scadenza(t) then raise exception 'Il sondaggio è chiuso'; end if;
+ if p_opt is null or p_opt<0 or p_opt>=array_length(op,1) then raise exception 'Risposta non valida'; end if;
+ insert into public.curva_vote(post_id,team,opt) values(p_post,p_team,p_opt) on conflict(post_id,team) do update set opt=excluded.opt;
+end $$;
+drop function if exists public.v62_vota(text,text,text,text);
+create or replace function public.v62_vota(p_id text,p_team text,p_code text,p_scelta text,p_cambia boolean default false)
 returns jsonb language plpgsql security definer set search_path='' as $$
 declare s votazioni62_private.sondaggi; precedente text; op text[]; prima timestamptz; fonte_id bigint; scelta_indice integer;
 begin
@@ -67,21 +81,24 @@ begin
   fonte_id=split_part(p_id,':',3)::bigint;
   select po.opts,p.created into op,prima from public.curva_poll po join public.curva_post p on p.id=po.post_id where po.post_id=fonte_id;
   if not found or extract(year from prima at time zone 'Europe/Rome')::int-(case when extract(month from prima at time zone 'Europe/Rome')<7 then 1 else 0 end)<>substring(p_id from 6 for 4)::int then raise exception 'Fonte non valida'; end if;
-  scelta_indice=array_position(op,p_scelta)-1;perform public.curva_vota(p_team,p_code,fonte_id,scelta_indice);
+  scelta_indice=array_position(op,p_scelta)-1;
+  if coalesce(p_cambia,false) then perform votazioni62_private.cambia_post(p_team,fonte_id,scelta_indice); else perform public.curva_vota(p_team,p_code,fonte_id,scelta_indice); end if;
   select op[v.opt+1] into precedente from public.curva_vote v where post_id=fonte_id and team=p_team;
   return jsonb_build_object('mia_scelta',precedente,'stato','registrato');
  end if;
  if s.origine='post' then
-  perform public.curva_vota(p_team,p_code,s.fonte::bigint,(select ord::int-1 from jsonb_array_elements_text(s.scelte) with ordinality a(scelta,ord) where scelta=p_scelta));
+  scelta_indice=(select ord::int-1 from jsonb_array_elements_text(s.scelte) with ordinality a(scelta,ord) where scelta=p_scelta);
+  if coalesce(p_cambia,false) then perform votazioni62_private.cambia_post(p_team,s.fonte::bigint,scelta_indice); else perform public.curva_vota(p_team,p_code,s.fonte::bigint,scelta_indice); end if;
   select po.opts[v.opt+1] into precedente from public.curva_vote v join public.curva_poll po on po.post_id=v.post_id where v.post_id=s.fonte::bigint and v.team=p_team;
   return jsonb_build_object('mia_scelta',precedente,'stato','registrato');
  end if;
  select scelta into precedente from sondaggio_private.voti where giornata=s.giornata and team=p_team;
- if found then return jsonb_build_object('registrato',false,'mia_scelta',precedente,'stato','gia_votato'); end if;
+ if found and not coalesce(p_cambia,false) then return jsonb_build_object('registrato',false,'mia_scelta',precedente,'stato','gia_votato'); end if;
  if s.chiuso is not null or coalesce(clock_timestamp()>=s.chiude,false) or clock_timestamp()<s.aperto then raise exception 'Votazione non aperta'; end if;
  if p_scelta is null or not s.scelte ? p_scelta then raise exception 'Scelta non valida'; end if;
  if s.origine='sfida' then
-  insert into sondaggio_private.voti(giornata,team,scelta) values(s.giornata,p_team,p_scelta) on conflict do nothing;
+  if precedente is not null then update sondaggio_private.voti set scelta=p_scelta where giornata=s.giornata and team=p_team;
+  else insert into sondaggio_private.voti(giornata,team,scelta) values(s.giornata,p_team,p_scelta) on conflict do nothing; end if;
  end if;
  return jsonb_build_object('registrato',true,'mia_scelta',p_scelta,'stato','registrato');
 end $$;
@@ -102,7 +119,8 @@ begin
  return public.sondaggio_stato(p_giornata)||risultato;
 end $$;
 
-create or replace function public.mvp_vota(p_team text,p_code text,p_stagione text,p_giornata integer,p_scelta text default null)
+drop function if exists public.mvp_vota(text,text,text,integer,text);
+create or replace function public.mvp_vota(p_team text,p_code text,p_stagione text,p_giornata integer,p_scelta text default null,p_cambia boolean default false)
 returns jsonb language plpgsql security definer set search_path='' as $$
 declare w mvp_private.giornate; precedente text;
 begin
@@ -110,10 +128,11 @@ begin
  select * into w from mvp_private.giornate where stagione=p_stagione and giornata=p_giornata for update;
  if not found then raise exception 'Votazione non disponibile'; end if;
  select scelta into precedente from mvp_private.voti where stagione=p_stagione and giornata=p_giornata and team=p_team;
- if found then return public.mvp_stato(p_stagione,p_giornata)||jsonb_build_object('scelta',precedente,'registrato',false); end if;
+ if found and not coalesce(p_cambia,false) then return public.mvp_stato(p_stagione,p_giornata)||jsonb_build_object('scelta',precedente,'registrato',false); end if;
  if w.chiusa is not null or clock_timestamp()>=w.chiude then raise exception 'Votazione conclusa'; end if;
  if p_scelta is null or not exists(select 1 from jsonb_array_elements(w.candidati) c where c->>'team'=p_scelta) then raise exception 'Candidatura non valida'; end if;
- insert into mvp_private.voti(stagione,giornata,team,scelta) values(p_stagione,p_giornata,p_team,p_scelta);
+ if precedente is not null then update mvp_private.voti set scelta=p_scelta where stagione=p_stagione and giornata=p_giornata and team=p_team;
+ else insert into mvp_private.voti(stagione,giornata,team,scelta) values(p_stagione,p_giornata,p_team,p_scelta); end if;
  return public.mvp_stato(p_stagione,p_giornata)||jsonb_build_object('scelta',p_scelta,'registrato',true);
 end $$;
 
@@ -191,7 +210,9 @@ revoke all on function public.v62_catalogo_server(text) from public,anon,authent
 grant execute on function public.v62_catalogo_server(text) to service_role;
 
 revoke all on all functions in schema votazioni62_private from public,anon,authenticated;
-revoke all on function public.v62_sondaggi(text,text,text),public.v62_vota(text,text,text,text),public.v62_prepara(text,text,text,text,int,text,jsonb,timestamptz,timestamptz) from public,anon,authenticated;
-grant execute on function public.v62_sondaggi(text,text,text),public.v62_vota(text,text,text,text) to anon,authenticated,service_role;
+revoke all on function public.v62_sondaggi(text,text,text),public.v62_vota(text,text,text,text,boolean),public.v62_prepara(text,text,text,text,int,text,jsonb,timestamptz,timestamptz) from public,anon,authenticated;
+grant execute on function public.v62_sondaggi(text,text,text),public.v62_vota(text,text,text,text,boolean) to anon,authenticated,service_role;
 grant execute on function public.v62_prepara(text,text,text,text,int,text,jsonb,timestamptz,timestamptz) to service_role;
+revoke all on function public.mvp_vota(text,text,text,integer,text,boolean) from public;
+grant execute on function public.mvp_vota(text,text,text,integer,text,boolean) to anon,authenticated,service_role;
 commit;

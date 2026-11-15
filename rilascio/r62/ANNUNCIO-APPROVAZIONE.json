@@ -1,6 +1,6 @@
 {
   "titolo": "Il Campo della Champions Cup",
-  "messaggio": "⚽ **O Girrr 6.2 è online!** Nel Campo ora trovi anche le partite della Champions Cup: un tocco sull’interruttore e passi da una competizione all’altra, e quando entri con il tuo codice si apre subito la tua partita. Con le nuove frecce passi da una partita all’altra o salti di giornata. Voti una volta sola e ritrovi il tuo voto sia nella Curva sia in Girrr Sport, dove puoi rileggere anche le conferenze già pubblicate. Nel Giornale c’è la rubrica con i candidati MVP dei tifosi della giornata e la Carriera è più leggibile. Buona giornata a tutti! ⚽",
+  "messaggio": "⚽ **O Girrr 6.2 è online!** Nel Campo ora trovi anche le partite della Champions Cup: un tocco sull’interruttore e passi da una competizione all’altra, e quando entri con il tuo codice si apre subito la tua partita. Con le nuove frecce passi da una partita all’altra o salti di giornata. Voti una volta sola, nella Curva o in Girrr Sport, e ritrovi il tuo voto in tutte e due: se ci ripensi, puoi cambiarlo finché la votazione è aperta. Quando si chiude l’MVP dei tifosi, Girrr Sport annuncia il verdetto nella Curva, e nel Giornale trovi i candidati e il verdetto della giornata prima. Buona giornata a tutti! ⚽",
   "voci": [
     "Campo: Interruttore Campionato / Champions Cup con passaggio morbido; ogni competizione ricorda la giornata e la partita che stavi guardando.",
     "Campo: Frecce ‹ › per cambiare partita e « » per cambiare giornata; le partite si possono anche scorrere e toccare, con cambi in dissolvenza.",
@@ -14,15 +14,16 @@
     "Tabellone: In «Dentro la partita» si legge «= Stessa posizione» e «1 posizione» al singolare.",
     "Carriera: Il grafico della posizione mostra giornata e piazzamento per ciascun punto, con testi più leggibili e «Peggiore» su una riga dal PC.",
     "Curva: Le schede cambiano più rapidamente e la bozza resta conservata durante la navigazione.",
-    "Curva: Il voto è condiviso tra Curva e Girrr Sport: ritrovi «Hai già votato» e non puoi inviare un secondo voto.",
+    "Curva: Il voto è condiviso tra Curva e Girrr Sport e conta una volta sola: ritrovi «Hai già votato» da tutte e due le parti e con «Cambia il mio voto» puoi cambiarlo finché la votazione è aperta.",
     "Curva: Per le future aperture, sfide fino al calcio d’inizio, post per 24 ore e MVP per 48 ore al massimo, entro il turno successivo.",
-    "Girrr Sport: Puoi votare i sondaggi della Lega anche in Girrr Sport e ritrovare la stessa scelta nella Curva.",
+    "Girrr Sport: Puoi votare sondaggi e MVP dei tifosi anche in Girrr Sport e ritrovare la stessa scelta nella Curva.",
     "Girrr Sport: Nei Precedenti delle conferenze scegli squadra e giornata, leggendo le dichiarazioni originali oppure «Dato non conservato».",
     "Girrr Sport: Per le future aperture, la vigilia termina al calcio d’inizio e il dopo partita resta disponibile per 48 ore dalla pubblicazione dei risultati.",
+    "Girrr Sport: Alla chiusura dell’MVP dei tifosi il profilo ufficiale di Girrr Sport pubblica il verdetto nella Curva, taggando la squadra scelta.",
     "Albo d’oro: Nella Storia i Padri Fondatori compaiono solo con il nome, tutti in fila.",
-    "Giornale: Una rubrica dedicata racconta i tre candidati MVP della giornata appena conclusa e le ragioni sportive delle candidature, separata dal commento della Curva.",
+    "Giornale: La rubrica «MVP dei tifosi» indica fino a quando si vota, presenta i tre candidati della giornata appena conclusa e racconta il verdetto della giornata precedente; il Coro della Curva resta separato.",
     "Radio: Dalla prossima puntata ordinaria, una sola breve frase indica la giornata dell’MVP o il voto ancora aperto, prima della chiusura integrale.",
     "App: I Bilanci riportano «Campionato & Champions Cup»; le animazioni rispettano Riduci movimento.",
-    "App: Puoi rivedere gli ultimi due sondaggi conclusi, senza riaprire l’intero elenco."
+    "App: Gli ultimi due sondaggi conclusi si rivedono sia nella Curva sia in Girrr Sport."
   ]
 }

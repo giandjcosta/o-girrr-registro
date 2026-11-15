@@ -4,7 +4,7 @@
   "data": "2026-11-15",
   "tipo": "medio",
   "titolo": "Il Campo della Champions Cup",
-  "messaggio": "⚽ **O Girrr 6.2 è online!** Nel Campo ora trovi anche le partite della Champions Cup: un tocco sull’interruttore e passi da una competizione all’altra, e quando entri con il tuo codice si apre subito la tua partita. Con le nuove frecce passi da una partita all’altra o salti di giornata. Voti una volta sola e ritrovi il tuo voto sia nella Curva sia in Girrr Sport, dove puoi rileggere anche le conferenze già pubblicate. Nel Giornale c’è la rubrica con i candidati MVP dei tifosi della giornata e la Carriera è più leggibile. Buona giornata a tutti! ⚽",
+  "messaggio": "⚽ **O Girrr 6.2 è online!** Nel Campo ora trovi anche le partite della Champions Cup: un tocco sull’interruttore e passi da una competizione all’altra, e quando entri con il tuo codice si apre subito la tua partita. Con le nuove frecce passi da una partita all’altra o salti di giornata. Voti una volta sola, nella Curva o in Girrr Sport, e ritrovi il tuo voto in tutte e due: se ci ripensi, puoi cambiarlo finché la votazione è aperta. Quando si chiude l’MVP dei tifosi, Girrr Sport annuncia il verdetto nella Curva, e nel Giornale trovi i candidati e il verdetto della giornata prima. Buona giornata a tutti! ⚽",
   "novita": [
     {
       "area": "Campo",
@@ -36,16 +36,17 @@
       "area": "Curva",
       "voci": [
         "Le schede cambiano più rapidamente e la bozza resta conservata durante la navigazione.",
-        "Il voto è condiviso tra Curva e Girrr Sport: ritrovi «Hai già votato» e non puoi inviare un secondo voto.",
+        "Il voto è condiviso tra Curva e Girrr Sport e conta una volta sola: ritrovi «Hai già votato» da tutte e due le parti e con «Cambia il mio voto» puoi cambiarlo finché la votazione è aperta.",
         "Per le future aperture, sfide fino al calcio d’inizio, post per 24 ore e MVP per 48 ore al massimo, entro il turno successivo."
       ]
     },
     {
       "area": "Girrr Sport",
       "voci": [
-        "Puoi votare i sondaggi della Lega anche in Girrr Sport e ritrovare la stessa scelta nella Curva.",
+        "Puoi votare sondaggi e MVP dei tifosi anche in Girrr Sport e ritrovare la stessa scelta nella Curva.",
         "Nei Precedenti delle conferenze scegli squadra e giornata, leggendo le dichiarazioni originali oppure «Dato non conservato».",
-        "Per le future aperture, la vigilia termina al calcio d’inizio e il dopo partita resta disponibile per 48 ore dalla pubblicazione dei risultati."
+        "Per le future aperture, la vigilia termina al calcio d’inizio e il dopo partita resta disponibile per 48 ore dalla pubblicazione dei risultati.",
+        "Alla chiusura dell’MVP dei tifosi il profilo ufficiale di Girrr Sport pubblica il verdetto nella Curva, taggando la squadra scelta."
       ]
     },
     {
@@ -57,7 +58,7 @@
     {
       "area": "Giornale",
       "voci": [
-        "Una rubrica dedicata racconta i tre candidati MVP della giornata appena conclusa e le ragioni sportive delle candidature, separata dal commento della Curva."
+        "La rubrica «MVP dei tifosi» indica fino a quando si vota, presenta i tre candidati della giornata appena conclusa e racconta il verdetto della giornata precedente; il Coro della Curva resta separato."
       ]
     },
     {
@@ -70,7 +71,7 @@
       "area": "App",
       "voci": [
         "I Bilanci riportano «Campionato & Champions Cup»; le animazioni rispettano Riduci movimento.",
-        "Puoi rivedere gli ultimi due sondaggi conclusi, senza riaprire l’intero elenco."
+        "Gli ultimi due sondaggi conclusi si rivedono sia nella Curva sia in Girrr Sport."
       ]
     }
   ]

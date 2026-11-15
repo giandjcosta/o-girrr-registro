@@ -4,6 +4,21 @@
 
 
 
+
+## 15 novembre (7) — Claude: voto unico con «Cambia il mio voto», risultati in Curva e Girrr Sport, verdetto MVP nella Curva
+
+- Decisioni di Gianluca:
+  - risultati chiusi sia in Girrr Sport sia nella Curva (A e B insieme);
+  - un solo voto condiviso fra Curva e Girrr Sport, per sondaggi e MVP, con un pulsante piccolo «Cambia il mio voto»;
+  - alla chiusura dell'MVP, un post del profilo ufficiale di Girrr Sport nella Curva, senza notifiche se non per chi è taggato.
+- **Lab** (`lab/integrata-62/` rigenerato con `preview.py`; cambiano solo `sondaggi62.js`, `tifosi.js` e `lab62.js`). Provato con Chromium su telefono:
+  - voto in Curva, poi «Hai già votato» anche in Girrr Sport;
+  - cambio in Girrr Sport, poi lo stesso voto anche in Curva;
+  - lo stesso per l'MVP; zero errori.
+- **SQL (solo proposta, non applicata):** `p_cambia` in `v62_vota` e `mvp_vota`. `prove/v62/postgres_cambio.py` passa 12 casi su PostgreSQL 16 locale e `postgres.py` resta verde.
+- **Post del verdetto:** `calcoli/leggi_eventi.py` (evento `mvp`) e `calcoli/post_curva.py`. Esempio: «🏆 MVP DEI TIFOSI · 7ª giornata / Stif dc @stif_dc è l’MVP dei tifosi della 7ª giornata. …». Le prove della redazione, della Moviola e delle cronache restano verdi. Va sul `main` del sito solo con il rilascio.
+- **Annuncio e changelog aggiornati:** 23 voci, validati con `aggiungi.py --prova`.
+
 ## 15 novembre (6) — Claude: rubrica MVP del Giornale con capolettera, chiusura del voto e verdetto
 
 - Richieste di Gianluca: capilettera rossi, da usare in un altro punto della rubrica; dal prossimo Giornale, non sui numeri già usciti; un breve taglio con l’MVP votato e la sua prestazione, perché quando esce il Giornale il voto è ancora aperto.
