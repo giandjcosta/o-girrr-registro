@@ -22,6 +22,9 @@ def check(label,ok):
  assert ok,label
  report.append(label)
 def value(sql,args=()):return c.execute(sql,args).fetchone()[0]
+# La RPC 6.1 deve restare disponibile prima del catalogo 6.2.
+c.execute("select public.sondaggio_vota('stif dc',%s,9,'A')",(code,))
+check('RPC 6.1 vota senza catalogo: nessuna interruzione durante la preparazione',value("select scelta from sondaggio_private.voti where giornata=9 and team='stif dc'")=='A')
 for n,offset in ((8,1),(7,-1),(6,-2),(5,-3)):
  c.execute("select public.v62_prepara(%s,'2026/27','sfida',%s,%s,'Sfida',%s,clock_timestamp()-interval '10 days',clock_timestamp()+(%s||' days')::interval)",(f'sfida:2026/27:{n}',str(n),n,'["A","B"]',str(offset)))
 check('Voti preesistenti leggibili senza importazioni',value("select public.v62_sondaggi('2026/27','Oranje VC',%s)->'aperti'->0->>'mia_scelta'",(code,))=='A')
@@ -59,6 +62,19 @@ with psycopg.connect(**connargs) as lock:
    except psycopg.Error:return True
    return False
   f=ex.submit(tardivo);time.sleep(.3);lock.commit();check('Scadenza ricontrollata dopo attesa del lock',f.result())
+# Senza finestre (prima installazione) non bloccare le conferenze della 6.1.
+c.execute("insert into public.conf_risposta(team,giornata,risposte) values('stif dc',7,'[]')")
+check('Conferenza nuova ammessa se la finestra non è inizializzata',value("select count(*) from public.conf_risposta where team='stif dc' and giornata=7")==1)
+# In futuro può comparire la colonna stagione; allora deve prevalere sul fallback corrente.
+c.execute("alter table public.conf_risposta add column stagione text")
+c.execute("select public.v62_finestre_prepara('2025/26','vigilia',9,clock_timestamp()-interval '1 hour',clock_timestamp()+interval '1 hour')")
+c.execute("select public.v62_finestre_prepara('2026/27','vigilia',9,clock_timestamp()-interval '2 days',clock_timestamp()-interval '1 day')")
+c.execute("insert into public.conf_risposta(team,giornata,risposte,stagione) values('Apo team',9,'[]','2025/26')")
+check('Finestre della stessa giornata isolate per stagione',value("select count(*) from public.conf_risposta where team='Apo team' and giornata=9")==1)
+try:
+ c.execute("insert into public.conf_risposta(team,giornata,risposte,stagione) values('Oranje VC',9,'[]','2026/27')")
+ raise AssertionError('Finestra 2026/27 scaduta non rispettata')
+except psycopg.errors.RaiseException:report.append('Finestra scaduta applicata solo alla stagione corrispondente')
 c.execute("select public.v62_finestre_prepara('2026/27','vigilia',8,clock_timestamp()-interval '1 hour',clock_timestamp()+interval '1 hour')")
 c.execute("insert into public.conf_risposta(team,giornata,risposte) values('Oranje VC',8,'[]')")
 try:c.execute("update public.conf_risposta set risposte='[{}]' where giornata=8");raise AssertionError('Conferenza sovrascritta')
