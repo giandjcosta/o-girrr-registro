@@ -1,5 +1,5 @@
 {
- "generato": 1794762565,
+ "generato": 1794762900,
  "versione": "6.1",
  "repository": [
   {
@@ -8228,16 +8228,22 @@
     },
     {
      "nome": "chatgpt/integrazione-62-completa",
-     "punta": "251c7f3",
-     "data": 1794762565,
-     "titolo": "ChatGPT: conserva i Precedenti durante gli aggiornamenti e isola la preview navigabile",
+     "punta": "1ee3d23",
+     "data": 1794762900,
+     "titolo": "ChatGPT: attende la configurazione prima di caricare le conferenze e rafforza le prove",
      "autore": "ChatGPT",
      "padre": "main",
      "nascita": "b051bfb",
      "dataNascita": 1794759206,
-     "avanti": 19,
+     "avanti": 20,
      "stato": "attivo",
      "commit": [
+      [
+       "1ee3d2300df52b6bca0cf08e4356999f1caaa42e",
+       1794762900,
+       "ChatGPT",
+       "ChatGPT: attende la configurazione prima di caricare le conferenze e rafforza le prove"
+      ],
       [
        "251c7f3a2e7444805528cf88c481251049e10cf1",
        1794762565,
@@ -8303,15 +8309,9 @@
        1794760006,
        "ChatGPT",
        "ChatGPT: documenta la 6.2 unica, la 6.1.1 inclusa e il Giornale a quattro pagine"
-      ],
-      [
-       "a66b28bc771617280b266ce7895e6866beabf5dc",
-       1794760004,
-       "ChatGPT",
-       "ChatGPT: documenta la 6.2 unica, la 6.1.1 inclusa e il Giornale a quattro pagine"
       ]
      ],
-     "totale": 19
+     "totale": 20
     }
    ]
   }
