@@ -1,5 +1,5 @@
 {
- "generato": 1794783966,
+ "generato": 1794784182,
  "versione": "6.1",
  "repository": [
   {
@@ -8459,16 +8459,52 @@
     },
     {
      "nome": "chatgpt/rc-62-verifica",
-     "punta": "81c6a84",
-     "data": 1794783966,
-     "titolo": "ChatGPT: include Albo 6.2 nella matrice browser completa",
+     "punta": "baecb18",
+     "data": 1794784182,
+     "titolo": "ChatGPT: allinea QA della 6.2 alla release candidate effettiva",
      "autore": "ChatGPT",
      "padre": "chatgpt/controllo-62",
      "nascita": "a5480da",
      "dataNascita": 1794783380,
-     "avanti": 9,
+     "avanti": 15,
      "stato": "attivo",
      "commit": [
+      [
+       "baecb1805e8b78b7d049c66fc9bbcf524d84cf01",
+       1794784182,
+       "ChatGPT",
+       "ChatGPT: allinea QA della 6.2 alla release candidate effettiva"
+      ],
+      [
+       "59ff151a9dc3a5a2b0c15c1ab2c388e85da71056",
+       1794784159,
+       "ChatGPT",
+       "ChatGPT: registra la release candidate e i controlli ancora necessari"
+      ],
+      [
+       "a49ec8c697209a15a0f94d8a0e3cb78067f44645",
+       1794784092,
+       "ChatGPT",
+       "ChatGPT: estende il collaudo della copia backend alla giuria"
+      ],
+      [
+       "8970a543f7fae94c1c3c176ca18383db4ee9cfd2",
+       1794784090,
+       "ChatGPT",
+       "ChatGPT: include l'Albo e le giurie nel piano SQL sicuro"
+      ],
+      [
+       "de42813c5c5e6182ca62563c8feef4ff9f6a944d",
+       1794784062,
+       "ChatGPT",
+       "ChatGPT: include il servizio delle giurie nella copia backend"
+      ],
+      [
+       "6a208bdf0ac3aa10d866b5e0d6298f192649b83b",
+       1794784060,
+       "ChatGPT",
+       "ChatGPT: rende portabile il validatore delle giurie nel backend"
+      ],
       [
        "81c6a84117304cbefb08d7ced2482c5eaef541b5",
        1794783966,
@@ -8504,27 +8540,9 @@
        1794783757,
        "ChatGPT",
        "ChatGPT: integra la proposta Albo 6.2 nella release candidate"
-      ],
-      [
-       "3d00ddea7c5d69505047f09d16a7a0de445d8582",
-       1794783754,
-       "ChatGPT",
-       "ChatGPT: integra la proposta Albo 6.2 nella release candidate"
-      ],
-      [
-       "875d983cf0b5d9eea5116c50f37e468ff4a23b95",
-       1794783751,
-       "ChatGPT",
-       "ChatGPT: integra la proposta Albo 6.2 nella release candidate"
-      ],
-      [
-       "a087a5096d16f317df96b4bd6c1b1322877d3a1b",
-       1794783749,
-       "ChatGPT",
-       "ChatGPT: integra la proposta Albo 6.2 nella release candidate"
       ]
      ],
-     "totale": 9
+     "totale": 15
     }
    ]
   }
