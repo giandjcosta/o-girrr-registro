@@ -1,5 +1,5 @@
 {
- "generato": 1794768152,
+ "generato": 1794770226,
  "versione": "6.1",
  "repository": [
   {
@@ -8145,11 +8145,17 @@
      "data": 1794766745,
      "titolo": "ChatGPT: separa i candidati MVP dal Coro e rende laterali i simboli dei portieri",
      "autore": "ChatGPT",
-     "padre": "main",
-     "nascita": "b051bfb",
-     "dataNascita": 1794759206,
-     "avanti": 27,
-     "stato": "attivo",
+     "padre": "claude/fervent-thompson-rwlwrh",
+     "nascita": "e84a62d",
+     "dataNascita": 1794759191,
+     "avanti": 28,
+     "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794770184,
+      "commit": "931b6d0",
+      "titolo": "Merge pull request #96: integrazione 6.2 nel Lab (richiesta di Gianluca, sito vero invariato)"
+     },
      "commit": [
       [
        "13b722368a7df8ebf15afb47dcec73caffa9a419",
@@ -8224,20 +8230,32 @@
        "ChatGPT: prepara la consegna a Codex per finire la 6.2 senza ripartire da zero"
       ]
      ],
-     "totale": 27
+     "totale": 28
     },
     {
      "nome": "main",
-     "punta": "58c38d2",
-     "data": 1794768152,
-     "titolo": "Registro: elenco attività aggiornato",
-     "autore": "Registro",
+     "punta": "6fb4d57",
+     "data": 1794770226,
+     "titolo": "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio",
+     "autore": "ChatGPT",
      "padre": null,
      "nascita": null,
      "avanti": 0,
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "6fb4d57bfad312ee9d728792dc01634ca9871a68",
+       1794770226,
+       "ChatGPT",
+       "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
+      ],
+      [
+       "931b6d062d1cceabd57fd5b83e2166d24a552858",
+       1794770184,
+       "giandjcosta",
+       "Merge pull request #96: integrazione 6.2 nel Lab (richiesta di Gianluca, sito vero invariato)"
+      ],
       [
        "58c38d2397f93cedf6f24e718121c2148be72af1",
        1794768152,
@@ -8297,21 +8315,9 @@
        1794691732,
        "ChatGPT",
        "ChatGPT: aggiorna STATO con la verifica dell’anteprima 6.1.1"
-      ],
-      [
-       "35573fa60d277ff630b4b68a84acdabfec2b0e12",
-       1794691510,
-       "ChatGPT",
-       "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
-      ],
-      [
-       "f959d2f69bda69ff8952969f4c862d38a65996d3",
-       1794691286,
-       "ChatGPT",
-       "ChatGPT: integra nel Lab l’anteprima 6.1.1"
       ]
      ],
-     "totale": 1225
+     "totale": 1254
     }
    ]
   }
