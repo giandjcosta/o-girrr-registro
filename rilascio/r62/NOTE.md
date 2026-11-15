@@ -4,7 +4,8 @@ Parte di Claude della 6.2. Prima certificazione nel Lab (`lab/novita-6-2.html`),
 
 - **Interruttore Campionato / Champions Cup** nel Campo, Lega e Stadio. Prima le partite di Coppa si aprivano solo con `?coppa=1` dal Tabellone (il collegamento resta valido).
 - **Passaggio morbido:** l'indicatore scorre da rosso ad azzurro (0,55 s); partite e schede escono in 0,16 s e rientrano in 0,34 s; le bande delle schede sfumano (rosso → azzurro nella Lega, oro → azzurro nello Stadio) con un velo che cambia solo opacità, senza ridisegnare le schede. «Riduci movimento»: cambio immediato.
-- **Cerchio dei giocatori di casa:** rosso in Campionato, azzurro in Coppa; ospite bianco, stella per il migliore in campo. Legenda aggiornata.
+- **Cerchio dei giocatori di casa:** rosso in Campionato, azzurro in Coppa; ospite bianco.
+- **Cerchio oro:** il voto più alto della partita tra le due squadre (a pari voto, tutti quelli col voto più alto). La stella ★ resta il «migliore in campo» dei dati ufficiali. Legenda aggiornata.
 - **La tua partita per prima:** con il codice della squadra la tua partita è aperta e al primo posto della fila, con il contorno oro già esistente.
 - Ogni competizione ricorda giornata e partita; l'indirizzo segue la scelta (`coppa=1`). Se il calendario della Coppa manca l'interruttore si nasconde.
 

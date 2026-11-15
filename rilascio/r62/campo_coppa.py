@@ -42,6 +42,9 @@ body[data-v53=campo]{--casa:#ff5a6a}
 body[data-v53=campo][data-comp=coppa]{--casa:#63bce9}
 /* Chi entra con il codice della squadra trova la sua partita per prima nella fila (contorno oro già esistente) */
 #matches>.gamebtn.mia{order:-1}
+/* Cerchio oro: il voto più alto della partita tra le due squadre (anche più giocatori, se a pari voto) */
+.pitch .pl.oro b,.pitch .pl.away.oro b{border-color:#ffd166;box-shadow:0 0 0 2px rgba(255,209,102,.35),0 2px 6px rgba(0,0,0,.35)}
+.campo-legend .leg-oro{display:inline-block;flex:none;width:26px;height:26px;border-radius:50%;border:3px solid #ffd166;margin:0 3px}
 @media(max-width:700px){.comp-sw{width:100%}}
 @media(max-width:360px){.comp-sw button{font-size:11.5px;letter-spacing:.03em;padding:10px 4px}}
 @media(prefers-reduced-motion:reduce){.comp-sw i,.comp-sw button,#board,#matches,#roundtitle,html.cc-pronto body[data-v53=campo] #board>.card::after,html.cc-pronto body[data-v53=campo] .sidebar nav a,html.cc-pronto body[data-v53=campo] .gamebtn{transition:none!important}}
@@ -107,6 +110,12 @@ def applica(t, nome):
                     "Number(q.get('partita'))||0)):partitaMia(round);render();requestAnimationFrame(function(){requestAnimationFrame(function(){document.documentElement.classList.add('cc-pronto')})})}", nome)
     t = sostituisci(t, "<span><b>Squadra di casa</b><small>Bordo azzurro.</small></span>",
                     "<span><b>Squadra di casa</b><small>'+(COPPA?'Bordo azzurro.':'Bordo rosso.')+'</small></span>", nome)
+    t = sostituisci(t, "if(xa&&xb){var H=TEL.matches?1250:700;",
+                    "if(xa&&xb){var H=TEL.matches?1250:700,tutti=xa.concat(xb),mx=Math.max.apply(null,tutti.map(function(g){return g.v==null?-1:g.v}));tutti.forEach(function(g){g.oro=mx>=0&&g.v===mx});", nome)
+    t = sostituisci(t, "'<div class=\"pl '+lato+(g.top?' top':'')+'\"", "'<div class=\"pl '+lato+(g.top?' top':'')+(g.oro?' oro':'')+'\"", nome)
+    t = sostituisci(t, "+(g.top?' · ★ Migliore in campo':'');", "+(g.top?' · ★ Migliore in campo':'')+(g.oro?' · Voto più alto della partita':'');", nome)
+    t = sostituisci(t, "<li><i class=\"leg-osp\" aria-hidden=\"true\"></i><span><b>Squadra ospite</b><small>Bordo bianco.</small></span></li>",
+                    "<li><i class=\"leg-osp\" aria-hidden=\"true\"></i><span><b>Squadra ospite</b><small>Bordo bianco.</small></span></li><li><i class=\"leg-oro\" aria-hidden=\"true\"></i><span><b>Cerchio oro</b><small>Voto più alto della partita, tra le due squadre.</small></span></li>", nome)
     return t
 
 
