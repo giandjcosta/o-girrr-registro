@@ -1,5 +1,5 @@
 {
- "generato": 1794770402,
+ "generato": 1794771796,
  "versione": "6.1",
  "repository": [
   {
@@ -8141,22 +8141,28 @@
     },
     {
      "nome": "claude/fervent-thompson-rwlwrh",
-     "punta": "d8c75e0",
-     "data": 1794770387,
-     "titolo": "Claude: STATO.md, la 6.2 completa di ChatGPT nel Lab (PR #96) con esito delle prove",
+     "punta": "36c026e",
+     "data": 1794771780,
+     "titolo": "Claude: Giornale 6.2 come quello di oggi, solo con la rubrica MVP dei candidati (giornale_mvp.py al posto di e",
      "autore": "Claude",
      "padre": "chatgpt/integrazione-62-completa",
      "nascita": "13b7223",
      "dataNascita": 1794766745,
-     "avanti": 4,
+     "avanti": 6,
      "stato": "unito",
      "unione": {
       "in": "main",
-      "data": 1794770402,
-      "commit": "a1b890e",
-      "titolo": "Merge pull request #97 from giandjcosta/claude/fervent-thompson-rwlwrh"
+      "data": 1794771796,
+      "commit": "da1d125",
+      "titolo": "Merge pull request #98 from giandjcosta/claude/fervent-thompson-rwlwrh"
      },
      "commit": [
+      [
+       "36c026e5c057155a1eaa83a19577b89c894e4893",
+       1794771780,
+       "Claude",
+       "Claude: Giornale 6.2 come quello di oggi, solo con la rubrica MVP dei candidati (giornale_mvp.py al posto di editoriale.py); annuncio in 5 f"
+      ],
       [
        "d8c75e0f24571927340e7fe279480c7647df2d95",
        1794770387,
@@ -8176,13 +8182,13 @@
        "Registro: elenco attività aggiornato"
       ]
      ],
-     "totale": 4
+     "totale": 6
     },
     {
      "nome": "main",
-     "punta": "a1b890e",
-     "data": 1794770402,
-     "titolo": "Merge pull request #97 from giandjcosta/claude/fervent-thompson-rwlwrh",
+     "punta": "da1d125",
+     "data": 1794771796,
+     "titolo": "Merge pull request #98 from giandjcosta/claude/fervent-thompson-rwlwrh",
      "autore": "giandjcosta",
      "padre": null,
      "nascita": null,
@@ -8190,6 +8196,12 @@
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "da1d12575965a9ae07cfe139e40eeb51ce49f1da",
+       1794771796,
+       "giandjcosta",
+       "Merge pull request #98 from giandjcosta/claude/fervent-thompson-rwlwrh"
+      ],
       [
        "a1b890e883908e3e78fa8f8345fd0fb319d56387",
        1794770402,
@@ -8255,15 +8267,9 @@
        1794724968,
        "Registro",
        "Registro: elenco attività aggiornato"
-      ],
-      [
-       "93b4752b16484bc29c3ec2fbbf04449ea712d5c0",
-       1794698680,
-       "ChatGPT",
-       "ChatGPT: corregge nel Lab la riga Peggiore sul PC"
       ]
      ],
-     "totale": 1256
+     "totale": 1258
     }
    ]
   }
