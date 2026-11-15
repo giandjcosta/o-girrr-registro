@@ -1,5 +1,5 @@
 {
- "generato": 1794755466,
+ "generato": 1794755659,
  "versione": "6.1",
  "repository": [
   {
@@ -8005,17 +8005,44 @@
      "totale": 1204
     },
     {
+     "nome": "chatgpt/coordinamento-62",
+     "punta": "0cbe4bb",
+     "data": 1794755633,
+     "titolo": "ChatGPT: prepara nel Lab la proposta coordinata 6.2",
+     "autore": "ChatGPT",
+     "padre": "main",
+     "nascita": "410f975",
+     "dataNascita": 1794753341,
+     "avanti": 1,
+     "stato": "attivo",
+     "commit": [
+      [
+       "0cbe4bb6d6d1dffdfe85e4cf98094db8f16b0377",
+       1794755633,
+       "ChatGPT",
+       "ChatGPT: prepara nel Lab la proposta coordinata 6.2"
+      ]
+     ],
+     "totale": 1
+    },
+    {
      "nome": "claude/fervent-thompson-rwlwrh",
-     "punta": "b25acc1",
-     "data": 1794755466,
-     "titolo": "Claude: Campo 6.2 con cerchio oro solo al migliore in campo e simboli di tutti i bonus e malus; «= Stessa posi",
+     "punta": "6e9bf80",
+     "data": 1794755659,
+     "titolo": "Claude: Tabellone 6.2, la tua partita per prima con un velo oro senza contorno; Albo e Derby senza oro",
      "autore": "Claude",
      "padre": "main",
      "nascita": "410f975",
      "dataNascita": 1794753341,
-     "avanti": 6,
+     "avanti": 7,
      "stato": "attivo",
      "commit": [
+      [
+       "6e9bf80d799fa4e6f6d05a1d7acf159ba40bd346",
+       1794755659,
+       "Claude",
+       "Claude: Tabellone 6.2, la tua partita per prima con un velo oro senza contorno; Albo e Derby senza oro"
+      ],
       [
        "b25acc11c33333a649f12466443ed3f2c00280e1",
        1794755466,
@@ -8047,7 +8074,7 @@
        "Claude: proposta 6.2, Campo con Campionato e Champions Cup (solo Lab)"
       ]
      ],
-     "totale": 6
+     "totale": 7
     }
    ]
   }
