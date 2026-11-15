@@ -1,5 +1,5 @@
 {
- "generato": 1794698680,
+ "generato": 1794708335,
  "versione": "6.1",
  "repository": [
   {
@@ -1608,9 +1608,9 @@
     },
     {
      "nome": "gh-pages",
-     "punta": "58ceccf",
-     "data": 1794689281,
-     "titolo": "Aggiorna statistiche e voti in automatico",
+     "punta": "13c88bb",
+     "data": 1794708335,
+     "titolo": "Calcoli dopo la giornata",
      "autore": "github-actions[bot]",
      "padre": null,
      "nascita": null,
@@ -1618,6 +1618,18 @@
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "13c88bbe7a3d931daa06892e72455d3f23ae4f7a",
+       1794708335,
+       "github-actions[bot]",
+       "Calcoli dopo la giornata"
+      ],
+      [
+       "3bcfaf4aba9397bbed1d7c8ebc4d4965b02dbe16",
+       1794707981,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
       [
        "58ceccfce577427f769d9d3ebb45e558e2f9514b",
        1794689281,
@@ -1677,21 +1689,9 @@
        1794572835,
        "github-actions[bot]",
        "Aggiorna statistiche e voti in automatico"
-      ],
-      [
-       "5aa475ae8a9d728303edd14d01d82e1d5cd4694c",
-       1794537762,
-       "github-actions[bot]",
-       "Aggiorna statistiche e voti in automatico"
-      ],
-      [
-       "b0c5f45a66ead8f3b59fb7d54830f2a849e81380",
-       1794499361,
-       "github-actions[bot]",
-       "Aggiorna statistiche e voti in automatico"
       ]
      ],
-     "totale": 654
+     "totale": 656
     }
    ]
   },
