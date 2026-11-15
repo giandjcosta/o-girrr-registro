@@ -1,5 +1,5 @@
 {
- "generato": 1794755957,
+ "generato": 1794756039,
  "versione": "6.1",
  "repository": [
   {
@@ -8069,16 +8069,22 @@
     },
     {
      "nome": "chatgpt/coordinamento-62",
-     "punta": "cb5af76",
-     "data": 1794755957,
-     "titolo": "ChatGPT: registra il Vai al solo Lab e i limiti della CI",
+     "punta": "05419a8",
+     "data": 1794756039,
+     "titolo": "ChatGPT: ferma la pubblicazione delle bozze grafiche rifiutate",
      "autore": "ChatGPT",
      "padre": "main",
      "nascita": "410f975",
      "dataNascita": 1794753341,
-     "avanti": 4,
+     "avanti": 5,
      "stato": "attivo",
      "commit": [
+      [
+       "05419a859eb8d138713ca95627641fad4a3849b9",
+       1794756039,
+       "ChatGPT",
+       "ChatGPT: ferma la pubblicazione delle bozze grafiche rifiutate"
+      ],
       [
        "cb5af7627338773c7b1d1ff60ea954863d9bec7a",
        1794755957,
@@ -8104,7 +8110,7 @@
        "ChatGPT: prepara nel Lab la proposta coordinata 6.2"
       ]
      ],
-     "totale": 4
+     "totale": 5
     }
    ]
   }
