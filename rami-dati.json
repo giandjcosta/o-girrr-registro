@@ -1,5 +1,5 @@
 {
- "generato": 1794777990,
+ "generato": 1794778186,
  "versione": "6.1",
  "repository": [
   {
@@ -8141,22 +8141,28 @@
     },
     {
      "nome": "claude/fervent-thompson-rwlwrh",
-     "punta": "3d54630",
-     "data": 1794777979,
-     "titolo": "Claude: Albo › Record con una sola grafica, MVP dei tifosi, corsa all'MVP del campionato e partita più seguita",
+     "punta": "31344ac",
+     "data": 1794778175,
+     "titolo": "Claude: in Girrr Sport › Sondaggi ogni sondaggio nel riquadro dell'app (Lega e Stadio), Curva invariata",
      "autore": "Claude",
      "padre": "chatgpt/integrazione-62-completa",
      "nascita": "13b7223",
      "dataNascita": 1794766745,
-     "avanti": 15,
+     "avanti": 17,
      "stato": "unito",
      "unione": {
       "in": "main",
-      "data": 1794777990,
-      "commit": "c544cbb",
-      "titolo": "Merge pull request #102 from giandjcosta/claude/fervent-thompson-rwlwrh"
+      "data": 1794778186,
+      "commit": "6e2c908",
+      "titolo": "Merge pull request #103 from giandjcosta/claude/fervent-thompson-rwlwrh"
      },
      "commit": [
+      [
+       "31344ac7ea74915855e3d66bee87898efb9ac12e",
+       1794778175,
+       "Claude",
+       "Claude: in Girrr Sport › Sondaggi ogni sondaggio nel riquadro dell'app (Lega e Stadio), Curva invariata"
+      ],
       [
        "3d54630eb10ec464f9612c74e57e8b914df2e4b0",
        1794777979,
@@ -8212,13 +8218,13 @@
        "Registro: elenco attività aggiornato"
       ]
      ],
-     "totale": 15
+     "totale": 17
     },
     {
      "nome": "main",
-     "punta": "c544cbb",
-     "data": 1794777990,
-     "titolo": "Merge pull request #102 from giandjcosta/claude/fervent-thompson-rwlwrh",
+     "punta": "6e2c908",
+     "data": 1794778186,
+     "titolo": "Merge pull request #103 from giandjcosta/claude/fervent-thompson-rwlwrh",
      "autore": "giandjcosta",
      "padre": null,
      "nascita": null,
@@ -8226,6 +8232,12 @@
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "6e2c908c735874c34a50576e8bccdba8ef592a6a",
+       1794778186,
+       "giandjcosta",
+       "Merge pull request #103 from giandjcosta/claude/fervent-thompson-rwlwrh"
+      ],
       [
        "c544cbbd4b30b945e7471ec67055bf95b432caf7",
        1794777990,
@@ -8291,15 +8303,9 @@
        1794759206,
        "giandjcosta",
        "Merge pull request #95 from giandjcosta/claude/fervent-thompson-rwlwrh"
-      ],
-      [
-       "a89f00cd21b6248af25d45620510e7b4c604970e",
-       1794757310,
-       "giandjcosta",
-       "Merge pull request #94: Claude, Campo 6.2 con i cartellini nel Lab"
       ]
      ],
-     "totale": 1267
+     "totale": 1269
     }
    ]
   }
