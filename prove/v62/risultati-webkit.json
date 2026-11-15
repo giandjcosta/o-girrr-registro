@@ -1,0 +1,170 @@
+{
+  "motore": "webkit",
+  "schermiEmulati": true,
+  "database": "PostgreSQL PGlite locale; service worker con simulatore IndexedDB",
+  "produzione": false,
+  "visite": [
+    {
+      "schermo": "iPhone 320",
+      "grafica": "lega",
+      "esito": "superato"
+    },
+    {
+      "schermo": "iPhone 320",
+      "grafica": "stadio",
+      "esito": "superato"
+    },
+    {
+      "schermo": "iPhone SE",
+      "grafica": "lega",
+      "esito": "superato"
+    },
+    {
+      "schermo": "iPhone SE",
+      "grafica": "stadio",
+      "esito": "superato"
+    },
+    {
+      "schermo": "iPhone 15 Pro",
+      "grafica": "lega",
+      "esito": "superato"
+    },
+    {
+      "schermo": "iPhone 15 Pro",
+      "grafica": "stadio",
+      "esito": "superato"
+    },
+    {
+      "schermo": "iPhone 15 Pro Max",
+      "grafica": "lega",
+      "esito": "superato"
+    },
+    {
+      "schermo": "iPhone 15 Pro Max",
+      "grafica": "stadio",
+      "esito": "superato"
+    },
+    {
+      "schermo": "Galaxy S8",
+      "grafica": "lega",
+      "esito": "superato"
+    },
+    {
+      "schermo": "Galaxy S8",
+      "grafica": "stadio",
+      "esito": "superato"
+    },
+    {
+      "schermo": "Pixel 7",
+      "grafica": "lega",
+      "esito": "superato"
+    },
+    {
+      "schermo": "Pixel 7",
+      "grafica": "stadio",
+      "esito": "superato"
+    },
+    {
+      "schermo": "Galaxy S9+",
+      "grafica": "lega",
+      "esito": "superato"
+    },
+    {
+      "schermo": "Galaxy S9+",
+      "grafica": "stadio",
+      "esito": "superato"
+    },
+    {
+      "schermo": "iPad Mini",
+      "grafica": "lega",
+      "esito": "superato"
+    },
+    {
+      "schermo": "iPad Mini",
+      "grafica": "stadio",
+      "esito": "superato"
+    },
+    {
+      "schermo": "iPad (gen 7) landscape",
+      "grafica": "lega",
+      "esito": "superato"
+    },
+    {
+      "schermo": "iPad (gen 7) landscape",
+      "grafica": "stadio",
+      "esito": "superato"
+    },
+    {
+      "schermo": "iPad Pro 11",
+      "grafica": "lega",
+      "esito": "superato"
+    },
+    {
+      "schermo": "iPad Pro 11",
+      "grafica": "stadio",
+      "esito": "superato"
+    },
+    {
+      "schermo": "Galaxy Tab S4",
+      "grafica": "lega",
+      "esito": "superato"
+    },
+    {
+      "schermo": "Galaxy Tab S4",
+      "grafica": "stadio",
+      "esito": "superato"
+    },
+    {
+      "schermo": "Galaxy Tab S4 landscape",
+      "grafica": "lega",
+      "esito": "superato"
+    },
+    {
+      "schermo": "Galaxy Tab S4 landscape",
+      "grafica": "stadio",
+      "esito": "superato"
+    },
+    {
+      "schermo": "PC1280",
+      "grafica": "lega",
+      "esito": "superato"
+    },
+    {
+      "schermo": "PC1280",
+      "grafica": "stadio",
+      "esito": "superato"
+    },
+    {
+      "schermo": "PC1920",
+      "grafica": "lega",
+      "esito": "superato"
+    },
+    {
+      "schermo": "PC1920",
+      "grafica": "stadio",
+      "esito": "superato"
+    },
+    {
+      "schermo": "PC2560",
+      "grafica": "lega",
+      "esito": "superato"
+    },
+    {
+      "schermo": "PC2560",
+      "grafica": "stadio",
+      "esito": "superato"
+    },
+    {
+      "schermo": "TV",
+      "grafica": "lega",
+      "esito": "superato"
+    },
+    {
+      "schermo": "TV",
+      "grafica": "stadio",
+      "esito": "superato"
+    }
+  ],
+  "dueContesti": true,
+  "serviceWorker": true
+}

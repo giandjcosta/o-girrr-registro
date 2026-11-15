@@ -10,3 +10,6 @@ consegna/
 .openai/
 
 .rami-cache/
+
+# Dipendenze locali delle prove
+node_modules/

@@ -1,0 +1,1 @@
+{"motore":"firefox","esito":"non disponibile","causa":"Timeout avvio headless e su Xvfb; compositor SWGL e namespace sandbox non disponibili nel container","certificato":"Profilo NSS preparato con CA del proxy, TLS non disattivato","profiliEseguiti":0,"produzione":false}

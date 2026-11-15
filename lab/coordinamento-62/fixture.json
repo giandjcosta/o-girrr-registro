@@ -1,0 +1,89 @@
+{
+  "stagione": "2026/27",
+  "giornata": 7,
+  "squadre": [
+    "The Blue brothers",
+    "Apo team",
+    "Grodah",
+    "WOA",
+    "Real Madrink",
+    "stif dc",
+    "Mariana Coneja",
+    "AFA SELECCION",
+    "Oranje VC",
+    "Atletico ma non troppo"
+  ],
+  "sondaggi": [
+    {
+      "id": "sfida:2026/27:8",
+      "origine": "sfida",
+      "fonte": "8",
+      "giornata": 8,
+      "titolo": "Quale sfida seguire nella 8ª?",
+      "scelte": [
+        "Mariana Coneja – Oranje VC",
+        "Apo team – Atletico ma non troppo",
+        "stif dc – The Blue brothers",
+        "AFA SELECCION – WOA",
+        "Real Madrink – Grodah"
+      ]
+    },
+    {
+      "id": "post:2026/27:620001",
+      "origine": "post",
+      "fonte": "620001",
+      "giornata": 7,
+      "titolo": "Post di prova · Cosa vuoi leggere?",
+      "scelte": [
+        "Conferenze",
+        "Analisi delle partite"
+      ]
+    }
+  ],
+  "mvp": {
+    "id": "mvp:2026/27:7",
+    "giornata": 7,
+    "titolo": "MVP dei tifosi · 7ª giornata",
+    "scelte": [
+      "stif dc",
+      "Oranje VC",
+      "Mariana Coneja"
+    ]
+  },
+  "chiusi": [
+    {
+      "id": "sfida:2026/27:7",
+      "origine": "sfida",
+      "fonte": "7",
+      "giornata": 7,
+      "titolo": "Sondaggio sulla 7ª giornata",
+      "scelte": [
+        "Mariana Coneja – Oranje VC",
+        "Apo team – Atletico ma non troppo"
+      ]
+    },
+    {
+      "id": "sfida:2026/27:6",
+      "origine": "sfida",
+      "fonte": "6",
+      "giornata": 6,
+      "titolo": "Sondaggio sulla 6ª giornata",
+      "scelte": [
+        "Mariana Coneja – Oranje VC",
+        "Apo team – Atletico ma non troppo"
+      ]
+    },
+    {
+      "id": "sfida:2026/27:5",
+      "origine": "sfida",
+      "fonte": "5",
+      "giornata": 5,
+      "titolo": "Sondaggio sulla 5ª giornata",
+      "scelte": [
+        "Mariana Coneja – Oranje VC",
+        "Apo team – Atletico ma non troppo"
+      ]
+    }
+  ],
+  "nota": "Preferenze e conteggi di prova, senza scritture alla Lega. Nessun verdetto MVP inventato."
+}
