@@ -1,5 +1,5 @@
 {
- "generato": 1794756723,
+ "generato": 1794756777,
  "versione": "6.1",
  "repository": [
   {
@@ -8057,16 +8057,22 @@
     },
     {
      "nome": "main",
-     "punta": "8011546",
-     "data": 1794756723,
-     "titolo": "Merge pull request #93: Claude, proposta 6.2 nel Lab",
-     "autore": "giandjcosta",
+     "punta": "ceed6c6",
+     "data": 1794756777,
+     "titolo": "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio",
+     "autore": "ChatGPT",
      "padre": null,
      "nascita": null,
      "avanti": 0,
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "ceed6c622ff8d8d3ed42fe7eef9f03903405bbd4",
+       1794756777,
+       "ChatGPT",
+       "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
+      ],
       [
        "8011546bc5e8c8324d376b1e1878842204b1dc9f",
        1794756723,
@@ -8132,15 +8138,9 @@
        1794673635,
        "ChatGPT",
        "ChatGPT: conserva nel main il rilascio 6.1 verificato"
-      ],
-      [
-       "4e16d5715a6869008dd85ddfe51caab3e8557e4d",
-       1794673063,
-       "giandjcosta",
-       "Merge pull request #84 from giandjcosta/claude/ramificazioni-aggiornamento-immediato"
       ]
      ],
-     "totale": 1218
+     "totale": 1219
     }
    ]
   }
