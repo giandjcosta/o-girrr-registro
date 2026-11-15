@@ -1,5 +1,5 @@
 {
- "generato": 1794765090,
+ "generato": 1794765554,
  "versione": "6.1",
  "repository": [
   {
@@ -8228,16 +8228,22 @@
     },
     {
      "nome": "chatgpt/integrazione-62-completa",
-     "punta": "98b90cc",
-     "data": 1794765090,
-     "titolo": "ChatGPT: consegna le anteprime native e il Giornale originale con dossier di revisione",
+     "punta": "44dd624",
+     "data": 1794765554,
+     "titolo": "ChatGPT: verifica il dopo partita finale e prepara i testi completi per approvazione",
      "autore": "ChatGPT",
      "padre": "main",
      "nascita": "b051bfb",
      "dataNascita": 1794759206,
-     "avanti": 24,
+     "avanti": 25,
      "stato": "attivo",
      "commit": [
+      [
+       "44dd62461186ea0e6df0f6b9fffb438d463e7200",
+       1794765554,
+       "ChatGPT",
+       "ChatGPT: verifica il dopo partita finale e prepara i testi completi per approvazione"
+      ],
       [
        "98b90ccaaa027f88bf61ce8ca1a4c1dd4e9ce4b5",
        1794765090,
@@ -8303,15 +8309,9 @@
        1794760326,
        "ChatGPT",
        "ChatGPT: aggiunge QA della 6.2 su copia e tre browser senza scritture reali"
-      ],
-      [
-       "3f0e32458bfe72a74af8f1b05c553429c64638fd",
-       1794760183,
-       "ChatGPT",
-       "ChatGPT: registra la decisione 6.1.1 in 6.2 e la sincronizzazione delle Ramificazioni"
       ]
      ],
-     "totale": 24
+     "totale": 25
     }
    ]
   }
