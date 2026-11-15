@@ -285,6 +285,11 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
             if z["tipo"] == "ufficiale": add("C", f"Ufficiale! {tx}.", "urlo")
             else: add("C", f"Lo dirò sottovoce: semi ufficiale, prendetelo con le pinze! {tx}.", "sus")
         add("G", "Ciro, come sempre, sicurissimo! Al cento per cento.")
+    # --- MVP dei tifosi: al massimo una nuova battuta, prima del saluto integrale.
+    from mvp_editoriale62 import frase as frase_mvp
+    testo_mvp = frase_mvp(D.get("mvp_tifosi"), D.get("mvp_annunciati", ()), giornata_puntata=n)
+    if testo_mvp:
+        add("G", testo_mvp)
     # --- chiusura
     add("B", "Per Radio Girrr, la radio ufficiale della Lega, è tutto! Mettete la formazione, vi vogliamo bene!", "urlo")
     add("G", "Ci sentiamo la prossima volta! Ciao a tutti!", "urlo")   # non più «mercoledì prossimo» (Gianluca, 3 novembre)
