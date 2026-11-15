@@ -1,5 +1,5 @@
 {
- "generato": 1794760731,
+ "generato": 1794762178,
  "versione": "6.1",
  "repository": [
   {
@@ -8228,16 +8228,22 @@
     },
     {
      "nome": "chatgpt/integrazione-62-completa",
-     "punta": "1e5b0ad",
-     "data": 1794760731,
-     "titolo": "ChatGPT: prepara la consegna a Codex per finire la 6.2 senza ripartire da zero",
+     "punta": "8d81a8e",
+     "data": 1794762178,
+     "titolo": "ChatGPT: integra le funzioni 6.2 nelle pagine originali e avvia i collaudi isolati",
      "autore": "ChatGPT",
      "padre": "main",
      "nascita": "b051bfb",
      "dataNascita": 1794759206,
-     "avanti": 16,
+     "avanti": 17,
      "stato": "attivo",
      "commit": [
+      [
+       "8d81a8e607d8ce0a7d472bd4591949133cbf0bb5",
+       1794762178,
+       "ChatGPT",
+       "ChatGPT: integra le funzioni 6.2 nelle pagine originali e avvia i collaudi isolati"
+      ],
       [
        "1e5b0ad844ec13dee1aa34a9c8e1966efc77f7ee",
        1794760731,
@@ -8303,15 +8309,9 @@
        1794759918,
        "ChatGPT",
        "ChatGPT: recupera le logiche 6.2 già provate e isolate dalla grafica rifiutata"
-      ],
-      [
-       "1ccfbbd43a2ff81d836f05209e7b860005420265",
-       1794759916,
-       "ChatGPT",
-       "ChatGPT: recupera le logiche 6.2 già provate e isolate dalla grafica rifiutata"
       ]
      ],
-     "totale": 16
+     "totale": 17
     }
    ]
   }
