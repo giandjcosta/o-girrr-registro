@@ -1,5 +1,5 @@
 {
- "generato": 1794762178,
+ "generato": 1794762222,
  "versione": "6.1",
  "repository": [
   {
@@ -8228,16 +8228,22 @@
     },
     {
      "nome": "chatgpt/integrazione-62-completa",
-     "punta": "8d81a8e",
-     "data": 1794762178,
-     "titolo": "ChatGPT: integra le funzioni 6.2 nelle pagine originali e avvia i collaudi isolati",
+     "punta": "8a0032f",
+     "data": 1794762222,
+     "titolo": "ChatGPT: corregge avvio QA e aggiorna i test del percorso Ramificazioni",
      "autore": "ChatGPT",
      "padre": "main",
      "nascita": "b051bfb",
      "dataNascita": 1794759206,
-     "avanti": 17,
+     "avanti": 18,
      "stato": "attivo",
      "commit": [
+      [
+       "8a0032f861ee90f4af85a099631a7673d95d0f86",
+       1794762222,
+       "ChatGPT",
+       "ChatGPT: corregge avvio QA e aggiorna i test del percorso Ramificazioni"
+      ],
       [
        "8d81a8e607d8ce0a7d472bd4591949133cbf0bb5",
        1794762178,
@@ -8303,15 +8309,9 @@
        1794760001,
        "ChatGPT",
        "ChatGPT: documenta la 6.2 unica, la 6.1.1 inclusa e il Giornale a quattro pagine"
-      ],
-      [
-       "3e18dfa4f0b76b7464f78956655f8a1a63a8284e",
-       1794759918,
-       "ChatGPT",
-       "ChatGPT: recupera le logiche 6.2 già provate e isolate dalla grafica rifiutata"
       ]
      ],
-     "totale": 17
+     "totale": 18
     }
    ]
   }
