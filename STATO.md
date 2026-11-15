@@ -19,6 +19,7 @@
   - Vincitrice: «Strepitosa Mariana Coneja, squadra MVP della 6ª: due vittorie e 8 gol tra Campionato e Champions Cup!».
   - Voto aperto: «Votazioni aperte per l’MVP della 7ª: in corsa stif dc, Oranje VC e Mariana Coneja. Si vota in Curva e in Girrr Sport!».
   - Il verdetto viene annunciato una volta sola.
+- Stessa avversaria in Campionato e in Champions Cup nella stessa giornata: un fatto solo, per esempio «Oranje VC batte WOA due volte nella stessa giornata, in Campionato (2–1) e in Champions Cup (2–1)». Vale per Giornale e Radio, e anche per pareggi, sconfitte e risultati misti.
 - Prove aggiornate alle nuove decisioni (`prove/v62/testi.py`). Verdi `testi.py`, cronache integrate, compatibilità cronache e Giro di boa. Anteprima integrata: 24 visite, zero errori. Annuncio e changelog aggiornati.
 
 ## 15 novembre (10) — Claude: sondaggi di Girrr Sport dentro i riquadri
