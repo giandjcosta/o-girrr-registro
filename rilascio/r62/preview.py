@@ -7,7 +7,7 @@ def esporta(site,out):
  out.mkdir(parents=True,exist_ok=True)
  for f in FILES:
   if (site/f).is_file():shutil.copyfile(site/f,out/f)
- for directory in ['girrr','stadio/girrr','formazioni','assets']:
+ for directory in ['girrr','stadio/girrr','formazioni','assets','riepiloghi']:
   # I file nativi restano quelli della copia preparata; nessuna UI del vecchio simulatore.
   if (site/directory).is_dir():shutil.copytree(site/directory,out/directory,dirs_exist_ok=True,ignore=shutil.ignore_patterns('voci','video'))
  for skin in ['girrr','stadio/girrr']:

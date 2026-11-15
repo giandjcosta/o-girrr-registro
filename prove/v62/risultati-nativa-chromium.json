@@ -160,7 +160,9 @@
     {
       "schermo": "Galaxy Tab S4 landscape",
       "grafica": "girrr",
-      "errore": "page.waitForSelector: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-v62-poll]') to be visible\u001b[22m\n\n    at /workspace/integrazione62/prove/v62/native-browser.cjs:22:66"
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
     },
     {
       "schermo": "Galaxy Tab S4 landscape",

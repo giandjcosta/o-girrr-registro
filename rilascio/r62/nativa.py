@@ -33,6 +33,9 @@ def prepara(base):
         for name in ('app.html','curva.html'):
             p=base/skin/name;s=p.read_text()
             if 'sondaggi62.js' not in s:s=sost(s,'</head>',f'<script src="{prefix}sondaggi62.js?v=62-nativa1"></script></head>')
+            if name=='curva.html' and 'data-v62-nativepost' not in s:
+                inizio=s.index('function pollHTML(p){');fine=s.index('\nfunction lancia()',inizio)
+                s=s[:inizio]+"function pollHTML(p){if(!p.real||!PM[p.id0])return '';return '<div data-v62-nativepost=\"'+p.id0+'\">'+(window.GirrrSondaggi62?GirrrSondaggi62.htmlPost(p.id0):'Caricamento dello stato personale…')+'</div>'}\n"+s[fine:]
             if name=='app.html' and "['sondaggi','Sondaggi']" not in s:
                 s=sost(s,"['conf','Conferenze stampa'],['radio','Radio']", "['conf','Conferenze stampa'],['sondaggi','Sondaggi'],['radio','Radio']")
                 s=sost(s,"sp==='conf'?spConf():sp==='radio'?", "sp==='conf'?spConf():sp==='sondaggi'?'<div class=\"v53\" data-v62-sondaggi=\"sport\">'+(window.GirrrSondaggi62?GirrrSondaggi62.html('sport'):'Caricamento…')+'</div>':sp==='radio'?")

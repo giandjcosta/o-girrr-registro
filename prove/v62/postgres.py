@@ -67,4 +67,18 @@ with psycopg.connect(**connargs) as anon:
  anon.execute('set role anon')
  try:anon.execute('select * from votazioni62_private.sondaggi');raise AssertionError('Accesso diretto consentito')
  except psycopg.errors.InsufficientPrivilege:report.append('Schema privato, RLS e privilegi verificati')
+try:
+ c.execute("select public.v62_sondaggi('2026/27','Oranje VC','errato')")
+ raise AssertionError('Codice errato accettato')
+except psycopg.errors.RaiseException:report.append('Preferenze personali negate a un codice errato')
+with psycopg.connect(**connargs) as anon:
+ anon.execute('set role anon')
+ try:anon.execute("select public.v62_catalogo_server('2026/27')");raise AssertionError('Catalogo riservato leggibile')
+ except psycopg.errors.InsufficientPrivilege:report.append('Catalogo di servizio non eseguibile dal browser')
+c.execute("insert into mvp_private.giornate(stagione,giornata,chiude,candidati,redazione,personaggi,firma) values('2026/27',6,clock_timestamp()-interval '1 hour',%s,%s,%s,repeat('b',64))",(cand,red,bots))
+c.execute("select public.mvp_chiudi('2026/27')")
+w=value("select public.mvp_stato('2026/27',6)")['votazione']
+check('MVP senza allenatori: verdetto definitivo e zero partecipazione umana inventata',bool(w['chiusa']) and all(x['humanCount']==0 and x['umani']==0 for x in w['classifica']))
+prima=json.dumps(w['classifica'],sort_keys=True);c.execute("select public.mvp_chiudi('2026/27')")
+check('Archivio MVP immutato al giro ordinario successivo',json.dumps(value("select public.mvp_stato('2026/27',6)")['votazione']['classifica'],sort_keys=True)==prima)
 c.close();Path(__file__).with_name('risultati-postgres.json').write_text(json.dumps({'motore':'PostgreSQL 17 nativo locale','databaseIsolato':NAME,'sessioniConcorrenti':2,'produzione':False,'prove':report},ensure_ascii=False,indent=2)+'\n');print('\n'.join(report))

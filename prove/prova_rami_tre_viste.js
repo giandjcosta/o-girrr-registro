@@ -3,11 +3,11 @@
 //   BASE=http://localhost:8790/o-girrr-registro/ MOTORE=chromium|webkit|firefox node prove/prova_rami_tre_viste.js [CARTELLA_FOTO]
 // Controlla: tre viste che si disegnano, cambio di repository, tocco su un ramo con i dettagli, niente scorrimento di lato,
 // l'altezza del riquadro che segue il contenuto dentro Ramificazioni, nessun errore nella console.
-const pw = require('playwright');
+const pw = require('playwright'), {browser}=require('./browser_certificato');
 const B = process.env.BASE || 'http://localhost:8790/o-girrr-registro/', M = process.env.MOTORE || 'chromium', D = process.argv[2];
 const SCH = [['iPhone SE 320', { viewport: { width: 320, height: 568 }, isMobile: M !== 'firefox', hasTouch: true }], ['iPad', { viewport: { width: 820, height: 1180 } }], ['PC 1280', { viewport: { width: 1280, height: 800 } }], ['TV', { viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 2 }]];
 (async () => {
-  const br = await pw[M].launch(); let ko = 0;
+  const br = await browser(M); let ko = 0;
   for (const [sn, o] of SCH) {
     const c = await br.newContext(o), p = await c.newPage(), pr = [];
     p.on('pageerror', e => pr.push('errore: ' + e.message.slice(0, 100)));

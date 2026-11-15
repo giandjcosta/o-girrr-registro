@@ -11,8 +11,8 @@ async function rete(c){
  await c.route('https://*.supabase.co/**',r=>{
   const fn=(r.request().url().match(/rpc\/([^?]+)/)||[])[1];
   assert(fn,'Richiesta DB inattesa');
-  assert(/_stato$|_pubblico$|_lista$|^curva_feed$|^mvp_mio$|^mvp_derby$/.test(fn),'RPC inattesa: '+fn);
-  return r.fulfill({json:fn==='curva_feed'?{ok:true,v:5,posts:[],replies:[],react:[],mine:[],follow:[],prof:{}}:fn==='mvp_stato'?{votazione:null,archivio:[]}:fn==='mvp_mio'?{scelta:null}:fn==='toto_pr_pubblico'?[]:{voti:[],sfide:[],coppie:[]}});
+  assert(/_stato$|_pubblico$|_lista$|^curva_feed$|^mvp_mio$|^mvp_derby$|^v62_sondaggi$|^v62_finestre$|^conf_pubbliche$|^conf_dopo_pubbliche$/.test(fn),'RPC inattesa: '+fn);
+  return r.fulfill({json:fn==='v62_sondaggi'?{aperti:[],chiusi:[]}:fn==='v62_finestre'?{server_ora:new Date().toISOString(),prima_giornata:8,finestre:[]}:fn==='conf_pubbliche'||fn==='conf_dopo_pubbliche'?[]:fn==='curva_feed'?{ok:true,v:5,posts:[],replies:[],react:[],mine:[],follow:[],prof:{}}:fn==='mvp_stato'?{votazione:null,archivio:[]}:fn==='mvp_mio'?{scelta:null}:fn==='toto_pr_pubblico'?[]:{voti:[],sfide:[],coppie:[]}});
  });
  await c.route('**/stagione.js*',r=>r.fulfill({path:R+'/rilascio/stagione/stagione.js',contentType:'text/javascript'}));
  for(const f of ['curva-os.js','curva-os.css'])await c.route('**/'+f+'*',r=>r.fulfill({path:R+'/rilascio/curva-os/'+f,contentType:f.endsWith('js')?'text/javascript':'text/css'}));

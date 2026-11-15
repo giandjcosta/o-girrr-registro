@@ -1,6 +1,6 @@
 {
   "motore": "PostgreSQL 17 nativo locale",
-  "databaseIsolato": "girrr62_test_22264_1794763054",
+  "databaseIsolato": "girrr62_test_26457_1794763702",
   "sessioniConcorrenti": 2,
   "produzione": false,
   "prove": [
@@ -16,6 +16,10 @@
     "Post nuovo: stesso ID e stessi voti senza copia del catalogo",
     "Scadenza ricontrollata dopo attesa del lock",
     "Conferenza pubblicata immutabile anche sul server",
-    "Schema privato, RLS e privilegi verificati"
+    "Schema privato, RLS e privilegi verificati",
+    "Preferenze personali negate a un codice errato",
+    "Catalogo di servizio non eseguibile dal browser",
+    "MVP senza allenatori: verdetto definitivo e zero partecipazione umana inventata",
+    "Archivio MVP immutato al giro ordinario successivo"
   ]
 }

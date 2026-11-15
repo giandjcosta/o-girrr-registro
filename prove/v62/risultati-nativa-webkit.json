@@ -1,0 +1,229 @@
+{
+  "motore": "webkit",
+  "produzione": false,
+  "schermiEmulati": true,
+  "visite": [
+    {
+      "schermo": "iPhone 320",
+      "grafica": "girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "iPhone 320",
+      "grafica": "stadio/girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "iPhone SE",
+      "grafica": "girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "iPhone SE",
+      "grafica": "stadio/girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "iPhone 15 Pro",
+      "grafica": "girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "iPhone 15 Pro",
+      "grafica": "stadio/girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "iPhone 15 Pro Max",
+      "grafica": "girrr",
+      "errore": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'rgb(86, 130, 189)'\n- 'rgb(61, 147, 214)'\n       ^\n\n    at /workspace/integrazione62/prove/v62/native-browser.cjs:13:101"
+    },
+    {
+      "schermo": "iPhone 15 Pro Max",
+      "grafica": "stadio/girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "Galaxy S8",
+      "grafica": "girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "Galaxy S8",
+      "grafica": "stadio/girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "Pixel 7",
+      "grafica": "girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "Pixel 7",
+      "grafica": "stadio/girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "Galaxy S9+",
+      "grafica": "girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "Galaxy S9+",
+      "grafica": "stadio/girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "iPad Mini",
+      "grafica": "girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "iPad Mini",
+      "grafica": "stadio/girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "iPad (gen 7) landscape",
+      "grafica": "girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "iPad (gen 7) landscape",
+      "grafica": "stadio/girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "iPad Pro 11",
+      "grafica": "girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "iPad Pro 11",
+      "grafica": "stadio/girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "Galaxy Tab S4",
+      "grafica": "girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "Galaxy Tab S4",
+      "grafica": "stadio/girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "Galaxy Tab S4 landscape",
+      "grafica": "girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "Galaxy Tab S4 landscape",
+      "grafica": "stadio/girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "PC1280",
+      "grafica": "girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "PC1280",
+      "grafica": "stadio/girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "PC1920",
+      "grafica": "girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "PC1920",
+      "grafica": "stadio/girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "PC2560",
+      "grafica": "girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "PC2560",
+      "grafica": "stadio/girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "TV",
+      "grafica": "girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "TV",
+      "grafica": "stadio/girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    }
+  ]
+}

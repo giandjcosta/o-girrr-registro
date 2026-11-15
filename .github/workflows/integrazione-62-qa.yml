@@ -2,9 +2,6 @@ name: ChatGPT - QA integrazione 6.2
 on:
   push:
     branches: [chatgpt/integrazione-62-completa]
-  pull_request:
-    branches: [main]
-    paths: ['rilascio/r62/**', 'lab/confronto-62.html', 'lab/novita-6-2.html', 'lab/offline/index.html', 'prove/prova_campo_62.js', 'prove/v62/**', 'voci-src/**', 'calcoli/finestre62.py', '.github/workflows/integrazione-62-qa.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -102,11 +99,28 @@ jobs:
           MOTORE: ${{ matrix.motore }}
           FIREFOX_CERT_PROFILE: ${{ runner.temp }}/firefox-ca
           SITO62: ${{ runner.temp }}/site-62
-          BASE62: http://127.0.0.1:8896/
+          BASE62: http://127.0.0.1:8896/o-fant-a-girrr/
           FOTO: qa-artifacts/native
         run: |
           node prove/v62/native-browser.cjs
           node prove/v62/funzioni.cjs
+      - name: Preview esportata senza scritture e senza cambiare sessione
+        env:
+          MOTORE: ${{ matrix.motore }}
+          FIREFOX_CERT_PROFILE: ${{ runner.temp }}/firefox-ca
+          LAB62: http://127.0.0.1:8901/lab62/
+        run: |
+          python3 rilascio/r62/preview.py "$RUNNER_TEMP/site-62" --out "$RUNNER_TEMP/lab62"
+          python3 -m http.server 8901 --bind 127.0.0.1 --directory "$RUNNER_TEMP" > "$RUNNER_TEMP/lab62-server.log" 2>&1 &
+          node prove/v62/preview.cjs
+      - name: Ramificazioni, tre viste nel portale e autonome
+        env:
+          MOTORE: ${{ matrix.motore }}
+          FIREFOX_CERT_PROFILE: ${{ runner.temp }}/firefox-ca
+          BASE: http://127.0.0.1:8898/
+        run: |
+          python3 -m http.server 8898 --bind 127.0.0.1 > "$RUNNER_TEMP/registro-server.log" 2>&1 &
+          node prove/prova_rami_tre_viste.js qa-artifacts/ramificazioni
       - name: Campo 6.2, sedici schermi e due grafiche
         env:
           MOTORE: ${{ matrix.motore }}
