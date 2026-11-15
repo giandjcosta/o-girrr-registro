@@ -9,7 +9,7 @@ def prepara(sorgente,uscita):
     sorgente=sorgente.resolve();uscita=uscita.resolve()
     if uscita.exists() or uscita.is_relative_to(sorgente) or sorgente.is_relative_to(uscita):raise ValueError('Serve una destinazione nuova e separata')
     shutil.copytree(sorgente,uscita,ignore=shutil.ignore_patterns('.git'))
-    for src,dst in [('calcoli/finestre62.py','calcoli/finestre62.py'),('rilascio/r62/server/catalogo62.py','calcoli/catalogo62.py')]:
+    for src,dst in [('calcoli/finestre62.py','calcoli/finestre62.py'),('rilascio/r62/server/catalogo62.py','calcoli/catalogo62.py'),('rilascio/r62/server/giuria62.py','calcoli/giuria62.py')]:
         (uscita/dst).write_text((R/src).read_text())
 
     # Verdetto MVP nella Curva: le sorgenti del Registro aggiungono soltanto
