@@ -49,6 +49,8 @@ self.GIRRR_SPECCHIO = (function () {
     'tv.js': new URL('../../rilascio/conferenze/tv.js', self.location.href).href, /* testo più grande solo sulla TV (?tv per provarlo dal PC) */
     'notifiche-lette.js': new URL('../../rilascio/notifiche/notifiche-lette.js', self.location.href).href, /* lette rimpicciolite */
     /* 6.2 in prova (Claude, 15 novembre 2026): Campo con Campionato e Champions Cup (rilascio/r62/campo_coppa.py) */
+    'girrr/tabellone.html': new URL('../../rilascio/r62/pagine/girrr/tabellone.html?v=62-3', self.location.href).href, /* 6.2: la tua partita per prima con velo oro (rilascio/r62/testi.py) */
+    'stadio/girrr/tabellone.html': new URL('../../rilascio/r62/pagine/stadio/girrr/tabellone.html?v=62-3', self.location.href).href,
     'girrr/campo.html': new URL('../../rilascio/r62/pagine/girrr/campo.html?v=62-2', self.location.href).href,
     'stadio/girrr/campo.html': new URL('../../rilascio/r62/pagine/stadio/girrr/campo.html?v=62-2', self.location.href).href,
     'girrr/curva.html': new URL('../../rilascio/curva-os/pagine/girrr/curva.html?v=611-1', self.location.href).href, /* Curva del sito (5.8.1) aggiornata pezzo per pezzo e Notifiche divise in Attività e Menzioni (rilascio/curva-os/applica.py) */

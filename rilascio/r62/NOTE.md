@@ -14,11 +14,12 @@ Parte di Claude della 6.2. Prima certificazione nel Lab (`lab/novita-6-2.html`),
 
 - Tabellone › Dentro la partita: «= Stessa posizione» con la maiuscola e «1 posizione» al singolare (`girrr/v55/ui.js`, Lega e Stadio).
 - Albo › La Storia: Padri Fondatori solo con il nome, tutti in fila, senza squadra (`novita.js`, Lega e Stadio). Il testo della Storia non cambia.
+- Tabellone › Risultati: con il codice della squadra la tua partita è la prima, con un leggero velo oro e la scritta «La tua partita», senza contorno (Campionato e Coppa). Da ospite nulla cambia. Albo d’oro e Derby restano senza oro (Gianluca, 15 novembre).
 - Segnalato, non toccato: `girrr/v55/cronache.json` risponde 404 anche sul sito vero (il Tabellone lo chiede).
 
 ## Preparazione
 
-Su una copia nuova di gh-pages: `python3 rilascio/r62/campo_coppa.py COPIA` e `python3 rilascio/r62/testi.py COPIA` (modifica `girrr/campo.html` e `stadio/girrr/campo.html`, si ferma se le pagine non sono quelle attese, rieseguirlo non cambia nulla). Pagine del Lab: `python3 rilascio/r62/campo_coppa.py --lab` → `rilascio/r62/pagine/`. Dopo il rilascio aggiornare anche `ufficiale/src/sito/` con le due pagine. Nessuna modifica a dati, workflow o database. Ritorno: `git revert` del commit di rilascio.
+Su una copia nuova di gh-pages: `python3 rilascio/r62/campo_coppa.py COPIA` e `python3 rilascio/r62/testi.py COPIA` (ui.js, novita.js, tabellone.html) (modifica `girrr/campo.html` e `stadio/girrr/campo.html`, si ferma se le pagine non sono quelle attese, rieseguirlo non cambia nulla). Pagine del Lab: `python3 rilascio/r62/campo_coppa.py --lab` → `rilascio/r62/pagine/`. Dopo il rilascio aggiornare anche `ufficiale/src/sito/` con le due pagine. Nessuna modifica a dati, workflow o database. Ritorno: `git revert` del commit di rilascio.
 
 ## Prove (Chromium reale, schermi emulati)
 
