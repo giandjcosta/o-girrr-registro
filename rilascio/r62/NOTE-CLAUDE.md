@@ -35,3 +35,7 @@ Su una copia nuova di gh-pages: `python3 rilascio/r62/campo_coppa.py COPIA` e `p
 - Gianluca vuole il Giornale come quello di oggi. `rilascio/r62/giornale_mvp.py` aggiunge al generatore originale solo la rubrica «MVP dei tifosi» con i tre candidati della giornata appena finita, in fondo alla pagina 2. Il Coro resta senza MVP e non cambiano caratteri, spazi o colonne.
 - Prima ho rigenerato il numero 7 con il generatore originale e con i caratteri giusti: è identico al PDF pubblicato, a parte il nome «The Blues Brothers», aggiornato dopo. Poi ho aggiunto la rubrica.
 - Caratteri necessari sulla macchina che genera il PDF: Inter, Inter Display e TeX Gyre Pagella come `serif`.
+
+## Rubrica MVP (15 novembre, sera tardi)
+
+Capolettera rosso sulla prima frase. La rubrica dice fino a quando si vota, presenta i tre candidati della giornata appena finita e, dal numero dopo, il verdetto della giornata prima. Il verdetto riporta squadra, risultato vero e motivo della redazione. Vale dal prossimo Giornale; i numeri già usciti non si rigenerano.
