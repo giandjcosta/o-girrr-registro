@@ -14,6 +14,7 @@
         "Con il codice della squadra si apre subito la tua partita, anche in Champions Cup.",
         "Il migliore in campo ha il cerchio oro e la stella; accanto ai giocatori i simboli di gol, rigori, assist, porta inviolata, gol subiti e autogol, con la legenda.",
         "I cartellini gialli e rossi compaiono accanto ai giocatori quando presenti nei dati, con i rispettivi simboli nella legenda.",
+        "I simboli dei portieri sono di lato al cerchio; i gol subiti hanno un pallone con una piccola X e il numero.",
         "Nella grafica Lega i cerchi di casa sono rossi in Campionato e azzurri in Champions Cup; nella grafica Stadio restano azzurri, oro soltanto il migliore."
       ]
     },
@@ -56,7 +57,7 @@
     {
       "area": "Giornale",
       "voci": [
-        "Il riquadro Curva riporta lo stato dell’MVP e, quando disponibile, un commento autentico pertinente, mantenendo le quattro pagine e la grafica attuale."
+        "Una rubrica dedicata racconta i tre candidati MVP della giornata appena conclusa e le ragioni sportive delle candidature, separata dal commento della Curva."
       ]
     },
     {

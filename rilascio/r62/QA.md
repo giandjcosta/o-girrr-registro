@@ -16,3 +16,9 @@ Dispositivi e schermi sono emulati, i motori sono reali. Safari su iPhone, Samsu
 ## Consegna della bozza
 
 Anteprime e immagini salvate nella PR #96, commit 98b90cc; testi aggiornati e prova del dopo partita finale nel commit 44dd624. Rapporto del backend in `prove/v62/risultati-backend.json`, protezione Radio già in archivio in `prove/v62/risultati-radio-cli.json`. Il browser condiviso non è controllabile per un errore AT-SPI; la navigazione della preview è stata invece verificata con Chromium e WebKit tramite il runner. Server locale sulla porta 8898. Nessuna certificazione del database reale e nessuna autorizzazione alla pubblicazione.
+
+## Rettifica successiva: rubrica MVP e portieri
+
+Giornale: rubrica autonoma dei tre candidati della giornata appena conclusa; Coro invariato, nessun verdetto precedente. PDF 6ª/7ª a quattro pagine con gli stessi livelli e scale di adattamento della base. In pagina 2 si compattano gli spazi e si distribuiscono Top/Flop su quattro colonne, conservando caratteri e contenuti. Cinque test testuali superati.
+
+Portieri: pallone con piccola X e contatore, laterali al cerchio di casa e ospite. Test Chromium su 320 px/PC/TV nelle due grafiche, compreso il portiere ospite con gol subiti: simboli dentro il campo, nessuno scorrimento laterale. Queste modifiche non sono ancora certificate nei tre motori.

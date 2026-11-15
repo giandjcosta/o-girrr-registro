@@ -34,3 +34,7 @@ La **preview esportata** è `lab/integrata-62/`: pagine native, entrambe le graf
 5. Preparare **un solo annuncio e un solo changelog** secondo `REGOLE-VERSIONI.md` e chiederne approvazione. Non registrare la 6.2 in `versioni.json` prima del rilascio.
 
 **Non dichiarare completamento della 6.2 fino a integrazione e QA effettivamente superati.**
+
+## Rettifica successiva di Gianluca
+
+Prevale sui riferimenti precedenti al Coro: rubrica autonoma MVP con tre candidati della giornata appena conclusa, senza premio precedente. Coro intatto. In pagina 2 si compattano gli spazi e si dispongono Top/Flop su quattro colonne per mantenere quattro A4 e gli stessi caratteri. Portieri: icone laterali, pallone con piccola X per i gol subiti. Prova mirata Chromium su telefono/PC/TV, entrambe le grafiche; tre motori ancora da certificare per questa rettifica.

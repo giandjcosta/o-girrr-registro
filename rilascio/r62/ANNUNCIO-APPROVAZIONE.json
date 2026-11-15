@@ -7,6 +7,7 @@
     "Campo: Con il codice della squadra si apre subito la tua partita, anche in Champions Cup.",
     "Campo: Il migliore in campo ha il cerchio oro e la stella; accanto ai giocatori i simboli di gol, rigori, assist, porta inviolata, gol subiti e autogol, con la legenda.",
     "Campo: I cartellini gialli e rossi compaiono accanto ai giocatori quando presenti nei dati, con i rispettivi simboli nella legenda.",
+    "Campo: I simboli dei portieri sono di lato al cerchio; i gol subiti hanno un pallone con una piccola X e il numero.",
     "Campo: Nella grafica Lega i cerchi di casa sono rossi in Campionato e azzurri in Champions Cup; nella grafica Stadio restano azzurri, oro soltanto il migliore.",
     "Tabellone: Con il codice della squadra la tua partita ha un leggero velo oro e la scritta «La tua partita».",
     "Tabellone: Nella grafica Stadio interruttore, giornate, bande e podio sono oro anche in Champions Cup.",
@@ -19,7 +20,7 @@
     "Girrr Sport: Nei Precedenti delle conferenze scegli squadra e giornata, leggendo le dichiarazioni originali oppure «Dato non conservato».",
     "Girrr Sport: Per le future aperture, la vigilia termina al calcio d’inizio e il dopo partita resta disponibile per 48 ore dalla pubblicazione dei risultati.",
     "Albo d’oro: Nella Storia i Padri Fondatori compaiono solo con il nome, tutti in fila.",
-    "Giornale: Il riquadro Curva riporta lo stato dell’MVP e, quando disponibile, un commento autentico pertinente, mantenendo le quattro pagine e la grafica attuale.",
+    "Giornale: Una rubrica dedicata racconta i tre candidati MVP della giornata appena conclusa e le ragioni sportive delle candidature, separata dal commento della Curva.",
     "Radio: Dalla prossima puntata ordinaria, una sola breve frase indica la giornata dell’MVP o il voto ancora aperto, prima della chiusura integrale.",
     "App: I Bilanci riportano «Campionato & Champions Cup»; le animazioni rispettano Riduci movimento.",
     "App: Puoi rivedere gli ultimi due sondaggi conclusi, senza riaprire l’intero elenco."

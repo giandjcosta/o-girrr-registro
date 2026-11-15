@@ -28,6 +28,9 @@ def esporta(site,out):
  (out/'lab62.js').write_text((R/'rilascio/r62/lab62.js').read_text())
  (out/'sw.js').write_text("self.addEventListener('install',()=>self.skipWaiting());self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));self.addEventListener('fetch',e=>{if(new URL(e.request.url).hostname.endsWith('.supabase.co'))e.respondWith(new Response('Database reale disabilitato nel Lab',{status:403}))});\n")
  shutil.copytree(R/'prove/v62/fixture',out/'fixture',dirs_exist_ok=True)
+ for n in (6,7):
+  pdf=R/f'lab/giornale-62/g{n}/giornale.pdf'
+  if pdf.exists():shutil.copyfile(pdf,out/f'riepiloghi/settimana-{n:02}.pdf')
  (out/'index.html').write_text('<!doctype html><meta charset="utf-8"><title>Anteprima integrata 6.2</title><a href="girrr/campo.html">Lega</a> · <a href="stadio/girrr/campo.html">Stadio</a>')
 if __name__=='__main__':
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('sito',type=Path);p.add_argument('--out',type=Path,default=R/'lab/integrata-62');a=p.parse_args();esporta(a.sito,a.out)

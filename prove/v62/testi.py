@@ -23,9 +23,8 @@ class Test(unittest.TestCase):
   now=datetime(2026,11,15,tzinfo=timezone.utc);t={'coro':{'testo':'Originale'},'titolo':'Intatto'}
   w={'stagione':'2026/27','giornata':6,'chiusa':'2026-11-14T00:00:00Z','classifica':[{'team':'Oranje VC'}]}
   dossier={'archivio':[w],'commento':{'squadra':'WOA','testo':'Parole autentiche','post_id':9,'giornata':6,'fonte':'curva','pertinente':True,'squadra_riferita':'Oranje VC'}}
-  r=integra(t,dossier,7,now);self.assertEqual(r['titolo'],'Intatto');self.assertIn('6ª: Oranje VC',r['coro']['testo']);self.assertIn('Parole autentiche',r['coro']['testo']);self.assertEqual(t['coro']['testo'],'Originale')
-  dossier['giornale_annunciati']=['2026/27:6'];self.assertEqual(integra(t,dossier,7,now),t)
-  dossier['giornale_annunciati']=[];dossier['commento']['squadra_riferita']='Altra';self.assertNotIn('Parole autentiche',integra(t,dossier,7,now)['coro']['testo'])
+  r=integra(t,dossier,7,now);self.assertEqual(r['coro'],t['coro']);self.assertEqual(r['titolo'],'Intatto');self.assertNotIn('mvp_editoriale',r)
+  aperto=json.loads((R/'prove/v62/fixture/mvp-reale.json').read_text());r=integra(t,aperto,7,now);self.assertEqual(len(r['mvp_editoriale']['candidati']),3);self.assertIsNone(r['mvp_editoriale']['verdetto']);self.assertEqual(r['coro'],t['coro'])
  def test_ora_legale(self):
   from zoneinfo import ZoneInfo
   a=datetime(2027,3,27,12,tzinfo=ZoneInfo('Europe/Rome'));fine=scadenza('post',apertura=a);self.assertEqual((fine-a.astimezone(timezone.utc)).total_seconds(),86400)

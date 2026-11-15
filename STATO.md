@@ -1,6 +1,12 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 15 novembre 2026)
 
 
+## 15 novembre — ChatGPT: rettifica MVP e simboli dei portieri
+
+- Decisione successiva di Gianluca: MVP fuori dal Coro della Curva, in una rubrica autonoma del Giornale. Solo i tre candidati della giornata appena conclusa, con motivazioni giornalistiche fondate sui dati; nessun richiamo al vincitore del turno precedente. Coro invariato. Quattro pagine, stessi caratteri e stessi livelli/scale di adattamento; in pagina 2 spazi più compatti e Top/Flop su quattro colonne, senza perdere contenuti.
+- Portieri casa e ospite: simboli laterali al cerchio; per i gol subiti pallone con piccolissima X sovrapposta e numero. Respinti GS e freccia. Prova Chromium 320 px/PC/TV nelle due grafiche: nessun simbolo fuori dal campo, nessuno scorrimento laterale.
+- PDF di prova 6ª/7ª e cinque test testuali superati; queste modifiche successive non sono ancora certificate sui tre motori. Nessun merge, pubblicazione, audio o scrittura Supabase.
+
 ## 15 novembre (4) — ChatGPT: integrazione nativa 6.2 nella PR #96, bozza integrata pronta, pubblicazione ferma
 
 - Ramo `chatgpt/integrazione-62-completa`, commit di preparazione `8d81a8e`, `a1e6670`, `b80680c`, `2d3f346`. Nessun merge o rilascio; sito e `versioni.json` restano alla **6.1**. Base gh-pages `98c0add`, main sito letto `40837e6`; cartellini già online preservati.

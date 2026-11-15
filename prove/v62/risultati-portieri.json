@@ -1,0 +1,11 @@
+{
+  "motore": "chromium",
+  "prove": [
+    "telefono-lega",
+    "telefono-stadio",
+    "pc-lega",
+    "pc-stadio",
+    "tv-lega",
+    "tv-stadio"
+  ]
+}
