@@ -1,5 +1,5 @@
 {
- "generato": 1794782789,
+ "generato": 1794782874,
  "versione": "6.1",
  "repository": [
   {
@@ -8320,51 +8320,6 @@
      "totale": 1273
     },
     {
-     "nome": "chatgpt/controllo-62",
-     "punta": "9e6e0df",
-     "data": 1794782293,
-     "titolo": "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL",
-     "autore": "ChatGPT",
-     "padre": "main",
-     "nascita": "2c856aa",
-     "dataNascita": 1794781146,
-     "avanti": 5,
-     "stato": "attivo",
-     "commit": [
-      [
-       "9e6e0dfbfa961e482552fef4e2dee70bdcdbd56e",
-       1794782293,
-       "ChatGPT",
-       "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
-      ],
-      [
-       "fa899b7fb96b4d9ed0e392e2690f4ef95e052635",
-       1794782291,
-       "ChatGPT",
-       "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
-      ],
-      [
-       "a5f6ada85b626371582f369a0db3fdc91ed4d91c",
-       1794782289,
-       "ChatGPT",
-       "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
-      ],
-      [
-       "313a970859d9b92eedb43b18e7f1a7585a3447f3",
-       1794782287,
-       "ChatGPT",
-       "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
-      ],
-      [
-       "d05ac91e365c0dd5874c98d3342ecc202af65eea",
-       1794782284,
-       "ChatGPT",
-       "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
-      ]
-     ],
-     "totale": 5
-    },
-    {
      "nome": "chatgpt/albo-62",
      "punta": "5003b8d",
      "data": 1794782789,
@@ -8402,6 +8357,57 @@
       ]
      ],
      "totale": 4
+    },
+    {
+     "nome": "chatgpt/controllo-62",
+     "punta": "71fa421",
+     "data": 1794782874,
+     "titolo": "ChatGPT: aggiorna QA alla scelta di Gianluca sui risultati condivisi",
+     "autore": "ChatGPT",
+     "padre": "main",
+     "nascita": "2c856aa",
+     "dataNascita": 1794781146,
+     "avanti": 6,
+     "stato": "attivo",
+     "commit": [
+      [
+       "71fa4210418ce69a1c6ecee8ae759e5a6a55db5f",
+       1794782874,
+       "ChatGPT",
+       "ChatGPT: aggiorna QA alla scelta di Gianluca sui risultati condivisi"
+      ],
+      [
+       "9e6e0dfbfa961e482552fef4e2dee70bdcdbd56e",
+       1794782293,
+       "ChatGPT",
+       "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
+      ],
+      [
+       "fa899b7fb96b4d9ed0e392e2690f4ef95e052635",
+       1794782291,
+       "ChatGPT",
+       "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
+      ],
+      [
+       "a5f6ada85b626371582f369a0db3fdc91ed4d91c",
+       1794782289,
+       "ChatGPT",
+       "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
+      ],
+      [
+       "313a970859d9b92eedb43b18e7f1a7585a3447f3",
+       1794782287,
+       "ChatGPT",
+       "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
+      ],
+      [
+       "d05ac91e365c0dd5874c98d3342ecc202af65eea",
+       1794782284,
+       "ChatGPT",
+       "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
+      ]
+     ],
+     "totale": 6
     }
    ]
   }
