@@ -1,5 +1,5 @@
 {
- "generato": 1794772082,
+ "generato": 1794776970,
  "versione": "6.1",
  "repository": [
   {
@@ -1818,8 +1818,8 @@
     },
     {
      "nome": "gh-pages",
-     "punta": "98c0add",
-     "data": 1794759088,
+     "punta": "a3b43a5",
+     "data": 1794776784,
      "titolo": "Aggiorna statistiche e voti in automatico",
      "autore": "github-actions[bot]",
      "padre": null,
@@ -1828,6 +1828,12 @@
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "a3b43a54c94e80b1f42ad8c850c64afb289bb953",
+       1794776784,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
       [
        "98c0adde22aba19ba2ad831c30d9d1659f14370d",
        1794759088,
@@ -1893,15 +1899,9 @@
        1794648661,
        "Claude",
        "Claude: Rilascio 6.0.1, Derby in tre schede nell'Albo d'oro, Condividi la giornata con anteprime e Giornale in PDF, schede fluide, Totogirrr"
-      ],
-      [
-       "9d8eeafd74faba140aefef2fb9e44768e15500a6",
-       1794623423,
-       "github-actions[bot]",
-       "Aggiorna statistiche e voti in automatico"
       ]
      ],
-     "totale": 661
+     "totale": 662
     }
    ]
   },
@@ -8141,22 +8141,28 @@
     },
     {
      "nome": "claude/fervent-thompson-rwlwrh",
-     "punta": "327c187",
-     "data": 1794772069,
-     "titolo": "Claude: rubrica MVP del Giornale con capolettera rosso, chiusura del voto e verdetto del numero dopo (dal pros",
+     "punta": "bd3dce9",
+     "data": 1794776955,
+     "titolo": "Claude: voto unico con «Cambia il mio voto» per sondaggi e MVP, risultati chiusi in Curva e Girrr Sport, post ",
      "autore": "Claude",
      "padre": "chatgpt/integrazione-62-completa",
      "nascita": "13b7223",
      "dataNascita": 1794766745,
-     "avanti": 8,
+     "avanti": 10,
      "stato": "unito",
      "unione": {
       "in": "main",
-      "data": 1794772082,
-      "commit": "bc15d1d",
-      "titolo": "Merge pull request #99 from giandjcosta/claude/fervent-thompson-rwlwrh"
+      "data": 1794776970,
+      "commit": "893a99f",
+      "titolo": "Merge pull request #100 from giandjcosta/claude/fervent-thompson-rwlwrh"
      },
      "commit": [
+      [
+       "bd3dce93d0843c8d6d2d159eb23b526e851fa619",
+       1794776955,
+       "Claude",
+       "Claude: voto unico con «Cambia il mio voto» per sondaggi e MVP, risultati chiusi in Curva e Girrr Sport, post del verdetto MVP di Girrr Spor"
+      ],
       [
        "327c187b95a39ba39fbce234d105440319b528b7",
        1794772069,
@@ -8188,13 +8194,13 @@
        "Registro: elenco attività aggiornato"
       ]
      ],
-     "totale": 8
+     "totale": 10
     },
     {
      "nome": "main",
-     "punta": "bc15d1d",
-     "data": 1794772082,
-     "titolo": "Merge pull request #99 from giandjcosta/claude/fervent-thompson-rwlwrh",
+     "punta": "893a99f",
+     "data": 1794776970,
+     "titolo": "Merge pull request #100 from giandjcosta/claude/fervent-thompson-rwlwrh",
      "autore": "giandjcosta",
      "padre": null,
      "nascita": null,
@@ -8202,6 +8208,12 @@
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "893a99f0bd49e6ac7b555224831b532f0ea7a8f6",
+       1794776970,
+       "giandjcosta",
+       "Merge pull request #100 from giandjcosta/claude/fervent-thompson-rwlwrh"
+      ],
       [
        "bc15d1d4cee94f1ba125d9ddc6c7006653c00b23",
        1794772082,
@@ -8267,15 +8279,9 @@
        1794753341,
        "giandjcosta",
        "Merge pull request #91 from giandjcosta/claude/stato-61"
-      ],
-      [
-       "e9da7297b944f25d745cd329689e4101fc3ead70",
-       1794751499,
-       "giandjcosta",
-       "Merge pull request #90 from giandjcosta/claude/ramificazioni-pagina-piena"
       ]
      ],
-     "totale": 1260
+     "totale": 1262
     }
    ]
   }
