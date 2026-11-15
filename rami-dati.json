@@ -1,5 +1,5 @@
 {
- "generato": 1794756205,
+ "generato": 1794756559,
  "versione": "6.1",
  "repository": [
   {
@@ -8051,16 +8051,22 @@
     },
     {
      "nome": "claude/fervent-thompson-rwlwrh",
-     "punta": "ce34ebe",
-     "data": 1794756205,
-     "titolo": "Claude: Campo 6.2, la tua partita si apre per prima ma resta al suo posto nella fila",
+     "punta": "e1b98d4",
+     "data": 1794756559,
+     "titolo": "Claude: Campo 6.2, frecce ‹ › per le partite e « » per le giornate, cambi con dissolvenza morbida",
      "autore": "Claude",
      "padre": "main",
      "nascita": "410f975",
      "dataNascita": 1794753341,
-     "avanti": 11,
+     "avanti": 12,
      "stato": "attivo",
      "commit": [
+      [
+       "e1b98d43e24b4776be820a402012eb3c5ec653c4",
+       1794756559,
+       "Claude",
+       "Claude: Campo 6.2, frecce ‹ › per le partite e « » per le giornate, cambi con dissolvenza morbida"
+      ],
       [
        "ce34ebea50f1bf37479c18cdc60439461c03e94e",
        1794756205,
@@ -8122,7 +8128,7 @@
        "Claude: proposta 6.2, Campo con Campionato e Champions Cup (solo Lab)"
       ]
      ],
-     "totale": 11
+     "totale": 12
     }
    ]
   }
