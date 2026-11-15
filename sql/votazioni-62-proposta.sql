@@ -43,7 +43,7 @@ begin
  union all
  select 'post:'||p_stagione||':'||po.post_id::text,p_stagione,'post',po.post_id::text,null::integer,left(p.body,160),to_jsonb(po.opts),p.created,votazioni62_private.post_scadenza(p.created),null::timestamptz
  from public.curva_poll po join public.curva_post p on p.id=po.post_id
- where p.created>=make_date(left(p_stagione,4)::int,7,1) and p.created<make_date(left(p_stagione,4)::int+1,7,1)
+ where p.created>=(make_date(left(p_stagione,4)::int,7,1)::timestamp at time zone 'Europe/Rome') and p.created<(make_date(left(p_stagione,4)::int+1,7,1)::timestamp at time zone 'Europe/Rome')
  and not exists(select 1 from votazioni62_private.sondaggi s where s.stagione=p_stagione and s.origine='post' and s.fonte=po.post_id::text)
  ),righe as (
  select s.*,s.chiuso is not null or coalesce(clock_timestamp()>=s.chiude,false) as concluso,

@@ -2,6 +2,23 @@ name: ChatGPT - QA integrazione 6.2
 on:
   push:
     branches: [chatgpt/integrazione-62-completa]
+    paths:
+      - '.github/workflows/integrazione-62-qa.yml'
+      - 'rilascio/r62/**'
+      - '!rilascio/r62/*.md'
+      - '!rilascio/r62/ANNUNCIO*'
+      - '!rilascio/r62/PREVIEW-MANIFEST.json'
+      - 'rilascio/r611/**'
+      - 'sql/**'
+      - 'prove/**/*.js'
+      - 'prove/**/*.cjs'
+      - 'prove/v62/*.py'
+      - 'prove/v62/package*.json'
+      - 'prove/v62/fixture/**'
+      - 'prove/v62/font/**'
+      - 'voci-src/*.py'
+      - 'calcoli/finestre62.py'
+      - 'lab/integrata-62/**'
   workflow_dispatch:
 permissions:
   contents: read

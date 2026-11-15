@@ -24,7 +24,7 @@ def prepara(sorgente: Path, uscita: Path):
         raise ValueError("La destinazione deve essere separata dalla copia originale")
     if uscita.exists():
         raise FileExistsError(f"Non sovrascrivo una directory preesistente: {uscita}")
-    shutil.copytree(sorgente, uscita)
+    shutil.copytree(sorgente, uscita, ignore=shutil.ignore_patterns(".git"))
     for passo in PASSI:
         print(f"Applico {passo} sulla NUOVA copia {uscita}", flush=True)
         subprocess.run((sys.executable, str(RADICE / passo), str(uscita)), check=True)

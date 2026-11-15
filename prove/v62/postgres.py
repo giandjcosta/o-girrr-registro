@@ -71,6 +71,8 @@ with psycopg.connect(**connargs) as anon:
  anon.execute('set role anon')
  try:anon.execute('select * from votazioni62_private.sondaggi');raise AssertionError('Accesso diretto consentito')
  except psycopg.errors.InsufficientPrivilege:report.append('Schema privato, RLS e privilegi verificati')
+c.execute("insert into public.curva_post values(620003,'2026-06-30T22:30:00Z','Confine stagione italiana');insert into public.curva_poll values(620003,array['A','B'])")
+check('Stagione dei post coerente con la mezzanotte italiana',any(x['id']=='post:2026/27:620003' for x in value("select public.v62_sondaggi('2026/27')")['aperti']))
 try:
  c.execute("select public.v62_sondaggi('2026/27','Oranje VC','errato')")
  raise AssertionError('Codice errato accettato')

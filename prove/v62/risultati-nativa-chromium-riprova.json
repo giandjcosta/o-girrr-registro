@@ -6,12 +6,16 @@
     {
       "schermo": "PC1920",
       "grafica": "girrr",
-      "errore": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'HTTP 400 http://127.0.0.1:8902/o-fant-a-girrr/__rpc/curva_pimg'\n+ ]\n- []\n\n    at /workspace/integrazione62/prove/v62/native-browser.cjs:24:9"
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
     },
     {
       "schermo": "PC1920",
       "grafica": "stadio/girrr",
-      "errore": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'HTTP 400 http://127.0.0.1:8902/o-fant-a-girrr/__rpc/curva_pimg'\n+ ]\n- []\n\n    at /workspace/integrazione62/prove/v62/native-browser.cjs:24:9"
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
     }
   ]
 }

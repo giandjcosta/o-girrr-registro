@@ -1,0 +1,66 @@
+{
+  "giornata": 7,
+  "pagine": 4,
+  "renderer": "originale",
+  "fit": [
+    {
+      "pag": 1,
+      "livello": 3,
+      "scala": 0.85,
+      "margine": "2.5",
+      "ci_sta": true
+    },
+    {
+      "pag": 2,
+      "livello": 0,
+      "scala": 1,
+      "margine": "18.1",
+      "ci_sta": true
+    },
+    {
+      "pag": 3,
+      "livello": 0,
+      "scala": 1,
+      "margine": "7.5",
+      "ci_sta": true
+    },
+    {
+      "pag": 4,
+      "livello": 3,
+      "scala": 0.94,
+      "margine": "2.1",
+      "ci_sta": true
+    }
+  ],
+  "baseline": [
+    {
+      "pag": 1,
+      "livello": 3,
+      "scala": 0.85,
+      "margine": "2.5",
+      "ci_sta": true
+    },
+    {
+      "pag": 2,
+      "livello": 0,
+      "scala": 1,
+      "margine": "18.1",
+      "ci_sta": true
+    },
+    {
+      "pag": 3,
+      "livello": 0,
+      "scala": 1,
+      "margine": "7.5",
+      "ci_sta": true
+    },
+    {
+      "pag": 4,
+      "livello": 3,
+      "scala": 0.94,
+      "margine": "2.1",
+      "ci_sta": true
+    }
+  ],
+  "fontVariati": false
+}

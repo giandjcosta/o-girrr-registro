@@ -18,7 +18,11 @@ def esporta(site,out):
 
   rel=p.relative_to(out);prof=len(rel.parts)-1;prefix='../'*prof
   text=p.read_text()
-  text=re.sub(r'<head([^>]*)>',lambda m:m.group(0)+f'<script src="{prefix}lab62.js"></script>',text,count=1,flags=re.I)
+  guard=f'<script src="{prefix}lab62.js"></script>'
+  if re.search(r'<head(?:\s|>)',text,re.I):text=re.sub(r'<head([^>]*)>',lambda m:m.group(0)+guard,text,count=1,flags=re.I)
+  else:text=re.sub(r'^(<!doctype[^>]*>)?',lambda m:m.group(0)+guard,text,count=1,flags=re.I)
+  first=re.search(r'<script\b[^>]*>',text,re.I)
+  if not first or 'lab62.js' not in first.group(0):raise ValueError('Protezione Lab non prima degli script: '+str(rel))
   text=re.sub(r'https://fonts.googleapis.com/css2[^\"<>]*',prefix+'font/originali.css',text)
   p.write_text(text)
  (out/'lab62.js').write_text((R/'rilascio/r62/lab62.js').read_text())

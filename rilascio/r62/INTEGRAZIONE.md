@@ -10,20 +10,25 @@
 - **Radio:** aggiungere una sola frase prima delle due battute di chiusura integrali, nella **successiva puntata programmata**, senza nuova voce, TTS, audio aggiuntivo o rigenerazione per la chiusura MVP.
 - **Scadenze per nuove aperture soltanto:** vigilia e sfida fino all'inizio, dopo partita 48 ore dai risultati pubblicati, MVP non oltre 48 ore dalla prima apertura e comunque entro il prossimo turno, post 24 ore. **Non modificare votazioni e scadenze già annunciate.** La scadenza registrata della 7ª resta il 21 novembre 2026 alle 15:00 italiane.
 
-## Cosa esiste e cosa manca
+## Integrazione preparata sul ramo della PR #96
 
-**Già nella parte di Claude del Lab:** Campo con Coppa, navigazione tra partite/giornate, cambio fluido, tua partita, migliore in campo, cartellini, ritocchi del Tabellone e Padri Fondatori. Vedere `rilascio/r62/NOTE-CLAUDE.md`.
+La copia nuova di gh-pages `98c0add` viene preparata senza scrivere nell'originale. Ordine: **6.1.1 → funzioni native → Campo di Claude → ritocchi di Claude → Giornale originale**. Due preparazioni indipendenti sono state confrontate byte per byte; gli script nativi sono anche ripetibili sulla copia. Le sorgenti di Claude non sono state riscritte.
 
-**Pronto come codice isolato in questa integrazione:** `calcoli/finestre62.py`, `voci-src/mvp_editoriale62.py`, `voci-src/copione.py` e `voci-src/prepara_dati.py` (nuovo segmento solo con `--mvp-tifosi`), `prove/v62/testi.py` e la **proposta NON applicata** `sql/votazioni-62-proposta.sql`. Sono stati recuperati dal lavoro Work senza importare la grafica rifiutata.
+- `nativa.py` e `sondaggi.js`: sondaggi e stato personale nelle pagine originali, compresi i post del feed; conteggi reali del medesimo voto, senza aggiungere reazioni simulate. Caricamento prima del modulo, scelta immutabile, lettura al ritorno e aggiornamento delle schede aperte. Precedenti con squadra/giornata e testo autentico. Gli stili del prodotto sono quelli esistenti.
+- `editoriale.py`: aggiunta contenutistica al solo Coro/riquadro Curva del renderer originale. PDF reali della 6ª e 7ª, quattro A4, stessi livelli di adattamento e scale del renderer prima/dopo. Nessun `impagina.cjs` o PDF rifiutato.
+- `backend.py`: prepara separatamente il main del sito, il catalogo nel giro MVP ordinario e l'uso del dossier nella preparazione Radio già programmata. Non esegue automazioni. Il saluto Radio resta integrale; una sola battuta e nessun TTS.
+- SQL esclusivamente proposta: stessi archivi di voto delle RPC esistenti, lock e vincoli unici. Gli schemi privati hanno RLS e privilegi negati al browser; preparazione e catalogo server sono riservati al servizio. Le nuove finestre dei post partono dall'attivazione, senza chiudere retroattivamente quelli precedenti senza scadenza conservata. La 7ª MVP conserva il 21 novembre alle 15 italiane.
 
-**Da completare prima di un rilascio:** integrazione di votazioni, Precedenti, MVP e risultati nelle pagine reali Lega/Stadio conservando menu e grafica; mappatura reale degli ID di sfide/post, compatibilità con voti preesistenti e controlli sull'autenticazione a codice; test con PostgreSQL di più sessioni; aggiornamento del Giornale originale a quattro pagine e del dossier editoriale; eventuale collegamento dei metadati alle automazioni. Nessuna modifica al DB senza autorizzazione separata.
+La **preview esportata** è `lab/integrata-62/`: pagine native, entrambe le grafiche e backend dimostrativo locale. I collaudi confermano zero richieste a Supabase e conservazione della sessione personale già presente: il Lab usa uno spazio separato. Non equivale a un collaudo del database della Lega. Le prove transazionali usano PostgreSQL 17 nativo locale, con due connessioni concorrenti; il gateway browser usa PGlite locale.
 
-La pagina `lab/confronto-62.html` confronta le posizioni A/B **solo come struttura visiva**, senza transazioni e senza dichiarare che sia la pagina di produzione. La pagina `lab/novita-6-2.html` mantiene tutte le schede di Claude e integra i riferimenti alle altre aree. La 6.1.1 continua a essere consultabile da `lab/novita-6-1-1.html`.
+`lab/confronto-62.html` apre ora A e B nelle pagine native. La vecchia comparazione concettuale è conservata in `lab/coordinamento-62/confronto-posizioni-bozza.html`, senza essere usata come interfaccia del prodotto. Le schede di Claude in `lab/novita-6-2.html` restano presenti.
+
+**Stato della certificazione:** vedere `QA.md` e i rapporti `prove/v62/risultati-*.json`. I risultati di run precedenti fallite non sono dichiarati superati; il controllo finale dei tre motori deve terminare prima della consegna come completa. Il sito resta alla 6.1.
 
 ## Sequenza tecnica
 
 1. Leggere `AGENTS.md`, `STATO.md`, `REGOLE-VERSIONI.md`, `rilascio/r62/NOTE-CLAUDE.md` e questo documento.
-2. Preparare una **nuova copia** di `gh-pages` tramite `python3 rilascio/r62/applica.py COPIA_GH_PAGES`. Ordine: 6.1.1, Campo di Claude, ritocchi di Claude. I tre passaggi devono riuscire e una seconda esecuzione su una copia nuova deve produrre lo stesso risultato.
+2. Preparare una **nuova copia** di `gh-pages` tramite `python3 rilascio/r62/applica.py COPIA_GH_PAGES`. Ordine: 6.1.1, integrazione nativa, Campo e ritocchi di Claude, Giornale. I cinque passaggi devono riuscire e una seconda esecuzione su una copia nuova deve produrre lo stesso risultato.
 3. Provare Chromium, WebKit e Firefox × 16 profili × Lega/Stadio; anche ospite e squadra, Coppa, tastiera, Riduci movimento, 320 px, console, PDF originale a 4 pagine. Salvare immagini PC 1920 e TV emulata Lega/Stadio.
 4. Solo dopo prova del Lab e «Vai» esplicito al sito: rilasciare `gh-pages`, verificare il sito, quindi aggiornare il `main` del sito se serve. Solo dopo sincronizzare `ufficiale/src/sito/` e lo stato con hash/rollback. Ogni modifica a Supabase necessita un «Vai» specifico.
 5. Preparare **un solo annuncio e un solo changelog** secondo `REGOLE-VERSIONI.md` e chiederne approvazione. Non registrare la 6.2 in `versioni.json` prima del rilascio.
