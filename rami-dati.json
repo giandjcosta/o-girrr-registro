@@ -1,5 +1,5 @@
 {
- "generato": 1794760006,
+ "generato": 1794760058,
  "versione": "6.1",
  "repository": [
   {
@@ -8228,16 +8228,22 @@
     },
     {
      "nome": "chatgpt/integrazione-62-completa",
-     "punta": "188a03f",
-     "data": 1794760006,
-     "titolo": "ChatGPT: documenta la 6.2 unica, la 6.1.1 inclusa e il Giornale a quattro pagine",
+     "punta": "47e6d05",
+     "data": 1794760058,
+     "titolo": "ChatGPT: confronta A e B nel Lab con le grafiche Lega e Stadio, senza votazioni reali",
      "autore": "ChatGPT",
      "padre": "main",
      "nascita": "b051bfb",
      "dataNascita": 1794759206,
-     "avanti": 9,
+     "avanti": 10,
      "stato": "attivo",
      "commit": [
+      [
+       "47e6d05dbcd379ad897c45ef0445ae0a52d2fcba",
+       1794760058,
+       "ChatGPT",
+       "ChatGPT: confronta A e B nel Lab con le grafiche Lega e Stadio, senza votazioni reali"
+      ],
       [
        "188a03fe5e5e6ace67cff3d37e2dfa9315d71308",
        1794760006,
@@ -8293,7 +8299,7 @@
        "ChatGPT: recupera le logiche 6.2 già provate e isolate dalla grafica rifiutata"
       ]
      ],
-     "totale": 9
+     "totale": 10
     }
    ]
   }
