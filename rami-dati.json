@@ -1,5 +1,5 @@
 {
- "generato": 1794782293,
+ "generato": 1794782632,
  "versione": "6.1",
  "repository": [
   {
@@ -8233,26 +8233,6 @@
      "totale": 21
     },
     {
-     "nome": "chatgpt/albo-62",
-     "punta": "2c856aa",
-     "data": 1794781146,
-     "titolo": "Merge pull request #105 from giandjcosta/claude/fervent-thompson-rwlwrh",
-     "autore": "giandjcosta",
-     "padre": "claude/fervent-thompson-rwlwrh",
-     "nascita": "fc08236",
-     "dataNascita": 1794781140,
-     "avanti": 1,
-     "stato": "unito",
-     "unione": {
-      "in": "main",
-      "data": 1794781146,
-      "commit": "2c856aa",
-      "titolo": "Merge pull request #105 from giandjcosta/claude/fervent-thompson-rwlwrh"
-     },
-     "commit": [],
-     "totale": 1
-    },
-    {
      "nome": "main",
      "punta": "2c856aa",
      "data": 1794781146,
@@ -8383,6 +8363,27 @@
       ]
      ],
      "totale": 5
+    },
+    {
+     "nome": "chatgpt/albo-62",
+     "punta": "339786d",
+     "data": 1794782632,
+     "titolo": "ChatGPT: prepara l'Albo 6.2 con voti verificabili e RPC protetta",
+     "autore": "ChatGPT",
+     "padre": "main",
+     "nascita": "2c856aa",
+     "dataNascita": 1794781146,
+     "avanti": 1,
+     "stato": "attivo",
+     "commit": [
+      [
+       "339786d0c515cef70a870e710af0232e48885bd4",
+       1794782632,
+       "ChatGPT",
+       "ChatGPT: prepara l'Albo 6.2 con voti verificabili e RPC protetta"
+      ]
+     ],
+     "totale": 1
     }
    ]
   }
