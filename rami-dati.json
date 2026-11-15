@@ -1,5 +1,5 @@
 {
- "generato": 1794783305,
+ "generato": 1794783380,
  "versione": "6.1",
  "repository": [
   {
@@ -8372,16 +8372,28 @@
     },
     {
      "nome": "chatgpt/controllo-62",
-     "punta": "21cfa6e",
-     "data": 1794783305,
-     "titolo": "ChatGPT: include il post MVP nel rilascio senza sovrascrivere script più recenti",
+     "punta": "a5480da",
+     "data": 1794783380,
+     "titolo": "ChatGPT: registra QA e copia protetta del post MVP",
      "autore": "ChatGPT",
      "padre": "main",
      "nascita": "2c856aa",
      "dataNascita": 1794781146,
-     "avanti": 13,
+     "avanti": 15,
      "stato": "attivo",
      "commit": [
+      [
+       "a5480da1a2298aa53fcedd386c7fb9a8c0b0074a",
+       1794783380,
+       "ChatGPT",
+       "ChatGPT: registra QA e copia protetta del post MVP"
+      ],
+      [
+       "f612366ed865ea1090418ebf51fa566f3e48a8dc",
+       1794783333,
+       "ChatGPT",
+       "ChatGPT: prova in CI la preparazione del backend MVP senza deploy"
+      ],
       [
        "21cfa6ecd919782fa2c23cde227b4e801c5c947c",
        1794783305,
@@ -8441,21 +8453,9 @@
        1794782291,
        "ChatGPT",
        "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
-      ],
-      [
-       "a5f6ada85b626371582f369a0db3fdc91ed4d91c",
-       1794782289,
-       "ChatGPT",
-       "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
-      ],
-      [
-       "313a970859d9b92eedb43b18e7f1a7585a3447f3",
-       1794782287,
-       "ChatGPT",
-       "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
       ]
      ],
-     "totale": 13
+     "totale": 15
     }
    ]
   }
