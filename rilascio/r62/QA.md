@@ -1,3 +1,21 @@
+# Collaudo 6.2 — release candidate integrata (15 novembre 2026)
+
+**Stato: NO-GO finché non termina la CI sullo SHA definitivo.** Solo Lab e rami di preparazione, sito ufficiale ancora 6.1. Nessun deploy, nessuna SQL su Supabase, nessun audio.
+
+Questa è la fonte di stato più recente; sotto rimangono le note storiche della PR #96.
+
+## Release candidate `chatgpt/rc-62-verifica`
+- SQL privata delle votazioni e finestre: compatibilità del voto 6.1 senza catalogo, finestre conferenze per stagione senza blocco prima della configurazione. PostgreSQL già superato sul ramo di controllo ([run 43771449312](https://github.com/giandjcosta/o-girrr-registro/actions/runs/43771449312)).
+- Albo: `v62_albo`, giurie protette e finalizzazione; test dedicato PostgreSQL superato sulla proposta ([run 43771149900](https://github.com/giandjcosta/o-girrr-registro/actions/runs/43771149900)). Dossier con scelte editoriali effettive ancora da produrre prima di registrare preferenze nel database.
+- Backend: preparatore del catalogo a flag esplicito, copia controllata degli script del post MVP e preparatore della giuria. Serve superamento del job `backend` sul ramo integrato.
+- 6.1.1: corretto il difetto su iPad landscape 1024 px («Peggiore» fuori dal riquadro), conservando una riga singola su PC >=1280.
+- Browser: il vecchio controllo A/B era obsoleto (risultati chiusi ormai in entrambe le pagine). La verifica è stata aggiornata e sono stati aggiunti casi «Cambia il mio voto» e Albo in Lega/Stadio 320/1280, comprese giurie presenti/assenti e fine stagione.
+- Giornale: grafica originale e testo «Serie A, 11ª giornata» intatti; i PDF devono essere prodotti con Inter, Inter Display e TeX Gyre Pagella, senza font di ripiego.
+
+**Per il GO tecnico:** risultati PASS di tutte le verifiche necessarie sullo SHA definitivo, test copia nuova `applica.py` ripetibile, verifica della copia backend, sicurezza SQL e piano di rilascio senza sospensione del voto. **Per pubblicare:** successiva autorizzazione distinta al sito (`Vai, pubblica`) e a Supabase (`Vai SQL`), oltre ai controlli reali post-attivazione.
+
+---
+
 # Collaudo 6.2 — bozza pronta, non pubblicata
 
 Base isolata: gh-pages `98c0add`. Main sito letto: `40837e6`. PR di lavoro: #96. Versione vera 6.1.
