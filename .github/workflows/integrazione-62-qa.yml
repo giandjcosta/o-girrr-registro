@@ -160,6 +160,7 @@ jobs:
           FOTO: qa-artifacts/native
         run: |
           node prove/v62/native-browser.cjs
+          node prove/v62/albo-browser.cjs
           node prove/v62/funzioni.cjs
       - name: Preview esportata senza scritture e senza cambiare sessione
         env:
