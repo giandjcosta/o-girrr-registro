@@ -7,6 +7,11 @@
 
 
 
+
+## 15 novembre (10) — Claude: sondaggi di Girrr Sport dentro i riquadri
+
+- Gianluca: in Girrr Sport › Sondaggi i sondaggi erano testo nudo sullo sfondo. In `rilascio/r62/sondaggi.js` ora, solo in Girrr Sport, ogni sondaggio usa la scheda dell’app (`card`): banda rossa nella Lega, riquadro arrotondato con banda oro nello Stadio. La Curva non cambia. Provato con Chromium: Lega e Stadio × 320 e 1280 × Girrr Sport e Curva, 8 casi, zero errori, nessuno scorrimento laterale.
+
 ## 15 novembre (9) — Claude: Albo › Record tutto con la stessa grafica
 
 - Gianluca: non due grafiche diverse nella stessa pagina. «MVP dei tifosi» (archivio), «Corsa all’MVP del campionato» e «La partita più seguita» ora usano la grafica dei «Record della lega»: scheda dell’Albo con righe a icona, etichetta, squadra, dettaglio e numero a destra, in Lega e Stadio. Il riquadro della 6.0 non compare più; resta il segnaposto `#pt-archivio` per i link «Archivio del premio». Corretto anche un controllo su un attributo vuoto, che faceva ricomparire il riquadro vecchio. Nomi con la maiuscola iniziale come nei Record.
