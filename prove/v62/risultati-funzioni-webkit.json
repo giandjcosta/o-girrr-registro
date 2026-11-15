@@ -1,0 +1,12 @@
+{
+  "motore": "webkit",
+  "produzione": false,
+  "prove": [
+    "Curva → Girrr Sport: scelta e modulo disattivato condivisi",
+    "MVP da Girrr Sport a Curva: primo voto immutabile, nessun cambio o ritiro",
+    "Ricarica: lo stato personale viene riletto dal server",
+    "Due contesti separati: preferenza già presente, senza localStorage dei voti",
+    "A/B: due chiusi centralizzati e B chiuso di default",
+    "Precedenti: selezione squadra/giornata e testo autentico"
+  ]
+}

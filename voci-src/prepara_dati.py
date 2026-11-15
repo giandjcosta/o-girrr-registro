@@ -42,6 +42,7 @@ def main(argv=None):
     p.add_argument('--segna', action='store_true')
     p.add_argument('--rifai', action='store_true', help="rifà la puntata anche se la giornata è già in archivio (la nuova sostituisce la vecchia)")
     p.add_argument('--cronache-classifica', action='store_true', help='Attiva esplicitamente le nuove cronache')
+    p.add_argument('--mvp-tifosi', action='store_true', help='Legge il dossier editoriale MVP, senza nuove puntate o voci')
     p.add_argument('--giro-di-boa', action='store_true', help='Forza il segmento nella preparazione locale del Lab, senza generare voci')
     p.add_argument('--uscita', type=Path, help='Directory separata per la preparazione di prova')
     args = p.parse_args(argv)
@@ -57,6 +58,12 @@ def main(argv=None):
     if args.segna:
         ev = carica(EV, [])
         k = {f"derby:{e['k']}" for e in ev if e.get("tipo") == "derby"}
+        preparati = carica(dest / 'dati.json', {})
+        premio = preparati.get('mvp_tifosi') or {}
+        from mvp_editoriale62 import frase as frase_mvp
+        detto = frase_mvp(premio, [x[4:] for x in carica(ANN, []) if x.startswith('mvp:')], giornata_puntata=n)
+        if args.mvp_tifosi and detto and premio.get('chiusa') and premio.get('risultato') and preparati.get('aw', [{}])[-1].get('n') == n:
+            k.add(f"mvp:{premio['stagione']}:{premio['giornata']}")
         ANN.write_text(json.dumps(sorted(k | set(carica(ANN, []))), indent=1), encoding="utf-8")
         print(f"giornata={n}"); return
     arc = carica(SITO / "girrr/voci/archivio.json", [])
@@ -95,6 +102,13 @@ def main(argv=None):
         if not boa or boa.get('ultima_pubblicata') != n:
             raise RuntimeError('Giro di boa non allineato: attendere Calcoli dopo la giornata')
         dati['giro_di_boa'] = boa
+    dati.pop('mvp_tifosi', None)
+    dati.pop('mvp_annunciati', None)
+    if args.mvp_tifosi:
+        from mvp_editoriale62 import scegli
+        gia = [k[4:] for k in carica(ANN, []) if k.startswith('mvp:')]
+        dati['mvp_tifosi'] = scegli(carica(SITO / 'girrr/dati/mvp-editoriale.json', {}), gia)
+        dati['mvp_annunciati'] = gia
     dest.mkdir(parents=True, exist_ok=True)
     (dest / "dati.json").write_text(json.dumps(dati, ensure_ascii=False), encoding="utf-8")
     conf = [e for e in ev if e.get("tipo") == "conferenza" and e.get("giornata") == n]

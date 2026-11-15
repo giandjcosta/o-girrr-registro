@@ -1,0 +1,21 @@
+{
+  "motore": "chromium",
+  "produzione": false,
+  "schermiEmulati": true,
+  "visite": [
+    {
+      "schermo": "PC1920",
+      "grafica": "girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    },
+    {
+      "schermo": "PC1920",
+      "grafica": "stadio/girrr",
+      "esito": "superato",
+      "competizioni": 2,
+      "identita": 2
+    }
+  ]
+}

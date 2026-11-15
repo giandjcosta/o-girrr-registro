@@ -1,6 +1,33 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 15 novembre 2026)
 
 
+## 15 novembre — ChatGPT: rettifica MVP e simboli dei portieri
+
+- Decisione successiva di Gianluca: MVP fuori dal Coro della Curva, in una rubrica autonoma del Giornale. Solo i tre candidati della giornata appena conclusa, con motivazioni giornalistiche fondate sui dati; nessun richiamo al vincitore del turno precedente. Coro invariato. Quattro pagine, stessi caratteri e stessi livelli/scale di adattamento; in pagina 2 spazi più compatti e Top/Flop su quattro colonne, senza perdere contenuti.
+- Portieri casa e ospite: simboli laterali al cerchio; per i gol subiti pallone con piccolissima X sovrapposta e numero. Respinti GS e freccia. Prova Chromium 320 px/PC/TV nelle due grafiche: nessun simbolo fuori dal campo, nessuno scorrimento laterale.
+- PDF di prova 6ª/7ª e cinque test testuali superati; queste modifiche successive non sono ancora certificate sui tre motori. Nessun merge, pubblicazione, audio o scrittura Supabase.
+
+## 15 novembre (4) — ChatGPT: integrazione nativa 6.2 nella PR #96, bozza integrata pronta, pubblicazione ferma
+
+- Ramo `chatgpt/integrazione-62-completa`, commit di preparazione `8d81a8e`, `a1e6670`, `b80680c`, `2d3f346`. Nessun merge o rilascio; sito e `versioni.json` restano alla **6.1**. Base gh-pages `98c0add`, main sito letto `40837e6`; cartellini già online preservati.
+- Funzioni integrate nelle pagine originali: sondaggi condivisi, anche nei post del feed con conteggi reali; caricamento dello stato personale, primo voto conservato, Precedenti per squadra/giornata. A/B entrambe navigabili; nessun nuovo menu Storici. 6.1.1 incorporata, parte di Claude conservata.
+- Giornale originale a **quattro A4**, prove 6ª e 7ª: nessuna modifica ai font/CSS e stessi adattamenti della base. Radio preparata esclusivamente come copione: una sola nuova battuta dalla prossima puntata normale, chiusura integrale, nessun audio.
+- SQL soltanto proposta e testata in PostgreSQL 17 locale con sessioni concorrenti; finestre nuove senza modifica retroattiva della scadenza MVP 7ª. Nessun accesso di scrittura a Supabase. Backend preparabile in una copia separata, automazioni mai eseguite.
+- Preview integrata in `lab/integrata-62/`, A/B in `lab/confronto-62.html`, PDF in `lab/giornale-62/`, Radio testuale in `lab/radio-62-copione.html`. Non pubblicate sul Lab online: attendono il successivo Vai. Le bozze rifiutate della PR #92 non vengono ripristinate.
+- Prove e limiti in `rilascio/r62/QA.md`; suite completa Chromium/WebKit/Firefox superata nella run 43742212017, commit 2d3f346; ripetizioni sui commit successivi ancora in corso, non dichiarate concluse. Anteprime e foto in 98b90cc; testi e backend finale in 44dd624. La bozza è pronta da rivedere, il rilascio resta fermo. Ramificazioni lette dal ramo automatico senza riscriverne gli snapshot; il badge continua a indicare 6.1.
+- Per tornare indietro dal lavoro di ramo usare `git revert` dei singoli commit `ChatGPT:`; nessun hash di pubblicazione esiste ancora. Dopo un eventuale rilascio annotare gli hash effettivi e i revert nel consueto ordine gh-pages → controllo online → main → sincronizzazione sorgenti.
+
+
+## 15 novembre (3) — ChatGPT: integrazione 6.2 con la 6.1.1, Giornale a quattro pagine e Ramificazioni
+
+- Per decisione di Gianluca la **6.1.1 confluisce nella 6.2**: grafico e testi della Carriera, Curva più fluida, nomenclatura «Campionato & Champions Cup» e correzione della posizione sul PC. Nessun rilascio autonomo 6.1.1, nessuna modifica a `versioni.json` prima del «Vai».
+- La **PR #95 di Claude è unita** e ha annotato i cartellini già online; non va riaperta. Il Campo/Tabellone di Claude (PR #93/#94) rimangono nel main del Registro.
+- **Giornale: conservare le quattro pagine** e l'impaginazione corrente. La reimpaginazione a tre pagine della PR #92 resta rifiutata; nessun PDF rifiutato può essere riutilizzato. MVP e commento reale eventualmente inseriti solo nel riquadro Curva originale e testati come quattro A4.
+- Ramo di integrazione `chatgpt/integrazione-62-completa`: conserva la pagina di Claude e aggiunge il confronto di collocazione A/B in `lab/confronto-62.html`, senza creare voti reali. Recuperate da Work le logiche testuali di Radio/MVP, scadenze e SQL **non applicata**. `rilascio/r62/applica.py` prepara la 6.1.1 e i due script di Claude su una copia nuova di `gh-pages`; da eseguire e certificare con gli asset ufficiali prima di qualunque uscita.
+- **Ancora da integrare e testare**: votazioni, risultati e conferenze nelle pagine reali delle due grafiche; collegamento editoriale al Giornale originale e alla Radio; sicurezze e dati storici dei voti; prove browser su 16 profili × Chromium/WebKit/Firefox. Non dichiarare la 6.2 completa finché i controlli non passano. Il sito vero e Supabase restano invariati.
+- **Ramificazioni:** l'apposito workflow aggiorna automaticamente `rami-dati.json` e `ramificazioni-dati.json` nel ramo `chatgpt/dati-ramificazioni` a ogni push/PR e secondo la schedulazione; verificare che compaiano il ramo 6.2 e la PR #95, senza modificare a mano i file generati. Il badge «Sul sito la 6.1» deve restare finché non sarà pubblicata la 6.2.
+- La bozza di messaggio e changelog unitari segue `REGOLE-VERSIONI.md`, è in `rilascio/r62/ANNUNCIO-BOZZA.md` e non va inviata in gruppo prima del «Vai». Regole e confini in `rilascio/r62/INTEGRAZIONE.md`.
+
 ## 15 novembre (2) — Claude: proposta 6.2, Campo con Campionato e Champions Cup (solo Lab)
 
 - Richiesta di Gianluca per la 6.2: nel Campo anche le partite della Coppa, con interruttore fluido e bande che passano dal colore del Campionato all'azzurro. Poi: frecce ‹ › per le partite e « » per le giornate, cambi con dissolvenza; la tua partita aperta per prima, al suo posto nella fila (contorno oro) e cerchio dei giocatori di casa rosso in Campionato e azzurro in Coppa. Ospite bianco; cerchio oro e stella solo al migliore in campo; simboli di tutti i bonus e malus presenti nei dati (cartellini, gol decisivo e assist da fermo non sono in `data.json`). «= Stessa posizione» e «1 posizione» nel Tabellone, Padri Fondatori solo con i nomi (`rilascio/r62/testi.py`). Tabellone: la tua partita al suo posto, con velo oro e «La tua partita», senza contorno (`lab/prova-squadra-62.html`); Albo d’oro e Derby senza oro, decisione di Gianluca. **Regola di Gianluca (15 novembre): la Lega tiene i colori rosso/azzurro, lo Stadio tutto oro anche in Coppa** (scritta in AGENTS.md; il Tabellone dello Stadio ha ancora l'interruttore rosso/azzurro, da allineare).

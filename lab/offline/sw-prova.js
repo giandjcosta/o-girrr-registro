@@ -91,7 +91,7 @@ self.GIRRR_SPECCHIO = (function () {
           if (!loc || /\.html$/.test(dest.split('?')[0])) t = riscrivi(t); /* le pagine del sito preparate qui si riscrivono come le altre */
           /* La Carriera e la Conferenza leggono lab-dati.json con una richiesta sincrona, che il browser non fa passare dal
              service worker: nello specchio andrebbe persa e la pagina userebbe i dati incorporati, vecchi. Va diretta al sito. */
-          if (/text\/html/.test(ct)) t = t.replace(/<body([^>]*)>/i, '<body$1><a href="' + qui + '../novita-6-1-1.html" style="display:block;text-align:center;padding:10px;background:#ffd166;color:#172448;font:800 16px system-ui;text-decoration:none;position:relative;z-index:90">Anteprima 6.1.1 · In prova nel Lab</a>');
+          if (/text\/html/.test(ct)) t = t.replace(/<body([^>]*)>/i, '<body$1><a href="' + qui + '../novita-6-2.html" style="display:block;text-align:center;padding:10px;background:#ffd166;color:#172448;font:800 16px system-ui;text-decoration:none;position:relative;z-index:90">Anteprima 6.2 · In prova nel Lab</a>');
           if (/text\/html/.test(ct)) t = t.replace(/x\.open\('GET','(?:\.\.\/\.\.\/girrr\/|)dati\/lab-dati\.json\?'/g, "x.open('GET','" + origine + "girrr/dati/lab-dati.json?'");
           if (/text\/html/.test(ct) && t.indexOf('tv.js') < 0) t = t.replace(/<head[^>]*>/i, function (h) { return h + '<script src="' + sito + 'tv.js"></script>'; }); /* testo grande sulla TV, su ogni pagina */
           if (/text\/html/.test(ct) && t.indexOf('offline.js') < 0) t = t.replace(/<\/head>/i, '<script src="' + sito + 'offline.js" defer></script></head>');

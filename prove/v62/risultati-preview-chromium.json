@@ -1,0 +1,17 @@
+{
+  "motore": "chromium",
+  "prove": [
+    {
+      "grafica": "girrr",
+      "esito": "superato",
+      "supabaseRichieste": 0,
+      "sessionePreservata": true
+    },
+    {
+      "grafica": "stadio/girrr",
+      "esito": "superato",
+      "supabaseRichieste": 0,
+      "sessionePreservata": true
+    }
+  ]
+}

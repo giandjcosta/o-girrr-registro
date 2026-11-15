@@ -1,0 +1,27 @@
+{
+  "motore": "PostgreSQL 17 nativo locale",
+  "databaseIsolato": "girrr62_test_30159_1794764592",
+  "sessioniConcorrenti": 2,
+  "produzione": false,
+  "prove": [
+    "Voti preesistenti leggibili senza importazioni",
+    "Due sessioni concorrenti con scelte diverse: un solo voto",
+    "Risposte concorrenti riportano entrambe la prima scelta",
+    "Vecchia RPC conserva la scelta",
+    "MVP concorrente: una preferenza immutabile",
+    "Il ritiro non cancella il primo voto",
+    "Scadenza già annunciata preservata",
+    "Ultimi due chiusi identici e storico non cancellato",
+    "Finestre solo future: post precedente senza scadenza inventata o chiusura retroattiva",
+    "Post nuovo: stesso ID e stessi voti senza copia del catalogo",
+    "Scadenza ricontrollata dopo attesa del lock",
+    "Conferenza pubblicata immutabile anche sul server",
+    "Dopo partita pubblicato immutabile anche sul server",
+    "Schema privato, RLS e privilegi verificati",
+    "Stagione dei post coerente con la mezzanotte italiana",
+    "Preferenze personali negate a un codice errato",
+    "Catalogo di servizio non eseguibile dal browser",
+    "MVP senza allenatori: verdetto definitivo e zero partecipazione umana inventata",
+    "Archivio MVP immutato al giro ordinario successivo"
+  ]
+}

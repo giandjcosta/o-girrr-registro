@@ -1,0 +1,1 @@
+self.addEventListener('install',()=>self.skipWaiting());self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));self.addEventListener('fetch',e=>{if(new URL(e.request.url).hostname.endsWith('.supabase.co'))e.respondWith(new Response('Database reale disabilitato nel Lab',{status:403}))});

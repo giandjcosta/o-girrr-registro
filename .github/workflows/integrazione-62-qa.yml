@@ -1,0 +1,162 @@
+name: ChatGPT - QA integrazione 6.2
+on:
+  push:
+    branches: [chatgpt/integrazione-62-completa]
+    paths:
+      - '.github/workflows/integrazione-62-qa.yml'
+      - 'rilascio/r62/**'
+      - '!rilascio/r62/*.md'
+      - '!rilascio/r62/ANNUNCIO*'
+      - '!rilascio/r62/PREVIEW-MANIFEST.json'
+      - 'rilascio/r611/**'
+      - 'sql/**'
+      - 'prove/**/*.js'
+      - 'prove/**/*.cjs'
+      - 'prove/v62/*.py'
+      - 'prove/v62/package*.json'
+      - 'prove/v62/fixture/**'
+      - 'prove/v62/font/**'
+      - 'voci-src/*.py'
+      - 'calcoli/finestre62.py'
+      - 'lab/integrata-62/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test-logica:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: "Radio MVP, scadenze e testi: nessun audio"
+        run: python3 -m unittest discover -s prove/v62 -p testi.py -v
+      - name: Check sintassi Python
+        run: python3 -m py_compile rilascio/r62/applica.py rilascio/r62/campo_coppa.py rilascio/r62/testi.py voci-src/copione.py voci-src/prepara_dati.py voci-src/mvp_editoriale62.py calcoli/finestre62.py
+  postgres:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: collaudo-locale
+        ports: ['5432:5432']
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install 'psycopg[binary]==3.2.12'
+      - run: python3 prove/v62/postgres.py
+        env:
+          PGHOST: 127.0.0.1
+          PGPORT: '5432'
+          PGUSER: postgres
+          PGPASSWORD: collaudo-locale
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: postgres62-isolato
+          path: prove/v62/risultati-postgres.json
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        motore: [chromium, webkit, firefox]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: giandjcosta/o-fant-a-girrr
+          ref: gh-pages
+          path: qa-site
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Installazione browser
+        run: |
+          npm install --no-save playwright@1.62.0
+          npx playwright install --with-deps ${{ matrix.motore }}
+          sudo apt-get install -y libnss3-tools
+          mkdir -p "$RUNNER_TEMP/firefox-ca"
+          certutil -N --empty-password -d "sql:$RUNNER_TEMP/firefox-ca"
+          for cert in /usr/local/share/ca-certificates/*.crt; do
+            [ -f "$cert" ] || continue
+            certutil -A -d "sql:$RUNNER_TEMP/firefox-ca" -n "$(basename "$cert")" -t 'C,,' -i "$cert"
+          done
+      - name: Prepara nuova copia senza alterare gh-pages
+        run: |
+          python3 rilascio/r62/applica.py qa-site --out "$RUNNER_TEMP/site-62"
+          python3 - <<'PY'
+          import json,os
+          from pathlib import Path
+          root=Path(os.environ['RUNNER_TEMP'])/'site-62'
+          assert json.loads((root/'versioni.json').read_text())['versioni'][0]['v']=='6.1', 'Numero versione alterato nella copia'
+          assert '6.2 · Campo con Campionato e Champions Cup' in (root/'girrr/campo.html').read_text()
+          assert '6.2 · Campo con Campionato e Champions Cup' in (root/'stadio/girrr/campo.html').read_text()
+          print('Copia 6.2 integra, versioni non modificate')
+          PY
+          mkdir -p "$RUNNER_TEMP/web"
+          ln -s "$RUNNER_TEMP/site-62" "$RUNNER_TEMP/web/o-fant-a-girrr"
+          python3 prove/server_range.py --directory "$RUNNER_TEMP/web" --port 8890 > "$RUNNER_TEMP/62-server.log" 2>&1 &
+      - name: Backend locale isolato
+        run: |
+          npm ci --prefix prove/v62
+          SITO62="$RUNNER_TEMP/site-62" PORT=8896 node prove/v62/native-server.cjs > "$RUNNER_TEMP/native-server.log" 2>&1 &
+          node prove/v62/attendi.cjs http://127.0.0.1:8896/o-fant-a-girrr/girrr/campo.html
+      - name: Integrazione nativa, sedici profili e funzioni condivise
+        env:
+          MOTORE: ${{ matrix.motore }}
+          FIREFOX_CERT_PROFILE: ${{ runner.temp }}/firefox-ca
+          SITO62: ${{ runner.temp }}/site-62
+          BASE62: http://127.0.0.1:8896/o-fant-a-girrr/
+          FOTO: qa-artifacts/native
+        run: |
+          node prove/v62/native-browser.cjs
+          node prove/v62/funzioni.cjs
+      - name: Preview esportata senza scritture e senza cambiare sessione
+        env:
+          MOTORE: ${{ matrix.motore }}
+          FIREFOX_CERT_PROFILE: ${{ runner.temp }}/firefox-ca
+          LAB62: http://127.0.0.1:8901/lab62/
+        run: |
+          python3 rilascio/r62/preview.py "$RUNNER_TEMP/site-62" --out "$RUNNER_TEMP/lab62"
+          python3 -m http.server 8901 --bind 127.0.0.1 --directory "$RUNNER_TEMP" > "$RUNNER_TEMP/lab62-server.log" 2>&1 &
+          node prove/v62/attendi.cjs http://127.0.0.1:8901/lab62/index.html
+          node prove/v62/preview.cjs
+      - name: Ramificazioni, tre viste nel portale e autonome
+        env:
+          MOTORE: ${{ matrix.motore }}
+          FIREFOX_CERT_PROFILE: ${{ runner.temp }}/firefox-ca
+          BASE: http://127.0.0.1:8898/
+        run: |
+          python3 -m http.server 8898 --bind 127.0.0.1 > "$RUNNER_TEMP/registro-server.log" 2>&1 &
+          node prove/prova_rami_tre_viste.js qa-artifacts/ramificazioni
+      - name: Campo 6.2, sedici schermi e due grafiche
+        env:
+          MOTORE: ${{ matrix.motore }}
+          FIREFOX_CERT_PROFILE: ${{ runner.temp }}/firefox-ca
+          SITO_DIR: ${{ runner.temp }}/site-62
+          FOTO: qa-artifacts/62
+        run: node prove/prova_campo_62.js
+      - name: Carriera e Curva 6.1.1, tre motori
+        env:
+          MOTORE: ${{ matrix.motore }}
+          FIREFOX_CERT_PROFILE: ${{ runner.temp }}/firefox-ca
+          FOTO: qa-artifacts/611
+        run: node prove/prova_611.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: integrazione-62-${{ matrix.motore }}
+          path: |
+            qa-artifacts/
+            prove/v62/risultati-*.json
