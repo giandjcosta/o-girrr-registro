@@ -1,5 +1,5 @@
 {
- "generato": 1794751499,
+ "generato": 1794753341,
  "versione": "6.1",
  "repository": [
   {
@@ -7891,10 +7891,37 @@
      "totale": 3
     },
     {
+     "nome": "claude/stato-61",
+     "punta": "4e3c3b4",
+     "data": 1794753329,
+     "titolo": "Claude: STATO.md, voce del 15 novembre in cima e la 6.0.2 confluita nella 6.1",
+     "autore": "Claude",
+     "padre": "claude/ramificazioni-pagina-piena",
+     "nascita": "16207d1",
+     "dataNascita": 1794751479,
+     "avanti": 2,
+     "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794753341,
+      "commit": "410f975",
+      "titolo": "Merge pull request #91 from giandjcosta/claude/stato-61"
+     },
+     "commit": [
+      [
+       "4e3c3b444adb5f54f6a989ae96a9b3a6e30950f3",
+       1794753329,
+       "Claude",
+       "Claude: STATO.md, voce del 15 novembre in cima e la 6.0.2 confluita nella 6.1"
+      ]
+     ],
+     "totale": 2
+    },
+    {
      "nome": "main",
-     "punta": "e9da729",
-     "data": 1794751499,
-     "titolo": "Merge pull request #90 from giandjcosta/claude/ramificazioni-pagina-piena",
+     "punta": "410f975",
+     "data": 1794753341,
+     "titolo": "Merge pull request #91 from giandjcosta/claude/stato-61",
      "autore": "giandjcosta",
      "padre": null,
      "nascita": null,
@@ -7902,6 +7929,12 @@
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "410f975d0aaf525b99978cba1d84bcebf2bf4a73",
+       1794753341,
+       "giandjcosta",
+       "Merge pull request #91 from giandjcosta/claude/stato-61"
+      ],
       [
        "e9da7297b944f25d745cd329689e4101fc3ead70",
        1794751499,
@@ -7967,15 +8000,9 @@
        1794673039,
        "ChatGPT",
        "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
-      ],
-      [
-       "a4ed78128dfde56a084e171c2a0d4b3db4fd5ec2",
-       1794672440,
-       "ChatGPT",
-       "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
       ]
      ],
-     "totale": 1202
+     "totale": 1204
     }
    ]
   }
