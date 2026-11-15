@@ -1,5 +1,5 @@
 {
- "generato": 1794784182,
+ "generato": 1794784351,
  "versione": "6.1",
  "repository": [
   {
@@ -8459,16 +8459,22 @@
     },
     {
      "nome": "chatgpt/rc-62-verifica",
-     "punta": "baecb18",
-     "data": 1794784182,
-     "titolo": "ChatGPT: allinea QA della 6.2 alla release candidate effettiva",
+     "punta": "09b19b0",
+     "data": 1794784351,
+     "titolo": "ChatGPT: inoltra il cambio esplicito nelle RPC del server locale QA",
      "autore": "ChatGPT",
      "padre": "chatgpt/controllo-62",
      "nascita": "a5480da",
      "dataNascita": 1794783380,
-     "avanti": 15,
+     "avanti": 16,
      "stato": "attivo",
      "commit": [
+      [
+       "09b19b0a13d94909f8b9e95df8abe05900e8bd85",
+       1794784351,
+       "ChatGPT",
+       "ChatGPT: inoltra il cambio esplicito nelle RPC del server locale QA"
+      ],
       [
        "baecb1805e8b78b7d049c66fc9bbcf524d84cf01",
        1794784182,
@@ -8534,15 +8540,9 @@
        1794783771,
        "ChatGPT",
        "ChatGPT: impedisce a Peggiore di uscire dal riquadro sui tablet"
-      ],
-      [
-       "7ba71538d1919329c08ccc78a47b7d1bbcd2ba9b",
-       1794783757,
-       "ChatGPT",
-       "ChatGPT: integra la proposta Albo 6.2 nella release candidate"
       ]
      ],
-     "totale": 15
+     "totale": 16
     }
    ]
   }
