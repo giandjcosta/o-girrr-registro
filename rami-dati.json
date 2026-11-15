@@ -1,5 +1,5 @@
 {
- "generato": 1794756126,
+ "generato": 1794756205,
  "versione": "6.1",
  "repository": [
   {
@@ -8051,16 +8051,22 @@
     },
     {
      "nome": "claude/fervent-thompson-rwlwrh",
-     "punta": "e9ea84b",
-     "data": 1794756126,
-     "titolo": "Claude: Tabellone dello Stadio tutto oro anche in Coppa, sfondi invariati (6.2, solo Lab)",
+     "punta": "ce34ebe",
+     "data": 1794756205,
+     "titolo": "Claude: Campo 6.2, la tua partita si apre per prima ma resta al suo posto nella fila",
      "autore": "Claude",
      "padre": "main",
      "nascita": "410f975",
      "dataNascita": 1794753341,
-     "avanti": 10,
+     "avanti": 11,
      "stato": "attivo",
      "commit": [
+      [
+       "ce34ebea50f1bf37479c18cdc60439461c03e94e",
+       1794756205,
+       "Claude",
+       "Claude: Campo 6.2, la tua partita si apre per prima ma resta al suo posto nella fila"
+      ],
       [
        "e9ea84b41d25df8155a50f084288c06cb27d1ab4",
        1794756126,
@@ -8116,7 +8122,7 @@
        "Claude: proposta 6.2, Campo con Campionato e Champions Cup (solo Lab)"
       ]
      ],
-     "totale": 10
+     "totale": 11
     }
    ]
   }
