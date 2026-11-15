@@ -1,5 +1,5 @@
 {
- "generato": 1794778186,
+ "generato": 1794781061,
  "versione": "6.1",
  "repository": [
   {
@@ -8141,22 +8141,28 @@
     },
     {
      "nome": "claude/fervent-thompson-rwlwrh",
-     "punta": "31344ac",
-     "data": 1794778175,
-     "titolo": "Claude: in Girrr Sport › Sondaggi ogni sondaggio nel riquadro dell'app (Lega e Stadio), Curva invariata",
+     "punta": "9f6312c",
+     "data": 1794781047,
+     "titolo": "Claude: MVP nel Giornale (vincitrice precedente con Campionato e Coppa, capolettera nero, candidate con storia",
      "autore": "Claude",
      "padre": "chatgpt/integrazione-62-completa",
      "nascita": "13b7223",
      "dataNascita": 1794766745,
-     "avanti": 17,
+     "avanti": 19,
      "stato": "unito",
      "unione": {
       "in": "main",
-      "data": 1794778186,
-      "commit": "6e2c908",
-      "titolo": "Merge pull request #103 from giandjcosta/claude/fervent-thompson-rwlwrh"
+      "data": 1794781061,
+      "commit": "a9313ee",
+      "titolo": "Merge pull request #104 from giandjcosta/claude/fervent-thompson-rwlwrh"
      },
      "commit": [
+      [
+       "9f6312c55ca157d828920b6b7a148be51d7d1ff7",
+       1794781047,
+       "Claude",
+       "Claude: MVP nel Giornale (vincitrice precedente con Campionato e Coppa, capolettera nero, candidate con storia) e in Radio (due battute brev"
+      ],
       [
        "31344ac7ea74915855e3d66bee87898efb9ac12e",
        1794778175,
@@ -8218,13 +8224,13 @@
        "Registro: elenco attività aggiornato"
       ]
      ],
-     "totale": 17
+     "totale": 19
     },
     {
      "nome": "main",
-     "punta": "6e2c908",
-     "data": 1794778186,
-     "titolo": "Merge pull request #103 from giandjcosta/claude/fervent-thompson-rwlwrh",
+     "punta": "a9313ee",
+     "data": 1794781061,
+     "titolo": "Merge pull request #104 from giandjcosta/claude/fervent-thompson-rwlwrh",
      "autore": "giandjcosta",
      "padre": null,
      "nascita": null,
@@ -8232,6 +8238,12 @@
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "a9313ee3dbd203f66f90a7d113b17f560fc94c0c",
+       1794781061,
+       "giandjcosta",
+       "Merge pull request #104 from giandjcosta/claude/fervent-thompson-rwlwrh"
+      ],
       [
        "6e2c908c735874c34a50576e8bccdba8ef592a6a",
        1794778186,
@@ -8297,15 +8309,9 @@
        1794768152,
        "Registro",
        "Registro: elenco attività aggiornato"
-      ],
-      [
-       "b051bfb4e62bdc5686c36a4dd7f34a4d37b228cf",
-       1794759206,
-       "giandjcosta",
-       "Merge pull request #95 from giandjcosta/claude/fervent-thompson-rwlwrh"
       ]
      ],
-     "totale": 1269
+     "totale": 1271
     }
    ]
   }
