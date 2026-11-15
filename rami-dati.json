@@ -1,5 +1,5 @@
 {
- "generato": 1794762900,
+ "generato": 1794763130,
  "versione": "6.1",
  "repository": [
   {
@@ -8228,16 +8228,22 @@
     },
     {
      "nome": "chatgpt/integrazione-62-completa",
-     "punta": "1ee3d23",
-     "data": 1794762900,
-     "titolo": "ChatGPT: attende la configurazione prima di caricare le conferenze e rafforza le prove",
+     "punta": "a1e6670",
+     "data": 1794763130,
+     "titolo": "ChatGPT: prepara annuncio unico e anteprime native, preserva le aperture precedenti",
      "autore": "ChatGPT",
      "padre": "main",
      "nascita": "b051bfb",
      "dataNascita": 1794759206,
-     "avanti": 20,
+     "avanti": 21,
      "stato": "attivo",
      "commit": [
+      [
+       "a1e667081dda8813a3c0bcca89a3cec52d349bad",
+       1794763130,
+       "ChatGPT",
+       "ChatGPT: prepara annuncio unico e anteprime native, preserva le aperture precedenti"
+      ],
       [
        "1ee3d2300df52b6bca0cf08e4356999f1caaa42e",
        1794762900,
@@ -8303,15 +8309,9 @@
        1794760058,
        "ChatGPT",
        "ChatGPT: confronta A e B nel Lab con le grafiche Lega e Stadio, senza votazioni reali"
-      ],
-      [
-       "188a03fe5e5e6ace67cff3d37e2dfa9315d71308",
-       1794760006,
-       "ChatGPT",
-       "ChatGPT: documenta la 6.2 unica, la 6.1.1 inclusa e il Giornale a quattro pagine"
       ]
      ],
-     "totale": 20
+     "totale": 21
     }
    ]
   }
