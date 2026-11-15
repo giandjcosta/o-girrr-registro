@@ -4,7 +4,7 @@
 
 ## Messaggio unico
 
-⚽ **O Girrr 6.2 è online!** Nel Campo ora trovi anche le partite della Champions Cup: un tocco sull’interruttore e passi da una competizione all’altra. Quando entri con la tua squadra si apre subito la tua partita, e con le nuove frecce passi da una partita all’altra o salti di giornata. Nella Curva ritrovi le tue scelte e puoi rivedere le conferenze già pubblicate. Trovi anche una Carriera più leggibile e più spazio all’MVP dei tifosi nel Giornale e dalla prossima puntata della Radio. Buona giornata a tutti! ⚽
+⚽ **O Girrr 6.2 è online!** Nel Campo ora trovi anche le partite della Champions Cup: un tocco sull’interruttore e passi da una competizione all’altra. Quando entri con la tua squadra si apre subito la tua partita, e con le nuove frecce passi da una partita all’altra o salti di giornata. Ritrovi le tue scelte tra Curva e Girrr Sport, dove puoi rivedere anche le conferenze già pubblicate. Trovi anche una Carriera più leggibile e più spazio all’MVP dei tifosi nel Giornale e dalla prossima puntata della Radio. Buona giornata a tutti! ⚽
 
 ## Changelog unico
 
@@ -19,14 +19,15 @@
 - **Tabellone:** In «Dentro la partita» si legge «= Stessa posizione» e «1 posizione» al singolare.
 - **Carriera:** Il grafico della posizione mostra giornata e piazzamento per ciascun punto, con testi più leggibili e «Peggiore» su una riga dal PC.
 - **Curva:** Le schede cambiano più rapidamente e la bozza resta conservata durante la navigazione.
-- **Curva:** La tua scelta viene riletta nelle pagine dei sondaggi e dell’MVP dei tifosi, senza offrire un secondo voto.
+- **Curva:** Il voto è condiviso tra Curva e Girrr Sport: ritrovi «Hai già votato» e non puoi inviare un secondo voto.
 - **Curva:** Per le future aperture, sfide fino al calcio d’inizio, post per 24 ore e MVP per 48 ore al massimo, entro il turno successivo.
-- **Girrr Sport:** Puoi consultare i sondaggi e gli ultimi due risultati conclusi, nella collocazione scelta per il rilascio.
+- **Girrr Sport:** Puoi votare i sondaggi della Lega anche in Girrr Sport e ritrovare la stessa scelta nella Curva.
 - **Girrr Sport:** Nei Precedenti delle conferenze scegli squadra e giornata, leggendo le dichiarazioni originali oppure «Dato non conservato».
 - **Girrr Sport:** Per le future aperture, la vigilia termina al calcio d’inizio e il dopo partita resta disponibile per 48 ore dalla pubblicazione dei risultati.
 - **Albo d’oro:** Nella Storia i Padri Fondatori compaiono solo con il nome, tutti in fila.
 - **Giornale:** Il riquadro Curva riporta lo stato dell’MVP e, quando disponibile, un commento autentico pertinente, mantenendo le quattro pagine e la grafica attuale.
 - **Radio:** Dalla prossima puntata ordinaria, una sola breve frase indica la giornata dell’MVP o il voto ancora aperto, prima della chiusura integrale.
 - **App:** I Bilanci riportano «Campionato & Champions Cup»; le animazioni rispettano Riduci movimento.
+- **App:** Puoi rivedere gli ultimi due sondaggi conclusi, senza riaprire l’intero elenco.
 
-A/B è ancora una scelta da approvare: prima del rilascio la relativa voce indicherà la collocazione definitiva. Numero 6.2, tipo medio; nessuna voce aggiunta alle versioni pubblicate.
+A/B resta da scegliere nella preview. I testi descrivono le funzioni comuni alle due collocazioni; nessuna versione o annuncio aggiunto ai dati pubblicati.

@@ -40,7 +40,8 @@ def esegui(sito,stagione,vai=False):
     prossima=next((x for x in catalogo if dt.datetime.fromisoformat(x['p_chiude'])>ora),None)
     if prossima:
         rpc('v62_finestre_prepara',{'p_stagione':stagione,'p_tipo':'vigilia','p_giornata':prossima['p_giornata'],'p_aperto':prossima['p_aperto'],'p_chiude':prossima['p_chiude']})
-        prima=rpc('v62_finestre',{'p_stagione':stagione}).get('prima_giornata') or prossima['p_giornata']
+    prima=rpc('v62_finestre',{'p_stagione':stagione}).get('prima_giornata') or (prossima['p_giornata'] if prossima else None)
+    if prima is not None:
         for g in raw['cal']['lega']:
             if g['n']<prima:continue
             sa=str(g['sa']);ts=[raw.get(k,{}).get(sa) for k in ('votiTs','calcTs')];ts=[dt.datetime.fromisoformat(x.replace('Z','+00:00')) for x in ts if x]

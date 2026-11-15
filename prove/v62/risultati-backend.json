@@ -1,0 +1,10 @@
+{
+  "produzione": false,
+  "rete": false,
+  "prove": [
+    "Dopo partita disponibile anche quando non resta un turno successivo",
+    "Prima giornata di attivazione conservata",
+    "Finestra di 48 ore dalla pubblicazione dei risultati",
+    "Dossier scritto soltanto nella copia isolata"
+  ]
+}
