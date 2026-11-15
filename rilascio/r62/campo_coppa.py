@@ -7,7 +7,8 @@ Aggiunge alla pagina Campo (Lega e Stadio) l'interruttore Campionato / Champions
 - Stadio: tutto resta oro anche in Coppa (regola di Gianluca, 15 novembre 2026);
 - cerchio oro e stella al migliore in campo; simboli per tutti i bonus e malus delle pagelle;
 - il contenuto esce e rientra con una dissolvenza breve; «Riduci movimento» toglie i movimenti;
-- ogni competizione ricorda la sua giornata e la sua partita.
+- ogni competizione ricorda la sua giornata e la sua partita;
+- frecce ‹ › per cambiare partita e « » per cambiare giornata, cambi con dissolvenza breve.
 
 Uso:
   python3 rilascio/r62/campo_coppa.py COPIA_DI_GH_PAGES     modifica girrr/campo.html e stadio/girrr/campo.html
@@ -48,9 +49,20 @@ body[data-v53=campo][data-skin=lega]{--casa:#ff5a6a}
 body[data-v53=campo][data-skin=lega][data-comp=coppa]{--casa:#63bce9}
 /* Cerchio oro: il migliore in campo, quello con la stella (al massimo uno per squadra, come nei dati di Fantacalcio) */
 .pitch .pl.top b,.pitch .pl.away.top b{border-color:#ffd166;box-shadow:0 0 0 2px rgba(255,209,102,.35),0 2px 6px rgba(0,0,0,.35)}
+/* Frecce: ‹ › cambiano partita, « » cambiano giornata. Le partite si scorrono e si toccano come prima */
+.partite-nav{display:flex;align-items:center;gap:6px;flex:1;min-width:0}
+.partite-nav>.matches{flex:1;min-width:0}
+.pfr{flex:none;width:42px;height:42px;border-radius:var(--g-tab,12px);border:1px solid var(--line);background:#30476c;color:#fff;font-size:20px;font-weight:900;line-height:1;transition:opacity .25s ease,background-color .25s ease}
+.pfr:disabled{opacity:.25;cursor:default}
+.pfr:not(:disabled):hover,.round button:not(:disabled):hover{background:#3b5683}
+#prev,#next{font-size:19px;letter-spacing:-.04em}
+/* Dopo la prima apertura le schede non rifanno l'entrata: il cambio è la sola dissolvenza, senza scatti */
+html.cc-pronto body[data-v53=campo] #board>.card{animation:none}
+@media(min-width:901px){.partite-nav{margin-left:4px;padding-left:12px;border-left:1px solid var(--line)}}
+@media(max-width:900px){.partite-nav{flex-basis:100%;order:3}.partite-nav>.matches{width:auto;flex-basis:auto;order:0}}
 @media(max-width:700px){.comp-sw{width:100%}}
 @media(max-width:360px){.comp-sw button{font-size:11.5px;letter-spacing:.03em;padding:10px 4px}}
-@media(prefers-reduced-motion:reduce){.comp-sw i,.comp-sw button,#board,#matches,#roundtitle,html.cc-pronto body[data-v53=campo] #board>.card::after,html.cc-pronto body[data-v53=campo] .sidebar nav a,html.cc-pronto body[data-v53=campo] .gamebtn{transition:none!important}}
+@media(prefers-reduced-motion:reduce){.comp-sw i,.comp-sw button,.pfr,#board,#matches,#roundtitle,html.cc-pronto body[data-v53=campo] #board>.card::after,html.cc-pronto body[data-v53=campo] .sidebar nav a,html.cc-pronto body[data-v53=campo] .gamebtn{transition:none!important}}
 '''
 
 SW = ('<div class="comp-sw" id="comp-sw" role="tablist" aria-label="Competizione"><i aria-hidden="true"></i>'
@@ -83,6 +95,15 @@ function setComp(c){
   fine();bd.classList.add('cc-da');colori();var c=bd.querySelector('.card');if(c)getComputedStyle(c,'::after').opacity;
   bd.classList.remove('cc-da');piani.forEach(function(p){p.classList.remove('cc-via')})},170);
 }
+/* Cambio di partita o di giornata: lo stato cambia subito (clic ripetuti si sommano), il disegno dopo una dissolvenza breve */
+function vai(fila){var t=++CAMBIO,piani=[document.getElementById('board')];if(fila)piani.push(document.getElementById('matches'),document.getElementById('roundtitle'));
+ if(FERMO.matches||!document.documentElement.classList.contains('cc-pronto')){render();return}
+ piani.forEach(function(p){p.classList.add('cc-via')});
+ setTimeout(function(){if(t!==CAMBIO)return;render();colori();['board','matches','roundtitle'].forEach(function(id){document.getElementById(id).classList.remove('cc-via')})},150)}
+function partita(i){var g=D&&D.cal.lega[round];if(!g||i<0||i>=g.m.length||i===game)return;game=i;
+ document.querySelectorAll('#matches [data-match]').forEach(function(x){x.setAttribute('aria-pressed',String(Number(x.dataset.match)===i))});
+ var pp=document.getElementById('pprev'),pn=document.getElementById('pnext');if(pp)pp.disabled=i<=0;if(pn)pn.disabled=i>=g.m.length-1;vai(false)}
+(function(){var a=document.getElementById('pprev'),b=document.getElementById('pnext');if(a)a.addEventListener('click',function(){partita(game-1)});if(b)b.addEventListener('click',function(){partita(game+1)})})();
 (function(){var sw=document.getElementById('comp-sw');if(!sw)return;
  sw.addEventListener('click',function(e){var b=e.target.closest('[data-comp-choice]');if(b)setComp(b.dataset.compChoice)});
  sw.addEventListener('keydown',function(e){if(!/^(ArrowLeft|ArrowRight|Home|End)$/.test(e.key))return;e.preventDefault();var c=e.key==='ArrowLeft'||e.key==='Home'?'lega':'coppa';setComp(c);var b=sw.querySelector('[data-comp-choice="'+c+'"]');if(b)b.focus()})})();
@@ -132,6 +153,16 @@ def applica(t, nome):
     t = sostituisci(t, GI_OLD, GI_NEW, nome)
     t = sostituisci(t, CH_OLD, CH_NEW, nome)
     t = sostituisci(t, LE_OLD, LE_NEW, nome)
+    t = sostituisci(t, '<div class="round"><button id="prev" aria-label="Giornata precedente">‹</button><span class="roundname" id="roundtitle">Giornata</span><button id="next" aria-label="Giornata successiva">›</button></div><nav id="matches" class="matches" aria-label="Partite della giornata"></nav>',
+                    '<div class="round"><button id="prev" aria-label="Giornata precedente" title="Giornata precedente">«</button><span class="roundname" id="roundtitle">Giornata</span><button id="next" aria-label="Giornata successiva" title="Giornata successiva">»</button></div><div class="partite-nav"><button id="pprev" class="pfr" aria-label="Partita precedente" title="Partita precedente">‹</button><nav id="matches" class="matches" aria-label="Partite della giornata"></nav><button id="pnext" class="pfr" aria-label="Partita successiva" title="Partita successiva">›</button></div>', nome)
+    t = sostituisci(t, "var a=e.target.closest('[data-match]');if(a){game=Number(a.dataset.match);render()}",
+                    "var a=e.target.closest('[data-match]');if(a){partita(Number(a.dataset.match))}", nome)
+    t = sostituisci(t, "document.getElementById('prev').addEventListener('click',function(){if(round>0){round--;game=partitaMia(round);render()}});",
+                    "document.getElementById('prev').addEventListener('click',function(){if(round>0){round--;game=partitaMia(round);vai(true)}});", nome)
+    t = sostituisci(t, "document.getElementById('next').addEventListener('click',function(){if(round<D.cal.lega.length-1){round++;game=partitaMia(round);render()}});",
+                    "document.getElementById('next').addEventListener('click',function(){if(round<D.cal.lega.length-1){round++;game=partitaMia(round);vai(true)}});", nome)
+    t = sostituisci(t, "document.getElementById('prev').disabled=round===0;document.getElementById('next').disabled=round===rounds.length-1;",
+                    "document.getElementById('prev').disabled=round===0;document.getElementById('next').disabled=round===rounds.length-1;var pp=document.getElementById('pprev'),pn=document.getElementById('pnext');if(pp)pp.disabled=game<=0;if(pn)pn.disabled=game>=g.m.length-1;", nome)
     return t
 
 

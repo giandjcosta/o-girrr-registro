@@ -8,6 +8,7 @@ Parte di Claude della 6.2. Prima certificazione nel Lab (`lab/novita-6-2.html`),
 - **Cerchio oro e stella:** solo il migliore in campo dei dati ufficiali (uno, o uno per squadra). Decisione di Gianluca, 15 novembre.
 - **Simboli dei bonus e malus** come su Fantacalcio, con legenda: ⚽ gol, 🎯 rigore segnato, 👟 assist, 🧤 rigore parato, 🛡️ porta inviolata (portiere con voto e nessun gol subito), 🥅 gol subiti dal portiere, ❌ rigore sbagliato, 🔴 autogol, ↑ entrato. Ammonizioni, espulsioni, gol decisivo e assist da fermo **non sono nei dati** che il sito scarica (`data.json`): per mostrarli il workflow dei voti deve prima salvarli.
 - **La tua partita si apre per prima:** con il codice della squadra il Campo apre la tua partita, in Campionato e in Coppa; nella fila resta al suo posto (anche ultima), con il contorno oro e «La tua partita», e la fila scorre per mostrarla.
+- **Frecce:** ‹ › cambiano partita, « » cambiano giornata; le partite si scorrono e si toccano (o cliccano) come prima. Ogni cambio con una dissolvenza breve (0,15 s in uscita, 0,34 s in entrata), senza la vecchia animazione di entrata delle schede; clic ripetuti si sommano.
 - Ogni competizione ricorda giornata e partita; l'indirizzo segue la scelta (`coppa=1`). Se il calendario della Coppa manca l'interruttore si nasconde.
 
 ## Altri ritocchi (`rilascio/r62/testi.py`)

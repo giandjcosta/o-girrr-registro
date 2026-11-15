@@ -181,9 +181,20 @@ body[data-v53=campo][data-skin=lega]{--casa:#ff5a6a}
 body[data-v53=campo][data-skin=lega][data-comp=coppa]{--casa:#63bce9}
 /* Cerchio oro: il migliore in campo, quello con la stella (al massimo uno per squadra, come nei dati di Fantacalcio) */
 .pitch .pl.top b,.pitch .pl.away.top b{border-color:#ffd166;box-shadow:0 0 0 2px rgba(255,209,102,.35),0 2px 6px rgba(0,0,0,.35)}
+/* Frecce: ‹ › cambiano partita, « » cambiano giornata. Le partite si scorrono e si toccano come prima */
+.partite-nav{display:flex;align-items:center;gap:6px;flex:1;min-width:0}
+.partite-nav>.matches{flex:1;min-width:0}
+.pfr{flex:none;width:42px;height:42px;border-radius:var(--g-tab,12px);border:1px solid var(--line);background:#30476c;color:#fff;font-size:20px;font-weight:900;line-height:1;transition:opacity .25s ease,background-color .25s ease}
+.pfr:disabled{opacity:.25;cursor:default}
+.pfr:not(:disabled):hover,.round button:not(:disabled):hover{background:#3b5683}
+#prev,#next{font-size:19px;letter-spacing:-.04em}
+/* Dopo la prima apertura le schede non rifanno l'entrata: il cambio è la sola dissolvenza, senza scatti */
+html.cc-pronto body[data-v53=campo] #board>.card{animation:none}
+@media(min-width:901px){.partite-nav{margin-left:4px;padding-left:12px;border-left:1px solid var(--line)}}
+@media(max-width:900px){.partite-nav{flex-basis:100%;order:3}.partite-nav>.matches{width:auto;flex-basis:auto;order:0}}
 @media(max-width:700px){.comp-sw{width:100%}}
 @media(max-width:360px){.comp-sw button{font-size:11.5px;letter-spacing:.03em;padding:10px 4px}}
-@media(prefers-reduced-motion:reduce){.comp-sw i,.comp-sw button,#board,#matches,#roundtitle,html.cc-pronto body[data-v53=campo] #board>.card::after,html.cc-pronto body[data-v53=campo] .sidebar nav a,html.cc-pronto body[data-v53=campo] .gamebtn{transition:none!important}}
+@media(prefers-reduced-motion:reduce){.comp-sw i,.comp-sw button,.pfr,#board,#matches,#roundtitle,html.cc-pronto body[data-v53=campo] #board>.card::after,html.cc-pronto body[data-v53=campo] .sidebar nav a,html.cc-pronto body[data-v53=campo] .gamebtn{transition:none!important}}
 </style><link rel="icon" type="image/png" href="../../assets/favicon-64.png"><script>window.goatcounter={path:function(){return location.pathname},no_onload:/[?&]demo/.test(location.search)}</script>
 <script data-goatcounter="https://djcosta18.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><link rel="stylesheet" href="../../girrr/v55/ui.css?v=55r10"><script src="../../girrr/v55/destinazioni55.js?v=55r8" defer></script><script src="../../girrr/v55/ui.js?v=55r10" defer></script><script src="../../offline.js" defer></script>
 </head>
@@ -192,7 +203,7 @@ body[data-v53=campo][data-skin=lega][data-comp=coppa]{--casa:#63bce9}
  <div class="mast"><div><a id="ritorno-tabellone" href="tabellone.html">‹ Tabellone</a><div class="campo-title"><img class="campo-logo" src="https://giandjcosta.github.io/o-fant-a-girrr/assets/loghi/logo-lega-o-fant-a-girrr.png" alt="O Fant A Girrr"><div><div class="kicker" style="margin-top:14px">Campo · Centro della giornata</div><h1>Dentro la giornata</h1><p class="sub">Partite, risultati, rendimento e andamento della Lega, aggiornati dal calendario.</p></div></div></div>
  <div class="comp-sw" id="comp-sw" role="tablist" aria-label="Competizione"><i aria-hidden="true"></i><button role="tab" data-comp-choice="lega" aria-selected="true">Campionato</button><button role="tab" data-comp-choice="coppa" aria-selected="false">Champions Cup</button></div>
  <div class="skin" role="group" aria-label="Grafica"><button data-skin-choice="lega" aria-pressed="false">Grafica Lega</button><button data-skin-choice="stadio" aria-pressed="true">Grafica Stadio</button></div></div>
- <div class="toolbar"><div class="round"><button id="prev" aria-label="Giornata precedente">‹</button><span class="roundname" id="roundtitle">Giornata</span><button id="next" aria-label="Giornata successiva">›</button></div><nav id="matches" class="matches" aria-label="Partite della giornata"></nav></div>
+ <div class="toolbar"><div class="round"><button id="prev" aria-label="Giornata precedente" title="Giornata precedente">«</button><span class="roundname" id="roundtitle">Giornata</span><button id="next" aria-label="Giornata successiva" title="Giornata successiva">»</button></div><div class="partite-nav"><button id="pprev" class="pfr" aria-label="Partita precedente" title="Partita precedente">‹</button><nav id="matches" class="matches" aria-label="Partite della giornata"></nav><button id="pnext" class="pfr" aria-label="Partita successiva" title="Partita successiva">›</button></div></div>
  <div class="board" id="board"><div class="loading">Caricamento del calendario…</div></div>
  </main></div>
 <script>
@@ -227,6 +238,15 @@ function setComp(c){
   fine();bd.classList.add('cc-da');colori();var c=bd.querySelector('.card');if(c)getComputedStyle(c,'::after').opacity;
   bd.classList.remove('cc-da');piani.forEach(function(p){p.classList.remove('cc-via')})},170);
 }
+/* Cambio di partita o di giornata: lo stato cambia subito (clic ripetuti si sommano), il disegno dopo una dissolvenza breve */
+function vai(fila){var t=++CAMBIO,piani=[document.getElementById('board')];if(fila)piani.push(document.getElementById('matches'),document.getElementById('roundtitle'));
+ if(FERMO.matches||!document.documentElement.classList.contains('cc-pronto')){render();return}
+ piani.forEach(function(p){p.classList.add('cc-via')});
+ setTimeout(function(){if(t!==CAMBIO)return;render();colori();['board','matches','roundtitle'].forEach(function(id){document.getElementById(id).classList.remove('cc-via')})},150)}
+function partita(i){var g=D&&D.cal.lega[round];if(!g||i<0||i>=g.m.length||i===game)return;game=i;
+ document.querySelectorAll('#matches [data-match]').forEach(function(x){x.setAttribute('aria-pressed',String(Number(x.dataset.match)===i))});
+ var pp=document.getElementById('pprev'),pn=document.getElementById('pnext');if(pp)pp.disabled=i<=0;if(pn)pn.disabled=i>=g.m.length-1;vai(false)}
+(function(){var a=document.getElementById('pprev'),b=document.getElementById('pnext');if(a)a.addEventListener('click',function(){partita(game-1)});if(b)b.addEventListener('click',function(){partita(game+1)})})();
 (function(){var sw=document.getElementById('comp-sw');if(!sw)return;
  sw.addEventListener('click',function(e){var b=e.target.closest('[data-comp-choice]');if(b)setComp(b.dataset.compChoice)});
  sw.addEventListener('keydown',function(e){if(!/^(ArrowLeft|ArrowRight|Home|End)$/.test(e.key))return;e.preventDefault();var c=e.key==='ArrowLeft'||e.key==='Home'?'lega':'coppa';setComp(c);var b=sw.querySelector('[data-comp-choice="'+c+'"]');if(b)b.focus()})})();
@@ -308,7 +328,7 @@ function pitch(a,b,g){
 function render(){
  if(!D)return;var rounds=D.cal.lega||[],g=rounds[round];if(!g)return;
  document.getElementById('roundtitle').textContent=(COPPA?'Coppa · ':'')+'Giornata '+g.n;
- document.getElementById('prev').disabled=round===0;document.getElementById('next').disabled=round===rounds.length-1;
+ document.getElementById('prev').disabled=round===0;document.getElementById('next').disabled=round===rounds.length-1;var pp=document.getElementById('pprev'),pn=document.getElementById('pnext');if(pp)pp.disabled=game<=0;if(pn)pn.disabled=game>=g.m.length-1;
  var list=document.getElementById('matches');
  list.innerHTML=g.m.map(function(m,i){var io=MIA&&(m[0]===MIA||m[3]===MIA);return '<button class="gamebtn'+(io?' mia':'')+'" data-match="'+i+'" aria-pressed="'+(i===game)+'">'+(io?'<span class="tua">La tua partita</span>':'')+nm(m[0])+' – '+nm(m[3])+'<small>'+(m[4]==='-'?'Da giocare':m[4])+'</small></button>'}).join('');
  var m=g.m[game];if(!m)return;var active=played(g),a=m[0],b=m[3],r=m[4]==='-'?'— : —':m[4].replace('-', ' : '),tb=ranks(g.n),ha=tb[a],hb=tb[b];
@@ -334,13 +354,13 @@ document.addEventListener('keydown',function(e){
 document.addEventListener('click',function(e){
  var nav=e.target.closest('.sidebar nav a[href^="#"]');if(nav){document.querySelectorAll('.sidebar nav a').forEach(function(x){x.classList.toggle('active',x===nav)})}
  var pl=e.target.closest('[data-det]');if(pl){var dd=document.getElementById('xi-det');if(dd)dd.textContent=pl.dataset.det;return}
- var a=e.target.closest('[data-match]');if(a){game=Number(a.dataset.match);render()}
+ var a=e.target.closest('[data-match]');if(a){partita(Number(a.dataset.match))}
  var s=e.target.closest('[data-skin-choice]');if(s){document.body.dataset.skin=s.dataset.skinChoice;document.querySelectorAll('[data-skin-choice]').forEach(function(x){x.setAttribute('aria-pressed',String(x===s))});var u=new URL(location.href);u.searchParams.set('skin',s.dataset.skinChoice);u.pathname=u.pathname.replace(/campo-(lega|stadio)\.html$/,'campo-'+s.dataset.skinChoice+'.html');history.replaceState(null,'',u);if(window.parent!==window)window.parent.postMessage({orrGrafica:s.dataset.skinChoice==='stadio'?'n':'a'},location.origin)}
 });
 (TEL.addEventListener?TEL.addEventListener('change',function(){render()}):TEL.addListener(function(){render()}));
 function partitaMia(r){var g=D.cal.lega[r];if(!MIA||!g)return 0;var i=g.m.findIndex(function(m){return m[0]===MIA||m[3]===MIA});return i<0?0:i}
-document.getElementById('prev').addEventListener('click',function(){if(round>0){round--;game=partitaMia(round);render()}});
-document.getElementById('next').addEventListener('click',function(){if(round<D.cal.lega.length-1){round++;game=partitaMia(round);render()}});
+document.getElementById('prev').addEventListener('click',function(){if(round>0){round--;game=partitaMia(round);vai(true)}});
+document.getElementById('next').addEventListener('click',function(){if(round<D.cal.lega.length-1){round++;game=partitaMia(round);vai(true)}});
 var q=new URLSearchParams(location.search);
 document.querySelectorAll('[data-skin-choice]').forEach(function(x){x.setAttribute('aria-pressed',String(x.dataset.skinChoice===document.body.dataset.skin))});
 Promise.all([fetch('https://giandjcosta.github.io/o-fant-a-girrr/data.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw Error(r.status);return r.json()}),fetch('https://giandjcosta.github.io/o-fant-a-girrr/formazioni.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).catch(function(){return null})]).then(function(x){var d=x[0];F=x[1];D=d;CAL.lega=D.cal.lega;CAL.coppa=(D.cal.cup||[]).filter(function(g){return g&&g.m&&g.m.length}).map(function(g){g.m.forEach(function(m){GIR[m[1]]=GIR[m[4]]=m[0]});(g.rest||[]).forEach(function(z){GIR[z[1]]=z[0]});return {n:g.n,sa:g.sa,m:g.m.map(function(m){return [m[1],m[2],m[3],m[4],m[5],m[0]]})}});if(!CAL.coppa.length){COPPA=false;var sw=document.getElementById('comp-sw');if(sw)sw.hidden=true}D.cal.lega=COPPA?CAL.coppa:CAL.lega;intestazione();colori();round=primo();var richiesto=D.cal.lega.findIndex(function(x){return x.n===Number(q.get('giornata'))});if(richiesto>=0)round=richiesto;game=q.has('partita')?Math.max(0,Math.min(D.cal.lega[round].m.length-1,Number(q.get('partita'))||0)):partitaMia(round);render();requestAnimationFrame(function(){requestAnimationFrame(function(){document.documentElement.classList.add('cc-pronto')})})}).catch(function(){document.getElementById('board').innerHTML='<div class="card">Non è possibile caricare il calendario. Riprova ad aprire la pagina.</div>'});
