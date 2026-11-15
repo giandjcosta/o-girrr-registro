@@ -39,6 +39,15 @@ def albero(repo, nome, escludi=('chatgpt/dati-ramificazioni',)):
         av = int(g(repo, 'rev-list', '--count', 'origin/%s..origin/%s' % (p, n)) or 0)
         info[n].update(padre=p, nascita=mb[:7] if mb else None, dataNascita=ts(mb) if mb else None, avanti=av,
                        stato='unito' if dentro else ('attivo' if time.time() - info[n]['data'] < 7 * 86400 else 'fermo'))
+        # Claude, 15 novembre 2026 (Gianluca: «non vedo quando qualcosa è mergiato o si riunisce»): dove e quando il ramo è rientrato.
+        # Prima nel ramo padre, poi in main/gh-pages: il primo commit della linea principale di quel ramo che contiene la punta del ramo.
+        for dest in [p] + [x for x in radici if x != p]:
+            if subprocess.run(['git', '-C', repo, 'merge-base', '--is-ancestor', head[n], 'origin/' + dest]).returncode != 0:
+                continue
+            fp = g(repo, 'rev-list', '--first-parent', '--ancestry-path', '--reverse', '%s..origin/%s' % (head[n], dest)).split('\n')[0]
+            sha = fp or head[n]
+            info[n]['unione'] = {'in': dest, 'data': ts(sha), 'commit': sha[:7], 'titolo': g(repo, 'show', '-s', '--format=%s', sha)[:110]}
+            break
     return {'repo': nome, 'tronco': tronco, 'radici': radici, 'rami': sorted(info.values(), key=lambda r: r['data'])}
 SITO, REG = (sys.argv[2], sys.argv[3]) if len(sys.argv) > 3 else ('/home/user/o-fant-a-girrr', '/home/user/o-girrr-registro')
 out = [albero(SITO, 'o-fant-a-girrr'), albero(REG, 'o-girrr-registro')]

@@ -61,6 +61,13 @@
 - Nessun audio generato, nessuna modifica al database o al sito vero. Condivisione WhatsApp/iPhone, Samsung Internet e TV fisici restano da verificare. La 6.0.2 rimane nel Lab; sito alla 6.0.1.
 
 
+## 15 novembre (1) — Claude: Ramificazioni a tutta pagina, con le unioni e senza spostamenti oltre l'inizio
+Richieste di Gianluca: la pagina grande come principale, la Linea del tempo che non deve andare a sinistra oltre l'inizio, disegni più comprensibili, unioni visibili, Ventaglio grande anche con Tutti ed Entrambi.
+- Il menu «Ramificazioni» del portale apre `rami.html` (`registro.js`); la mappa di ChatGPT resta in `ramificazioni.html`, collegata in fondo, con il ritorno ai rami.
+- `rami_genera.py`: `unione` per ogni ramo rientrato (139 su 156 nei dati di prova). Disegnate in tutte e tre le viste.
+- Vista bloccata all'inizio, rotella che scorre, nomi e date fissi nella Linea del tempo, «Oggi», blocchi separati nel Ventaglio; corretti in Firefox il ramo scelto per errore a fine trascinamento e il puntatore trattenuto quando si rilascia fuori dalla finestra; aperta da sola la pagina non legge i dati prima di entrare nel portale.
+- Prove `prove/prova_rami_tre_viste.js` (con unioni e trascinamento): Chromium, WebKit e Firefox 0 problemi; `prova_ramificazioni.py` OK.
+
 ## 14 novembre (3) — ChatGPT: Giro di boa, lettere centrate e colori delle scritte distinti dalle bande
 
 - Ramo `chatgpt/giro-boa-colori-602`, solo Lab e pacchetto della 6.0.2. V/N/P centrate sul glifo reale sia nella pagina sia nei PNG; lettere sempre leggibili anche senza distinguere i colori.

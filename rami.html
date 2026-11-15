@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex">
-<title>Rami e sotto-rami · O Girrr</title>
+<title>Ramificazioni · Registro O Girrr</title><script src="registro-ingresso.js" data-sezione="ramificazioni" defer></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&family=Inter:wght@500;600;700;800;900&display=swap">
 <style>
 /* Claude (13-14 novembre 2026): tre disegni interattivi di rami e sotto-rami, in cima a Ramificazioni (Gianluca: «tutti e 3»).
@@ -37,7 +37,7 @@ input[type=search]{font:inherit;font-size:14px;color:var(--text);background:#111
 .tela:active{cursor:grabbing}.tela svg{display:block;width:100%;height:100%}
 .tela .aiuto{position:absolute;left:10px;bottom:8px;font-size:11.5px;color:var(--muted);pointer-events:none;background:rgba(13,22,48,.7);padding:3px 8px;border-radius:999px}
 svg text{font-family:Inter,system-ui,sans-serif;pointer-events:none}.tela svg path,.tela svg line{pointer-events:none}
-.nodo-s{cursor:pointer}.nodo-s:focus{outline:none}.nodo-s:focus-visible circle.p{stroke:#fff;stroke-width:3}
+.tela,.tela svg{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}.nodo-s{cursor:pointer}.nodo-s:focus{outline:none}.nodo-s:focus-visible circle.p{stroke:#fff;stroke-width:3}
 .nodo-s circle.alone{opacity:0;transition:opacity .25s}.nodo-s:hover circle.alone,.nodo-s.sel circle.alone{opacity:.35}
 .spento{opacity:.18;transition:opacity .3s}.acceso{opacity:1;transition:opacity .3s}
 /* Albero */
@@ -79,7 +79,7 @@ footer{color:var(--muted);font-size:12.5px;padding:18px 0}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style></head>
 <body><script>if(/[?&]dentro\b/.test(location.search))document.documentElement.classList.add('dentro')</script><div class="w">
-<div class="capo"><div class="k">Registro · Ramificazioni</div><h1>Rami e sotto-rami</h1></div>
+<div class="capo"><div class="k">Registro · Rami e sotto-rami</div><h1>Ramificazioni</h1></div>
 <p class="lead">Tre modi di disegnare gli stessi rami, con i dati veri di Git. Ogni ramo parte dal ramo da cui è nato davvero. <b>Tocca un pallino</b>: la vista si avvicina a quel ramo e si aprono i dettagli, con i commit e i link a GitHub.</p>
 <div class="barra">
  <div class="seg" id="vista" role="group" aria-label="Disegno"><button data-v="albero">Albero</button><button data-v="metro">Linea del tempo</button><button data-v="ventaglio">Ventaglio</button></div>
@@ -90,6 +90,7 @@ footer{color:var(--muted);font-size:12.5px;padding:18px 0}
 <div class="legenda" id="legenda"></div>
 <div class="lay" id="lay"><div class="card vista" id="box"></div><aside class="card dettagli" id="det" hidden aria-live="polite"></aside></div>
 <footer id="piede"></footer>
+<p class="mappa-confronto" style="margin:14px 0 0;font-weight:700"><a href="ramificazioni.html?nel-registro=1">La mappa del confronto con main ›</a> <span style="color:var(--muted);font-weight:600">Ogni ramo confrontato con main, con le Pull Request e la storia dei commit.</span></p>
 </div>
 <script>
 (function(){
@@ -126,12 +127,12 @@ function antenati(n){var a={};while(n&&X.by[n]){a[n]=1;n=X.by[n].padre}return a}
 /* ---------- scheda dei dettagli ---------- */
 function dettagli(){var det=document.getElementById('det'),lay=document.getElementById('lay'),b=S.sel&&X.by[S.sel];
  if(!b){det.hidden=true;lay.classList.remove('aperto');return}
- var R=X.R,c=colore(b),rad=R.radici.indexOf(b.nome)>=0,f=X.tutti[b.nome]||[],stato=rad?(b.nome==='main'?'Principale':'Sito pubblicato'):b.stato==='unito'?'Unito':b.stato==='attivo'?'Attivo':'Fermo';
+ var R=X.R,c=colore(b),rad=R.radici.indexOf(b.nome)>=0,f=X.tutti[b.nome]||[],stato=rad?((b.vero||b.nome)==='main'?'Principale':'Sito pubblicato'):b.unione?'Unito in '+b.unione['in']+' · '+giornoBreve(b.unione.data):b.stato==='attivo'?'Attivo':'Fermo';
  det.innerHTML='<div class="testa"><i style="background:'+c+'"></i><div><div class="k" style="color:var(--muted)">'+E(aut(b))+' · '+stato+'</div><h3>'+E(b.nome)+'</h3></div><button class="chiudi" type="button" aria-label="Chiudi i dettagli" data-chiudi>×</button></div>'+
   '<p style="margin:8px 0 0;color:var(--muted);font-size:13.5px">'+E(b.titolo)+'</p>'+
   '<dl>'+(b.padre?'<dt>Nato da</dt><dd><button type="button" data-vai="'+E(b.padre)+'">'+E(b.padre)+'</button></dd><dt>Nato il</dt><dd>'+giorno(b.dataNascita)+'</dd>':'')+
   '<dt>Ultimo lavoro</dt><dd>'+giorno(b.data,1)+'</dd><dt>'+(rad?'Commit':'Commit propri')+'</dt><dd>'+(b.totale||0)+(b.padre?' rispetto a '+E(b.padre):'')+'</dd>'+
-  '<dt>Sotto-rami</dt><dd>'+(f.length||'Nessuno')+'</dd></dl>'+
+  '<dt>Sotto-rami</dt><dd>'+(f.length||'Nessuno')+'</dd>'+(b.unione?'<dt>Unito in</dt><dd>'+E(b.unione['in'])+', il '+giorno(b.unione.data,1)+' · <a href="'+GH[b.repoVero||R.repo]+'/commit/'+b.unione.commit+'" target="_blank" rel="noopener">'+E(b.unione.titolo)+' ↗</a></dd>':'')+'</dl>'+
   (f.length?'<div class="figli">'+f.map(function(x){return '<button type="button" data-vai="'+E(x.nome)+'" style="border-left:3px solid '+colore(x)+'">'+E(x.nome)+'</button>'}).join('')+'</div>':'')+
   '<div class="link"><a href="'+ramoUrl(R,b.nome,b)+'" target="_blank" rel="noopener">Apri il ramo su GitHub ↗</a>'+(b.padre?'<a class="se" href="'+GH[b.repoVero||R.repo]+'/compare/'+encodeURIComponent(b.padreVero||b.padre)+'...'+encodeURIComponent(b.vero||b.nome)+'" target="_blank" rel="noopener">Confronta con '+E(b.padre)+' ↗</a>':'')+'</div>'+
   '<div class="k" style="margin:0 0 8px">Ultimi commit</div>'+(b.commit&&b.commit.length?'<ol class="commit">'+b.commit.map(function(k){return '<li style="--c:'+COL[aut(k[2])]+'"><div class="q">'+giorno(k[1],1)+' · '+E(k[2])+' · <code>'+k[0].slice(0,7)+'</code></div><a href="'+GH[b.repoVero||R.repo]+'/commit/'+k[0]+'" target="_blank" rel="noopener">'+E(k[3])+' ↗</a></li>'}).join('')+'</ol>'+((b.totale||0)>b.commit.length?'<p class="q" style="color:var(--muted);font-size:12px">Gli ultimi '+b.commit.length+' di '+b.totale+'.</p>':''):'<p style="color:var(--muted);font-size:13px">Nessun commit proprio: il ramo coincide con quello da cui è nato.</p>');
@@ -144,9 +145,9 @@ document.getElementById('det').addEventListener('click',function(e){var t=e.targ
 
 /* ---------- Albero: il pallino entra nel ramo (zoom), la freccia apre e chiude ---------- */
 function albero(){var radici=S.fuoco&&X.by[S.fuoco]?[S.fuoco]:X.R.radici,b0=S.fuoco&&X.by[S.fuoco];
- function rec(b,liv){var f=X.figli[b.nome]||[],c=colore(b),rad=X.R.radici.indexOf(b.nome)>=0,stato=rad?(b.nome==='main'?'Principale':'Sito pubblicato'):b.stato==='unito'?'Unito':b.stato==='attivo'?'Attivo':'Fermo';
+ function rec(b,liv){var f=X.figli[b.nome]||[],c=colore(b),rad=X.R.radici.indexOf(b.nome)>=0,stato=rad?((b.vero||b.nome)==='main'?'Principale':'Sito pubblicato'):b.unione?'Unito in '+b.unione['in']+' · '+giornoBreve(b.unione.data):b.stato==='attivo'?'Attivo':'Fermo';
   return '<li'+(liv>2&&!S.fuoco?' class="chiuso"':'')+'><div class="riga'+(b.nome===S.sel?' sel':'')+'" style="--c:'+c+'"><button type="button" class="pallino'+(b.stato==='attivo'||rad?'':' vuoto')+'" data-zoom="'+E(b.nome)+'" aria-label="Avvicina '+E(b.nome)+'">'+(f.length||'')+'</button>'+
-   '<span class="t" data-info="'+E(b.nome)+'"><b>'+E(b.nome)+'</b><small>'+E(b.titolo)+' · '+giorno(b.data)+'</small></span><span class="chip'+(rad?' main':' '+b.stato)+'">'+stato+'</span>'+
+   '<span class="t" data-info="'+E(b.nome)+'"><b>'+E(b.nome)+'</b><small>'+E(b.titolo)+' · '+giorno(b.data)+'</small></span><span class="chip'+(rad?' main':' '+(b.unione?'unito':b.stato))+'">'+(b.unione&&!rad?'↩ ':'')+stato+'</span>'+
    (f.length?'<button type="button" class="freccia" data-apri aria-label="Apri o chiudi i sotto-rami">▾</button>':'')+'</div>'+(f.length?'<ul>'+f.map(function(x){return rec(x,liv+1)}).join('')+'</ul>':'')+'</li>'}
  var bric='';if(b0){var cat=[],n=b0.nome;while(n){cat.unshift(n);n=X.by[n]&&X.by[n].padre}
   bric='<nav class="briciole" aria-label="Percorso"><button type="button" data-zoom="">Tutti i rami</button>'+cat.map(function(n,i){return '<span>›</span>'+(i<cat.length-1?'<button type="button" data-zoom="'+E(n)+'">'+E(n.split('/').pop())+'</button>':'<b>'+E(n.split('/').pop())+'</b>')}).join('')+'</nav>'}
@@ -159,15 +160,16 @@ document.getElementById('box').addEventListener('click',function(e){if(S.v!=='al
 /* ---------- viste a disegno: telecamera con zoom e trascinamento ---------- */
 var cam=null;
 function Telecamera(svg,W,H){var v={x:0,y:0,w:W,h:H},t=null;
- function metti(){svg.setAttribute('viewBox',v.x+' '+v.y+' '+v.w+' '+v.h)}
- function tutto(){return {x:0,y:0,w:W,h:H}}
- function limita(o){var r=svg.clientWidth/Math.max(1,svg.clientHeight);o.w=Math.max(W/12,Math.min(o.w,W*1.05));o.h=o.w/r;o.x=Math.max(-o.w*.4,Math.min(o.x,W-o.w*.6));o.y=Math.max(-o.h*.4,Math.min(o.y,H-o.h*.6));return o}
+ function metti(){svg.setAttribute('viewBox',v.x+' '+v.y+' '+v.w+' '+v.h);var nm=svg.querySelector('#nomi'),as=svg.querySelector('#asse');if(nm)nm.setAttribute('transform','translate('+v.x+',0)');if(as)as.setAttribute('transform','translate(0,'+v.y+')')}
+ function tutto(){var r=svg.clientWidth/Math.max(1,svg.clientHeight),w=Math.min(W,svg.clientWidth/(svg.clientWidth<600?.6:.8));return {x:0,y:0,w:w,h:w/r}}   /* «Vista intera»: dall'inizio, leggibile */
+ /* Gianluca (15 novembre 2026): il lato iniziale non si muove mai; si va solo verso destra (e verso il basso), mai oltre l'inizio */
+ function limita(o){var r=svg.clientWidth/Math.max(1,svg.clientHeight);o.w=Math.max(W/12,Math.min(o.w,W));o.h=o.w/r;o.x=Math.max(0,Math.min(o.x,Math.max(0,W-o.w)));o.y=Math.max(0,Math.min(o.y,Math.max(0,H-o.h)));return o}
  function anima(o,ms){o=limita(o);cancelAnimationFrame(t);if(FERMO){v=o;metti();return}var a={x:v.x,y:v.y,w:v.w,h:v.h},t0=performance.now(),d=ms||550;
   (function passo(now){var k=Math.min(1,(now-t0)/d),e=1-Math.pow(1-k,3);['x','y','w','h'].forEach(function(p){v[p]=a[p]+(o[p]-a[p])*e});metti();if(k<1)t=requestAnimationFrame(passo)})(t0)}
  function zoom(f,cx,cy){var p=punto(cx,cy);anima({w:v.w/f,h:v.h/f,x:p.x-(p.x-v.x)/f,y:p.y-(p.y-v.y)/f},250)}
  function punto(cx,cy){var r=svg.getBoundingClientRect();return {x:v.x+(cx-r.left)/r.width*v.w,y:v.y+(cy-r.top)/r.height*v.h}}
  // all'inizio: tutta la larghezza, dall'alto
- var r0=svg.clientWidth/Math.max(1,svg.clientHeight);v={x:0,y:0,w:W,h:W/r0};metti();
+ v=tutto();metti();   /* si parte dall'alto a sinistra, con il testo leggibile */
  var punti={},trascina=null,pizzico=null;
  svg.addEventListener('pointerdown',function(e){punti[e.pointerId]={x:e.clientX,y:e.clientY};var k=Object.keys(punti);
   if(k.length===1)trascina={x:e.clientX,y:e.clientY,v:{x:v.x,y:v.y,w:v.w,h:v.h},mosso:0};
@@ -177,12 +179,23 @@ function Telecamera(svg,W,H){var v={x:0,y:0,w:W,h:H},t=null;
    var o=limita({w:nw,h:0,x:c.x-(c.x-v.x)*nw/v.w,y:c.y-(c.y-v.y)*nw/v.w});v=o;metti();return}
   if(trascina){var r=svg.getBoundingClientRect(),dx=(e.clientX-trascina.x)/r.width*trascina.v.w,dy=(e.clientY-trascina.y)/r.height*trascina.v.h;trascina.mosso=Math.max(trascina.mosso,Math.abs(e.clientX-trascina.x)+Math.abs(e.clientY-trascina.y));
    if(trascina.mosso>4){svg.setPointerCapture&&svg.setPointerCapture(e.pointerId);cancelAnimationFrame(t);v=limita({x:trascina.v.x-dx,y:trascina.v.y-dy,w:trascina.v.w,h:trascina.v.h});metti()}}});
- function su(e){delete punti[e.pointerId];if(Object.keys(punti).length<2)pizzico=null;if(!Object.keys(punti).length)setTimeout(function(){trascina=null},0)}
+ var fineMosso=0;   /* un tocco subito dopo un trascinamento non sceglie il ramo (Firefox manda il clic dopo) */
+ function su(e){if(trascina&&trascina.mosso>4)fineMosso=performance.now();try{if(svg.hasPointerCapture&&svg.hasPointerCapture(e.pointerId))svg.releasePointerCapture(e.pointerId)}catch(er){}delete punti[e.pointerId];if(Object.keys(punti).length<2)pizzico=null;if(!Object.keys(punti).length)setTimeout(function(){trascina=null},0)}
  svg.addEventListener('pointerup',su);svg.addEventListener('pointercancel',su);
- svg.addEventListener('wheel',function(e){e.preventDefault();zoom(e.deltaY<0?1.25:0.8,e.clientX,e.clientY)},{passive:false});
+ /* se il trascinamento finisce fuori dalla finestra il rilascio può non arrivare: al primo tocco fuori dal disegno si lascia andare */
+ var fuori=function(e){if(!svg.isConnected){document.removeEventListener('pointerdown',fuori,true);return}if(svg.contains(e.target)||!Object.keys(punti).length)return;
+  Object.keys(punti).forEach(function(id){try{svg.releasePointerCapture(+id)}catch(er){}});punti={};trascina=null;pizzico=null};
+ document.addEventListener('pointerdown',fuori,true);svg.addEventListener('lostpointercapture',function(e){delete punti[e.pointerId];if(!Object.keys(punti).length){pizzico=null;setTimeout(function(){trascina=null},0)}});
+ svg.addEventListener('wheel',function(e){if(e.ctrlKey||e.metaKey){e.preventDefault();zoom(e.deltaY<0?1.25:0.8,e.clientX,e.clientY);return}
+  /* la rotella scorre la vista; arrivati in fondo (o in cima) scorre la pagina */
+  var r=svg.getBoundingClientRect(),k=v.w/r.width,dx=(e.shiftKey?e.deltaY:e.deltaX)*k,dy=(e.shiftKey?0:e.deltaY)*k,o=limita({x:v.x+dx,y:v.y+dy,w:v.w,h:v.h});
+  if(Math.abs(o.x-v.x)<.5&&Math.abs(o.y-v.y)<.5)return;e.preventDefault();cancelAnimationFrame(t);v=o;metti()},{passive:false});
  return {anima:anima,tutto:tutto,zoom:function(f){var r=svg.getBoundingClientRect();zoom(f,r.left+r.width/2,r.top+r.height/2)},
-  su:function(x,y,ingr){var r=svg.clientWidth/Math.max(1,svg.clientHeight),w=W/(ingr||3);anima({w:w,h:w/r,x:x-w/2,y:y-w/r/2})},mosso:function(){return trascina&&trascina.mosso>4}}}
+  su:function(x,y,ingr){var r=svg.clientWidth/Math.max(1,svg.clientHeight),w=W/(ingr||3);anima({w:w,h:w/r,x:x-w/2,y:y-w/r/2})},mosso:function(){return (trascina&&trascina.mosso>4)||performance.now()-fineMosso<350}}}
 var POS={};
+/* Unioni (Gianluca, 15 novembre 2026): dove e quando un ramo è rientrato. In Entrambi il nome del ramo di arrivo ha lo stesso «Sito ›» o «Registro ›» */
+function arrivo(b){if(!b.unione)return null;var pre=b.vero?b.nome.slice(0,b.nome.length-b.vero.length):'';return pre+b.unione['in']}
+function giornoBreve(t){var d=new Date(t*1000);return d.getDate()+' '+['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'][d.getMonth()]}
 function vaiA(n){var p=POS[n];if(p&&cam)cam.su(p.x,p.y,S.v==='metro'?2.6:2.4)}
 function evidenzia(){var svg=document.querySelector('.tela svg');if(!svg)return;var a=S.sel?antenati(S.sel):null,disc={};
  if(S.sel)(function rec(n){disc[n]=1;(X.figli[n]||[]).forEach(function(f){rec(f.nome)})})(S.sel);
@@ -191,37 +204,66 @@ function evidenzia(){var svg=document.querySelector('.tela svg');if(!svg)return;
  var k=svg.querySelector('#commit-sel');if(k)k.innerHTML=S.v==='metro'?puntiCommit():''}
 function nodoSvg(b,x,y,rr,c,u){return '<g class="nodo-s" data-n="'+E(b.nome)+'" data-r="'+E(b.nome)+'" role="button" tabindex="0" aria-label="'+E(b.nome)+'"><circle class="alone" cx="'+x+'" cy="'+y+'" r="'+(rr+9)+'" fill="'+c+'"/><circle class="p" cx="'+x+'" cy="'+y+'" r="'+rr+'" fill="'+(u?'#172654':c)+'" stroke="'+c+'" stroke-width="2.5"/><circle cx="'+x+'" cy="'+y+'" r="'+(rr+12)+'" fill="transparent"/></g>'}
 function tela(titolo,sub,W,H,dentro){return '<h2>'+titolo+'</h2><p class="sub">'+sub+'</p><div class="comandi"><button type="button" data-cam="piu" aria-label="Avvicina">+</button><button type="button" data-cam="meno" aria-label="Allontana">−</button><button type="button" data-cam="tutto">Vista intera</button></div>'+
- '<div class="tela"><svg role="img" aria-label="'+titolo+' dei rami" preserveAspectRatio="xMinYMin meet">'+dentro+'</svg><span class="aiuto">Trascina per muoverti · Rotella o due dita per lo zoom · Tocca un pallino</span></div>'}
+ '<div class="tela"><svg role="img" aria-label="'+titolo+' dei rami" preserveAspectRatio="xMinYMin meet">'+dentro+'</svg><span class="aiuto">Trascina o usa la rotella per muoverti · Ctrl + rotella o due dita per lo zoom · Tocca un pallino</span></div>'}
 
 /* Linea del tempo */
 var T={};
-function metro(){var L=X.ordine,W=1400,lab=330,riga=30,H=L.length*riga+50,s='',pal='';POS={};
- var t0=Math.min.apply(null,L.slice(1).map(function(o){return o.b.dataNascita||o.b.data}).concat([L[0].b.data])),t1=Math.max.apply(null,L.map(function(o){return o.b.data})),
-  xs=function(t){return lab+16+(W-lab-40)*((t-t0)/Math.max(1,t1-t0))},y={};T={xs:xs,y:y};
- L.forEach(function(o,i){y[o.b.nome]=24+i*riga});
- for(var d=new Date(t0*1000);d.getTime()/1000<=t1;d.setDate(d.getDate()+1)){var gx=xs(d.getTime()/1000);s+='<line x1="'+gx+'" y1="10" x2="'+gx+'" y2="'+(H-22)+'" stroke="rgba(255,255,255,.05)"/>'+(d.getDate()%2===0?'<text x="'+gx+'" y="'+(H-6)+'" fill="#8fa0c4" font-size="10" text-anchor="middle">'+d.getDate()+'/'+(d.getMonth()+1)+'</text>':'')}
- L.forEach(function(o){var b=o.b,c=colore(b),yy=y[b.nome],x0=o.d?xs(b.dataNascita||b.data):lab+16,x1=Math.max(x0+4,xs(b.data)),u=b.stato!=='attivo'&&o.d,g='';
-  if(o.d){var py=y[b.padre];g+='<path d="M'+x0+' '+py+' C'+(x0+14)+' '+py+' '+x0+' '+yy+' '+(x0+14)+' '+yy+'" fill="none" stroke="'+c+'" stroke-width="2" opacity="'+(u?.5:.95)+'"/>';x0+=14}
-  g+='<line x1="'+x0+'" y1="'+yy+'" x2="'+Math.max(x0,x1)+'" y2="'+yy+'" stroke="'+c+'" stroke-width="'+(o.d?3:5)+'" stroke-linecap="round" opacity="'+(u?.5:1)+'"/>';
-  var nome=b.nome.length>34?b.nome.slice(0,33)+'…':b.nome;
-  g+='<text x="'+(8+Math.min(o.d,8)*9)+'" y="'+(yy+4)+'" fill="'+(u?'#8fa0c4':'#f5f6fb')+'" font-size="12.5" font-weight="'+(o.d?600:900)+'">'+E(nome)+'</text>';
-  s+='<g data-r="'+E(b.nome)+'">'+g+'</g>';pal+=nodoSvg(b,Math.max(x0,x1),yy,o.d?5:7,c,u);POS[b.nome]={x:Math.max(x0,x1),y:yy}});
- s+=pal;   // i pallini sopra tutte le linee, così il tocco arriva sempre al ramo giusto
- return tela('Linea del tempo','Ogni riga è un ramo, dal giorno in cui nasce al suo ultimo lavoro; la curva parte dal ramo da cui è nato. Tocca un pallino: lo zoom porta su quel ramo e sulla sua riga compaiono i commit, ognuno con il suo link.',W,H,s+'<g id="commit-sel"></g>')+'<!--'+W+'x'+H+'-->'}
+function metro(){var L=X.ordine,W=1500,lab=300,riga=30,top=58,stacco=0,rp='',yv=L.map(function(o){var q=o.b.repoVero||'';if(q!==rp){if(rp)stacco+=26;rp=q}return stacco}),H=top+L.length*riga+stacco+24,s='',pal='',nomi='',asse='';POS={};
+ /* Gianluca (15 novembre 2026): più comprensibile. Nomi fissi a sinistra e date fisse in alto mentre si scorre, mesi e settimane,
+    la linea di oggi, i rami di Entrambi senza «Sito ›» ripetuto (c'è il titolo del repository). */
+ var oggi=Date.now()/1000,t0=Math.min.apply(null,L.slice(1).map(function(o){return o.b.dataNascita||o.b.data}).concat([L[0].b.data])),t1=Math.max(oggi,Math.max.apply(null,L.map(function(o){return o.b.data})));
+ t0-=86400;var x0p=lab+20,xs=function(t){return x0p+(W-x0p-30)*((t-t0)/Math.max(1,t1-t0))},y={};T={xs:xs,y:y};
+ L.forEach(function(o,i){y[o.b.nome]=top+14+i*riga+yv[i]+(L[0].b.repoVero?14:0)});if(L[0].b.repoVero)H+=14;
+ var MESI=['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'],passo=(t1-t0)/86400>60?7:1;
+ for(var d=new Date(t0*1000),k=0;d.getTime()/1000<=t1+86400;d.setDate(d.getDate()+1),k++){var gx=xs(d.getTime()/1000),lun=d.getDay()===1,primo=d.getDate()===1;
+  s+='<line x1="'+gx+'" y1="'+top+'" x2="'+gx+'" y2="'+H+'" stroke="rgba(255,255,255,'+(primo?.22:lun?.1:.04)+')"/>';
+  if(primo||(passo===1&&(lun||k===0))||(passo===7&&lun&&d.getDate()<=7))asse+='<text x="'+gx+'" y="'+(primo?22:44)+'" fill="'+(primo?'#ffd166':'#b6c3e0')+'" font-size="'+(primo?13:11)+'" font-weight="'+(primo?900:700)+'" text-anchor="middle">'+(primo?MESI[d.getMonth()]+' '+d.getFullYear():d.getDate()+' '+MESI[d.getMonth()])+'</text>'}
+ var gx=xs(oggi);s+='<line x1="'+gx+'" y1="'+top+'" x2="'+gx+'" y2="'+H+'" stroke="#ffd166" stroke-width="1.5" stroke-dasharray="4 4" opacity=".7"/>';asse+='<text x="'+gx+'" y="22" fill="#ffd166" font-size="12" font-weight="900" text-anchor="middle">Oggi</text>';
+ var repoPrima='';
+ L.forEach(function(o){var b=o.b,c=colore(b),yy=y[b.nome],xa=o.d?xs(b.dataNascita||b.data):x0p,x1=Math.max(xa+4,xs(b.data)),u=b.stato!=='attivo'&&o.d,g='';
+  if(o.d){var py=y[b.padre];g+='<path d="M'+xa+' '+py+' C'+(xa+14)+' '+py+' '+xa+' '+yy+' '+(xa+14)+' '+yy+'" fill="none" stroke="'+c+'" stroke-width="2" opacity="'+(u?.5:.95)+'"/>';xa+=14}
+  g+='<line x1="'+xa+'" y1="'+yy+'" x2="'+Math.max(xa,x1)+'" y2="'+yy+'" stroke="'+c+'" stroke-width="'+(o.d?3:5)+'" stroke-linecap="round" opacity="'+(u?.5:1)+'"/>';
+  var dove=arrivo(b);if(dove&&y[dove]!=null){var xm=Math.max(Math.max(xa,x1)+10,xs(b.unione.data)),ym=y[dove];
+   g+='<path d="M'+Math.max(xa,x1)+' '+yy+' C'+(xm-8)+' '+yy+' '+(xm-14)+' '+ym+' '+xm+' '+ym+'" fill="none" stroke="'+c+'" stroke-width="2" stroke-dasharray="5 4" opacity=".9"/><path d="M'+(xm-6)+' '+(ym-5)+' L'+xm+' '+ym+' L'+(xm-6)+' '+(ym+5)+'" fill="none" stroke="'+c+'" stroke-width="2"/><title>'+E((b.vero||b.nome)+' unito in '+b.unione['in']+' il '+giorno(b.unione.data,1))+'</title>'}
+  s+='<g data-r="'+E(b.nome)+'">'+g+'</g>';pal+=nodoSvg(b,Math.max(xa,x1),yy,o.d?5:7,c,u);POS[b.nome]={x:Math.max(xa,x1),y:yy};
+  /* nome a sinistra: il nome vero del ramo (in Entrambi senza «Sito ›»), rientrato di poco per i sotto-rami */
+  var vero=b.vero||b.nome,rep=b.repoVero?(b.repoVero==='o-fant-a-girrr'?'Sito della lega':'Registro'):'';
+  if(rep&&rep!==repoPrima){repoPrima=rep;nomi+='<text x="10" y="'+(yy-19)+'" fill="#ffd166" font-size="10.5" font-weight="900" letter-spacing="1.5">'+E(rep.toUpperCase())+'</text>'}
+  var rientro=Math.min(o.d,6)*10,max=Math.floor((lab-24-rientro)/7.1),nome=vero.length>max?vero.slice(0,max-1)+'…':vero;
+  nomi+='<g class="nodo-s etichetta" data-n="'+E(b.nome)+'" data-r="'+E(b.nome)+'" role="button" tabindex="0" aria-label="'+E(vero)+'"><title>'+E(vero+' · '+(b.titolo||''))+'</title>'+
+   (o.d?'<circle cx="'+(14+rientro)+'" cy="'+yy+'" r="3.5" fill="'+c+'" opacity="'+(u?.5:1)+'"/>':'<rect x="'+(9+rientro)+'" y="'+(yy-5)+'" width="10" height="10" rx="2" fill="'+c+'"/>')+
+   '<text x="'+(24+rientro)+'" y="'+(yy+4)+'" fill="'+(u?'#8fa0c4':'#f5f6fb')+'" font-size="12.5" font-weight="'+(o.d?600:900)+'">'+E(nome)+'</text></g>'});
+ s+=pal+'<g id="commit-sel"></g>';   // pallini e commit sopra le linee, sotto nomi e date fissi
+ var fondo='#111d40';
+ s+='<g id="asse"><rect x="'+(-W)+'" y="0" width="'+(W*3)+'" height="'+top+'" fill="'+fondo+'"/><line x1="'+(-W)+'" y1="'+top+'" x2="'+(W*2)+'" y2="'+top+'" stroke="rgba(255,255,255,.18)"/>'+asse+'</g>';
+ s+='<g id="nomi"><rect x="0" y="'+(-H)+'" width="'+lab+'" height="'+(H*3)+'" fill="'+fondo+'"/><line x1="'+lab+'" y1="'+(-H)+'" x2="'+lab+'" y2="'+(H*2)+'" stroke="rgba(255,255,255,.18)"/>'+nomi+
+  '<rect x="0" y="0" width="'+lab+'" height="'+top+'" fill="'+fondo+'"/><text x="12" y="38" fill="#b6c3e0" font-size="11" font-weight="800" letter-spacing="1.5">RAMO</text></g>';
+ return tela('Linea del tempo','Ogni riga è un ramo: la linea va dal giorno in cui nasce al suo ultimo lavoro (il pallino) e la curva parte dal ramo da cui è nato. La linea tratteggiata con la freccia è l’unione: il ramo rientra nel ramo da cui è nato o in main, nel giorno in cui è stato unito. I nomi restano a sinistra e le date in alto mentre scorri. Tocca un nome o un pallino: compaiono i commit, ognuno con il suo link.',W,H,s)+'<!--'+W+'x'+H+'-->'}
 function puntiCommit(){var b=S.sel&&X.by[S.sel];if(!b||!T.xs||T.y[b.nome]==null)return '';var R=X.R;
  return (b.commit||[]).map(function(k){var x=T.xs(k[1]),y=T.y[b.nome];return '<a href="'+GH[b.repoVero||R.repo]+'/commit/'+k[0]+'" target="_blank" rel="noopener"><title>'+E(giorno(k[1],1)+' · '+k[3])+'</title><circle cx="'+x+'" cy="'+y+'" r="4" fill="#fff" stroke="'+COL[aut(k[2])]+'" stroke-width="2.5" style="cursor:pointer"/></a>'}).join('')}
 /* Ventaglio */
-function ventaglio(){var L=X.ordine,W=1400,maxd=Math.max.apply(null,L.map(function(o){return o.d})),passo=Math.max(110,Math.min(170,(W-260)/(maxd+1))),riga=30,y={},foglie=0,s='';POS={};
- function pos(b){var f=X.figli[b.nome]||[];if(!f.length){y[b.nome]=26+(foglie++)*riga;return y[b.nome]}var a=f.map(pos);y[b.nome]=(Math.min.apply(null,a)+Math.max.apply(null,a))/2;return y[b.nome]}
- X.R.radici.forEach(function(n,i){if(i)foglie++;pos(X.by[n])});
- var H=26+foglie*riga+20,dx=function(o){return 30+o.d*passo},Wv=Math.max(W,30+(maxd+1)*passo+260),dep={};L.forEach(function(o){dep[o.b.nome]=o.d});
+function ventaglio(){var L=X.ordine,W=1400,maxd=Math.max.apply(null,L.map(function(o){return o.d})),passo=Math.max(80,Math.min(170,(W-420)/(maxd+1))),riga=34,y={},foglie=0,s='',tit='';POS={};
+ /* Gianluca (15 novembre 2026): con Tutti ed Entrambi diventava piccolissimo. Ora i rami si stringono in larghezza invece di rimpicciolire
+    tutto, e ogni tronco (main e gh-pages del sito, main del registro) ha il suo blocco, separato da una linea: si scorre verso il basso. */
+ function pos(b){var f=X.figli[b.nome]||[];if(!f.length){y[b.nome]=foglie;foglie++;return y[b.nome]}var a=f.map(pos);y[b.nome]=(Math.min.apply(null,a)+Math.max.apply(null,a))/2;return y[b.nome]}
+ var blocchi=[],cima=10;
+ X.R.radici.forEach(function(n){var r0=foglie,prima=Object.keys(y);pos(X.by[n]);blocchi.push({n:n,da:r0,a:foglie,nomi:Object.keys(y).filter(function(k){return prima.indexOf(k)<0})})});
+ var Y={};blocchi.forEach(function(k,i){var base=cima+(i?18:0)+40;k.y0=cima;k.nomi.forEach(function(nm){Y[nm]=base+(y[nm]-k.da)*riga+12});cima=base+Math.max(1,k.a-k.da)*riga+12});
+ y=Y;var H=cima+20,dx=function(o){return 30+o.d*passo},Wv=Math.max(W,30+(maxd+1)*passo+300),dep={};L.forEach(function(o){dep[o.b.nome]=o.d});
+ blocchi.forEach(function(k,i){var b=X.by[k.n],nome=b.vero||b.nome,q=b.repoVero||X.R.repo,rep=q==='o-fant-a-girrr'?'Sito della lega':'Registro';
+  if(i)tit+='<line x1="0" y1="'+(k.y0+8)+'" x2="'+Wv+'" y2="'+(k.y0+8)+'" stroke="rgba(255,209,102,.35)" stroke-width="1.5"/>';
+  tit+='<text x="16" y="'+(k.y0+(i?36:28))+'" fill="#ffd166" font-size="13" font-weight="900" letter-spacing="1.5">'+E((rep+' · '+nome).toUpperCase())+'</text>'});
+ s+=tit;
  L.forEach(function(o){if(!o.d)return;var b=o.b,p=X.by[b.padre],c=colore(b),x0=30+dep[p.nome]*passo,x1=dx(o),u=b.stato!=='attivo';
   s+='<path data-r="'+E(b.nome)+'" d="M'+x0+' '+y[p.nome]+' C'+(x0+passo*.55)+' '+y[p.nome]+' '+(x1-passo*.55)+' '+y[b.nome]+' '+x1+' '+y[b.nome]+'" fill="none" stroke="'+c+'" stroke-width="2.5" opacity="'+(u?.5:.95)+'"/>'});
- L.forEach(function(o){var b=o.b,c=colore(b),u=b.stato!=='attivo'&&o.d,x=dx(o),foglia=!(X.figli[b.nome]||[]).length,nome=foglia||!o.d?b.nome:b.nome.split('/').pop();
+ L.forEach(function(o){var b=o.b,c=colore(b),u=b.stato!=='attivo'&&o.d,x=dx(o),foglia=!(X.figli[b.nome]||[]).length,vero=b.vero||b.nome,nome=foglia||!o.d?vero:vero.split('/').pop();
   if(!foglia&&o.d&&nome.length>16)nome=nome.slice(0,15)+'…';
-  s+='<text data-r="'+E(b.nome)+'" x="'+(x+(foglia?12:o.d?0:-10))+'" y="'+(y[b.nome]+(foglia?4:o.d?-11:-15))+'" text-anchor="'+(foglia||!o.d?'start':'middle')+'" fill="'+(u?'#8fa0c4':'#f5f6fb')+'" font-size="12" font-weight="'+(o.d?600:900)+'">'+E(nome)+'</text>';
-  s+=nodoSvg(b,x,y[b.nome],o.d?6:9,c,u);POS[b.nome]={x:x,y:y[b.nome]}});
- return tela('Ventaglio','Da main i rami si aprono verso destra: ogni passo è un livello di sotto-ramificazione. Tocca un pallino: lo zoom porta su quel ramo, si accendono lui, la sua strada fino a main e i suoi sotto-rami.',Wv,H,s)+'<!--'+Wv+'x'+H+'-->'}
+  /* nelle catene lunghe il nome intermedio si vede solo dove il ramo si divide (gli altri: passandoci sopra) */
+  var muto=!foglia&&o.d>1&&(X.figli[b.nome]||[]).length<2;if(muto)nome='';
+  var un=b.unione&&o.d?'<tspan fill="#8fa0c4" font-weight="700"> ↩ Unito in '+E(b.unione['in'])+' · '+giornoBreve(b.unione.data)+'</tspan>':'';
+  s+='<text data-r="'+E(b.nome)+'" x="'+(x+(foglia?12:o.d?0:-10))+'" y="'+(y[b.nome]+(foglia?4:o.d?-11:-15))+'" text-anchor="'+(foglia||!o.d?'start':'middle')+'" fill="'+(u?'#8fa0c4':'#f5f6fb')+'" font-size="13" font-weight="'+(o.d?600:900)+'">'+E(nome)+(foglia?un:'')+'</text>';
+  s+=nodoSvg(b,x,y[b.nome],o.d?6:9,c,u).replace('</g>','<title>'+E(vero+(b.unione?' · Unito in '+b.unione["in"]+' · '+giornoBreve(b.unione.data):''))+'</title></g>');POS[b.nome]={x:x,y:y[b.nome]}});
+ return tela('Ventaglio','Da main i rami si aprono verso destra: ogni passo è un livello di sotto-ramificazione. Ogni tronco ha il suo blocco: scorri verso il basso per vederli tutti. «↩ Unito in …» dice dove e quando il ramo è rientrato. Tocca un pallino: si accendono lui, la sua strada fino a main e i suoi sotto-rami.',Wv,H,s)+'<!--'+Wv+'x'+H+'-->'}
 
 /* ---------- disegno ---------- */
 function disegnaVista(){var box=document.getElementById('box');X=prepara();
@@ -241,15 +283,18 @@ addEventListener('keydown',function(e){if(e.key==='Escape'&&S.sel){S.sel=null;S.
 /* dati: prima la copia aggiornata dal workflow (ramo tecnico), se non risponde quella qui accanto; poi un controllo ogni minuto */
 /* la versione online, dalla stessa fonte della pagina Versioni del sito */
 var VERS=null;function versione(){return fetch('https://giandjcosta.github.io/o-fant-a-girrr/versioni.json?t='+Date.now(),{cache:'no-cache'}).then(function(r){return r.json()}).then(function(j){var v=j.versioni&&j.versioni[0]&&j.versioni[0].v;if(v&&v!==VERS){VERS=v;if(D)disegnaVista()}}).catch(function(){})}
-versione();setInterval(function(){if(!document.hidden)versione()},300000);
+if(!(window.self===window.top&&!/[?&](nel-registro|dentro|dati=locale)\b/.test(location.search)))versione();setInterval(function(){if(!document.hidden)versione()},300000);
 var FRESCO='https://raw.githubusercontent.com/giandjcosta/o-girrr-registro/chatgpt/dati-ramificazioni/rami-dati.json',VISTO=0;
 function usa(j){if(!j||!j.repository||(j.generato<=VISTO&&(!D||j.versione===D.versione)))return false;VISTO=j.generato;D=j.repository;D.generato=j.generato;D.versione=j.versione;
  if(S.sel&&!D.some(function(R){return R.rami.some(function(b){return b.nome===S.sel})})){S.sel=null;S.fuoco=null}
  if(S.sel&&S.v==='albero')S.fuoco=S.sel;disegnaVista();dettagli();return true}
 function leggi(u){return fetch(u,{cache:'no-cache'}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
-function carica(){return leggi(FRESCO+'?t='+Date.now()).then(usa).catch(function(){return leggi('rami-dati.json').then(usa)})}
-carica().catch(function(){if(!D)document.getElementById('box').textContent='Dati non caricati.'});
-setInterval(function(){if(!document.hidden)leggi(FRESCO+'?t='+Date.now()).then(usa).catch(function(){})},60000);
+var LOCALE=/[?&]dati=locale\b/.test(location.search);   /* per le prove: solo la copia qui accanto */
+function carica(){if(LOCALE)return leggi('rami-dati.json').then(usa);return leggi(FRESCO+'?t='+Date.now()).then(usa).catch(function(){return leggi('rami-dati.json').then(usa)})}
+/* aperta da sola, la pagina entra subito nel portale del Registro (registro-ingresso.js): lì legge i dati, qui no */
+var VIA=window.self===window.top&&!/[?&](nel-registro|dentro|dati=locale)\b/.test(location.search);
+if(!VIA)carica().catch(function(){if(!D)document.getElementById('box').textContent='Dati non caricati.'});
+setInterval(function(){if(!document.hidden&&!LOCALE)leggi(FRESCO+'?t='+Date.now()).then(usa).catch(function(){})},60000);
 /* dentro Ramificazioni: l'altezza alla pagina che contiene */
 if(document.documentElement.classList.contains('dentro')&&parent!==window){var ult=0,manda=function(){var h=Math.ceil(document.documentElement.scrollHeight);if(Math.abs(h-ult)>2){ult=h;parent.postMessage({ramiAltezza:h},'*')}};
  if(window.ResizeObserver)new ResizeObserver(manda).observe(document.body);setInterval(manda,1000);addEventListener('load',manda)}
