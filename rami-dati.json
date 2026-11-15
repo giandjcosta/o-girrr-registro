@@ -8140,6 +8140,26 @@
      "totale": 19
     },
     {
+     "nome": "chatgpt/integrazione-62-completa",
+     "punta": "b051bfb",
+     "data": 1794759206,
+     "titolo": "Merge pull request #95 from giandjcosta/claude/fervent-thompson-rwlwrh",
+     "autore": "giandjcosta",
+     "padre": "claude/fervent-thompson-rwlwrh",
+     "nascita": "e84a62d",
+     "dataNascita": 1794759191,
+     "avanti": 1,
+     "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794759206,
+      "commit": "b051bfb",
+      "titolo": "Merge pull request #95 from giandjcosta/claude/fervent-thompson-rwlwrh"
+     },
+     "commit": [],
+     "totale": 1
+    },
+    {
      "nome": "main",
      "punta": "b051bfb",
      "data": 1794759206,
