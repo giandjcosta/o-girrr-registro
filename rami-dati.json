@@ -1,5 +1,5 @@
 {
- "generato": 1794783380,
+ "generato": 1794783966,
  "versione": "6.1",
  "repository": [
   {
@@ -8456,6 +8456,75 @@
       ]
      ],
      "totale": 15
+    },
+    {
+     "nome": "chatgpt/rc-62-verifica",
+     "punta": "81c6a84",
+     "data": 1794783966,
+     "titolo": "ChatGPT: include Albo 6.2 nella matrice browser completa",
+     "autore": "ChatGPT",
+     "padre": "chatgpt/controllo-62",
+     "nascita": "a5480da",
+     "dataNascita": 1794783380,
+     "avanti": 9,
+     "stato": "attivo",
+     "commit": [
+      [
+       "81c6a84117304cbefb08d7ced2482c5eaef541b5",
+       1794783966,
+       "ChatGPT",
+       "ChatGPT: include Albo 6.2 nella matrice browser completa"
+      ],
+      [
+       "c012495a2cc56dedf6234a723d49717ae6704e0a",
+       1794783957,
+       "ChatGPT",
+       "ChatGPT: verifica l'Albo nativo su tre browser e due grafiche"
+      ],
+      [
+       "5a36587ddafd3a98837243a42f26ff2628b734c7",
+       1794783817,
+       "ChatGPT",
+       "ChatGPT: integra QA Albo, voto e backend nella release candidate"
+      ],
+      [
+       "9c65728c031a3c10db8d42ff4e08e0fa8fdbf13b",
+       1794783774,
+       "ChatGPT",
+       "ChatGPT: impedisce a Peggiore di uscire dal riquadro sui tablet"
+      ],
+      [
+       "fbf14ac9235fe34e2c92bb9e9dbd1dc3bc07cd43",
+       1794783771,
+       "ChatGPT",
+       "ChatGPT: impedisce a Peggiore di uscire dal riquadro sui tablet"
+      ],
+      [
+       "7ba71538d1919329c08ccc78a47b7d1bbcd2ba9b",
+       1794783757,
+       "ChatGPT",
+       "ChatGPT: integra la proposta Albo 6.2 nella release candidate"
+      ],
+      [
+       "3d00ddea7c5d69505047f09d16a7a0de445d8582",
+       1794783754,
+       "ChatGPT",
+       "ChatGPT: integra la proposta Albo 6.2 nella release candidate"
+      ],
+      [
+       "875d983cf0b5d9eea5116c50f37e468ff4a23b95",
+       1794783751,
+       "ChatGPT",
+       "ChatGPT: integra la proposta Albo 6.2 nella release candidate"
+      ],
+      [
+       "a087a5096d16f317df96b4bd6c1b1322877d3a1b",
+       1794783749,
+       "ChatGPT",
+       "ChatGPT: integra la proposta Albo 6.2 nella release candidate"
+      ]
+     ],
+     "totale": 9
     }
    ]
   }
