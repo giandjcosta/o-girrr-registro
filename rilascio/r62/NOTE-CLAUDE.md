@@ -39,3 +39,12 @@ Su una copia nuova di gh-pages: `python3 rilascio/r62/campo_coppa.py COPIA` e `p
 ## Rubrica MVP (15 novembre, sera tardi)
 
 Capolettera rosso sulla prima frase. La rubrica dice fino a quando si vota, presenta i tre candidati della giornata appena finita e, dal numero dopo, il verdetto della giornata prima. Il verdetto riporta squadra, risultato vero e motivo della redazione. Vale dal prossimo Giornale; i numeri già usciti non si rigenerano.
+
+## Votazioni e verdetto MVP (15 novembre, sera)
+
+Decisione di Gianluca:
+- risultati chiusi in Curva e in Girrr Sport;
+- voto unico condiviso, con il pulsante piccolo «Cambia il mio voto» per sondaggi e MVP;
+- post del verdetto MVP del profilo Girrr Sport nella Curva, con la squadra taggata e nessun'altra notifica.
+
+Dettagli in `INTEGRAZIONE.md`. La SQL resta una proposta: senza il «Vai» non si applica.

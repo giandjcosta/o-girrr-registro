@@ -1,6 +1,6 @@
 {
   "motore": "PostgreSQL 17 nativo locale",
-  "databaseIsolato": "girrr62_test_30159_1794764592",
+  "databaseIsolato": "girrr62_test_619_1794776694",
   "sessioniConcorrenti": 2,
   "produzione": false,
   "prove": [
