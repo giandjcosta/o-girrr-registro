@@ -215,7 +215,7 @@ body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:no
 <script>window.goatcounter={path:function(){return location.pathname},no_onload:/[?&]demo/.test(location.search)}</script>
 <script data-goatcounter="https://djcosta18.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><link rel="stylesheet" href="v55/ui.css?v=55r10"><script src="v55/destinazioni55.js?v=55r8" defer></script><script src="v55/ui.js?v=55r10" defer></script><script src="../offline.js" defer></script>
 <script src="../condividi.js?v=61-periodi1" defer></script>
-<style>/* 6.2: la tua partita per prima, con un leggero velo oro */#board>.m.tua{position:relative;background-image:linear-gradient(90deg,rgba(255,209,102,.17),rgba(255,209,102,.05))!important}#board>.m.tua::before{content:'La tua partita';position:absolute;top:6px;left:18px;font:900 9px/1 Inter,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#ffd166}</style></head>
+<style>/* 6.2: la tua partita con un leggero velo oro */#board>.m.tua{position:relative;background-image:linear-gradient(90deg,rgba(255,209,102,.17),rgba(255,209,102,.05))!important}#board>.m.tua::before{content:'La tua partita';position:absolute;top:6px;left:18px;font:900 9px/1 Inter,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#ffd166}</style></head>
 <body data-mode="lega" data-v53="board" data-v53-skin="lega">
 <div class="wrap">
   <a class="back" href="index.html">‹ O Girrr</a>
@@ -315,7 +315,7 @@ function render(){
   document.getElementById('kick').textContent=pl?'RISULTATI':(n===lp+1?'PROSSIMA GIORNATA':'DA GIOCARE');
   document.title='Tabellone · '+tit;
   var b='<div class="nota">Serie A · Giornata '+g.sa+'</div>';
-  g.m.slice().sort(function(x,z){function tua(q){return ME&&(q[cup?1:0]===ME||q[cup?4:3]===ME)?0:1}return tua(x)-tua(z)}).forEach(function(m,k){
+  g.m.forEach(function(m,k){
     var gir='',casa,pc,pf,fuori,ris;
     if(cup){gir=m[0];casa=m[1];pc=m[2];pf=m[3];fuori=m[4];ris=m[5]}else{casa=m[0];pc=m[1];pf=m[2];fuori=m[3];ris=m[4]}
     var wc='w',wf='w',sc='<b>–</b><i></i><b>–</b>',fc='',ff='';

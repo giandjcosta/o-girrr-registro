@@ -5,7 +5,7 @@
   dopo il simbolo, e «1 posizione» al singolare (prima «↑ 1 posizioni»).
 - Albo › La Storia (girrr/novita.js e stadio/girrr/novita.js): i Padri Fondatori solo con il nome, tutti in fila,
   senza la squadra di oggi. Il testo della Storia non cambia.
-- Tabellone › Risultati: la tua partita per prima con un leggero velo oro, senza contorno.
+- Tabellone › Risultati: la tua partita al suo posto, con un leggero velo oro e «La tua partita», senza contorno.
 - Tabellone dello Stadio: interruttore Campionato / Champions Cup oro in tutte e due le posizioni.
 
 Uso come campo_coppa.py:  python3 rilascio/r62/testi.py COPIA_DI_GH_PAGES   oppure   --lab
@@ -23,14 +23,11 @@ PF_NEW = "STORIA.f.map(function(x){return '<div><b>'+esc(x[0])+'</b></div>'})"
 CSS_OLD = ".sto-f{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:8px;margin:10px 0 14px}"
 CSS_NEW = ".sto-f{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:8px;margin:10px 0 14px}.sto-f div{text-align:center}"
 
-# Tabellone › Risultati: la partita di chi entra col codice per prima, con un leggero velo oro (niente contorno). Albo e Derby restano senza oro.
-TAB_GIRO_OLD = "  var b='<div class=\"nota\">Serie A · Giornata '+g.sa+'</div>';\n  g.m.forEach(function(m,k){"
-TAB_GIRO_NEW = ("  var b='<div class=\"nota\">Serie A · Giornata '+g.sa+'</div>';\n"
-                "  g.m.slice().sort(function(x,z){function tua(q){return ME&&(q[cup?1:0]===ME||q[cup?4:3]===ME)?0:1}return tua(x)-tua(z)}).forEach(function(m,k){")
+# Tabellone › Risultati: la partita di chi entra col codice resta al suo posto, con un leggero velo oro e «La tua partita» (niente contorno). Albo e Derby restano senza oro.
 TAB_M_OLD = "b+='<div class=\"m'+(cup?' cp':'')+(tg.length?' dby':'')+'\""
 TAB_M_NEW = "b+='<div class=\"m'+(cup?' cp':'')+(tg.length?' dby':'')+(ME&&(casa===ME||fuori===ME)?' tua':'')+'\""
 TAB_CSS_OLD = "</head>"
-TAB_CSS_NEW = ("<style>/* 6.2: la tua partita per prima, con un leggero velo oro */"
+TAB_CSS_NEW = ("<style>/* 6.2: la tua partita con un leggero velo oro */"
                "#board>.m.tua{position:relative;background-image:linear-gradient(90deg,rgba(255,209,102,.17),rgba(255,209,102,.05))!important}"
                "#board>.m.tua::before{content:'La tua partita';position:absolute;top:6px;left:18px;font:900 9px/1 Inter,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#ffd166}"
                "</style></head>")
@@ -42,8 +39,8 @@ LAVORI = {
     'girrr/v55/ui.js': [(POS_OLD, POS_NEW)],
     'girrr/novita.js': [(PF_OLD, PF_NEW), (CSS_OLD, CSS_NEW)],
     'stadio/girrr/novita.js': [(PF_OLD, PF_NEW), (CSS_OLD, CSS_NEW)],
-    'girrr/tabellone.html': [(TAB_GIRO_OLD, TAB_GIRO_NEW), (TAB_M_OLD, TAB_M_NEW), (TAB_CSS_OLD, TAB_CSS_NEW)],
-    'stadio/girrr/tabellone.html': [(TAB_GIRO_OLD, TAB_GIRO_NEW), (TAB_M_OLD, TAB_M_NEW), (TAB_CSS_OLD, TAB_CSS_NEW), (SW_OLD, SW_NEW), (SWT_OLD, SWT_NEW)],
+    'girrr/tabellone.html': [(TAB_M_OLD, TAB_M_NEW), (TAB_CSS_OLD, TAB_CSS_NEW)],
+    'stadio/girrr/tabellone.html': [(TAB_M_OLD, TAB_M_NEW), (TAB_CSS_OLD, TAB_CSS_NEW), (SW_OLD, SW_NEW), (SWT_OLD, SWT_NEW)],
 }
 
 

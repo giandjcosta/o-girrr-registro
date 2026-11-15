@@ -14,7 +14,7 @@ Parte di Claude della 6.2. Prima certificazione nel Lab (`lab/novita-6-2.html`),
 
 - Tabellone › Dentro la partita: «= Stessa posizione» con la maiuscola e «1 posizione» al singolare (`girrr/v55/ui.js`, Lega e Stadio).
 - Albo › La Storia: Padri Fondatori solo con il nome, tutti in fila, senza squadra (`novita.js`, Lega e Stadio). Il testo della Storia non cambia.
-- Tabellone › Risultati: con il codice della squadra la tua partita è la prima, con un leggero velo oro e la scritta «La tua partita», senza contorno (Campionato e Coppa). Da ospite nulla cambia. Albo d’oro e Derby restano senza oro (Gianluca, 15 novembre).
+- Tabellone › Risultati: con il codice della squadra la tua partita resta al suo posto, con un leggero velo oro e la scritta «La tua partita», senza contorno (Campionato e Coppa). Da ospite nulla cambia. Albo d’oro e Derby restano senza oro (Gianluca, 15 novembre).
 - Tabellone dello Stadio: interruttore Campionato / Champions Cup oro in tutte e due le posizioni, testo scuro sulla parte scelta (Gianluca, 15 novembre: «Sì»). Bande, giornate e podio del Tabellone dello Stadio restano come prima.
 - Segnalato, non toccato: `girrr/v55/cronache.json` risponde 404 anche sul sito vero (il Tabellone lo chiede).
 
