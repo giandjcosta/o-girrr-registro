@@ -61,7 +61,7 @@ function mount(){if(!data||!editoriale)return;const login=JSON.stringify(identit
   career();
  }
  if(page==='albo.html'){
-  insert(document.querySelector('[data-ap="rec"]'),'pt-archivio',archive());
+  insert(document.querySelector('[data-ap="rec"]'),'pt-archivio','<span id="pt-archivio" data-al62></span>');   /* 6.2: l'archivio lo disegna albo62.js con la grafica dei Record */
   /* 6.0.1: la Classifica dei Derby è una delle tre schede della pagina Derby, con il suo riquadro in Albo › Derby (novita.js) */
   if(location.hash==='#pt-archivio'){const b=document.querySelector('[data-at="rec"]');if(b&&b.getAttribute('aria-selected')!=='true')setTimeout(()=>{if(b.isConnected&&b.getAttribute('aria-selected')!=='true')b.click()},0)}
  }
@@ -74,7 +74,7 @@ document.addEventListener('click',e=>{
  if(e.target.closest('[data-pt-week]')){e.preventDefault();e.stopImmediatePropagation();careerWeek=true;section('settimana');mount();return}
  if(e.target.closest('[data-ctab]')){careerWeek=false;section('');document.getElementById('pt-storia')?.remove();document.querySelectorAll('#view>[hidden]').forEach(x=>x.hidden=false)}
 },true);
-function redrawPoll(){const p=document.getElementById('pt-mvp');if(p)p.outerHTML=poll();const a=document.getElementById('pt-archivio');if(a)a.outerHTML=archive()}
+function redrawPoll(){const p=document.getElementById('pt-mvp');if(p)p.outerHTML=poll();const a=document.getElementById('pt-archivio');if(a&&!a.hasAttribute('data-al62'))a.outerHTML=archive()}
 async function refresh(){
  if(!config||!data||busyVote)return;
  const generation=++refreshId,login=JSON.stringify(identity());
