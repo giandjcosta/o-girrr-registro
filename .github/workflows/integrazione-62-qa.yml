@@ -34,7 +34,32 @@ jobs:
       - name: "Radio MVP, scadenze e testi: nessun audio"
         run: python3 -m unittest discover -s prove/v62 -p testi.py -v
       - name: Check sintassi Python
-        run: python3 -m py_compile rilascio/r62/applica.py rilascio/r62/campo_coppa.py rilascio/r62/testi.py voci-src/copione.py voci-src/prepara_dati.py voci-src/mvp_editoriale62.py calcoli/finestre62.py rilascio/r62/server/catalogo62.py
+        run: python3 -m py_compile rilascio/r62/applica.py rilascio/r62/campo_coppa.py rilascio/r62/testi.py voci-src/copione.py voci-src/prepara_dati.py voci-src/mvp_editoriale62.py calcoli/finestre62.py rilascio/r62/server/catalogo62.py rilascio/r62/backend.py
+  backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: giandjcosta/o-fant-a-girrr
+          ref: main
+          path: qa-site-backend
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prepara backend su copia nuova, senza deploy o Supabase
+        run: |
+          python3 rilascio/r62/backend.py qa-site-backend "$RUNNER_TEMP/backend-62"
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          base=Path(os.environ['RUNNER_TEMP'])/'backend-62'
+          assert 'eventi_mvp(' in (base/'calcoli/leggi_eventi.py').read_text()
+          assert 'if t == "mvp"' in (base/'calcoli/post_curva.py').read_text()
+          assert '--prima-del-rilascio' in (base/'calcoli/catalogo62.py').read_text()
+          print('Backend preparato, nessun sito o database modificato')
+          PY
   postgres:
     runs-on: ubuntu-latest
     services:
