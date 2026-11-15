@@ -4,7 +4,7 @@
 
 ## Messaggio unico
 
-⚽ **O Girrr 6.2 è online!** Nel Campo ora trovi anche le partite della Champions Cup: un tocco sull’interruttore e passi da una competizione all’altra. Quando entri con la tua squadra si apre subito la tua partita, e con le nuove frecce passi da una partita all’altra o salti di giornata. Ritrovi le tue scelte tra Curva e Girrr Sport, dove puoi rivedere anche le conferenze già pubblicate. Trovi anche una Carriera più leggibile e più spazio all’MVP dei tifosi nel Giornale e dalla prossima puntata della Radio. Buona giornata a tutti! ⚽
+⚽ **O Girrr 6.2 è online!** Nel Campo ora trovi anche le partite della Champions Cup: un tocco sull’interruttore e passi da una competizione all’altra, e quando entri con il tuo codice si apre subito la tua partita. Con le nuove frecce passi da una partita all’altra o salti di giornata. Voti una volta sola e ritrovi il tuo voto sia nella Curva sia in Girrr Sport, dove puoi rileggere anche le conferenze già pubblicate. Nel Giornale c’è la rubrica con i candidati MVP dei tifosi della giornata e la Carriera è più leggibile. Buona giornata a tutti! ⚽
 
 ## Changelog unico
 

@@ -29,3 +29,9 @@ Su una copia nuova di gh-pages: `python3 rilascio/r62/campo_coppa.py COPIA` e `p
 - Fluidità: PC 1920, media 17–18 ms per fotogramma durante il cambio (prima tecnica scartata: 26–34 ms); telefono 390 con CPU rallentata 4×: un solo fotogramma lento, quello del nuovo disegno mentre il contenuto è invisibile.
 - Clic ripetuti veloci: vince l'ultimo, nessuno stato a metà. Andata e ritorno conservano la giornata.
 - **Non provati qui:** WebKit e Firefox (non installati in questo ambiente: usare `registro-browser-qa.yml`), Safari su iPhone, Samsung Internet, TV fisiche.
+
+## Giornale (15 novembre, sera)
+
+- Gianluca vuole il Giornale come quello di oggi. `rilascio/r62/giornale_mvp.py` aggiunge al generatore originale solo la rubrica «MVP dei tifosi» con i tre candidati della giornata appena finita, in fondo alla pagina 2. Il Coro resta senza MVP e non cambiano caratteri, spazi o colonne.
+- Prima ho rigenerato il numero 7 con il generatore originale e con i caratteri giusti: è identico al PDF pubblicato, a parte il nome «The Blues Brothers», aggiornato dopo. Poi ho aggiunto la rubrica.
+- Caratteri necessari sulla macchina che genera il PDF: Inter, Inter Display e TeX Gyre Pagella come `serif`.

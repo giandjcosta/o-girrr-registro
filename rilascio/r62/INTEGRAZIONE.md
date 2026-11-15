@@ -35,6 +35,10 @@ La **preview esportata** è `lab/integrata-62/`: pagine native, entrambe le graf
 
 **Non dichiarare completamento della 6.2 fino a integrazione e QA effettivamente superati.**
 
+## Giornale come quello di oggi (Gianluca, 15 novembre 2026, sera)
+
+Prevale su tutto ciò che è scritto sopra sul Giornale. Gianluca vuole il Giornale «come l’ha fatto Claude», cioè quello pubblicato oggi, non la versione rigenerata da ChatGPT: quella usciva con caratteri di ripiego (Liberation Sans al posto di Inter e Inter Display, DejaVu al posto di TeX Gyre Pagella) e cambiava gli spazi della pagina 2 e i Top/Flop su quattro colonne. Ora `applica.py` usa `rilascio/r62/giornale_mvp.py` al posto di `editoriale.py`: il generatore originale aggiunge **solo** la rubrica MVP in fondo alla pagina 2, con gli stili della pagina; se lo spazio non basta interviene il normale controllo di impaginazione (pagina 2 a scala 0,94, come già succede alle pagine 1, 3 e 4). Per generare il PDF servono i caratteri Inter, Inter Display e TeX Gyre Pagella come `serif`: senza, Chromium usa caratteri di ripiego. PDF di prova in `lab/giornale-62/g7/` (numero 7 con la rubrica) e `g6/` (numero pubblicato). «Serie A, 11ª giornata» nei Top/Flop e nella formazione c’è già nel Giornale pubblicato dal 9 ottobre: non è stato toccato.
+
 ## Rettifica successiva di Gianluca
 
 Prevale sui riferimenti precedenti al Coro: rubrica autonoma MVP con tre candidati della giornata appena conclusa, senza premio precedente. Coro intatto. In pagina 2 si compattano gli spazi e si dispongono Top/Flop su quattro colonne per mantenere quattro A4 e gli stessi caratteri. Portieri: icone laterali, pallone con piccola X per i gol subiti. Prova mirata Chromium su telefono/PC/TV, entrambe le grafiche; tre motori ancora da certificare per questa rettifica.

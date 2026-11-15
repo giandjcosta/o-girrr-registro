@@ -2,6 +2,14 @@
 
 
 
+
+## 15 novembre (5) — Claude: Giornale come quello di oggi, solo con la rubrica MVP; annuncio sistemato
+
+- Gianluca: «voglio il giornale come l’hai fatto te, non come l’ha fatto ChatGPT». Il PDF della 6.2 di ChatGPT usava caratteri di ripiego (Liberation Sans, DejaVu) e cambiava la pagina 2. Nuovo passo `rilascio/r62/giornale_mvp.py` in `applica.py` al posto di `editoriale.py`: aggiunge solo la rubrica MVP (tre candidati della giornata appena finita, premio da assegnare) in fondo alla pagina 2. Il Coro resta senza MVP. Il numero 7 rigenerato è identico al pubblicato, a parte il nome «The Blues Brothers», più la rubrica; la pagina 2 va a scala 0,94 con il normale controllo di impaginazione. Il Lab mostra questo PDF (`lab/giornale-62/g7/`, `lab/integrata-62/riepiloghi/settimana-07.pdf`); il numero 6 è quello pubblicato.
+- «Serie A, 11ª giornata» (Top/Flop e formazione della settimana) c’è già nel Giornale pubblicato dal 9 ottobre: non toccato, si chiede a Gianluca se toglierlo.
+- Annuncio 6.2: messaggio riscritto in 5 frasi secondo `REGOLE-VERSIONI.md` (voto unico in Curva e Girrr Sport, rubrica MVP nel Giornale). Validato con `aggiungi.py --prova`, niente in `versioni.json`.
+- `applica.py` rieseguito su una copia nuova di gh-pages: tutti i passi riusciti, copia originale intatta.
+
 ## 15 novembre (4) — Claude: la 6.2 completa di ChatGPT entra nel Lab
 
 - Richiesta di Gianluca: «Finisci il lavoro di chat e mettilo nel lab così lo provo». PR [#96](https://github.com/giandjcosta/o-girrr-registro/pull/96) di ChatGPT (`chatgpt/integrazione-62-completa`, 6.1.1 dentro la 6.2, votazioni e Precedenti nelle pagine originali, Giornale a quattro pagine, Radio solo testo, confronto A/B) unita in `main` come `931b6d0`. Solo Lab: **sito vero alla 6.1, Supabase non toccato, nessuna SQL applicata, nessun audio, niente in `versioni.json`**.
