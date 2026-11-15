@@ -23,7 +23,7 @@ Il ritorno del frontend si farà con `git revert` del commit effettivamente pubb
 ## Piano preliminare di attivazione (NON autorizzato)
 
 1. Acquisire una copia verificata delle definizioni RPC/trigger esistenti, privilegi, conteggi dei voti e finestre; verificare i valori reali prima di ogni modifica.
-2. In una finestra controllata, applicare **prima** `sql/votazioni-62-proposta.sql`, quindi `sql/finestre-62-proposta.sql`. Sono ancora bozze e richiedono un «Vai» specifico per Supabase.
+2. In una finestra controllata, applicare **prima** `sql/votazioni-62-proposta.sql`, poi `sql/finestre-62-proposta.sql` e infine `sql/albo-62-proposta.sql` (RPC e tabelle di giuria). Sono ancora bozze e richiedono un «Vai» specifico per Supabase.
 3. Il catalogo deve essere pronto **prima** di pubblicare le pagine: `catalogo62.py` rifiuta normalmente di scrivere finché il numero è 6.1. Per il solo intervento di rilascio già autorizzato, utilizzare la **copia separata del backend del sito** preparata da `rilascio/r62/backend.py`, che include `calcoli/catalogo62.py`, e invocarla come `python3 COPIA_BACKEND/calcoli/catalogo62.py COPIA_GH_PAGES --vai --prima-del-rilascio`. Il flag anticipato funziona solo se `versioni.json` della copia di gh-pages è ancora alla 6.1; senza `--vai` non può operare. Non utilizzare questo comando prima dell'autorizzazione SQL di Gianluca. Non usare lo script originale nella cartella Registro: il suo percorso di import è progettato per la copia del backend.
 4. Verificare con le RPC di sola lettura che il catalogo sia completo, che le preferenze precedenti siano immutate, che le conferenze siano ancora operative, e che la scadenza MVP della **7ª, 21 novembre 2026 ore 15:00 Europe/Rome**, sia invariata. Solo dopo le verifiche pubblicare le pagine 6.2 e aggiornare `versioni.json`, seguendo la procedura ufficiale e registrando SHA e rollback.
 
@@ -32,3 +32,16 @@ Il ritorno del frontend si farà con `git revert` del commit effettivamente pubb
 **Limite dello schema delle conferenze:** le tabelle storiche `conf_risposta` / `conf_dopo` non dichiarano la stagione. Il trigger usa la stagione esplicita solo se la colonna esiste; in mancanza usa l'anno sportivo corrente (confine a luglio, fuso Roma). Non può distinguere in modo certo un inserimento retroattivo fuori stagione senza un campo stagione: per i backfill storici serve uno schema esplicitamente stagionalizzato o una procedura di importazione dedicata. Se non esiste una finestra corrispondente, il nuovo trigger lascia in vigore il comportamento precedente. Prima dell'applicazione reale verificare i casi storico/attuale sulla struttura effettiva.
 
 **Stagione futura dei sondaggi delle sfide:** `sondaggio_private.voti` è indicizzata solo da (giornata, team): la prossima stagione riuserebbe le stesse chiavi. Proposta separata, NON inclusa nella 6.2: introdurre una chiave `(stagione, giornata, team)`, migrare tutti i voti esistenti alla stagione verificata, mantenere la vecchia RPC come adattatore alla stagione corrente fino all'aggiornamento dei client. Non riattribuire stagioni per ipotesi.
+
+
+## Albo e giurie, ordine obbligatorio (solo dopo GO e Vai SQL)
+
+- Nella copia separata di `main` del sito, `rilascio/r62/backend.py` prepara anche `calcoli/giuria62.py` insieme al catalogo, senza scriverli nel repository vero.
+- Prima del rilascio, su database **solo di collaudo**, eseguire anche `prove/v62/postgres_albo.py`. La RPC `v62_albo` deve esistere prima che le pagine della 6.2 vengano mostrate.
+- Dopo la pubblicazione della 6.2, soltanto i dossier editoriali realmente preparati e verificati dalla redazione possono essere caricati da `calcoli/giuria62.py COPIA_GH_PAGES DOSSIER.json --vai`; senza `--vai` opera in lettura locale, **senza rete**. Il loader è per il servizio, non per il browser e non sceglie preferenze da solo. Nessuna pubblicazione o invio al database avviene in questa PR.
+- Se una giornata non contiene entrambe le giurie, `v62_albo.partite` è `null`, quindi la UI deve riportare «Dato non disponibile». Non costruire preferenze di redazione/personaggi retroattive.
+- Il dato ufficiale «Serie A, 11ª giornata» nel Giornale rimane esattamente quello pubblicato; non è parte della migrazione.
+
+## Punto di arresto prima della pubblicazione
+
+Non autorizzare una pubblicazione automatica sulla base dei test locali. Fare verifiche post-SQL con letture RPC sul database reale **solo dopo** il «Vai SQL» esplicito, controllare una copia staged del frontend e il catalogo, e avere rollback del sito e definizioni delle funzioni originali. La ripartenza dei workflow si abilita solo dopo che i nuovi ingressi sono stati provati; in caso contrario conservare la 6.1.
