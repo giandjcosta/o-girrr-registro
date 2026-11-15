@@ -1,5 +1,5 @@
 {
- "generato": 1794755736,
+ "generato": 1794755860,
  "versione": "6.1",
  "repository": [
   {
@@ -8005,17 +8005,62 @@
      "totale": 1204
     },
     {
+     "nome": "chatgpt/coordinamento-62",
+     "punta": "0567515",
+     "data": 1794755736,
+     "titolo": "ChatGPT: collega la revisione 6.2 alla PR 92",
+     "autore": "ChatGPT",
+     "padre": "main",
+     "nascita": "410f975",
+     "dataNascita": 1794753341,
+     "avanti": 3,
+     "stato": "attivo",
+     "commit": [
+      [
+       "05675158964756f53d48eb183a1c7ce0fd0b3a7f",
+       1794755736,
+       "ChatGPT",
+       "ChatGPT: collega la revisione 6.2 alla PR 92"
+      ],
+      [
+       "fd6c1c7aa46925c91c6c93f702524335ea28d1a6",
+       1794755684,
+       "ChatGPT",
+       "ChatGPT: registra hash e verifiche della proposta 6.2"
+      ],
+      [
+       "0cbe4bb6d6d1dffdfe85e4cf98094db8f16b0377",
+       1794755633,
+       "ChatGPT",
+       "ChatGPT: prepara nel Lab la proposta coordinata 6.2"
+      ]
+     ],
+     "totale": 3
+    },
+    {
      "nome": "claude/fervent-thompson-rwlwrh",
-     "punta": "6e9bf80",
-     "data": 1794755659,
-     "titolo": "Claude: Tabellone 6.2, la tua partita per prima con un velo oro senza contorno; Albo e Derby senza oro",
+     "punta": "fc51bea",
+     "data": 1794755860,
+     "titolo": "Claude: Tabellone 6.2, la tua partita resta al suo posto con velo oro e «La tua partita»",
      "autore": "Claude",
      "padre": "main",
      "nascita": "410f975",
      "dataNascita": 1794753341,
-     "avanti": 7,
+     "avanti": 9,
      "stato": "attivo",
      "commit": [
+      [
+       "fc51beabb70f44fa003b7883e92b013bf8c9a17a",
+       1794755860,
+       "Claude",
+       "Claude: Tabellone 6.2, la tua partita resta al suo posto con velo oro e «La tua partita»"
+      ],
+      [
+       "79ebe4d26f11f782fcd946184f9241366c0becaf",
+       1794755777,
+       "Claude",
+       "Claude: Tabellone dello Stadio, interruttore Campionato / Champions Cup oro (6.2, solo Lab)"
+      ],
       [
        "6e9bf80d799fa4e6f6d05a1d7acf159ba40bd346",
        1794755659,
@@ -8053,40 +8098,7 @@
        "Claude: proposta 6.2, Campo con Campionato e Champions Cup (solo Lab)"
       ]
      ],
-     "totale": 7
-    },
-    {
-     "nome": "chatgpt/coordinamento-62",
-     "punta": "0567515",
-     "data": 1794755736,
-     "titolo": "ChatGPT: collega la revisione 6.2 alla PR 92",
-     "autore": "ChatGPT",
-     "padre": "main",
-     "nascita": "410f975",
-     "dataNascita": 1794753341,
-     "avanti": 3,
-     "stato": "attivo",
-     "commit": [
-      [
-       "05675158964756f53d48eb183a1c7ce0fd0b3a7f",
-       1794755736,
-       "ChatGPT",
-       "ChatGPT: collega la revisione 6.2 alla PR 92"
-      ],
-      [
-       "fd6c1c7aa46925c91c6c93f702524335ea28d1a6",
-       1794755684,
-       "ChatGPT",
-       "ChatGPT: registra hash e verifiche della proposta 6.2"
-      ],
-      [
-       "0cbe4bb6d6d1dffdfe85e4cf98094db8f16b0377",
-       1794755633,
-       "ChatGPT",
-       "ChatGPT: prepara nel Lab la proposta coordinata 6.2"
-      ]
-     ],
-     "totale": 3
+     "totale": 9
     }
    ]
   }
