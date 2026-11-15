@@ -9,7 +9,8 @@ import json
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+SOURCE = Path(__file__).resolve()
+ROOT = SOURCE.parents[3] if SOURCE.parent.name == 'server' else SOURCE.parents[1]
 
 
 def valida(dossier, sito):
