@@ -1,5 +1,5 @@
 {
- "generato": 1794757310,
+ "generato": 1794759206,
  "versione": "6.1",
  "repository": [
   {
@@ -1733,9 +1733,93 @@
      "totale": 101
     },
     {
+     "nome": "claude/fervent-thompson-rwlwrh",
+     "punta": "7aaac18",
+     "data": 1794757105,
+     "titolo": "Claude: prova della lettura dei cartellini su una copia di data.json (solo log, ramo di prova)",
+     "autore": "Claude",
+     "padre": "main",
+     "nascita": "40837e6",
+     "dataNascita": 1794728639,
+     "avanti": 2,
+     "stato": "attivo",
+     "commit": [
+      [
+       "7aaac184331889d76a77b42729c44897fb102712",
+       1794757105,
+       "Claude",
+       "Claude: prova della lettura dei cartellini su una copia di data.json (solo log, ramo di prova)"
+      ],
+      [
+       "a223dbde6dfc7e0d87e39dfe971d3caa9dea18df",
+       1794756998,
+       "Claude",
+       "Claude: prova diagnostica dei cartellini nella pagina dei voti (solo log, ramo di prova)"
+      ]
+     ],
+     "totale": 2
+    },
+    {
+     "nome": "claude/cartellini-voti",
+     "punta": "a44a4bc",
+     "data": 1794757160,
+     "titolo": "Claude: i voti leggono anche ammonizioni ed espulsioni (data.json), il Giornale non le mostra",
+     "autore": "Claude",
+     "padre": "chatgpt/rilascio-6-1",
+     "nascita": "2536af2",
+     "dataNascita": 1794672383,
+     "avanti": 7,
+     "stato": "unito",
+     "unione": {
+      "in": "gh-pages",
+      "data": 1794759026,
+      "commit": "1112d94",
+      "titolo": "Claude: unisce la lettura di ammonizioni ed espulsioni (PR #17, «Vai» di Gianluca)"
+     },
+     "commit": [
+      [
+       "a44a4bc6954e4f65192b0e13d17bfdaa27a42ccb",
+       1794757160,
+       "Claude",
+       "Claude: i voti leggono anche ammonizioni ed espulsioni (data.json), il Giornale non le mostra"
+      ],
+      [
+       "13e87e4ccec016441f21cea30212cdbf5949a138",
+       1794754291,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
+      [
+       "ad341cd11f0cc9fd26fa551a03bf1be68a7f98e7",
+       1794744405,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
+      [
+       "13c88bbe7a3d931daa06892e72455d3f23ae4f7a",
+       1794708335,
+       "github-actions[bot]",
+       "Calcoli dopo la giornata"
+      ],
+      [
+       "3bcfaf4aba9397bbed1d7c8ebc4d4965b02dbe16",
+       1794707981,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
+      [
+       "58ceccfce577427f769d9d3ebb45e558e2f9514b",
+       1794689281,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ]
+     ],
+     "totale": 7
+    },
+    {
      "nome": "gh-pages",
-     "punta": "13e87e4",
-     "data": 1794754291,
+     "punta": "98c0add",
+     "data": 1794759088,
      "titolo": "Aggiorna statistiche e voti in automatico",
      "autore": "github-actions[bot]",
      "padre": null,
@@ -1744,6 +1828,18 @@
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "98c0adde22aba19ba2ad831c30d9d1659f14370d",
+       1794759088,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
+      [
+       "1112d94871d3a097b198499781979e8eef19f032",
+       1794759026,
+       "Claude",
+       "Claude: unisce la lettura di ammonizioni ed espulsioni (PR #17, «Vai» di Gianluca)"
+      ],
       [
        "13e87e4ccec016441f21cea30212cdbf5949a138",
        1794754291,
@@ -1803,69 +1899,9 @@
        1794623423,
        "github-actions[bot]",
        "Aggiorna statistiche e voti in automatico"
-      ],
-      [
-       "5752f4efaabbe7f866455cef236d6abf94b8fa05",
-       1794607323,
-       "github-actions[bot]",
-       "Aggiorna statistiche e voti in automatico"
-      ],
-      [
-       "1e06510ae31f196ee8315acd5db11faf77783602",
-       1794591011,
-       "ChatGPT",
-       "ChatGPT: pubblica il messaggio 6.0 approvato"
       ]
      ],
-     "totale": 658
-    },
-    {
-     "nome": "claude/fervent-thompson-rwlwrh",
-     "punta": "7aaac18",
-     "data": 1794757105,
-     "titolo": "Claude: prova della lettura dei cartellini su una copia di data.json (solo log, ramo di prova)",
-     "autore": "Claude",
-     "padre": "main",
-     "nascita": "40837e6",
-     "dataNascita": 1794728639,
-     "avanti": 2,
-     "stato": "attivo",
-     "commit": [
-      [
-       "7aaac184331889d76a77b42729c44897fb102712",
-       1794757105,
-       "Claude",
-       "Claude: prova della lettura dei cartellini su una copia di data.json (solo log, ramo di prova)"
-      ],
-      [
-       "a223dbde6dfc7e0d87e39dfe971d3caa9dea18df",
-       1794756998,
-       "Claude",
-       "Claude: prova diagnostica dei cartellini nella pagina dei voti (solo log, ramo di prova)"
-      ]
-     ],
-     "totale": 2
-    },
-    {
-     "nome": "claude/cartellini-voti",
-     "punta": "a44a4bc",
-     "data": 1794757160,
-     "titolo": "Claude: i voti leggono anche ammonizioni ed espulsioni (data.json), il Giornale non le mostra",
-     "autore": "Claude",
-     "padre": "gh-pages",
-     "nascita": "13e87e4",
-     "dataNascita": 1794754291,
-     "avanti": 1,
-     "stato": "attivo",
-     "commit": [
-      [
-       "a44a4bc6954e4f65192b0e13d17bfdaa27a42ccb",
-       1794757160,
-       "Claude",
-       "Claude: i voti leggono anche ammonizioni ed espulsioni (data.json), il Giornale non le mostra"
-      ]
-     ],
-     "totale": 1
+     "totale": 661
     }
    ]
   },
@@ -8012,22 +8048,28 @@
     },
     {
      "nome": "claude/fervent-thompson-rwlwrh",
-     "punta": "f4081c6",
-     "data": 1794757297,
-     "titolo": "Claude: novità 6.2, cartellini nella scheda del Campo",
+     "punta": "e84a62d",
+     "data": 1794759191,
+     "titolo": "Claude: STATO.md, cartellini online nei dati del sito (PR #17 unita con il «Vai» di Gianluca)",
      "autore": "Claude",
      "padre": "chatgpt/coordinamento-62",
      "nascita": "410f975",
      "dataNascita": 1794753341,
-     "avanti": 17,
+     "avanti": 19,
      "stato": "unito",
      "unione": {
       "in": "main",
-      "data": 1794757310,
-      "commit": "a89f00c",
-      "titolo": "Merge pull request #94: Claude, Campo 6.2 con i cartellini nel Lab"
+      "data": 1794759206,
+      "commit": "b051bfb",
+      "titolo": "Merge pull request #95 from giandjcosta/claude/fervent-thompson-rwlwrh"
      },
      "commit": [
+      [
+       "e84a62d9f44d5ec2771f80bc2a788e04e1bc4eb2",
+       1794759191,
+       "Claude",
+       "Claude: STATO.md, cartellini online nei dati del sito (PR #17 unita con il «Vai» di Gianluca)"
+      ],
       [
        "f4081c60660a43f09fafc87a629a552dca2d0330",
        1794757297,
@@ -8093,21 +8135,15 @@
        1794755466,
        "Claude",
        "Claude: Campo 6.2 con cerchio oro solo al migliore in campo e simboli di tutti i bonus e malus; «= Stessa posizione»; Padri Fondatori solo c"
-      ],
-      [
-       "8948a6d5b43846415b5eb0b400b940c47afe3645",
-       1794755134,
-       "Claude",
-       "Claude: proposta 6.2, immagini prima/dopo della tua squadra in risalto (Tabellone e Albo)"
       ]
      ],
-     "totale": 17
+     "totale": 19
     },
     {
      "nome": "main",
-     "punta": "a89f00c",
-     "data": 1794757310,
-     "titolo": "Merge pull request #94: Claude, Campo 6.2 con i cartellini nel Lab",
+     "punta": "b051bfb",
+     "data": 1794759206,
+     "titolo": "Merge pull request #95 from giandjcosta/claude/fervent-thompson-rwlwrh",
      "autore": "giandjcosta",
      "padre": null,
      "nascita": null,
@@ -8115,6 +8151,12 @@
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "b051bfb4e62bdc5686c36a4dd7f34a4d37b228cf",
+       1794759206,
+       "giandjcosta",
+       "Merge pull request #95 from giandjcosta/claude/fervent-thompson-rwlwrh"
+      ],
       [
        "a89f00cd21b6248af25d45620510e7b4c604970e",
        1794757310,
@@ -8180,15 +8222,9 @@
        1794682005,
        "ChatGPT",
        "ChatGPT: mostra nel Lab Campionato & Champions Cup"
-      ],
-      [
-       "d29fd094945c4245e3d3d159e1726e7d37660afd",
-       1794681768,
-       "Registro",
-       "Registro: elenco attività aggiornato"
       ]
      ],
-     "totale": 1222
+     "totale": 1224
     }
    ]
   }
