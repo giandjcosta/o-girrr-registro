@@ -54,4 +54,4 @@ I browser devono essere installati con le loro librerie. Qui Chromium e WebKit r
 
 ## Autorizzazioni
 
-Nessun merge o pubblicazione del sito vero, modifica Supabase o servizio vocale. Nessuna nuova voce in `versioni.json`. La pubblicazione nel Lab pubblico avviene soltanto dopo il via richiesto da `AGENTS.md`; la PR è una revisione concreta, non un rilascio già avvenuto.
+Nessun merge o pubblicazione del sito vero, modifica Supabase o servizio vocale. Nessuna nuova voce in `versioni.json`. Gianluca ha dato il «Vai al solo Lab» il 15 novembre 2026, autorizzando il merge della PR #92 nel Registro. Il sito vero, Supabase e le voci restano esclusi. I test generali di Filtri/Panorama presentano la stessa anomalia già presente sul main precedente (`e9da729`, run `43722387690`), documentata in STATO.md; non sono dichiarati superati.
