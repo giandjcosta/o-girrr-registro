@@ -1,0 +1,88 @@
+{
+  "archivio": [],
+  "votazione": {
+    "firma": "fbc05b270c505129f6d63c85f0d781ab403b27349fe16d8a31723fb585e154af",
+    "chiude": "2026-11-21T14:00:00+00:00",
+    "chiusa": null,
+    "giornata": 7,
+    "stagione": "2026/27",
+    "redazione": [
+      {
+        "autore": "Redazione di Girrr Sport",
+        "motivo": "Vince 2–1 in trasferta sulla Grodah e sale al secondo posto: una risposta immediata alla sconfitta con l’Atletico.",
+        "scelta": "stif dc"
+      }
+    ],
+    "classifica": [
+      {
+        "gf": 2,
+        "gs": 1,
+        "op": "Grodah",
+        "red": 1,
+        "away": true,
+        "team": "stif dc",
+        "opPos": 2,
+        "score": 14.8,
+        "total": 56.0,
+        "umani": 0,
+        "humanCount": 2,
+        "personaggi": 2
+      },
+      {
+        "gf": 2,
+        "gs": 1,
+        "op": "WOA",
+        "red": 0,
+        "away": true,
+        "team": "Oranje VC",
+        "opPos": 10,
+        "score": 14,
+        "total": 26.0,
+        "umani": 1,
+        "humanCount": 2,
+        "personaggi": 2
+      },
+      {
+        "gf": 3,
+        "gs": 2,
+        "op": "Apo team",
+        "red": 0,
+        "away": false,
+        "team": "Mariana Coneja",
+        "opPos": 8,
+        "score": 13.2,
+        "total": 18.0,
+        "umani": 1,
+        "humanCount": 2,
+        "personaggi": 1
+      }
+    ],
+    "personaggi": [
+      {
+        "autore": "Nonno Cesare",
+        "motivo": "Nonno Cesare premia la solidità del risultato: 2–1 contro WOA.",
+        "scelta": "Oranje VC"
+      },
+      {
+        "autore": "Statistico Folle",
+        "motivo": "Statistico Folle considera margine, trasferta e posizione dell’avversario: 2–1 contro Grodah.",
+        "scelta": "stif dc"
+      },
+      {
+        "autore": "Il Romantico del Pallone",
+        "motivo": "Il Romantico del Pallone premia il ritorno alla vittoria: 2–1 contro WOA.",
+        "scelta": "Oranje VC"
+      },
+      {
+        "autore": "Tifoso Arrabbiato",
+        "motivo": "Tifoso Arrabbiato premia una risposta dopo una sconfitta: 2–1 contro Grodah.",
+        "scelta": "stif dc"
+      },
+      {
+        "autore": "Telecronista Stanco",
+        "motivo": "Telecronista Stanco premia i gol della vincitrice, poi la trasferta: 3–2 contro Apo team.",
+        "scelta": "Mariana Coneja"
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "motore": "PostgreSQL 17.5 WASM/PGlite locale",
+  "produzione": false,
+  "prove": [
+    "Autenticazione e isolamento",
+    "Due invii con scelte diverse: primo voto conservato, conteggio uno",
+    "Preferenze già esistenti prima della 6.2 conservate senza importazioni",
+    "Vecchio endpoint non sovrascrive il primo voto",
+    "MVP: cambio e ritiro non sovrascrivono il voto",
+    "Ospite senza preferenze private, due risultati visibili, dati vecchi conservati",
+    "Post: stessa curva_vote e stesso identificativo, vecchio endpoint senza duplicazioni",
+    "Scadenza verificata dal server",
+    "Chiusura definitiva e archivio, giurie originali conservate",
+    "RLS, schema privato e apertura riservata"
+  ]
+}

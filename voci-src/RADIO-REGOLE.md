@@ -63,3 +63,15 @@ Nessuno dei due è britannico (era così solo con le voci in inglese): niente t�
 - Per rifare la puntata di una giornata già uscita: workflow «Radio della giornata» con `subito` = 1 e `rifai` = 1 (la nuova sostituisce la vecchia; se Gemini non risponde resta quella di prima).
 
 - La puntata 6 non si rifà (Gianluca, 3 novembre): le correzioni valgono dalla prossima puntata. L'ultimo tentativo si è fermato da solo per la quota di Gemini finita (100 richieste al giorno per modello) e non ha pubblicato niente.
+
+## 6.2 · MVP dei tifosi (Gianluca, 15 novembre 2026)
+
+Una sola battuta aggiunta immediatamente prima della chiusura integrale di Beppe:
+«Per Radio Girrr, la radio ufficiale della Lega, è tutto! Mettete la formazione, vi vogliamo bene!».
+La nuova battuta usa Luigi, senza sostituire altri testi; supera la precedente richiesta sul numero invariato di battute.
+Verdetto definitivo: «{Squadra} è l’MVP dei tifosi della {N}ª giornata.».
+Voto aperto: «Per l’MVP della {N}ª si vota ancora in Curva.».
+Una sola delle due, indicativamente 10–15 parole anche con il nome più lungo; giornata sempre quella premiata.
+I verdetti già annunciati non si ripetono. `--mvp-tifosi` legge il dossier dello stesso giro editoriale;
+`--segna` viene usato solo dopo la normale pubblicazione riuscita, mai durante anteprime e prove.
+Niente supplementi o rigenerazioni per chiusure o variazioni di voto. Test solo testuali: non eseguire `puntata.py`, prove vocali o TTS.
