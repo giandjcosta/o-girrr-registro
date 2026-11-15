@@ -2,7 +2,7 @@
 from pathlib import Path
 import argparse,json,shutil,re
 R=Path(__file__).resolve().parents[2]
-FILES=['sondaggi62.js','conferenze.js','stagione.js','curva-os.js','curva-os.css','giro-di-boa.js','giro-di-boa.css','condividi.js','nomi.js','pillole.js','tv.js','offline.js','ospite.js','versioni.js','versioni.json','data.json','formazioni.json','toto-quote.json','push.js','notifiche-lette.js','cerca.js']
+FILES=['sondaggi62.js','albo62.js','conferenze.js','stagione.js','curva-os.js','curva-os.css','giro-di-boa.js','giro-di-boa.css','condividi.js','nomi.js','pillole.js','tv.js','offline.js','ospite.js','versioni.js','versioni.json','data.json','formazioni.json','toto-quote.json','push.js','notifiche-lette.js','cerca.js']
 def esporta(site,out):
  out.mkdir(parents=True,exist_ok=True)
  for f in FILES:
