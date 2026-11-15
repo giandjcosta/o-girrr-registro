@@ -1,5 +1,5 @@
 {
- "generato": 1794781061,
+ "generato": 1794781146,
  "versione": "6.1",
  "repository": [
   {
@@ -8141,22 +8141,28 @@
     },
     {
      "nome": "claude/fervent-thompson-rwlwrh",
-     "punta": "9f6312c",
-     "data": 1794781047,
-     "titolo": "Claude: MVP nel Giornale (vincitrice precedente con Campionato e Coppa, capolettera nero, candidate con storia",
+     "punta": "fc08236",
+     "data": 1794781140,
+     "titolo": "Claude: stessa avversaria in Campionato e Coppa nella stessa giornata raccontata come un fatto solo (Giornale ",
      "autore": "Claude",
      "padre": "chatgpt/integrazione-62-completa",
      "nascita": "13b7223",
      "dataNascita": 1794766745,
-     "avanti": 19,
+     "avanti": 21,
      "stato": "unito",
      "unione": {
       "in": "main",
-      "data": 1794781061,
-      "commit": "a9313ee",
-      "titolo": "Merge pull request #104 from giandjcosta/claude/fervent-thompson-rwlwrh"
+      "data": 1794781146,
+      "commit": "2c856aa",
+      "titolo": "Merge pull request #105 from giandjcosta/claude/fervent-thompson-rwlwrh"
      },
      "commit": [
+      [
+       "fc08236e98d758ac4a2449e5a543e5545b2f0d1f",
+       1794781140,
+       "Claude",
+       "Claude: stessa avversaria in Campionato e Coppa nella stessa giornata raccontata come un fatto solo (Giornale e Radio)"
+      ],
       [
        "9f6312c55ca157d828920b6b7a148be51d7d1ff7",
        1794781047,
@@ -8224,13 +8230,13 @@
        "Registro: elenco attività aggiornato"
       ]
      ],
-     "totale": 19
+     "totale": 21
     },
     {
      "nome": "main",
-     "punta": "a9313ee",
-     "data": 1794781061,
-     "titolo": "Merge pull request #104 from giandjcosta/claude/fervent-thompson-rwlwrh",
+     "punta": "2c856aa",
+     "data": 1794781146,
+     "titolo": "Merge pull request #105 from giandjcosta/claude/fervent-thompson-rwlwrh",
      "autore": "giandjcosta",
      "padre": null,
      "nascita": null,
@@ -8238,6 +8244,12 @@
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "2c856aa2c6b1e42f5fc04172d6e444eaa2b42a90",
+       1794781146,
+       "giandjcosta",
+       "Merge pull request #105 from giandjcosta/claude/fervent-thompson-rwlwrh"
+      ],
       [
        "a9313ee3dbd203f66f90a7d113b17f560fc94c0c",
        1794781061,
@@ -8303,15 +8315,9 @@
        1794770184,
        "giandjcosta",
        "Merge pull request #96: integrazione 6.2 nel Lab (richiesta di Gianluca, sito vero invariato)"
-      ],
-      [
-       "58c38d2397f93cedf6f24e718121c2148be72af1",
-       1794768152,
-       "Registro",
-       "Registro: elenco attività aggiornato"
       ]
      ],
-     "totale": 1271
+     "totale": 1273
     }
    ]
   }
