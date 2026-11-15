@@ -46,8 +46,6 @@ html.cc-pronto body[data-v53=campo] .gamebtn{transition:background-color .6s cub
 /* Cerchio dei giocatori di casa sul campo, solo nella Lega: rosso in Campionato, azzurro in Coppa. Nello Stadio resta com'era (l'oro è del migliore in campo). Ospite sempre bianco */
 body[data-v53=campo][data-skin=lega]{--casa:#ff5a6a}
 body[data-v53=campo][data-skin=lega][data-comp=coppa]{--casa:#63bce9}
-/* Chi entra con il codice della squadra trova la sua partita per prima nella fila (contorno oro già esistente) */
-#matches>.gamebtn.mia{order:-1}
 /* Cerchio oro: il migliore in campo, quello con la stella (al massimo uno per squadra, come nei dati di Fantacalcio) */
 .pitch .pl.top b,.pitch .pl.away.top b{border-color:#ffd166;box-shadow:0 0 0 2px rgba(255,209,102,.35),0 2px 6px rgba(0,0,0,.35)}
 @media(max-width:700px){.comp-sw{width:100%}}

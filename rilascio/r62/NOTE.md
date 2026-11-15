@@ -7,7 +7,7 @@ Parte di Claude della 6.2. Prima certificazione nel Lab (`lab/novita-6-2.html`),
 - **Cerchio dei giocatori di casa:** nella Lega rosso in Campionato e azzurro in Coppa; nello Stadio azzurro come prima (l'oro è riservato al voto più alto). Ospite bianco.
 - **Cerchio oro e stella:** solo il migliore in campo dei dati ufficiali (uno, o uno per squadra). Decisione di Gianluca, 15 novembre.
 - **Simboli dei bonus e malus** come su Fantacalcio, con legenda: ⚽ gol, 🎯 rigore segnato, 👟 assist, 🧤 rigore parato, 🛡️ porta inviolata (portiere con voto e nessun gol subito), 🥅 gol subiti dal portiere, ❌ rigore sbagliato, 🔴 autogol, ↑ entrato. Ammonizioni, espulsioni, gol decisivo e assist da fermo **non sono nei dati** che il sito scarica (`data.json`): per mostrarli il workflow dei voti deve prima salvarli.
-- **La tua partita per prima:** con il codice della squadra la tua partita è aperta e al primo posto della fila, con il contorno oro già esistente.
+- **La tua partita si apre per prima:** con il codice della squadra il Campo apre la tua partita, in Campionato e in Coppa; nella fila resta al suo posto (anche ultima), con il contorno oro e «La tua partita», e la fila scorre per mostrarla.
 - Ogni competizione ricorda giornata e partita; l'indirizzo segue la scelta (`coppa=1`). Se il calendario della Coppa manca l'interruttore si nasconde.
 
 ## Altri ritocchi (`rilascio/r62/testi.py`)
