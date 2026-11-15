@@ -8,6 +8,19 @@
 
 
 
+
+## 15 novembre (11) — Claude: MVP nel Giornale e in Radio come deciso da Gianluca
+
+- **Giornale** (`rilascio/r62/editoriale/mvp_giornale62.py`, `giornale_mvp.py`): niente data di chiusura.
+  - La vincitrice della giornata precedente ha una storia più lunga, con Campionato e Champions Cup della stessa giornata insieme e i gol complessivi, più il motivo della redazione. Capolettera nero e una linea separano la vincitrice dalle candidate.
+  - Le tre candidate hanno una breve storia ciascuna: motivo della redazione, più la Coppa se giocata.
+  - Solo risultati veri. Vale dal prossimo Giornale.
+- **Radio** (`voci-src/mvp_editoriale62.py` `battute()`, `copione.py`, `prepara_dati.py`): al massimo due battute brevi prima dei saluti, per spendere poco audio.
+  - Vincitrice: «Strepitosa Mariana Coneja, squadra MVP della 6ª: due vittorie e 8 gol tra Campionato e Champions Cup!».
+  - Voto aperto: «Votazioni aperte per l’MVP della 7ª: in corsa stif dc, Oranje VC e Mariana Coneja. Si vota in Curva e in Girrr Sport!».
+  - Il verdetto viene annunciato una volta sola.
+- Prove aggiornate alle nuove decisioni (`prove/v62/testi.py`). Verdi `testi.py`, cronache integrate, compatibilità cronache e Giro di boa. Anteprima integrata: 24 visite, zero errori. Annuncio e changelog aggiornati.
+
 ## 15 novembre (10) — Claude: sondaggi di Girrr Sport dentro i riquadri
 
 - Gianluca: in Girrr Sport › Sondaggi i sondaggi erano testo nudo sullo sfondo. In `rilascio/r62/sondaggi.js` ora, solo in Girrr Sport, ogni sondaggio usa la scheda dell’app (`card`): banda rossa nella Lega, riquadro arrotondato con banda oro nello Stadio. La Curva non cambia. Provato con Chromium: Lega e Stadio × 320 e 1280 × Girrr Sport e Curva, 8 casi, zero errori, nessuno scorrimento laterale.

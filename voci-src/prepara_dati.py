@@ -104,11 +104,20 @@ def main(argv=None):
         dati['giro_di_boa'] = boa
     dati.pop('mvp_tifosi', None)
     dati.pop('mvp_annunciati', None)
+    dati.pop('mvp_aperta', None)
+    dati.pop('mvp_storie', None)
     if args.mvp_tifosi:
         from mvp_editoriale62 import scegli
         gia = [k[4:] for k in carica(ANN, []) if k.startswith('mvp:')]
-        dati['mvp_tifosi'] = scegli(carica(SITO / 'girrr/dati/mvp-editoriale.json', {}), gia)
+        dossier_mvp = carica(SITO / 'girrr/dati/mvp-editoriale.json', {})
+        dati['mvp_tifosi'] = scegli(dossier_mvp, gia)
         dati['mvp_annunciati'] = gia
+        # Claude, 15 novembre: votazione aperta (le tre candidate) e partite vere per il commento della Radio
+        from mvp_editoriale62 import storie
+        aperta = dossier_mvp.get('votazione')
+        dati['mvp_aperta'] = aperta if aperta and not aperta.get('chiusa') else None
+        v = dati['mvp_tifosi'] or {}
+        dati['mvp_storie'] = storie(d, ((v.get('risultato') or v.get('classifica') or [{}])[0].get('team'), v.get('giornata')))
     dest.mkdir(parents=True, exist_ok=True)
     (dest / "dati.json").write_text(json.dumps(dati, ensure_ascii=False), encoding="utf-8")
     conf = [e for e in ev if e.get("tipo") == "conferenza" and e.get("giornata") == n]
