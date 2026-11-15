@@ -1,5 +1,5 @@
 {
- "generato": 1794777006,
+ "generato": 1794777304,
  "versione": "6.1",
  "repository": [
   {
@@ -8141,22 +8141,34 @@
     },
     {
      "nome": "claude/fervent-thompson-rwlwrh",
-     "punta": "bd3dce9",
-     "data": 1794776955,
-     "titolo": "Claude: voto unico con «Cambia il mio voto» per sondaggi e MVP, risultati chiusi in Curva e Girrr Sport, post ",
+     "punta": "b97a220",
+     "data": 1794777290,
+     "titolo": "Claude: Albo › Record con MVP del campionato e partita più seguita (albo62.js), archivio MVP con il motivo giu",
      "autore": "Claude",
      "padre": "chatgpt/integrazione-62-completa",
      "nascita": "13b7223",
      "dataNascita": 1794766745,
-     "avanti": 10,
+     "avanti": 13,
      "stato": "unito",
      "unione": {
       "in": "main",
-      "data": 1794776970,
-      "commit": "893a99f",
-      "titolo": "Merge pull request #100 from giandjcosta/claude/fervent-thompson-rwlwrh"
+      "data": 1794777304,
+      "commit": "e29d99c",
+      "titolo": "Merge pull request #101 from giandjcosta/claude/fervent-thompson-rwlwrh"
      },
      "commit": [
+      [
+       "b97a220defa2509e8b3a65f47ff71f43f438916e",
+       1794777290,
+       "Claude",
+       "Claude: Albo › Record con MVP del campionato e partita più seguita (albo62.js), archivio MVP con il motivo giusto; Lab con esempio simulato"
+      ],
+      [
+       "b1279be3b5f7b743c66eeee835c0329622b5e878",
+       1794777006,
+       "ChatGPT",
+       "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
+      ],
       [
        "bd3dce93d0843c8d6d2d159eb23b526e851fa619",
        1794776955,
@@ -8194,20 +8206,26 @@
        "Registro: elenco attività aggiornato"
       ]
      ],
-     "totale": 10
+     "totale": 13
     },
     {
      "nome": "main",
-     "punta": "b1279be",
-     "data": 1794777006,
-     "titolo": "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio",
-     "autore": "ChatGPT",
+     "punta": "e29d99c",
+     "data": 1794777304,
+     "titolo": "Merge pull request #101 from giandjcosta/claude/fervent-thompson-rwlwrh",
+     "autore": "giandjcosta",
      "padre": null,
      "nascita": null,
      "avanti": 0,
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "e29d99c8712ccd1bb6ebe19c91bcc5287185c40d",
+       1794777304,
+       "giandjcosta",
+       "Merge pull request #101 from giandjcosta/claude/fervent-thompson-rwlwrh"
+      ],
       [
        "b1279be3b5f7b743c66eeee835c0329622b5e878",
        1794777006,
@@ -8273,15 +8291,9 @@
        1794756777,
        "ChatGPT",
        "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
-      ],
-      [
-       "8011546bc5e8c8324d376b1e1878842204b1dc9f",
-       1794756723,
-       "giandjcosta",
-       "Merge pull request #93: Claude, proposta 6.2 nel Lab"
       ]
      ],
-     "totale": 1263
+     "totale": 1265
     }
    ]
   }
