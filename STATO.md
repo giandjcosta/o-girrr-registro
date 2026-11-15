@@ -5,6 +5,15 @@
 
 
 
+
+## 15 novembre (8) — Claude: Albo › Record con MVP del campionato e partita più seguita (lavoro diviso con ChatGPT)
+
+- Richiesta di Gianluca: gli MVP restano nell’Albo; a fine anno l’MVP del campionato (chi ha più MVP) e la partita più seguita (più voti ai sondaggi delle partite, con anche redazione e personaggi). Lavoro diviso: **ChatGPT** fa dati, SQL, voti di giuria e la RPC `v62_albo` (ramo `chatgpt/albo-62`, prompt nella risposta a Gianluca). **Claude** fa Albo, Lab e simulatore.
+- `rilascio/r62/albo62.js` + `albo_record.py` (in `applica.py`): due riquadri in Albo › Record, sotto l’archivio MVP, in Lega e Stadio. «Corsa all’MVP del campionato» diventa «MVP del campionato» a stagione conclusa; a pari MVP pari merito. «La partita più seguita» mostra la prima e le altre quattro, con i voti di allenatori, redazione e personaggi. Senza `v62_albo` gli MVP si ricavano dall’archivio di `mvp_stato` e la partita più seguita è «Dato non disponibile». Niente oro.
+- Contratto atteso da `v62_albo(p_stagione)`: `{stagione, mvp:[{giornata,team,chiusa}], mvp_classifica:[{team,mvp,giornate}], partite:[{id,giornata,partita,voti:{allenatori,redazione,personaggi,totale}}], stagione_conclusa}`.
+- Corretto l’archivio MVP della 6.0: sotto la vincitrice ora c’è il motivo della redazione che l’ha scelta.
+- Lab: `?albo=esempio` (ed `&fine=1`) per un esempio **simulato**. Provato con Chromium: 12 casi (Lega/Stadio × 320/1280 × dati veri, esempio, fine stagione), zero errori, nessuno scorrimento laterale.
+
 ## 15 novembre (7) — Claude: voto unico con «Cambia il mio voto», risultati in Curva e Girrr Sport, verdetto MVP nella Curva
 
 - Decisioni di Gianluca:

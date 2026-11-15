@@ -12,7 +12,7 @@ import subprocess
 import sys
 
 RADICE = Path(__file__).resolve().parents[2]
-PASSI = ("rilascio/r611/applica.py", "rilascio/r62/nativa.py", "rilascio/r62/campo_coppa.py", "rilascio/r62/testi.py", "rilascio/r62/campo_portieri.py", "rilascio/r62/giornale_mvp.py")
+PASSI = ("rilascio/r611/applica.py", "rilascio/r62/nativa.py", "rilascio/r62/campo_coppa.py", "rilascio/r62/testi.py", "rilascio/r62/campo_portieri.py", "rilascio/r62/giornale_mvp.py", "rilascio/r62/albo_record.py")
 
 def prepara(sorgente: Path, uscita: Path):
     sorgente = sorgente.resolve()
