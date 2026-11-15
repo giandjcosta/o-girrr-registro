@@ -1,5 +1,5 @@
 {
- "generato": 1794783033,
+ "generato": 1794783305,
  "versione": "6.1",
  "repository": [
   {
@@ -8320,17 +8320,92 @@
      "totale": 1273
     },
     {
-     "nome": "chatgpt/controllo-62",
-     "punta": "9288be6",
-     "data": 1794782988,
-     "titolo": "ChatGPT: include la preparazione del catalogo nella verifica sintattica",
+     "nome": "chatgpt/albo-62",
+     "punta": "a31fab6",
+     "data": 1794783134,
+     "titolo": "ChatGPT: registra esiti e limiti della revisione 6.2",
      "autore": "ChatGPT",
      "padre": "main",
      "nascita": "2c856aa",
      "dataNascita": 1794781146,
-     "avanti": 9,
+     "avanti": 6,
      "stato": "attivo",
      "commit": [
+      [
+       "a31fab6d0b4b40f3849930d6c6ee273fccf82e0e",
+       1794783134,
+       "ChatGPT",
+       "ChatGPT: registra esiti e limiti della revisione 6.2"
+      ],
+      [
+       "0de9e4cbd3d7cf4d209a64fff11a418597ef16b6",
+       1794783033,
+       "ChatGPT",
+       "ChatGPT: documenta la provenienza verificabile dei voti dell'Albo"
+      ],
+      [
+       "5003b8d306229a88cbc2ac4d99eaeda39c528ab3",
+       1794782789,
+       "ChatGPT",
+       "ChatGPT: valida i voti editoriali delle sfide prima della registrazione"
+      ],
+      [
+       "992886cbe95f99ff1ed002ad5d538f4849f2916a",
+       1794782730,
+       "ChatGPT",
+       "ChatGPT: certifica l'Albo 6.2 nella CI isolata"
+      ],
+      [
+       "58695ad4bb61c013e50caff6d7eec9b5dad28c0e",
+       1794782706,
+       "ChatGPT",
+       "ChatGPT: collauda l'Albo 6.2 su PostgreSQL locale"
+      ],
+      [
+       "339786d0c515cef70a870e710af0232e48885bd4",
+       1794782632,
+       "ChatGPT",
+       "ChatGPT: prepara l'Albo 6.2 con voti verificabili e RPC protetta"
+      ]
+     ],
+     "totale": 6
+    },
+    {
+     "nome": "chatgpt/controllo-62",
+     "punta": "21cfa6e",
+     "data": 1794783305,
+     "titolo": "ChatGPT: include il post MVP nel rilascio senza sovrascrivere script più recenti",
+     "autore": "ChatGPT",
+     "padre": "main",
+     "nascita": "2c856aa",
+     "dataNascita": 1794781146,
+     "avanti": 13,
+     "stato": "attivo",
+     "commit": [
+      [
+       "21cfa6ecd919782fa2c23cde227b4e801c5c947c",
+       1794783305,
+       "ChatGPT",
+       "ChatGPT: include il post MVP nel rilascio senza sovrascrivere script più recenti"
+      ],
+      [
+       "a72246282b0cb045f042b4d52ad5802bddffb356",
+       1794783205,
+       "ChatGPT",
+       "ChatGPT: allinea la revisione SQL al cambio voto esplicito"
+      ],
+      [
+       "4338ea97ec793b2b6af4693e7a9abcdb62b70e28",
+       1794783188,
+       "ChatGPT",
+       "ChatGPT: prova il cambio voto condiviso per sondaggi e MVP"
+      ],
+      [
+       "f7342fb63fac4f8e9816e2cf883e8b4cfdfb8459",
+       1794783131,
+       "ChatGPT",
+       "ChatGPT: registra esiti e limiti della revisione 6.2"
+      ],
       [
        "9288be6eb5f02b799ef458fa54137e971662664d",
        1794782988,
@@ -8378,60 +8453,9 @@
        1794782287,
        "ChatGPT",
        "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
-      ],
-      [
-       "d05ac91e365c0dd5874c98d3342ecc202af65eea",
-       1794782284,
-       "ChatGPT",
-       "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
       ]
      ],
-     "totale": 9
-    },
-    {
-     "nome": "chatgpt/albo-62",
-     "punta": "0de9e4c",
-     "data": 1794783033,
-     "titolo": "ChatGPT: documenta la provenienza verificabile dei voti dell'Albo",
-     "autore": "ChatGPT",
-     "padre": "main",
-     "nascita": "2c856aa",
-     "dataNascita": 1794781146,
-     "avanti": 5,
-     "stato": "attivo",
-     "commit": [
-      [
-       "0de9e4cbd3d7cf4d209a64fff11a418597ef16b6",
-       1794783033,
-       "ChatGPT",
-       "ChatGPT: documenta la provenienza verificabile dei voti dell'Albo"
-      ],
-      [
-       "5003b8d306229a88cbc2ac4d99eaeda39c528ab3",
-       1794782789,
-       "ChatGPT",
-       "ChatGPT: valida i voti editoriali delle sfide prima della registrazione"
-      ],
-      [
-       "992886cbe95f99ff1ed002ad5d538f4849f2916a",
-       1794782730,
-       "ChatGPT",
-       "ChatGPT: certifica l'Albo 6.2 nella CI isolata"
-      ],
-      [
-       "58695ad4bb61c013e50caff6d7eec9b5dad28c0e",
-       1794782706,
-       "ChatGPT",
-       "ChatGPT: collauda l'Albo 6.2 su PostgreSQL locale"
-      ],
-      [
-       "339786d0c515cef70a870e710af0232e48885bd4",
-       1794782632,
-       "ChatGPT",
-       "ChatGPT: prepara l'Albo 6.2 con voti verificabili e RPC protetta"
-      ]
-     ],
-     "totale": 5
+     "totale": 13
     }
    ]
   }
