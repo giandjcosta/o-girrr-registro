@@ -1,5 +1,5 @@
 {
- "generato": 1794782953,
+ "generato": 1794782988,
  "versione": "6.1",
  "repository": [
   {
@@ -8360,16 +8360,28 @@
     },
     {
      "nome": "chatgpt/controllo-62",
-     "punta": "28cade1",
-     "data": 1794782953,
-     "titolo": "ChatGPT: permette l'inizializzazione autorizzata del catalogo prima della pubblicazione",
+     "punta": "9288be6",
+     "data": 1794782988,
+     "titolo": "ChatGPT: include la preparazione del catalogo nella verifica sintattica",
      "autore": "ChatGPT",
      "padre": "main",
      "nascita": "2c856aa",
      "dataNascita": 1794781146,
-     "avanti": 7,
+     "avanti": 9,
      "stato": "attivo",
      "commit": [
+      [
+       "9288be6eb5f02b799ef458fa54137e971662664d",
+       1794782988,
+       "ChatGPT",
+       "ChatGPT: include la preparazione del catalogo nella verifica sintattica"
+      ],
+      [
+       "787ccb521cb1c81ea9f4dd0e6fb8bf0a52b7c3f1",
+       1794782978,
+       "ChatGPT",
+       "ChatGPT: documenta preparazione anticipata verificabile della 6.2"
+      ],
       [
        "28cade1c916cc9cd5e389722c7c61de988de8328",
        1794782953,
@@ -8413,7 +8425,7 @@
        "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
       ]
      ],
-     "totale": 7
+     "totale": 9
     }
    ]
   }
