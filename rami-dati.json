@@ -1,5 +1,5 @@
 {
- "generato": 1794782632,
+ "generato": 1794782730,
  "versione": "6.1",
  "repository": [
   {
@@ -8366,16 +8366,28 @@
     },
     {
      "nome": "chatgpt/albo-62",
-     "punta": "339786d",
-     "data": 1794782632,
-     "titolo": "ChatGPT: prepara l'Albo 6.2 con voti verificabili e RPC protetta",
+     "punta": "992886c",
+     "data": 1794782730,
+     "titolo": "ChatGPT: certifica l'Albo 6.2 nella CI isolata",
      "autore": "ChatGPT",
      "padre": "main",
      "nascita": "2c856aa",
      "dataNascita": 1794781146,
-     "avanti": 1,
+     "avanti": 3,
      "stato": "attivo",
      "commit": [
+      [
+       "992886cbe95f99ff1ed002ad5d538f4849f2916a",
+       1794782730,
+       "ChatGPT",
+       "ChatGPT: certifica l'Albo 6.2 nella CI isolata"
+      ],
+      [
+       "58695ad4bb61c013e50caff6d7eec9b5dad28c0e",
+       1794782706,
+       "ChatGPT",
+       "ChatGPT: collauda l'Albo 6.2 su PostgreSQL locale"
+      ],
       [
        "339786d0c515cef70a870e710af0232e48885bd4",
        1794782632,
@@ -8383,7 +8395,7 @@
        "ChatGPT: prepara l'Albo 6.2 con voti verificabili e RPC protetta"
       ]
      ],
-     "totale": 1
+     "totale": 3
     }
    ]
   }
