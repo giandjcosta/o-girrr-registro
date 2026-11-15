@@ -3,6 +3,19 @@
 
 
 
+
+## 15 novembre (6) — Claude: rubrica MVP del Giornale con capolettera, chiusura del voto e verdetto
+
+- Richieste di Gianluca: capilettera rossi, da usare in un altro punto della rubrica; dal prossimo Giornale, non sui numeri già usciti; un breve taglio con l’MVP votato e la sua prestazione, perché quando esce il Giornale il voto è ancora aperto.
+- `rilascio/r62/editoriale/mvp_giornale62.py` e `giornale_mvp.py`:
+  - la rubrica dice fino a quando si vota in Curva e che il verdetto arriva in Curva e nel numero dopo;
+  - presenta i tre candidati della giornata appena finita;
+  - nel numero successivo racconta il verdetto della giornata prima, con il capolettera rosso: squadra, risultato vero e motivo della redazione, niente di inventato.
+  - Il voto MVP chiude al massimo 48 ore dopo l’apertura e sempre prima del turno seguente, quindi il verdetto è pronto per il Giornale successivo.
+  - Coro invariato. La pagina 2 va a scala 0,90 con il normale controllo di impaginazione.
+- Lab: esempio sul numero 7 (`lab/giornale-62/g7/`) ed esempio **simulato** con un verdetto finto, solo per l’impaginazione (`lab/giornale-62/esempio-verdetto/`). `applica.py` riprovato su una copia nuova di gh-pages: tutto riuscito.
+- Da proporre: annuncio del verdetto alla chiusura, con post ufficiale nella Curva e notifica sul telefono. Oggi alla chiusura il verdetto compare solo nella scheda MVP della Curva e di Girrr Sport, nell’archivio dell’Albo e nella puntata successiva della Radio. Serve un «Vai», perché scrive nel database.
+
 ## 15 novembre (5) — Claude: Giornale come quello di oggi, solo con la rubrica MVP; annuncio sistemato
 
 - Gianluca: «voglio il giornale come l’hai fatto te, non come l’ha fatto ChatGPT». Il PDF della 6.2 di ChatGPT usava caratteri di ripiego (Liberation Sans, DejaVu) e cambiava la pagina 2. Nuovo passo `rilascio/r62/giornale_mvp.py` in `applica.py` al posto di `editoriale.py`: aggiunge solo la rubrica MVP (tre candidati della giornata appena finita, premio da assegnare) in fondo alla pagina 2. Il Coro resta senza MVP. Il numero 7 rigenerato è identico al pubblicato, a parte il nome «The Blues Brothers», più la rubrica; la pagina 2 va a scala 0,94 con il normale controllo di impaginazione. Il Lab mostra questo PDF (`lab/giornale-62/g7/`, `lab/integrata-62/riepiloghi/settimana-07.pdf`); il numero 6 è quello pubblicato.

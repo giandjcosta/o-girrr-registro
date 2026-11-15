@@ -2,8 +2,9 @@
 """6.2 · Giornale: solo la rubrica «MVP dei tifosi» (Claude, 15 novembre 2026).
 
 Decisione di Gianluca: il Giornale resta quello di oggi, con la sua grafica, i suoi caratteri e i suoi spazi.
-Si aggiunge soltanto, in fondo alla pagina 2, la rubrica con i tre candidati MVP della giornata appena finita
-(premio ancora da assegnare: niente verdetto, niente giornata precedente). Il Coro della Curva non cambia.
+Si aggiunge soltanto, in fondo alla pagina 2, la rubrica «MVP dei tifosi»: il verdetto dell'MVP già votato della giornata
+precedente (con il capolettera rosso), i tre candidati della giornata appena finita e fino a quando si vota.
+Vale dal prossimo Giornale: i numeri già usciti non si rigenerano. Il Coro della Curva non cambia.
 Niente spazi compattati, niente Top/Flop su quattro colonne: se la pagina non basta, interviene il normale
 controllo di impaginazione del generatore, come sulle altre pagine.
 
@@ -25,13 +26,23 @@ DATI_NEW = ("    # 6.2: candidati MVP dei tifosi della giornata appena finita (s
             "        t = integra_mvp(t, json.loads(dossier.read_text(encoding='utf-8')), ultima)\n" + DATI_OLD)
 RUB_OLD = '    h.append(piede(2) + "</section>")'
 RUB_NEW = '''    mvp = t.get('mvp_editoriale')
-    if mvp and mvp.get('candidati'):   # 6.2: rubrica MVP dei tifosi, stessi stili della pagina
+    if mvp and (mvp.get('candidati') or mvp.get('verdetto')):   # 6.2: rubrica MVP dei tifosi, stessi stili della pagina
         h.append('<div class="tab" data-rubrica-mvp><h2>MVP <b>dei tifosi</b></h2>')
-        h.append('<div class="gr">' + str(mvp['giornata']) + 'ª giornata · Tre candidature, premio ancora da assegnare</div>')
-        h.append('<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4mm">')
-        for c in mvp['candidati']:
-            h.append('<div style="font-size:9.6pt;line-height:1.42"><b>' + esc(cap(c['squadra'])) + '</b><br>' + esc(c['testo']) + '</div>')
-        h.append('</div></div>')
+        v = mvp.get('verdetto')
+        if v:
+            h.append('<div class="gr">Il verdetto della ' + str(v['giornata']) + 'ª giornata</div>')
+            h.append('<p class="txt">' + esc(v['squadra']) + ' è l’MVP dei tifosi della ' + str(v['giornata']) + 'ª giornata.' + (' ' + esc(v['testo']) if v.get('testo') else '') + '</p>')
+        if mvp.get('candidati'):
+            h.append('<div class="gr">' + str(mvp['giornata']) + 'ª giornata · Tre candidature, premio ancora da assegnare</div>')
+            if mvp.get('chiude') and not v:
+                h.append('<p class="txt">' + esc(mvp['chiude']) + ': redazione, personaggi e tifosi scelgono il club della giornata. Il verdetto arriva in Curva e nel prossimo numero.</p>')
+            elif mvp.get('chiude'):
+                h.append('<p style="font-size:9.6pt;line-height:1.42;margin:0 0 1.5mm">' + esc(mvp['chiude']) + '. Il verdetto arriva in Curva e nel prossimo numero.</p>')
+            h.append('<div style="clear:both;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4mm">')
+            for c in mvp['candidati']:
+                h.append('<div style="font-size:9.6pt;line-height:1.42"><b>' + esc(cap(c['squadra'])) + '</b><br>' + esc(c['testo']) + '</div>')
+            h.append('</div>')
+        h.append('</div>')
 ''' + RUB_OLD
 
 
