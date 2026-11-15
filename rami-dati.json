@@ -1,5 +1,5 @@
 {
- "generato": 1794759206,
+ "generato": 1794759918,
  "versione": "6.1",
  "repository": [
   {
@@ -8140,26 +8140,6 @@
      "totale": 19
     },
     {
-     "nome": "chatgpt/integrazione-62-completa",
-     "punta": "b051bfb",
-     "data": 1794759206,
-     "titolo": "Merge pull request #95 from giandjcosta/claude/fervent-thompson-rwlwrh",
-     "autore": "giandjcosta",
-     "padre": "claude/fervent-thompson-rwlwrh",
-     "nascita": "e84a62d",
-     "dataNascita": 1794759191,
-     "avanti": 1,
-     "stato": "unito",
-     "unione": {
-      "in": "main",
-      "data": 1794759206,
-      "commit": "b051bfb",
-      "titolo": "Merge pull request #95 from giandjcosta/claude/fervent-thompson-rwlwrh"
-     },
-     "commit": [],
-     "totale": 1
-    },
-    {
      "nome": "main",
      "punta": "b051bfb",
      "data": 1794759206,
@@ -8245,6 +8225,57 @@
       ]
      ],
      "totale": 1224
+    },
+    {
+     "nome": "chatgpt/integrazione-62-completa",
+     "punta": "3e18dfa",
+     "data": 1794759918,
+     "titolo": "ChatGPT: recupera le logiche 6.2 già provate e isolate dalla grafica rifiutata",
+     "autore": "ChatGPT",
+     "padre": "main",
+     "nascita": "b051bfb",
+     "dataNascita": 1794759206,
+     "avanti": 6,
+     "stato": "attivo",
+     "commit": [
+      [
+       "3e18dfa4f0b76b7464f78956655f8a1a63a8284e",
+       1794759918,
+       "ChatGPT",
+       "ChatGPT: recupera le logiche 6.2 già provate e isolate dalla grafica rifiutata"
+      ],
+      [
+       "1ccfbbd43a2ff81d836f05209e7b860005420265",
+       1794759916,
+       "ChatGPT",
+       "ChatGPT: recupera le logiche 6.2 già provate e isolate dalla grafica rifiutata"
+      ],
+      [
+       "41b4de59ec1278947d435d05605599fa4ce2580a",
+       1794759912,
+       "ChatGPT",
+       "ChatGPT: prepara la Radio 6.2 senza generare audio né attivare nuove puntate"
+      ],
+      [
+       "e64c1161874d4da117b4b40db19def3b59144ca2",
+       1794759909,
+       "ChatGPT",
+       "ChatGPT: prepara la Radio 6.2 senza generare audio né attivare nuove puntate"
+      ],
+      [
+       "000e0aa670a88948148a7007a6ac35e5bcf34d9c",
+       1794759906,
+       "ChatGPT",
+       "ChatGPT: recupera le logiche 6.2 già provate e isolate dalla grafica rifiutata"
+      ],
+      [
+       "9e4c5de47e5a8d410f4846eda87c612c1fa6b71e",
+       1794759904,
+       "ChatGPT",
+       "ChatGPT: recupera le logiche 6.2 già provate e isolate dalla grafica rifiutata"
+      ]
+     ],
+     "totale": 6
     }
    ]
   }
