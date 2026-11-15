@@ -17,6 +17,15 @@ class Test(unittest.TestCase):
  def test_finestre(self):
   a=datetime(2026,11,15,12,tzinfo=timezone.utc);i=a+timedelta(hours=36)
   self.assertEqual(scadenza('mvp',apertura=a,inizio=i),i);self.assertEqual(scadenza('mvp',apertura=a,inizio=a+timedelta(days=5)),a+timedelta(hours=48));self.assertEqual(scadenza('post',apertura=a),a+timedelta(hours=24));self.assertEqual(scadenza('dopo',apertura=a+timedelta(hours=8),risultati=a),a+timedelta(hours=48));self.assertEqual(scadenza('vigilia',apertura=a,inizio=i),i);self.assertEqual(scadenza('mvp',apertura=a,inizio=i,esistente=a+timedelta(days=6)),a+timedelta(days=6))
+ def test_giornale_contenuti(self):
+  sys.path.insert(0,str(R/'rilascio/r62/editoriale'))
+  from mvp_giornale62 import integra
+  now=datetime(2026,11,15,tzinfo=timezone.utc);t={'coro':{'testo':'Originale'},'titolo':'Intatto'}
+  w={'stagione':'2026/27','giornata':6,'chiusa':'2026-11-14T00:00:00Z','classifica':[{'team':'Oranje VC'}]}
+  dossier={'archivio':[w],'commento':{'squadra':'WOA','testo':'Parole autentiche','post_id':9,'giornata':6,'fonte':'curva','pertinente':True,'squadra_riferita':'Oranje VC'}}
+  r=integra(t,dossier,7,now);self.assertEqual(r['titolo'],'Intatto');self.assertIn('6ª: Oranje VC',r['coro']['testo']);self.assertIn('Parole autentiche',r['coro']['testo']);self.assertEqual(t['coro']['testo'],'Originale')
+  dossier['giornale_annunciati']=['2026/27:6'];self.assertEqual(integra(t,dossier,7,now),t)
+  dossier['giornale_annunciati']=[];dossier['commento']['squadra_riferita']='Altra';self.assertNotIn('Parole autentiche',integra(t,dossier,7,now)['coro']['testo'])
  def test_ora_legale(self):
   from zoneinfo import ZoneInfo
   a=datetime(2027,3,27,12,tzinfo=ZoneInfo('Europe/Rome'));fine=scadenza('post',apertura=a);self.assertEqual((fine-a.astimezone(timezone.utc)).total_seconds(),86400)

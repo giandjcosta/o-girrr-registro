@@ -10,7 +10,7 @@ async function noLato(p){assert(await p.evaluate(()=>document.documentElement.sc
  await vai(BASE+skin+'/campo.html');await pronto(p);await noLato(p);assert.equal(await p.locator('#comp-sw').count(),1);
  for(const comp of ['lega','coppa']){await p.click('[data-comp-choice='+comp+']');await p.waitForFunction(comp=>document.body.dataset.comp===comp&&document.querySelectorAll('#matches .gamebtn').length,comp);await p.waitForTimeout(1100);await noLato(p);
  if(autenticato){const selected=p.locator('#matches [aria-pressed=true]');assert((await selected.textContent()).includes('Oranje VC'));assert.equal(await p.locator('#matches .mia').count(),1)}else assert.equal(await p.locator('#matches .mia').count(),0);
- const colori=await p.locator('.comp-sw i').evaluate(e=>getComputedStyle(e).backgroundColor);assert.equal(colori,skin.includes('stadio')?'rgb(255, 209, 102)':comp==='coppa'?'rgb(61, 147, 214)':'rgb(214, 40, 57)');
+ const atteso=skin.includes('stadio')?'rgb(255, 209, 102)':comp==='coppa'?'rgb(61, 147, 214)':'rgb(214, 40, 57)';await p.waitForFunction(x=>getComputedStyle(document.querySelector('.comp-sw i')).backgroundColor===x,atteso);
  const leg=p.locator('.campo-legend');if(await leg.count()){await leg.locator('summary').click();const text=await leg.innerText();for(const symbol of ['⚽','🎯','👟','🧤','🛡️','🥅','❌','🔴','↑'])assert(text.includes(symbol));await leg.locator('summary').click()}
  assert.equal(await p.locator('.pl.top b').count(),await p.locator('.pl.top').count());
  if(M==='chromium'&&autenticato&&comp==='coppa'&&['PC1920','TV','iPhone 320'].includes(nome))await p.screenshot({path:F+'/'+nome+'-'+(skin.includes('stadio')?'stadio':'lega')+'.png',fullPage:true});

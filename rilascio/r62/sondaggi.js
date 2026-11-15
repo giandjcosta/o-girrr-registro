@@ -3,10 +3,11 @@
 const ROOT=new URL('./',document.currentScript.src).href,E=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),N=x=>String(x).replace(/The Blue brothers/g,'The Blues Brothers');
 let finestre=null;
 let cfg,stato=null,ready=false,error='',busy=false,epoch=0,conf=null,comments=new Set(),hosts=new Set();
+const configurazione=fetch(ROOT+'girrr/v60/tifosi-config.json').then(r=>{if(!r.ok)throw Error('Configurazione non disponibile');return r.json()}).then(x=>cfg=x);
 const bc=typeof BroadcastChannel==='function'?new BroadcastChannel('girrr-voti62'):null;
 function identita(){try{if(sessionStorage.getItem('ospite')==='1'||new URLSearchParams(location.search).has('ospite'))return null;const f=JSON.parse(localStorage.getItem('fg')||'null');return f?.team&&f?.code?f:null}catch(e){return null}}
 function alternativa(){return new URLSearchParams(location.search).get('risultati')==='B'?'B':'A'}
-async function rpc(nome,args={}){if(!cfg)throw Error('Configurazione non disponibile');const r=await fetch(cfg.url+'/rest/v1/rpc/'+nome,{method:'POST',headers:{apikey:cfg.publishableKey,'Content-Type':'application/json'},body:JSON.stringify(args),cache:'no-store'});if(!r.ok)throw Error('Servizio non disponibile. Riprova.');const j=await r.json();if(j?.error)throw Error('Operazione non confermata');return j}
+async function rpc(nome,args={}){if(!cfg)await configurazione;const r=await fetch(cfg.url+'/rest/v1/rpc/'+nome,{method:'POST',headers:{apikey:cfg.publishableKey,'Content-Type':'application/json'},body:JSON.stringify(args),cache:'no-store'});if(!r.ok)throw Error('Servizio non disponibile. Riprova.');const j=await r.json();if(j?.error)throw Error('Operazione non confermata');return j}
 function scadenza(p){return new Date(p.chiude).toLocaleString('it-IT',{dateStyle:'medium',timeStyle:'short',timeZone:'Europe/Rome'})+' · Ora italiana'}
 function scheda(p){const mio=p.mia_scelta,tot=Object.values(p.conteggi||{}).reduce((a,b)=>a+Number(b),0),key=E(p.id),show=comments.has(p.id);
 let h='<article class="v55-pollpost" data-v62-poll="'+key+'"><div class="v55-pp-head"><img src="'+ROOT+'assets/loghi/logo-lega-o-fant-a-girrr.png" alt=""><div><b>O Girrr</b> <span>· '+(p.giornata?'Sondaggio della '+p.giornata+'ª giornata':'Sondaggio del post')+'</span><small>'+(p.chiuso?'Concluso · ':'Chiusura: ')+E(scadenza(p))+'</small></div></div><p class="v55-pp-q">'+E(N(p.titolo))+'</p>';
@@ -28,5 +29,5 @@ window.GirrrFinestre62=function(tipo,giornata){if(!finestre)return {aperta:false
 window.GirrrSondaggi62={mount,html,refresh,precedenti};
 document.addEventListener('submit',e=>{const f=e.target.closest('[data-v62-vote],[data-v62-comment]');if(!f)return;e.preventDefault();invia(f,f.hasAttribute('data-v62-comment'))});document.addEventListener('click',e=>{const b=e.target.closest('[data-v62-comments]');if(!b)return;comments.has(b.dataset.v62Comments)?comments.delete(b.dataset.v62Comments):comments.add(b.dataset.v62Comments);draw()});
 for(const event of ['focus','pageshow','storage'])window.addEventListener(event,()=>refresh(true));document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh(true)});if(bc)bc.onmessage=()=>refresh(true);
-(async()=>{try{cfg=await fetch(ROOT+'girrr/v60/tifosi-config.json').then(r=>r.json());await refresh(true);try{finestre=await rpc('v62_finestre',{p_stagione:cfg.stagione});finestre.offset=Date.parse(finestre.server_ora)-Date.now();window.GirrrApp?.render()}catch(e){}setInterval(()=>{if(!document.hidden)refresh()},15000)}catch(e){error='Servizio non disponibile. Riprova.';draw()}})();
+(async()=>{try{await configurazione;await refresh(true);try{finestre=await rpc('v62_finestre',{p_stagione:cfg.stagione});finestre.offset=Date.parse(finestre.server_ora)-Date.now();window.GirrrApp?.render()}catch(e){}setInterval(()=>{if(!document.hidden)refresh()},15000)}catch(e){error='Servizio non disponibile. Riprova.';draw()}})();
 })();
