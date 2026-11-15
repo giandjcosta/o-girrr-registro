@@ -1,5 +1,5 @@
 {
- "generato": 1794754798,
+ "generato": 1794755134,
  "versione": "6.1",
  "repository": [
   {
@@ -8006,16 +8006,22 @@
     },
     {
      "nome": "claude/fervent-thompson-rwlwrh",
-     "punta": "3e675a5",
-     "data": 1794754798,
-     "titolo": "Claude: Campo 6.2, lo Stadio resta tutto oro anche in Coppa (regola di Gianluca: la Lega tiene rosso/azzurro)",
+     "punta": "8948a6d",
+     "data": 1794755134,
+     "titolo": "Claude: proposta 6.2, immagini prima/dopo della tua squadra in risalto (Tabellone e Albo)",
      "autore": "Claude",
      "padre": "main",
      "nascita": "410f975",
      "dataNascita": 1794753341,
-     "avanti": 4,
+     "avanti": 5,
      "stato": "attivo",
      "commit": [
+      [
+       "8948a6d5b43846415b5eb0b400b940c47afe3645",
+       1794755134,
+       "Claude",
+       "Claude: proposta 6.2, immagini prima/dopo della tua squadra in risalto (Tabellone e Albo)"
+      ],
       [
        "3e675a5cdcc08560aeb114f7ad0f5f1386f5e055",
        1794754798,
@@ -8035,7 +8041,7 @@
        "Claude: proposta 6.2, Campo con Campionato e Champions Cup (solo Lab)"
       ]
      ],
-     "totale": 4
+     "totale": 5
     }
    ]
   }
