@@ -1,5 +1,5 @@
 {
- "generato": 1794777304,
+ "generato": 1794777990,
  "versione": "6.1",
  "repository": [
   {
@@ -8141,22 +8141,28 @@
     },
     {
      "nome": "claude/fervent-thompson-rwlwrh",
-     "punta": "b97a220",
-     "data": 1794777290,
-     "titolo": "Claude: Albo › Record con MVP del campionato e partita più seguita (albo62.js), archivio MVP con il motivo giu",
+     "punta": "3d54630",
+     "data": 1794777979,
+     "titolo": "Claude: Albo › Record con una sola grafica, MVP dei tifosi, corsa all'MVP del campionato e partita più seguita",
      "autore": "Claude",
      "padre": "chatgpt/integrazione-62-completa",
      "nascita": "13b7223",
      "dataNascita": 1794766745,
-     "avanti": 13,
+     "avanti": 15,
      "stato": "unito",
      "unione": {
       "in": "main",
-      "data": 1794777304,
-      "commit": "e29d99c",
-      "titolo": "Merge pull request #101 from giandjcosta/claude/fervent-thompson-rwlwrh"
+      "data": 1794777990,
+      "commit": "c544cbb",
+      "titolo": "Merge pull request #102 from giandjcosta/claude/fervent-thompson-rwlwrh"
      },
      "commit": [
+      [
+       "3d54630eb10ec464f9612c74e57e8b914df2e4b0",
+       1794777979,
+       "Claude",
+       "Claude: Albo › Record con una sola grafica, MVP dei tifosi, corsa all'MVP del campionato e partita più seguita come i Record della lega"
+      ],
       [
        "b97a220defa2509e8b3a65f47ff71f43f438916e",
        1794777290,
@@ -8206,13 +8212,13 @@
        "Registro: elenco attività aggiornato"
       ]
      ],
-     "totale": 13
+     "totale": 15
     },
     {
      "nome": "main",
-     "punta": "e29d99c",
-     "data": 1794777304,
-     "titolo": "Merge pull request #101 from giandjcosta/claude/fervent-thompson-rwlwrh",
+     "punta": "c544cbb",
+     "data": 1794777990,
+     "titolo": "Merge pull request #102 from giandjcosta/claude/fervent-thompson-rwlwrh",
      "autore": "giandjcosta",
      "padre": null,
      "nascita": null,
@@ -8220,6 +8226,12 @@
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "c544cbbd4b30b945e7471ec67055bf95b432caf7",
+       1794777990,
+       "giandjcosta",
+       "Merge pull request #102 from giandjcosta/claude/fervent-thompson-rwlwrh"
+      ],
       [
        "e29d99c8712ccd1bb6ebe19c91bcc5287185c40d",
        1794777304,
@@ -8285,15 +8297,9 @@
        1794757310,
        "giandjcosta",
        "Merge pull request #94: Claude, Campo 6.2 con i cartellini nel Lab"
-      ],
-      [
-       "ceed6c622ff8d8d3ed42fe7eef9f03903405bbd4",
-       1794756777,
-       "ChatGPT",
-       "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
       ]
      ],
-     "totale": 1265
+     "totale": 1267
     }
    ]
   }
