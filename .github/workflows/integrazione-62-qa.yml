@@ -1,7 +1,7 @@
 name: ChatGPT - QA integrazione 6.2
 on:
   push:
-    branches: [chatgpt/integrazione-62-completa]
+    branches: [main, 'chatgpt/**', 'claude/**']
     paths:
       - '.github/workflows/integrazione-62-qa.yml'
       - 'rilascio/r62/**'
@@ -51,6 +51,13 @@ jobs:
           python-version: '3.12'
       - run: pip install 'psycopg[binary]==3.2.12'
       - run: python3 prove/v62/postgres.py
+        env:
+          PGHOST: 127.0.0.1
+          PGPORT: '5432'
+          PGUSER: postgres
+          PGPASSWORD: collaudo-locale
+      - name: Cambio voto 6.2 (PostgreSQL locale)
+        run: python3 prove/v62/postgres_cambio.py
         env:
           PGHOST: 127.0.0.1
           PGPORT: '5432'
