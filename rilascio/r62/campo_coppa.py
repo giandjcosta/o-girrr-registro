@@ -3,8 +3,9 @@
 
 Aggiunge alla pagina Campo (Lega e Stadio) l'interruttore Campionato / Champions Cup:
 - le partite della Coppa erano raggiungibili solo con ?coppa=1 dal Tabellone; ora si cambia nella pagina;
-- l'indicatore scorre da rosso (Campionato) ad azzurro (Champions Cup) in tutte e due le grafiche;
-- bande, scheda attiva, grafici e cerchi sfumano dal colore del Campionato all'azzurro (@property);
+- Lega: l'indicatore scorre da rosso ad azzurro e le bande sfumano da rosso ad azzurro;
+- Stadio: tutto resta oro anche in Coppa (regola di Gianluca, 15 novembre 2026);
+- cerchio oro al voto più alto della partita tra le due squadre;
 - il contenuto esce e rientra con una dissolvenza breve; «Riduci movimento» toglie i movimenti;
 - ogni competizione ricorda la sua giornata e la sua partita.
 
@@ -22,11 +23,16 @@ PAGINE = ('girrr/campo.html', 'stadio/girrr/campo.html')
 SEGNO = '/* 6.2 · Campo con Campionato e Champions Cup */'
 
 CSS = SEGNO + r'''
-body[data-v53=campo][data-comp=coppa][data-skin]{--g-acc:#3d93d6;--g-onacc:#fff;--accent:#3d93d6;--onaccent:#fff}
+/* Regola di Gianluca (15 novembre 2026): la Lega tiene i colori (Campionato rosso, Coppa azzurra), lo Stadio tiene tutto oro anche in Coppa */
+body[data-v53=campo][data-comp=coppa][data-skin=lega]{--g-acc:#3d93d6;--g-onacc:#fff;--accent:#3d93d6;--onaccent:#fff}
+body[data-v53=campo][data-comp=coppa][data-skin=stadio]{--accent:#ffd166;--onaccent:#142449}
 .comp-sw{position:relative;display:grid;grid-template-columns:1fr 1fr;align-self:center;width:min(100%,400px);padding:4px;border-radius:999px;background:rgba(20,29,61,.72);box-shadow:inset 0 0 0 1px var(--line)}
 .comp-sw[hidden]{display:none}
 .comp-sw i{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:999px;background:#d62839;box-shadow:0 4px 14px rgba(0,0,0,.28);transition:transform .55s cubic-bezier(.65,0,.25,1),background-color .55s ease;will-change:transform}
-.comp-sw[data-on=coppa] i{transform:translateX(100%);background:#3d93d6}
+.comp-sw[data-on=coppa] i{transform:translateX(100%)}
+body[data-skin=lega] .comp-sw[data-on=coppa] i{background:#3d93d6}
+body[data-skin=stadio] .comp-sw i{background:#ffd166}
+body[data-skin=stadio] .comp-sw button[aria-selected=true]{color:#1d2a52;transition:opacity .35s ease,color .3s ease .15s}
 .comp-sw button{position:relative;z-index:1;border:0;background:none;color:#fbf6ec;font:800 13px/1.2 Inter,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:10px 8px;min-height:44px;border-radius:999px;white-space:nowrap;transition:opacity .35s ease}
 .comp-sw button[aria-selected=false]{opacity:.7}.comp-sw button[aria-selected=false]:hover{opacity:1}
 /* Il colore sfuma solo dove serve. Bande delle schede: la banda di prima resta sopra come velo e svanisce (solo opacità, lavoro della scheda grafica) */
@@ -37,9 +43,9 @@ html.cc-pronto body[data-v53=campo] .sidebar nav a{transition:box-shadow .6s cub
 html.cc-pronto body[data-v53=campo] .gamebtn{transition:background-color .6s cubic-bezier(.4,0,.2,1),color .6s cubic-bezier(.4,0,.2,1)}
 #board,#matches,#roundtitle{transition:opacity .34s cubic-bezier(.22,.61,.36,1),transform .34s cubic-bezier(.22,.61,.36,1)}
 #board.cc-via,#matches.cc-via,#roundtitle.cc-via{opacity:0;transform:translateY(8px);transition-duration:.16s;transition-timing-function:ease-in;pointer-events:none}
-/* Cerchio dei giocatori di casa sul campo: rosso in Campionato, azzurro in Coppa (l'ospite resta bianco, il migliore in campo ha la stella) */
-body[data-v53=campo]{--casa:#ff5a6a}
-body[data-v53=campo][data-comp=coppa]{--casa:#63bce9}
+/* Cerchio dei giocatori di casa sul campo, solo nella Lega: rosso in Campionato, azzurro in Coppa. Nello Stadio resta com'era (l'oro è del voto più alto). Ospite sempre bianco */
+body[data-v53=campo][data-skin=lega]{--casa:#ff5a6a}
+body[data-v53=campo][data-skin=lega][data-comp=coppa]{--casa:#63bce9}
 /* Chi entra con il codice della squadra trova la sua partita per prima nella fila (contorno oro già esistente) */
 #matches>.gamebtn.mia{order:-1}
 /* Cerchio oro: il voto più alto della partita tra le due squadre (anche più giocatori, se a pari voto) */
@@ -109,7 +115,7 @@ def applica(t, nome):
     t = sostituisci(t, "Number(q.get('partita'))||0)):partitaMia(round);render()}",
                     "Number(q.get('partita'))||0)):partitaMia(round);render();requestAnimationFrame(function(){requestAnimationFrame(function(){document.documentElement.classList.add('cc-pronto')})})}", nome)
     t = sostituisci(t, "<span><b>Squadra di casa</b><small>Bordo azzurro.</small></span>",
-                    "<span><b>Squadra di casa</b><small>'+(COPPA?'Bordo azzurro.':'Bordo rosso.')+'</small></span>", nome)
+                    "<span><b>Squadra di casa</b><small>'+(COPPA||document.body.dataset.skin!=='lega'?'Bordo azzurro.':'Bordo rosso.')+'</small></span>", nome)
     t = sostituisci(t, "if(xa&&xb){var H=TEL.matches?1250:700;",
                     "if(xa&&xb){var H=TEL.matches?1250:700,tutti=xa.concat(xb),mx=Math.max.apply(null,tutti.map(function(g){return g.v==null?-1:g.v}));tutti.forEach(function(g){g.oro=mx>=0&&g.v===mx});", nome)
     t = sostituisci(t, "'<div class=\"pl '+lato+(g.top?' top':'')+'\"", "'<div class=\"pl '+lato+(g.top?' top':'')+(g.oro?' oro':'')+'\"", nome)

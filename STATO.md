@@ -3,7 +3,7 @@
 
 ## 15 novembre (2) — Claude: proposta 6.2, Campo con Campionato e Champions Cup (solo Lab)
 
-- Richiesta di Gianluca per la 6.2: nel Campo anche le partite della Coppa, con interruttore fluido e bande che passano dal colore del Campionato all'azzurro. Poi: la tua partita per prima (contorno oro) e cerchio dei giocatori di casa rosso in Campionato e azzurro in Coppa. Ospite bianco; cerchio oro al voto più alto della partita tra le due squadre (stella ★ invariata).
+- Richiesta di Gianluca per la 6.2: nel Campo anche le partite della Coppa, con interruttore fluido e bande che passano dal colore del Campionato all'azzurro. Poi: la tua partita per prima (contorno oro) e cerchio dei giocatori di casa rosso in Campionato e azzurro in Coppa. Ospite bianco; cerchio oro al voto più alto della partita tra le due squadre (stella ★ invariata). **Regola di Gianluca (15 novembre): la Lega tiene i colori rosso/azzurro, lo Stadio tutto oro anche in Coppa** (scritta in AGENTS.md; il Tabellone dello Stadio ha ancora l'interruttore rosso/azzurro, da allineare).
 - Script `rilascio/r62/campo_coppa.py`, pagine di prova `rilascio/r62/pagine/`, specchio del Lab aggiornato (`lab/offline/sw-prova.js`), pagina `lab/novita-6-2.html` con foto in `lab/62-foto/`, collegata dal Lab. Dettagli e prove in `rilascio/r62/NOTE.md`.
 - Sito vero, `ufficiale/src/sito/` e database **non toccati**. Serve certificazione nel Lab e «Vai». Il cartello in cima alle pagine dello specchio dice ancora «Anteprima 6.1.1»: da allineare quando si decide cosa entra nella 6.2.
 - Da fare (richiesta di Gianluca, in attesa di conferma dell'elenco): squadra di chi entra col codice per prima e in leggero oro in tutti i menu dell'app (non nella Storia; nell'Albo con la scritta in leggero oro).
