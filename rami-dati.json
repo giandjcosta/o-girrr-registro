@@ -1,5 +1,5 @@
 {
- "generato": 1794764284,
+ "generato": 1794765090,
  "versione": "6.1",
  "repository": [
   {
@@ -8228,16 +8228,22 @@
     },
     {
      "nome": "chatgpt/integrazione-62-completa",
-     "punta": "2d3f346",
-     "data": 1794764284,
-     "titolo": "ChatGPT: completa i casi di giurie senza voti e allinea i servizi di prova ai percorsi reali",
+     "punta": "98b90cc",
+     "data": 1794765090,
+     "titolo": "ChatGPT: consegna le anteprime native e il Giornale originale con dossier di revisione",
      "autore": "ChatGPT",
      "padre": "main",
      "nascita": "b051bfb",
      "dataNascita": 1794759206,
-     "avanti": 23,
+     "avanti": 24,
      "stato": "attivo",
      "commit": [
+      [
+       "98b90ccaaa027f88bf61ce8ca1a4c1dd4e9ce4b5",
+       1794765090,
+       "ChatGPT",
+       "ChatGPT: consegna le anteprime native e il Giornale originale con dossier di revisione"
+      ],
       [
        "2d3f3469a45256cc0de41db938f60d7ba4e8316b",
        1794764284,
@@ -8303,15 +8309,9 @@
        1794760183,
        "ChatGPT",
        "ChatGPT: registra la decisione 6.1.1 in 6.2 e la sincronizzazione delle Ramificazioni"
-      ],
-      [
-       "68ce5316f50afdbaeab9a2a2f762c9d01117ec02",
-       1794760180,
-       "ChatGPT",
-       "ChatGPT: allinea il cartello del Lab alla proposta 6.2 senza eliminare la 6.1.1"
       ]
      ],
-     "totale": 23
+     "totale": 24
     }
    ]
   }
