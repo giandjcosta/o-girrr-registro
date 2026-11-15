@@ -47,6 +47,8 @@ html.cc-pronto body[data-v53=campo] .gamebtn{transition:background-color .6s cub
 /* Cerchio dei giocatori di casa sul campo, solo nella Lega: rosso in Campionato, azzurro in Coppa. Nello Stadio resta com'era (l'oro è del migliore in campo). Ospite sempre bianco */
 body[data-v53=campo][data-skin=lega]{--casa:#ff5a6a}
 body[data-v53=campo][data-skin=lega][data-comp=coppa]{--casa:#63bce9}
+/* Portiere ospite, in fondo al campo: i simboli sopra il cerchio, così il bordo non li taglia */
+.pitch .pl.basso i{top:auto;bottom:100%;margin:0 0 2px}
 /* Cerchio oro: il migliore in campo, quello con la stella (al massimo uno per squadra, come nei dati di Fantacalcio) */
 .pitch .pl.top b,.pitch .pl.away.top b{border-color:#ffd166;box-shadow:0 0 0 2px rgba(255,209,102,.35),0 2px 6px rgba(0,0,0,.35)}
 /* Frecce: ‹ › cambiano partita, « » cambiano giornata. Le partite si scorrono e si toccano come prima */
@@ -111,18 +113,18 @@ function partita(i){var g=D&&D.cal.lega[round];if(!g||i<0||i>=g.m.length||i===ga
 GI_OLD = r''' function gioc(id,dentro){var p=D.P[id]||{},x=voto(id),b=(x&&x.b)||[],gol=0,ass=0,top=false;
   b.forEach(function(s){var n;if((n=/^(\d+) (gol|rigore segnato|rigori segnati)$/.exec(s)))gol+=+n[1];else if((n=/^(\d+) assist$/.exec(s)))ass+=+n[1];else if(s==='migliore in campo')top=true});
   return {n:p.n||'—',r:p.r||'C',v:x&&x.v!=null?x.v:null,gol:gol,ass:ass,top:top,dentro:dentro||null}}'''
-GI_NEW = r''' function gioc(id,dentro){var p=D.P[id]||{},x=voto(id),b=(x&&x.b)||[],k={gol:0,rig:0,ass:0,ag:0,rs:0,rp:0,gs:0},top=false;
+GI_NEW = r''' function gioc(id,dentro){var p=D.P[id]||{},x=voto(id),b=(x&&x.b)||[],k={gol:0,rig:0,ass:0,ag:0,rs:0,rp:0,gs:0,am:0,es:0},top=false;
   b.forEach(function(s){var n=/^(\d+) (.+)$/.exec(s),q=n?+n[1]:0,w=n?n[2]:s;
-   if(w==='gol')k.gol+=q;else if(/^rigor[ei] segnat[oi]$/.test(w))k.rig+=q;else if(w==='assist')k.ass+=q;else if(w==='autogol')k.ag+=q;else if(/^rigor[ei] sbagliat[oi]$/.test(w))k.rs+=q;else if(/^rigor[ei] parat[oi]$/.test(w))k.rp+=q;else if(/^gol subit[oi]$/.test(w))k.gs+=q;else if(s==='migliore in campo')top=true});
+   if(w==='gol')k.gol+=q;else if(/^rigor[ei] segnat[oi]$/.test(w))k.rig+=q;else if(w==='assist')k.ass+=q;else if(w==='autogol')k.ag+=q;else if(/^rigor[ei] sbagliat[oi]$/.test(w))k.rs+=q;else if(/^rigor[ei] parat[oi]$/.test(w))k.rp+=q;else if(/^gol subit[oi]$/.test(w))k.gs+=q;else if(s==='ammonizione')k.am=1;else if(s==='espulsione')k.es=1;else if(s==='migliore in campo')top=true});
   var r=p.r||'C',v=x&&x.v!=null?x.v:null;
-  return {n:p.n||'—',r:r,v:v,gol:k.gol,rig:k.rig,ass:k.ass,ag:k.ag,rs:k.rs,rp:k.rp,gs:k.gs,pi:r==='P'&&v!=null&&!k.gs,top:top,dentro:dentro||null}}'''
+  return {n:p.n||'—',r:r,v:v,gol:k.gol,rig:k.rig,ass:k.ass,ag:k.ag,rs:k.rs,rp:k.rp,gs:k.gs,am:k.am,es:k.es,pi:r==='P'&&v!=null&&!k.gs,top:top,dentro:dentro||null}}'''
 CH_OLD = r''' var ic=(g.gol?Array(g.gol+1).join('⚽'):'')+(g.ass?(g.ass>1?g.ass+'×':'')+'👟':'')+(g.dentro?'↑':'');
  var tit=g.n+(g.dentro?' (Entrato al posto di '+g.dentro+')':'')+' · Voto '+v+(g.gol?' · Gol: '+g.gol:'')+(g.ass?' · Assist: '+g.ass:'')+(g.top?' · ★ Migliore in campo':'');'''
 CH_NEW = r''' function rip(n,s){return n?(n>2?n+'×'+s:Array(n+1).join(s)):''}
- var ic=rip(g.gol,'⚽')+rip(g.rig,'🎯')+rip(g.ass,'👟')+rip(g.rp,'🧤')+(g.pi?'🛡️':'')+(g.gs?g.gs+'🥅':'')+rip(g.rs,'❌')+rip(g.ag,'🔴')+(g.dentro?'↑':'');
- var tit=g.n+(g.dentro?' (Entrato al posto di '+g.dentro+')':'')+' · Voto '+v+(g.gol?' · Gol: '+g.gol:'')+(g.rig?' · Rigori segnati: '+g.rig:'')+(g.ass?' · Assist: '+g.ass:'')+(g.rp?' · Rigori parati: '+g.rp:'')+(g.pi?' · Porta inviolata':'')+(g.gs?' · Gol subiti: '+g.gs:'')+(g.rs?' · Rigori sbagliati: '+g.rs:'')+(g.ag?' · Autogol: '+g.ag:'')+(g.top?' · ★ Migliore in campo':'');'''
+ var ic=rip(g.gol,'⚽')+rip(g.rig,'🎯')+rip(g.ass,'👟')+rip(g.rp,'🧤')+(g.pi?'🛡️':'')+(g.gs?g.gs+'🥅':'')+rip(g.rs,'❌')+rip(g.ag,'🔴')+(g.es?'🟥':g.am?'🟨':'')+(g.dentro?'↑':'');
+ var tit=g.n+(g.dentro?' (Entrato al posto di '+g.dentro+')':'')+' · Voto '+v+(g.gol?' · Gol: '+g.gol:'')+(g.rig?' · Rigori segnati: '+g.rig:'')+(g.ass?' · Assist: '+g.ass:'')+(g.rp?' · Rigori parati: '+g.rp:'')+(g.pi?' · Porta inviolata':'')+(g.gs?' · Gol subiti: '+g.gs:'')+(g.rs?' · Rigori sbagliati: '+g.rs:'')+(g.ag?' · Autogol: '+g.ag:'')+(g.es?' · Espulso':g.am?' · Ammonito':'')+(g.top?' · ★ Migliore in campo':'');'''
 LE_OLD = '''<li><span class="legend-symbol leg-star" aria-hidden="true">★</span><span>Migliore in campo.</span></li><li><span class="legend-symbol" aria-hidden="true">⚽</span><span>Gol segnato.</span></li><li><span class="legend-symbol" aria-hidden="true">👟</span><span>Assist.</span></li>'''
-LE_NEW = '''<li><span class="legend-symbol leg-star" aria-hidden="true">★</span><span>Migliore in campo: cerchio oro e stella.</span></li><li><span class="legend-symbol" aria-hidden="true">⚽</span><span>Gol segnato.</span></li><li><span class="legend-symbol" aria-hidden="true">🎯</span><span>Rigore segnato.</span></li><li><span class="legend-symbol" aria-hidden="true">👟</span><span>Assist.</span></li><li><span class="legend-symbol" aria-hidden="true">🧤</span><span>Rigore parato.</span></li><li><span class="legend-symbol" aria-hidden="true">🛡️</span><span>Porta inviolata: portiere senza gol subiti.</span></li><li><span class="legend-symbol" aria-hidden="true">🥅</span><span>Gol subiti dal portiere (il numero accanto).</span></li><li><span class="legend-symbol" aria-hidden="true">❌</span><span>Rigore sbagliato.</span></li><li><span class="legend-symbol" aria-hidden="true">🔴</span><span>Autogol.</span></li>'''
+LE_NEW = '''<li><span class="legend-symbol leg-star" aria-hidden="true">★</span><span>Migliore in campo: cerchio oro e stella.</span></li><li><span class="legend-symbol" aria-hidden="true">⚽</span><span>Gol segnato.</span></li><li><span class="legend-symbol" aria-hidden="true">🎯</span><span>Rigore segnato.</span></li><li><span class="legend-symbol" aria-hidden="true">👟</span><span>Assist.</span></li><li><span class="legend-symbol" aria-hidden="true">🧤</span><span>Rigore parato.</span></li><li><span class="legend-symbol" aria-hidden="true">🛡️</span><span>Porta inviolata: portiere senza gol subiti.</span></li><li><span class="legend-symbol" aria-hidden="true">🥅</span><span>Gol subiti dal portiere (il numero accanto).</span></li><li><span class="legend-symbol" aria-hidden="true">❌</span><span>Rigore sbagliato.</span></li><li><span class="legend-symbol" aria-hidden="true">🔴</span><span>Autogol.</span></li><li><span class="legend-symbol" aria-hidden="true">🟨</span><span>Ammonito.</span></li><li><span class="legend-symbol" aria-hidden="true">🟥</span><span>Espulso.</span></li>'''
 
 
 def sostituisci(t, vecchio, nuovo, nome):
@@ -163,6 +165,7 @@ def applica(t, nome):
                     "document.getElementById('next').addEventListener('click',function(){if(round<D.cal.lega.length-1){round++;game=partitaMia(round);vai(true)}});", nome)
     t = sostituisci(t, "document.getElementById('prev').disabled=round===0;document.getElementById('next').disabled=round===rounds.length-1;",
                     "document.getElementById('prev').disabled=round===0;document.getElementById('next').disabled=round===rounds.length-1;var pp=document.getElementById('pprev'),pn=document.getElementById('pnext');if(pp)pp.disabled=game<=0;if(pn)pn.disabled=game>=g.m.length-1;", nome)
+    t = sostituisci(t, "return '<div class=\"pl '+lato+(g.top?' top':'')+'\"", "return '<div class=\"pl '+lato+(g.top?' top':'')+(lato==='away'&&g.r==='P'?' basso':'')+'\"", nome)
     return t
 
 
