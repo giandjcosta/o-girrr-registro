@@ -1,5 +1,5 @@
 {
- "generato": 1794755860,
+ "generato": 1794755957,
  "versione": "6.1",
  "repository": [
   {
@@ -8005,39 +8005,6 @@
      "totale": 1204
     },
     {
-     "nome": "chatgpt/coordinamento-62",
-     "punta": "0567515",
-     "data": 1794755736,
-     "titolo": "ChatGPT: collega la revisione 6.2 alla PR 92",
-     "autore": "ChatGPT",
-     "padre": "main",
-     "nascita": "410f975",
-     "dataNascita": 1794753341,
-     "avanti": 3,
-     "stato": "attivo",
-     "commit": [
-      [
-       "05675158964756f53d48eb183a1c7ce0fd0b3a7f",
-       1794755736,
-       "ChatGPT",
-       "ChatGPT: collega la revisione 6.2 alla PR 92"
-      ],
-      [
-       "fd6c1c7aa46925c91c6c93f702524335ea28d1a6",
-       1794755684,
-       "ChatGPT",
-       "ChatGPT: registra hash e verifiche della proposta 6.2"
-      ],
-      [
-       "0cbe4bb6d6d1dffdfe85e4cf98094db8f16b0377",
-       1794755633,
-       "ChatGPT",
-       "ChatGPT: prepara nel Lab la proposta coordinata 6.2"
-      ]
-     ],
-     "totale": 3
-    },
-    {
      "nome": "claude/fervent-thompson-rwlwrh",
      "punta": "fc51bea",
      "data": 1794755860,
@@ -8099,6 +8066,45 @@
       ]
      ],
      "totale": 9
+    },
+    {
+     "nome": "chatgpt/coordinamento-62",
+     "punta": "cb5af76",
+     "data": 1794755957,
+     "titolo": "ChatGPT: registra il Vai al solo Lab e i limiti della CI",
+     "autore": "ChatGPT",
+     "padre": "main",
+     "nascita": "410f975",
+     "dataNascita": 1794753341,
+     "avanti": 4,
+     "stato": "attivo",
+     "commit": [
+      [
+       "cb5af7627338773c7b1d1ff60ea954863d9bec7a",
+       1794755957,
+       "ChatGPT",
+       "ChatGPT: registra il Vai al solo Lab e i limiti della CI"
+      ],
+      [
+       "05675158964756f53d48eb183a1c7ce0fd0b3a7f",
+       1794755736,
+       "ChatGPT",
+       "ChatGPT: collega la revisione 6.2 alla PR 92"
+      ],
+      [
+       "fd6c1c7aa46925c91c6c93f702524335ea28d1a6",
+       1794755684,
+       "ChatGPT",
+       "ChatGPT: registra hash e verifiche della proposta 6.2"
+      ],
+      [
+       "0cbe4bb6d6d1dffdfe85e4cf98094db8f16b0377",
+       1794755633,
+       "ChatGPT",
+       "ChatGPT: prepara nel Lab la proposta coordinata 6.2"
+      ]
+     ],
+     "totale": 4
     }
    ]
   }
