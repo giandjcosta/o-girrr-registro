@@ -1,5 +1,5 @@
 {
- "generato": 1794770226,
+ "generato": 1794770402,
  "versione": "6.1",
  "repository": [
   {
@@ -8047,108 +8047,15 @@
      "totale": 5
     },
     {
-     "nome": "claude/fervent-thompson-rwlwrh",
-     "punta": "e84a62d",
-     "data": 1794759191,
-     "titolo": "Claude: STATO.md, cartellini online nei dati del sito (PR #17 unita con il «Vai» di Gianluca)",
-     "autore": "Claude",
-     "padre": "chatgpt/coordinamento-62",
-     "nascita": "410f975",
-     "dataNascita": 1794753341,
-     "avanti": 19,
-     "stato": "unito",
-     "unione": {
-      "in": "main",
-      "data": 1794759206,
-      "commit": "b051bfb",
-      "titolo": "Merge pull request #95 from giandjcosta/claude/fervent-thompson-rwlwrh"
-     },
-     "commit": [
-      [
-       "e84a62d9f44d5ec2771f80bc2a788e04e1bc4eb2",
-       1794759191,
-       "Claude",
-       "Claude: STATO.md, cartellini online nei dati del sito (PR #17 unita con il «Vai» di Gianluca)"
-      ],
-      [
-       "f4081c60660a43f09fafc87a629a552dca2d0330",
-       1794757297,
-       "Claude",
-       "Claude: novità 6.2, cartellini nella scheda del Campo"
-      ],
-      [
-       "facdf68944c8799af77903a8038216111200bf74",
-       1794757285,
-       "Claude",
-       "Claude: Campo 6.2 con ammonizioni e espulsioni (🟨 🟥) e legenda; simboli del portiere ospite sopra il cerchio; prompt e note aggiornati"
-      ],
-      [
-       "ceed6c622ff8d8d3ed42fe7eef9f03903405bbd4",
-       1794756777,
-       "ChatGPT",
-       "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
-      ],
-      [
-       "da23848b02ff7d35d77f6ddd8ae57c8b35226503",
-       1794756705,
-       "Claude",
-       "Claude: regola fissa per messaggi e changelog (REGOLE-VERSIONI.md), prompt per ChatGPT, note 6.2 in NOTE-CLAUDE.md"
-      ],
-      [
-       "e1b98d43e24b4776be820a402012eb3c5ec653c4",
-       1794756559,
-       "Claude",
-       "Claude: Campo 6.2, frecce ‹ › per le partite e « » per le giornate, cambi con dissolvenza morbida"
-      ],
-      [
-       "ce34ebea50f1bf37479c18cdc60439461c03e94e",
-       1794756205,
-       "Claude",
-       "Claude: Campo 6.2, la tua partita si apre per prima ma resta al suo posto nella fila"
-      ],
-      [
-       "e9ea84b41d25df8155a50f084288c06cb27d1ab4",
-       1794756126,
-       "Claude",
-       "Claude: Tabellone dello Stadio tutto oro anche in Coppa, sfondi invariati (6.2, solo Lab)"
-      ],
-      [
-       "fc51beabb70f44fa003b7883e92b013bf8c9a17a",
-       1794755860,
-       "Claude",
-       "Claude: Tabellone 6.2, la tua partita resta al suo posto con velo oro e «La tua partita»"
-      ],
-      [
-       "79ebe4d26f11f782fcd946184f9241366c0becaf",
-       1794755777,
-       "Claude",
-       "Claude: Tabellone dello Stadio, interruttore Campionato / Champions Cup oro (6.2, solo Lab)"
-      ],
-      [
-       "6e9bf80d799fa4e6f6d05a1d7acf159ba40bd346",
-       1794755659,
-       "Claude",
-       "Claude: Tabellone 6.2, la tua partita per prima con un velo oro senza contorno; Albo e Derby senza oro"
-      ],
-      [
-       "b25acc11c33333a649f12466443ed3f2c00280e1",
-       1794755466,
-       "Claude",
-       "Claude: Campo 6.2 con cerchio oro solo al migliore in campo e simboli di tutti i bonus e malus; «= Stessa posizione»; Padri Fondatori solo c"
-      ]
-     ],
-     "totale": 19
-    },
-    {
      "nome": "chatgpt/integrazione-62-completa",
      "punta": "13b7223",
      "data": 1794766745,
      "titolo": "ChatGPT: separa i candidati MVP dal Coro e rende laterali i simboli dei portieri",
      "autore": "ChatGPT",
-     "padre": "claude/fervent-thompson-rwlwrh",
-     "nascita": "e84a62d",
-     "dataNascita": 1794759191,
-     "avanti": 28,
+     "padre": "chatgpt/coordinamento-62",
+     "nascita": "410f975",
+     "dataNascita": 1794753341,
+     "avanti": 47,
      "stato": "unito",
      "unione": {
       "in": "main",
@@ -8230,20 +8137,65 @@
        "ChatGPT: prepara la consegna a Codex per finire la 6.2 senza ripartire da zero"
       ]
      ],
-     "totale": 28
+     "totale": 47
+    },
+    {
+     "nome": "claude/fervent-thompson-rwlwrh",
+     "punta": "d8c75e0",
+     "data": 1794770387,
+     "titolo": "Claude: STATO.md, la 6.2 completa di ChatGPT nel Lab (PR #96) con esito delle prove",
+     "autore": "Claude",
+     "padre": "chatgpt/integrazione-62-completa",
+     "nascita": "13b7223",
+     "dataNascita": 1794766745,
+     "avanti": 4,
+     "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794770402,
+      "commit": "a1b890e",
+      "titolo": "Merge pull request #97 from giandjcosta/claude/fervent-thompson-rwlwrh"
+     },
+     "commit": [
+      [
+       "d8c75e0f24571927340e7fe279480c7647df2d95",
+       1794770387,
+       "Claude",
+       "Claude: STATO.md, la 6.2 completa di ChatGPT nel Lab (PR #96) con esito delle prove"
+      ],
+      [
+       "6fb4d57bfad312ee9d728792dc01634ca9871a68",
+       1794770226,
+       "ChatGPT",
+       "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
+      ],
+      [
+       "58c38d2397f93cedf6f24e718121c2148be72af1",
+       1794768152,
+       "Registro",
+       "Registro: elenco attività aggiornato"
+      ]
+     ],
+     "totale": 4
     },
     {
      "nome": "main",
-     "punta": "6fb4d57",
-     "data": 1794770226,
-     "titolo": "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio",
-     "autore": "ChatGPT",
+     "punta": "a1b890e",
+     "data": 1794770402,
+     "titolo": "Merge pull request #97 from giandjcosta/claude/fervent-thompson-rwlwrh",
+     "autore": "giandjcosta",
      "padre": null,
      "nascita": null,
      "avanti": 0,
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "a1b890e883908e3e78fa8f8345fd0fb319d56387",
+       1794770402,
+       "giandjcosta",
+       "Merge pull request #97 from giandjcosta/claude/fervent-thompson-rwlwrh"
+      ],
       [
        "6fb4d57bfad312ee9d728792dc01634ca9871a68",
        1794770226,
@@ -8309,15 +8261,9 @@
        1794698680,
        "ChatGPT",
        "ChatGPT: corregge nel Lab la riga Peggiore sul PC"
-      ],
-      [
-       "c427c75ba6a6bd1226e0642e11257ef4fd233080",
-       1794691732,
-       "ChatGPT",
-       "ChatGPT: aggiorna STATO con la verifica dell’anteprima 6.1.1"
       ]
      ],
-     "totale": 1254
+     "totale": 1256
     }
    ]
   }
