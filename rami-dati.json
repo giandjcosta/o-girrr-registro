@@ -1,5 +1,5 @@
 {
- "generato": 1794771796,
+ "generato": 1794772082,
  "versione": "6.1",
  "repository": [
   {
@@ -8141,22 +8141,28 @@
     },
     {
      "nome": "claude/fervent-thompson-rwlwrh",
-     "punta": "36c026e",
-     "data": 1794771780,
-     "titolo": "Claude: Giornale 6.2 come quello di oggi, solo con la rubrica MVP dei candidati (giornale_mvp.py al posto di e",
+     "punta": "327c187",
+     "data": 1794772069,
+     "titolo": "Claude: rubrica MVP del Giornale con capolettera rosso, chiusura del voto e verdetto del numero dopo (dal pros",
      "autore": "Claude",
      "padre": "chatgpt/integrazione-62-completa",
      "nascita": "13b7223",
      "dataNascita": 1794766745,
-     "avanti": 6,
+     "avanti": 8,
      "stato": "unito",
      "unione": {
       "in": "main",
-      "data": 1794771796,
-      "commit": "da1d125",
-      "titolo": "Merge pull request #98 from giandjcosta/claude/fervent-thompson-rwlwrh"
+      "data": 1794772082,
+      "commit": "bc15d1d",
+      "titolo": "Merge pull request #99 from giandjcosta/claude/fervent-thompson-rwlwrh"
      },
      "commit": [
+      [
+       "327c187b95a39ba39fbce234d105440319b528b7",
+       1794772069,
+       "Claude",
+       "Claude: rubrica MVP del Giornale con capolettera rosso, chiusura del voto e verdetto del numero dopo (dal prossimo Giornale)"
+      ],
       [
        "36c026e5c057155a1eaa83a19577b89c894e4893",
        1794771780,
@@ -8182,13 +8188,13 @@
        "Registro: elenco attività aggiornato"
       ]
      ],
-     "totale": 6
+     "totale": 8
     },
     {
      "nome": "main",
-     "punta": "da1d125",
-     "data": 1794771796,
-     "titolo": "Merge pull request #98 from giandjcosta/claude/fervent-thompson-rwlwrh",
+     "punta": "bc15d1d",
+     "data": 1794772082,
+     "titolo": "Merge pull request #99 from giandjcosta/claude/fervent-thompson-rwlwrh",
      "autore": "giandjcosta",
      "padre": null,
      "nascita": null,
@@ -8196,6 +8202,12 @@
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "bc15d1d4cee94f1ba125d9ddc6c7006653c00b23",
+       1794772082,
+       "giandjcosta",
+       "Merge pull request #99 from giandjcosta/claude/fervent-thompson-rwlwrh"
+      ],
       [
        "da1d12575965a9ae07cfe139e40eeb51ce49f1da",
        1794771796,
@@ -8261,15 +8273,9 @@
        1794751499,
        "giandjcosta",
        "Merge pull request #90 from giandjcosta/claude/ramificazioni-pagina-piena"
-      ],
-      [
-       "5ee6ad57164eed50a4851789b978761d23f06fa1",
-       1794724968,
-       "Registro",
-       "Registro: elenco attività aggiornato"
       ]
      ],
-     "totale": 1258
+     "totale": 1260
     }
    ]
   }
