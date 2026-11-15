@@ -1,5 +1,5 @@
 {
- "generato": 1794763130,
+ "generato": 1794764055,
  "versione": "6.1",
  "repository": [
   {
@@ -8228,16 +8228,22 @@
     },
     {
      "nome": "chatgpt/integrazione-62-completa",
-     "punta": "a1e6670",
-     "data": 1794763130,
-     "titolo": "ChatGPT: prepara annuncio unico e anteprime native, preserva le aperture precedenti",
+     "punta": "b80680c",
+     "data": 1794764055,
+     "titolo": "ChatGPT: unifica anche i sondaggi nei post e completa i controlli delle anteprime",
      "autore": "ChatGPT",
      "padre": "main",
      "nascita": "b051bfb",
      "dataNascita": 1794759206,
-     "avanti": 21,
+     "avanti": 22,
      "stato": "attivo",
      "commit": [
+      [
+       "b80680c5ae1286fd12a0a8e61700982669e54c9f",
+       1794764055,
+       "ChatGPT",
+       "ChatGPT: unifica anche i sondaggi nei post e completa i controlli delle anteprime"
+      ],
       [
        "a1e667081dda8813a3c0bcca89a3cec52d349bad",
        1794763130,
@@ -8303,15 +8309,9 @@
        1794760114,
        "ChatGPT",
        "ChatGPT: aggiunge alla pagina 6.2 la 6.1.1 e il confronto A/B senza cancellare il Campo"
-      ],
-      [
-       "47e6d05dbcd379ad897c45ef0445ae0a52d2fcba",
-       1794760058,
-       "ChatGPT",
-       "ChatGPT: confronta A e B nel Lab con le grafiche Lega e Stadio, senza votazioni reali"
       ]
      ],
-     "totale": 21
+     "totale": 22
     }
    ]
   }
