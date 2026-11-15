@@ -86,7 +86,9 @@ def battute(verdetto, aperta, racconti=None, annunciati=(), giornata_puntata=Non
             vinte = [p for p in pp if p['gf'] > p['gs']]
             T = _nome(team)
             T = T[:1].upper() + T[1:]
-            if len(pp) == 2 and len(vinte) == 2:
+            if len(pp) == 2 and len(vinte) == 2 and pp[0]['opp'] == pp[1]['opp']:   # stessa avversaria due volte
+                testo = f"Strepitosa {T}, squadra MVP della {g}ª: batte due volte {_nome(pp[0]['opp'])}, in Campionato e in Champions Cup!"
+            elif len(pp) == 2 and len(vinte) == 2:
                 testo = f"Strepitosa {T}, squadra MVP della {g}ª: due vittorie e {pp[0]['gf'] + pp[1]['gf']} gol tra Campionato e Champions Cup!"
             elif vinte:
                 testo = f"Applausi per {T}, squadra MVP della {g}ª: decisivo {_racconta(vinte[0])}!"

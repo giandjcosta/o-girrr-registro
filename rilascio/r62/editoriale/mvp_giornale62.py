@@ -46,6 +46,21 @@ def racconta(p):
     return f"cade {p['gf']}–{p['gs']} contro {o}"
 
 
+def doppia(T, pp):
+    """Stessa avversaria in Campionato e in Champions Cup nella stessa giornata: un fatto solo, non due frasi uguali."""
+    if len(pp) != 2 or pp[0]["opp"] != pp[1]["opp"]:
+        return None
+    o, a, b = nome(pp[0]["opp"]), pp[0], pp[1]
+    ris = f"in Campionato ({a['gf']}–{a['gs']}) e in Champions Cup ({b['gf']}–{b['gs']})"
+    if a["gf"] > a["gs"] and b["gf"] > b["gs"]:
+        return f"{T} batte {o} due volte nella stessa giornata, {ris}."
+    if a["gf"] == a["gs"] and b["gf"] == b["gs"]:
+        return f"{T} pareggia due volte con {o} nella stessa giornata, {ris}."
+    if a["gf"] < a["gs"] and b["gf"] < b["gs"]:
+        return f"{T} cade due volte contro {o} nella stessa giornata, {ris}."
+    return f"{T} affronta {o} due volte nella stessa giornata, {ris}."
+
+
 def motivo(w, team):
     return next((v.get("motivo") for v in (w or {}).get("redazione", []) if v.get("scelta") == team and v.get("motivo")), None)
 
@@ -56,6 +71,9 @@ def breve(D, w, c, giornata):
     pp = partite(D, team, giornata)
     lega = [p for p in pp if p["comp"] == "Campionato"]
     coppa = [p for p in pp if p["comp"] == "Champions Cup"]
+    due = doppia(maiuscola(nome(team)), lega + coppa)
+    if due:   # stessa avversaria due volte: un fatto solo al posto delle due frasi
+        return due
     testo = motivo(w, team)
     if not testo and lega:
         testo = maiuscola(nome(team)) + " " + racconta(lega[0]) + " in Campionato."
@@ -71,7 +89,11 @@ def lunga(D, a, team):
     g = a["giornata"]
     pp = partite(D, team, g)
     righe = [f"{maiuscola(nome(team))} è l’MVP dei tifosi della {g}ª giornata."]
-    if len(pp) == 2:
+    due = doppia("", pp)
+    if due:
+        due = maiuscola(due.strip())   # «Batte WOA due volte…»: il nome della squadra è già nella frase prima
+        righe.append(due + (f" In tutto {pp[0]['gf'] + pp[1]['gf']} gol fatti." if pp[0]['gf'] + pp[1]['gf'] else ""))
+    elif len(pp) == 2:
         v = sum(1 for p in pp if p["gf"] > p["gs"])
         righe.append(f"In Campionato {racconta(pp[0])}, in Champions Cup {racconta(pp[1])}: "
                      + ("due vittorie nella stessa giornata" if v == 2 else "una settimana piena") + f", con {pp[0]['gf'] + pp[1]['gf']} gol fatti.")
