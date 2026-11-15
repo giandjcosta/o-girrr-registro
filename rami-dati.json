@@ -1,5 +1,5 @@
 {
- "generato": 1794724968,
+ "generato": 1794728639,
  "versione": "6.1",
  "repository": [
   {
@@ -1520,93 +1520,6 @@
      "totale": 7
     },
     {
-     "nome": "main",
-     "punta": "b5a6b88",
-     "data": 1794673265,
-     "titolo": "ChatGPT: attiva i calcoli dei bilanci della stagione 6.1",
-     "autore": "ChatGPT",
-     "padre": null,
-     "nascita": null,
-     "avanti": 0,
-     "indietro": 0,
-     "stato": "principale",
-     "commit": [
-      [
-       "b5a6b88c6729dde20603a151827de51ff98250b1",
-       1794673265,
-       "ChatGPT",
-       "ChatGPT: attiva i calcoli dei bilanci della stagione 6.1"
-      ],
-      [
-       "8f6e6a9a9f57b9a2cf8955c72e62d0e751dd456c",
-       1794673042,
-       "giandjcosta",
-       "Merge pull request #16 from giandjcosta/claude/avvisa-ramificazioni"
-      ],
-      [
-       "0f0cc3dea79632ca5c00b923db26c760566ac136",
-       1794649740,
-       "giandjcosta",
-       "Merge pull request #14 from giandjcosta/claude/sito-601"
-      ],
-      [
-       "ff29fa200671f0bc06e43c70018ae9359317890b",
-       1794587335,
-       "Claude",
-       "Claude: AGENTS.md, sul sito la 6.0 (#11)"
-      ],
-      [
-       "da338dcddd03cc54c41d574e2a80a4bd5996bc4c",
-       1794587023,
-       "Claude",
-       "Claude: 6.0 nel main del sito, workflow del video e dell'MVP (#10)"
-      ],
-      [
-       "22da7aa2c6486344bf5d671896f7191e0c2b68aa",
-       1794496372,
-       "Claude",
-       "Claude: AGENTS.md, sul sito la 5.8.2"
-      ],
-      [
-       "ad578e5811440ed92af8fd7c90700487f22ae07c",
-       1794483831,
-       "ChatGPT",
-       "ChatGPT: integra il controllo preliminare dei premi autorizzato da Gianluca"
-      ],
-      [
-       "e4465da0b41b556c6daf75f05c2d7ac040e9d270",
-       1794369002,
-       "Claude",
-       "Claude: 5.8 · aspettano il giudizio solo le conferenze delle giornate su cui lavora la redazione"
-      ],
-      [
-       "4b74020cb4f81be666dbf4d3a06a0d4d62048cd7",
-       1794368980,
-       "Claude",
-       "Claude: versione 5.8 · calcoli con i giudizi della redazione di Girrr Sport"
-      ],
-      [
-       "48767169a1921994f7a00b9a5ed8623be96fd301",
-       1794354678,
-       "Claude",
-       "Claude: AGENTS.md, sul sito c'è la 5.7"
-      ],
-      [
-       "c05cf9fe18199340ace3396110a10c7a7bbbca29",
-       1794354563,
-       "Claude",
-       "Claude: versione 5.7 · calcoli (post delle conferenze con partita, allenatore e tag; dopo partita; tono nella fiducia)"
-      ],
-      [
-       "0885382164a5e4f57d266f0755f94f3fd13d58ff",
-       1794266942,
-       "Claude",
-       "Claude: AGENTS.md, sul sito c'è la 5.6.2"
-      ]
-     ],
-     "totale": 100
-    },
-    {
      "nome": "gh-pages",
      "punta": "13c88bb",
      "data": 1794708335,
@@ -1692,6 +1605,93 @@
       ]
      ],
      "totale": 656
+    },
+    {
+     "nome": "main",
+     "punta": "40837e6",
+     "data": 1794728639,
+     "titolo": "Curva: post nuovi",
+     "autore": "Curva",
+     "padre": null,
+     "nascita": null,
+     "avanti": 0,
+     "indietro": 0,
+     "stato": "principale",
+     "commit": [
+      [
+       "40837e6192a1f91ecff803815a7b5285d5d89b6b",
+       1794728639,
+       "Curva",
+       "Curva: post nuovi"
+      ],
+      [
+       "b5a6b88c6729dde20603a151827de51ff98250b1",
+       1794673265,
+       "ChatGPT",
+       "ChatGPT: attiva i calcoli dei bilanci della stagione 6.1"
+      ],
+      [
+       "8f6e6a9a9f57b9a2cf8955c72e62d0e751dd456c",
+       1794673042,
+       "giandjcosta",
+       "Merge pull request #16 from giandjcosta/claude/avvisa-ramificazioni"
+      ],
+      [
+       "0f0cc3dea79632ca5c00b923db26c760566ac136",
+       1794649740,
+       "giandjcosta",
+       "Merge pull request #14 from giandjcosta/claude/sito-601"
+      ],
+      [
+       "ff29fa200671f0bc06e43c70018ae9359317890b",
+       1794587335,
+       "Claude",
+       "Claude: AGENTS.md, sul sito la 6.0 (#11)"
+      ],
+      [
+       "da338dcddd03cc54c41d574e2a80a4bd5996bc4c",
+       1794587023,
+       "Claude",
+       "Claude: 6.0 nel main del sito, workflow del video e dell'MVP (#10)"
+      ],
+      [
+       "22da7aa2c6486344bf5d671896f7191e0c2b68aa",
+       1794496372,
+       "Claude",
+       "Claude: AGENTS.md, sul sito la 5.8.2"
+      ],
+      [
+       "ad578e5811440ed92af8fd7c90700487f22ae07c",
+       1794483831,
+       "ChatGPT",
+       "ChatGPT: integra il controllo preliminare dei premi autorizzato da Gianluca"
+      ],
+      [
+       "e4465da0b41b556c6daf75f05c2d7ac040e9d270",
+       1794369002,
+       "Claude",
+       "Claude: 5.8 · aspettano il giudizio solo le conferenze delle giornate su cui lavora la redazione"
+      ],
+      [
+       "4b74020cb4f81be666dbf4d3a06a0d4d62048cd7",
+       1794368980,
+       "Claude",
+       "Claude: versione 5.8 · calcoli con i giudizi della redazione di Girrr Sport"
+      ],
+      [
+       "48767169a1921994f7a00b9a5ed8623be96fd301",
+       1794354678,
+       "Claude",
+       "Claude: AGENTS.md, sul sito c'è la 5.7"
+      ],
+      [
+       "c05cf9fe18199340ace3396110a10c7a7bbbca29",
+       1794354563,
+       "Claude",
+       "Claude: versione 5.7 · calcoli (post delle conferenze con partita, allenatore e tag; dopo partita; tono nella fiducia)"
+      ]
+     ],
+     "totale": 101
     }
    ]
   },
