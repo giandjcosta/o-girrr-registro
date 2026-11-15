@@ -1,0 +1,218 @@
+[
+  {
+    "team": "Oranje VC",
+    "giornata": 8,
+    "risposte": [
+      {
+        "a": 1,
+        "k": 1,
+        "t": "Una partita alla volta, con umiltà.",
+        "w": 0
+      },
+      {
+        "a": 1,
+        "k": 1,
+        "t": "Mariana Coneja è un ottimo avversario: serve attenzione.",
+        "w": 0
+      },
+      {
+        "a": 2,
+        "k": 2,
+        "t": "Chi non crede in noi può restare a casa.",
+        "w": 1
+      }
+    ],
+    "libera": null,
+    "promessa": "Chi non crede in noi può restare a casa.",
+    "pesa": 2
+  },
+  {
+    "team": "Apo team",
+    "giornata": 7,
+    "risposte": [
+      {
+        "a": "free",
+        "k": 1,
+        "t": "Noi ci crediamo e non molliamo",
+        "w": 0
+      },
+      {
+        "a": "free",
+        "k": 1,
+        "t": "Sarà una partita difficile contro un avversario molto forte",
+        "w": 0
+      },
+      {
+        "a": "free",
+        "k": 1,
+        "t": "Chi dubita di noi é gay",
+        "w": 0
+      }
+    ],
+    "libera": "Noi ci crediamo e non molliamo",
+    "promessa": null,
+    "pesa": 0
+  },
+  {
+    "team": "Apo team",
+    "giornata": 6,
+    "risposte": [
+      {
+        "a": "free",
+        "k": 0,
+        "t": "Se non dovessimo vincere questa giornata probabilmente salterà qualche testa",
+        "w": 1
+      },
+      {
+        "a": "free",
+        "k": 1,
+        "t": "Ce li scopiamo sti olandesi, zero paura, mora sarà in campo per il gol dell'ex",
+        "w": 0
+      },
+      {
+        "a": "free",
+        "k": 1,
+        "t": "Leccatemi il sotto palla sudato",
+        "w": 0
+      }
+    ],
+    "libera": "Se non dovessimo vincere questa giornata probabilmente salterà qualche testa",
+    "promessa": "Se non dovessimo vincere questa giornata probabilmente salterà qualche testa",
+    "pesa": 1
+  },
+  {
+    "team": "Apo team",
+    "giornata": 5,
+    "risposte": [
+      {
+        "a": "free",
+        "k": 1,
+        "t": "Questa settimana con doppia partita sarà determinante per la classifica",
+        "w": 0
+      },
+      {
+        "a": "free",
+        "k": 1,
+        "t": "Abbiamo bisogno dei nostri attaccanti, ancora troppi pochi bonus da parte loro",
+        "w": 0
+      },
+      {
+        "a": "free",
+        "k": 1,
+        "t": "Capisco i dubbi su di noi ma li faremo ricedere presto",
+        "w": 0
+      }
+    ],
+    "libera": "Questa settimana con doppia partita sarà determinante per la classifica",
+    "promessa": null,
+    "pesa": 0
+  },
+  {
+    "team": "Apo team",
+    "giornata": 4,
+    "risposte": [
+      {
+        "a": "free",
+        "k": 1,
+        "t": "Il campionato é lungo e noi siamo pronti a metterci in gioco",
+        "w": 0
+      },
+      {
+        "a": "free",
+        "k": 0,
+        "t": "Sarà sicuramente una bella partita, che vinca il migliore",
+        "w": 1
+      },
+      {
+        "a": "free",
+        "k": 1,
+        "t": "Forza Apo team, anche perché le altre squadre fanno schifo",
+        "w": 0
+      }
+    ],
+    "libera": "Il campionato é lungo e noi siamo pronti a metterci in gioco",
+    "promessa": "Sarà sicuramente una bella partita, che vinca il migliore",
+    "pesa": 1
+  },
+  {
+    "team": "Oranje VC",
+    "giornata": 4,
+    "risposte": [
+      {
+        "a": 2,
+        "k": 2,
+        "t": "Chi parla di obiettivi guardi la classifica.",
+        "w": 1
+      },
+      {
+        "a": 1,
+        "k": 1,
+        "t": "Real Madrink è un ottimo avversario: serve attenzione.",
+        "w": 0
+      },
+      {
+        "a": 1,
+        "k": 1,
+        "t": "Grazie, continuiamo a lavorare a testa bassa.",
+        "w": 0
+      }
+    ],
+    "libera": null,
+    "promessa": "Chi parla di obiettivi guardi la classifica.",
+    "pesa": 2
+  },
+  {
+    "team": "Apo team",
+    "giornata": 3,
+    "risposte": [
+      {
+        "a": "free",
+        "k": 1,
+        "t": "Il nostro obbiettivo al momento é rialzarci dopo due stagioni da cancellare",
+        "w": 0
+      },
+      {
+        "a": 1,
+        "k": 1,
+        "t": "AFA SELECCION è un ottimo avversario: serve attenzione.",
+        "w": 0
+      },
+      {
+        "a": 1,
+        "k": 1,
+        "t": "Grazie, continuiamo a lavorare a testa bassa.",
+        "w": 0
+      }
+    ],
+    "libera": "Il nostro obbiettivo al momento é rialzarci dopo due stagioni da cancellare",
+    "promessa": null,
+    "pesa": 0
+  },
+  {
+    "team": "The Blue brothers",
+    "giornata": 3,
+    "risposte": [
+      {
+        "a": 1,
+        "k": 1,
+        "t": "È presto: lavoriamo e vediamo.",
+        "w": 0
+      },
+      {
+        "a": 1,
+        "k": 1,
+        "t": "Atletico ma non troppo è un ottimo avversario: serve attenzione.",
+        "w": 0
+      },
+      {
+        "a": 1,
+        "k": 1,
+        "t": "Chiedo tempo: i risultati arriveranno.",
+        "w": 0
+      }
+    ],
+    "libera": null,
+    "promessa": null,
+    "pesa": 0
+  }
+]

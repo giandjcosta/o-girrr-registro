@@ -1,5 +1,7 @@
 name: ChatGPT - QA integrazione 6.2
 on:
+  push:
+    branches: [chatgpt/integrazione-62-completa]
   pull_request:
     branches: [main]
     paths: ['rilascio/r62/**', 'lab/confronto-62.html', 'lab/novita-6-2.html', 'lab/offline/index.html', 'prove/prova_campo_62.js', 'prove/v62/**', 'voci-src/**', 'calcoli/finestre62.py', '.github/workflows/integrazione-62-qa.yml']
@@ -65,6 +67,20 @@ jobs:
           mkdir -p "$RUNNER_TEMP/web"
           ln -s "$RUNNER_TEMP/site-62" "$RUNNER_TEMP/web/o-fant-a-girrr"
           python3 prove/server_range.py --directory "$RUNNER_TEMP/web" --port 8890 > "$RUNNER_TEMP/62-server.log" 2>&1 &
+      - name: Backend locale isolato
+        run: |
+          npm ci --prefix prove/v62
+          SITO62="$RUNNER_TEMP/site-62" PORT=8896 node prove/v62/native-server.cjs > "$RUNNER_TEMP/native-server.log" 2>&1 &
+      - name: Integrazione nativa, sedici profili e funzioni condivise
+        env:
+          MOTORE: ${{ matrix.motore }}
+          FIREFOX_CERT_PROFILE: ${{ runner.temp }}/firefox-ca
+          SITO62: ${{ runner.temp }}/site-62
+          BASE62: http://127.0.0.1:8896/
+          FOTO: qa-artifacts/native
+        run: |
+          node prove/v62/native-browser.cjs
+          node prove/v62/funzioni.cjs
       - name: Campo 6.2, sedici schermi e due grafiche
         env:
           MOTORE: ${{ matrix.motore }}
@@ -82,4 +98,6 @@ jobs:
         if: always()
         with:
           name: integrazione-62-${{ matrix.motore }}
-          path: qa-artifacts/
+          path: |
+            qa-artifacts/
+            prove/v62/risultati-*.json

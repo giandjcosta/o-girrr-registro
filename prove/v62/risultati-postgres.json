@@ -1,0 +1,20 @@
+{
+  "motore": "PostgreSQL 17 nativo locale",
+  "databaseIsolato": "girrr62_test_16621_1794762155",
+  "sessioniConcorrenti": 2,
+  "produzione": false,
+  "prove": [
+    "Voti preesistenti leggibili senza importazioni",
+    "Due sessioni concorrenti con scelte diverse: un solo voto",
+    "Risposte concorrenti riportano entrambe la prima scelta",
+    "Vecchia RPC conserva la scelta",
+    "MVP concorrente: una preferenza immutabile",
+    "Il ritiro non cancella il primo voto",
+    "Scadenza già annunciata preservata",
+    "Ultimi due chiusi identici e storico non cancellato",
+    "Post nuovo: stesso ID e stessi voti senza copia del catalogo",
+    "Scadenza ricontrollata dopo attesa del lock",
+    "Conferenza pubblicata immutabile anche sul server",
+    "Schema privato, RLS e privilegi verificati"
+  ]
+}
