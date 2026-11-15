@@ -1,5 +1,17 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 15 novembre 2026)
 
+## 15 novembre (14) — ChatGPT: release candidate 6.2 integrata, in certificazione (nessun deploy)
+
+- **Ramo `chatgpt/rc-62-verifica`**, nato dal controllo tecnico e integrato con il lavoro dati dell'Albo della PR #107; non è un merge a `main`.
+- SQL: compatibilità della RPC 6.1 prima del catalogo, finestre conferenze isolabili per stagione e senza blocco prima dell'inizializzazione; RPC `v62_albo`, dati redazione e personaggi inseribili soltanto dal servizio con dossier verificato, RLS, prova PostgreSQL isolata.
+- L'Albo mostra `partite:null` («Dato non disponibile») quando mancano giurie realmente documentate: non inventare risultati storici. Il caricamento editoriale è disponibile nella **copia di backend** con `calcoli/giuria62.py` e rimane inoperoso fino al «Vai SQL» ed al dossier firmato.
+- Preparazione del sito: `applica.py` su copia nuova, non su `gh-pages`. Preparazione separata backend: `backend.py` su copia nuova di `main` del sito; include gli script per il post verdetto MVP e il preparatore giurie; fallisce se i file base sono cambiati.
+- Correzione responsive minima 6.1.1: il vincolo «Peggiore» su una sola riga è riservato ai veri schermi PC da 1280 px; su tablet 1024 px può andare a capo, senza uscire dal riquadro. Il difetto era documentato nel report Chromium della run 43771449312.
+- CI unificata: PostgreSQL `postgres.py`, `postgres_cambio.py`, `postgres_albo.py`; collaudo backend; Chromium/WebKit/Firefox × 16 profili × Lega/Stadio; nuova verifica visiva Albo su 320/1280; controlli di Campo/Curva/Carriera.
+- **Non è ancora un GO finale** fino all'esito del workflow sullo SHA definitivo del ramo, all'ispezione dei PDF con caratteri corretti e alla verifica della sequenza di rilascio su copie. La run prima della certificazione integrata è [43772944317](https://github.com/giandjcosta/o-girrr-registro/actions/runs/43772944317); non attribuire successi non ancora riportati da CI.
+- Giornale originale, quattro pagine, **«Serie A, 11ª giornata» invariato** come richiesto da Gianluca. Nessun merge sul sito, SQL su Supabase, audio o pubblicazione.
+
+
 
 
 
