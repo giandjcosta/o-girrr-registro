@@ -1,5 +1,5 @@
 {
- "generato": 1794760058,
+ "generato": 1794760114,
  "versione": "6.1",
  "repository": [
   {
@@ -8228,16 +8228,22 @@
     },
     {
      "nome": "chatgpt/integrazione-62-completa",
-     "punta": "47e6d05",
-     "data": 1794760058,
-     "titolo": "ChatGPT: confronta A e B nel Lab con le grafiche Lega e Stadio, senza votazioni reali",
+     "punta": "e6f5858",
+     "data": 1794760114,
+     "titolo": "ChatGPT: aggiunge alla pagina 6.2 la 6.1.1 e il confronto A/B senza cancellare il Campo",
      "autore": "ChatGPT",
      "padre": "main",
      "nascita": "b051bfb",
      "dataNascita": 1794759206,
-     "avanti": 10,
+     "avanti": 11,
      "stato": "attivo",
      "commit": [
+      [
+       "e6f585857e11af1743588b809b12c1dd2e71a2d8",
+       1794760114,
+       "ChatGPT",
+       "ChatGPT: aggiunge alla pagina 6.2 la 6.1.1 e il confronto A/B senza cancellare il Campo"
+      ],
       [
        "47e6d05dbcd379ad897c45ef0445ae0a52d2fcba",
        1794760058,
@@ -8299,7 +8305,7 @@
        "ChatGPT: recupera le logiche 6.2 già provate e isolate dalla grafica rifiutata"
       ]
      ],
-     "totale": 10
+     "totale": 11
     }
    ]
   }
