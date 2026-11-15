@@ -1,5 +1,5 @@
 {
- "generato": 1794782874,
+ "generato": 1794782953,
  "versione": "6.1",
  "repository": [
   {
@@ -8360,16 +8360,22 @@
     },
     {
      "nome": "chatgpt/controllo-62",
-     "punta": "71fa421",
-     "data": 1794782874,
-     "titolo": "ChatGPT: aggiorna QA alla scelta di Gianluca sui risultati condivisi",
+     "punta": "28cade1",
+     "data": 1794782953,
+     "titolo": "ChatGPT: permette l'inizializzazione autorizzata del catalogo prima della pubblicazione",
      "autore": "ChatGPT",
      "padre": "main",
      "nascita": "2c856aa",
      "dataNascita": 1794781146,
-     "avanti": 6,
+     "avanti": 7,
      "stato": "attivo",
      "commit": [
+      [
+       "28cade1c916cc9cd5e389722c7c61de988de8328",
+       1794782953,
+       "ChatGPT",
+       "ChatGPT: permette l'inizializzazione autorizzata del catalogo prima della pubblicazione"
+      ],
       [
        "71fa4210418ce69a1c6ecee8ae759e5a6a55db5f",
        1794782874,
@@ -8407,7 +8413,7 @@
        "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
       ]
      ],
-     "totale": 6
+     "totale": 7
     }
    ]
   }
