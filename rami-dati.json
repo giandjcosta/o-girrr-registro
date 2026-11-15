@@ -1,5 +1,5 @@
 {
- "generato": 1794760114,
+ "generato": 1794760183,
  "versione": "6.1",
  "repository": [
   {
@@ -8228,16 +8228,28 @@
     },
     {
      "nome": "chatgpt/integrazione-62-completa",
-     "punta": "e6f5858",
-     "data": 1794760114,
-     "titolo": "ChatGPT: aggiunge alla pagina 6.2 la 6.1.1 e il confronto A/B senza cancellare il Campo",
+     "punta": "3f0e324",
+     "data": 1794760183,
+     "titolo": "ChatGPT: registra la decisione 6.1.1 in 6.2 e la sincronizzazione delle Ramificazioni",
      "autore": "ChatGPT",
      "padre": "main",
      "nascita": "b051bfb",
      "dataNascita": 1794759206,
-     "avanti": 11,
+     "avanti": 13,
      "stato": "attivo",
      "commit": [
+      [
+       "3f0e32458bfe72a74af8f1b05c553429c64638fd",
+       1794760183,
+       "ChatGPT",
+       "ChatGPT: registra la decisione 6.1.1 in 6.2 e la sincronizzazione delle Ramificazioni"
+      ],
+      [
+       "68ce5316f50afdbaeab9a2a2f762c9d01117ec02",
+       1794760180,
+       "ChatGPT",
+       "ChatGPT: allinea il cartello del Lab alla proposta 6.2 senza eliminare la 6.1.1"
+      ],
       [
        "e6f585857e11af1743588b809b12c1dd2e71a2d8",
        1794760114,
@@ -8297,15 +8309,9 @@
        1794759906,
        "ChatGPT",
        "ChatGPT: recupera le logiche 6.2 già provate e isolate dalla grafica rifiutata"
-      ],
-      [
-       "9e4c5de47e5a8d410f4846eda87c612c1fa6b71e",
-       1794759904,
-       "ChatGPT",
-       "ChatGPT: recupera le logiche 6.2 già provate e isolate dalla grafica rifiutata"
       ]
      ],
-     "totale": 11
+     "totale": 13
     }
    ]
   }
