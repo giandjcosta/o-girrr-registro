@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Radio MVP, scadenze e testi: nessun audio
+      - name: "Radio MVP, scadenze e testi: nessun audio"
         run: python3 -m unittest discover -s prove/v62 -p testi.py -v
       - name: Check sintassi Python
         run: python3 -m py_compile rilascio/r62/applica.py rilascio/r62/campo_coppa.py rilascio/r62/testi.py voci-src/copione.py voci-src/prepara_dati.py voci-src/mvp_editoriale62.py calcoli/finestre62.py

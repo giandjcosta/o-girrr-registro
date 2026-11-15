@@ -64,6 +64,9 @@ with sync_playwright() as p:
             expect(content.locator('.r')).to_contain_text('Notizia estiva')
             fits()
             page.evaluate("location.hash='ramificazioni'")
+            expect(content.locator('a[href*="ramificazioni.html"]')).to_have_count(1)
+            page.goto(BASE+'ramificazioni.html')
+            content=page
             expect(content.locator('[data-overview]')).to_have_count(2)
             for repo in SNAP['repositories']:
                 host=content.locator('[data-repository="'+repo['id']+'"]');overview=host.locator('[data-overview]')

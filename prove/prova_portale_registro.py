@@ -74,7 +74,7 @@ with sync_playwright() as p:
                 with navigation as loaded:
                     if page.locator('#sezione').is_visible(): page.locator('#sezione').select_option(key)
                     else: page.locator('#menu a[href="#'+key+'"]').click()
-                expect(shell).to_have_attribute('data-src',re.compile(re.escape({'lab':'lab/','aggiornamenti':'aggiornamenti.html','archivio':'archivio.html','ramificazioni':'ramificazioni.html','anteprima':'ufficiale/'}[key])+r'\?nel-registro=1$'))
+                expect(shell).to_have_attribute('data-src',re.compile(re.escape({'lab':'lab/','aggiornamenti':'aggiornamenti.html','archivio':'archivio.html','ramificazioni':'rami.html','anteprima':'ufficiale/'}[key])+r'\?nel-registro=1$'))
                 ready()
                 expect(page.locator('#menu a[aria-current]')).to_have_attribute('href','#'+key)
                 if key=='ramificazioni':
@@ -130,7 +130,7 @@ with sync_playwright() as p:
             bookmark.value.locator('h1').first.wait_for()
             bookmark.value.wait_for_load_state('networkidle')
             page.evaluate("location.hash='ramificazioni'")
-            expect(shell).to_have_attribute('data-src',BASE+'ramificazioni.html?nel-registro=1')
+            expect(shell).to_have_attribute('data-src',BASE+'rami.html?nel-registro=1')
             ready()
             page.evaluate('history.back()')
             expect(page).to_have_url(BASE+'registro.html#anteprima')
