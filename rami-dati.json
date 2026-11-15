@@ -1,5 +1,5 @@
 {
- "generato": 1794756039,
+ "generato": 1794756126,
  "versione": "6.1",
  "repository": [
   {
@@ -8005,17 +8005,68 @@
      "totale": 1204
     },
     {
+     "nome": "chatgpt/coordinamento-62",
+     "punta": "05419a8",
+     "data": 1794756039,
+     "titolo": "ChatGPT: ferma la pubblicazione delle bozze grafiche rifiutate",
+     "autore": "ChatGPT",
+     "padre": "main",
+     "nascita": "410f975",
+     "dataNascita": 1794753341,
+     "avanti": 5,
+     "stato": "attivo",
+     "commit": [
+      [
+       "05419a859eb8d138713ca95627641fad4a3849b9",
+       1794756039,
+       "ChatGPT",
+       "ChatGPT: ferma la pubblicazione delle bozze grafiche rifiutate"
+      ],
+      [
+       "cb5af7627338773c7b1d1ff60ea954863d9bec7a",
+       1794755957,
+       "ChatGPT",
+       "ChatGPT: registra il Vai al solo Lab e i limiti della CI"
+      ],
+      [
+       "05675158964756f53d48eb183a1c7ce0fd0b3a7f",
+       1794755736,
+       "ChatGPT",
+       "ChatGPT: collega la revisione 6.2 alla PR 92"
+      ],
+      [
+       "fd6c1c7aa46925c91c6c93f702524335ea28d1a6",
+       1794755684,
+       "ChatGPT",
+       "ChatGPT: registra hash e verifiche della proposta 6.2"
+      ],
+      [
+       "0cbe4bb6d6d1dffdfe85e4cf98094db8f16b0377",
+       1794755633,
+       "ChatGPT",
+       "ChatGPT: prepara nel Lab la proposta coordinata 6.2"
+      ]
+     ],
+     "totale": 5
+    },
+    {
      "nome": "claude/fervent-thompson-rwlwrh",
-     "punta": "fc51bea",
-     "data": 1794755860,
-     "titolo": "Claude: Tabellone 6.2, la tua partita resta al suo posto con velo oro e «La tua partita»",
+     "punta": "e9ea84b",
+     "data": 1794756126,
+     "titolo": "Claude: Tabellone dello Stadio tutto oro anche in Coppa, sfondi invariati (6.2, solo Lab)",
      "autore": "Claude",
      "padre": "main",
      "nascita": "410f975",
      "dataNascita": 1794753341,
-     "avanti": 9,
+     "avanti": 10,
      "stato": "attivo",
      "commit": [
+      [
+       "e9ea84b41d25df8155a50f084288c06cb27d1ab4",
+       1794756126,
+       "Claude",
+       "Claude: Tabellone dello Stadio tutto oro anche in Coppa, sfondi invariati (6.2, solo Lab)"
+      ],
       [
        "fc51beabb70f44fa003b7883e92b013bf8c9a17a",
        1794755860,
@@ -8065,52 +8116,7 @@
        "Claude: proposta 6.2, Campo con Campionato e Champions Cup (solo Lab)"
       ]
      ],
-     "totale": 9
-    },
-    {
-     "nome": "chatgpt/coordinamento-62",
-     "punta": "05419a8",
-     "data": 1794756039,
-     "titolo": "ChatGPT: ferma la pubblicazione delle bozze grafiche rifiutate",
-     "autore": "ChatGPT",
-     "padre": "main",
-     "nascita": "410f975",
-     "dataNascita": 1794753341,
-     "avanti": 5,
-     "stato": "attivo",
-     "commit": [
-      [
-       "05419a859eb8d138713ca95627641fad4a3849b9",
-       1794756039,
-       "ChatGPT",
-       "ChatGPT: ferma la pubblicazione delle bozze grafiche rifiutate"
-      ],
-      [
-       "cb5af7627338773c7b1d1ff60ea954863d9bec7a",
-       1794755957,
-       "ChatGPT",
-       "ChatGPT: registra il Vai al solo Lab e i limiti della CI"
-      ],
-      [
-       "05675158964756f53d48eb183a1c7ce0fd0b3a7f",
-       1794755736,
-       "ChatGPT",
-       "ChatGPT: collega la revisione 6.2 alla PR 92"
-      ],
-      [
-       "fd6c1c7aa46925c91c6c93f702524335ea28d1a6",
-       1794755684,
-       "ChatGPT",
-       "ChatGPT: registra hash e verifiche della proposta 6.2"
-      ],
-      [
-       "0cbe4bb6d6d1dffdfe85e4cf98094db8f16b0377",
-       1794755633,
-       "ChatGPT",
-       "ChatGPT: prepara nel Lab la proposta coordinata 6.2"
-      ]
-     ],
-     "totale": 5
+     "totale": 10
     }
    ]
   }
