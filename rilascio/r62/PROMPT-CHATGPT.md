@@ -108,11 +108,9 @@ Prima di scrivere, mandami messaggio e changelog completi per l'approvazione.
 
 ## Cartellini
 
-Claude ha aperto [giandjcosta/o-fant-a-girrr#17](https://github.com/giandjcosta/o-fant-a-girrr/pull/17) verso `gh-pages`: `scripts/aggiorna_dati.py` legge ammonizioni ed espulsioni (classi `yellow-card` e `red-card` della pagina dei voti) e le aggiunge anche alle giornate già salvate, senza cambiare altro. `pdf_giornale.py` le esclude dalle pagelle. Prove sulle pagine vere nella PR.
+**Già online** (unita con il mio «Vai» il 15 novembre, `1112d94`; i dati hanno già 345 ammonizioni e 10 espulsioni): [giandjcosta/o-fant-a-girrr#17](https://github.com/giandjcosta/o-fant-a-girrr/pull/17) verso `gh-pages`: `scripts/aggiorna_dati.py` legge ammonizioni ed espulsioni (classi `yellow-card` e `red-card` della pagina dei voti) e le aggiunge anche alle giornate già salvate, senza cambiare altro. `pdf_giornale.py` le esclude dalle pagelle. Prove sulle pagine vere nella PR.
 
-Controllala:
-- dopo l'unione la Moviola potrà mostrare espulsioni anche nelle giornate passate;
-- uniscila insieme alla 6.2 solo con il mio «Vai».
+Controlla solo che la Moviola delle prossime giornate mostri bene le espulsioni; non serve unire altro.
 
 Voce di changelog da aggiungere:
 - `Campo: Accanto ai giocatori anche ammonizioni 🟨 ed espulsioni 🟥, con la legenda.`
