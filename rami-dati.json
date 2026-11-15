@@ -1,5 +1,5 @@
 {
- "generato": 1794756777,
+ "generato": 1794756998,
  "versione": "6.1",
  "repository": [
   {
@@ -1818,6 +1818,27 @@
       ]
      ],
      "totale": 658
+    },
+    {
+     "nome": "claude/fervent-thompson-rwlwrh",
+     "punta": "a223dbd",
+     "data": 1794756998,
+     "titolo": "Claude: prova diagnostica dei cartellini nella pagina dei voti (solo log, ramo di prova)",
+     "autore": "Claude",
+     "padre": "main",
+     "nascita": "40837e6",
+     "dataNascita": 1794728639,
+     "avanti": 1,
+     "stato": "attivo",
+     "commit": [
+      [
+       "a223dbde6dfc7e0d87e39dfe971d3caa9dea18df",
+       1794756998,
+       "Claude",
+       "Claude: prova diagnostica dei cartellini nella pagina dei voti (solo log, ramo di prova)"
+      ]
+     ],
+     "totale": 1
     }
    ]
   },
