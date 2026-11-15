@@ -1,64 +1,66 @@
 name: ChatGPT - Aggiornamento delle ramificazioni
 on:
   schedule:
-    # Registrazione rinnovata; quattro controlli all’ora, lontano dal minuto zero.
-    - cron: '8,23,38,53 * * * *'
-  push:
-    branches-ignore: [chatgpt/dati-ramificazioni]
-  pull_request_target:
-    # Legge solo metadati; checkout esplicito del main, mai del codice della PR.
-    types: [opened, reopened, closed, synchronize, edited, ready_for_review, converted_to_draft]
-  create:
-  delete:
-  workflow_run:
-    # Se GitHub ritarda i cron, aggiorna anche dopo i lavori e gli allineamenti.
-    # Il collector non è in questo elenco: il feed tecnico non crea un ciclo.
-    workflows:
-      - 'ChatGPT - Registro Chromium WebKit Firefox'
-      - 'ChatGPT - Integrazione Anteprima 5.5'
-      - 'Claude - Collaudo 5.5 telefono e PC (Chromium e WebKit)'
-      - 'ChatGPT - Allineamento automatico del Registro'
-    types: [requested, completed]
+    # Solo controllo leggero giornaliero; la mappa viene rigenerata se la versione del sito cambia.
+    - cron: '17 5 * * *'
   workflow_dispatch:
-  # Claude, 14 novembre 2026: avviso immediato dal sito della lega (o-fant-a-girrr, avvisa-ramificazioni.yml) a ogni push,
-  # ramo nuovo o cancellato e Pull Request: senza aspettare il controllo dei 15 minuti.
   repository_dispatch:
-    types: [ramificazioni]
+    types: [ramificazioni-versione]
 permissions:
   contents: write
 concurrency:
   group: ramificazioni
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   aggiorna:
-    # Rami e PR di qualsiasi base: esegue sempre e soltanto codice del main.
-    # Esclude creazione/cancellazione del feed tecnico e gli eventi sui tag.
-    # Scrive sul ramo tecnico; non pubblica GitHub Pages.
-    if: >-
-      (github.event_name != 'create' && github.event_name != 'delete') ||
-      (github.event.ref_type == 'branch' && github.event.ref != 'chatgpt/dati-ramificazioni')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
+      - name: Controlla versione pubblicata: niente aggiornamenti a ogni commit o PR
+        id: versione
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+        run: |
+          python3 - <<'PY'
+          import json, os, pathlib, re, subprocess, urllib.request
+          url='https://raw.githubusercontent.com/giandjcosta/o-fant-a-girrr/gh-pages/versioni.json'
+          with urllib.request.urlopen(url, timeout=25) as res:
+              data=json.load(res)
+          v=str(data['versioni'][0]['v'])
+          if not re.fullmatch(r'[0-9]+(?:\.[0-9]+){1,2}', v):
+              raise ValueError('Versione pubblicata non valida: '+v)
+          subprocess.run(['git','fetch','--no-tags','origin',
+              'refs/heads/chatgpt/dati-ramificazioni:refs/remotes/origin/chatgpt/dati-ramificazioni'],
+              check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+          prev=subprocess.run(['git','show','refs/remotes/origin/chatgpt/dati-ramificazioni:versione-sito.txt'],
+              capture_output=True, text=True, check=False)
+          old=prev.stdout.strip() if prev.returncode==0 else ''
+          update=os.environ['GITHUB_EVENT_NAME']=='workflow_dispatch' or v!=old
+          pathlib.Path(os.environ['RUNNER_TEMP'],'versione-sito.txt').write_text(v+'\n')
+          with open(os.environ['GITHUB_OUTPUT'],'a') as out:out.write('aggiorna='+('true' if update else 'false')+'\n')
+          print('Versione sito',v,'già registrata',old or '(assente)','rigenera',update)
+          PY
       - uses: actions/setup-python@v5
+        if: steps.versione.outputs.aggiorna == 'true'
         with:
           python-version: '3.12'
       - name: Leggi entrambi i repository
+        if: steps.versione.outputs.aggiorna == 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: python3 ramificazioni.py --cache "$RUNNER_TEMP/grafi-git" --output "$RUNNER_TEMP/ramificazioni-dati.json"
       - name: Claude - Dati dei tre disegni (Albero, Linea del tempo, Ventaglio)
-        # rami.html, in cima a Ramificazioni (Gianluca, 14 novembre 2026). Copie Git senza file, solo storia e rami.
-        # Se non riesce, la mappa di sopra si aggiorna lo stesso.
+        if: steps.versione.outputs.aggiorna == 'true'
         continue-on-error: true
         run: |
           git clone -q --no-checkout --filter=blob:none https://github.com/giandjcosta/o-fant-a-girrr.git "$RUNNER_TEMP/rami-sito"
           git clone -q --no-checkout --filter=blob:none https://github.com/giandjcosta/o-girrr-registro.git "$RUNNER_TEMP/rami-registro"
           python3 rami_genera.py "$RUNNER_TEMP/rami-dati.json" "$RUNNER_TEMP/rami-sito" "$RUNNER_TEMP/rami-registro"
       - name: Conserva i dati su un ramo tecnico, senza modificare il sito
+        if: steps.versione.outputs.aggiorna == 'true'
         env:
           SNAPSHOT: ${{ runner.temp }}/ramificazioni-dati.json
         run: |
@@ -73,8 +75,9 @@ jobs:
             git -C "$destinazione" switch --orphan chatgpt/mappa-temporanea
           fi
           cp "$SNAPSHOT" "$destinazione/ramificazioni-dati.json"
-          git -C "$destinazione" add -- ramificazioni-dati.json
+          cp "$RUNNER_TEMP/versione-sito.txt" "$destinazione/versione-sito.txt"
+          git -C "$destinazione" add -- ramificazioni-dati.json versione-sito.txt
           if [ -s "$RUNNER_TEMP/rami-dati.json" ]; then cp "$RUNNER_TEMP/rami-dati.json" "$destinazione/rami-dati.json"; git -C "$destinazione" add -- rami-dati.json; fi
           if git -C "$destinazione" diff --cached --quiet; then exit 0; fi
-          git -C "$destinazione" commit -m 'ChatGPT: aggiorna automaticamente la mappa dei rami'
+          git -C "$destinazione" commit -m 'ChatGPT: aggiorna le ramificazioni alla nuova versione'
           git -C "$destinazione" push origin HEAD:refs/heads/chatgpt/dati-ramificazioni
