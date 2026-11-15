@@ -1,5 +1,5 @@
 {
- "generato": 1794781146,
+ "generato": 1794782291,
  "versione": "6.1",
  "repository": [
   {
@@ -8233,26 +8233,6 @@
      "totale": 21
     },
     {
-     "nome": "chatgpt/controllo-62",
-     "punta": "2c856aa",
-     "data": 1794781146,
-     "titolo": "Merge pull request #105 from giandjcosta/claude/fervent-thompson-rwlwrh",
-     "autore": "giandjcosta",
-     "padre": "claude/fervent-thompson-rwlwrh",
-     "nascita": "fc08236",
-     "dataNascita": 1794781140,
-     "avanti": 1,
-     "stato": "unito",
-     "unione": {
-      "in": "main",
-      "data": 1794781146,
-      "commit": "2c856aa",
-      "titolo": "Merge pull request #105 from giandjcosta/claude/fervent-thompson-rwlwrh"
-     },
-     "commit": [],
-     "totale": 1
-    },
-    {
      "nome": "main",
      "punta": "2c856aa",
      "data": 1794781146,
@@ -8338,6 +8318,45 @@
       ]
      ],
      "totale": 1273
+    },
+    {
+     "nome": "chatgpt/controllo-62",
+     "punta": "fa899b7",
+     "data": 1794782291,
+     "titolo": "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL",
+     "autore": "ChatGPT",
+     "padre": "main",
+     "nascita": "2c856aa",
+     "dataNascita": 1794781146,
+     "avanti": 4,
+     "stato": "attivo",
+     "commit": [
+      [
+       "fa899b7fb96b4d9ed0e392e2690f4ef95e052635",
+       1794782291,
+       "ChatGPT",
+       "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
+      ],
+      [
+       "a5f6ada85b626371582f369a0db3fdc91ed4d91c",
+       1794782289,
+       "ChatGPT",
+       "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
+      ],
+      [
+       "313a970859d9b92eedb43b18e7f1a7585a3447f3",
+       1794782287,
+       "ChatGPT",
+       "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
+      ],
+      [
+       "d05ac91e365c0dd5874c98d3342ecc202af65eea",
+       1794782284,
+       "ChatGPT",
+       "ChatGPT: protegge l'attivazione 6.2 e aggiorna QA PostgreSQL"
+      ]
+     ],
+     "totale": 4
     }
    ]
   }
