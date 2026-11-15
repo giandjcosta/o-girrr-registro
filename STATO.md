@@ -18,7 +18,9 @@
 - `rilascio/r62/SICUREZZA-SQL.md`: procedura e limiti di attivazione, continuità della 6.1, rollback, migrazione stagionale futura.
 - `prove/v62/postgres.py`: regressioni sul catalogo non pronto, tabella finestre vuota, due stagioni e finestre concluse; CI PostgreSQL **PASS** (run [43770392220](https://github.com/giandjcosta/o-girrr-registro/actions/runs/43770392220), e run [43771449312](https://github.com/giandjcosta/o-girrr-registro/actions/runs/43771449312)).
 - `prove/v62/funzioni.cjs`: aspettativa A/B superata rimossa; Gianluca vuole gli ultimi due risultati in **entrambi** Curva e Girrr Sport. Nella vecchia run 43770392220 Chromium falliva sulla riga 12 con l'attesa A/B: non era una certificazione verde. **Tre browser sul nuovo commit da ricontrollare** (run 43771449312).
-- **Restano fuori** le modifiche di Claude a `backend.py`, `testi.py`, `sondaggi.js`, al Giornale, Radio e Albo grafico; la correzione del post MVP e il voto nel Tabellone sono da completare in un passaggio separato. La dicitura «Serie A, 11ª giornata» nel Giornale resta invariata.
+- Ulteriore piccola correzione di rilascio: `rilascio/r62/backend.py` trasferisce in una **copia separata** del backend del sito `calcoli/leggi_eventi.py` e `calcoli/post_curva.py` per il post MVP in Curva. Prima confronta i file del sito con quelli del Registro: se ci sono cambiamenti incompatibili, si ferma invece di sovrascriverli. Job CI dedicato `backend`; nessuna pubblicazione eseguita.
+- Browser QA esteso: `prove/v62/funzioni.cjs` verifica anche «Cambia il mio voto» tra Curva, Girrr Sport e MVP. Run [43771968860](https://github.com/giandjcosta/o-girrr-registro/actions/runs/43771968860) avviata; **non dichiarare i tre motori verdi senza risultati**.
+- **Restano fuori** le modifiche grafiche di Claude a `testi.py`, `sondaggi.js`, Giornale, Radio e Albo grafico; la duplicazione degli stili per la riapplicazione manuale di `testi.py` e il voto nel Tabellone sono ancora da verificare. «Serie A, 11ª giornata» nel Giornale resta invariata.
 
 ## 15 novembre (11) — Claude: MVP nel Giornale e in Radio come deciso da Gianluca
 
