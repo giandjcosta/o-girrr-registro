@@ -1,5 +1,5 @@
 {
- "generato": 1794754470,
+ "generato": 1794754612,
  "versione": "6.1",
  "repository": [
   {
@@ -8006,16 +8006,22 @@
     },
     {
      "nome": "claude/fervent-thompson-rwlwrh",
-     "punta": "52c5217",
-     "data": 1794754470,
-     "titolo": "Claude: unisce main nel ramo della proposta 6.2 (STATO.md con le due voci del 15 novembre)",
+     "punta": "60617b6",
+     "data": 1794754612,
+     "titolo": "Claude: Campo 6.2, cerchio oro al voto più alto della partita tra le due squadre",
      "autore": "Claude",
      "padre": "main",
      "nascita": "410f975",
      "dataNascita": 1794753341,
-     "avanti": 2,
+     "avanti": 3,
      "stato": "attivo",
      "commit": [
+      [
+       "60617b6f33086db5c0b1814df00e187125b6c4d4",
+       1794754612,
+       "Claude",
+       "Claude: Campo 6.2, cerchio oro al voto più alto della partita tra le due squadre"
+      ],
       [
        "f93103e26707ef7eaad2dd265b95134c6516cc24",
        1794754452,
@@ -8023,7 +8029,7 @@
        "Claude: proposta 6.2, Campo con Campionato e Champions Cup (solo Lab)"
       ]
      ],
-     "totale": 2
+     "totale": 3
     }
    ]
   }
