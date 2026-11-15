@@ -1,5 +1,5 @@
 {
- "generato": 1794760183,
+ "generato": 1794760329,
  "versione": "6.1",
  "repository": [
   {
@@ -8228,16 +8228,28 @@
     },
     {
      "nome": "chatgpt/integrazione-62-completa",
-     "punta": "3f0e324",
-     "data": 1794760183,
-     "titolo": "ChatGPT: registra la decisione 6.1.1 in 6.2 e la sincronizzazione delle Ramificazioni",
+     "punta": "472f2db",
+     "data": 1794760329,
+     "titolo": "ChatGPT: aggiunge QA della 6.2 su copia e tre browser senza scritture reali",
      "autore": "ChatGPT",
      "padre": "main",
      "nascita": "b051bfb",
      "dataNascita": 1794759206,
-     "avanti": 13,
+     "avanti": 15,
      "stato": "attivo",
      "commit": [
+      [
+       "472f2dbb4258ce8b3d8cf6d0aa579dd5a5f6a658",
+       1794760329,
+       "ChatGPT",
+       "ChatGPT: aggiunge QA della 6.2 su copia e tre browser senza scritture reali"
+      ],
+      [
+       "500e034cb6ad16d9783b42ffc61245310c1f28eb",
+       1794760326,
+       "ChatGPT",
+       "ChatGPT: aggiunge QA della 6.2 su copia e tre browser senza scritture reali"
+      ],
       [
        "3f0e32458bfe72a74af8f1b05c553429c64638fd",
        1794760183,
@@ -8297,21 +8309,9 @@
        1794759912,
        "ChatGPT",
        "ChatGPT: prepara la Radio 6.2 senza generare audio né attivare nuove puntate"
-      ],
-      [
-       "e64c1161874d4da117b4b40db19def3b59144ca2",
-       1794759909,
-       "ChatGPT",
-       "ChatGPT: prepara la Radio 6.2 senza generare audio né attivare nuove puntate"
-      ],
-      [
-       "000e0aa670a88948148a7007a6ac35e5bcf34d9c",
-       1794759906,
-       "ChatGPT",
-       "ChatGPT: recupera le logiche 6.2 già provate e isolate dalla grafica rifiutata"
       ]
      ],
-     "totale": 13
+     "totale": 15
     }
    ]
   }
