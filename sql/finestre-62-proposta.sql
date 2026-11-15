@@ -25,6 +25,7 @@ declare f record; v_tipo text; prima integer;
 begin
  v_tipo=case when tg_table_name='conf_dopo' then 'dopo' else 'vigilia' end;
  if tg_op='UPDATE' then
+  if v_tipo='dopo' and to_jsonb(new)->'risposta' is distinct from to_jsonb(old)->'risposta' then raise exception 'Dopo partita già pubblicato: le parole restano quelle'; end if;
   if v_tipo='vigilia' and (to_jsonb(new)->'risposte',to_jsonb(new)->'libera',to_jsonb(new)->'promessa',to_jsonb(new)->'pesa') is distinct from (to_jsonb(old)->'risposte',to_jsonb(old)->'libera',to_jsonb(old)->'promessa',to_jsonb(old)->'pesa') then raise exception 'Conferenza già pubblicata: le parole restano quelle'; end if;
   return new;
  end if;

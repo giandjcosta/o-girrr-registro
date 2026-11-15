@@ -1,6 +1,6 @@
 {
   "motore": "PostgreSQL 17 nativo locale",
-  "databaseIsolato": "girrr62_test_16621_1794762155",
+  "databaseIsolato": "girrr62_test_22264_1794763054",
   "sessioniConcorrenti": 2,
   "produzione": false,
   "prove": [
@@ -12,6 +12,7 @@
     "Il ritiro non cancella il primo voto",
     "Scadenza già annunciata preservata",
     "Ultimi due chiusi identici e storico non cancellato",
+    "Finestre solo future: post precedente senza scadenza inventata o chiusura retroattiva",
     "Post nuovo: stesso ID e stessi voti senza copia del catalogo",
     "Scadenza ricontrollata dopo attesa del lock",
     "Conferenza pubblicata immutabile anche sul server",

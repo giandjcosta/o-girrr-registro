@@ -1,0 +1,75 @@
+6.1 -> 6.2
+{
+  "v": "6.2",
+  "data": "2026-11-15",
+  "tipo": "medio",
+  "titolo": "Il Campo della Champions Cup",
+  "messaggio": "⚽ **O Girrr 6.2 è online!** Nel Campo ora trovi anche le partite della Champions Cup: un tocco sull’interruttore e passi da una competizione all’altra. Quando entri con la tua squadra si apre subito la tua partita, e con le nuove frecce passi da una partita all’altra o salti di giornata. Nella Curva ritrovi le tue scelte e puoi rivedere le conferenze già pubblicate. Trovi anche una Carriera più leggibile e più spazio all’MVP dei tifosi nel Giornale e dalla prossima puntata della Radio. Buona giornata a tutti! ⚽",
+  "novita": [
+    {
+      "area": "Campo",
+      "voci": [
+        "Interruttore Campionato / Champions Cup con passaggio morbido; ogni competizione ricorda la giornata e la partita che stavi guardando.",
+        "Frecce ‹ › per cambiare partita e « » per cambiare giornata; le partite si possono anche scorrere e toccare, con cambi in dissolvenza.",
+        "Con il codice della squadra si apre subito la tua partita, anche in Champions Cup.",
+        "Il migliore in campo ha il cerchio oro e la stella; accanto ai giocatori i simboli di gol, rigori, assist, porta inviolata, gol subiti e autogol, con la legenda.",
+        "I cartellini gialli e rossi compaiono accanto ai giocatori quando presenti nei dati, con i rispettivi simboli nella legenda.",
+        "Nella grafica Lega i cerchi di casa sono rossi in Campionato e azzurri in Champions Cup; nella grafica Stadio restano azzurri, oro soltanto il migliore."
+      ]
+    },
+    {
+      "area": "Tabellone",
+      "voci": [
+        "Con il codice della squadra la tua partita ha un leggero velo oro e la scritta «La tua partita».",
+        "Nella grafica Stadio interruttore, giornate, bande e podio sono oro anche in Champions Cup.",
+        "In «Dentro la partita» si legge «= Stessa posizione» e «1 posizione» al singolare."
+      ]
+    },
+    {
+      "area": "Carriera",
+      "voci": [
+        "Il grafico della posizione mostra giornata e piazzamento per ciascun punto, con testi più leggibili e «Peggiore» su una riga dal PC."
+      ]
+    },
+    {
+      "area": "Curva",
+      "voci": [
+        "Le schede cambiano più rapidamente e la bozza resta conservata durante la navigazione.",
+        "La tua scelta viene riletta nelle pagine dei sondaggi e dell’MVP dei tifosi, senza offrire un secondo voto.",
+        "Per le future aperture, sfide fino al calcio d’inizio, post per 24 ore e MVP per 48 ore al massimo, entro il turno successivo."
+      ]
+    },
+    {
+      "area": "Girrr Sport",
+      "voci": [
+        "Puoi consultare i sondaggi e gli ultimi due risultati conclusi, nella collocazione scelta per il rilascio.",
+        "Nei Precedenti delle conferenze scegli squadra e giornata, leggendo le dichiarazioni originali oppure «Dato non conservato».",
+        "Per le future aperture, la vigilia termina al calcio d’inizio e il dopo partita resta disponibile per 48 ore dalla pubblicazione dei risultati."
+      ]
+    },
+    {
+      "area": "Albo d’oro",
+      "voci": [
+        "Nella Storia i Padri Fondatori compaiono solo con il nome, tutti in fila."
+      ]
+    },
+    {
+      "area": "Giornale",
+      "voci": [
+        "Il riquadro Curva riporta lo stato dell’MVP e, quando disponibile, un commento autentico pertinente, mantenendo le quattro pagine e la grafica attuale."
+      ]
+    },
+    {
+      "area": "Radio",
+      "voci": [
+        "Dalla prossima puntata ordinaria, una sola breve frase indica la giornata dell’MVP o il voto ancora aperto, prima della chiusura integrale."
+      ]
+    },
+    {
+      "area": "App",
+      "voci": [
+        "I Bilanci riportano «Campionato & Champions Cup»; le animazioni rispettano Riduci movimento."
+      ]
+    }
+  ]
+}

@@ -5,6 +5,15 @@
 begin;
 create schema if not exists votazioni62_private;
 revoke all on schema votazioni62_private from public,anon,authenticated;
+-- Un solo istante di attivazione: le finestre dei post valgono per nuove aperture.
+create table if not exists votazioni62_private.attivazione(id boolean primary key default true check(id),post_dal timestamptz not null);
+insert into votazioni62_private.attivazione values(true,clock_timestamp()) on conflict do nothing;
+alter table votazioni62_private.attivazione enable row level security;
+revoke all on votazioni62_private.attivazione from public,anon,authenticated;
+create or replace function votazioni62_private.post_scadenza(p_creato timestamptz)
+returns timestamptz language sql stable set search_path='' as $$
+ select case when p_creato>=post_dal then p_creato+interval '24 hours' else null end from votazioni62_private.attivazione where id
+$$;
 create table if not exists votazioni62_private.sondaggi (
  id text primary key,
  stagione text not null,
@@ -32,14 +41,14 @@ begin
  return (with catalogo as (
  select id,stagione,origine,fonte,giornata,titolo,scelte,aperto,chiude,chiuso from votazioni62_private.sondaggi where stagione=p_stagione
  union all
- select 'post:'||p_stagione||':'||po.post_id::text,p_stagione,'post',po.post_id::text,null::integer,left(p.body,160),to_jsonb(po.opts),p.created,p.created+interval '24 hours',null::timestamptz
+ select 'post:'||p_stagione||':'||po.post_id::text,p_stagione,'post',po.post_id::text,null::integer,left(p.body,160),to_jsonb(po.opts),p.created,votazioni62_private.post_scadenza(p.created),null::timestamptz
  from public.curva_poll po join public.curva_post p on p.id=po.post_id
  where p.created>=make_date(left(p_stagione,4)::int,7,1) and p.created<make_date(left(p_stagione,4)::int+1,7,1)
  and not exists(select 1 from votazioni62_private.sondaggi s where s.stagione=p_stagione and s.origine='post' and s.fonte=po.post_id::text)
  ),righe as (
- select s.*,s.chiuso is not null or clock_timestamp()>=s.chiude as concluso,
+ select s.*,s.chiuso is not null or coalesce(clock_timestamp()>=s.chiude,false) as concluso,
  jsonb_build_object('id',s.id,'giornata',s.giornata,'titolo',s.titolo,'origine',s.origine,'fonte',s.fonte,'scelte',s.scelte,
- 'aperto',s.aperto,'chiude',s.chiude,'commenti',case when s.origine='sfida' then public.sondaggio_stato(s.giornata)->'commenti' else '[]'::jsonb end,'chiuso',s.chiuso is not null or clock_timestamp()>=s.chiude,
+ 'aperto',s.aperto,'chiude',s.chiude,'commenti',case when s.origine='sfida' then public.sondaggio_stato(s.giornata)->'commenti' else '[]'::jsonb end,'chiuso',s.chiuso is not null or coalesce(clock_timestamp()>=s.chiude,false),
  'mia_scelta',case when s.origine='post' then (select po.opts[v.opt+1] from public.curva_vote v join public.curva_poll po on po.post_id=v.post_id where v.post_id=s.fonte::bigint and v.team=p_team) else (select v.scelta from sondaggio_private.voti v where v.giornata=s.giornata and v.team=p_team) end,
  'conteggi',case when s.origine='post' then coalesce((select jsonb_object_agg(scelta,n) from (select po.opts[v.opt+1] scelta,count(*) n from public.curva_vote v join public.curva_poll po on po.post_id=v.post_id where v.post_id=s.fonte::bigint group by po.opts[v.opt+1]) z),'{}'::jsonb) else coalesce((select jsonb_object_agg(scelta,n) from (select scelta,count(*) n from sondaggio_private.voti where giornata=s.giornata group by scelta) z),'{}'::jsonb) end) as dati
  from catalogo s where (s.aperto is null or s.aperto<=clock_timestamp()))
@@ -69,7 +78,7 @@ begin
  end if;
  select scelta into precedente from sondaggio_private.voti where giornata=s.giornata and team=p_team;
  if found then return jsonb_build_object('registrato',false,'mia_scelta',precedente,'stato','gia_votato'); end if;
- if s.chiuso is not null or clock_timestamp()>=s.chiude or clock_timestamp()<s.aperto then raise exception 'Votazione non aperta'; end if;
+ if s.chiuso is not null or coalesce(clock_timestamp()>=s.chiude,false) or clock_timestamp()<s.aperto then raise exception 'Votazione non aperta'; end if;
  if p_scelta is null or not s.scelte ? p_scelta then raise exception 'Scelta non valida'; end if;
  if s.origine='sfida' then
   insert into sondaggio_private.voti(giornata,team,scelta) values(s.giornata,p_team,p_scelta) on conflict do nothing;
@@ -165,7 +174,7 @@ begin
  select po.opts,p.created into op,t from public.curva_poll po join public.curva_post p on p.id=po.post_id where po.post_id=p_post for update of po;
  if not found then raise exception 'Sondaggio non trovato'; end if;
  if exists(select 1 from public.curva_vote where post_id=p_post and team=p_team) then return; end if;
- if clock_timestamp()>=t+interval '24 hours' then raise exception 'Il sondaggio è chiuso'; end if;
+ if clock_timestamp()>=votazioni62_private.post_scadenza(t) then raise exception 'Il sondaggio è chiuso'; end if;
  if p_opt is null or p_opt<0 or p_opt>=array_length(op,1) then raise exception 'Risposta non valida'; end if;
  insert into public.curva_vote(post_id,team,opt) values(p_post,p_team,p_opt) on conflict(post_id,team) do nothing;
 end $$;
