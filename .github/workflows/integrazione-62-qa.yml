@@ -21,6 +21,32 @@ jobs:
         run: python3 -m unittest discover -s prove/v62 -p testi.py -v
       - name: Check sintassi Python
         run: python3 -m py_compile rilascio/r62/applica.py rilascio/r62/campo_coppa.py rilascio/r62/testi.py voci-src/copione.py voci-src/prepara_dati.py voci-src/mvp_editoriale62.py calcoli/finestre62.py
+  postgres:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: collaudo-locale
+        ports: ['5432:5432']
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install 'psycopg[binary]==3.2.12'
+      - run: python3 prove/v62/postgres.py
+        env:
+          PGHOST: 127.0.0.1
+          PGPORT: '5432'
+          PGUSER: postgres
+          PGPASSWORD: collaudo-locale
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: postgres62-isolato
+          path: prove/v62/risultati-postgres.json
   browser:
     runs-on: ubuntu-latest
     timeout-minutes: 35

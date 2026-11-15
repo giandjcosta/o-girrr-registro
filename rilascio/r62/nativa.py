@@ -42,8 +42,11 @@ def prepara(base):
                 s=sost(s,"window.GirrrApp={render:function(){render()},", "window.GirrrApp={render:function(){render()},")
                 # Accoglie il link dalla Curva prima del primo disegno.
                 s=sost(s,"function vSport(){\n  var sp=S.sp,", "function vSport(){\n  if(new URLSearchParams(location.search).get('sezione')==='sondaggi'){S.sp='sondaggi';var su=new URL(location.href);su.searchParams.delete('sezione');history.replaceState(null,'',su)}\n  var sp=S.sp,")
-                hook="<script>(function(){let pending=false;function monta(){document.querySelectorAll('[data-v62-sondaggi]').forEach(h=>window.GirrrSondaggi62?.mount(h,h.dataset.v62Sondaggi));document.querySelectorAll('[data-v62-precedenti]').forEach(h=>{if(!h.dataset.avviato){h.dataset.avviato='1';window.GirrrSondaggi62?.precedenti(h)}})}new MutationObserver(()=>{if(!pending){pending=true;requestAnimationFrame(()=>{pending=false;monta()})}}).observe(document.getElementById('view'),{childList:true});monta()})();</script>"
+                hook="<script>(function(){let pending=false;function monta(){document.querySelectorAll('[data-v62-sondaggi]').forEach(h=>window.GirrrSondaggi62?.mount(h,h.dataset.v62Sondaggi));document.querySelectorAll('[data-v62-precedenti]').forEach(h=>{if(!h.dataset.avviato){h.dataset.avviato='1';window.GirrrSondaggi62?.precedenti(h)}})}new MutationObserver(()=>{if(!pending){pending=true;requestAnimationFrame(()=>{pending=false;monta()})}}).observe(document.getElementById('view'),{childList:true,subtree:true});monta()})();</script>"
                 s=sost(s,'</body>',hook+'</body>')
+            if name=='app.html' and '/* host62 */' not in s:
+                s=sost(s,"    if(a.nodeType!==1)continue;", "    if(a.nodeType!==1)continue;\n    /* host62 */ if((a.hasAttribute('data-v62-precedenti')&&b.hasAttribute('data-v62-precedenti'))||(a.hasAttribute('data-v62-sondaggi')&&b.hasAttribute('data-v62-sondaggi')))continue;")
+                s=s.replace("{childList:true});monta()", "{childList:true,subtree:true});monta()")
             if name=='app.html' and 'var cfW62=' not in s:
                 s=sost(s,'function vConfL(){',"function vConfL(){\n  var cfW62=window.GirrrFinestre62?GirrrFinestre62('vigilia',D.cal[0]&&D.cal[0].n):{aperta:false,testo:'Caricamento della scadenza…'};")
                 s=sost(s,'done=ch.every(function(c){return c}),lk=confBloccata(),dis=lk?', 'done=cfW62.aperta&&ch.every(function(c){return c}),lk=confBloccata(),dis=(lk||!cfW62.aperta)?')

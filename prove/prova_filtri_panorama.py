@@ -65,7 +65,7 @@ with sync_playwright() as p:
             fits()
             page.evaluate("location.hash='ramificazioni'")
             expect(content.locator('a[href*="ramificazioni.html"]')).to_have_count(1)
-            page.goto(BASE+'ramificazioni.html')
+            page.goto(BASE+'ramificazioni.html?nel-registro=1')
             content=page
             expect(content.locator('[data-overview]')).to_have_count(2)
             for repo in SNAP['repositories']:

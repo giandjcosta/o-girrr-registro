@@ -7,13 +7,19 @@ def esporta(site,out):
  out.mkdir(parents=True,exist_ok=True)
  for f in FILES:
   if (site/f).is_file():shutil.copyfile(site/f,out/f)
- for directory in ['girrr','stadio/girrr','formazioni']:
+ for directory in ['girrr','stadio/girrr','formazioni','assets']:
   # I file nativi restano quelli della copia preparata; nessuna UI del vecchio simulatore.
   if (site/directory).is_dir():shutil.copytree(site/directory,out/directory,dirs_exist_ok=True,ignore=shutil.ignore_patterns('voci','video'))
+ for skin in ['girrr','stadio/girrr']:
+  for f in (site/skin/'voci').glob('*.json'):
+   (out/skin/'voci').mkdir(exist_ok=True);shutil.copyfile(f,out/skin/'voci'/f.name)
+ shutil.copytree(R/'prove/v62/font',out/'font',dirs_exist_ok=True)
  for p in out.rglob('*.html'):
+
   rel=p.relative_to(out);prof=len(rel.parts)-1;prefix='../'*prof
   text=p.read_text()
   text=re.sub(r'<head([^>]*)>',lambda m:m.group(0)+f'<script src="{prefix}lab62.js"></script>',text,count=1,flags=re.I)
+  text=re.sub(r'https://fonts.googleapis.com/css2[^\"<>]*',prefix+'font/originali.css',text)
   p.write_text(text)
  (out/'lab62.js').write_text((R/'rilascio/r62/lab62.js').read_text())
  (out/'sw.js').write_text("self.addEventListener('install',()=>self.skipWaiting());self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));self.addEventListener('fetch',e=>{if(new URL(e.request.url).hostname.endsWith('.supabase.co'))e.respondWith(new Response('Database reale disabilitato nel Lab',{status:403}))});\n")
