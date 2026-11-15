@@ -5,7 +5,7 @@ Aggiunge alla pagina Campo (Lega e Stadio) l'interruttore Campionato / Champions
 - le partite della Coppa erano raggiungibili solo con ?coppa=1 dal Tabellone; ora si cambia nella pagina;
 - Lega: l'indicatore scorre da rosso ad azzurro e le bande sfumano da rosso ad azzurro;
 - Stadio: tutto resta oro anche in Coppa (regola di Gianluca, 15 novembre 2026);
-- cerchio oro al voto più alto della partita tra le due squadre;
+- cerchio oro e stella al migliore in campo; simboli per tutti i bonus e malus delle pagelle;
 - il contenuto esce e rientra con una dissolvenza breve; «Riduci movimento» toglie i movimenti;
 - ogni competizione ricorda la sua giornata e la sua partita.
 
@@ -43,14 +43,13 @@ html.cc-pronto body[data-v53=campo] .sidebar nav a{transition:box-shadow .6s cub
 html.cc-pronto body[data-v53=campo] .gamebtn{transition:background-color .6s cubic-bezier(.4,0,.2,1),color .6s cubic-bezier(.4,0,.2,1)}
 #board,#matches,#roundtitle{transition:opacity .34s cubic-bezier(.22,.61,.36,1),transform .34s cubic-bezier(.22,.61,.36,1)}
 #board.cc-via,#matches.cc-via,#roundtitle.cc-via{opacity:0;transform:translateY(8px);transition-duration:.16s;transition-timing-function:ease-in;pointer-events:none}
-/* Cerchio dei giocatori di casa sul campo, solo nella Lega: rosso in Campionato, azzurro in Coppa. Nello Stadio resta com'era (l'oro è del voto più alto). Ospite sempre bianco */
+/* Cerchio dei giocatori di casa sul campo, solo nella Lega: rosso in Campionato, azzurro in Coppa. Nello Stadio resta com'era (l'oro è del migliore in campo). Ospite sempre bianco */
 body[data-v53=campo][data-skin=lega]{--casa:#ff5a6a}
 body[data-v53=campo][data-skin=lega][data-comp=coppa]{--casa:#63bce9}
 /* Chi entra con il codice della squadra trova la sua partita per prima nella fila (contorno oro già esistente) */
 #matches>.gamebtn.mia{order:-1}
-/* Cerchio oro: il voto più alto della partita tra le due squadre (anche più giocatori, se a pari voto) */
-.pitch .pl.oro b,.pitch .pl.away.oro b{border-color:#ffd166;box-shadow:0 0 0 2px rgba(255,209,102,.35),0 2px 6px rgba(0,0,0,.35)}
-.campo-legend .leg-oro{display:inline-block;flex:none;width:26px;height:26px;border-radius:50%;border:3px solid #ffd166;margin:0 3px}
+/* Cerchio oro: il migliore in campo, quello con la stella (al massimo uno per squadra, come nei dati di Fantacalcio) */
+.pitch .pl.top b,.pitch .pl.away.top b{border-color:#ffd166;box-shadow:0 0 0 2px rgba(255,209,102,.35),0 2px 6px rgba(0,0,0,.35)}
 @media(max-width:700px){.comp-sw{width:100%}}
 @media(max-width:360px){.comp-sw button{font-size:11.5px;letter-spacing:.03em;padding:10px 4px}}
 @media(prefers-reduced-motion:reduce){.comp-sw i,.comp-sw button,#board,#matches,#roundtitle,html.cc-pronto body[data-v53=campo] #board>.card::after,html.cc-pronto body[data-v53=campo] .sidebar nav a,html.cc-pronto body[data-v53=campo] .gamebtn{transition:none!important}}
@@ -90,6 +89,22 @@ function setComp(c){
  sw.addEventListener('click',function(e){var b=e.target.closest('[data-comp-choice]');if(b)setComp(b.dataset.compChoice)});
  sw.addEventListener('keydown',function(e){if(!/^(ArrowLeft|ArrowRight|Home|End)$/.test(e.key))return;e.preventDefault();var c=e.key==='ArrowLeft'||e.key==='Home'?'lega':'coppa';setComp(c);var b=sw.querySelector('[data-comp-choice="'+c+'"]');if(b)b.focus()})})();
 '''
+GI_OLD = r''' function gioc(id,dentro){var p=D.P[id]||{},x=voto(id),b=(x&&x.b)||[],gol=0,ass=0,top=false;
+  b.forEach(function(s){var n;if((n=/^(\d+) (gol|rigore segnato|rigori segnati)$/.exec(s)))gol+=+n[1];else if((n=/^(\d+) assist$/.exec(s)))ass+=+n[1];else if(s==='migliore in campo')top=true});
+  return {n:p.n||'—',r:p.r||'C',v:x&&x.v!=null?x.v:null,gol:gol,ass:ass,top:top,dentro:dentro||null}}'''
+GI_NEW = r''' function gioc(id,dentro){var p=D.P[id]||{},x=voto(id),b=(x&&x.b)||[],k={gol:0,rig:0,ass:0,ag:0,rs:0,rp:0,gs:0},top=false;
+  b.forEach(function(s){var n=/^(\d+) (.+)$/.exec(s),q=n?+n[1]:0,w=n?n[2]:s;
+   if(w==='gol')k.gol+=q;else if(/^rigor[ei] segnat[oi]$/.test(w))k.rig+=q;else if(w==='assist')k.ass+=q;else if(w==='autogol')k.ag+=q;else if(/^rigor[ei] sbagliat[oi]$/.test(w))k.rs+=q;else if(/^rigor[ei] parat[oi]$/.test(w))k.rp+=q;else if(/^gol subit[oi]$/.test(w))k.gs+=q;else if(s==='migliore in campo')top=true});
+  var r=p.r||'C',v=x&&x.v!=null?x.v:null;
+  return {n:p.n||'—',r:r,v:v,gol:k.gol,rig:k.rig,ass:k.ass,ag:k.ag,rs:k.rs,rp:k.rp,gs:k.gs,pi:r==='P'&&v!=null&&!k.gs,top:top,dentro:dentro||null}}'''
+CH_OLD = r''' var ic=(g.gol?Array(g.gol+1).join('⚽'):'')+(g.ass?(g.ass>1?g.ass+'×':'')+'👟':'')+(g.dentro?'↑':'');
+ var tit=g.n+(g.dentro?' (Entrato al posto di '+g.dentro+')':'')+' · Voto '+v+(g.gol?' · Gol: '+g.gol:'')+(g.ass?' · Assist: '+g.ass:'')+(g.top?' · ★ Migliore in campo':'');'''
+CH_NEW = r''' function rip(n,s){return n?(n>2?n+'×'+s:Array(n+1).join(s)):''}
+ var ic=rip(g.gol,'⚽')+rip(g.rig,'🎯')+rip(g.ass,'👟')+rip(g.rp,'🧤')+(g.pi?'🛡️':'')+(g.gs?g.gs+'🥅':'')+rip(g.rs,'❌')+rip(g.ag,'🔴')+(g.dentro?'↑':'');
+ var tit=g.n+(g.dentro?' (Entrato al posto di '+g.dentro+')':'')+' · Voto '+v+(g.gol?' · Gol: '+g.gol:'')+(g.rig?' · Rigori segnati: '+g.rig:'')+(g.ass?' · Assist: '+g.ass:'')+(g.rp?' · Rigori parati: '+g.rp:'')+(g.pi?' · Porta inviolata':'')+(g.gs?' · Gol subiti: '+g.gs:'')+(g.rs?' · Rigori sbagliati: '+g.rs:'')+(g.ag?' · Autogol: '+g.ag:'')+(g.top?' · ★ Migliore in campo':'');'''
+LE_OLD = '''<li><span class="legend-symbol leg-star" aria-hidden="true">★</span><span>Migliore in campo.</span></li><li><span class="legend-symbol" aria-hidden="true">⚽</span><span>Gol segnato.</span></li><li><span class="legend-symbol" aria-hidden="true">👟</span><span>Assist.</span></li>'''
+LE_NEW = '''<li><span class="legend-symbol leg-star" aria-hidden="true">★</span><span>Migliore in campo: cerchio oro e stella.</span></li><li><span class="legend-symbol" aria-hidden="true">⚽</span><span>Gol segnato.</span></li><li><span class="legend-symbol" aria-hidden="true">🎯</span><span>Rigore segnato.</span></li><li><span class="legend-symbol" aria-hidden="true">👟</span><span>Assist.</span></li><li><span class="legend-symbol" aria-hidden="true">🧤</span><span>Rigore parato.</span></li><li><span class="legend-symbol" aria-hidden="true">🛡️</span><span>Porta inviolata: portiere senza gol subiti.</span></li><li><span class="legend-symbol" aria-hidden="true">🥅</span><span>Gol subiti dal portiere (il numero accanto).</span></li><li><span class="legend-symbol" aria-hidden="true">❌</span><span>Rigore sbagliato.</span></li><li><span class="legend-symbol" aria-hidden="true">🔴</span><span>Autogol.</span></li>'''
+
 
 def sostituisci(t, vecchio, nuovo, nome):
     n = t.count(vecchio)
@@ -116,12 +131,9 @@ def applica(t, nome):
                     "Number(q.get('partita'))||0)):partitaMia(round);render();requestAnimationFrame(function(){requestAnimationFrame(function(){document.documentElement.classList.add('cc-pronto')})})}", nome)
     t = sostituisci(t, "<span><b>Squadra di casa</b><small>Bordo azzurro.</small></span>",
                     "<span><b>Squadra di casa</b><small>'+(COPPA||document.body.dataset.skin!=='lega'?'Bordo azzurro.':'Bordo rosso.')+'</small></span>", nome)
-    t = sostituisci(t, "if(xa&&xb){var H=TEL.matches?1250:700;",
-                    "if(xa&&xb){var H=TEL.matches?1250:700,tutti=xa.concat(xb),mx=Math.max.apply(null,tutti.map(function(g){return g.v==null?-1:g.v}));tutti.forEach(function(g){g.oro=mx>=0&&g.v===mx});", nome)
-    t = sostituisci(t, "'<div class=\"pl '+lato+(g.top?' top':'')+'\"", "'<div class=\"pl '+lato+(g.top?' top':'')+(g.oro?' oro':'')+'\"", nome)
-    t = sostituisci(t, "+(g.top?' · ★ Migliore in campo':'');", "+(g.top?' · ★ Migliore in campo':'')+(g.oro?' · Voto più alto della partita':'');", nome)
-    t = sostituisci(t, "<li><i class=\"leg-osp\" aria-hidden=\"true\"></i><span><b>Squadra ospite</b><small>Bordo bianco.</small></span></li>",
-                    "<li><i class=\"leg-osp\" aria-hidden=\"true\"></i><span><b>Squadra ospite</b><small>Bordo bianco.</small></span></li><li><i class=\"leg-oro\" aria-hidden=\"true\"></i><span><b>Cerchio oro</b><small>Voto più alto della partita, tra le due squadre.</small></span></li>", nome)
+    t = sostituisci(t, GI_OLD, GI_NEW, nome)
+    t = sostituisci(t, CH_OLD, CH_NEW, nome)
+    t = sostituisci(t, LE_OLD, LE_NEW, nome)
     return t
 
 

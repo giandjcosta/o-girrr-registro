@@ -5,13 +5,20 @@ Parte di Claude della 6.2. Prima certificazione nel Lab (`lab/novita-6-2.html`),
 - **Interruttore Campionato / Champions Cup** nel Campo, Lega e Stadio. Prima le partite di Coppa si aprivano solo con `?coppa=1` dal Tabellone (il collegamento resta valido).
 - **Passaggio morbido:** l'indicatore scorre (0,55 s); partite e schede escono in 0,16 s e rientrano in 0,34 s. **Lega:** indicatore e bande sfumano da rosso ad azzurro, con un velo che cambia solo opacità. **Stadio:** tutto resta oro anche in Coppa (regola di Gianluca, 15 novembre). «Riduci movimento»: cambio immediato.
 - **Cerchio dei giocatori di casa:** nella Lega rosso in Campionato e azzurro in Coppa; nello Stadio azzurro come prima (l'oro è riservato al voto più alto). Ospite bianco.
-- **Cerchio oro:** il voto più alto della partita tra le due squadre (a pari voto, tutti quelli col voto più alto). La stella ★ resta il «migliore in campo» dei dati ufficiali. Legenda aggiornata.
+- **Cerchio oro e stella:** solo il migliore in campo dei dati ufficiali (uno, o uno per squadra). Decisione di Gianluca, 15 novembre.
+- **Simboli dei bonus e malus** come su Fantacalcio, con legenda: ⚽ gol, 🎯 rigore segnato, 👟 assist, 🧤 rigore parato, 🛡️ porta inviolata (portiere con voto e nessun gol subito), 🥅 gol subiti dal portiere, ❌ rigore sbagliato, 🔴 autogol, ↑ entrato. Ammonizioni, espulsioni, gol decisivo e assist da fermo **non sono nei dati** che il sito scarica (`data.json`): per mostrarli il workflow dei voti deve prima salvarli.
 - **La tua partita per prima:** con il codice della squadra la tua partita è aperta e al primo posto della fila, con il contorno oro già esistente.
 - Ogni competizione ricorda giornata e partita; l'indirizzo segue la scelta (`coppa=1`). Se il calendario della Coppa manca l'interruttore si nasconde.
 
+## Altri ritocchi (`rilascio/r62/testi.py`)
+
+- Tabellone › Dentro la partita: «= Stessa posizione» con la maiuscola e «1 posizione» al singolare (`girrr/v55/ui.js`, Lega e Stadio).
+- Albo › La Storia: Padri Fondatori solo con il nome, tutti in fila, senza squadra (`novita.js`, Lega e Stadio). Il testo della Storia non cambia.
+- Segnalato, non toccato: `girrr/v55/cronache.json` risponde 404 anche sul sito vero (il Tabellone lo chiede).
+
 ## Preparazione
 
-Su una copia nuova di gh-pages: `python3 rilascio/r62/campo_coppa.py COPIA` (modifica `girrr/campo.html` e `stadio/girrr/campo.html`, si ferma se le pagine non sono quelle attese, rieseguirlo non cambia nulla). Pagine del Lab: `python3 rilascio/r62/campo_coppa.py --lab` → `rilascio/r62/pagine/`. Dopo il rilascio aggiornare anche `ufficiale/src/sito/` con le due pagine. Nessuna modifica a dati, workflow o database. Ritorno: `git revert` del commit di rilascio.
+Su una copia nuova di gh-pages: `python3 rilascio/r62/campo_coppa.py COPIA` e `python3 rilascio/r62/testi.py COPIA` (modifica `girrr/campo.html` e `stadio/girrr/campo.html`, si ferma se le pagine non sono quelle attese, rieseguirlo non cambia nulla). Pagine del Lab: `python3 rilascio/r62/campo_coppa.py --lab` → `rilascio/r62/pagine/`. Dopo il rilascio aggiornare anche `ufficiale/src/sito/` con le due pagine. Nessuna modifica a dati, workflow o database. Ritorno: `git revert` del commit di rilascio.
 
 ## Prove (Chromium reale, schermi emulati)
 

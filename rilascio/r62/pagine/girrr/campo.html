@@ -176,14 +176,13 @@ html.cc-pronto body[data-v53=campo] .sidebar nav a{transition:box-shadow .6s cub
 html.cc-pronto body[data-v53=campo] .gamebtn{transition:background-color .6s cubic-bezier(.4,0,.2,1),color .6s cubic-bezier(.4,0,.2,1)}
 #board,#matches,#roundtitle{transition:opacity .34s cubic-bezier(.22,.61,.36,1),transform .34s cubic-bezier(.22,.61,.36,1)}
 #board.cc-via,#matches.cc-via,#roundtitle.cc-via{opacity:0;transform:translateY(8px);transition-duration:.16s;transition-timing-function:ease-in;pointer-events:none}
-/* Cerchio dei giocatori di casa sul campo, solo nella Lega: rosso in Campionato, azzurro in Coppa. Nello Stadio resta com'era (l'oro è del voto più alto). Ospite sempre bianco */
+/* Cerchio dei giocatori di casa sul campo, solo nella Lega: rosso in Campionato, azzurro in Coppa. Nello Stadio resta com'era (l'oro è del migliore in campo). Ospite sempre bianco */
 body[data-v53=campo][data-skin=lega]{--casa:#ff5a6a}
 body[data-v53=campo][data-skin=lega][data-comp=coppa]{--casa:#63bce9}
 /* Chi entra con il codice della squadra trova la sua partita per prima nella fila (contorno oro già esistente) */
 #matches>.gamebtn.mia{order:-1}
-/* Cerchio oro: il voto più alto della partita tra le due squadre (anche più giocatori, se a pari voto) */
-.pitch .pl.oro b,.pitch .pl.away.oro b{border-color:#ffd166;box-shadow:0 0 0 2px rgba(255,209,102,.35),0 2px 6px rgba(0,0,0,.35)}
-.campo-legend .leg-oro{display:inline-block;flex:none;width:26px;height:26px;border-radius:50%;border:3px solid #ffd166;margin:0 3px}
+/* Cerchio oro: il migliore in campo, quello con la stella (al massimo uno per squadra, come nei dati di Fantacalcio) */
+.pitch .pl.top b,.pitch .pl.away.top b{border-color:#ffd166;box-shadow:0 0 0 2px rgba(255,209,102,.35),0 2px 6px rgba(0,0,0,.35)}
 @media(max-width:700px){.comp-sw{width:100%}}
 @media(max-width:360px){.comp-sw button{font-size:11.5px;letter-spacing:.03em;padding:10px 4px}}
 @media(prefers-reduced-motion:reduce){.comp-sw i,.comp-sw button,#board,#matches,#roundtitle,html.cc-pronto body[data-v53=campo] #board>.card::after,html.cc-pronto body[data-v53=campo] .sidebar nav a,html.cc-pronto body[data-v53=campo] .gamebtn{transition:none!important}}
@@ -278,9 +277,11 @@ function campoSvg(H,a,b){
 function undici(t,sa){
  var fm=F&&F[sa]&&F[sa][t];if(!fm||!fm.tit||!fm.tit.length||fm.tit.length>11)return null;
  function voto(id){var x=D.votes&&D.votes[id]&&D.votes[id][sa];return x||null}
- function gioc(id,dentro){var p=D.P[id]||{},x=voto(id),b=(x&&x.b)||[],gol=0,ass=0,top=false;
-  b.forEach(function(s){var n;if((n=/^(\d+) (gol|rigore segnato|rigori segnati)$/.exec(s)))gol+=+n[1];else if((n=/^(\d+) assist$/.exec(s)))ass+=+n[1];else if(s==='migliore in campo')top=true});
-  return {n:p.n||'—',r:p.r||'C',v:x&&x.v!=null?x.v:null,gol:gol,ass:ass,top:top,dentro:dentro||null}}
+ function gioc(id,dentro){var p=D.P[id]||{},x=voto(id),b=(x&&x.b)||[],k={gol:0,rig:0,ass:0,ag:0,rs:0,rp:0,gs:0},top=false;
+  b.forEach(function(s){var n=/^(\d+) (.+)$/.exec(s),q=n?+n[1]:0,w=n?n[2]:s;
+   if(w==='gol')k.gol+=q;else if(/^rigor[ei] segnat[oi]$/.test(w))k.rig+=q;else if(w==='assist')k.ass+=q;else if(w==='autogol')k.ag+=q;else if(/^rigor[ei] sbagliat[oi]$/.test(w))k.rs+=q;else if(/^rigor[ei] parat[oi]$/.test(w))k.rp+=q;else if(/^gol subit[oi]$/.test(w))k.gs+=q;else if(s==='migliore in campo')top=true});
+  var r=p.r||'C',v=x&&x.v!=null?x.v:null;
+  return {n:p.n||'—',r:r,v:v,gol:k.gol,rig:k.rig,ass:k.ass,ag:k.ag,rs:k.rs,rp:k.rp,gs:k.gs,pi:r==='P'&&v!=null&&!k.gs,top:top,dentro:dentro||null}}
  var usati={},out=fm.tit.map(function(id){var g=gioc(id);if(g.v!=null)return g;
   // senza voto: entra il primo della panchina dello stesso ruolo con un voto
   var r=(D.P[id]||{}).r;for(var i=0;i<(fm.pan||[]).length;i++){var q=fm.pan[i];if(!usati[q]&&(D.P[q]||{}).r===r&&voto(q)&&voto(q).v!=null){usati[q]=1;var s=gioc(q,g.n);return s}}
@@ -288,9 +289,10 @@ function undici(t,sa){
  return out}
 function chip(g,lato,x,y,w){
  var cl=g.v==null?'sv':g.v>=6.5?'ok':g.v<6?'ko':'',v=g.v==null?'s.v.':String(g.v).replace('.',',');
- var ic=(g.gol?Array(g.gol+1).join('⚽'):'')+(g.ass?(g.ass>1?g.ass+'×':'')+'👟':'')+(g.dentro?'↑':'');
- var tit=g.n+(g.dentro?' (Entrato al posto di '+g.dentro+')':'')+' · Voto '+v+(g.gol?' · Gol: '+g.gol:'')+(g.ass?' · Assist: '+g.ass:'')+(g.top?' · ★ Migliore in campo':'')+(g.oro?' · Voto più alto della partita':'');
- return '<div class="pl '+lato+(g.top?' top':'')+(g.oro?' oro':'')+'" role="button" tabindex="0" data-det="'+esc(tit)+'" style="left:'+x.toFixed(2)+'%;top:'+y.toFixed(2)+'%;width:'+w.toFixed(1)+'%" title="'+esc(tit)+'" aria-label="'+esc(tit)+'"><b class="'+cl+'">'+esc(v)+'</b><span>'+esc(g.n)+'</span>'+(ic?'<i>'+ic+'</i>':'')+'</div>'}
+ function rip(n,s){return n?(n>2?n+'×'+s:Array(n+1).join(s)):''}
+ var ic=rip(g.gol,'⚽')+rip(g.rig,'🎯')+rip(g.ass,'👟')+rip(g.rp,'🧤')+(g.pi?'🛡️':'')+(g.gs?g.gs+'🥅':'')+rip(g.rs,'❌')+rip(g.ag,'🔴')+(g.dentro?'↑':'');
+ var tit=g.n+(g.dentro?' (Entrato al posto di '+g.dentro+')':'')+' · Voto '+v+(g.gol?' · Gol: '+g.gol:'')+(g.rig?' · Rigori segnati: '+g.rig:'')+(g.ass?' · Assist: '+g.ass:'')+(g.rp?' · Rigori parati: '+g.rp:'')+(g.pi?' · Porta inviolata':'')+(g.gs?' · Gol subiti: '+g.gs:'')+(g.rs?' · Rigori sbagliati: '+g.rs:'')+(g.ag?' · Autogol: '+g.ag:'')+(g.top?' · ★ Migliore in campo':'');
+ return '<div class="pl '+lato+(g.top?' top':'')+'" role="button" tabindex="0" data-det="'+esc(tit)+'" style="left:'+x.toFixed(2)+'%;top:'+y.toFixed(2)+'%;width:'+w.toFixed(1)+'%" title="'+esc(tit)+'" aria-label="'+esc(tit)+'"><b class="'+cl+'">'+esc(v)+'</b><span>'+esc(g.n)+'</span>'+(ic?'<i>'+ic+'</i>':'')+'</div>'}
 function schiera(xi,lato,H){
  var file={P:[],D:[],C:[],A:[]};xi.forEach(function(g){(file[g.r]||file.C).push(g)});
  // la casa difende la porta in alto, l'ospite quella in basso
@@ -299,7 +301,7 @@ function schiera(xi,lato,H){
  return h}
 function pitch(a,b,g){
  var sa=g&&String(g.sa),xa=g&&undici(a,sa),xb=g&&undici(b,sa);
- if(xa&&xb){var H=TEL.matches?1250:700,tutti=xa.concat(xb),mx=Math.max.apply(null,tutti.map(function(g){return g.v==null?-1:g.v}));tutti.forEach(function(g){g.oro=mx>=0&&g.v===mx});
+ if(xa&&xb){var H=TEL.matches?1250:700;
   return '<div class="pitch conxi">'+campoSvg(H,a,b)+'</svg><div class="xi"><span class="squadra casa">'+esc(a)+'</span><span class="squadra ospite">'+esc(b)+'</span>'+schiera(xa,'home',H)+schiera(xb,'away',H)+'</div></div>'}
  function sigla(t){return esc(t.split(/\s+/).map(function(x){return x[0]}).join('').toUpperCase().slice(0,4))}
  return '<div class="pitch">'+campoSvg(480,a,b)+
@@ -316,7 +318,7 @@ function render(){
  var h='<section class="card match-panel" id="confronto"><div class="match-head"><span class="club">'+nm(a)+'</span><span class="score">'+esc(r)+'</span><span class="club">'+nm(b)+'</span></div>'+
  '<div class="phase">'+(COPPA?'Champions Cup · Girone '+esc(m[5])+' · ':'')+'Giornata '+g.n+' · Serie A '+g.sa+' · '+score+'</div>'+
  pitch(a,b,g)+
- '<div class="pitch-footer"><span>CASA · '+nm(a)+'</span><span>'+score.toUpperCase()+'</span><span>OSPITE · '+nm(b)+'</span></div>'+(undici(a,String(g.sa))?'<details class="campo-legend"><summary>Legenda</summary><div class="legend-columns"><section><h4>Voto in pagella</h4><p>Il numero nel cerchio è il voto del giocatore.</p><ul><li><span class="voto-sample ok" aria-hidden="true">6,5</span><span><b>Da 6,5 in su</b><small>Cerchio verde.</small></span></li><li><span class="voto-sample" aria-hidden="true">6</span><span><b>Da 6 a meno di 6,5</b><small>Cerchio neutro.</small></span></li><li><span class="voto-sample ko" aria-hidden="true">5,5</span><span><b>Sotto il 6</b><small>Cerchio rosso.</small></span></li><li><span class="voto-sample sv" aria-hidden="true">S.V.</span><span><b>Senza voto</b><small>Voto non disponibile.</small></span></li></ul></section><section><h4>Squadra</h4><p>Il colore del bordo distingue le due squadre.</p><ul><li><i class="leg-casa" aria-hidden="true"></i><span><b>Squadra di casa</b><small>'+(COPPA||document.body.dataset.skin!=='lega'?'Bordo azzurro.':'Bordo rosso.')+'</small></span></li><li><i class="leg-osp" aria-hidden="true"></i><span><b>Squadra ospite</b><small>Bordo bianco.</small></span></li><li><i class="leg-oro" aria-hidden="true"></i><span><b>Cerchio oro</b><small>Voto più alto della partita, tra le due squadre.</small></span></li></ul></section><section><h4>Simboli del giocatore</h4><ul><li><span class="legend-symbol leg-star" aria-hidden="true">★</span><span>Migliore in campo.</span></li><li><span class="legend-symbol" aria-hidden="true">⚽</span><span>Gol segnato.</span></li><li><span class="legend-symbol" aria-hidden="true">👟</span><span>Assist.</span></li><li><span class="legend-symbol" aria-hidden="true">↑</span><span>Entrato dalla panchina.</span></li></ul></section></div><p class="legend-help">Seleziona un giocatore per leggere nome completo, voto e dettagli.</p></details><p class="panchina" id="xi-det" aria-live="polite"></p>':(active?'<p class="panchina">Per questa giornata le formazioni non sono state salvate.</p>':'<p class="panchina">Le formazioni compaiono quando la giornata è stata giocata.</p>'))+'</section>';
+ '<div class="pitch-footer"><span>CASA · '+nm(a)+'</span><span>'+score.toUpperCase()+'</span><span>OSPITE · '+nm(b)+'</span></div>'+(undici(a,String(g.sa))?'<details class="campo-legend"><summary>Legenda</summary><div class="legend-columns"><section><h4>Voto in pagella</h4><p>Il numero nel cerchio è il voto del giocatore.</p><ul><li><span class="voto-sample ok" aria-hidden="true">6,5</span><span><b>Da 6,5 in su</b><small>Cerchio verde.</small></span></li><li><span class="voto-sample" aria-hidden="true">6</span><span><b>Da 6 a meno di 6,5</b><small>Cerchio neutro.</small></span></li><li><span class="voto-sample ko" aria-hidden="true">5,5</span><span><b>Sotto il 6</b><small>Cerchio rosso.</small></span></li><li><span class="voto-sample sv" aria-hidden="true">S.V.</span><span><b>Senza voto</b><small>Voto non disponibile.</small></span></li></ul></section><section><h4>Squadra</h4><p>Il colore del bordo distingue le due squadre.</p><ul><li><i class="leg-casa" aria-hidden="true"></i><span><b>Squadra di casa</b><small>'+(COPPA||document.body.dataset.skin!=='lega'?'Bordo azzurro.':'Bordo rosso.')+'</small></span></li><li><i class="leg-osp" aria-hidden="true"></i><span><b>Squadra ospite</b><small>Bordo bianco.</small></span></li></ul></section><section><h4>Simboli del giocatore</h4><ul><li><span class="legend-symbol leg-star" aria-hidden="true">★</span><span>Migliore in campo: cerchio oro e stella.</span></li><li><span class="legend-symbol" aria-hidden="true">⚽</span><span>Gol segnato.</span></li><li><span class="legend-symbol" aria-hidden="true">🎯</span><span>Rigore segnato.</span></li><li><span class="legend-symbol" aria-hidden="true">👟</span><span>Assist.</span></li><li><span class="legend-symbol" aria-hidden="true">🧤</span><span>Rigore parato.</span></li><li><span class="legend-symbol" aria-hidden="true">🛡️</span><span>Porta inviolata: portiere senza gol subiti.</span></li><li><span class="legend-symbol" aria-hidden="true">🥅</span><span>Gol subiti dal portiere (il numero accanto).</span></li><li><span class="legend-symbol" aria-hidden="true">❌</span><span>Rigore sbagliato.</span></li><li><span class="legend-symbol" aria-hidden="true">🔴</span><span>Autogol.</span></li><li><span class="legend-symbol" aria-hidden="true">↑</span><span>Entrato dalla panchina.</span></li></ul></section></div><p class="legend-help">Seleziona un giocatore per leggere nome completo, voto e dettagli.</p></details><p class="panchina" id="xi-det" aria-live="polite"></p>':(active?'<p class="panchina">Per questa giornata le formazioni non sono state salvate.</p>':'<p class="panchina">Le formazioni compaiono quando la giornata è stata giocata.</p>'))+'</section>';
  function ring(t,label){var g=t?t.v+t.n+t.p:0,pct=g?Math.round(t.v/g*100):0;return '<div class="gauge"><div class="dial" style="--val:'+pct+'"><strong>'+(g?pct+'%':'—')+'</strong></div><div><b>'+nm(label)+'</b><small>Vittorie / Gare concluse</small><span>'+(g?t.v+' su '+g:'In attesa')+'</span></div></div>'}
  h+='<aside class="card numbers" id="rendimento"><div class="kicker">Rendimento stagionale</div><h2>I numeri del confronto</h2><p class="sub">'+(COPPA?'Champions Cup · ':'')+'Dopo '+complete().filter(function(x){return x.n<=g.n}).length+' giornate complete</p>'+
  '<div class="duel-head"><b>'+nm(a)+'</b><span>CONFRONTO</span><b>'+nm(b)+'</b></div>'+
