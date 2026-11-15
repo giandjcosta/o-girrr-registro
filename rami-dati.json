@@ -1,5 +1,5 @@
 {
- "generato": 1794760329,
+ "generato": 1794760731,
  "versione": "6.1",
  "repository": [
   {
@@ -8228,16 +8228,22 @@
     },
     {
      "nome": "chatgpt/integrazione-62-completa",
-     "punta": "472f2db",
-     "data": 1794760329,
-     "titolo": "ChatGPT: aggiunge QA della 6.2 su copia e tre browser senza scritture reali",
+     "punta": "1e5b0ad",
+     "data": 1794760731,
+     "titolo": "ChatGPT: prepara la consegna a Codex per finire la 6.2 senza ripartire da zero",
      "autore": "ChatGPT",
      "padre": "main",
      "nascita": "b051bfb",
      "dataNascita": 1794759206,
-     "avanti": 15,
+     "avanti": 16,
      "stato": "attivo",
      "commit": [
+      [
+       "1e5b0ad844ec13dee1aa34a9c8e1966efc77f7ee",
+       1794760731,
+       "ChatGPT",
+       "ChatGPT: prepara la consegna a Codex per finire la 6.2 senza ripartire da zero"
+      ],
       [
        "472f2dbb4258ce8b3d8cf6d0aa579dd5a5f6a658",
        1794760329,
@@ -8303,15 +8309,9 @@
        1794759916,
        "ChatGPT",
        "ChatGPT: recupera le logiche 6.2 già provate e isolate dalla grafica rifiutata"
-      ],
-      [
-       "41b4de59ec1278947d435d05605599fa4ce2580a",
-       1794759912,
-       "ChatGPT",
-       "ChatGPT: prepara la Radio 6.2 senza generare audio né attivare nuove puntate"
       ]
      ],
-     "totale": 15
+     "totale": 16
     }
    ]
   }
