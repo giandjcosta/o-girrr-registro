@@ -1,5 +1,5 @@
 {
- "generato": 1794765554,
+ "generato": 1794765867,
  "versione": "6.1",
  "repository": [
   {
@@ -8228,16 +8228,22 @@
     },
     {
      "nome": "chatgpt/integrazione-62-completa",
-     "punta": "44dd624",
-     "data": 1794765554,
-     "titolo": "ChatGPT: verifica il dopo partita finale e prepara i testi completi per approvazione",
+     "punta": "5715e12",
+     "data": 1794765867,
+     "titolo": "ChatGPT: registra la consegna della bozza e gli esiti effettivi senza pubblicare",
      "autore": "ChatGPT",
      "padre": "main",
      "nascita": "b051bfb",
      "dataNascita": 1794759206,
-     "avanti": 25,
+     "avanti": 26,
      "stato": "attivo",
      "commit": [
+      [
+       "5715e121cf267ddf825b10f5ecedfc6d7bebaaad",
+       1794765867,
+       "ChatGPT",
+       "ChatGPT: registra la consegna della bozza e gli esiti effettivi senza pubblicare"
+      ],
       [
        "44dd62461186ea0e6df0f6b9fffb438d463e7200",
        1794765554,
@@ -8303,15 +8309,9 @@
        1794760329,
        "ChatGPT",
        "ChatGPT: aggiunge QA della 6.2 su copia e tre browser senza scritture reali"
-      ],
-      [
-       "500e034cb6ad16d9783b42ffc61245310c1f28eb",
-       1794760326,
-       "ChatGPT",
-       "ChatGPT: aggiunge QA della 6.2 su copia e tre browser senza scritture reali"
       ]
      ],
-     "totale": 25
+     "totale": 26
     }
    ]
   }
