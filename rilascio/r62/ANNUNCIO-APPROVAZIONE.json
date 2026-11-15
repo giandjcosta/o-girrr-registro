@@ -1,6 +1,6 @@
 {
   "titolo": "Il Campo della Champions Cup",
-  "messaggio": "⚽ **O Girrr 6.2 è online!** Nel Campo ora trovi anche le partite della Champions Cup: un tocco sull’interruttore e passi da una competizione all’altra, e quando entri con il tuo codice si apre subito la tua partita. Con le nuove frecce passi da una partita all’altra o salti di giornata. Voti una volta sola, nella Curva o in Girrr Sport, e ritrovi il tuo voto in tutte e due: se ci ripensi, puoi cambiarlo finché la votazione è aperta. Quando si chiude l’MVP dei tifosi, Girrr Sport annuncia il verdetto nella Curva, e nel Giornale trovi i candidati e il verdetto della giornata prima. Buona giornata a tutti! ⚽",
+  "messaggio": "⚽ **O Girrr 6.2 è online!** Nel Campo ora trovi anche le partite della Champions Cup: un tocco sull’interruttore e passi da una competizione all’altra, e quando entri con il tuo codice si apre subito la tua partita. Con le nuove frecce passi da una partita all’altra o salti di giornata. Voti una volta sola, nella Curva o in Girrr Sport, e ritrovi il tuo voto in tutte e due: se ci ripensi, puoi cambiarlo finché la votazione è aperta. Quando si chiude l’MVP dei tifosi, Girrr Sport annuncia il verdetto nella Curva, e Giornale e Radio raccontano la vincitrice e le nuove candidate. Buona giornata a tutti! ⚽",
   "voci": [
     "Campo: Interruttore Campionato / Champions Cup con passaggio morbido; ogni competizione ricorda la giornata e la partita che stavi guardando.",
     "Campo: Frecce ‹ › per cambiare partita e « » per cambiare giornata; le partite si possono anche scorrere e toccare, con cambi in dissolvenza.",
@@ -21,8 +21,8 @@
     "Girrr Sport: Per le future aperture, la vigilia termina al calcio d’inizio e il dopo partita resta disponibile per 48 ore dalla pubblicazione dei risultati.",
     "Girrr Sport: Alla chiusura dell’MVP dei tifosi il profilo ufficiale di Girrr Sport pubblica il verdetto nella Curva, taggando la squadra scelta.",
     "Albo d’oro: Nella Storia i Padri Fondatori compaiono solo con il nome, tutti in fila.",
-    "Giornale: La rubrica «MVP dei tifosi» indica fino a quando si vota, presenta i tre candidati della giornata appena conclusa e racconta il verdetto della giornata precedente; il Coro della Curva resta separato.",
-    "Radio: Dalla prossima puntata ordinaria, una sola breve frase indica la giornata dell’MVP o il voto ancora aperto, prima della chiusura integrale.",
+    "Giornale: La rubrica «MVP dei tifosi» racconta la vincitrice della giornata precedente, con Campionato e Champions Cup insieme, e presenta le tre candidate della giornata appena conclusa; il Coro della Curva resta separato.",
+    "Radio: Dalla prossima puntata ordinaria, prima dei saluti, due battute brevi: la squadra MVP della scorsa giornata e le candidate per cui si vota in Curva e in Girrr Sport.",
     "App: I Bilanci riportano «Campionato & Champions Cup»; le animazioni rispettano Riduci movimento.",
     "App: Gli ultimi due sondaggi conclusi si rivedono sia nella Curva sia in Girrr Sport."
   ]

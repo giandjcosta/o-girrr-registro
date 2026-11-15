@@ -9,7 +9,7 @@ class Test(unittest.TestCase):
  def test_radio(self):
   d=json.loads((R/'voci-src/dati.json').read_text());d['cronache_classifica_attive']=True
   base=copione.build(d,random.Random(7),{});w={'stagione':'2026/27','giornata':4,'chiusa':'2026-11-01T12:00:00Z','risultato':[{'team':'Atletico ma non troppo'}]};d['mvp_tifosi']=w
-  dopo=copione.build(d,random.Random(7),{});self.assertEqual(len(dopo),len(base)+1);self.assertEqual(dopo[:-3]+dopo[-2:],base);self.assertEqual(dopo[-3][0],'G');self.assertEqual(dopo[-3][1],'Atletico ma non troppo è l’MVP dei tifosi della 4ª giornata.');self.assertLessEqual(len(dopo[-3][1].split()),15)
+  dopo=copione.build(d,random.Random(7),{});self.assertEqual(len(dopo),len(base)+1);self.assertEqual(dopo[:-3]+dopo[-2:],base);self.assertEqual(dopo[-3][0],'G');self.assertEqual(dopo[-3][1],'Atletico ma non troppo è la squadra MVP della 4ª giornata!')  # frase breve decisa da Gianluca il 15 novembre;self.assertLessEqual(len(dopo[-3][1].split()),15)
   d['mvp_annunciati']=['2026/27:4'];self.assertEqual(copione.build(d,random.Random(7),{}),base)
  def test_stati(self):
   now=datetime(2026,11,15,tzinfo=timezone.utc);w={'stagione':'2026/27','giornata':7,'chiude':'2026-11-21T14:00:00Z','chiusa':None,'classifica':[{'team':'Provvisoria'}]}
@@ -23,7 +23,8 @@ class Test(unittest.TestCase):
   now=datetime(2026,11,15,tzinfo=timezone.utc);t={'coro':{'testo':'Originale'},'titolo':'Intatto'}
   w={'stagione':'2026/27','giornata':6,'chiusa':'2026-11-14T00:00:00Z','classifica':[{'team':'Oranje VC'}]}
   dossier={'archivio':[w],'commento':{'squadra':'WOA','testo':'Parole autentiche','post_id':9,'giornata':6,'fonte':'curva','pertinente':True,'squadra_riferita':'Oranje VC'}}
-  r=integra(t,dossier,7,now);self.assertEqual(r['coro'],t['coro']);self.assertEqual(r['titolo'],'Intatto');self.assertNotIn('mvp_editoriale',r)
+  r=integra(t,dossier,7,now);self.assertEqual(r['coro'],t['coro']);self.assertEqual(r['titolo'],'Intatto');self.assertEqual(r['mvp_editoriale']['verdetto']['squadra'],'Oranje VC');self.assertEqual(r['mvp_editoriale']['candidati'],[])  # Gianluca, 15 novembre: la vincitrice della giornata precedente va raccontata; il Coro resta intatto
+  self.assertNotIn('mvp_editoriale',integra(t,dossier,8,now))  # solo la giornata immediatamente precedente
   aperto=json.loads((R/'prove/v62/fixture/mvp-reale.json').read_text());r=integra(t,aperto,7,now);self.assertEqual(len(r['mvp_editoriale']['candidati']),3);self.assertIsNone(r['mvp_editoriale']['verdetto']);self.assertEqual(r['coro'],t['coro'])
  def test_ora_legale(self):
   from zoneinfo import ZoneInfo

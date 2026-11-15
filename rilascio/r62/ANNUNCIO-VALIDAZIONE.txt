@@ -4,7 +4,7 @@
   "data": "2026-11-15",
   "tipo": "medio",
   "titolo": "Il Campo della Champions Cup",
-  "messaggio": "⚽ **O Girrr 6.2 è online!** Nel Campo ora trovi anche le partite della Champions Cup: un tocco sull’interruttore e passi da una competizione all’altra, e quando entri con il tuo codice si apre subito la tua partita. Con le nuove frecce passi da una partita all’altra o salti di giornata. Voti una volta sola, nella Curva o in Girrr Sport, e ritrovi il tuo voto in tutte e due: se ci ripensi, puoi cambiarlo finché la votazione è aperta. Quando si chiude l’MVP dei tifosi, Girrr Sport annuncia il verdetto nella Curva, e nel Giornale trovi i candidati e il verdetto della giornata prima. Buona giornata a tutti! ⚽",
+  "messaggio": "⚽ **O Girrr 6.2 è online!** Nel Campo ora trovi anche le partite della Champions Cup: un tocco sull’interruttore e passi da una competizione all’altra, e quando entri con il tuo codice si apre subito la tua partita. Con le nuove frecce passi da una partita all’altra o salti di giornata. Voti una volta sola, nella Curva o in Girrr Sport, e ritrovi il tuo voto in tutte e due: se ci ripensi, puoi cambiarlo finché la votazione è aperta. Quando si chiude l’MVP dei tifosi, Girrr Sport annuncia il verdetto nella Curva, e Giornale e Radio raccontano la vincitrice e le nuove candidate. Buona giornata a tutti! ⚽",
   "novita": [
     {
       "area": "Campo",
@@ -58,13 +58,13 @@
     {
       "area": "Giornale",
       "voci": [
-        "La rubrica «MVP dei tifosi» indica fino a quando si vota, presenta i tre candidati della giornata appena conclusa e racconta il verdetto della giornata precedente; il Coro della Curva resta separato."
+        "La rubrica «MVP dei tifosi» racconta la vincitrice della giornata precedente, con Campionato e Champions Cup insieme, e presenta le tre candidate della giornata appena conclusa; il Coro della Curva resta separato."
       ]
     },
     {
       "area": "Radio",
       "voci": [
-        "Dalla prossima puntata ordinaria, una sola breve frase indica la giornata dell’MVP o il voto ancora aperto, prima della chiusura integrale."
+        "Dalla prossima puntata ordinaria, prima dei saluti, due battute brevi: la squadra MVP della scorsa giornata e le candidate per cui si vota in Curva e in Girrr Sport."
       ]
     },
     {
