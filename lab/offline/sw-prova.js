@@ -34,13 +34,13 @@ self.GIRRR_SPECCHIO = (function () {
     'girrr/derby.html': new URL('../../rilascio/r601/pagine/girrr/derby.html', self.location.href).href, /* 6.0.1: Albo › Derby con tre schede, Derby della Lega, Le rivalità e Classifica dei Derby */
     'girrr/derby.js': new URL('../../rilascio/r601/pagine/girrr/derby.js', self.location.href).href,
     'girrr/rivalita.html': new URL('../../rilascio/r601/pagine/girrr/rivalita.html', self.location.href).href,
-    'girrr/novita.js': new URL('../../rilascio/r601/pagine/girrr/novita.js', self.location.href).href,
+    'girrr/novita.js': new URL('../../rilascio/r62/pagine/girrr/novita.js?v=62-2', self.location.href).href,
     'girrr/albo.html': new URL('../../rilascio/r601/pagine/girrr/albo.html', self.location.href).href,
     'girrr/totogirrr.html': new URL('../../rilascio/r601/pagine/girrr/totogirrr.html', self.location.href).href,
     'stadio/girrr/derby.html': new URL('../../rilascio/r601/pagine/stadio/girrr/derby.html', self.location.href).href,
     'stadio/girrr/derby.js': new URL('../../rilascio/r601/pagine/stadio/girrr/derby.js', self.location.href).href,
     'stadio/girrr/rivalita.html': new URL('../../rilascio/r601/pagine/stadio/girrr/rivalita.html', self.location.href).href,
-    'stadio/girrr/novita.js': new URL('../../rilascio/r601/pagine/stadio/girrr/novita.js', self.location.href).href,
+    'stadio/girrr/novita.js': new URL('../../rilascio/r62/pagine/stadio/girrr/novita.js?v=62-2', self.location.href).href,
     'stadio/girrr/albo.html': new URL('../../rilascio/r601/pagine/stadio/girrr/albo.html', self.location.href).href,
     'stadio/girrr/totogirrr.html': new URL('../../rilascio/r601/pagine/stadio/girrr/totogirrr.html', self.location.href).href,
     'stagione.js': new URL('../../rilascio/stagione/stagione.js?v=611-pc1', self.location.href).href, /* Carriera · La mia stagione */
@@ -48,6 +48,11 @@ self.GIRRR_SPECCHIO = (function () {
     'conferenze.js': new URL('../../rilascio/conferenze/conferenze.js', self.location.href).href,
     'tv.js': new URL('../../rilascio/conferenze/tv.js', self.location.href).href, /* testo più grande solo sulla TV (?tv per provarlo dal PC) */
     'notifiche-lette.js': new URL('../../rilascio/notifiche/notifiche-lette.js', self.location.href).href, /* lette rimpicciolite */
+    /* 6.2 in prova (Claude, 15 novembre 2026): Campo con Campionato e Champions Cup (rilascio/r62/campo_coppa.py) */
+    'girrr/tabellone.html': new URL('../../rilascio/r62/pagine/girrr/tabellone.html?v=62-3', self.location.href).href, /* 6.2: la tua partita per prima con velo oro (rilascio/r62/testi.py) */
+    'stadio/girrr/tabellone.html': new URL('../../rilascio/r62/pagine/stadio/girrr/tabellone.html?v=62-3', self.location.href).href,
+    'girrr/campo.html': new URL('../../rilascio/r62/pagine/girrr/campo.html?v=62-2', self.location.href).href,
+    'stadio/girrr/campo.html': new URL('../../rilascio/r62/pagine/stadio/girrr/campo.html?v=62-2', self.location.href).href,
     'girrr/curva.html': new URL('../../rilascio/curva-os/pagine/girrr/curva.html?v=611-1', self.location.href).href, /* Curva del sito (5.8.1) aggiornata pezzo per pezzo e Notifiche divise in Attività e Menzioni (rilascio/curva-os/applica.py) */
     'stadio/girrr/curva.html': new URL('../../rilascio/curva-os/pagine/stadio/girrr/curva.html?v=611-1', self.location.href).href,
     'push.js': new URL('../../rilascio/push/push.js', self.location.href).href, /* notifiche sul telefono */
@@ -55,7 +60,7 @@ self.GIRRR_SPECCHIO = (function () {
     'liquid-glass.css': new URL('../../rilascio/liquid-glass/liquid-glass.css', self.location.href).href, /* prototipo Liquid Glass dello Stadio (?stile=vetro) */
     'girrr/curva-banca.js': new URL('../../rilascio/curva-os/pagine/girrr/curva-banca.js', self.location.href).href, /* nuovi personaggi, frasi e immagini (rilascio/curva-os/banca.py) */
     'stadio/girrr/curva-banca.js': new URL('../../rilascio/curva-os/pagine/stadio/girrr/curva-banca.js', self.location.href).href,
-    'girrr/v55/ui.js': new URL('../../rilascio/r601/pagine/girrr/v55/ui.js', self.location.href).href, /* 6.0.1: senza la seconda banda dell'ospite (prima: commenti del sondaggio senza «· bot») */
+    'girrr/v55/ui.js': new URL('../../rilascio/r62/pagine/girrr/v55/ui.js?v=62-2', self.location.href).href, /* 6.0.1: senza la seconda banda dell'ospite (prima: commenti del sondaggio senza «· bot») */
     'curva-os.js': new URL('../../rilascio/curva-os/curva-os.js?v=611-1', self.location.href).href, /* Curva: uno stile per iPhone e uno per Android */
     'curva-os.css': new URL('../../rilascio/curva-os/curva-os.css?v=611-1', self.location.href).href,
     'material.css': new URL('../../rilascio/liquid-glass/material.css', self.location.href).href, /* prototipo Android, Material 3, dello Stadio (?stile=android) */
