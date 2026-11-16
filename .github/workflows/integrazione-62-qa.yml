@@ -258,7 +258,7 @@ jobs:
           python3 rilascio/r622/applica.py qa-site
           python3 rilascio/r63/applica.py qa-site
           python3 rilascio/r63/applica.py qa-site | grep -q 'File cambiati: 0'
-          for f in qa-site/pillole.js qa-site/tv.js qa-site/giro-di-boa.js qa-site/condividi.js qa-site/girrr/v60/tifosi.js qa-site/girrr/derby.js qa-site/stadio/girrr/derby.js; do node --check "$f"; done
+          for f in qa-site/pillole.js qa-site/tv.js qa-site/giro-di-boa.js qa-site/condividi.js qa-site/versioni.js qa-site/girrr/v60/tifosi.js qa-site/girrr/derby.js qa-site/stadio/girrr/derby.js; do node --check "$f"; done
           grep -q 'data-toto63' qa-site/girrr/totogirrr.html && grep -q 'data-toto63' lab/integrata-62/stadio/girrr/totogirrr.html
       - name: Sintassi JavaScript del sito preparato e del Lab
         run: |
