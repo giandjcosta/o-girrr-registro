@@ -9,7 +9,7 @@ Stati: `Da fare` · `In corso` · `In prova nel Lab` · `Aspetta Gianluca` · `B
 Ultimo aggiornamento: 16 novembre 2026, Claude.
 
 ## Aspetta Gianluca
-- **6.2.3 «Il Totogirrr su ogni schermo»** (era 6.3; Gianluca: correzione minore) · Claude · `Aspetta Gianluca` · ramo `claude/totogirrr-ui-responsive-b2pgee` del registro, `rilascio/r623/` (applica.py sopra la 6.2.2 online, lab.py, ANNUNCIO-BOZZA.json), `lab/novita-6-2-3.html`, `prove/v623/`. Schede del Totogirrr (scheda toccata tutta in vista, tocco breve, più trasparenti, non restano in alto), colonne su tablet/PC/TV, titolo a 320 px, Giro di boa senza «6.1», sfondo del Totogirrr più grigio, «Esci» in fondo alla Home (tolto dal Totogirrr), finestre di Condividi (pulsanti centrati, anteprima senza scorrere), «‹ O Girrr» senza alone anche nell'app (.oback), cambio Lega/Stadio senza scatti, Spogliatoio con sfondi diversi per Lega e Stadio, Spogliatoio Lega in rosso e azzurro e Svincolati con due menu a tendina, «C» della Curva che non porta alla Home (Curva per il resto com'era). PR #117, #118 e #120 (numeri bianchi, di Gianluca) unite da Gianluca; Spogliatoio raggiungibile dal Lab (index.html come nel sito). Prossimo passo: Gianluca prova nel Lab (dopo il merge del ramo) e approva il messaggio; con il «Vai», `r623/applica.py` su `gh-pages` e `aggiungi.py --tipo minore`.
+- **6.2.4** (Spogliatoio completo nel Lab, numeri neutri, Calendario fluido, «‹ O Girrr» senza fondo al passaggio, schede del Totogirrr senza scorrimento del colore) · Claude · `Da fare` stanotte all'1 · Gianluca ha dato il «Vai» anche per pubblicarla («son correzioni minori»).
 - **SQL dei personaggi che votano durante la settimana** (`sql/mvp-personaggi-621.sql`) · Claude · `Aspetta Gianluca` · Provato su PostgreSQL locale (`prove/v62/postgres_personaggi.py`, 10 prove). La 6.2.1 è online: Gianluca lo incolla nell'SQL Editor di Supabase prima dell'apertura della votazione della 8ª giornata.
 
 ## Online con la 6.2.2 (16 novembre, `gh-pages` `64a243b`)
@@ -25,6 +25,7 @@ Ultimo aggiornamento: 16 novembre 2026, Claude.
 - **Safari e Firefox veri, e telefoni veri** · Tutti · `Da fare` · Nell'ambiente di Claude c'è solo Chromium. I workflow di GitHub provano anche WebKit e Firefox, ma non i dispositivi veri.
 
 ## Fatto di recente
+- 16 novembre 2026 · Gianluca e Claude · **6.2.3 online**: `gh-pages` `4b0fc71` (PR #21 del sito, unita da Gianluca), 63 pagine controllate sul sito vero. Per tornare indietro: «Revert» della PR #21.
 - 16 novembre 2026 · Gianluca · **First Pull Request made by me**: una riga nel quaderno, commit e merge dal browser
 - 16 novembre 2026 · Claude · **6.2.2 online**: `gh-pages` `64a243b` («Carriera e Derby più fluidi»).
 - 16 novembre 2026 · Claude · **6.2.1 online**: `gh-pages` `19653ba`, `main` del sito `4074b62`, provata sul sito vero (60 pagine).
