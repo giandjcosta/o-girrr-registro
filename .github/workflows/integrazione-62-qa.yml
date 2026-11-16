@@ -22,8 +22,12 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: integrazione-62-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   test-logica:
+    if: ${{ !startsWith(github.ref, 'refs/heads/chatgpt/621-') }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -36,6 +40,7 @@ jobs:
       - name: Check sintassi Python
         run: python3 -m py_compile rilascio/r62/applica.py rilascio/r62/campo_coppa.py rilascio/r62/testi.py voci-src/copione.py voci-src/prepara_dati.py voci-src/mvp_editoriale62.py calcoli/finestre62.py rilascio/r62/server/catalogo62.py rilascio/r62/server/giuria62.py rilascio/r62/backend.py
   backend:
+    if: ${{ !startsWith(github.ref, 'refs/heads/chatgpt/621-') }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -62,6 +67,7 @@ jobs:
           print('Backend preparato, nessun sito o database modificato')
           PY
   postgres:
+    if: ${{ !startsWith(github.ref, 'refs/heads/chatgpt/621-') }}
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -102,6 +108,7 @@ jobs:
           name: postgres62-isolato
           path: prove/v62/risultati-postgres.json
   browser:
+    if: ${{ !startsWith(github.ref, 'refs/heads/chatgpt/621-') }}
     runs-on: ubuntu-latest
     timeout-minutes: 35
     strategy:
@@ -201,3 +208,51 @@ jobs:
           path: |
             qa-artifacts/
             prove/v62/risultati-*.json
+
+  verifica-621:
+    if: ${{ startsWith(github.ref, 'refs/heads/chatgpt/621-') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: collaudo-locale
+        ports: ['5432:5432']
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: giandjcosta/o-fant-a-girrr
+          ref: gh-pages
+          path: qa-site
+      - uses: actions/checkout@v4
+        with:
+          repository: giandjcosta/o-fant-a-girrr
+          ref: main
+          path: qa-site-backend
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Sintassi degli strumenti 6.2.1
+        run: python3 -m py_compile rilascio/r621/applica.py rilascio/r621/backend.py rilascio/r621/bug621.py prove/v62/postgres_personaggi.py prove/v62/check621.py
+      - name: Applica 6.2.1 solo a due checkout temporanei, due volte per verificare idempotenza
+        run: |
+          python3 rilascio/r621/applica.py qa-site
+          python3 rilascio/r621/applica.py qa-site
+          python3 rilascio/r621/backend.py qa-site-backend
+          python3 rilascio/r621/backend.py qa-site-backend
+          python3 prove/v62/check621.py qa-site qa-site-backend
+      - name: Sintassi JavaScript del sito preparato e del Lab
+        run: |
+          for f in qa-site/girrr/v55/ui.js qa-site/girrr/v55/home55.js qa-site/girrr/v60/tifosi.js qa-site/sondaggi62.js qa-site/pillole.js qa-site/girrr/novita.js qa-site/stadio/girrr/novita.js qa-site/girrr/derby.js qa-site/stadio/girrr/derby.js qa-site-backend/calcoli/tifosi/contesto.cjs lab/integrata-62/sondaggi62.js lab/integrata-62/pillole.js lab/integrata-62/girrr/novita.js lab/integrata-62/stadio/girrr/novita.js lab/integrata-62/girrr/derby.js lab/integrata-62/stadio/girrr/derby.js; do node --check "$f"; done
+      - name: PostgreSQL locale - arrivo progressivo dei personaggi
+        env:
+          PGHOST: 127.0.0.1
+          PGPORT: '5432'
+          PGUSER: postgres
+          PGPASSWORD: collaudo-locale
+        run: |
+          python3 -m pip install 'psycopg[binary]==3.2.12'
+          python3 prove/v62/postgres_personaggi.py
