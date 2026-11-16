@@ -49,7 +49,10 @@ LAVORI = {
 
 def applica(t, nome, coppie):
     for vecchio, nuovo in coppie:
-        if nuovo in t:
+        # Gli stili aggiunti prima di </head> si riconoscono senza </head>: dopo il primo può esserci un altro stile
+        # 6.2, e senza questa regola una seconda esecuzione sulla stessa copia lo duplicherebbe.
+        gia = nuovo[:-len('</head>')] if vecchio == '</head>' else nuovo
+        if gia in t:
             continue
         if t.count(vecchio) != 1:
             raise SystemExit('%s: atteso una volta «%s…», trovato %d volte' % (nome, vecchio[:50], t.count(vecchio)))

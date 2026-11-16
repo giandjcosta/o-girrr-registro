@@ -34,6 +34,29 @@
 - Browser QA esteso: `prove/v62/funzioni.cjs` verifica anche «Cambia il mio voto» tra Curva, Girrr Sport e MVP. Run [43771968860](https://github.com/giandjcosta/o-girrr-registro/actions/runs/43771968860) avviata; **non dichiarare i tre motori verdi senza risultati**.
 - **Restano fuori** le modifiche grafiche di Claude a `testi.py`, `sondaggi.js`, Giornale, Radio e Albo grafico; la duplicazione degli stili per la riapplicazione manuale di `testi.py` e il voto nel Tabellone sono ancora da verificare. «Serie A, 11ª giornata» nel Giornale resta invariata.
 
+## 16 novembre — Claude: 6.2 pronta per il rilascio (manca solo il «Vai»)
+
+- **Release candidate di ChatGPT** (PR [#108](https://github.com/giandjcosta/o-girrr-registro/pull/108) e [#109](https://github.com/giandjcosta/o-girrr-registro/pull/109)) portata sul ramo `claude/fervent-thompson-rwlwrh` insieme all'ultimo `main`, senza conflitti. Comprende:
+  - SQL corretta: conferenze mai bloccate se manca la finestra; finestre separate per stagione; voto 6.1 delle sfide attivo anche prima del catalogo;
+  - Albo con `v62_albo` e i voti di giuria;
+  - copia del verdetto MVP sul `main` del sito.
+- **Correzioni di Claude:**
+  - `prove/v62/albo-browser.cjs` confrontava il titolo con `innerText`, che restituisce il maiuscolo del CSS: falliva nei tre motori pur con la pagina giusta;
+  - `rilascio/r62/testi.py` rieseguito sulla stessa copia duplicava lo stile del Tabellone Stadio: ora è idempotente e la prima esecuzione è identica byte per byte.
+- **Annuncio:** aggiunta la voce dell'Albo › Record, 24 voci, rivalidato con `aggiungi.py --prova` senza toccare `versioni.json`. `PROMPT-CHATGPT.md` è segnato come superato.
+- **Scaletta del rilascio con comandi, verifiche e ritorno indietro:** `rilascio/r62/RILASCIO.md`. Il catalogo dell'8ª usa le stesse scelte dei 2 voti già dati nella 6.1 (verificato in sola lettura).
+- **Non era un problema:** il voto «Quale sfida seguire» della Curva 6.1 nella 6.2 è sostituito dal modulo condiviso, che ha «Cambia il mio voto».
+- **Prove locali sul codice di questo ramo, solo Chromium** (WebKit e Firefox non disponibili qui, fa fede la run di GitHub):
+  - PostgreSQL locale: 19 + 12 + 19 controlli;
+  - testi;
+  - Albo: 12 casi;
+  - funzioni condivise: 7 casi;
+  - preview;
+  - Campo: 64 visite;
+  - 6.1.1: 34 visite;
+  - preparazione del `main` del sito `66a6b2f`.
+- **Sito vero ancora alla 6.1, Supabase invariato** (solo letture), nessun audio.
+
 ## 15 novembre (11) — Claude: MVP nel Giornale e in Radio come deciso da Gianluca
 
 - **Giornale** (`rilascio/r62/editoriale/mvp_giornale62.py`, `giornale_mvp.py`): niente data di chiusura.

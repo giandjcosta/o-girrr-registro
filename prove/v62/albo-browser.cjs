@@ -16,7 +16,8 @@ const dati={stagione:'2026/27',mvp:[{giornata:7,team:'stif dc',chiusa:'2026-11-2
   assert.equal(await p.locator('#al-mvp').count(),1);
   assert.equal(await p.locator('#al-mvp-campionato').count(),1);
   assert.equal(await p.locator('#al-partita-seguita').count(),1);
-  assert((await p.locator('#al-mvp-campionato').innerText()).includes(stato==='fine'?'MVP del campionato':'Corsa all’MVP del campionato'));
+  // textContent: il titolo è in maiuscolo solo per la grafica (text-transform), innerText restituirebbe il maiuscolo
+  assert.equal((await p.locator('#al-mvp-campionato h3').textContent()).trim(),stato==='fine'?'MVP del campionato':'Corsa all’MVP del campionato');
   const k=await p.locator('#al-partita-seguita').innerText();
   if(stato==='mancanti')assert(k.includes('Dato non disponibile'));
   else {assert(k.includes('Grodah'));assert(k.includes('Allenatori 4'));assert(k.includes('Redazione 1'));assert(k.includes('Personaggi 5'))}
