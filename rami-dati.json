@@ -1,6 +1,6 @@
 {
- "generato": 1794797073,
- "versione": "6.1",
+ "generato": 1794832208,
+ "versione": "6.2",
  "repository": [
   {
    "repo": "o-fant-a-girrr",
@@ -1730,93 +1730,6 @@
      "totale": 7
     },
     {
-     "nome": "main",
-     "punta": "66a6b2f",
-     "data": 1794785898,
-     "titolo": "ChatGPT: elimina gli avvisi Ramificazioni per ogni push, PR e ramo; solo comando manuale",
-     "autore": "ChatGPT",
-     "padre": null,
-     "nascita": null,
-     "avanti": 0,
-     "indietro": 0,
-     "stato": "principale",
-     "commit": [
-      [
-       "66a6b2fed4f83882dc6b5c059ded0c894e62340a",
-       1794785898,
-       "ChatGPT",
-       "ChatGPT: elimina gli avvisi Ramificazioni per ogni push, PR e ramo; solo comando manuale"
-      ],
-      [
-       "40837e6192a1f91ecff803815a7b5285d5d89b6b",
-       1794728639,
-       "Curva",
-       "Curva: post nuovi"
-      ],
-      [
-       "b5a6b88c6729dde20603a151827de51ff98250b1",
-       1794673265,
-       "ChatGPT",
-       "ChatGPT: attiva i calcoli dei bilanci della stagione 6.1"
-      ],
-      [
-       "8f6e6a9a9f57b9a2cf8955c72e62d0e751dd456c",
-       1794673042,
-       "giandjcosta",
-       "Merge pull request #16 from giandjcosta/claude/avvisa-ramificazioni"
-      ],
-      [
-       "0f0cc3dea79632ca5c00b923db26c760566ac136",
-       1794649740,
-       "giandjcosta",
-       "Merge pull request #14 from giandjcosta/claude/sito-601"
-      ],
-      [
-       "ff29fa200671f0bc06e43c70018ae9359317890b",
-       1794587335,
-       "Claude",
-       "Claude: AGENTS.md, sul sito la 6.0 (#11)"
-      ],
-      [
-       "da338dcddd03cc54c41d574e2a80a4bd5996bc4c",
-       1794587023,
-       "Claude",
-       "Claude: 6.0 nel main del sito, workflow del video e dell'MVP (#10)"
-      ],
-      [
-       "22da7aa2c6486344bf5d671896f7191e0c2b68aa",
-       1794496372,
-       "Claude",
-       "Claude: AGENTS.md, sul sito la 5.8.2"
-      ],
-      [
-       "ad578e5811440ed92af8fd7c90700487f22ae07c",
-       1794483831,
-       "ChatGPT",
-       "ChatGPT: integra il controllo preliminare dei premi autorizzato da Gianluca"
-      ],
-      [
-       "e4465da0b41b556c6daf75f05c2d7ac040e9d270",
-       1794369002,
-       "Claude",
-       "Claude: 5.8 · aspettano il giudizio solo le conferenze delle giornate su cui lavora la redazione"
-      ],
-      [
-       "4b74020cb4f81be666dbf4d3a06a0d4d62048cd7",
-       1794368980,
-       "Claude",
-       "Claude: versione 5.8 · calcoli con i giudizi della redazione di Girrr Sport"
-      ],
-      [
-       "48767169a1921994f7a00b9a5ed8623be96fd301",
-       1794354678,
-       "Claude",
-       "Claude: AGENTS.md, sul sito c'è la 5.7"
-      ]
-     ],
-     "totale": 102
-    },
-    {
      "nome": "chatgpt/r62-rilascio-sicuro",
      "punta": "432505d",
      "data": 1794786453,
@@ -1845,16 +1758,28 @@
     },
     {
      "nome": "gh-pages",
-     "punta": "dfd4201",
-     "data": 1794795322,
-     "titolo": "Aggiorna statistiche e voti in automatico",
-     "autore": "github-actions[bot]",
+     "punta": "c313e1a",
+     "data": 1794819267,
+     "titolo": "Claude: rilascio 6.2 «Il Campo della Champions Cup» (Campo con Champions Cup, voto unico con Cambia il mio vot",
+     "autore": "Claude",
      "padre": null,
      "nascita": null,
      "avanti": 0,
      "indietro": 0,
      "stato": "principale",
      "commit": [
+      [
+       "c313e1a408f6ec4020759dab1c37779871b80589",
+       1794819267,
+       "Claude",
+       "Claude: rilascio 6.2 «Il Campo della Champions Cup» (Campo con Champions Cup, voto unico con Cambia il mio voto, Albo › Record, MVP in Giorn"
+      ],
+      [
+       "a1b5c35788e6bed54bebf7af36b8a5c183429343",
+       1794813098,
+       "github-actions[bot]",
+       "Calcoli dopo la giornata"
+      ],
       [
        "dfd4201b6b6350d7d0b335065ab13ab5eb8ed00a",
        1794795322,
@@ -1914,21 +1839,150 @@
        1794672940,
        "ChatGPT",
        "ChatGPT: pubblica O Girrr 6.1, la stagione da raccontare"
-      ],
-      [
-       "8621e3a0d81c40e414100b680f202a62b60056c2",
-       1794671981,
-       "github-actions[bot]",
-       "Calcoli dopo la giornata"
-      ],
-      [
-       "e7342491468e152e67461b18481a4820b295de6f",
-       1794665855,
-       "github-actions[bot]",
-       "Aggiorna statistiche e voti in automatico"
       ]
      ],
-     "totale": 663
+     "totale": 665
+    },
+    {
+     "nome": "main",
+     "punta": "cd233e2",
+     "data": 1794819543,
+     "titolo": "Claude: AGENTS.md, sul sito la 6.2",
+     "autore": "Claude",
+     "padre": null,
+     "nascita": null,
+     "avanti": 0,
+     "indietro": 0,
+     "stato": "principale",
+     "commit": [
+      [
+       "cd233e25af1de7ad7f976896ee6eb4a82cc2f240",
+       1794819543,
+       "Claude",
+       "Claude: AGENTS.md, sul sito la 6.2"
+      ],
+      [
+       "532c4d2d86943281a3c6c919ccd78017eaaa6646",
+       1794819499,
+       "Claude",
+       "Claude: rilascio 6.2 sul main, catalogo e finestre dei sondaggi, giurie, verdetto MVP nella Curva e Radio con le battute MVP · «Vai» di Gian"
+      ],
+      [
+       "66a6b2fed4f83882dc6b5c059ded0c894e62340a",
+       1794785898,
+       "ChatGPT",
+       "ChatGPT: elimina gli avvisi Ramificazioni per ogni push, PR e ramo; solo comando manuale"
+      ],
+      [
+       "40837e6192a1f91ecff803815a7b5285d5d89b6b",
+       1794728639,
+       "Curva",
+       "Curva: post nuovi"
+      ],
+      [
+       "b5a6b88c6729dde20603a151827de51ff98250b1",
+       1794673265,
+       "ChatGPT",
+       "ChatGPT: attiva i calcoli dei bilanci della stagione 6.1"
+      ],
+      [
+       "8f6e6a9a9f57b9a2cf8955c72e62d0e751dd456c",
+       1794673042,
+       "giandjcosta",
+       "Merge pull request #16 from giandjcosta/claude/avvisa-ramificazioni"
+      ],
+      [
+       "0f0cc3dea79632ca5c00b923db26c760566ac136",
+       1794649740,
+       "giandjcosta",
+       "Merge pull request #14 from giandjcosta/claude/sito-601"
+      ],
+      [
+       "ff29fa200671f0bc06e43c70018ae9359317890b",
+       1794587335,
+       "Claude",
+       "Claude: AGENTS.md, sul sito la 6.0 (#11)"
+      ],
+      [
+       "da338dcddd03cc54c41d574e2a80a4bd5996bc4c",
+       1794587023,
+       "Claude",
+       "Claude: 6.0 nel main del sito, workflow del video e dell'MVP (#10)"
+      ],
+      [
+       "22da7aa2c6486344bf5d671896f7191e0c2b68aa",
+       1794496372,
+       "Claude",
+       "Claude: AGENTS.md, sul sito la 5.8.2"
+      ],
+      [
+       "ad578e5811440ed92af8fd7c90700487f22ae07c",
+       1794483831,
+       "ChatGPT",
+       "ChatGPT: integra il controllo preliminare dei premi autorizzato da Gianluca"
+      ],
+      [
+       "e4465da0b41b556c6daf75f05c2d7ac040e9d270",
+       1794369002,
+       "Claude",
+       "Claude: 5.8 · aspettano il giudizio solo le conferenze delle giornate su cui lavora la redazione"
+      ]
+     ],
+     "totale": 104
+    },
+    {
+     "nome": "release/621-ready",
+     "punta": "93ad1a6",
+     "data": 1794825477,
+     "titolo": "O Girrr 6.2.1: cache pagine Stadio",
+     "autore": "O Girrr 6.2.1",
+     "padre": "gh-pages",
+     "nascita": "c313e1a",
+     "dataNascita": 1794819267,
+     "avanti": 3,
+     "stato": "attivo",
+     "commit": [
+      [
+       "93ad1a6e0a9c445dace42a8e8638376227e362df",
+       1794825477,
+       "O Girrr 6.2.1",
+       "O Girrr 6.2.1: cache pagine Stadio"
+      ],
+      [
+       "afd29df7293fd651d9e3bc49c7b81d1d574c2214",
+       1794825444,
+       "O Girrr 6.2.1",
+       "O Girrr 6.2.1: cache pagine Lega"
+      ],
+      [
+       "7b4ef89f02483dd412d350369cb94e7197d4f59f",
+       1794825384,
+       "O Girrr 6.2.1",
+       "O Girrr 6.2.1: correzioni, messaggio e changelog (candidato)"
+      ]
+     ],
+     "totale": 3
+    },
+    {
+     "nome": "release/621-backend",
+     "punta": "326fea4",
+     "data": 1794825527,
+     "titolo": "O Girrr 6.2.1: 11 personaggi MVP dalla ottava giornata",
+     "autore": "O Girrr 6.2.1",
+     "padre": "main",
+     "nascita": "cd233e2",
+     "dataNascita": 1794819543,
+     "avanti": 1,
+     "stato": "attivo",
+     "commit": [
+      [
+       "326fea4716a0170b16d7acde3b585364511cba65",
+       1794825527,
+       "O Girrr 6.2.1",
+       "O Girrr 6.2.1: 11 personaggi MVP dalla ottava giornata"
+      ]
+     ],
+     "totale": 1
     }
    ]
   },
@@ -8167,99 +8221,6 @@
      "totale": 47
     },
     {
-     "nome": "claude/fervent-thompson-rwlwrh",
-     "punta": "fc08236",
-     "data": 1794781140,
-     "titolo": "Claude: stessa avversaria in Campionato e Coppa nella stessa giornata raccontata come un fatto solo (Giornale ",
-     "autore": "Claude",
-     "padre": "chatgpt/integrazione-62-completa",
-     "nascita": "13b7223",
-     "dataNascita": 1794766745,
-     "avanti": 21,
-     "stato": "unito",
-     "unione": {
-      "in": "main",
-      "data": 1794781146,
-      "commit": "2c856aa",
-      "titolo": "Merge pull request #105 from giandjcosta/claude/fervent-thompson-rwlwrh"
-     },
-     "commit": [
-      [
-       "fc08236e98d758ac4a2449e5a543e5545b2f0d1f",
-       1794781140,
-       "Claude",
-       "Claude: stessa avversaria in Campionato e Coppa nella stessa giornata raccontata come un fatto solo (Giornale e Radio)"
-      ],
-      [
-       "9f6312c55ca157d828920b6b7a148be51d7d1ff7",
-       1794781047,
-       "Claude",
-       "Claude: MVP nel Giornale (vincitrice precedente con Campionato e Coppa, capolettera nero, candidate con storia) e in Radio (due battute brev"
-      ],
-      [
-       "31344ac7ea74915855e3d66bee87898efb9ac12e",
-       1794778175,
-       "Claude",
-       "Claude: in Girrr Sport › Sondaggi ogni sondaggio nel riquadro dell'app (Lega e Stadio), Curva invariata"
-      ],
-      [
-       "3d54630eb10ec464f9612c74e57e8b914df2e4b0",
-       1794777979,
-       "Claude",
-       "Claude: Albo › Record con una sola grafica, MVP dei tifosi, corsa all'MVP del campionato e partita più seguita come i Record della lega"
-      ],
-      [
-       "b97a220defa2509e8b3a65f47ff71f43f438916e",
-       1794777290,
-       "Claude",
-       "Claude: Albo › Record con MVP del campionato e partita più seguita (albo62.js), archivio MVP con il motivo giusto; Lab con esempio simulato"
-      ],
-      [
-       "b1279be3b5f7b743c66eeee835c0329622b5e878",
-       1794777006,
-       "ChatGPT",
-       "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
-      ],
-      [
-       "bd3dce93d0843c8d6d2d159eb23b526e851fa619",
-       1794776955,
-       "Claude",
-       "Claude: voto unico con «Cambia il mio voto» per sondaggi e MVP, risultati chiusi in Curva e Girrr Sport, post del verdetto MVP di Girrr Spor"
-      ],
-      [
-       "327c187b95a39ba39fbce234d105440319b528b7",
-       1794772069,
-       "Claude",
-       "Claude: rubrica MVP del Giornale con capolettera rosso, chiusura del voto e verdetto del numero dopo (dal prossimo Giornale)"
-      ],
-      [
-       "36c026e5c057155a1eaa83a19577b89c894e4893",
-       1794771780,
-       "Claude",
-       "Claude: Giornale 6.2 come quello di oggi, solo con la rubrica MVP dei candidati (giornale_mvp.py al posto di editoriale.py); annuncio in 5 f"
-      ],
-      [
-       "d8c75e0f24571927340e7fe279480c7647df2d95",
-       1794770387,
-       "Claude",
-       "Claude: STATO.md, la 6.2 completa di ChatGPT nel Lab (PR #96) con esito delle prove"
-      ],
-      [
-       "6fb4d57bfad312ee9d728792dc01634ca9871a68",
-       1794770226,
-       "ChatGPT",
-       "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
-      ],
-      [
-       "58c38d2397f93cedf6f24e718121c2148be72af1",
-       1794768152,
-       "Registro",
-       "Registro: elenco attività aggiornato"
-      ]
-     ],
-     "totale": 21
-    },
-    {
      "nome": "chatgpt/albo-62",
      "punta": "a31fab6",
      "data": 1794783134,
@@ -8316,11 +8277,17 @@
      "data": 1794783380,
      "titolo": "ChatGPT: registra QA e copia protetta del post MVP",
      "autore": "ChatGPT",
-     "padre": "main",
+     "padre": "chatgpt/albo-62",
      "nascita": "2c856aa",
      "dataNascita": 1794781146,
      "avanti": 15,
-     "stato": "attivo",
+     "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794783380,
+      "commit": "a5480da",
+      "titolo": "ChatGPT: registra QA e copia protetta del post MVP"
+     },
      "commit": [
       [
        "a5480da1a2298aa53fcedd386c7fb9a8c0b0074a",
@@ -8398,93 +8365,6 @@
      "totale": 15
     },
     {
-     "nome": "main",
-     "punta": "ffb5705",
-     "data": 1794785882,
-     "titolo": "ChatGPT: aggiorna Ramificazioni solo alla versione pubblicata, con verifica giornaliera leggera e comando manu",
-     "autore": "ChatGPT",
-     "padre": null,
-     "nascita": null,
-     "avanti": 0,
-     "indietro": 0,
-     "stato": "principale",
-     "commit": [
-      [
-       "ffb5705f4845dd01c65ac077e7d301b680ebd39f",
-       1794785882,
-       "ChatGPT",
-       "ChatGPT: aggiorna Ramificazioni solo alla versione pubblicata, con verifica giornaliera leggera e comando manuale"
-      ],
-      [
-       "2c856aa2c6b1e42f5fc04172d6e444eaa2b42a90",
-       1794781146,
-       "giandjcosta",
-       "Merge pull request #105 from giandjcosta/claude/fervent-thompson-rwlwrh"
-      ],
-      [
-       "a9313ee3dbd203f66f90a7d113b17f560fc94c0c",
-       1794781061,
-       "giandjcosta",
-       "Merge pull request #104 from giandjcosta/claude/fervent-thompson-rwlwrh"
-      ],
-      [
-       "6e2c908c735874c34a50576e8bccdba8ef592a6a",
-       1794778186,
-       "giandjcosta",
-       "Merge pull request #103 from giandjcosta/claude/fervent-thompson-rwlwrh"
-      ],
-      [
-       "c544cbbd4b30b945e7471ec67055bf95b432caf7",
-       1794777990,
-       "giandjcosta",
-       "Merge pull request #102 from giandjcosta/claude/fervent-thompson-rwlwrh"
-      ],
-      [
-       "e29d99c8712ccd1bb6ebe19c91bcc5287185c40d",
-       1794777304,
-       "giandjcosta",
-       "Merge pull request #101 from giandjcosta/claude/fervent-thompson-rwlwrh"
-      ],
-      [
-       "b1279be3b5f7b743c66eeee835c0329622b5e878",
-       1794777006,
-       "ChatGPT",
-       "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
-      ],
-      [
-       "893a99f0bd49e6ac7b555224831b532f0ea7a8f6",
-       1794776970,
-       "giandjcosta",
-       "Merge pull request #100 from giandjcosta/claude/fervent-thompson-rwlwrh"
-      ],
-      [
-       "bc15d1d4cee94f1ba125d9ddc6c7006653c00b23",
-       1794772082,
-       "giandjcosta",
-       "Merge pull request #99 from giandjcosta/claude/fervent-thompson-rwlwrh"
-      ],
-      [
-       "da1d12575965a9ae07cfe139e40eeb51ce49f1da",
-       1794771796,
-       "giandjcosta",
-       "Merge pull request #98 from giandjcosta/claude/fervent-thompson-rwlwrh"
-      ],
-      [
-       "a1b890e883908e3e78fa8f8345fd0fb319d56387",
-       1794770402,
-       "giandjcosta",
-       "Merge pull request #97 from giandjcosta/claude/fervent-thompson-rwlwrh"
-      ],
-      [
-       "6fb4d57bfad312ee9d728792dc01634ca9871a68",
-       1794770226,
-       "ChatGPT",
-       "ChatGPT: Registro allineato automaticamente al sito e al Laboratorio"
-      ]
-     ],
-     "totale": 1274
-    },
-    {
      "nome": "chatgpt/rc-62-verifica",
      "punta": "7c5fbaa",
      "data": 1794786096,
@@ -8494,7 +8374,13 @@
      "nascita": "a5480da",
      "dataNascita": 1794783380,
      "avanti": 17,
-     "stato": "attivo",
+     "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794786096,
+      "commit": "7c5fbaa",
+      "titolo": "ChatGPT: apri la scheda Record prima delle verifiche Albo 6.2"
+     },
      "commit": [
       [
        "7c5fbaa216a67018974a4790edf497d6d3014daf",
@@ -8577,11 +8463,17 @@
      "data": 1794797073,
      "titolo": "ChatGPT: collega Ramificazioni moderna al portale 6.2",
      "autore": "ChatGPT",
-     "padre": "chatgpt/controllo-62",
-     "nascita": "a5480da",
-     "dataNascita": 1794783380,
-     "avanti": 19,
-     "stato": "attivo",
+     "padre": "chatgpt/rc-62-verifica",
+     "nascita": "7c5fbaa",
+     "dataNascita": 1794786096,
+     "avanti": 2,
+     "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794797073,
+      "commit": "3e4e2d4",
+      "titolo": "ChatGPT: collega Ramificazioni moderna al portale 6.2"
+     },
      "commit": [
       [
        "3e4e2d48d3574d2bfc463f8b7e67ccdc663888bc",
@@ -8594,69 +8486,210 @@
        1794797069,
        "ChatGPT",
        "ChatGPT: collega Ramificazioni moderna al portale 6.2"
-      ],
-      [
-       "7c5fbaa216a67018974a4790edf497d6d3014daf",
-       1794786096,
-       "ChatGPT",
-       "ChatGPT: apri la scheda Record prima delle verifiche Albo 6.2"
-      ],
-      [
-       "09b19b0a13d94909f8b9e95df8abe05900e8bd85",
-       1794784351,
-       "ChatGPT",
-       "ChatGPT: inoltra il cambio esplicito nelle RPC del server locale QA"
-      ],
-      [
-       "baecb1805e8b78b7d049c66fc9bbcf524d84cf01",
-       1794784182,
-       "ChatGPT",
-       "ChatGPT: allinea QA della 6.2 alla release candidate effettiva"
-      ],
-      [
-       "59ff151a9dc3a5a2b0c15c1ab2c388e85da71056",
-       1794784159,
-       "ChatGPT",
-       "ChatGPT: registra la release candidate e i controlli ancora necessari"
-      ],
-      [
-       "a49ec8c697209a15a0f94d8a0e3cb78067f44645",
-       1794784092,
-       "ChatGPT",
-       "ChatGPT: estende il collaudo della copia backend alla giuria"
-      ],
-      [
-       "8970a543f7fae94c1c3c176ca18383db4ee9cfd2",
-       1794784090,
-       "ChatGPT",
-       "ChatGPT: include l'Albo e le giurie nel piano SQL sicuro"
-      ],
-      [
-       "de42813c5c5e6182ca62563c8feef4ff9f6a944d",
-       1794784062,
-       "ChatGPT",
-       "ChatGPT: include il servizio delle giurie nella copia backend"
-      ],
-      [
-       "6a208bdf0ac3aa10d866b5e0d6298f192649b83b",
-       1794784060,
-       "ChatGPT",
-       "ChatGPT: rende portabile il validatore delle giurie nel backend"
-      ],
-      [
-       "81c6a84117304cbefb08d7ced2482c5eaef541b5",
-       1794783966,
-       "ChatGPT",
-       "ChatGPT: include Albo 6.2 nella matrice browser completa"
-      ],
-      [
-       "c012495a2cc56dedf6234a723d49717ae6704e0a",
-       1794783957,
-       "ChatGPT",
-       "ChatGPT: verifica l'Albo nativo su tre browser e due grafiche"
       ]
      ],
-     "totale": 19
+     "totale": 2
+    },
+    {
+     "nome": "chatgpt/621-completamento",
+     "punta": "6573411",
+     "data": 1794825138,
+     "titolo": "ChatGPT: includi modulo MVP 6.2 nel PDF di prova cronache",
+     "autore": "ChatGPT",
+     "padre": "chatgpt/fix-62-portale-ramificazioni",
+     "nascita": "3e4e2d4",
+     "dataNascita": 1794797073,
+     "avanti": 37,
+     "stato": "unito",
+     "unione": {
+      "in": "main",
+      "data": 1794826094,
+      "commit": "cce0af4",
+      "titolo": "ChatGPT: pubblica anteprima integrata O Girrr 6.2.1 nel Registro"
+     },
+     "commit": [
+      [
+       "6573411415cdf16c9ad9e350d83c3490d1b13d9b",
+       1794825138,
+       "ChatGPT",
+       "ChatGPT: includi modulo MVP 6.2 nel PDF di prova cronache"
+      ],
+      [
+       "5ea110ea52ab60bc5b773cbee55c5756c8fb43b2",
+       1794824437,
+       "ChatGPT",
+       "ChatGPT: mantiene QA 6.2.1 valida anche sul main dopo rilascio"
+      ],
+      [
+       "b054d887d2f6c05dca79b2e6956e9df4d444abdf",
+       1794824163,
+       "ChatGPT",
+       "ChatGPT: corregge sintassi YAML che bloccava workflow Ramificazioni"
+      ],
+      [
+       "bf282aa0a7493b16542560498e29e46a9e896e1c",
+       1794824059,
+       "ChatGPT",
+       "ChatGPT: completa QA 6.2.1, allinea Lab e disattiva workflow obsoleti"
+      ],
+      [
+       "d764b8ea886eb6adcf33dea283da9c799c5a993e",
+       1794823820,
+       "ChatGPT",
+       "ChatGPT: completa presentazione correzioni 6.2.1 nel Lab"
+      ],
+      [
+       "19a024ec26719760c0ffa7acabc5cfd2840a5d01",
+       1794823740,
+       "ChatGPT",
+       "ChatGPT: invalida cache 6.2.1 per Albo e Derby nel Lab"
+      ],
+      [
+       "2cb6cc5f45102c74d735a772292627285a9c0381",
+       1794823734,
+       "ChatGPT",
+       "ChatGPT: invalida cache 6.2.1 per Albo e Derby nel Lab"
+      ],
+      [
+       "6cb4fc5ec23e3fe26b05630f559d3693abaeb30d",
+       1794823727,
+       "ChatGPT",
+       "ChatGPT: invalida cache 6.2.1 per Albo e Derby nel Lab"
+      ],
+      [
+       "2d669ea906c9e6677877eb249c852e538ecb7d9e",
+       1794823725,
+       "ChatGPT",
+       "ChatGPT: invalida cache 6.2.1 per Albo e Derby nel Lab"
+      ],
+      [
+       "3e85ed3ccded6bd8f8ee724cd7b62ac14b3eb838",
+       1794823688,
+       "ChatGPT",
+       "ChatGPT: integra animazione Derby 6.2.1 nel Lab"
+      ],
+      [
+       "d56213847448f7cdcd8b7c7e98c514bc145eef6e",
+       1794823684,
+       "ChatGPT",
+       "ChatGPT: integra animazione Derby 6.2.1 nel Lab"
+      ],
+      [
+       "08f0cc540169d2a2ec8584386c1a31635dbaf81b",
+       1794823662,
+       "ChatGPT",
+       "ChatGPT: anima solo corpo Albo di Latta 6.2.1 nel Lab"
+      ]
+     ],
+     "totale": 37
+    },
+    {
+     "nome": "main",
+     "punta": "1987fd6",
+     "data": 1794831455,
+     "titolo": "Merge pull request #114 from giandjcosta/claude/fervent-thompson-rwlwrh",
+     "autore": "giandjcosta",
+     "padre": null,
+     "nascita": null,
+     "avanti": 0,
+     "indietro": 0,
+     "stato": "principale",
+     "commit": [
+      [
+       "1987fd60937ac9a312b1708956fe03e84986dcd1",
+       1794831455,
+       "giandjcosta",
+       "Merge pull request #114 from giandjcosta/claude/fervent-thompson-rwlwrh"
+      ],
+      [
+       "b01435b1b0b8a9d1549bd7215d1ee7b35a7719f4",
+       1794828390,
+       "ChatGPT",
+       "ChatGPT: forza aggiornamento browser del badge Anteprima 6.2.1"
+      ],
+      [
+       "45f034a93930b317f0efad965c268459ad043ce2",
+       1794828382,
+       "ChatGPT",
+       "ChatGPT: mostra 6.2.1 nel badge Registro quando è selezionata l'anteprima, 6.2 per il pubblicato"
+      ],
+      [
+       "94cf0f076d1445b9291ecf00ade75919bd799f24",
+       1794828294,
+       "ChatGPT",
+       "ChatGPT: centra sottoschede Derby e mostra sottolineatura già all'apertura"
+      ],
+      [
+       "bb52fc7a5ca274adee36f127caf5268ffa8c2259",
+       1794828288,
+       "ChatGPT",
+       "ChatGPT: centra sottoschede Derby e mostra sottolineatura già all'apertura"
+      ],
+      [
+       "40ccf602cfab2b5f4a6ab593f312be1ec5fba56b",
+       1794828254,
+       "ChatGPT",
+       "ChatGPT: chiarisci limiti dello Spogliatoio ospite nella copia di prova"
+      ],
+      [
+       "cbdf78e67258128dcec4337383360778da2340c3",
+       1794828250,
+       "ChatGPT",
+       "ChatGPT: chiarisci limiti dello Spogliatoio ospite nella copia di prova"
+      ],
+      [
+       "7161dc27d41f8d936ef2a92650206320f579ddc2",
+       1794828242,
+       "ChatGPT",
+       "ChatGPT: ripara ingresso Spogliatoio ospite e Totogirrr demo dalla Home"
+      ],
+      [
+       "77b292311d67d42b4efda2682bbb6bdca0c41d98",
+       1794828236,
+       "ChatGPT",
+       "ChatGPT: ripara ingresso Spogliatoio ospite e Totogirrr demo dalla Home"
+      ],
+      [
+       "a07411450b1d09e2a0c63a00eebadb70b4d85e5d",
+       1794828226,
+       "ChatGPT",
+       "ChatGPT: uniforma loghi e rimuove aloni menu, mostra versione di prova 6.2.1"
+      ],
+      [
+       "450b9e0e87a4e56a3ecab7f48b69ef172b82c073",
+       1794828190,
+       "ChatGPT",
+       "ChatGPT: abilita Totogirrr guest demo per tutta la copia di prova"
+      ],
+      [
+       "b095b1a368dd6898836f651a08b33bdac2b00e62",
+       1794828186,
+       "ChatGPT",
+       "ChatGPT: abilita Totogirrr guest demo per tutta la copia di prova"
+      ]
+     ],
+     "totale": 1448
+    },
+    {
+     "nome": "claude/fervent-thompson-rwlwrh",
+     "punta": "cd1f842",
+     "data": 1794832208,
+     "titolo": "Claude: Anteprima di nuovo generabile dopo il nuovo menu del Lab",
+     "autore": "Claude",
+     "padre": "main",
+     "nascita": "1987fd6",
+     "dataNascita": 1794831455,
+     "avanti": 1,
+     "stato": "attivo",
+     "commit": [
+      [
+       "cd1f8425468f8e399e74f0b8c1eb23afa7a4f264",
+       1794832208,
+       "Claude",
+       "Claude: Anteprima di nuovo generabile dopo il nuovo menu del Lab"
+      ]
+     ],
+     "totale": 1
     }
    ]
   }
