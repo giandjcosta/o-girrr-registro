@@ -1,0 +1,17 @@
+6.2 -> 6.2.1
+{
+  "v": "6.2.1",
+  "data": "2026-11-16",
+  "tipo": "minore",
+  "titolo": "I collegamenti della Home",
+  "messaggio": "🔧 **O Girrr 6.2.1 è online!** Nella Home, in «Oggi al Girrr», ogni collegamento ti porta alla giornata giusta del Tabellone. I cerchi del cammino in classifica aprono la classifica di quella giornata, le partite aprono i risultati. Ora funziona su tutti i telefoni e browser. Buona giornata a tutti! ⚽",
+  "novita": [
+    {
+      "area": "Home",
+      "voci": [
+        "I cerchi del «Cammino in classifica» aprono il Tabellone sulla Classifica dopo quella giornata, anche su Firefox e sui Safari meno recenti.",
+        "Ultimo risultato, Le ultime cinque, Prossima sfida e Le prossime tre aprono il Tabellone sui Risultati della giornata."
+      ]
+    }
+  ]
+}

@@ -107,6 +107,14 @@ def sincronizza(site):
                 text = collega_pagine_registro(text, src, site)
             if src.suffix != '.json':
                 text = text.replace(LIVE, MIRROR)
+            if name == 'girrr/v55/destinazioni55.js':
+                # Claude, 16 novembre 2026: la copia pubblicata ha le cartelle del sito vero (girrr/, stadio/girrr/), ma un
+                # indirizzo diverso da /o-fant-a-girrr/. Senza questa riga i collegamenti della Home andavano ai nomi
+                # dell'Anteprima 5.5 («v55/tabellone-lega.html», pagina inesistente).
+                vecchio = "var sito=/^\\/o-fant-a-girrr\\//.test(location.pathname),base=new URL('/o-fant-a-girrr/',location.href).href"
+                if text.count(vecchio) != 1:
+                    raise ValueError('destinazioni55.js diverso da quello atteso: controllare gli indirizzi dell\'Anteprima')
+                text = text.replace(vecchio, "var sito=true,base=new URL('../../',document.currentScript.src).href")
             if src.suffix == '.html':
                 guard = os.path.relpath(ROOT / 'anteprima/sola-lettura.js', out.parent)
                 tag = '<script src="' + guard + '"></script>'

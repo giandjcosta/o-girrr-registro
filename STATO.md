@@ -34,6 +34,20 @@
 - Browser QA esteso: `prove/v62/funzioni.cjs` verifica anche «Cambia il mio voto» tra Curva, Girrr Sport e MVP. Run [43771968860](https://github.com/giandjcosta/o-girrr-registro/actions/runs/43771968860) avviata; **non dichiarare i tre motori verdi senza risultati**.
 - **Restano fuori** le modifiche grafiche di Claude a `testi.py`, `sondaggi.js`, Giornale, Radio e Albo grafico; la duplicazione degli stili per la riapplicazione manuale di `testi.py` e il voto nel Tabellone sono ancora da verificare. «Serie A, 11ª giornata» nel Giornale resta invariata.
 
+## 16 novembre (3) — Claude: collegamenti della Home (6.2.1 nel Lab) e Anteprima del Registro
+
+- Segnalazione di Gianluca: in «Oggi al Girrr» i collegamenti non portavano alla giornata.
+- **Sito vero, difetto preesistente dalla 5.5.** Su Firefox e sui Safari meno recenti, che non hanno le transizioni native, il tocco su un cerchio del «Cammino in classifica» portava a «[object SVGAnimatedString]», una pagina 404. La causa: la dissolvenza in `girrr/v55/ui.js` leggeva `l.href`, che nei disegni SVG non è un testo. Su Chromium e Safari 18 funzionava.
+- **Proposta 6.2.1** (`rilascio/r621/applica.py`, solo pagine, nessuna SQL, rieseguibile):
+  - la dissolvenza legge l'attributo href;
+  - i cerchi aprono la Classifica dopo quella giornata;
+  - Ultimo risultato, Le ultime cinque, Prossima sfida e Le prossime tre aprono i Risultati della giornata;
+  - nuova versione nell'indirizzo di `ui.js` e `home55.js` (`?v=621`), così i telefoni scaricano i file nuovi.
+  - Applicata alla preview `lab/integrata-62/`; pagina delle novità `lab/novita-6-2-1.html`, collegata dal Lab.
+- **Prove, solo Chromium:** 32 casi in locale (PC e telefono, Lega e Stadio, con e senza transizioni native) e 16 nel Lab, compreso 320 px senza scorrimento laterale. WebKit e Firefox non disponibili qui.
+- **Annuncio 6.2.1** validato con `aggiungi.py --prova` (`rilascio/r621/ANNUNCIO-APPROVAZIONE.json`). Aspetta il «Vai».
+- **Registro › Anteprima** (`ufficiale/` → `anteprima/pubblicata/`): `destinazioni55.js` riconosceva il sito solo da `/o-fant-a-girrr/`, quindi la copia pubblicata usava i nomi dell'Anteprima 5.5 (`v55/tabellone-lega.html`, 404). Ora `sincronizza.py` la imposta in modalità sito, con la base calcolata dalla posizione dello script. Copia rigenerata con `sincronizza.py`: cambia solo quel file. Nessuna modifica al sito vero.
+
 ## 16 novembre (2) — Claude: 6.2 ONLINE
 
 - **Pubblicata la 6.2 «Il Campo della Champions Cup»** con il «Vai» di Gianluca (SQL, annuncio e pubblicazione):
