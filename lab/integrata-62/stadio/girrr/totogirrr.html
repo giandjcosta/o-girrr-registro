@@ -230,7 +230,7 @@ function f2(n){return Number(n).toLocaleString('it-IT',{minimumFractionDigits:2,
 function f0(n){return Number(n).toLocaleString('it-IT',{maximumFractionDigits:0})}
 var LS={};try{LS=JSON.parse(localStorage.getItem('fg')||'{}')||{}}catch(e){}
 function save(){try{localStorage.setItem('fg',JSON.stringify(LS))}catch(e){}}
-var DEMO=/[?&]demo\b/.test(location.search);
+var DEMO=true; /* Anteprima isolata: accesso ospite sempre con dati fittizi. */
 var teams=[],team=DEMO?'Oranje VC':(LS.team||''),code=DEMO?'demo':(LS.code||''),S=null,tab='partite',slip=[],err='',busy=false;
 var MORE={};
 function mlab(m){var t={'1':'1','X':'X','2':'2','O':'Over 4,5','U':'Under 4,5','O35':'Over 3,5','U35':'Under 3,5','O55':'Over 5,5','U55':'Under 5,5','GG':'Entrambe segnano','NG':'Non segnano entrambe'};if(t[m])return t[m];if(m.indexOf('T:')===0)return m.slice(2);if(m.indexOf('E:')===0)return 'Esatto '+m.slice(2).replace('-','–');return m}
