@@ -1,5 +1,5 @@
 {
- "generato": 1794786096,
+ "generato": 1794797073,
  "versione": "6.1",
  "repository": [
   {
@@ -1730,93 +1730,6 @@
      "totale": 7
     },
     {
-     "nome": "gh-pages",
-     "punta": "a3b43a5",
-     "data": 1794776784,
-     "titolo": "Aggiorna statistiche e voti in automatico",
-     "autore": "github-actions[bot]",
-     "padre": null,
-     "nascita": null,
-     "avanti": 0,
-     "indietro": 0,
-     "stato": "principale",
-     "commit": [
-      [
-       "a3b43a54c94e80b1f42ad8c850c64afb289bb953",
-       1794776784,
-       "github-actions[bot]",
-       "Aggiorna statistiche e voti in automatico"
-      ],
-      [
-       "98c0adde22aba19ba2ad831c30d9d1659f14370d",
-       1794759088,
-       "github-actions[bot]",
-       "Aggiorna statistiche e voti in automatico"
-      ],
-      [
-       "1112d94871d3a097b198499781979e8eef19f032",
-       1794759026,
-       "Claude",
-       "Claude: unisce la lettura di ammonizioni ed espulsioni (PR #17, «Vai» di Gianluca)"
-      ],
-      [
-       "13e87e4ccec016441f21cea30212cdbf5949a138",
-       1794754291,
-       "github-actions[bot]",
-       "Aggiorna statistiche e voti in automatico"
-      ],
-      [
-       "ad341cd11f0cc9fd26fa551a03bf1be68a7f98e7",
-       1794744405,
-       "github-actions[bot]",
-       "Aggiorna statistiche e voti in automatico"
-      ],
-      [
-       "13c88bbe7a3d931daa06892e72455d3f23ae4f7a",
-       1794708335,
-       "github-actions[bot]",
-       "Calcoli dopo la giornata"
-      ],
-      [
-       "3bcfaf4aba9397bbed1d7c8ebc4d4965b02dbe16",
-       1794707981,
-       "github-actions[bot]",
-       "Aggiorna statistiche e voti in automatico"
-      ],
-      [
-       "58ceccfce577427f769d9d3ebb45e558e2f9514b",
-       1794689281,
-       "github-actions[bot]",
-       "Aggiorna statistiche e voti in automatico"
-      ],
-      [
-       "a6fcf03c50da1fd762e49e1096e5e2146a4a7f54",
-       1794672940,
-       "ChatGPT",
-       "ChatGPT: pubblica O Girrr 6.1, la stagione da raccontare"
-      ],
-      [
-       "8621e3a0d81c40e414100b680f202a62b60056c2",
-       1794671981,
-       "github-actions[bot]",
-       "Calcoli dopo la giornata"
-      ],
-      [
-       "e7342491468e152e67461b18481a4820b295de6f",
-       1794665855,
-       "github-actions[bot]",
-       "Aggiorna statistiche e voti in automatico"
-      ],
-      [
-       "e9124d905464ddb1d2a9d0ae7bd54bbd0867431d",
-       1794648661,
-       "Claude",
-       "Claude: Rilascio 6.0.1, Derby in tre schede nell'Albo d'oro, Condividi la giornata con anteprime e Giornale in PDF, schede fluide, Totogirrr"
-      ]
-     ],
-     "totale": 662
-    },
-    {
      "nome": "main",
      "punta": "66a6b2f",
      "data": 1794785898,
@@ -1902,6 +1815,120 @@
       ]
      ],
      "totale": 102
+    },
+    {
+     "nome": "chatgpt/r62-rilascio-sicuro",
+     "punta": "432505d",
+     "data": 1794786453,
+     "titolo": "ChatGPT: blocca lo staging se la CI sullo SHA non è completamente verde",
+     "autore": "ChatGPT",
+     "padre": "main",
+     "nascita": "66a6b2f",
+     "dataNascita": 1794785898,
+     "avanti": 2,
+     "stato": "attivo",
+     "commit": [
+      [
+       "432505d542177c2b158225640e584f4bc0c39ecd",
+       1794786453,
+       "ChatGPT",
+       "ChatGPT: blocca lo staging se la CI sullo SHA non è completamente verde"
+      ],
+      [
+       "e6536059359384fb9e27135ce34e48e3e1109d73",
+       1794786428,
+       "ChatGPT",
+       "ChatGPT: prepara l'orchestrazione separata per lo staging 6.2 senza pubblicare"
+      ]
+     ],
+     "totale": 2
+    },
+    {
+     "nome": "gh-pages",
+     "punta": "dfd4201",
+     "data": 1794795322,
+     "titolo": "Aggiorna statistiche e voti in automatico",
+     "autore": "github-actions[bot]",
+     "padre": null,
+     "nascita": null,
+     "avanti": 0,
+     "indietro": 0,
+     "stato": "principale",
+     "commit": [
+      [
+       "dfd4201b6b6350d7d0b335065ab13ab5eb8ed00a",
+       1794795322,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
+      [
+       "a3b43a54c94e80b1f42ad8c850c64afb289bb953",
+       1794776784,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
+      [
+       "98c0adde22aba19ba2ad831c30d9d1659f14370d",
+       1794759088,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
+      [
+       "1112d94871d3a097b198499781979e8eef19f032",
+       1794759026,
+       "Claude",
+       "Claude: unisce la lettura di ammonizioni ed espulsioni (PR #17, «Vai» di Gianluca)"
+      ],
+      [
+       "13e87e4ccec016441f21cea30212cdbf5949a138",
+       1794754291,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
+      [
+       "ad341cd11f0cc9fd26fa551a03bf1be68a7f98e7",
+       1794744405,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
+      [
+       "13c88bbe7a3d931daa06892e72455d3f23ae4f7a",
+       1794708335,
+       "github-actions[bot]",
+       "Calcoli dopo la giornata"
+      ],
+      [
+       "3bcfaf4aba9397bbed1d7c8ebc4d4965b02dbe16",
+       1794707981,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
+      [
+       "58ceccfce577427f769d9d3ebb45e558e2f9514b",
+       1794689281,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ],
+      [
+       "a6fcf03c50da1fd762e49e1096e5e2146a4a7f54",
+       1794672940,
+       "ChatGPT",
+       "ChatGPT: pubblica O Girrr 6.1, la stagione da raccontare"
+      ],
+      [
+       "8621e3a0d81c40e414100b680f202a62b60056c2",
+       1794671981,
+       "github-actions[bot]",
+       "Calcoli dopo la giornata"
+      ],
+      [
+       "e7342491468e152e67461b18481a4820b295de6f",
+       1794665855,
+       "github-actions[bot]",
+       "Aggiorna statistiche e voti in automatico"
+      ]
+     ],
+     "totale": 663
     }
    ]
   },
@@ -8543,6 +8570,93 @@
       ]
      ],
      "totale": 17
+    },
+    {
+     "nome": "chatgpt/fix-62-portale-ramificazioni",
+     "punta": "3e4e2d4",
+     "data": 1794797073,
+     "titolo": "ChatGPT: collega Ramificazioni moderna al portale 6.2",
+     "autore": "ChatGPT",
+     "padre": "chatgpt/controllo-62",
+     "nascita": "a5480da",
+     "dataNascita": 1794783380,
+     "avanti": 19,
+     "stato": "attivo",
+     "commit": [
+      [
+       "3e4e2d48d3574d2bfc463f8b7e67ccdc663888bc",
+       1794797073,
+       "ChatGPT",
+       "ChatGPT: collega Ramificazioni moderna al portale 6.2"
+      ],
+      [
+       "0f9a40c73d80934c76ebfb762b6d27eb6f689b07",
+       1794797069,
+       "ChatGPT",
+       "ChatGPT: collega Ramificazioni moderna al portale 6.2"
+      ],
+      [
+       "7c5fbaa216a67018974a4790edf497d6d3014daf",
+       1794786096,
+       "ChatGPT",
+       "ChatGPT: apri la scheda Record prima delle verifiche Albo 6.2"
+      ],
+      [
+       "09b19b0a13d94909f8b9e95df8abe05900e8bd85",
+       1794784351,
+       "ChatGPT",
+       "ChatGPT: inoltra il cambio esplicito nelle RPC del server locale QA"
+      ],
+      [
+       "baecb1805e8b78b7d049c66fc9bbcf524d84cf01",
+       1794784182,
+       "ChatGPT",
+       "ChatGPT: allinea QA della 6.2 alla release candidate effettiva"
+      ],
+      [
+       "59ff151a9dc3a5a2b0c15c1ab2c388e85da71056",
+       1794784159,
+       "ChatGPT",
+       "ChatGPT: registra la release candidate e i controlli ancora necessari"
+      ],
+      [
+       "a49ec8c697209a15a0f94d8a0e3cb78067f44645",
+       1794784092,
+       "ChatGPT",
+       "ChatGPT: estende il collaudo della copia backend alla giuria"
+      ],
+      [
+       "8970a543f7fae94c1c3c176ca18383db4ee9cfd2",
+       1794784090,
+       "ChatGPT",
+       "ChatGPT: include l'Albo e le giurie nel piano SQL sicuro"
+      ],
+      [
+       "de42813c5c5e6182ca62563c8feef4ff9f6a944d",
+       1794784062,
+       "ChatGPT",
+       "ChatGPT: include il servizio delle giurie nella copia backend"
+      ],
+      [
+       "6a208bdf0ac3aa10d866b5e0d6298f192649b83b",
+       1794784060,
+       "ChatGPT",
+       "ChatGPT: rende portabile il validatore delle giurie nel backend"
+      ],
+      [
+       "81c6a84117304cbefb08d7ced2482c5eaef541b5",
+       1794783966,
+       "ChatGPT",
+       "ChatGPT: include Albo 6.2 nella matrice browser completa"
+      ],
+      [
+       "c012495a2cc56dedf6234a723d49717ae6704e0a",
+       1794783957,
+       "ChatGPT",
+       "ChatGPT: verifica l'Albo nativo su tre browser e due grafiche"
+      ]
+     ],
+     "totale": 19
     }
    ]
   }
