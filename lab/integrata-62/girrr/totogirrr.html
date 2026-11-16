@@ -229,7 +229,7 @@ function f2(n){return Number(n).toLocaleString('it-IT',{minimumFractionDigits:2,
 function f0(n){return Number(n).toLocaleString('it-IT',{maximumFractionDigits:0})}
 var LS={};try{LS=JSON.parse(localStorage.getItem('fg')||'{}')||{}}catch(e){}
 function save(){try{localStorage.setItem('fg',JSON.stringify(LS))}catch(e){}}
-var DEMO=/[?&]demo\b/.test(location.search);
+var DEMO=true; /* Anteprima isolata: accesso ospite sempre con dati fittizi. */
 var teams=[],team=DEMO?'Oranje VC':(LS.team||''),code=DEMO?'demo':(LS.code||''),S=null,tab='partite',slip=[],err='',busy=false;
 var PREMI={premi:[],reputazione:0};
 var MORE={};
