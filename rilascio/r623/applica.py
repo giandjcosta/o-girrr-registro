@@ -15,7 +15,8 @@
 - Condividi: pulsanti con il testo al centro in tutte le finestre; l'anteprima (video, Radio, immagini) sta tutta nella finestra.
 - «‹ O Girrr» senza alone in tutte le pagine, anche nell'app (.oback).
 - Cambio Lega/Stadio della Home senza pezzi che compaiono di colpo; Spogliatoio con sfondi diversi per Lega e Stadio,
-  cambio di stile con dissolvenza e, nella Lega, rosso e azzurro alternati al posto dell'oro.
+  cambio di stile con dissolvenza e, nella Lega, rosso e azzurro alternati al posto dell'oro; Svincolati con
+  ruolo e ordinamento in due menu a tendina.
 - Curva: la «C» in alto non porta più alla Home.
 
 Uso: python3 rilascio/r623/applica.py COPIA_GH_PAGES_6_2_2
@@ -220,6 +221,12 @@ SPO_CSS = ('</head>', """<style data-spogliatoio623>/* 6.2.3 (Gianluca): sfondi 
 :root[data-skin="girrr"] nav button[data-alt="az"][aria-selected=true],:root[data-skin="girrr"] .seg button[data-sort][aria-pressed=true],:root[data-skin="girrr"] .seg button[data-comp="cup"][aria-pressed=true]{background:#3d93d6;border-color:#3d93d6;color:#fff;box-shadow:none}
 :root[data-skin="girrr"] .btn:not(.o):not(.ghost)+.btn:not(.o):not(.ghost):nth-of-type(even){background:#3d93d6;border-color:#3d93d6;color:#fff}
 :root[data-skin="girrr"] nav button,:root[data-skin="girrr"] .seg button{transition:background-color .25s ease,border-color .25s ease,color .25s ease}
+/* Svincolati: due menu affiancati, anche su iPhone SE; Lega: ruolo rosso, ordine azzurro; Stadio: oro */
+.fa-filtri{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 14px}
+.fa-filtri label{display:flex;flex-direction:column;gap:5px;min-width:0;font:700 .78rem var(--fb);color:var(--mute)}
+.fa-filtri select{width:100%;min-width:0;margin:0}
+:root[data-skin="girrr"] #fa-ruolo{border-color:#d62839}:root[data-skin="girrr"] #fa-ordine{border-color:#3d93d6}
+:root[data-skin="stadio"] .fa-filtri select{border-color:#ffd166}
 </style>
 <script>/* 6.2.3: alternanza rosso / azzurro delle schede visibili (da ospite alcune sono nascoste) */(function(){function alt(){var t=document.getElementById('tabs');if(!t)return;var i=0;[].forEach.call(t.querySelectorAll('button'),function(b){var v=b.hidden?null:(i++%2?'az':'ro');if(b.getAttribute('data-alt')!==v){if(v)b.setAttribute('data-alt',v);else b.removeAttribute('data-alt')}})}
 document.addEventListener('DOMContentLoaded',function(){alt();var t=document.getElementById('tabs');if(t&&window.MutationObserver)new MutationObserver(alt).observe(t,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden']})})})()</script>
@@ -231,6 +238,16 @@ SPO_JS = ("try{document.cookie='gskin='+LS.skin+'; max-age=31536000; path=/; Sam
 # in basso. (Il corsivo della Curva nello Stadio resta: Gianluca ci ha ripensato, «lo manteniamo».)
 CURVA_C = ('<i class="lg" data-lega="1" style="width:28px;height:28px;cursor:pointer"></i>',
            '<i class="lg" aria-hidden="true" style="width:28px;height:28px"></i>')
+
+# 6.2.3 · Spogliatoio › Svincolati (Gianluca: «tutti quei pulsanti sotto sono disordinati»): due menu a tendina affiancati,
+# a sinistra il ruolo e a destra l'ordinamento, al posto delle due file di pulsanti.
+SPO_FA = ("""  h+='<div class="seg">'+['P','D','C','A'].map(function(r){return '<button aria-pressed="'+(role===r)+'" data-role="'+r+'">'+{P:'Portieri',D:'Difensori',C:'Centrocampisti',A:'Attaccanti'}[r]+'</button>'}).join('')+'<span style="flex:1"></span>'+
+  [['score','Punteggio'],['tit','Giocherà di più'],['fm','Vota meglio']].map(function(x){return '<button aria-pressed="'+(sortBy===x[0])+'" data-sort="'+x[0]+'">'+x[1]+'</button>'}).join('')+'</div>';""",
+"""  /* 6.2.3 (Gianluca): ruolo e ordinamento in due menu a tendina affiancati, al posto delle file di pulsanti */
+  h+='<div class="fa-filtri"><label>Ruolo<select class="pick" id="fa-ruolo">'+['P','D','C','A'].map(function(r){return '<option value="'+r+'"'+(role===r?' selected':'')+'>'+{P:'Portieri',D:'Difensori',C:'Centrocampisti',A:'Attaccanti'}[r]+'</option>'}).join('')+'</select></label>'+
+  '<label>Ordina per<select class="pick" id="fa-ordine">'+[['score','Punteggio'],['tit','Giocherà di più'],['fm','Vota meglio']].map(function(x){return '<option value="'+x[0]+'"'+(sortBy===x[0]?' selected':'')+'>'+x[1]+'</option>'}).join('')+'</select></label></div>';""")
+SPO_FA_ON = ("function vFa(){\n",
+             "var _faMenu=0;function vFa(){\n  if(!_faMenu){_faMenu=1;document.addEventListener('change',function(e){var x=e.target;if(x.id==='fa-ruolo'){role=x.value;render()}else if(x.id==='fa-ordine'){sortBy=x.value;render()}})}   /* 6.2.3: menu degli Svincolati */\n")
 
 BOA = ('<small class="gb-versione">6.1 · Bilancio della stagione</small>', '')
 
@@ -313,7 +330,9 @@ def main(argv):
     def spogliatoio(t, rel):
         if 'data-spogliatoio623' not in t:
             t = sostituisci(t, rel, *SPO_CSS)
-        return sostituisci(t, rel, *SPO_JS)
+        t = sostituisci(t, rel, *SPO_JS)
+        t = sostituisci(t, rel, *SPO_FA)
+        return sostituisci(t, rel, *SPO_FA_ON)
     scrivi('index.html', spogliatoio)
 
     def curva(t, rel):

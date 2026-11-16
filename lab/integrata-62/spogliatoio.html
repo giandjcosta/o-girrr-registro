@@ -428,6 +428,12 @@ h2.sec{font-size:1.35rem;margin-block:18px 8px}
 :root[data-skin="girrr"] nav button[data-alt="az"][aria-selected=true],:root[data-skin="girrr"] .seg button[data-sort][aria-pressed=true],:root[data-skin="girrr"] .seg button[data-comp="cup"][aria-pressed=true]{background:#3d93d6;border-color:#3d93d6;color:#fff;box-shadow:none}
 :root[data-skin="girrr"] .btn:not(.o):not(.ghost)+.btn:not(.o):not(.ghost):nth-of-type(even){background:#3d93d6;border-color:#3d93d6;color:#fff}
 :root[data-skin="girrr"] nav button,:root[data-skin="girrr"] .seg button{transition:background-color .25s ease,border-color .25s ease,color .25s ease}
+/* Svincolati: due menu affiancati, anche su iPhone SE; Lega: ruolo rosso, ordine azzurro; Stadio: oro */
+.fa-filtri{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 14px}
+.fa-filtri label{display:flex;flex-direction:column;gap:5px;min-width:0;font:700 .78rem var(--fb);color:var(--mute)}
+.fa-filtri select{width:100%;min-width:0;margin:0}
+:root[data-skin="girrr"] #fa-ruolo{border-color:#d62839}:root[data-skin="girrr"] #fa-ordine{border-color:#3d93d6}
+:root[data-skin="stadio"] .fa-filtri select{border-color:#ffd166}
 </style>
 <script>/* 6.2.3: alternanza rosso / azzurro delle schede visibili (da ospite alcune sono nascoste) */(function(){function alt(){var t=document.getElementById('tabs');if(!t)return;var i=0;[].forEach.call(t.querySelectorAll('button'),function(b){var v=b.hidden?null:(i++%2?'az':'ro');if(b.getAttribute('data-alt')!==v){if(v)b.setAttribute('data-alt',v);else b.removeAttribute('data-alt')}})}
 document.addEventListener('DOMContentLoaded',function(){alt();var t=document.getElementById('tabs');if(t&&window.MutationObserver)new MutationObserver(alt).observe(t,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden']})})})()</script>
@@ -872,10 +878,12 @@ function vMkt(){
   if(!ready)setTimeout(function(){if(tab!=='mkt'||mkV!=='c')return;mkCompute();var e=document.getElementById('mkres');if(e)e.innerHTML=mkHtml(mkView(mkH))},40);
   return h;
 }
-function vFa(){
+var _faMenu=0;function vFa(){
+  if(!_faMenu){_faMenu=1;document.addEventListener('change',function(e){var x=e.target;if(x.id==='fa-ruolo'){role=x.value;render()}else if(x.id==='fa-ordine'){sortBy=x.value;render()}})}   /* 6.2.3: menu degli Svincolati */
   var h='<div class="note">Gli svincolati della lega. Il punteggio tiene conto del valore del giocatore e del suo stato per la prossima giornata; quando sono disponibili titolarità e fantamedia reali, compare la dicitura «Dati reali».</div>';
-  h+='<div class="seg">'+['P','D','C','A'].map(function(r){return '<button aria-pressed="'+(role===r)+'" data-role="'+r+'">'+{P:'Portieri',D:'Difensori',C:'Centrocampisti',A:'Attaccanti'}[r]+'</button>'}).join('')+'<span style="flex:1"></span>'+
-  [['score','Punteggio'],['tit','Giocherà di più'],['fm','Vota meglio']].map(function(x){return '<button aria-pressed="'+(sortBy===x[0])+'" data-sort="'+x[0]+'">'+x[1]+'</button>'}).join('')+'</div>';
+  /* 6.2.3 (Gianluca): ruolo e ordinamento in due menu a tendina affiancati, al posto delle file di pulsanti */
+  h+='<div class="fa-filtri"><label>Ruolo<select class="pick" id="fa-ruolo">'+['P','D','C','A'].map(function(r){return '<option value="'+r+'"'+(role===r?' selected':'')+'>'+{P:'Portieri',D:'Difensori',C:'Centrocampisti',A:'Attaccanti'}[r]+'</option>'}).join('')+'</select></label>'+
+  '<label>Ordina per<select class="pick" id="fa-ordine">'+[['score','Punteggio'],['tit','Giocherà di più'],['fm','Vota meglio']].map(function(x){return '<option value="'+x[0]+'"'+(sortBy===x[0]?' selected':'')+'>'+x[1]+'</option>'}).join('')+'</select></label></div>';
   var ord={T:0,B:1,R:2,D:3,P:4,I:5};
   var l=D.fa.map(String).filter(function(i){return P(i).r===role}).map(function(i){var p=P(i),s=faStat(i);return {id:i,n:p.n,t:p.t,p:p.p,q:p.q,f:p.f,sc:score(i),tit:s.tit,fm:s.fm,h:s.h}});
   if(!l.length)return h+'<div class="empty">Nessuno svincolato per questo ruolo.</div>';
