@@ -1,14 +1,14 @@
 {
- "aggiornato": "2026-11-16T06:43:27Z",
+ "aggiornato": "2026-11-16T18:42:49Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
    "quando": "Ogni 3 giorni alle 11:17 (giorni 1, 4, 7… del mese)",
    "stato": "attiva",
-   "prossimo": "2026-11-16T10:17:00Z",
+   "prossimo": "2026-11-19T10:17:00Z",
    "nota": "Fonte principale Sky Sport (45%), poi Fantacalcio.it e i giornali.",
    "ultimo": {
-    "quando": "2026-11-13T10:23:58Z",
+    "quando": "2026-11-16T10:17:23Z",
     "esito": "riuscito"
    }
   },
@@ -209,6 +209,24 @@
    "stato": "conclusa",
    "ultimo": {
     "quando": "2026-11-13T20:27:39Z",
+    "esito": "riuscito"
+   }
+  },
+  {
+   "nome": "Promemoria: controllo CI PR 110 del Registro",
+   "quando": "Una volta: 16 novembre alle 08:59",
+   "stato": "conclusa",
+   "ultimo": {
+    "quando": "2026-11-16T07:59:12Z",
+    "esito": "riuscito"
+   }
+  },
+  {
+   "nome": "Promemoria: ricontrollo PR 115 del Registro",
+   "quando": "Una volta: 16 novembre alle 14:21",
+   "stato": "conclusa",
+   "ultimo": {
+    "quando": "2026-11-16T13:21:30Z",
     "esito": "riuscito"
    }
   }
