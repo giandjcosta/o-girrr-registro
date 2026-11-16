@@ -42,12 +42,13 @@ with sync_playwright() as p:
                 ctx.add_init_script("if(!localStorage.getItem('qa404-seed')){localStorage.setItem('qa404-seed','1');localStorage.setItem('registro-anteprima-online',"+json.dumps(BASE+'anteprima/pubblicata/girrr/pagina-rimossa.html')+");}")
             page.goto(BASE+'registro.html#anteprima',wait_until='load')
             expect(page.locator('#versione')).to_have_text(VERSION)
-            assert page.locator('#versione').evaluate('(e)=>parseFloat(getComputedStyle(e).fontSize)>=28')
+            # Gianluca, 16 novembre 2026: la parte sopra più piccola (26 px su PC, 20 sul telefono); resta comunque ben leggibile.
+            assert page.locator('#versione').evaluate('(e)=>parseFloat(getComputedStyle(e).fontSize)>=20')
             expect(page.get_by_role('switch',name='Grafica Stadio')).to_be_visible()
             expect(page.locator('#grafica')).to_be_enabled()
             if screen=='iPhone320':
                 expect(page.locator('#stato')).to_contain_text('riaperta sulla Home')
-                assert page.evaluate("!localStorage.getItem('registro-anteprima-online').includes('pagina-rimossa')")
+                assert page.evaluate("!(localStorage.getItem('registro-anteprima-online')||'').includes('pagina-rimossa')")   # dopo il ripristino la memoria può essere vuota
             positions=page.locator('.versione-box').bounding_box()
             filenames=['index.html','tabellone.html','albo.html','curva.html','app.html'] if screen in ('iPhone320','PC1920') else ['index.html']
             for filename in filenames:
@@ -91,7 +92,7 @@ with sync_playwright() as p:
             page.wait_for_function("count=>{const f=document.getElementById('contenuto'),d=f.contentDocument;return !f.hasAttribute('aria-busy')&&d?.readyState==='complete'&&d.documentElement.dataset.registroCollegato==='true'&&d.querySelectorAll('.release-card').length===count}",arg=len(VERSIONS))
             archive=page.evaluate('''()=>{const d=document.getElementById('contenuto').contentDocument;return {count:d.querySelectorAll('.release-card').length,open:d.querySelectorAll('.release-card details[open]').length,latest:d.querySelector('.release-latest').innerText,fits:d.documentElement.scrollWidth<=d.defaultView.innerWidth+1,prototypes:d.querySelectorAll('.archive-prototypes a').length}}''')
             assert archive['count']==len(VERSIONS) and archive['open']==1
-            assert VERSION in archive['latest'] and archive['fits'] and archive['prototypes']==4
+            assert VERSION in archive['latest'] and archive['fits'] and archive['prototypes']==7   # Gianluca, 16 novembre: 4 prototipi + anteprima storica 5.5 (3 link) nell'Archivio
             if screen in ('PC1920','TV','iPhone320'):page.screenshot(path=str(OUT/(engine+'-archivio-'+screen+'.png')))
             page.evaluate("()=>document.getElementById('contenuto').contentDocument.querySelectorAll('.release-card summary')[1].scrollIntoView({block:'center',behavior:'instant'})")
             page.evaluate('''async()=>{const w=document.getElementById('contenuto').contentWindow;await new Promise(resolve=>w.requestAnimationFrame(()=>w.requestAnimationFrame(resolve)))}''')

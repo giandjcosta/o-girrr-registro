@@ -15,8 +15,14 @@ sost("<title>Laboratorio O Girrr</title>", "<title>O Girrr · Anteprima 5.5</tit
 sost('href="../favicon-64.png"', 'href="../favicon-64.png"')
 sost("<h1>Laboratorio O Girrr</h1>", "<h1>O Girrr 5.5</h1>")
 sost("<p>Prova ogni idea e dai un voto. Alla fine trovi il riassunto da mandare a Gianluca.</p>", "<p>Anteprima della nuova versione: così apparirà tutto quando andrà in linea.</p>")
-sost('<span class="proto">Prototipo</span> <a class="back" href="../">Torna al Registro</a>', '<span class="proto">Anteprima 5.5</span> <a class="back" href="../lab/versione-5-3.html">Archivio 5.3</a>')
-sost('<a class="back" href="versione-5-3.html">Archivio 5.3</a>', '')
+# Claude, 16 novembre 2026: il menu del Lab è diventato un <nav> con pochi accessi rapidi (ChatGPT, 1ea4fc4) e il riquadro
+# «Ultimi aggiornamenti da provare»; nell'Anteprima restano l'etichetta e l'Archivio, il materiale del Lab sparisce.
+_nav = re.search(r'<nav aria-label="Accessi rapidi del laboratorio".*?</nav>', s, re.S)
+assert _nav, 'Menu del Lab non trovato'
+sost(_nav.group(0), '<span class="proto">Anteprima 5.5</span> <a class="back" href="../lab/versione-5-3.html">Archivio 5.3</a>')
+_ult = re.search(r'<section class="card" aria-label="Ultimi aggiornamenti del laboratorio".*?</section>', s, re.S)
+if _ult:
+    sost(_ult.group(0), '')
 # nascondere il materiale da laboratorio
 sost("</style>", ".where,.note,.lead,.fb,.proto-only{display:none!important}.hm{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}.hm button{display:flex;flex-direction:column;gap:4px;text-align:left;padding:14px;border-radius:16px;background:linear-gradient(160deg,#17214a,#2a1c52);border:1px solid var(--line);color:#fff;min-height:96px}.hm b{font-family:var(--fd);font-size:20px;font-weight:400}.hm small{color:var(--mute);font-size:12px;font-weight:600}.hm .big{grid-column:1/-1}</style>", 1)
 # nav e Home

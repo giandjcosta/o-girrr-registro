@@ -19,6 +19,8 @@ on:
       - 'voci-src/*.py'
       - 'calcoli/finestre62.py'
       - 'lab/integrata-62/**'
+      - 'rilascio/r621/**'
+      - 'rilascio/r622/**'
   workflow_dispatch:
 permissions:
   contents: read
@@ -27,7 +29,9 @@ concurrency:
   cancel-in-progress: true
 jobs:
   test-logica:
-    if: ${{ !startsWith(github.ref, 'refs/heads/chatgpt/621-') && github.ref != 'refs/heads/main' }}
+    # Claude, 16 novembre 2026: la 6.2 è online (gh-pages c313e1a), quindi le prove «prima del rilascio 6.2» falliscono per forza
+    # sui rami claude/: il sito ha già le modifiche. I rami claude/ fanno ora le stesse prove di main (verifica-621).
+    if: ${{ !startsWith(github.ref, 'refs/heads/chatgpt/621-') && !startsWith(github.ref, 'refs/heads/claude/') && github.ref != 'refs/heads/main' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -40,7 +44,9 @@ jobs:
       - name: Check sintassi Python
         run: python3 -m py_compile rilascio/r62/applica.py rilascio/r62/campo_coppa.py rilascio/r62/testi.py voci-src/copione.py voci-src/prepara_dati.py voci-src/mvp_editoriale62.py calcoli/finestre62.py rilascio/r62/server/catalogo62.py rilascio/r62/server/giuria62.py rilascio/r62/backend.py
   backend:
-    if: ${{ !startsWith(github.ref, 'refs/heads/chatgpt/621-') && github.ref != 'refs/heads/main' }}
+    # Claude, 16 novembre 2026: la 6.2 è online (gh-pages c313e1a), quindi le prove «prima del rilascio 6.2» falliscono per forza
+    # sui rami claude/: il sito ha già le modifiche. I rami claude/ fanno ora le stesse prove di main (verifica-621).
+    if: ${{ !startsWith(github.ref, 'refs/heads/chatgpt/621-') && !startsWith(github.ref, 'refs/heads/claude/') && github.ref != 'refs/heads/main' }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -67,7 +73,9 @@ jobs:
           print('Backend preparato, nessun sito o database modificato')
           PY
   postgres:
-    if: ${{ !startsWith(github.ref, 'refs/heads/chatgpt/621-') && github.ref != 'refs/heads/main' }}
+    # Claude, 16 novembre 2026: la 6.2 è online (gh-pages c313e1a), quindi le prove «prima del rilascio 6.2» falliscono per forza
+    # sui rami claude/: il sito ha già le modifiche. I rami claude/ fanno ora le stesse prove di main (verifica-621).
+    if: ${{ !startsWith(github.ref, 'refs/heads/chatgpt/621-') && !startsWith(github.ref, 'refs/heads/claude/') && github.ref != 'refs/heads/main' }}
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -108,7 +116,9 @@ jobs:
           name: postgres62-isolato
           path: prove/v62/risultati-postgres.json
   browser:
-    if: ${{ !startsWith(github.ref, 'refs/heads/chatgpt/621-') && github.ref != 'refs/heads/main' }}
+    # Claude, 16 novembre 2026: la 6.2 è online (gh-pages c313e1a), quindi le prove «prima del rilascio 6.2» falliscono per forza
+    # sui rami claude/: il sito ha già le modifiche. I rami claude/ fanno ora le stesse prove di main (verifica-621).
+    if: ${{ !startsWith(github.ref, 'refs/heads/chatgpt/621-') && !startsWith(github.ref, 'refs/heads/claude/') && github.ref != 'refs/heads/main' }}
     runs-on: ubuntu-latest
     timeout-minutes: 35
     strategy:
@@ -210,7 +220,7 @@ jobs:
             prove/v62/risultati-*.json
 
   verifica-621:
-    if: ${{ startsWith(github.ref, 'refs/heads/chatgpt/621-') || github.ref == 'refs/heads/main' }}
+    if: ${{ startsWith(github.ref, 'refs/heads/chatgpt/621-') || startsWith(github.ref, 'refs/heads/claude/') || github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     services:
@@ -244,6 +254,11 @@ jobs:
           python3 rilascio/r621/backend.py qa-site-backend
           python3 rilascio/r621/backend.py qa-site-backend
           python3 prove/v62/check621.py qa-site qa-site-backend
+          # 6.2.2 (Claude, 16 novembre 2026): le migliorie sopra la 6.2.1 pubblicata, due volte per l'idempotenza
+          python3 rilascio/r622/applica.py qa-site
+          python3 rilascio/r622/applica.py qa-site
+          for f in qa-site/pillole.js qa-site/tv.js qa-site/girrr/v60/tifosi.js qa-site/girrr/derby.js qa-site/stadio/girrr/derby.js; do node --check "$f"; done
+          grep -q 'entrata:1' qa-site/girrr/app.html && grep -q 'entrata:1' lab/integrata-62/girrr/app.html
       - name: Sintassi JavaScript del sito preparato e del Lab
         run: |
           for f in qa-site/girrr/v55/ui.js qa-site/girrr/v55/home55.js qa-site/girrr/v60/tifosi.js qa-site/sondaggi62.js qa-site/pillole.js qa-site/girrr/novita.js qa-site/stadio/girrr/novita.js qa-site/girrr/derby.js qa-site/stadio/girrr/derby.js qa-site-backend/calcoli/tifosi/contesto.cjs lab/integrata-62/sondaggi62.js lab/integrata-62/pillole.js lab/integrata-62/girrr/novita.js lab/integrata-62/stadio/girrr/novita.js lab/integrata-62/girrr/derby.js lab/integrata-62/stadio/girrr/derby.js; do node --check "$f"; done
