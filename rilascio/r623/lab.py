@@ -2,7 +2,8 @@
 """6.2.3 · Preview del Lab: la 6.2.2 pubblicata più rilascio/r623/applica.py (Claude, 16 novembre 2026).
 
 Come per la 6.2.2 (rilascio/r622/lab.py): quello che si prova nel Lab è quello che va online. Sopra si aggiungono solo le
-comodità del Lab (Totogirrr dimostrativo, Spogliatoio da ospite) e la versione 6.2.3 in prova nella pagina Versioni.
+comodità del Lab (Totogirrr dimostrativo, Spogliatoio come nel sito in integrata-62/index.html) e la versione 6.2.3
+in prova nella pagina Versioni.
 
 Uso: python3 rilascio/r623/lab.py COPIA_GH_PAGES_CON_6_2_3   (copia di gh-pages con la 6.2.2, già passata da rilascio/r623/applica.py)
 """
@@ -17,14 +18,9 @@ VIDEO = 'https://giandjcosta.github.io/o-fant-a-girrr/girrr/video/'   # 6.2.3: n
 SOLO_LAB = {
     'girrr/app.html': [("VB='video/'", "VB='" + VIDEO + "'")],
     'stadio/girrr/app.html': [("VB='../../girrr/video/'", "VB='" + VIDEO + "'")],
-    'girrr/index.html': [
-        ('<a class="c" href="../index.html"><div class="ic"><img src="../assets/logo-lega.png" alt=""></div><h2>Spogliatoio</h2><p>La tua rosa, la giornata, gli scambi e il Mercato Scambi, svincolati e infortunati.</p>',
-         '<a class="c" href="squadre.html"><div class="ic"><img src="../assets/logo-lega.png" alt=""></div><h2>Spogliatoio</h2><p>Modalità ospite di prova: consulta squadre, rose e dati pubblici. Scambi e mercato non sono ancora simulati.</p>'),
-    ],
-    'stadio/girrr/index.html': [
-        ('<a class="c" href="../../index.html"><div class="ic"><img src="../../assets/logo-lega.png" alt=""></div><h2>Spogliatoio</h2><p>La tua rosa, la giornata, gli scambi e il Mercato Scambi, svincolati e infortunati.</p>',
-         '<a class="c" href="squadre.html"><div class="ic"><img src="../../assets/logo-lega.png" alt=""></div><h2>Spogliatoio</h2><p>Modalità ospite di prova: consulta squadre, rose e dati pubblici. Scambi e mercato non sono ancora simulati.</p>'),
-    ],
+    # 6.2.3 (Gianluca: «come faccio a testare se sono link separati»): niente più dirottamento della scheda Spogliatoio
+    # su squadre.html: lo Spogliatoio del Lab è integrata-62/index.html, come nel sito vero, e ci portano tutti i link.
+    'girrr/index.html': [], 'stadio/girrr/index.html': [],   # restano qui per il link al Totogirrr con ?demo
     'girrr/totogirrr.html': [("var DEMO=/[?&]demo\\b/.test(location.search);", "var DEMO=true; /* Anteprima isolata: accesso ospite sempre con dati fittizi. */")],
     'stadio/girrr/totogirrr.html': [("var DEMO=/[?&]demo\\b/.test(location.search);", "var DEMO=true; /* Anteprima isolata: accesso ospite sempre con dati fittizi. */")],
 }
@@ -45,7 +41,8 @@ def main(argv):
     primo = re.search(r'<script\b[^>]*>', s, re.I)
     if 'data-spogliatoio623' not in s or not primo or 'lab62.js' not in primo.group(0):
         raise SystemExit('Spogliatoio del Lab: protezione o modifiche 6.2.3 mancanti')
-    (OUT / 'spogliatoio.html').write_text(s, encoding='utf-8')
+    (OUT / 'index.html').write_text(s, encoding='utf-8')         # come nel sito: ../index.html porta allo Spogliatoio
+    (OUT / 'spogliatoio.html').write_text(s, encoding='utf-8')   # indirizzo già usato nelle novità della 6.2.3
     for rel, coppie in SOLO_LAB.items():
         f = OUT / rel; t = f.read_text(encoding='utf-8')
         for a, b in coppie:
