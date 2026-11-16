@@ -53,11 +53,24 @@ if(window.MutationObserver)new MutationObserver(tutte).observe(document.document
 ORO_SCROLL = """requestAnimationFrame(function(){var r=document.querySelector('.oro-scroll'),a=r&&r.querySelector('[aria-pressed="true"]');if(a)a.scrollIntoView({block:'nearest',inline:'center'})});"""
 ORO_SCROLL_NEW = """requestAnimationFrame(function(){var r=document.querySelector('.oro-scroll'),a=r&&r.querySelector('[aria-pressed="true"]');/* 6.2.1: la fila si sposta solo se la voce scelta è fuori vista, e con calma; la pagina non si muove */if(a&&r.scrollWidth>r.clientWidth+1){var e=r.getBoundingClientRect(),q=a.getBoundingClientRect();if(q.left<e.left-1||q.right>e.right+1)r.scrollTo({left:Math.max(0,r.scrollLeft+(q.left-e.left)-(e.width-q.width)/2),behavior:(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)?'auto':'smooth'})}});"""
 
+PILL_FILA = """      /* la fila non torna all'inizio */
+      if (scorri(c2) && c2.scrollLeft < sl - 2) { var sb = c2.style.scrollBehavior; c2.style.scrollBehavior = 'auto'; c2.scrollLeft = sl; c2.style.scrollBehavior = sb; }
+      centra(c2, n);"""
+PILL_FILA_NEW = """      /* 6.2.1: nelle file ferme (Albo, Carriera, Derby) la fila non viene riportata indietro e si sposta solo se la voce scelta
+         è fuori vista: prima tre scorrimenti insieme (questo, l'app e il ritorno indietro) la fermavano a metà, con l'ultima voce tagliata */
+      var ferma = c2.matches && c2.matches(FERME);
+      if (ferma) { var _r = n.getBoundingClientRect(), _e = c2.getBoundingClientRect(); if (_r.left < _e.left - 1 || _r.right > _e.right + 1) centra(c2, n); }
+      else {
+      /* la fila non torna all'inizio */
+      if (scorri(c2) && c2.scrollLeft < sl - 2) { var sb = c2.style.scrollBehavior; c2.style.scrollBehavior = 'auto'; c2.scrollLeft = sl; c2.style.scrollBehavior = sb; }
+      centra(c2, n);
+      }"""
+
 LAVORI = {
     'girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW), (ORO_SCROLL, ORO_SCROLL_NEW)],
     'stadio/girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW), (ORO_SCROLL, ORO_SCROLL_NEW)],
     'sondaggi62.js': [(SOND_DRAW, SOND_DRAW_NEW), (SOND_PREC, SOND_PREC_NEW), (SOND_PREC2, SOND_PREC2_NEW), (SOND_CAMBIA, SOND_CAMBIA_NEW)],
-    'pillole.js': [(PILL_FILE, PILL_FILE_NEW), (PILL_GHOST, PILL_GHOST_NEW)],
+    'pillole.js': [(PILL_FILE, PILL_FILE_NEW), (PILL_GHOST, PILL_GHOST_NEW), (PILL_FILA, PILL_FILA_NEW)],
     'girrr/novita.js': [(LATTA, LATTA_NEW)],
     'stadio/girrr/novita.js': [(LATTA, LATTA_NEW)],
 }
