@@ -1,4 +1,4 @@
-/* Cornice dell'ultima versione pubblicata, distinta dai prototipi del Laboratorio. */
+/* Cornice di prova integrale O Girrr 6.2.1 nel Registro. Non modifica il sito ufficiale. */
 (function () {
   'use strict';
   // Il vecchio ingresso rimanda al portale: non avviare un iframe che sarebbe
@@ -7,7 +7,7 @@
     location.replace(new URL('../registro.html#anteprima', document.currentScript.src).href);
     return;
   }
-  var base = new URL('pubblicata/', document.currentScript.src);
+  var base = new URL('../lab/integrata-62/', document.currentScript.src);
   var frame = document.getElementById('f'), toggle = document.getElementById('tg'), pending, recovered = false;
   function mode(u) { return /\/stadio\/girrr\//.test(u.pathname) ? 'n' : 'a'; }
   function inside(u) { return u.origin === base.origin && u.pathname.startsWith(base.pathname); }
@@ -28,7 +28,7 @@
   }
   function current() { try { return new URL(frame.contentWindow.location.href); } catch (e) { return new URL('girrr/index.html', base); } }
   function recover() {
-    try { localStorage.removeItem('registro-anteprima-online'); } catch (e) {}
+    try { localStorage.removeItem('registro-anteprima-621'); } catch (e) {}
     document.documentElement.dataset.anteprimaRipristinata = 'true';
     if (recovered) return; // Un errore anche sulla Home non deve creare un ciclo di richieste.
     recovered = true;
