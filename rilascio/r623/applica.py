@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""6.3 · Totogirrr per tutti gli schermi (Claude, 16 novembre 2026; richiesta di Gianluca dopo la 6.2.2).
+"""6.2.3 · Totogirrr per tutti gli schermi (Claude, 16 novembre 2026; richiesta di Gianluca dopo la 6.2.2).
 
 - Totogirrr, schede in alto:
   * la scheda toccata si sposta quanto basta per vedersi tutta (prima restava tagliata: la fila che scorre è il <nav>,
@@ -13,17 +13,17 @@
 - Home: pillola «Esci da (squadra)» in fondo a sinistra, di fronte a quella della versione (due tocchi per uscire);
   nel Totogirrr non c'è più «Esci». Totogirrr con lo sfondo un po' più grigio in Lega e Stadio.
 
-Uso: python3 rilascio/r63/applica.py COPIA_GH_PAGES_6_2_2
+Uso: python3 rilascio/r623/applica.py COPIA_GH_PAGES_6_2_2
 Si ferma se il sito non è la 6.2.2 pubblicata (gh-pages 64a243b). Rieseguibile: la seconda volta non cambia niente.
 """
 import json, pathlib, re, sys
 
-V = '63'
+V = '623'
 
 PILL = [
     # 1. una funzione che mostra per intero la scheda toccata nella fila che scorre davvero
     ("  function contenuto(c) {",
-     "  /* 6.3 (Gianluca): nel Totogirrr la fila che scorre è il <nav>, non .nvi (largo quanto le schede, non scorre mai). La scheda\n"
+     "  /* 6.2.3 (Gianluca): nel Totogirrr la fila che scorre è il <nav>, non .nvi (largo quanto le schede, non scorre mai). La scheda\n"
      "     toccata si sposta quanto basta per vedersi tutta, con un margine, senza andare al centro. */\n"
      "  function fila(c) { return c.matches && c.matches('nav .nvi') ? c.parentElement : null; }\n"
      "  function mostra(s, b, subito) {\n"
@@ -38,14 +38,14 @@ PILL = [
     # 2. al tocco: nel Totogirrr scorre il <nav>
     ("      var ferma = c2.matches && c2.matches(FERME);\n      if (ferma) {",
      "      var ferma = c2.matches && c2.matches(FERME), _nv = fila(c2);\n"
-     "      if (_nv) mostra(_nv, n);   /* 6.3: Totogirrr, un solo codice muove la fila */\n"
+     "      if (_nv) mostra(_nv, n);   /* 6.2.3: Totogirrr, un solo codice muove la fila */\n"
      "      else if (ferma) {"),
     # 3. colore che scivola più breve nel Totogirrr
     ("        ], { duration: 380, easing: EASE });",
-     "        ], { duration: _nv ? 220 : 380, easing: EASE });   /* 6.3: nel Totogirrr più corto (Gianluca) */"),
+     "        ], { duration: _nv ? 220 : 380, easing: EASE });   /* 6.2.3: nel Totogirrr più corto (Gianluca) */"),
     # 4. all'apertura (anche con ?t=movimenti) la scheda scelta è in vista
     ("      var a = attiva(c); if (!a || !scorri(c)) return;",
-     "      var a = attiva(c), _s = fila(c); if (_s) { if (a) mostra(_s, a, true); return; }   /* 6.3: Totogirrr */\n"
+     "      var a = attiva(c), _s = fila(c); if (_s) { if (a) mostra(_s, a, true); return; }   /* 6.2.3: Totogirrr */\n"
      "      if (!a || !scorri(c)) return;"),
 ]
 
@@ -54,10 +54,10 @@ NAVPOST = (
     "  if(b){var sl=n.scrollLeft,cw=n.clientWidth,l=b.offsetLeft,r=l+b.offsetWidth,m=10,to=null;\n"
     "    if(l-m<sl)to=Math.max(0,l-m);else if(r+m>sl+cw)to=Math.min(n.scrollWidth-cw,r+m-cw);\n"
     "    if(to!==null&&Math.abs(to-sl)>1)n.scrollTo({left:to,behavior:'smooth'})}\n",
-    "  /* 6.3: la scheda toccata la porta in vista solo pillole.js (prima due codici muovevano la stessa fila) */\n",
+    "  /* 6.2.3: la scheda toccata la porta in vista solo pillole.js (prima due codici muovevano la stessa fila) */\n",
 )
 
-STILE = '''<style data-toto63>/* 6.3 · Totogirrr (Claude, 16 novembre 2026, richieste di Gianluca dopo la 6.2.2) */
+STILE = '''<style data-toto623>/* 6.2.3 · Totogirrr (Claude, 16 novembre 2026, richieste di Gianluca dopo la 6.2.2) */
 /* Sfondo un po' più grigio, in Lega e Stadio (Gianluca): un velo sopra il blu, sotto le strisce; l'oro resta */
 html::after{content:'';position:fixed;inset:0;z-index:-2;pointer-events:none;background:rgba(88,94,110,.30)}
 /* Schede in alto: scorrono via con la pagina, più trasparenti, tocco breve (niente rimpicciolimento) */
@@ -93,14 +93,14 @@ nav button.on{box-shadow:none}
 '''
 
 TOTO = ['girrr/totogirrr.html', 'stadio/girrr/totogirrr.html']
-ESCI_TOTO = ('<button class="x" id="out">Esci</button>', '')   # 6.3: si esce dalla Home (pillola in fondo a sinistra)
+ESCI_TOTO = ('<button class="x" id="out">Esci</button>', '')   # 6.2.3: si esce dalla Home (pillola in fondo a sinistra)
 
 VERS_VECCHIO = '''  function inFondoHome(x) {
     if (document.querySelector('.vv-fondo')) return;
     var sp = document.querySelector('.wrap > .sp') || document.querySelector('.sp') || document.querySelector('.foot');
     if (sp && sp.parentNode) sp.parentNode.insertBefore(pillola(x), sp);
   }'''
-VERS_NUOVO = '''  /* 6.3 · «Esci» (Gianluca, 16 novembre 2026): prima si usciva solo dal Totogirrr. Ora in fondo alla Home, a sinistra,
+VERS_NUOVO = '''  /* 6.2.3 · «Esci» (Gianluca, 16 novembre 2026): prima si usciva solo dal Totogirrr. Ora in fondo alla Home, a sinistra,
      sulla stessa riga della pillola della versione e con lo stesso aspetto. Si vede solo se sei entrato con la tua squadra
      o come ospite. Primo tocco: «Tocca di nuovo per uscire» per 3 secondi; secondo tocco: esci (il nome della squadra resta
      solo come proposta nella schermata di accesso, come faceva il Totogirrr) e la Home si ricarica. */
@@ -165,7 +165,7 @@ def main(argv):
         raise SystemExit(__doc__)
     base = pathlib.Path(argv[0])
     v = json.loads((base / 'versioni.json').read_text(encoding='utf-8'))['versioni'][0]['v']
-    if v not in ('6.2.2', '6.3'):
+    if v not in ('6.2.2', '6.2.3'):
         raise SystemExit('La copia deve avere la 6.2.2 pubblicata (trovata ' + v + ')')
     cambiati = 0
 
@@ -184,7 +184,7 @@ def main(argv):
     def toto(t, rel):
         t = sostituisci(t, rel, *NAVPOST)
         t = sostituisci(t, rel, *ESCI_TOTO)
-        if 'data-toto63' not in t:
+        if 'data-toto623' not in t:
             t = sostituisci(t, rel, '</head>', STILE + '</head>')
         return t
     for rel in TOTO:
@@ -198,7 +198,7 @@ def main(argv):
         if rel.startswith(('v5', 'prova/')) or '/v5' in rel:
             continue
         scrivi(rel, lambda t, rel: versioni(t))
-    print('6.3 applicata · File cambiati:', cambiati)
+    print('6.2.3 applicata · File cambiati:', cambiati)
 
 
 if __name__ == '__main__':

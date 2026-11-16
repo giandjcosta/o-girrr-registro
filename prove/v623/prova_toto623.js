@@ -1,6 +1,6 @@
-// 6.3 · Totogirrr su 16 schermi, Lega e Stadio (Claude, 16 novembre 2026).
-// Uso: node prove/v63/prova_toto63.js URL_BASE [CARTELLA_FOTO]
-//   URL_BASE = indirizzo di una copia di gh-pages con rilascio/r63/applica.py (per esempio http://localhost:8766/sito/)
+// 6.2.3 · Totogirrr su 16 schermi, Lega e Stadio (Claude, 16 novembre 2026).
+// Uso: node prove/v623/prova_toto623.js URL_BASE [CARTELLA_FOTO]
+//   URL_BASE = indirizzo di una copia di gh-pages con rilascio/r623/applica.py (per esempio http://localhost:8766/sito/)
 // Controlla: niente scorrimento laterale, nessun errore, colonne delle partite (1 sul telefono, 2-4 sugli schermi larghi),
 // schede in alto che vanno via scorrendo, scheda toccata (tocco vero) tutta in vista sul telefono.
 const { chromium, devices } = require('playwright');

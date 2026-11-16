@@ -163,7 +163,7 @@
     a.onmouseleave = function () { a.style.opacity = '.8'; a.style.background = 'rgba(255,255,255,.06)'; };
     return a;
   }
-  /* 6.3 · «Esci» (Gianluca, 16 novembre 2026): prima si usciva solo dal Totogirrr. Ora in fondo alla Home, a sinistra,
+  /* 6.2.3 · «Esci» (Gianluca, 16 novembre 2026): prima si usciva solo dal Totogirrr. Ora in fondo alla Home, a sinistra,
      sulla stessa riga della pillola della versione e con lo stesso aspetto. Si vede solo se sei entrato con la tua squadra
      o come ospite. Primo tocco: «Tocca di nuovo per uscire» per 3 secondi; secondo tocco: esci (il nome della squadra resta
      solo come proposta nella schermata di accesso, come faceva il Totogirrr) e la Home si ricarica. */

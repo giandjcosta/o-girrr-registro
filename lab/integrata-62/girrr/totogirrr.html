@@ -217,8 +217,8 @@ nav button{flex:1 0 auto;white-space:nowrap;padding:10px 13px}
 <script>window.goatcounter={path:function(){return location.pathname},no_onload:/[?&]demo/.test(location.search)}</script>
 <script data-goatcounter="https://djcosta18.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 <script src="transizioni.js"></script>
-<style>/* Menu a tendina leggibili su PC: elenco blu pieno, nomi chiari, carattere normale (1° novembre 2026) */select,select option,select optgroup{font-family:Inter,system-ui,sans-serif!important;font-style:normal!important}select option,select optgroup{background-color:#1d2a52!important;color:#fbf6ec!important}</style><script src="../pillole.js?v=63" defer></script><script src="../offline.js" defer></script>
-<style data-toto63>/* 6.3 · Totogirrr (Claude, 16 novembre 2026, richieste di Gianluca dopo la 6.2.2) */
+<style>/* Menu a tendina leggibili su PC: elenco blu pieno, nomi chiari, carattere normale (1° novembre 2026) */select,select option,select optgroup{font-family:Inter,system-ui,sans-serif!important;font-style:normal!important}select option,select optgroup{background-color:#1d2a52!important;color:#fbf6ec!important}</style><script src="../pillole.js?v=623" defer></script><script src="../offline.js" defer></script>
+<style data-toto623>/* 6.2.3 · Totogirrr (Claude, 16 novembre 2026, richieste di Gianluca dopo la 6.2.2) */
 /* Sfondo un po' più grigio, in Lega e Stadio (Gianluca): un velo sopra il blu, sotto le strisce; l'oro resta */
 html::after{content:'';position:fixed;inset:0;z-index:-2;pointer-events:none;background:rgba(88,94,110,.30)}
 /* Schede in alto: scorrono via con la pagina, più trasparenti, tocco breve (niente rimpicciolimento) */
@@ -618,7 +618,7 @@ setInterval(function(){if(tab==='sfide'&&!document.hidden)duLoad(true)},45000);
 var MINT=0;function cambioTab(ph){var pn=document.querySelector('.pane'),nv=document.querySelector('nav');if(pn&&ph){pn.style.minHeight=Math.min(ph,innerHeight)+'px';clearTimeout(MINT);MINT=setTimeout(function(){var p2=document.querySelector('.pane');if(p2)p2.style.minHeight=''},1500)}if(pn){var nh=nv?nv.offsetHeight:0,y=pn.getBoundingClientRect().top+scrollY-nh-12;if(scrollY>y+1){var rid=false;try{rid=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}window.scrollTo({top:Math.max(0,y),behavior:rid?'auto':'smooth'})}}}
 function navPre(){var n=document.querySelector('nav');if(n)NAVX=n.scrollLeft}
 function navPost(){var n=document.querySelector('nav');if(!n)return;n.scrollLeft=NAVX;
-  /* 6.3: la scheda toccata la porta in vista solo pillole.js (prima due codici muovevano la stessa fila) */
+  /* 6.2.3: la scheda toccata la porta in vista solo pillole.js (prima due codici muovevano la stessa fila) */
   navBounce(n)}
 function navBounce(n){
   var inn=n.firstChild;if(!inn||!inn.classList||!inn.classList.contains('nvi'))return;

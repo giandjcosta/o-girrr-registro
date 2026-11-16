@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""6.3 · Preview del Lab: la 6.2.2 pubblicata più rilascio/r63/applica.py (Claude, 16 novembre 2026).
+"""6.2.3 · Preview del Lab: la 6.2.2 pubblicata più rilascio/r623/applica.py (Claude, 16 novembre 2026).
 
 Come per la 6.2.2 (rilascio/r622/lab.py): quello che si prova nel Lab è quello che va online. Sopra si aggiungono solo le
-comodità del Lab (Totogirrr dimostrativo, Spogliatoio da ospite) e la versione 6.3 in prova nella pagina Versioni.
+comodità del Lab (Totogirrr dimostrativo, Spogliatoio da ospite) e la versione 6.2.3 in prova nella pagina Versioni.
 
-Uso: python3 rilascio/r63/lab.py COPIA_GH_PAGES_CON_6_3   (copia di gh-pages con la 6.2.2, già passata da rilascio/r63/applica.py)
+Uso: python3 rilascio/r623/lab.py COPIA_GH_PAGES_CON_6_2_3   (copia di gh-pages con la 6.2.2, già passata da rilascio/r623/applica.py)
 """
 import json, pathlib, shutil, subprocess, sys, tempfile
 
@@ -31,8 +31,8 @@ def main(argv):
     if len(argv) != 1:
         raise SystemExit(__doc__)
     sito = pathlib.Path(argv[0]).resolve()
-    if 'data-toto63' not in (sito / 'girrr/totogirrr.html').read_text(encoding='utf-8'):
-        raise SystemExit('La copia non è passata da rilascio/r63/applica.py')
+    if 'data-toto623' not in (sito / 'girrr/totogirrr.html').read_text(encoding='utf-8'):
+        raise SystemExit('La copia non è passata da rilascio/r623/applica.py')
     esporta(sito, OUT)
     for rel, coppie in SOLO_LAB.items():
         f = OUT / rel; t = f.read_text(encoding='utf-8')
@@ -44,8 +44,8 @@ def main(argv):
             t = t.replace(a, b)
         t = t.replace('href="totogirrr.html"', 'href="totogirrr.html?demo"')
         f.write_text(t, encoding='utf-8')
-    # Versione in prova: la pillola in basso a destra della Home e la pagina Versioni dicono 6.3
-    d = json.loads((R / 'rilascio/r63/ANNUNCIO-BOZZA.json').read_text(encoding='utf-8'))
+    # Versione in prova: la pillola in basso a destra della Home e la pagina Versioni dicono 6.2.3
+    d = json.loads((R / 'rilascio/r623/ANNUNCIO-BOZZA.json').read_text(encoding='utf-8'))
     with tempfile.TemporaryDirectory() as tmp:
         v = pathlib.Path(tmp) / 'versioni.json'
         shutil.copyfile(sito / 'versioni.json', v)

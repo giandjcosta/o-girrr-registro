@@ -33,7 +33,7 @@
     var to = Math.max(0, Math.min(c.scrollWidth - c.clientWidth, c.scrollLeft + (r.left - e.left) - (e.width - r.width) / 2));
     if (Math.abs(to - c.scrollLeft) > 1) c.scrollTo({ left: to, behavior: ridotto() ? 'auto' : 'smooth' });
   }
-  /* 6.3 (Gianluca): nel Totogirrr la fila che scorre è il <nav>, non .nvi (largo quanto le schede, non scorre mai). La scheda
+  /* 6.2.3 (Gianluca): nel Totogirrr la fila che scorre è il <nav>, non .nvi (largo quanto le schede, non scorre mai). La scheda
      toccata si sposta quanto basta per vedersi tutta, con un margine, senza andare al centro. */
   function fila(c) { return c.matches && c.matches('nav .nvi') ? c.parentElement : null; }
   function mostra(s, b, subito) {
@@ -72,7 +72,7 @@
       /* 6.2.1: nelle file ferme (Albo, Carriera, Derby) la fila non viene riportata indietro e si sposta solo se la voce scelta
          è fuori vista: prima tre scorrimenti insieme (questo, l'app e il ritorno indietro) la fermavano a metà, con l'ultima voce tagliata */
       var ferma = c2.matches && c2.matches(FERME), _nv = fila(c2);
-      if (_nv) mostra(_nv, n);   /* 6.3: Totogirrr, un solo codice muove la fila */
+      if (_nv) mostra(_nv, n);   /* 6.2.3: Totogirrr, un solo codice muove la fila */
       else if (ferma) { var _r = n.getBoundingClientRect(), _e = c2.getBoundingClientRect(); if (!c2.matches('.oro-scroll') && (_r.left < _e.left - 1 || _r.right > _e.right + 1)) centra(c2, n); }   /* 6.2.2: Albo e Carriera le sposta solo l'app */
       else {
       /* la fila non torna all'inizio */
@@ -113,7 +113,7 @@
         var an = g.animate([
           { transform: 'translate(' + x0 + 'px,' + y0 + 'px)', width: r0.width + 'px', height: r0.height + 'px' },
           { transform: 'translate(' + x1 + 'px,' + y1 + 'px)', width: r1.width + 'px', height: r1.height + 'px' }
-        ], { duration: _nv ? 220 : 380, easing: EASE });   /* 6.3: nel Totogirrr più corto (Gianluca) */
+        ], { duration: _nv ? 220 : 380, easing: EASE });   /* 6.2.3: nel Totogirrr più corto (Gianluca) */
         an.onfinish = fine; an.oncancel = fine;
         setTimeout(fine, 900);
         /* se la pagina ridisegna di nuovo durante l'animazione e toglie la pillola fantasma, si chiude subito */
@@ -124,7 +124,7 @@
   /* all'apertura (anche da un collegamento che porta su una scheda in fondo alla fila) la pillola scelta è in vista */
   function inVista() {
     file().forEach(function (c) {
-      var a = attiva(c), _s = fila(c); if (_s) { if (a) mostra(_s, a, true); return; }   /* 6.3: Totogirrr */
+      var a = attiva(c), _s = fila(c); if (_s) { if (a) mostra(_s, a, true); return; }   /* 6.2.3: Totogirrr */
       if (!a || !scorri(c)) return;
       var r = a.getBoundingClientRect(), e = c.getBoundingClientRect();
       if (r.left >= e.left - 1 && r.right <= e.right + 1) return;

@@ -1,5 +1,5 @@
-// 6.3 · Pillola «Esci» in fondo alla Home (Claude, 16 novembre 2026).
-// Uso: node prove/v63/prova_esci63.js URL_BASE   (copia di gh-pages con rilascio/r63/applica.py, per esempio http://localhost:8766/sito/)
+// 6.2.3 · Pillola «Esci» in fondo alla Home (Claude, 16 novembre 2026).
+// Uso: node prove/v623/prova_esci623.js URL_BASE   (copia di gh-pages con rilascio/r623/applica.py, per esempio http://localhost:8766/sito/)
 // Con squadra, da ospite e senza accesso; Lega e Stadio; iPhone SE 320 (tocco vero) e PC. Due tocchi per uscire.
 const { chromium, devices } = require('playwright');
 (async () => {
