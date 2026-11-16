@@ -1,11 +1,8 @@
 name: ChatGPT - Aggiornamento delle ramificazioni
 on:
-  schedule:
-    # Solo controllo leggero giornaliero; la mappa viene rigenerata se la versione del sito cambia.
-    - cron: '17 5 * * *'
+  # Gianluca, 16 novembre 2026: Ramificazioni si aggiorna solo a mano, quando lo chiede lui
+  # (Actions › «ChatGPT - Aggiornamento delle ramificazioni» › Run workflow). Niente orari né avvisi dal sito.
   workflow_dispatch:
-  repository_dispatch:
-    types: [ramificazioni-versione]
 permissions:
   contents: write
 concurrency:

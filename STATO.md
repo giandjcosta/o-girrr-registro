@@ -9,7 +9,8 @@
 - **Registro**: barra in alto più piccola; l'interruttore Lega/Stadio del Registro funziona anche con l'Anteprima di prova; riga «Prova 6.2.1» compatta (`rilascio/r62/lab62.js`); Archivio con prototipi e anteprima storica 5.5 (`sincronizza.py`); «Link utili» del README aggiornati; Ramificazioni rilanciato a mano.
 - **Basi comuni**: `REGOLE-LAVORO.md` (codice, prove, rilascio, guasti) e `LAVORI-IN-CORSO.md` (quaderno dei passaggi di consegna), collegati da `AGENTS.md`.
 - **Prove** (solo Chromium, file locali serviti a Playwright): pillole su Pixel 7 Lega e Stadio, tabellone su telefono e PC (Home → Carriera gira; schede no; rientro gira), alone al tocco, Registro su PC e iPhone SE (interruttore Lega → Stadio, niente scorrimento laterale), `check621.py` e `preview.cjs` superati. Non provati: Safari, Firefox e telefoni veri.
-- **Aspetta Gianluca**: «Vai» per la 6.2.1; scelta A/B sull'Anteprima del Registro (vedi `LAVORI-IN-CORSO.md`); frequenza di Ramificazioni.
+- **Decisioni di Gianluca (16 novembre):** l'Anteprima del Registro torna alla versione online (6.2), in sola lettura (`anteprima/pubblicata.js`, `cornice_pubblicata.py` e `registro.js` come prima delle modifiche di ChatGPT; restano la barra compatta e l'interruttore unico); la 6.2.1 resta nel Lab. Ramificazioni si aggiorna solo a mano. Prove del Registro (cornice, Registro corrente, portale) di nuovo superate su Chromium; soglie aggiornate alla barra più piccola e all'Archivio con 7 voci storiche.
+- **Aspetta Gianluca**: «Vai» per la 6.2.1.
 
 ## 16 novembre (5) — ChatGPT: completamento verificabile della 6.2.1 (NON pubblicata)
 

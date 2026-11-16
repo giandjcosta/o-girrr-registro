@@ -1,4 +1,6 @@
 # Ramificazioni
+> **Solo a mano (Gianluca, 16 novembre 2026):** Ramificazioni si aggiorna quando lo chiede Gianluca, lanciando `ramificazioni.yml` a mano (Actions › Run workflow). Niente orari, niente avvisi dal sito. Le righe sotto sugli aggiornamenti automatici descrivono come funzionava prima.
+
 
 ## In cima: i tre disegni dei rami (Claude, 14 novembre 2026)
 Su richiesta di Gianluca («tutti e 3 i disegni») la pagina si apre con **Rami e sotto-rami**: `rami.html`, incorporata con `?dentro` (senza titolo; comunica la sua altezza a `ramificazioni.html`), oppure a tutta pagina. Tre viste degli stessi dati: **Albero** (ogni ramo sotto il ramo da cui è nato), **Linea del tempo** (una riga per ramo, dalla nascita all'ultimo lavoro) e **Ventaglio** (da main verso destra). Toccando un pallino la vista si avvicina e si aprono i dettagli con gli ultimi commit e i link a GitHub.
