@@ -67,6 +67,7 @@ def main(argv):
     if len(argv) != 1:
         raise SystemExit(__doc__)
     base = pathlib.Path(argv[0])
+    bug621.copia(base)
     tutti = {}
     for d in (LAVORI, bug621.LAVORI):
         for p, c in d.items():

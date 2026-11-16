@@ -66,14 +66,40 @@ PILL_FILA_NEW = """      /* 6.2.1: nelle file ferme (Albo, Carriera, Derby) la f
       centra(c2, n);
       }"""
 
+CURVA_LOGO = '<div class="logo" data-lega="1">'
+CURVA_LOGO_NEW = '<div class="logo" aria-label="Curva">'  # 6.2.1 (da ChatGPT nel Lab): il simbolo C della Curva non apre più la Home della Lega
+NOTIFICHE_HEAD = '</head>'
+NOTIFICHE_NEW = ('<style>/* 6.2.1 (da ChatGPT nel Lab): logo della Lega senza alone, come nelle altre pagine; niente contorno al tocco */'
+                 'body[data-v53="notifications"] .hero img{filter:none!important;animation:none!important}'
+                 'body[data-v53="notifications"] .hero>a{background:transparent!important;box-shadow:none!important;border:0!important}'
+                 'a[href]:focus:not(:focus-visible),button:focus:not(:focus-visible){outline:none!important;box-shadow:none!important}</style></head>')
+
 LAVORI = {
     'girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW), (ORO_SCROLL, ORO_SCROLL_NEW)],
     'stadio/girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW), (ORO_SCROLL, ORO_SCROLL_NEW)],
     'sondaggi62.js': [(SOND_DRAW, SOND_DRAW_NEW), (SOND_PREC, SOND_PREC_NEW), (SOND_PREC2, SOND_PREC2_NEW), (SOND_CAMBIA, SOND_CAMBIA_NEW)],
+    'girrr/curva.html': [(CURVA_LOGO, CURVA_LOGO_NEW)],
+    'stadio/girrr/curva.html': [(CURVA_LOGO, CURVA_LOGO_NEW)],
+    'girrr/notifiche.html': [(NOTIFICHE_HEAD, NOTIFICHE_NEW)],
+    'stadio/girrr/notifiche.html': [(NOTIFICHE_HEAD, NOTIFICHE_NEW)],
+    'condividi.js': [("giro-di-boa.js?v=61-periodi1", "giro-di-boa.js?v=621")],
     'pillole.js': [(PILL_FILE, PILL_FILE_NEW), (PILL_GHOST, PILL_GHOST_NEW), (PILL_FILA, PILL_FILA_NEW)],
-    'girrr/novita.js': [(LATTA, LATTA_NEW)],
-    'stadio/girrr/novita.js': [(LATTA, LATTA_NEW)],
 }
+
+
+def copia(base):
+    """6.2.1: file corretti da ChatGPT nel Lab (Derby, Albo di Latta, Giro di boa), presi così come sono.
+    Si fermano se il file del sito non è più quello da cui sono partiti."""
+    import hashlib, json, pathlib
+    qui = pathlib.Path(__file__).resolve().parent / 'file'
+    attesi = json.loads((qui / 'ORIGINALI.json').read_text())
+    for rel, h in attesi.items():
+        dst = base / rel; nuovo = (qui / rel).read_bytes()
+        if dst.read_bytes() == nuovo:
+            continue
+        if hashlib.sha256(dst.read_bytes()).hexdigest() != h:
+            raise SystemExit('Il sito ha cambiato ' + rel + ' dopo la prova nel Lab: riallineare prima di pubblicare')
+        dst.write_bytes(nuovo)
 
 
 def extra(base):
@@ -94,4 +120,5 @@ def versioni(t):
     t = t.replace('pillole.js?v=1"', 'pillole.js?v=621"')
     t = re.sub(r'derby\.js\?v=\d+', 'derby.js?v=621', t)
     t = re.sub(r'novita\.js\?v=\d+', 'novita.js?v=621', t)
+    t = t.replace('giro-di-boa.js?v=611-1', 'giro-di-boa.js?v=621').replace('giro-di-boa.css?v=61-periodi1', 'giro-di-boa.css?v=621').replace('condividi.js?v=61-periodi1', 'condividi.js?v=621')
     return t
