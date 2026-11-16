@@ -34,6 +34,26 @@
 - Browser QA esteso: `prove/v62/funzioni.cjs` verifica anche «Cambia il mio voto» tra Curva, Girrr Sport e MVP. Run [43771968860](https://github.com/giandjcosta/o-girrr-registro/actions/runs/43771968860) avviata; **non dichiarare i tre motori verdi senza risultati**.
 - **Restano fuori** le modifiche grafiche di Claude a `testi.py`, `sondaggi.js`, Giornale, Radio e Albo grafico; la duplicazione degli stili per la riapplicazione manuale di `testi.py` e il voto nel Tabellone sono ancora da verificare. «Serie A, 11ª giornata» nel Giornale resta invariata.
 
+## 16 novembre (2) — Claude: 6.2 ONLINE
+
+- **Pubblicata la 6.2 «Il Campo della Champions Cup»** con il «Vai» di Gianluca (SQL, annuncio e pubblicazione):
+  - `gh-pages` `c313e1a`: 23 file preparati con `rilascio/r62/applica.py` e `versioni.json` con la 6.2;
+  - `main` del sito `532c4d2`: `rilascio/r62/backend.py`, con catalogo, finestre e giurie, verdetto MVP nella Curva e Radio con `--mvp-tifosi`;
+  - `main` del registro `9f63b47` (PR #110).
+- **SQL:** applicata da Gianluca dall'SQL Editor di Supabase, nell'ordine `votazioni`, `finestre`, `albo` 6.2. Lo strumento SQL di Claude chiedeva una conferma che dal telefono non arrivava. Verifica in sola lettura dopo l'applicazione:
+  - funzioni `v62_*`, nuove `mvp_vota` e `sondaggio_vota`, trigger `conf_finestre62` e `dopo_finestre62` presenti;
+  - voti invariati: sondaggi 6ª 1, 7ª 2, 8ª 2; MVP 7ª 2, chiusura il 21 novembre alle 15:00; conferenze 8, dopo partita 1.
+- **Catalogo:** `sfida:2026/27:8` e la finestra della vigilia dell'8ª, preparati con `v62_prepara` e `v62_finestre_prepara` dal piano di `catalogo62.py`. Chiude il 21 novembre alle 15:00 e conta già i 2 voti dati nella 6.1. Da adesso lo aggiorna il workflow `tifosi-giornata.yml`.
+- **Sito vero controllato, solo letture:** Lega e Stadio × 320 e 1280 × Home, Campo, Tabellone, Curva, Girrr Sport, Albo, Versioni, 28 visite. Zero errori in console, nessuno scorrimento laterale, `v62_sondaggi`, `v62_finestre` e `v62_albo` rispondono 200, Home e Versioni mostrano la 6.2.
+- **Prima del rilascio:** suite 6.2 completa verde su Chromium, WebKit e Firefox, run 43825222693 su `777ebfb`. Corretti anche la prova dell'Albo e il menu Ramificazioni del portale (torna su `rami.html`, la pagina con le tre viste).
+- **Sorgenti** `ufficiale/src/sito/` allineate alle pagine pubblicate.
+- **Tornare indietro:**
+  - pagine: `git revert c313e1a` su `gh-pages`;
+  - backend: `git revert 532c4d2` sul `main` del sito;
+  - database: definizioni 6.1 in `rilascio/r62/prima/funzioni-61.sql`, più togliere i due trigger. Mai cancellare voti, cataloghi o verdetti.
+- **Non provati:** Safari su iPhone vero, Samsung Internet, TV fisiche.
+- **Da fare, non bloccante:** voti delle sfide con la stagione, prima della stagione 2027/28; giurie reali per «La partita più seguita», per ora «Dato non disponibile».
+
 ## 16 novembre — Claude: 6.2 pronta per il rilascio (manca solo il «Vai»)
 
 - **Release candidate di ChatGPT** (PR [#108](https://github.com/giandjcosta/o-girrr-registro/pull/108) e [#109](https://github.com/giandjcosta/o-girrr-registro/pull/109)) portata sul ramo `claude/fervent-thompson-rwlwrh` insieme all'ultimo `main`, senza conflitti. Comprende:
