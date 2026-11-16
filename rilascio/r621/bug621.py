@@ -72,7 +72,16 @@ NOTIFICHE_HEAD = '</head>'
 NOTIFICHE_NEW = ('<style>/* 6.2.1 (da ChatGPT nel Lab): logo della Lega senza alone, come nelle altre pagine; niente contorno al tocco */'
                  'body[data-v53="notifications"] .hero img{filter:none!important;animation:none!important}'
                  'body[data-v53="notifications"] .hero>a{background:transparent!important;box-shadow:none!important;border:0!important}'
-                 'a[href]:focus:not(:focus-visible),button:focus:not(:focus-visible){outline:none!important;box-shadow:none!important}</style></head>')
+                 'a[href]:focus:not(:focus-visible),button:focus:not(:focus-visible){outline:none!important;box-shadow:none!important}'
+                 '/* 6.2.1 (Gianluca): testata come nelle altre pagine: «‹ O Girrr» sopra, logo grande a fianco del titolo, stesse misure dell\'Albo */'
+                 'html body[data-v53="notifications"] .wrap .v55-header .v55-home-logo{display:none!important}'
+                 'html body[data-v53="notifications"] .wrap .v55-header{border-bottom:0!important;padding:0!important;margin:0 0 10px!important}'
+                 'html body[data-v53="notifications"] .wrap .v55-header .v55-return{padding:0!important;min-height:0!important;font-size:13px!important;letter-spacing:.14em;max-width:none!important}'
+                 'html body[data-v53="notifications"] .wrap .hero{gap:16px!important;align-items:center!important}'
+                 'html body[data-v53="notifications"] .wrap .hero>a{display:block!important;flex:none}'
+                 'html body[data-v53="notifications"] .wrap .hero img{display:block;height:clamp(70px,13vw,120px)!important;width:auto!important}'
+                 'html body[data-v53="notifications"] .wrap .hero h1{font-size:clamp(26px,5vw,44px)!important;line-height:1.05!important;margin-top:4px}'
+                 'html body[data-v53-skin="stadio"][data-v53="notifications"] .wrap .hero h1{font-size:clamp(30px,6vw,48px)!important}</style></head>')
 
 WEEK_MORPH = "  morphDom(_vw,_nv);"
 WEEK_MORPH_NEW = ("  /* 6.2.1: «La mia settimana» la aggiunge tifosi.js dopo il disegno: fuori dal confronto, poi di nuovo al suo posto, con la fila ferma.\n"

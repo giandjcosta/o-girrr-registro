@@ -18,6 +18,7 @@ Ultimo aggiornamento: 16 novembre 2026, Claude.
 - **Carriera sul telefono** · Claude · `In prova nel Lab` · `rilascio/r621/bug621.py` (CENTRA, ORO_SCROLL, WEEK_MORPH, PILL_FILA) e anteprima in `lab/integrata-62/`. Ogni tocco su una pillola fa partire un solo scorrimento e la fila arriva sulla voce scelta. Prima tre codici muovevano la stessa fila e un ridisegno a metà la fermava (per esempio «Promesse» si fermava a 226 invece di 279). Prossimo passo: Gianluca prova sul suo telefono.
 - **Tabellone della Fiducia a ogni ingresso nella Carriera** · Claude · `In prova nel Lab` · `bug621.py` (FID_TAB, FID_INIT, FID_GATE). Riparte ogni volta che si entra nella Carriera dalla Home o da un altro menu; cambiando scheda dentro la Carriera non riparte. Prima girava al massimo una volta ogni 5 minuti.
 - **Niente alone al tocco su «‹ O Girrr» e sugli altri link** · Claude · `In prova nel Lab` · `bug621.py` (TOCCO, aggiunto in `tv.js`, che è in tutte le pagine; `tv.js?v=621`).
+- **Notifiche: logo e titolo come nelle altre pagine** · Claude · `In prova nel Lab` · `bug621.py` (NOTIFICHE_NEW): «‹ O Girrr» sopra, logo 104×120 su PC e 60×70 su telefono, a 16 px dal titolo, come nell'Albo.
 - **Registro: barra in alto più piccola e un solo interruttore Lega/Stadio** · Claude · `In prova nel Lab` · `registro.css`, `registro.js` e `rilascio/r62/lab62.js`, che ora ha una riga di prova compatta al posto dei link blu sottolineati.
 
 ## Da fare
