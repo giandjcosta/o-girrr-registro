@@ -17,6 +17,8 @@
   "App: «‹ O Girrr» non si illumina più quando lo tocchi per tornare indietro, in tutte le pagine dell’app.",
   "App: Passando da Lega a Stadio (e viceversa) la Home entra con una dissolvenza già completa, senza parti che compaiono dopo o che si spostano.",
   "Spogliatoio: Lo sfondo della grafica Lega è blu con le strisce e quello della grafica Stadio ha i riflessi rosso e azzurro, come nelle altre pagine.",
-  "Spogliatoio: Cambiando stile dal menu «Grafica» la pagina passa con una dissolvenza invece di cambiare di colpo."
+  "Spogliatoio: Cambiando stile dal menu «Grafica» la pagina passa con una dissolvenza invece di cambiare di colpo.",
+  "Curva: È uguale nella grafica Lega e nella grafica Stadio; cambia solo tra la grafica per iPhone e quella per Android.",
+  "Curva: Toccando la «C» in alto a sinistra non si torna più alla Home; per tornare c’è «O Girrr» nella barra in basso."
  ]
 }

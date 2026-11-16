@@ -16,6 +16,7 @@
 - «‹ O Girrr» senza alone in tutte le pagine, anche nell'app (.oback).
 - Cambio Lega/Stadio della Home senza pezzi che compaiono di colpo; Spogliatoio con sfondi diversi per Lega e Stadio e
   cambio di stile con dissolvenza.
+- Curva: uguale in Lega e Stadio (cambia solo tra iPhone e Android); la «C» in alto non porta più alla Home.
 
 Uso: python3 rilascio/r623/applica.py COPIA_GH_PAGES_6_2_2
 Si ferma se il sito non è la 6.2.2 pubblicata (gh-pages 64a243b). Rieseguibile: la seconda volta non cambia niente.
@@ -215,6 +216,26 @@ SPO_CSS = ('</head>', """<style data-spogliatoio623>/* 6.2.3 (Gianluca): sfondi 
 SPO_JS = ("try{document.cookie='gskin='+LS.skin+'; max-age=31536000; path=/; SameSite=Lax'}catch(e){}render()}});",
           "try{document.cookie='gskin='+LS.skin+'; max-age=31536000; path=/; SameSite=Lax'}catch(e){}/* 6.2.3: cambio di stile con dissolvenza */var _rid=false;try{_rid=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}if(!_rid&&document.startViewTransition){document.startViewTransition(function(){render()})}else if(!_rid&&document.body.animate){var _a=document.body.animate([{opacity:1},{opacity:0}],{duration:140,easing:'ease-in'});_a.onfinish=function(){render();document.body.animate([{opacity:0},{opacity:1}],{duration:240,easing:'ease-out'})}}else render()}});")
 
+# 6.2.3 · Curva (Gianluca, 16 novembre): «tra Lega e Stadio non dovrebbe cambiare niente: cambia se è la grafica per Android o
+# per iPhone». Nella Curva dello Stadio via il corsivo (skin-nuova, Lobster) e le regole Stadio di tifosi.css (data-pt-skin);
+# i collegamenti restano quelli dello Stadio (data-v53-skin e i percorsi non cambiano).
+# E la «C» in alto a sinistra non porta più alla Home (aveva data-lega): alla Home si va da «O Girrr» nella barra in basso.
+CURVA_C = ('<i class="lg" data-lega="1" style="width:28px;height:28px;cursor:pointer"></i>',
+           '<i class="lg" aria-hidden="true" style="width:28px;height:28px"></i>')
+CURVA_ST = [
+    ('<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" media="print" onload="this.media=\'all\'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"></noscript>', ''),
+    ('<style id="skin-nuova">.bar .tt,.bar .tt>span,h2{font-family:Lobster,\'Brush Script MT\',cursive!important;font-weight:400!important;letter-spacing:0!important}.bar .tt{font-size:25px!important}.bar .tt small{font-family:Inter,system-ui,sans-serif!important;font-size:12px!important;font-weight:500!important}</style>', ''),
+    ('</body>', '<script>/* 6.2.3 (Gianluca): la Curva è uguale in Lega e Stadio, cambia solo tra iPhone e Android */document.documentElement.dataset.ptSkin=\'lega\'</script></body>'),
+    # ui.css (v55) ha regole proprie dello Stadio legate a data-v53-skin, che serve anche ai collegamenti: qui si rimettono i valori della Lega
+    ('</head>', '<style data-curva623>/* 6.2.3: Curva come nella Lega (titoli, accento, riquadri, menu, tirare per aggiornare) */'
+     'body[data-v53=curva][data-v53-skin=stadio]{--v53-title-font:Inter,system-ui,sans-serif;--v53-title-weight:900;--g-card:4px 14px 14px 4px;--g-box:10px;--g-acc:#d62839;--g-onacc:#fbf6ec}'
+     'body[data-v53=curva][data-v53-skin=stadio] .v53-h1{font-family:Inter,system-ui,sans-serif!important;font-size:clamp(23px,4vw,33px)!important;font-weight:900!important;letter-spacing:-.025em!important}'
+     'body[data-v53=curva][data-v53-skin=stadio] .v53-panel h2{font-family:Inter,system-ui,sans-serif!important;font-size:21px!important;font-weight:900!important;letter-spacing:-.015em!important}'
+     'body[data-v53=curva][data-v53-skin=stadio] .v53-panel{border-radius:16px}body[data-v53=curva][data-v53-skin=stadio] .v53-menu a{border-radius:10px}'
+     'body[data-v53=curva][data-v53-skin=stadio] .v53-select{border-color:rgba(255,255,255,.27)}body[data-v53=curva][data-v53-skin=stadio] .v53-pill[aria-selected=true],body[data-v53=curva][data-v53-skin=stadio] .v53-pill.active{color:var(--v53-onaccent)}'
+     'body[data-v53=curva][data-v53-skin=stadio] .v55-ptr.pronto{background:rgba(214,40,57,.62);border-color:rgba(214,40,57,.8);color:inherit}</style></head>'),
+]
+
 BOA = ('<small class="gb-versione">6.1 · Bilancio della stagione</small>', '')
 
 
@@ -298,6 +319,15 @@ def main(argv):
             t = sostituisci(t, rel, *SPO_CSS)
         return sostituisci(t, rel, *SPO_JS)
     scrivi('index.html', spogliatoio)
+
+    def curva(t, rel):
+        t = sostituisci(t, rel, *CURVA_C)
+        if rel.startswith('stadio/'):
+            for a, b in CURVA_ST:
+                t = sostituisci(t, rel, a, b)
+        return t
+    for rel in ('girrr/curva.html', 'stadio/girrr/curva.html'):
+        scrivi(rel, curva)
     scrivi('versioni.js', lambda t, rel: sostituisci(t, rel, VERS_VECCHIO, VERS_NUOVO))
     for html in sorted(base.rglob('*.html')):
         rel = str(html.relative_to(base))
