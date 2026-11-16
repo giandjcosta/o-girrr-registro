@@ -22,8 +22,8 @@ Il Changelog ha filtri compatti combinabili: ricerca, menu Area e calendario Dat
 | Sito vero in **modalità ospite** (sola lettura, da condividere) | https://giandjcosta.github.io/o-fant-a-girrr/girrr/?ospite=1 |
 | **Registro** · Un solo ingresso con Changelog, Lab, Anteprima, Aggiornamenti, Archivio e Ramificazioni | https://giandjcosta.github.io/o-girrr-registro/registro.html |
 | **Laboratorio** (le prove nuove) | https://giandjcosta.github.io/o-girrr-registro/lab/ |
-| **Correzioni 6.2.1** (in prova, una scheda per correzione) | https://giandjcosta.github.io/o-girrr-registro/lab/novita-6-2-1.html |
-| **Novità 6.2** (ultima versione online) | https://giandjcosta.github.io/o-girrr-registro/lab/novita-6-2.html |
+| **Migliorie 6.2.2** (in prova, una scheda per miglioria) | https://giandjcosta.github.io/o-girrr-registro/lab/novita-6-2-2.html |
+| **Correzioni 6.2.1** (ultima versione online) | https://giandjcosta.github.io/o-girrr-registro/lab/novita-6-2-1.html |
 | **Anteprima** · La versione online, in sola lettura, grafica Lega o Stadio (le versioni in prova sono nel Laboratorio) | https://giandjcosta.github.io/o-girrr-registro/registro.html#anteprima |
 | **Archivio** · Le versioni uscite (l'ultima aperta), con i prototipi e l'anteprima storica della 5.5 | https://giandjcosta.github.io/o-girrr-registro/archivio.html |
 | **Ramificazioni** · Rami e versioni dei due repository (si aggiorna a mano) | https://giandjcosta.github.io/o-girrr-registro/registro.html#ramificazioni |

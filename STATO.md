@@ -1,6 +1,16 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 16 novembre 2026)
 
-## 16 novembre (6) — Claude: Carriera sul telefono, tabellone della Fiducia, Registro e regole comuni (6.2.1 NON pubblicata)
+## 16 novembre (7) — Claude: 6.2.1 ONLINE, migliorie del pomeriggio spostate nella 6.2.2 (in prova nel Lab)
+- **6.2.1 pubblicata** con il «Vai» di Gianluca («Facciamo il rilascio della 6.2.1 e la miglioriamo con la 6.2.2»), così come era nel Lab stamattina (registro `main` `1987fd6`, `rilascio/r621/`):
+  - `gh-pages` `19653ba` (da `b4114fb`): 37 file, `versioni.json` 6.2.1 «Correzioni e personaggi in Curva» con l'annuncio approvato.
+  - `main` del sito `4074b62` (da `cd233e2`): `calcoli/tifosi/contesto.cjs` con undici personaggi dalla votazione della 8ª giornata.
+  - Controllo sul sito vero: 60 pagine (10 pagine × Lega/Stadio × PC, iPhone SE, TV) senza errori nuovi e senza scorrimento laterale, pillola «V6.2.1» in Home, correzioni presenti nei file online.
+  - Per tornare indietro: `git revert 19653ba` su `gh-pages`, `git revert 4074b62` su `main` del sito.
+  - **Manca**: `sql/mvp-personaggi-621.sql` (voti dei personaggi uno alla volta durante la settimana), da incollare da Gianluca nell'SQL Editor prima che si apra la votazione della 8ª giornata. Senza, i personaggi votano tutti all'apertura e la riga «Personaggi che hanno votato» non compare.
+- **6.2.2 in prova** (`rilascio/r622/applica.py` sopra la 6.2.1 pubblicata, `sostituzioni.json`, Lab con `rilascio/r622/lab.py`, pagina `lab/novita-6-2-2.html`): Carriera sul telefono, tabellone della Fiducia a ogni ingresso, schede del Derby al centro, Campionato/Champions Cup affiancati e in oro nello Stadio, logo delle Notifiche, niente alone al tocco. `rilascio/r621/` riportato a quello pubblicato. Messaggio da approvare in `rilascio/r622/ANNUNCIO-BOZZA.json`.
+- `ufficiale/src/sito/` allineato a `gh-pages` `19653ba` (31 file sorgente; i file dei workflow restano fuori).
+
+## 16 novembre (6) — Claude: Carriera sul telefono, tabellone della Fiducia, Registro e regole comuni (diventate 6.2.2, vedi sopra)
 - **Carriera sul telefono** (`rilascio/r621/bug621.py`): ogni tocco su una pillola fa partire un solo scorrimento (`centra` non riparte verso la stessa voce, ORO_SCROLL passa da `centra`, `pillole.js` non muove le file `.oro-scroll`, WEEK_MORPH rimette lo scorrimento solo se è cambiato). Prima «Promesse» si fermava a 226 invece di 279 e la fila saltava. Su PC le pillole stanno tutte in vista, per questo lì andava bene.
 - **Tabellone della Fiducia**: riparte a ogni ingresso nella Carriera (dalla Home o da un altro menu), non cambiando scheda. Prima al massimo ogni 5 minuti (decisione nuova di Gianluca).
 - **Notifiche**: testata come nelle altre pagine («‹ O Girrr» sopra, logo grande a fianco del titolo, misure dell'Albo), provata su telefono, PC e TV.

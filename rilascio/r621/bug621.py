@@ -51,7 +51,7 @@ if(window.MutationObserver)new MutationObserver(tutte).observe(document.document
 """
 
 ORO_SCROLL = """requestAnimationFrame(function(){var r=document.querySelector('.oro-scroll'),a=r&&r.querySelector('[aria-pressed="true"]');if(a)a.scrollIntoView({block:'nearest',inline:'center'})});"""
-ORO_SCROLL_NEW = """requestAnimationFrame(function(){var r=document.querySelector('.oro-scroll'),a=r&&r.querySelector('[aria-pressed="true"]');/* 6.2.1: la fila si sposta solo se la voce scelta è fuori vista, e con calma; la pagina non si muove */if(a&&r.scrollWidth>r.clientWidth+1){var e=r.getBoundingClientRect(),q=a.getBoundingClientRect();if(q.left<e.left-1||q.right>e.right+1)centra(r,a)}});"""
+ORO_SCROLL_NEW = """requestAnimationFrame(function(){var r=document.querySelector('.oro-scroll'),a=r&&r.querySelector('[aria-pressed="true"]');/* 6.2.1: la fila si sposta solo se la voce scelta è fuori vista, e con calma; la pagina non si muove */if(a&&r.scrollWidth>r.clientWidth+1){var e=r.getBoundingClientRect(),q=a.getBoundingClientRect();if(q.left<e.left-1||q.right>e.right+1)r.scrollTo({left:Math.max(0,r.scrollLeft+(q.left-e.left)-(e.width-q.width)/2),behavior:(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)?'auto':'smooth'})}});"""
 
 PILL_FILA = """      /* la fila non torna all'inizio */
       if (scorri(c2) && c2.scrollLeft < sl - 2) { var sb = c2.style.scrollBehavior; c2.style.scrollBehavior = 'auto'; c2.scrollLeft = sl; c2.style.scrollBehavior = sb; }
@@ -59,7 +59,7 @@ PILL_FILA = """      /* la fila non torna all'inizio */
 PILL_FILA_NEW = """      /* 6.2.1: nelle file ferme (Albo, Carriera, Derby) la fila non viene riportata indietro e si sposta solo se la voce scelta
          è fuori vista: prima tre scorrimenti insieme (questo, l'app e il ritorno indietro) la fermavano a metà, con l'ultima voce tagliata */
       var ferma = c2.matches && c2.matches(FERME);
-      if (ferma) { var _r = n.getBoundingClientRect(), _e = c2.getBoundingClientRect(); if (!c2.matches('.oro-scroll') && (_r.left < _e.left - 1 || _r.right > _e.right + 1)) centra(c2, n); }   /* Albo e Carriera: le sposta solo l'app */
+      if (ferma) { var _r = n.getBoundingClientRect(), _e = c2.getBoundingClientRect(); if (_r.left < _e.left - 1 || _r.right > _e.right + 1) centra(c2, n); }
       else {
       /* la fila non torna all'inizio */
       if (scorri(c2) && c2.scrollLeft < sl - 2) { var sb = c2.style.scrollBehavior; c2.style.scrollBehavior = 'auto'; c2.scrollLeft = sl; c2.style.scrollBehavior = sb; }
@@ -72,62 +72,18 @@ NOTIFICHE_HEAD = '</head>'
 NOTIFICHE_NEW = ('<style>/* 6.2.1 (da ChatGPT nel Lab): logo della Lega senza alone, come nelle altre pagine; niente contorno al tocco */'
                  'body[data-v53="notifications"] .hero img{filter:none!important;animation:none!important}'
                  'body[data-v53="notifications"] .hero>a{background:transparent!important;box-shadow:none!important;border:0!important}'
-                 'a[href]:focus:not(:focus-visible),button:focus:not(:focus-visible){outline:none!important;box-shadow:none!important}'
-                 '/* 6.2.1 (Gianluca): testata come nelle altre pagine: «‹ O Girrr» sopra, logo grande a fianco del titolo, stesse misure dell\'Albo */'
-                 'html body[data-v53="notifications"] .wrap .v55-header .v55-home-logo{display:none!important}'
-                 'html body[data-v53="notifications"] .wrap .v55-header{border-bottom:0!important;padding:0!important;margin:0 0 10px!important}'
-                 'html body[data-v53="notifications"] .wrap .v55-header .v55-return{padding:0!important;min-height:0!important;font-size:13px!important;letter-spacing:.14em;max-width:none!important}'
-                 'html body[data-v53="notifications"] .wrap .hero{gap:16px!important;align-items:center!important}'
-                 'html body[data-v53="notifications"] .wrap .hero>a{display:block!important;flex:none}'
-                 'html body[data-v53="notifications"] .wrap .hero img{display:block;height:clamp(70px,13vw,120px)!important;width:auto!important}'
-                 'html body[data-v53="notifications"] .wrap .hero h1{font-size:clamp(26px,5vw,44px)!important;line-height:1.05!important;margin-top:4px}'
-                 'html body[data-v53-skin="stadio"][data-v53="notifications"] .wrap .hero h1{font-size:clamp(30px,6vw,48px)!important}</style></head>')
+                 'a[href]:focus:not(:focus-visible),button:focus:not(:focus-visible){outline:none!important;box-shadow:none!important}</style></head>')
 
 WEEK_MORPH = "  morphDom(_vw,_nv);"
 WEEK_MORPH_NEW = ("  /* 6.2.1: «La mia settimana» la aggiunge tifosi.js dopo il disegno: fuori dal confronto, poi di nuovo al suo posto, con la fila ferma.\n"
                   "     Prima il confronto la trasformava in «Regole» e cancellava l'ultimo pulsante: la fila saltava e i pulsanti cambiavano sotto il dito. */\n"
                   "  var _wk=_vw.querySelector('[data-pt-week]'),_wfr=_wk&&_wk.parentNode,_wsl=_wfr?_wfr.scrollLeft:0;if(_wk)_wk.remove();\n"
                   "  morphDom(_vw,_nv);\n"
-                  "  if(_wk){var _rg=_vw.querySelector('[data-ctab=\"reg\"]');if(_rg&&_rg.parentNode){var _rf=_rg.parentNode,_rsb=_rf.style.scrollBehavior;_rf.insertBefore(_wk,_rg);if(Math.abs(_rf.scrollLeft-_wsl)>1){_rf.style.scrollBehavior='auto';_rf.scrollLeft=_wsl;_rf.style.scrollBehavior=_rsb}}}")
+                  "  if(_wk){var _rg=_vw.querySelector('[data-ctab=\"reg\"]');if(_rg&&_rg.parentNode){var _rf=_rg.parentNode,_rsb=_rf.style.scrollBehavior;_rf.insertBefore(_wk,_rg);_rf.style.scrollBehavior='auto';_rf.scrollLeft=_wsl;_rf.style.scrollBehavior=_rsb}}")
 
-CENTRA = "function centra(el,b){var r=b.getBoundingClientRect(),e=el.getBoundingClientRect();el.scrollTo({left:el.scrollLeft+(r.left-e.left)-(e.width-r.width)/2,behavior:'smooth'})}"
-CENTRA_NEW = ("function centra(el,b){var r=b.getBoundingClientRect(),e=el.getBoundingClientRect(),t=Math.max(0,Math.min(el.scrollWidth-el.clientWidth,el.scrollLeft+(r.left-e.left)-(e.width-r.width)/2)),ora=Date.now();"
-              "/* 6.2.1: uno scorrimento per volta verso la stessa voce. Sul telefono tre scorrimenti insieme (e un nuovo disegno a metà) fermavano la fila prima della voce scelta */"
-              "if(Math.abs(t-el.scrollLeft)<2||(el._ct!=null&&Math.abs(el._ct-t)<2&&ora-el._cts<900))return;el._ct=t;el._cts=ora;"
-              "el.scrollTo({left:t,behavior:(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)?'auto':'smooth'})}")
-FID_TAB = "if(cur==='radio'&&t!=='radio'){radioStop();RA.i=-1}cur=t;"
-FID_TAB_NEW = "if(cur==='radio'&&t!=='radio'){radioStop();RA.i=-1}if(t==='carriera'&&cur!=='carriera')TRUSTANIM.entrata=1;cur=t;"
-FID_INIT = "var TRUSTANIM={team:null,value:null,token:0};"
-FID_INIT_NEW = "var TRUSTANIM={team:null,value:null,token:0,entrata:1};   /* 6.2.1: aprire la pagina conta come ingresso nella Carriera */"
-FID_GATE = ("/* Gianluca: l'arco che si colora da zero e il numero che scorre come un tabellone, non a ogni ingresso ma al massimo ogni 5 minuti */\n"
-            "  var G=TRUSTANIM.giro,giro=false,ora=Date.now(),ult=0;\n"
-            "  if(G&&G.team===t&&G.v===v)giro=true;   /* la pagina si è ridisegnata durante il giro: si continua da dove era */\n"
-            "  else if(!reduce){try{ult=+localStorage.getItem('orr_fid_anim')||0}catch(e){}\n"
-            "    if(ora-ult>=300000){giro=true;G=TRUSTANIM.giro={team:t,v:v,start:null,duration:Math.max(1100,Math.min(1900,v*30))};try{localStorage.setItem('orr_fid_anim',String(ora))}catch(e){}}}")
-FID_GATE_NEW = ("/* Gianluca (16 novembre 2026): l'arco che si colora da zero e il numero a cartellini ripartono ogni volta che si entra nella Carriera\n"
-                "     (dalla Home o da un altro menu); cambiando scheda dentro la Carriera non ripartono. Prima: al massimo ogni 5 minuti. */\n"
-                "  var G=TRUSTANIM.giro,giro=false;\n"
-                "  if(G&&G.team===t&&G.v===v)giro=true;   /* la pagina si è ridisegnata durante il giro: si continua da dove era */\n"
-                "  else if(!reduce&&TRUSTANIM.entrata){TRUSTANIM.entrata=0;giro=true;G=TRUSTANIM.giro={team:t,v:v,start:null,duration:Math.max(1100,Math.min(1900,v*30))}}")
-
-COMP_MARCA = '6.2.1 · Campionato e Champions Cup dei Derby'
-COMP = ("/* 6.2.1 · Campionato e Champions Cup dei Derby (Gianluca): due pulsanti affiancati anche su iPhone SE (andavano a capo per 1 px)\n"
-        "   e, nella grafica Stadio, tutto oro anche in Champions Cup (regola del 15 novembre 2026); nella Lega restano rosso e azzurro. */\n"
-        "(function () { try { var stadio = /\\/stadio\\//.test(location.pathname); var s = document.createElement('style');\n"
-        "  s.textContent = '.pt-competition{flex-wrap:nowrap}.pt-competition button{flex:0 1 auto;min-width:0;white-space:nowrap}' + (stadio ?\n"
-        "    '.pt-competition button[data-pt-comp][aria-pressed=true]{background:#ffd166!important;border-color:#ffd166!important;color:#182649!important}'\n"
-        "    + '#pt-derby,#pt-derby[data-pt-competition=cup]{border-left-color:#ffd166!important}' : '');\n"
-        "  (document.head || document.documentElement).appendChild(s); } catch (e) {} })();")
-TOCCO_MARCA = '6.2.1 · Niente alone al tocco'
-TOCCO = ("/* 6.2.1 · Niente alone al tocco (Gianluca): su telefono il browser colorava di azzurro o di grigio il riquadro\n"
-         "   di «‹ O Girrr» e degli altri link mentre si premono. tv.js è in tutte le pagine di Lega, Stadio e Spogliatoio. */\n"
-         "(function () { try { var s = document.createElement('style'); s.textContent = 'a,button,summary,label,[role=button]{-webkit-tap-highlight-color:transparent}"
-         "a:focus:not(:focus-visible),button:focus:not(:focus-visible){outline:none}.back:active{opacity:.7}'; (document.head || document.documentElement).appendChild(s); } catch (e) {} })();")
 LAVORI = {
-    'girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW), (ORO_SCROLL, ORO_SCROLL_NEW), (WEEK_MORPH, WEEK_MORPH_NEW),
-                       (CENTRA, CENTRA_NEW), (FID_TAB, FID_TAB_NEW), (FID_INIT, FID_INIT_NEW), (FID_GATE, FID_GATE_NEW)],
-    'stadio/girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW), (ORO_SCROLL, ORO_SCROLL_NEW), (WEEK_MORPH, WEEK_MORPH_NEW),
-                       (CENTRA, CENTRA_NEW), (FID_TAB, FID_TAB_NEW), (FID_INIT, FID_INIT_NEW), (FID_GATE, FID_GATE_NEW)],
+    'girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW), (ORO_SCROLL, ORO_SCROLL_NEW), (WEEK_MORPH, WEEK_MORPH_NEW)],
+    'stadio/girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW), (ORO_SCROLL, ORO_SCROLL_NEW), (WEEK_MORPH, WEEK_MORPH_NEW)],
     'sondaggi62.js': [(SOND_DRAW, SOND_DRAW_NEW), (SOND_PREC, SOND_PREC_NEW), (SOND_PREC2, SOND_PREC2_NEW), (SOND_CAMBIA, SOND_CAMBIA_NEW)],
     'girrr/curva.html': [(CURVA_LOGO, CURVA_LOGO_NEW)],
     'stadio/girrr/curva.html': [(CURVA_LOGO, CURVA_LOGO_NEW)],
@@ -164,19 +120,12 @@ def extra(base):
         f = base / p; t = f.read_text(encoding='utf-8')
         if '__dline' not in t:
             f.write_text(t + DERBY_FINE, encoding='utf-8')
-    f = base / 'girrr/v60/tifosi.js'; t = f.read_text(encoding='utf-8')
-    if COMP_MARCA not in t:
-        f.write_text(t.rstrip('\n') + '\n' + COMP + '\n', encoding='utf-8')
-    f = base / 'tv.js'; t = f.read_text(encoding='utf-8')
-    if TOCCO_MARCA not in t:
-        f.write_text(t.rstrip('\n') + '\n' + TOCCO + '\n', encoding='utf-8')
 
 
 def versioni(t):
     import re
     t = t.replace('pillole.js?v=1"', 'pillole.js?v=621"')
     t = re.sub(r'derby\.js\?v=\d+', 'derby.js?v=621', t)
-    t = re.sub(r'(["/])tv\.js(?=["\'])', r'\1tv.js?v=621', t)   # niente alone al tocco: i telefoni devono riprendere tv.js
     t = re.sub(r'novita\.js\?v=\d+', 'novita.js?v=621', t)
     t = t.replace('giro-di-boa.js?v=611-1', 'giro-di-boa.js?v=621').replace('giro-di-boa.css?v=61-periodi1', 'giro-di-boa.css?v=621').replace('condividi.js?v=61-periodi1', 'condividi.js?v=621')
     return t
