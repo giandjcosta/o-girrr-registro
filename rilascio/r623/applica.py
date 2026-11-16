@@ -215,7 +215,7 @@ SPO_CSS = ('</head>', """<style data-spogliatoio623>/* 6.2.3 (Gianluca): sfondi 
 /* Grafica Lega: rosso e azzurro al posto di rosso e oro (Gianluca). Lo Stadio resta oro. Le schede e i pulsanti si alternano:
    la scheda scelta è rossa o azzurra secondo la posizione; Svincolati: ruolo rosso, ordine azzurro; Calendario: Classic League
    rossa, Champions Cup azzurra (come nel sito); tra due pulsanti vicini il secondo è azzurro. I colori dello stato («In dubbio»…) restano. */
-:root[data-skin="girrr"]{--hl:#8fd0ff;--hl-ink:#0d1f3c;--hl-bg:rgba(61,147,214,.18);--hl-name:#8fd0ff;--num:#8fd0ff}
+:root[data-skin="girrr"]{--hl:#8fd0ff;--hl-ink:#0d1f3c;--hl-bg:rgba(61,147,214,.18);--hl-name:#8fd0ff;--num:#fbf6ec}
 :root[data-skin="girrr"] header .sub{color:#8fd0ff}
 :root[data-skin="girrr"] header::after{background:linear-gradient(90deg,#d62839 0 60%,#3d93d6 60% 100%)}
 :root[data-skin="girrr"] nav button[data-alt="az"][aria-selected=true],:root[data-skin="girrr"] .seg button[data-sort][aria-pressed=true],:root[data-skin="girrr"] .seg button[data-comp="cup"][aria-pressed=true]{background:#3d93d6;border-color:#3d93d6;color:#fff;box-shadow:none}
