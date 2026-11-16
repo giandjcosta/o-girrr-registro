@@ -7,6 +7,7 @@
 - Albo › Record: la «Serie di vittorie più lunga» senza il numero in oro (niente oro nell'Albo).
 - MVP dei tifosi: «Giurie e criteri» resta aperta durante gli aggiornamenti; testo sui personaggi che votano durante
   la settimana e quanti hanno votato (con sql/mvp-personaggi-621.sql).
+- Girrr Sport › Sondaggi: risultati con barre e percentuali staccate (prima solo testo, perché gli stili erano nella Curva).
 - Destinazioni (richiesta di Gianluca): i cerchi aprono la Classifica dopo quella giornata; Ultimo risultato,
   Le ultime cinque, Prossima sfida e Le prossime tre aprono i Risultati della giornata.
 
@@ -24,6 +25,12 @@ LAVORI = {
     'girrr/v55/home55.js': [
         ("circleChart(series,'Posizioni nelle ultime giornate',o.dayLink,false)",
          "circleChart(series,'Posizioni nelle ultime giornate',function(n){return o.dayLink(n,'classifica')},false)"),  # 6.2.1: Classifica dopo la giornata
+    ],
+    'sondaggi62.js': [
+        # 6.2.1: in Girrr Sport i risultati del sondaggio avevano solo gli stili della Curva (barre e percentuali assenti).
+        # Stili propri, solo dentro i riquadri di Girrr Sport: barre rosse nella Lega e oro nello Stadio.
+        ("st.id='v62-cambia-css';st.textContent='",
+         "st.id='v62-cambia-css';st.textContent=(function(){var c=/\\/stadio\\//.test(location.pathname)?'#ffd166':'#d62839';return '.v62-card .poll{margin:10px 0 4px}.v62-card .po-r{position:relative;display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.22);border-radius:12px;padding:11px 14px;margin:6px 0;overflow:hidden;font-size:15px}.v62-card .po-r i{position:absolute;left:0;top:0;bottom:0;background:'+c+';opacity:.3}.v62-card .po-r.me{border-color:'+c+'}.v62-card .po-r.me i{opacity:.5}.v62-card .po-r span{position:relative;min-width:0}.v62-card .po-r b{font-weight:900}.v62-card .pom{font-size:13px;opacity:.75;margin-top:4px}'})()+'"),
     ],
     'girrr/albo.html': [
         ("row('🔥','Serie di vittorie più lunga',se.best.t,'tra campionato e coppa',se.best.n,true)",
@@ -73,6 +80,7 @@ def main(argv):
         t = html.read_text(encoding='utf-8')
         n = t.replace('v55/ui.js?v=55r10', 'v55/ui.js?v=621').replace('v55/home55.js?v=55r8', 'v55/home55.js?v=621')
         n = re.sub(r'v60/tifosi\.js(?=["\'])', 'v60/tifosi.js?v=621', n)
+        n = n.replace('sondaggi62.js?v=62-nativa1', 'sondaggi62.js?v=621')
         if n != t:
             html.write_text(n, encoding='utf-8'); cambiate += 1
     if not cambiate and not any('v55/ui.js?v=621' in h.read_text(encoding='utf-8') for h in base.rglob('*.html')):

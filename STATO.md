@@ -57,6 +57,7 @@
   - vale solo per le votazioni aperte dopo l'applicazione (tabella `mvp_private.progressivo`): la 7ª resta com'è.
   - Prova `prove/v62/postgres_personaggi.py`: 10 casi su PostgreSQL locale. Restano verdi `postgres`, `postgres_cambio` e `postgres_albo`.
   - Le pagine 6.2.1 funzionano anche senza questa SQL: semplicemente non mostrano il conteggio.
+- **Girrr Sport › Sondaggi** (foto di Gianluca): dopo il voto i risultati erano solo testo («Oranje VC50%»), perché gli stili delle barre stanno in `curva.html`. Ora `sondaggi62.js` porta i suoi stili, solo nei riquadri di Girrr Sport: barre rosse nella Lega e oro nello Stadio. Pagine con `sondaggi62.js?v=621`. Provato nel Lab: Lega e Stadio, 320 e 1280, zero richieste a Supabase.
 - I personaggi sono ancora 5 (`calcoli/tifosi/contesto.cjs`); se ne possono aggiungere altri, ognuno con un suo criterio.
 - Lab: Curva e Albo, Lega e Stadio, 320 e 1280. «Giurie e criteri» aperta anche dopo 17 secondi, conteggio «3 su 5» simulato, numero del record senza oro, zero errori.
 - **Annuncio 6.2.1** aggiornato con 5 voci e validato.
