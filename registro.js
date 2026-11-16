@@ -1,6 +1,6 @@
 (function(){'use strict';
   var base=new URL('./',document.currentScript.src),frame=document.getElementById('contenuto');
-  var routes={changelog:['index.html','Changelog'],lab:['lab/','Lab'],anteprima:['ufficiale/','Anteprima'],aggiornamenti:['aggiornamenti.html','Aggiornamenti'],archivio:['archivio.html','Archivio'],ramificazioni:['rami.html','Ramificazioni']};
+  var routes={changelog:['index.html','Changelog'],lab:['lab/','Lab'],anteprima:['ufficiale/','Anteprima 6.2.1'],aggiornamenti:['aggiornamenti.html','Aggiornamenti'],archivio:['archivio.html','Archivio'],ramificazioni:['rami.html','Ramificazioni']};
   var current='',status=document.getElementById('stato'),skin=document.getElementById('grafica'),skinControl=document.getElementById('scelta-grafica'),select=document.getElementById('sezione');
   function section(){var key=location.hash.slice(1);return Object.prototype.hasOwnProperty.call(routes,key)?key:'changelog';}
   function navigate(){var key=section();if(key===current)return;current=key;
