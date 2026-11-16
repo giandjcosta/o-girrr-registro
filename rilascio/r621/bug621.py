@@ -23,7 +23,7 @@ SOND_CAMBIA_NEW = (".v62-cambia{display:inline-flex;align-items:center;font:inhe
                    ".v62-cambia:hover{filter:brightness(1.1)}.v62-cambia:focus-visible{outline:3px solid #89d9ff;outline-offset:2px}.v62-cambia[disabled]{opacity:.55;cursor:default}")
 
 PILL_FILE = "  var FILE = '.seg,.at,.dtab,nav .nvi,.chips,.ptabs,#tabs,.pt-competition';"
-PILL_FILE_NEW = PILL_FILE + "\n  /* 6.2.1 (Gianluca): menu dell'Albo, sottomenu dei Derby e pulsanti Campionato / Champions Cup dei Derby: il colore passa\n     dalla pillola di prima alla nuova senza scivolare; le pillole restano ferme (sul telefono la scelta resta in vista). */\n  var FERME = '.at,.dtab,.pt-competition';"
+PILL_FILE_NEW = PILL_FILE + "\n  /* 6.2.1 (Gianluca): menu dell'Albo e della Carriera (.oro-scroll), sottomenu dei Derby e pulsanti Campionato / Champions Cup dei Derby: il colore passa\n     dalla pillola di prima alla nuova senza scivolare; le pillole restano ferme (sul telefono la scelta resta in vista). */\n  var FERME = '.at,.dtab,.pt-competition,.oro-scroll';\n  try { var _fs = document.createElement('style'); _fs.textContent = FERME + '{scroll-snap-type:none!important}'; (document.head || document.documentElement).appendChild(_fs); } catch (e) {}   /* l'aggancio riportava indietro la fila e l'ultima voce restava tagliata */"
 PILL_GHOST = "      /* il colore scivola dalla pillola di prima a quella nuova */"
 PILL_GHOST_NEW = "      if (c2.matches && c2.matches(FERME)) return;\n" + PILL_GHOST
 
@@ -50,9 +50,12 @@ if(window.MutationObserver)new MutationObserver(tutte).observe(document.document
 })();
 """
 
+ORO_SCROLL = """requestAnimationFrame(function(){var r=document.querySelector('.oro-scroll'),a=r&&r.querySelector('[aria-pressed="true"]');if(a)a.scrollIntoView({block:'nearest',inline:'center'})});"""
+ORO_SCROLL_NEW = """requestAnimationFrame(function(){var r=document.querySelector('.oro-scroll'),a=r&&r.querySelector('[aria-pressed="true"]');/* 6.2.1: la fila si sposta solo se la voce scelta è fuori vista, e con calma; la pagina non si muove */if(a&&r.scrollWidth>r.clientWidth+1){var e=r.getBoundingClientRect(),q=a.getBoundingClientRect();if(q.left<e.left-1||q.right>e.right+1)r.scrollTo({left:Math.max(0,r.scrollLeft+(q.left-e.left)-(e.width-q.width)/2),behavior:(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)?'auto':'smooth'})}});"""
+
 LAVORI = {
-    'girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW)],
-    'stadio/girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW)],
+    'girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW), (ORO_SCROLL, ORO_SCROLL_NEW)],
+    'stadio/girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW), (ORO_SCROLL, ORO_SCROLL_NEW)],
     'sondaggi62.js': [(SOND_DRAW, SOND_DRAW_NEW), (SOND_PREC, SOND_PREC_NEW), (SOND_PREC2, SOND_PREC2_NEW), (SOND_CAMBIA, SOND_CAMBIA_NEW)],
     'pillole.js': [(PILL_FILE, PILL_FILE_NEW), (PILL_GHOST, PILL_GHOST_NEW)],
     'girrr/novita.js': [(LATTA, LATTA_NEW)],
