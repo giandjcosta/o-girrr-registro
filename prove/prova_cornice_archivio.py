@@ -48,7 +48,7 @@ with sync_playwright() as p:
             expect(page.locator('#grafica')).to_be_enabled()
             if screen=='iPhone320':
                 expect(page.locator('#stato')).to_contain_text('riaperta sulla Home')
-                assert page.evaluate("!localStorage.getItem('registro-anteprima-online').includes('pagina-rimossa')")
+                assert page.evaluate("!(localStorage.getItem('registro-anteprima-online')||'').includes('pagina-rimossa')")   # dopo il ripristino la memoria può essere vuota
             positions=page.locator('.versione-box').bounding_box()
             filenames=['index.html','tabellone.html','albo.html','curva.html','app.html'] if screen in ('iPhone320','PC1920') else ['index.html']
             for filename in filenames:
