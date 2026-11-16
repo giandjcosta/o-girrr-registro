@@ -46,6 +46,20 @@
   - Applicata alla preview `lab/integrata-62/`; pagina delle novità `lab/novita-6-2-1.html`, collegata dal Lab.
 - **Prove, solo Chromium:** 32 casi in locale (PC e telefono, Lega e Stadio, con e senza transizioni native) e 16 nel Lab, compreso 320 px senza scorrimento laterale. WebKit e Firefox non disponibili qui.
 - **Annuncio 6.2.1** validato con `aggiungi.py --prova` (`rilascio/r621/ANNUNCIO-APPROVAZIONE.json`). Aspetta il «Vai».
+- **Altre richieste di Gianluca nella 6.2.1** (stesso `rilascio/r621/applica.py`):
+  - MVP › «Giurie e criteri» si chiudeva da sola, perché la scheda si ridisegna ogni 15 secondi. Ora resta aperta.
+  - Testo nuovo: votano la redazione e più personaggi; i personaggi arrivano uno alla volta durante la settimana. Mostra quanti hanno votato.
+  - Albo › Record: la serie di vittorie più lunga non è più in oro.
+  - Pagine con `tifosi.js?v=621`.
+- **SQL `sql/mvp-personaggi-621.sql`, da applicare con il «Vai»:**
+  - il personaggio n-esimo su N arriva a n/(N+1) della durata della votazione;
+  - la classifica provvisoria conta solo i voti arrivati, mentre alla chiusura contano tutti, quindi il verdetto non cambia;
+  - vale solo per le votazioni aperte dopo l'applicazione (tabella `mvp_private.progressivo`): la 7ª resta com'è.
+  - Prova `prove/v62/postgres_personaggi.py`: 10 casi su PostgreSQL locale. Restano verdi `postgres`, `postgres_cambio` e `postgres_albo`.
+  - Le pagine 6.2.1 funzionano anche senza questa SQL: semplicemente non mostrano il conteggio.
+- I personaggi sono ancora 5 (`calcoli/tifosi/contesto.cjs`); se ne possono aggiungere altri, ognuno con un suo criterio.
+- Lab: Curva e Albo, Lega e Stadio, 320 e 1280. «Giurie e criteri» aperta anche dopo 17 secondi, conteggio «3 su 5» simulato, numero del record senza oro, zero errori.
+- **Annuncio 6.2.1** aggiornato con 5 voci e validato.
 - **Registro › Anteprima** (`ufficiale/` → `anteprima/pubblicata/`): `destinazioni55.js` riconosceva il sito solo da `/o-fant-a-girrr/`, quindi la copia pubblicata usava i nomi dell'Anteprima 5.5 (`v55/tabellone-lega.html`, 404). Ora `sincronizza.py` la imposta in modalità sito, con la base calcolata dalla posizione dello script. Copia rigenerata con `sincronizza.py`: cambia solo quel file. Nessuna modifica al sito vero.
 
 ## 16 novembre (2) — Claude: 6.2 ONLINE

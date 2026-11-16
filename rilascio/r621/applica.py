@@ -4,12 +4,15 @@
 - I cerchi del «Cammino in classifica» sono collegamenti dentro un disegno (SVG). Nei browser senza transizioni
   native (Firefox, Safari meno recenti) la dissolvenza di ui.js leggeva `l.href`, che nei disegni non è un testo,
   e mandava a «[object SVGAnimatedString]» (pagina 404). Ora legge l'attributo href.
+- Albo › Record: la «Serie di vittorie più lunga» senza il numero in oro (niente oro nell'Albo).
+- MVP dei tifosi: «Giurie e criteri» resta aperta durante gli aggiornamenti; testo sui personaggi che votano durante
+  la settimana e quanti hanno votato (con sql/mvp-personaggi-621.sql).
 - Destinazioni (richiesta di Gianluca): i cerchi aprono la Classifica dopo quella giornata; Ultimo risultato,
   Le ultime cinque, Prossima sfida e Le prossime tre aprono i Risultati della giornata.
 
 Uso: python3 rilascio/r621/applica.py COPIA_GH_PAGES   (si ferma se il file non è quello atteso; rieseguibile)
 """
-import pathlib, sys
+import pathlib, re, sys
 
 LAVORI = {
     'girrr/v55/ui.js': [
@@ -21,6 +24,22 @@ LAVORI = {
     'girrr/v55/home55.js': [
         ("circleChart(series,'Posizioni nelle ultime giornate',o.dayLink,false)",
          "circleChart(series,'Posizioni nelle ultime giornate',function(n){return o.dayLink(n,'classifica')},false)"),  # 6.2.1: Classifica dopo la giornata
+    ],
+    'girrr/albo.html': [
+        ("row('🔥','Serie di vittorie più lunga',se.best.t,'tra campionato e coppa',se.best.n,true)",
+         "row('🔥','Serie di vittorie più lunga',se.best.t,'tra campionato e coppa',se.best.n)"),  # 6.2.1: niente oro nell'Albo (Gianluca)
+    ],
+    'stadio/girrr/albo.html': [
+        ("row('🔥','Serie di vittorie più lunga',se.best.t,'tra campionato e coppa',se.best.n,true)",
+         "row('🔥','Serie di vittorie più lunga',se.best.t,'tra campionato e coppa',se.best.n)"),
+    ],
+    'girrr/v60/tifosi.js': [
+        # «Giurie e criteri» resta aperta quando la scheda si aggiorna da sola (ogni 15 secondi)
+        ("<details><summary>Giurie e criteri</summary>",
+         "<details data-pt-giurie'+(window.ptGiurieAperte?' open':'')+'><summary>Giurie e criteri</summary>"),
+        # personaggi che votano durante la settimana (Gianluca, 16 novembre)
+        ("<p>Le candidature considerano vittorie, risultato, trasferta e avversario. Ogni personaggio applica un criterio riconoscibile; le preferenze sono normalizzate, così il loro numero non decide da solo il premio.</p>",
+         "<p>Votano la redazione e più personaggi della Curva. La redazione vota all’apertura; i personaggi arrivano uno alla volta durante la settimana, fino alla chiusura, e la classifica provvisoria si aggiorna a ogni nuovo voto.</p>'+(week.personaggi_totali&&!week.chiusa?'<p>Personaggi che hanno votato: '+(week.personaggi||[]).length+' su '+week.personaggi_totali+'.</p>':'')+'<p>Le candidature considerano vittorie, risultato, trasferta e avversario. Ogni personaggio applica un criterio riconoscibile; le preferenze sono normalizzate, così il loro numero non decide da solo il premio.</p>"),
     ],
 }
 
@@ -43,11 +62,17 @@ def main(argv):
     for dst, t in uscite:
         dst.write_text(t, encoding='utf-8')
         print('Scritto', dst)
+    # «Giurie e criteri»: ricorda se è aperta (l'evento toggle non risale, si ascolta in cattura)
+    t = (base / 'girrr/v60/tifosi.js').read_text(encoding='utf-8')
+    if 'ptGiurieAperte=d.open' not in t:
+        t += "\n/* 6.2.1: «Giurie e criteri» resta aperta durante gli aggiornamenti automatici */document.addEventListener('toggle',function(e){var d=e.target;if(d&&d.matches&&d.matches('[data-pt-giurie]'))window.ptGiurieAperte=d.open},true);\n"
+        (base / 'girrr/v60/tifosi.js').write_text(t, encoding='utf-8')
     # Versione nell'indirizzo dei due file: senza, i telefoni tengono quelli vecchi in memoria.
     cambiate = 0
     for html in sorted(base.rglob('*.html')):
         t = html.read_text(encoding='utf-8')
         n = t.replace('v55/ui.js?v=55r10', 'v55/ui.js?v=621').replace('v55/home55.js?v=55r8', 'v55/home55.js?v=621')
+        n = re.sub(r'v60/tifosi\.js(?=["\'])', 'v60/tifosi.js?v=621', n)
         if n != t:
             html.write_text(n, encoding='utf-8'); cambiate += 1
     if not cambiate and not any('v55/ui.js?v=621' in h.read_text(encoding='utf-8') for h in base.rglob('*.html')):
