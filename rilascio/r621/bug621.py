@@ -110,6 +110,14 @@ FID_GATE_NEW = ("/* Gianluca (16 novembre 2026): l'arco che si colora da zero e 
                 "  if(G&&G.team===t&&G.v===v)giro=true;   /* la pagina si è ridisegnata durante il giro: si continua da dove era */\n"
                 "  else if(!reduce&&TRUSTANIM.entrata){TRUSTANIM.entrata=0;giro=true;G=TRUSTANIM.giro={team:t,v:v,start:null,duration:Math.max(1100,Math.min(1900,v*30))}}")
 
+COMP_MARCA = '6.2.1 · Campionato e Champions Cup dei Derby'
+COMP = ("/* 6.2.1 · Campionato e Champions Cup dei Derby (Gianluca): due pulsanti affiancati anche su iPhone SE (andavano a capo per 1 px)\n"
+        "   e, nella grafica Stadio, tutto oro anche in Champions Cup (regola del 15 novembre 2026); nella Lega restano rosso e azzurro. */\n"
+        "(function () { try { var stadio = /\\/stadio\\//.test(location.pathname); var s = document.createElement('style');\n"
+        "  s.textContent = '.pt-competition{flex-wrap:nowrap}.pt-competition button{flex:0 1 auto;min-width:0;white-space:nowrap}' + (stadio ?\n"
+        "    '.pt-competition button[data-pt-comp][aria-pressed=true]{background:#ffd166!important;border-color:#ffd166!important;color:#182649!important}'\n"
+        "    + '#pt-derby,#pt-derby[data-pt-competition=cup]{border-left-color:#ffd166!important}' : '');\n"
+        "  (document.head || document.documentElement).appendChild(s); } catch (e) {} })();")
 TOCCO_MARCA = '6.2.1 · Niente alone al tocco'
 TOCCO = ("/* 6.2.1 · Niente alone al tocco (Gianluca): su telefono il browser colorava di azzurro o di grigio il riquadro\n"
          "   di «‹ O Girrr» e degli altri link mentre si premono. tv.js è in tutte le pagine di Lega, Stadio e Spogliatoio. */\n"
@@ -156,6 +164,9 @@ def extra(base):
         f = base / p; t = f.read_text(encoding='utf-8')
         if '__dline' not in t:
             f.write_text(t + DERBY_FINE, encoding='utf-8')
+    f = base / 'girrr/v60/tifosi.js'; t = f.read_text(encoding='utf-8')
+    if COMP_MARCA not in t:
+        f.write_text(t.rstrip('\n') + '\n' + COMP + '\n', encoding='utf-8')
     f = base / 'tv.js'; t = f.read_text(encoding='utf-8')
     if TOCCO_MARCA not in t:
         f.write_text(t.rstrip('\n') + '\n' + TOCCO + '\n', encoding='utf-8')

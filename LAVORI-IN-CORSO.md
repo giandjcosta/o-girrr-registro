@@ -19,6 +19,7 @@ Ultimo aggiornamento: 16 novembre 2026, Claude.
 - **Tabellone della Fiducia a ogni ingresso nella Carriera** · Claude · `In prova nel Lab` · `bug621.py` (FID_TAB, FID_INIT, FID_GATE). Riparte ogni volta che si entra nella Carriera dalla Home o da un altro menu; cambiando scheda dentro la Carriera non riparte. Prima girava al massimo una volta ogni 5 minuti.
 - **Niente alone al tocco su «‹ O Girrr» e sugli altri link** · Claude · `In prova nel Lab` · `bug621.py` (TOCCO, aggiunto in `tv.js`, che è in tutte le pagine; `tv.js?v=621`).
 - **Notifiche: logo e titolo come nelle altre pagine** · Claude · `In prova nel Lab` · `bug621.py` (NOTIFICHE_NEW): «‹ O Girrr» sopra, logo 104×120 su PC e 60×70 su telefono, a 16 px dal titolo, come nell'Albo.
+- **Schede del Derby e Campionato/Champions Cup** · Claude · `In prova nel Lab` · `rilascio/r621/file/*/derby.js`: su PC le schede sono di nuovo al centro. La regola cercava l'ultimo elemento della fila, che ora è la linea, non un pulsante. `bug621.py` (COMP in `tifosi.js`): i due pulsanti stanno affiancati su iPhone SE (andavano a capo per 1 px); nello Stadio sono tutto oro, anche in Champions Cup.
 - **Registro: barra in alto più piccola e un solo interruttore Lega/Stadio** · Claude · `In prova nel Lab` · `registro.css`, `registro.js` e `rilascio/r62/lab62.js`, che ora ha una riga di prova compatta al posto dei link blu sottolineati.
 
 ## Da fare
