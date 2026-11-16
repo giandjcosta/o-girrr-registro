@@ -33,7 +33,7 @@ with sync_playwright() as p:
             if engine=='firefox': config.pop('is_mobile',None)
             ctx = b.new_context(**config, service_workers='block')
             installa(ctx)
-            ctx.route('https://raw.githubusercontent.com/giandjcosta/o-girrr-registro/chatgpt/dati-ramificazioni/**', lambda r:r.fulfill(status=200,content_type='application/json',headers={'Access-Control-Allow-Origin':'*'},body=(ROOT/'ramificazioni-dati.json').read_bytes()))
+            ctx.route('https://raw.githubusercontent.com/giandjcosta/o-girrr-registro/chatgpt/dati-ramificazioni/**', lambda r:r.fulfill(status=200,content_type='application/json',headers={'Access-Control-Allow-Origin':'*'},body=(ROOT/('rami-dati.json' if '/rami-dati.json' in r.request.url else 'ramificazioni-dati.json')).read_bytes()))  # rami.html e la mappa del confronto leggono due file diversi
             def local(r):
                 rel = unquote(urlsplit(r.request.url).path).removeprefix('/o-girrr-registro/')
                 target = (ROOT/rel).resolve()
