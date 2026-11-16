@@ -23,7 +23,7 @@ SOND_CAMBIA_NEW = (".v62-cambia{display:inline-flex;align-items:center;font:inhe
                    ".v62-cambia:hover{filter:brightness(1.1)}.v62-cambia:focus-visible{outline:3px solid #89d9ff;outline-offset:2px}.v62-cambia[disabled]{opacity:.55;cursor:default}")
 
 PILL_FILE = "  var FILE = '.seg,.at,.dtab,nav .nvi,.chips,.ptabs,#tabs,.pt-competition';"
-PILL_FILE_NEW = PILL_FILE + "\n  /* 6.2.1 (Gianluca): menu dell'Albo, sottomenu dei Derby e pulsanti Campionato / Champions Cup dei Derby: il colore passa\n     dalla pillola di prima alla nuova senza scivolare; le pillole restano ferme (sul telefono la scelta resta in vista). */\n  var FERME = '.at,.dtab,.pt-competition';"
+PILL_FILE_NEW = PILL_FILE + "\n  /* 6.2.1 (Gianluca): menu dell'Albo e della Carriera (.oro-scroll), sottomenu dei Derby e pulsanti Campionato / Champions Cup dei Derby: il colore passa\n     dalla pillola di prima alla nuova senza scivolare; le pillole restano ferme (sul telefono la scelta resta in vista). */\n  var FERME = '.at,.dtab,.pt-competition,.oro-scroll';\n  try { var _fs = document.createElement('style'); _fs.textContent = FERME + '{scroll-snap-type:none!important}'; (document.head || document.documentElement).appendChild(_fs); } catch (e) {}   /* l'aggancio riportava indietro la fila e l'ultima voce restava tagliata */"
 PILL_GHOST = "      /* il colore scivola dalla pillola di prima a quella nuova */"
 PILL_GHOST_NEW = "      if (c2.matches && c2.matches(FERME)) return;\n" + PILL_GHOST
 
@@ -50,14 +50,63 @@ if(window.MutationObserver)new MutationObserver(tutte).observe(document.document
 })();
 """
 
+ORO_SCROLL = """requestAnimationFrame(function(){var r=document.querySelector('.oro-scroll'),a=r&&r.querySelector('[aria-pressed="true"]');if(a)a.scrollIntoView({block:'nearest',inline:'center'})});"""
+ORO_SCROLL_NEW = """requestAnimationFrame(function(){var r=document.querySelector('.oro-scroll'),a=r&&r.querySelector('[aria-pressed="true"]');/* 6.2.1: la fila si sposta solo se la voce scelta è fuori vista, e con calma; la pagina non si muove */if(a&&r.scrollWidth>r.clientWidth+1){var e=r.getBoundingClientRect(),q=a.getBoundingClientRect();if(q.left<e.left-1||q.right>e.right+1)r.scrollTo({left:Math.max(0,r.scrollLeft+(q.left-e.left)-(e.width-q.width)/2),behavior:(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)?'auto':'smooth'})}});"""
+
+PILL_FILA = """      /* la fila non torna all'inizio */
+      if (scorri(c2) && c2.scrollLeft < sl - 2) { var sb = c2.style.scrollBehavior; c2.style.scrollBehavior = 'auto'; c2.scrollLeft = sl; c2.style.scrollBehavior = sb; }
+      centra(c2, n);"""
+PILL_FILA_NEW = """      /* 6.2.1: nelle file ferme (Albo, Carriera, Derby) la fila non viene riportata indietro e si sposta solo se la voce scelta
+         è fuori vista: prima tre scorrimenti insieme (questo, l'app e il ritorno indietro) la fermavano a metà, con l'ultima voce tagliata */
+      var ferma = c2.matches && c2.matches(FERME);
+      if (ferma) { var _r = n.getBoundingClientRect(), _e = c2.getBoundingClientRect(); if (_r.left < _e.left - 1 || _r.right > _e.right + 1) centra(c2, n); }
+      else {
+      /* la fila non torna all'inizio */
+      if (scorri(c2) && c2.scrollLeft < sl - 2) { var sb = c2.style.scrollBehavior; c2.style.scrollBehavior = 'auto'; c2.scrollLeft = sl; c2.style.scrollBehavior = sb; }
+      centra(c2, n);
+      }"""
+
+CURVA_LOGO = '<div class="logo" data-lega="1">'
+CURVA_LOGO_NEW = '<div class="logo" aria-label="Curva">'  # 6.2.1 (da ChatGPT nel Lab): il simbolo C della Curva non apre più la Home della Lega
+NOTIFICHE_HEAD = '</head>'
+NOTIFICHE_NEW = ('<style>/* 6.2.1 (da ChatGPT nel Lab): logo della Lega senza alone, come nelle altre pagine; niente contorno al tocco */'
+                 'body[data-v53="notifications"] .hero img{filter:none!important;animation:none!important}'
+                 'body[data-v53="notifications"] .hero>a{background:transparent!important;box-shadow:none!important;border:0!important}'
+                 'a[href]:focus:not(:focus-visible),button:focus:not(:focus-visible){outline:none!important;box-shadow:none!important}</style></head>')
+
+WEEK_MORPH = "  morphDom(_vw,_nv);"
+WEEK_MORPH_NEW = ("  /* 6.2.1: «La mia settimana» la aggiunge tifosi.js dopo il disegno: fuori dal confronto, poi di nuovo al suo posto, con la fila ferma.\n"
+                  "     Prima il confronto la trasformava in «Regole» e cancellava l'ultimo pulsante: la fila saltava e i pulsanti cambiavano sotto il dito. */\n"
+                  "  var _wk=_vw.querySelector('[data-pt-week]'),_wfr=_wk&&_wk.parentNode,_wsl=_wfr?_wfr.scrollLeft:0;if(_wk)_wk.remove();\n"
+                  "  morphDom(_vw,_nv);\n"
+                  "  if(_wk){var _rg=_vw.querySelector('[data-ctab=\"reg\"]');if(_rg&&_rg.parentNode){var _rf=_rg.parentNode,_rsb=_rf.style.scrollBehavior;_rf.insertBefore(_wk,_rg);_rf.style.scrollBehavior='auto';_rf.scrollLeft=_wsl;_rf.style.scrollBehavior=_rsb}}")
+
 LAVORI = {
-    'girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW)],
-    'stadio/girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW)],
+    'girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW), (ORO_SCROLL, ORO_SCROLL_NEW), (WEEK_MORPH, WEEK_MORPH_NEW)],
+    'stadio/girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW), (ORO_SCROLL, ORO_SCROLL_NEW), (WEEK_MORPH, WEEK_MORPH_NEW)],
     'sondaggi62.js': [(SOND_DRAW, SOND_DRAW_NEW), (SOND_PREC, SOND_PREC_NEW), (SOND_PREC2, SOND_PREC2_NEW), (SOND_CAMBIA, SOND_CAMBIA_NEW)],
-    'pillole.js': [(PILL_FILE, PILL_FILE_NEW), (PILL_GHOST, PILL_GHOST_NEW)],
-    'girrr/novita.js': [(LATTA, LATTA_NEW)],
-    'stadio/girrr/novita.js': [(LATTA, LATTA_NEW)],
+    'girrr/curva.html': [(CURVA_LOGO, CURVA_LOGO_NEW)],
+    'stadio/girrr/curva.html': [(CURVA_LOGO, CURVA_LOGO_NEW)],
+    'girrr/notifiche.html': [(NOTIFICHE_HEAD, NOTIFICHE_NEW)],
+    'stadio/girrr/notifiche.html': [(NOTIFICHE_HEAD, NOTIFICHE_NEW)],
+    'condividi.js': [("giro-di-boa.js?v=61-periodi1", "giro-di-boa.js?v=621")],
+    'pillole.js': [(PILL_FILE, PILL_FILE_NEW), (PILL_GHOST, PILL_GHOST_NEW), (PILL_FILA, PILL_FILA_NEW)],
 }
+
+
+def copia(base):
+    """6.2.1: file corretti da ChatGPT nel Lab (Derby, Albo di Latta, Giro di boa), presi così come sono.
+    Si fermano se il file del sito non è più quello da cui sono partiti."""
+    import hashlib, json, pathlib
+    qui = pathlib.Path(__file__).resolve().parent / 'file'
+    attesi = json.loads((qui / 'ORIGINALI.json').read_text())
+    for rel, h in attesi.items():
+        dst = base / rel; nuovo = (qui / rel).read_bytes()
+        if dst.read_bytes() == nuovo:
+            continue
+        if hashlib.sha256(dst.read_bytes()).hexdigest() != h:
+            raise SystemExit('Il sito ha cambiato ' + rel + ' dopo la prova nel Lab: riallineare prima di pubblicare')
+        dst.write_bytes(nuovo)
 
 
 def extra(base):
@@ -78,4 +127,5 @@ def versioni(t):
     t = t.replace('pillole.js?v=1"', 'pillole.js?v=621"')
     t = re.sub(r'derby\.js\?v=\d+', 'derby.js?v=621', t)
     t = re.sub(r'novita\.js\?v=\d+', 'novita.js?v=621', t)
+    t = t.replace('giro-di-boa.js?v=611-1', 'giro-di-boa.js?v=621').replace('giro-di-boa.css?v=61-periodi1', 'giro-di-boa.css?v=621').replace('condividi.js?v=61-periodi1', 'condividi.js?v=621')
     return t
