@@ -28,11 +28,15 @@ def piano(raw,stagione,vecchi,ora):
         if fine>ora:break
     return out
 
-def esegui(sito,stagione,vai=False):
+def esegui(sito,stagione,vai=False,prima_del_rilascio=False):
     raw=json.loads((sito/'data.json').read_text());ora=dt.datetime.now(dt.timezone.utc)
     if not vai:return {'prova':True,'catalogo':piano(raw,stagione,[],ora)}
     v=json.loads((sito/'versioni.json').read_text())['versioni'][0]['v']
-    if tuple(map(int,v.split('.')[:2]))<(6,2):return {'attivo':False}
+    # Prima del rilascio le pagine sono ancora alla 6.1: consentire il catalogo
+    # soltanto su comando esplicito e già autorizzato, non ai workflow ordinari.
+    if tuple(map(int,v.split('.')[:2]))<(6,2) and not prima_del_rilascio:return {'attivo':False}
+    if prima_del_rilascio and tuple(map(int,v.split('.')[:2]))!=(6,1):
+        raise ValueError('Preparazione anticipata permessa solo sulla copia ufficiale 6.1')
     url,headers=server_auth();rpc=lambda n,a:call(url,headers,n,a)
     vecchi=rpc('v62_catalogo_server',{'p_stagione':stagione})
     catalogo=piano(raw,stagione,vecchi,ora)
@@ -58,4 +62,6 @@ def esegui(sito,stagione,vai=False):
     if not destinazione.exists() or destinazione.read_text()!=testo:destinazione.write_text(testo)
     return {'attivo':True,'sondaggi':len(catalogo)}
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('sito',type=Path);p.add_argument('--stagione',default='2026/27');p.add_argument('--vai',action='store_true');a=p.parse_args();print(json.dumps(esegui(a.sito,a.stagione,a.vai),ensure_ascii=False,indent=2))
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('sito',type=Path);p.add_argument('--stagione',default='2026/27');p.add_argument('--vai',action='store_true');p.add_argument('--prima-del-rilascio',action='store_true',help='prepara il catalogo su copia 6.1 SOLO con --vai e autorizzazione');a=p.parse_args();
+    if a.prima_del_rilascio and not a.vai:raise SystemExit('La preparazione anticipata richiede --vai e autorizzazione specifica')
+    print(json.dumps(esegui(a.sito,a.stagione,a.vai,a.prima_del_rilascio),ensure_ascii=False,indent=2))

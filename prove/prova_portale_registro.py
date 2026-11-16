@@ -33,7 +33,7 @@ with sync_playwright() as p:
             if engine=='firefox': config.pop('is_mobile',None)
             ctx = b.new_context(**config, service_workers='block')
             installa(ctx)
-            ctx.route('https://raw.githubusercontent.com/giandjcosta/o-girrr-registro/chatgpt/dati-ramificazioni/**', lambda r:r.fulfill(status=200,content_type='application/json',headers={'Access-Control-Allow-Origin':'*'},body=(ROOT/'ramificazioni-dati.json').read_bytes()))
+            ctx.route('https://raw.githubusercontent.com/giandjcosta/o-girrr-registro/chatgpt/dati-ramificazioni/**', lambda r:r.fulfill(status=200,content_type='application/json',headers={'Access-Control-Allow-Origin':'*'},body=(ROOT/('rami-dati.json' if '/rami-dati.json' in r.request.url else 'ramificazioni-dati.json')).read_bytes()))  # rami.html e la mappa del confronto leggono due file diversi
             def local(r):
                 rel = unquote(urlsplit(r.request.url).path).removeprefix('/o-girrr-registro/')
                 target = (ROOT/rel).resolve()
@@ -79,9 +79,11 @@ with sync_playwright() as p:
                 expect(page.locator('#menu a[aria-current]')).to_have_attribute('href','#'+key)
                 if key=='ramificazioni':
                     content = page.frame_locator('#contenuto')
-                    expect(content.locator('.repo')).to_have_count(2)
-                    content.locator('#select-all').click()
-                    assert content.locator('[data-map-branch]:visible').count()>20
+                    # Pagina principale delle Ramificazioni (Gianluca, 14-15 novembre): rami.html con Albero, Linea del tempo e Ventaglio;
+                    # la mappa del confronto (ramificazioni.html) si apre dal suo collegamento.
+                    expect(content.locator('h1')).to_have_text('Ramificazioni')
+                    content.locator('#box .nodo-s, #box .riga').nth(2).wait_for()
+                    expect(content.locator('.mappa-confronto a')).to_have_count(1)
                     ready()
                     if name in ('PC1920','TV'):
                         page.screenshot(path=str(OUT/(engine+'-'+name+'.png')))

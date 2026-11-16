@@ -1,7 +1,7 @@
 6.1 -> 6.2
 {
   "v": "6.2",
-  "data": "2026-11-15",
+  "data": "2026-11-16",
   "tipo": "medio",
   "titolo": "Il Campo della Champions Cup",
   "messaggio": "⚽ **O Girrr 6.2 è online!** Nel Campo ora trovi anche le partite della Champions Cup: un tocco sull’interruttore e passi da una competizione all’altra, e quando entri con il tuo codice si apre subito la tua partita. Con le nuove frecce passi da una partita all’altra o salti di giornata. Voti una volta sola, nella Curva o in Girrr Sport, e ritrovi il tuo voto in tutte e due: se ci ripensi, puoi cambiarlo finché la votazione è aperta. Quando si chiude l’MVP dei tifosi, Girrr Sport annuncia il verdetto nella Curva, e Giornale e Radio raccontano la vincitrice e le nuove candidate. Buona giornata a tutti! ⚽",
@@ -52,6 +52,7 @@
     {
       "area": "Albo d’oro",
       "voci": [
+        "In Record trovi l’archivio degli MVP dei tifosi, la corsa all’MVP del campionato e la partita più seguita.",
         "Nella Storia i Padri Fondatori compaiono solo con il nome, tutti in fila."
       ]
     },

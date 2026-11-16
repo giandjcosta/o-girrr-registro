@@ -1,3 +1,5 @@
+> **Superato (16 novembre 2026).** Questo prompt è del 15 novembre e non va più usato: Curva, Giornale e Radio sono cambiati dopo. La release candidate è unita nel Lab; la scaletta del rilascio è in `rilascio/r62/RILASCIO.md`.
+
 # Prompt per ChatGPT: controllo e pubblicazione della parte di Claude nella 6.2
 
 Testo da incollare a ChatGPT (preparato da Claude il 15 novembre 2026 su richiesta di Gianluca).

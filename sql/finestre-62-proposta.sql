@@ -21,7 +21,7 @@ returns jsonb language sql stable security definer set search_path='' as $$
 $$;
 create or replace function votazioni62_private.controlla_conferenza()
 returns trigger language plpgsql security definer set search_path='' as $$
-declare f record; v_tipo text; prima integer;
+declare f record; v_tipo text; v_stagione text; v_anno integer; v_locale timestamp;
 begin
  v_tipo=case when tg_table_name='conf_dopo' then 'dopo' else 'vigilia' end;
  if tg_op='UPDATE' then
@@ -29,11 +29,17 @@ begin
   if v_tipo='vigilia' and (to_jsonb(new)->'risposte',to_jsonb(new)->'libera',to_jsonb(new)->'promessa',to_jsonb(new)->'pesa') is distinct from (to_jsonb(old)->'risposte',to_jsonb(old)->'libera',to_jsonb(old)->'promessa',to_jsonb(old)->'pesa') then raise exception 'Conferenza già pubblicata: le parole restano quelle'; end if;
   return new;
  end if;
- select min(giornata) into prima from votazioni62_private.finestre;
- -- Le giornate precedenti all’attivazione conservano le regole già annunciate.
- if prima is not null and new.giornata<prima then return new; end if;
- select * into f from votazioni62_private.finestre where giornata=new.giornata and finestre.tipo=v_tipo order by stagione desc limit 1 for key share;
- if not found then raise exception 'Finestra non ancora disponibile'; end if;
+ -- Le vecchie tabelle non hanno una colonna stagione: per le nuove conferenze
+ -- senza stagione esplicita si usa la stagione corrente a Roma. Dove la colonna
+ -- esiste, il valore esplicito prevale e consente inserimenti storici sicuri.
+ v_locale=clock_timestamp() at time zone 'Europe/Rome';
+ v_anno=extract(year from v_locale)::integer - case when extract(month from v_locale)<7 then 1 else 0 end;
+ v_stagione=coalesce(nullif(to_jsonb(new)->>'stagione',''),v_anno::text||'/'||lpad(((v_anno+1)%100)::text,2,'0'));
+ select * into f from votazioni62_private.finestre
+  where stagione=v_stagione and giornata=new.giornata and tipo=v_tipo for key share;
+ -- Un catalogo non ancora inizializzato NON blocca la procedura 6.1.
+ -- Se manca la finestra, si applicano le regole precedenti; nessun reset di scadenze.
+ if not found then return new; end if;
  if clock_timestamp()<f.aperto or clock_timestamp()>=f.chiude then raise exception 'Conferenza fuori dalla finestra di partecipazione'; end if;
  return new;
 end $$;
