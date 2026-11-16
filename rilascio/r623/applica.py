@@ -14,6 +14,8 @@
   nel Totogirrr non c'è più «Esci». Totogirrr con lo sfondo un po' più grigio in Lega e Stadio.
 - Condividi: pulsanti con il testo al centro in tutte le finestre; l'anteprima (video, Radio, immagini) sta tutta nella finestra.
 - «‹ O Girrr» senza alone in tutte le pagine, anche nell'app (.oback).
+- Cambio Lega/Stadio della Home senza pezzi che compaiono di colpo; Spogliatoio con sfondi diversi per Lega e Stadio e
+  cambio di stile con dissolvenza.
 
 Uso: python3 rilascio/r623/applica.py COPIA_GH_PAGES_6_2_2
 Si ferma se il sito non è la 6.2.2 pubblicata (gh-pages 64a243b). Rieseguibile: la seconda volta non cambia niente.
@@ -180,6 +182,39 @@ TV = ('/* 6.2.3 · alone', """/* 6.2.3 · alone su «‹ O Girrr» (Gianluca): n
   addEventListener('pageshow', giu); document.addEventListener('visibilitychange', giu);
 } catch (e) {} })();""")
 
+# 6.2.3 · Cambio di grafica Lega/Stadio senza scatti (Gianluca: «le transizioni per tutti i cambi di grafica sono scattose»).
+# Registrato: dopo la dissolvenza la Home nuova arrivava mezza vuota e mezzo secondo dopo comparivano di colpo l'avviso della
+# versione e le Notifiche, con «Oggi al Girrr» che saltava giù. Ora, arrivando dall'interruttore, sotto il titolo la pagina
+# resta trasparente finché smette di cambiare (al massimo 1,2 secondi) e poi entra con una dissolvenza.
+GRAFICA = ('/* 6.2.3 · arrivo', """/* 6.2.3 · arrivo dall'interruttore Lega/Stadio senza scatti (Gianluca): sotto il titolo la pagina entra con una dissolvenza
+   quando ha finito di disegnarsi (avviso della versione, Notifiche, «Oggi al Girrr»), invece di comparire a pezzi. */
+(function () { try {
+  document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('#gsw button[aria-pressed=false]')) try { sessionStorage.setItem('gsw_arrivo', '1'); } catch (x) {} }, true);
+  var arrivo = false; try { arrivo = sessionStorage.getItem('gsw_arrivo') === '1'; sessionStorage.removeItem('gsw_arrivo'); } catch (x) {}
+  if (!arrivo || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+  var h = document.documentElement, s = document.createElement('style');
+  s.textContent = 'html.gsw-attesa .wrap>:not(.hero),html.gsw-attesa .hero h1{opacity:0}html.gsw-pronta .wrap>:not(.hero),html.gsw-pronta .hero h1{transition:opacity .38s ease}';
+  (document.head || h).appendChild(s); h.classList.add('gsw-attesa');
+  var t0 = Date.now(), ultimo = Date.now(), fatto = false;
+  var mostra = function () { if (fatto) return; fatto = true; h.classList.add('gsw-pronta'); requestAnimationFrame(function () { h.classList.remove('gsw-attesa'); setTimeout(function () { h.classList.remove('gsw-pronta'); }, 450); }); };
+  var guarda = function () {
+    if (window.MutationObserver && document.body) new MutationObserver(function () { ultimo = Date.now(); }).observe(document.body, { childList: true, subtree: true });
+    (function controlla() { var ora = Date.now(), font = !document.fonts || document.fonts.status === 'loaded'; if ((ora - ultimo > 200 && font) || ora - t0 > 1200) mostra(); else setTimeout(controlla, 60); })();   /* anche il carattere del titolo (Lobster nello Stadio) */
+  };
+  if (document.body) guarda(); else document.addEventListener('DOMContentLoaded', guarda);
+} catch (e) {} })();""")
+
+# 6.2.3 · Spogliatoio: Lega e Stadio avevano lo stesso sfondo (una regola comune ai due stili); ora come nelle pagine del sito:
+# Lega blu con le strisce, Stadio con i riflessi rosso e azzurro. E il cambio di stile entra con una dissolvenza.
+SPO_CSS = ('</head>', """<style data-spogliatoio623>/* 6.2.3 (Gianluca): sfondi diversi per Lega e Stadio, come nelle pagine del sito; cambio di stile con dissolvenza */
+:root[data-skin="girrr"]{--body:repeating-linear-gradient(115deg,rgba(255,255,255,.04) 0 36px,transparent 36px 72px),radial-gradient(1200px 700px at 80% -10%,#2c3f7c 0,#1d2a52 55%,#141d3d 100%)}
+:root[data-skin="stadio"]{--body:radial-gradient(900px 520px at 85% -8%,rgba(214,40,57,.26),transparent 62%),radial-gradient(1000px 640px at -10% 18%,rgba(61,147,214,.26),transparent 60%),linear-gradient(180deg,#2c3f7c,#1d2a52 45%,#141d3d)}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.35s;animation-timing-function:ease}
+</style>
+</head>""")
+SPO_JS = ("try{document.cookie='gskin='+LS.skin+'; max-age=31536000; path=/; SameSite=Lax'}catch(e){}render()}});",
+          "try{document.cookie='gskin='+LS.skin+'; max-age=31536000; path=/; SameSite=Lax'}catch(e){}/* 6.2.3: cambio di stile con dissolvenza */var _rid=false;try{_rid=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}if(!_rid&&document.startViewTransition){document.startViewTransition(function(){render()})}else if(!_rid&&document.body.animate){var _a=document.body.animate([{opacity:1},{opacity:0}],{duration:140,easing:'ease-in'});_a.onfinish=function(){render();document.body.animate([{opacity:0},{opacity:1}],{duration:240,easing:'ease-out'})}}else render()}});")
+
 BOA = ('<small class="gb-versione">6.1 · Bilancio della stagione</small>', '')
 
 
@@ -199,6 +234,7 @@ def versioni(t):
     t = re.sub(r'condividi\.js\?v=\w+', 'condividi.js?v=' + V, t)
     t = re.sub(r'versioni\.js(\?v=\w+)?"', 'versioni.js?v=%s"' % V, t)
     t = re.sub(r'([\"/])tv\.js(\?v=\w+)?(?=[\"\'])', r'\1tv.js?v=' + V, t)
+    t = re.sub(r'"grafica\.js(\?v=\w+)?"', '"grafica.js?v=%s"' % V, t)
     return t
 
 
@@ -249,6 +285,19 @@ def main(argv):
             t = t.rstrip('\n') + '\n' + TV[1] + '\n'
         return t
     scrivi('tv.js', tv)
+
+    def grafica(t, rel):
+        if GRAFICA[0] not in t:
+            t = t.rstrip('\n') + '\n' + GRAFICA[1] + '\n'
+        return t
+    for rel in ('girrr/grafica.js', 'stadio/girrr/grafica.js'):
+        scrivi(rel, grafica)
+
+    def spogliatoio(t, rel):
+        if 'data-spogliatoio623' not in t:
+            t = sostituisci(t, rel, *SPO_CSS)
+        return sostituisci(t, rel, *SPO_JS)
+    scrivi('index.html', spogliatoio)
     scrivi('versioni.js', lambda t, rel: sostituisci(t, rel, VERS_VECCHIO, VERS_NUOVO))
     for html in sorted(base.rglob('*.html')):
         rel = str(html.relative_to(base))
