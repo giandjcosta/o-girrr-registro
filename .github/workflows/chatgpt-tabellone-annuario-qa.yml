@@ -1,13 +1,7 @@
 name: ChatGPT Tabellone e Annuario QA
 on:
-  push:
-    branches: [chatgpt/tabellone-annuario]
-    paths:
-      - 'lab/index.html'
-      - 'lab/prova-tabellone-*.html'
-      - 'anteprima/**'
-      - 'prove/collaudo_tabellone_annuario_browser.py'
-      - '.github/workflows/chatgpt-tabellone-annuario-qa.yml'
+  # Claude, 16 novembre 2026 (Gianluca: «i check superflui non si possono eliminare?»): collaudo di una versione passata,
+  # solo a mano (Actions › questo workflow › Run workflow). Prima partiva da solo su push e Pull Request.
   workflow_dispatch:
 jobs:
   qa:

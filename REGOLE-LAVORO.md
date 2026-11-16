@@ -26,6 +26,7 @@ Le regole di progetto restano in `AGENTS.md` (contenuti, grafiche Lega e Stadio,
 - **Misura, non indovinare.** Per le animazioni registra la posizione fotogramma per fotogramma (`requestAnimationFrame`) e intercetta chi muove cosa (`scrollTo`, `scrollLeft`, `scrollIntoView`). Così si vede subito se due codici si contendono lo stesso movimento.
 - **Schermi:** 320 px (iPhone SE) senza scorrimento laterale, telefono grande, tablet, PC 1280 e 1920, monitor 2560 e TV (`prove/prova_schermi_56.js`). A Gianluca le foto su PC e TV.
 - **Console senza errori nuovi.** Se un errore c'era già, confrontalo con la versione pubblicata e dillo.
+- **Controlli di GitHub** (Gianluca, 16 novembre 2026): sulle PR partono da soli solo quelli della versione in corso e del Registro (`integrazione-62-qa`, `registro-browser-qa`). I collaudi delle versioni passate restano nei file e si lanciano a mano (Actions › Run workflow) quando serve. Una versione nuova aggiunge il suo controllo e rende «solo a mano» quello vecchio.
 - **Prove automatiche del registro** (`prove/`): lancia quelle di quello che hai toccato. Non lanciare `voci-src/prova_*.py`, che usano servizi a pagamento.
 - **Database:** le prove SQL solo su PostgreSQL locale (`prove/v62/postgres_*.py`), mai su Supabase.
 - **Di' sempre cosa hai provato davvero e cosa no**: per esempio «Safari su iPhone non disponibile qui» oppure «solo Chromium». Cambiare user-agent non vale come prova di un altro browser.
