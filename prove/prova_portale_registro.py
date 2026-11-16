@@ -74,14 +74,16 @@ with sync_playwright() as p:
                 with navigation as loaded:
                     if page.locator('#sezione').is_visible(): page.locator('#sezione').select_option(key)
                     else: page.locator('#menu a[href="#'+key+'"]').click()
-                expect(shell).to_have_attribute('data-src',re.compile(re.escape({'lab':'lab/','aggiornamenti':'aggiornamenti.html','archivio':'archivio.html','ramificazioni':'ramificazioni.html','anteprima':'ufficiale/'}[key])+r'\?nel-registro=1$'))
+                expect(shell).to_have_attribute('data-src',re.compile(re.escape({'lab':'lab/','aggiornamenti':'aggiornamenti.html','archivio':'archivio.html','ramificazioni':'rami.html','anteprima':'ufficiale/'}[key])+r'\?nel-registro=1$'))
                 ready()
                 expect(page.locator('#menu a[aria-current]')).to_have_attribute('href','#'+key)
                 if key=='ramificazioni':
                     content = page.frame_locator('#contenuto')
-                    expect(content.locator('.repo')).to_have_count(2)
-                    content.locator('#select-all').click()
-                    assert content.locator('[data-map-branch]:visible').count()>20
+                    # Pagina principale delle Ramificazioni (Gianluca, 14-15 novembre): rami.html con Albero, Linea del tempo e Ventaglio;
+                    # la mappa del confronto (ramificazioni.html) si apre dal suo collegamento.
+                    expect(content.locator('h1')).to_have_text('Ramificazioni')
+                    content.locator('#box .nodo-s, #box .riga').nth(2).wait_for()
+                    expect(content.locator('.mappa-confronto a')).to_have_count(1)
                     ready()
                     if name in ('PC1920','TV'):
                         page.screenshot(path=str(OUT/(engine+'-'+name+'.png')))
@@ -130,7 +132,7 @@ with sync_playwright() as p:
             bookmark.value.locator('h1').first.wait_for()
             bookmark.value.wait_for_load_state('networkidle')
             page.evaluate("location.hash='ramificazioni'")
-            expect(shell).to_have_attribute('data-src',BASE+'ramificazioni.html?nel-registro=1')
+            expect(shell).to_have_attribute('data-src',BASE+'rami.html?nel-registro=1')
             ready()
             page.evaluate('history.back()')
             expect(page).to_have_url(BASE+'registro.html#anteprima')
