@@ -12,6 +12,8 @@
 - Carriera › Giro di boa: tolta la targhetta «6.1 · Bilancio della stagione».
 - Home: pillola «Esci da (squadra)» in fondo a sinistra, di fronte a quella della versione (due tocchi per uscire);
   nel Totogirrr non c'è più «Esci». Totogirrr con lo sfondo un po' più grigio in Lega e Stadio.
+- Condividi: pulsanti con il testo al centro in tutte le finestre; l'anteprima (video, Radio, immagini) sta tutta nella finestra.
+- «‹ O Girrr» senza alone in tutte le pagine, anche nell'app (.oback).
 
 Uso: python3 rilascio/r623/applica.py COPIA_GH_PAGES_6_2_2
 Si ferma se il sito non è la 6.2.2 pubblicata (gh-pages 64a243b). Rieseguibile: la seconda volta non cambia niente.
@@ -139,6 +141,45 @@ VERS_NUOVO = '''  /* 6.2.3 · «Esci» (Gianluca, 16 novembre 2026): prima si us
     sp.parentNode.insertBefore(riga, sp);
   }'''
 
+# 6.2.3 · Condividi (Gianluca, foto del 16 novembre): «Condividi» non centrato in tutte le finestre dell'app (il pulsante usa la
+# classe .pr, che in app.html è una riga a griglia con una colonna da 34 px) e anteprima del video più alta dello schermo.
+CD_CSS = ("      '.cd-sf{margin:8px 0 0}' +\n",
+          "      '.cd-sf{margin:8px 0 0}' +\n"
+          "      '.cd-az a,.cd-az button{display:inline-flex;align-items:center;justify-content:center;text-align:center;grid-template-columns:none;border-top-width:0}' +   /* 6.2.3: testo centrato, niente righe .pr dell'app */\n")
+CD_FN = ("  function anteprima(f, r, titolo) {\n",
+         "  /* 6.2.3 (Gianluca): l'anteprima sta tutta nella finestra, senza scorrere: l'immagine prende l'altezza che resta\n"
+         "     dopo titolo, testo e pulsanti (un video verticale era più alto dello schermo). Si riadatta se lo schermo cambia. */\n"
+         "  function stringi(box) {\n"
+         "    var img = box.querySelector('.cd-ant img'); if (!img) return;\n"
+         "    img.style.width = 'auto'; img.style.maxWidth = 'min(100%, 360px)';\n"
+         "    var fai = function () {\n"
+         "      if (!img.isConnected) { removeEventListener('resize', fai); return; }\n"
+         "      img.style.maxHeight = '';\n"
+         "      var mx = parseFloat(getComputedStyle(box).maxHeight) || innerHeight, alto = Math.min(mx, innerHeight * 0.92);\n"
+         "      var resto = box.scrollHeight - img.getBoundingClientRect().height;\n"
+         "      img.style.maxHeight = Math.max(140, Math.floor(alto - resto - 2)) + 'px';\n"
+         "    };\n"
+         "    if (img.complete && img.naturalWidth) fai(); else img.addEventListener('load', fai);\n"
+         "    addEventListener('resize', fai);\n"
+         "  }\n"
+         "  function anteprima(f, r, titolo) {\n")
+CD_SH = ("\n    var sh = f.box.querySelector('[data-a=sh]');\n", "\n    stringi(f.box);   /* 6.2.3 */\n    var sh = f.box.querySelector('[data-a=sh]');\n")
+CD_SH2 = ("\n      var sh = f.box.querySelector('[data-a=sh]');\n", "\n      stringi(f.box);   /* 6.2.3 */\n      var sh = f.box.querySelector('[data-a=sh]');\n")
+
+# 6.2.3 · Niente alone su «‹ O Girrr» (Gianluca: «avevo già detto di togliere l'alone… in tutte le pagine»). La 6.2.2 copriva .back;
+# nell'app il link si chiama .oback. Niente evidenziazione, contorno, menu del tocco lungo, e il fuoco non resta sul link.
+TV = ('/* 6.2.3 · alone', """/* 6.2.3 · alone su «‹ O Girrr» (Gianluca): nell'app il link indietro si chiama .oback (la 6.2.2 copriva solo .back). Né evidenziazione
+   del tocco né contorno né anteprima del tocco lungo; dopo il tocco e al ritorno con «Indietro» il link non resta col fuoco. */
+(function () { try {
+  var s = document.createElement('style');
+  s.textContent = '.back,.oback{-webkit-tap-highlight-color:transparent!important;-webkit-touch-callout:none;outline:none!important;box-shadow:none!important}'
+    + '.back:focus,.oback:focus,.back:focus-visible,.oback:focus-visible{outline:none!important;box-shadow:none!important;background:transparent!important}.oback:active{opacity:.7}';
+  (document.head || document.documentElement).appendChild(s);
+  var giu = function () { var a = document.activeElement; if (a && a.matches && a.matches('.back,.oback')) a.blur(); };
+  document.addEventListener('click', function (e) { var a = e.target && e.target.closest && e.target.closest('.back,.oback'); if (a) a.blur(); }, true);
+  addEventListener('pageshow', giu); document.addEventListener('visibilitychange', giu);
+} catch (e) {} })();""")
+
 BOA = ('<small class="gb-versione">6.1 · Bilancio della stagione</small>', '')
 
 
@@ -157,6 +198,7 @@ def versioni(t):
     t = re.sub(r'giro-di-boa\.js\?v=\w+', 'giro-di-boa.js?v=' + V, t)
     t = re.sub(r'condividi\.js\?v=\w+', 'condividi.js?v=' + V, t)
     t = re.sub(r'versioni\.js(\?v=\w+)?"', 'versioni.js?v=%s"' % V, t)
+    t = re.sub(r'([\"/])tv\.js(\?v=\w+)?(?=[\"\'])', r'\1tv.js?v=' + V, t)
     return t
 
 
@@ -191,7 +233,22 @@ def main(argv):
         scrivi(rel, toto)
 
     scrivi('giro-di-boa.js', lambda t, rel: sostituisci(t, rel, *BOA))
-    scrivi('condividi.js', lambda t, rel: versioni(t))
+    def cd(t, rel):
+        t = versioni(t)
+        for a, b in (CD_CSS, CD_FN):
+            t = sostituisci(t, rel, a, b)
+        if 'stringi(f.box);' not in t:
+            if t.count(CD_SH[0]) != 1 or t.count(CD_SH2[0]) != 1:
+                raise SystemExit('condividi.js: finestre di anteprima diverse da quelle della 6.2.2')
+            t = t.replace(CD_SH[0], CD_SH[1]).replace(CD_SH2[0], CD_SH2[1])
+        return t
+    scrivi('condividi.js', cd)
+
+    def tv(t, rel):
+        if TV[0] not in t:
+            t = t.rstrip('\n') + '\n' + TV[1] + '\n'
+        return t
+    scrivi('tv.js', tv)
     scrivi('versioni.js', lambda t, rel: sostituisci(t, rel, VERS_VECCHIO, VERS_NUOVO))
     for html in sorted(base.rglob('*.html')):
         rel = str(html.relative_to(base))

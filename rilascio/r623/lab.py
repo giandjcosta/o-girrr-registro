@@ -13,7 +13,10 @@ OUT = R / 'lab/integrata-62'
 sys.path.insert(0, str(R / 'rilascio/r62'))
 from preview import esporta  # noqa: E402
 
+VIDEO = 'https://giandjcosta.github.io/o-fant-a-girrr/girrr/video/'   # 6.2.3: nella preview i video (20 MB) non sono copiati; si leggono dal sito vero, stesso indirizzo
 SOLO_LAB = {
+    'girrr/app.html': [("VB='video/'", "VB='" + VIDEO + "'")],
+    'stadio/girrr/app.html': [("VB='../../girrr/video/'", "VB='" + VIDEO + "'")],
     'girrr/index.html': [
         ('<a class="c" href="../index.html"><div class="ic"><img src="../assets/logo-lega.png" alt=""></div><h2>Spogliatoio</h2><p>La tua rosa, la giornata, gli scambi e il Mercato Scambi, svincolati e infortunati.</p>',
          '<a class="c" href="squadre.html"><div class="ic"><img src="../assets/logo-lega.png" alt=""></div><h2>Spogliatoio</h2><p>Modalità ospite di prova: consulta squadre, rose e dati pubblici. Scambi e mercato non sono ancora simulati.</p>'),

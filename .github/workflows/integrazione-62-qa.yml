@@ -259,7 +259,7 @@ jobs:
           python3 rilascio/r623/applica.py qa-site
           python3 rilascio/r623/applica.py qa-site | grep -q 'File cambiati: 0'
           for f in qa-site/pillole.js qa-site/tv.js qa-site/giro-di-boa.js qa-site/condividi.js qa-site/versioni.js qa-site/girrr/v60/tifosi.js qa-site/girrr/derby.js qa-site/stadio/girrr/derby.js; do node --check "$f"; done
-          grep -q 'data-toto623' qa-site/girrr/totogirrr.html && grep -q 'data-toto623' lab/integrata-62/stadio/girrr/totogirrr.html
+          grep -q 'stringi(f.box)' qa-site/condividi.js && grep -q '6.2.3 · alone' qa-site/tv.js && grep -q 'data-toto623' qa-site/girrr/totogirrr.html && grep -q 'data-toto623' lab/integrata-62/stadio/girrr/totogirrr.html
       - name: Sintassi JavaScript del sito preparato e del Lab
         run: |
           for f in qa-site/girrr/v55/ui.js qa-site/girrr/v55/home55.js qa-site/girrr/v60/tifosi.js qa-site/sondaggi62.js qa-site/pillole.js qa-site/girrr/novita.js qa-site/stadio/girrr/novita.js qa-site/girrr/derby.js qa-site/stadio/girrr/derby.js qa-site-backend/calcoli/tifosi/contesto.cjs lab/integrata-62/sondaggi62.js lab/integrata-62/pillole.js lab/integrata-62/girrr/novita.js lab/integrata-62/stadio/girrr/novita.js lab/integrata-62/girrr/derby.js lab/integrata-62/stadio/girrr/derby.js; do node --check "$f"; done
