@@ -11,7 +11,7 @@
     var target=new URL(routes[key][0]+'?nel-registro=1',base).href;
     frame.dataset.src=target;frame.contentWindow.location.replace(target);
   }
-  function skinState(){try{var doc=frame.contentDocument,toggle=doc.getElementById('tg'),inner=doc.getElementById('f');skin.disabled=!toggle||!inner?.contentWindow.__registroSolaLettura;if(!toggle)return;var stadio=toggle.getAttribute('aria-checked')==='true';skin.setAttribute('aria-checked',String(stadio));document.getElementById('skin-lega').classList.toggle('is-active',!stadio);document.getElementById('skin-stadio').classList.toggle('is-active',stadio);if(current==='anteprima'&&!skin.disabled)status.textContent=doc.documentElement.dataset.anteprimaRipristinata==='true'?'Pagina precedente non disponibile · Anteprima riaperta sulla Home':'Anteprima in sola lettura';}catch(e){skin.disabled=true;}}
+  function skinState(){try{var doc=frame.contentDocument,toggle=doc.getElementById('tg'),inner=doc.getElementById('f');skin.disabled=!toggle||!inner;var sola=!!(inner&&inner.contentWindow.__registroSolaLettura);if(!toggle)return;var stadio=toggle.getAttribute('aria-checked')==='true';skin.setAttribute('aria-checked',String(stadio));document.getElementById('skin-lega').classList.toggle('is-active',!stadio);document.getElementById('skin-stadio').classList.toggle('is-active',stadio);if(current==='anteprima'&&!skin.disabled)status.textContent=doc.documentElement.dataset.anteprimaRipristinata==='true'?'Pagina precedente non disponibile · Anteprima riaperta sulla Home':(sola?'Anteprima in sola lettura':'Anteprima di prova · Dati di prova');}catch(e){skin.disabled=true;}}
   function routeKey(url){if(url.origin!==base.origin)return null;return Object.keys(routes).find(function(k){var path=new URL(routes[k][0],base).pathname;return url.pathname===path||url.pathname===path+'index.html'||(k==='changelog'&&url.pathname===base.pathname);});}
   function connect(doc){
     if(!doc||doc.documentElement.dataset.registroCollegato)return;doc.documentElement.dataset.registroCollegato='true';
@@ -32,7 +32,7 @@
         var inner=doc.getElementById('f');inner.addEventListener('load',function(){try{connect(inner.contentDocument);}catch(e){}skinState();});
         try{connect(inner.contentDocument);}catch(e){}skinState();
       }
-      doc.head.appendChild(style);status.textContent=current==='anteprima'?(doc.documentElement.dataset.anteprimaRipristinata==='true'?'Pagina precedente non disponibile · Anteprima riaperta sulla Home':'Anteprima in sola lettura'):'';
+      doc.head.appendChild(style);status.textContent='';if(current==='anteprima')skinState();
     }catch(e){status.textContent='La pagina è aperta. Il menu resta disponibile.';}
     frame.removeAttribute('aria-busy');
   });

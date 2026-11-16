@@ -17,23 +17,25 @@ Il Changelog ha filtri compatti combinabili: ricerca, menu Area e calendario Dat
 
 | Cosa | Link |
 |---|---|
-| **Sito vero** · grafica Lega | https://giandjcosta.github.io/o-fant-a-girrr/girrr/ |
-| **Sito vero** · grafica Stadio | https://giandjcosta.github.io/o-fant-a-girrr/stadio/girrr/ |
+| **Sito vero** · Grafica Lega | https://giandjcosta.github.io/o-fant-a-girrr/girrr/ |
+| **Sito vero** · Grafica Stadio | https://giandjcosta.github.io/o-fant-a-girrr/stadio/girrr/ |
 | Sito vero in **modalità ospite** (sola lettura, da condividere) | https://giandjcosta.github.io/o-fant-a-girrr/girrr/?ospite=1 |
-| **Registro** · Changelog (le modifiche giorno per giorno) | https://giandjcosta.github.io/o-girrr-registro/ |
-| **Aggiornamenti** (cosa porta ogni versione) | https://giandjcosta.github.io/o-girrr-registro/aggiornamenti.html |
+| **Registro** · Un solo ingresso con Changelog, Lab, Anteprima, Aggiornamenti, Archivio e Ramificazioni | https://giandjcosta.github.io/o-girrr-registro/registro.html |
 | **Laboratorio** (le prove nuove) | https://giandjcosta.github.io/o-girrr-registro/lab/ |
-| **Novità 5.5** (tutte le novità con foto e link) | https://giandjcosta.github.io/o-girrr-registro/lab/novita-5-5.html |
-| **Anteprima corrente** · ultima versione online, in sola lettura, con scelta della grafica | https://giandjcosta.github.io/o-girrr-registro/ufficiale/ |
-| Archivio della prova 5.5 · pagine (Home, Notifiche, Tabellone, Campo, Albo, Curva) | https://giandjcosta.github.io/o-girrr-registro/anteprima/5.5/index.html |
-| Anteprima storica dell'app 5.5 · Lega / Stadio | https://giandjcosta.github.io/o-girrr-registro/anteprima/attuale.html · https://giandjcosta.github.io/o-girrr-registro/anteprima/index.html |
-| Archivio delle versioni uscite | https://giandjcosta.github.io/o-girrr-registro/archivio.html |
+| **Correzioni 6.2.1** (in prova, una scheda per correzione) | https://giandjcosta.github.io/o-girrr-registro/lab/novita-6-2-1.html |
+| **Novità 6.2** (ultima versione online) | https://giandjcosta.github.io/o-girrr-registro/lab/novita-6-2.html |
+| **Anteprima** · La versione in prova con le pagine vere, grafica Lega o Stadio | https://giandjcosta.github.io/o-girrr-registro/registro.html#anteprima |
+| **Archivio** · Le versioni uscite (l'ultima aperta), con i prototipi e l'anteprima storica della 5.5 | https://giandjcosta.github.io/o-girrr-registro/archivio.html |
+| **Ramificazioni** · Rami e versioni dei due repository | https://giandjcosta.github.io/o-girrr-registro/registro.html#ramificazioni |
 | Stato del progetto (cosa è online, cosa è in prova) | [STATO.md](STATO.md) |
+| **Lavori in corso** (bug, migliorie e passaggi di consegna tra assistenti) | [LAVORI-IN-CORSO.md](LAVORI-IN-CORSO.md) |
+| **Regole comuni di lavoro** (codice, prove, rilascio, ricerca dei guasti) | [REGOLE-LAVORO.md](REGOLE-LAVORO.md) |
 | Collaudo automatico su telefono e PC, Chromium e WebKit (Safari) | https://github.com/giandjcosta/o-girrr-registro/actions/workflows/claude-collaudo-55.yml |
+| Prova del Registro con Chromium, WebKit e Firefox su 16 schermi | https://github.com/giandjcosta/o-girrr-registro/actions/workflows/registro-browser-qa.yml |
 
 Versione online sul sito vero: **6.2**. Anteprima corrente: copia in sola lettura della stessa versione; i prototipi restano nel Laboratorio. Allineamento automatico dopo le modifiche al Lab e sincronizzazione ogni 7 giorni, subito se esce una versione nuova (gli orari GitHub possono slittare).
 
-Per riprendere il lavoro in una chat nuova: "Leggi STATO.md nel repo o-girrr-registro e continuiamo da lì". In `STATO.md` c'è cosa è online, cosa è in prova e cosa resta da fare.
+Per riprendere il lavoro in una chat nuova (Claude, ChatGPT, Grok, Copilot, Perplexity…): "Leggi AGENTS.md, STATO.md e LAVORI-IN-CORSO.md nel repo o-girrr-registro e continuiamo da lì". In `STATO.md` c'è cosa è online e cosa è in prova; in `LAVORI-IN-CORSO.md` cosa si sta facendo adesso e chi lo sta facendo.
 
 ## Cosa c'è
 

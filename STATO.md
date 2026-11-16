@@ -1,5 +1,14 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 16 novembre 2026)
 
+## 16 novembre (6) — Claude: Carriera sul telefono, tabellone della Fiducia, Registro e regole comuni (6.2.1 NON pubblicata)
+- **Carriera sul telefono** (`rilascio/r621/bug621.py`): ogni tocco su una pillola fa partire un solo scorrimento (`centra` non riparte verso la stessa voce, ORO_SCROLL passa da `centra`, `pillole.js` non muove le file `.oro-scroll`, WEEK_MORPH rimette lo scorrimento solo se è cambiato). Prima «Promesse» si fermava a 226 invece di 279 e la fila saltava. Su PC le pillole stanno tutte in vista, per questo lì andava bene.
+- **Tabellone della Fiducia**: riparte a ogni ingresso nella Carriera (dalla Home o da un altro menu), non cambiando scheda. Prima al massimo ogni 5 minuti (decisione nuova di Gianluca).
+- **Niente alone al tocco** su «‹ O Girrr» e sugli altri link: stile aggiunto in `tv.js` (in tutte le pagine), `tv.js?v=621`.
+- **Registro**: barra in alto più piccola; l'interruttore Lega/Stadio del Registro funziona anche con l'Anteprima di prova; riga «Prova 6.2.1» compatta (`rilascio/r62/lab62.js`); Archivio con prototipi e anteprima storica 5.5 (`sincronizza.py`); «Link utili» del README aggiornati; Ramificazioni rilanciato a mano.
+- **Basi comuni**: `REGOLE-LAVORO.md` (codice, prove, rilascio, guasti) e `LAVORI-IN-CORSO.md` (quaderno dei passaggi di consegna), collegati da `AGENTS.md`.
+- **Prove** (solo Chromium, file locali serviti a Playwright): pillole su Pixel 7 Lega e Stadio, tabellone su telefono e PC (Home → Carriera gira; schede no; rientro gira), alone al tocco, Registro su PC e iPhone SE (interruttore Lega → Stadio, niente scorrimento laterale), `check621.py` e `preview.cjs` superati. Non provati: Safari, Firefox e telefoni veri.
+- **Aspetta Gianluca**: «Vai» per la 6.2.1; scelta A/B sull'Anteprima del Registro (vedi `LAVORI-IN-CORSO.md`); frequenza di Ramificazioni.
+
 ## 16 novembre (5) — ChatGPT: completamento verificabile della 6.2.1 (NON pubblicata)
 
 - Base: lavoro Claude PR #112, ramo separato `chatgpt/621-completamento`; niente merge sul sito vero, niente SQL Supabase, niente invio annuncio.
