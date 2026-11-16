@@ -1,4 +1,15 @@
-# Stato del progetto O Girrr (ultimi giorni — aggiornato 15 novembre 2026)
+# Stato del progetto O Girrr (ultimi giorni — aggiornato 16 novembre 2026)
+
+## 16 novembre (5) — ChatGPT: completamento verificabile della 6.2.1 (NON pubblicata)
+
+- Base: lavoro Claude PR #112, ramo separato `chatgpt/621-completamento`; niente merge sul sito vero, niente SQL Supabase, niente invio annuncio.
+- Riparata riproducibilità della vecchia Anteprima 5.5: quattro HTML rigenerati ora includono il link alla nuova anteprima 6.2.1. Prima la CI `percorsi-e-cronache` falliva su questo diff.
+- Le ultime correzioni di Claude (isolamento sondaggi nella Moviola, contatore Sfide, colore della pillola «Cambia il mio voto», pillole ferme Albo, transizione Albo di Latta, linea e dissolvenza Derby) erano nel generatore del sito, ma mancavano nella copia `lab/integrata-62`; ora anche il Lab le contiene per entrambe le grafiche.
+- Test dedicati 6.2.1: `prove/v62/check621.py` controlla copia del sito, Lab, backend e 11 personaggi; il workflow nel ramo applica `applica.py` e `backend.py` due volte su checkout **temporanei**, verifica JavaScript con `node --check` ed esegue `postgres_personaggi.py` su PostgreSQL locale.
+- Le vecchie prove 6.2 su base 6.1 sono escluse dal ramo 6.2.1 per non generare falsi errori: la 6.2 è già pubblicata. Concorrenza CI configurata per cancellare run superate del medesimo ramo.
+- I collaudi della storica 5.5 sono conservati come avvio manuale, per non consumare runner ad ogni modifica del Lab.
+- **Resta necessario:** vedere l'esito del workflow sull'ultimo commit, browser QA su Firefox/WebKit della patch 6.2.1, revisione visiva dell'anteprima e nuovo «Vai, pubblica» per SQL, backend e sito. Non dichiarare GO o rilascio fino a quei controlli.
+
 
 ## 15 novembre (14) — ChatGPT: release candidate 6.2 integrata, in certificazione (nessun deploy)
 
@@ -33,6 +44,54 @@
 - Ulteriore piccola correzione di rilascio: `rilascio/r62/backend.py` trasferisce in una **copia separata** del backend del sito `calcoli/leggi_eventi.py` e `calcoli/post_curva.py` per il post MVP in Curva. Prima confronta i file del sito con quelli del Registro: se ci sono cambiamenti incompatibili, si ferma invece di sovrascriverli. Job CI dedicato `backend`; nessuna pubblicazione eseguita.
 - Browser QA esteso: `prove/v62/funzioni.cjs` verifica anche «Cambia il mio voto» tra Curva, Girrr Sport e MVP. Run [43771968860](https://github.com/giandjcosta/o-girrr-registro/actions/runs/43771968860) avviata; **non dichiarare i tre motori verdi senza risultati**.
 - **Restano fuori** le modifiche grafiche di Claude a `testi.py`, `sondaggi.js`, Giornale, Radio e Albo grafico; la duplicazione degli stili per la riapplicazione manuale di `testi.py` e il voto nel Tabellone sono ancora da verificare. «Serie A, 11ª giornata» nel Giornale resta invariata.
+
+## 16 novembre (4) — Claude: 6.2.1, bug del sito vero (priorità di Gianluca: prima il sito, poi Lab e Registro)
+
+- `rilascio/r621/applica.py` (con `bug621.py`) su una copia nuova di `gh-pages`; `rilascio/r621/backend.py` sul `main` del sito.
+- **Sondaggi che comparivano nelle altre schede di Girrr Sport** (Moviola e altre):
+  - causa: `morphDom` di `app.html` trasformava il riquadro dei sondaggi nella nuova scheda, ma `sondaggi62.js` continuava a scriverci al suo aggiornamento automatico;
+  - correzione: l'app sostituisce il riquadro, e i sondaggi e i Precedenti scrivono solo in un riquadro che è ancora loro;
+  - riprodotto sulla versione pubblicata (comparsi entro 25 secondi), assente con la 6.2.1.
+- **«Cambia il mio voto»:** pillola piena, rossa nella Lega e oro nello Stadio (regola dello Stadio tutto oro), alta 36 px, nei sondaggi e nell'MVP.
+- **Sfide:** contatore «N/2 sfide lanciate quest'anno» in cima alla scheda.
+- **Albo:**
+  - menu `.at`, sottomenu `.dtab` e `.pt-competition` senza la pillola che scivola: il colore passa e basta;
+  - le pillole restano ferme sul PC; sul telefono la voce scelta resta in vista;
+  - Albo di Latta: titolo e pulsanti restano, cambia solo il contenuto in dissolvenza (prima si riscriveva tutto il riquadro);
+  - Derby: linea sotto la voce che scorre, pannello in dissolvenza, nessun salto della pagina.
+- **Personaggi dell'MVP:** 11, cioè i 5 di prima più Il Complottista, Gufo Professionista, Il Mago della Cabala, Il Tassista, Arbitro in Pensione e Klaus Pünktlich, ognuno con il suo criterio. Valgono dalla votazione della 8ª: la 7ª resta con i 5 già registrati, altrimenti `mvp_prepara` rifiuterebbe una votazione iniziata. Simulazione sui risultati della 7ª: voti divisi 4, 4, 3.
+- **Versioni nell'indirizzo** (`?v=621`) di `ui.js`, `home55.js`, `tifosi.js`, `sondaggi62.js`, `pillole.js`, `derby.js` e `novita.js`.
+- **Prove Chromium in locale**, Lega e Stadio a 320 e 1280: 48 controlli, tutti a posto tranne i sondaggi con un codice squadra finto. Quelli non si disegnano perché il database rifiuta il codice, come deve; verificati da ospite. Nessun errore JS, nessuno scorrimento laterale. WebKit e Firefox non disponibili qui.
+- **Annuncio 6.2.1:** 14 voci, validato. Aspetta l'approvazione e il «Vai».
+
+## 16 novembre (3) — Claude: collegamenti della Home (6.2.1 nel Lab) e Anteprima del Registro
+
+- Segnalazione di Gianluca: in «Oggi al Girrr» i collegamenti non portavano alla giornata.
+- **Sito vero, difetto preesistente dalla 5.5.** Su Firefox e sui Safari meno recenti, che non hanno le transizioni native, il tocco su un cerchio del «Cammino in classifica» portava a «[object SVGAnimatedString]», una pagina 404. La causa: la dissolvenza in `girrr/v55/ui.js` leggeva `l.href`, che nei disegni SVG non è un testo. Su Chromium e Safari 18 funzionava.
+- **Proposta 6.2.1** (`rilascio/r621/applica.py`, solo pagine, nessuna SQL, rieseguibile):
+  - la dissolvenza legge l'attributo href;
+  - i cerchi aprono la Classifica dopo quella giornata;
+  - Ultimo risultato, Le ultime cinque, Prossima sfida e Le prossime tre aprono i Risultati della giornata;
+  - nuova versione nell'indirizzo di `ui.js` e `home55.js` (`?v=621`), così i telefoni scaricano i file nuovi.
+  - Applicata alla preview `lab/integrata-62/`; pagina delle novità `lab/novita-6-2-1.html`, collegata dal Lab.
+- **Prove, solo Chromium:** 32 casi in locale (PC e telefono, Lega e Stadio, con e senza transizioni native) e 16 nel Lab, compreso 320 px senza scorrimento laterale. WebKit e Firefox non disponibili qui.
+- **Annuncio 6.2.1** validato con `aggiungi.py --prova` (`rilascio/r621/ANNUNCIO-APPROVAZIONE.json`). Aspetta il «Vai».
+- **Altre richieste di Gianluca nella 6.2.1** (stesso `rilascio/r621/applica.py`):
+  - MVP › «Giurie e criteri» si chiudeva da sola, perché la scheda si ridisegna ogni 15 secondi. Ora resta aperta.
+  - Testo nuovo: votano la redazione e più personaggi; i personaggi arrivano uno alla volta durante la settimana. Mostra quanti hanno votato.
+  - Albo › Record: la serie di vittorie più lunga non è più in oro.
+  - Pagine con `tifosi.js?v=621`.
+- **SQL `sql/mvp-personaggi-621.sql`, da applicare con il «Vai»:**
+  - il personaggio n-esimo su N arriva a n/(N+1) della durata della votazione;
+  - la classifica provvisoria conta solo i voti arrivati, mentre alla chiusura contano tutti, quindi il verdetto non cambia;
+  - vale solo per le votazioni aperte dopo l'applicazione (tabella `mvp_private.progressivo`): la 7ª resta com'è.
+  - Prova `prove/v62/postgres_personaggi.py`: 10 casi su PostgreSQL locale. Restano verdi `postgres`, `postgres_cambio` e `postgres_albo`.
+  - Le pagine 6.2.1 funzionano anche senza questa SQL: semplicemente non mostrano il conteggio.
+- **Girrr Sport › Sondaggi** (foto di Gianluca): dopo il voto i risultati erano solo testo («Oranje VC50%»), perché gli stili delle barre stanno in `curva.html`. Ora `sondaggi62.js` porta i suoi stili, solo nei riquadri di Girrr Sport: barre rosse nella Lega e oro nello Stadio. Pagine con `sondaggi62.js?v=621`. Provato nel Lab: Lega e Stadio, 320 e 1280, zero richieste a Supabase.
+- I personaggi sono ancora 5 (`calcoli/tifosi/contesto.cjs`); se ne possono aggiungere altri, ognuno con un suo criterio.
+- Lab: Curva e Albo, Lega e Stadio, 320 e 1280. «Giurie e criteri» aperta anche dopo 17 secondi, conteggio «3 su 5» simulato, numero del record senza oro, zero errori.
+- **Annuncio 6.2.1** aggiornato con 5 voci e validato.
+- **Registro › Anteprima** (`ufficiale/` → `anteprima/pubblicata/`): `destinazioni55.js` riconosceva il sito solo da `/o-fant-a-girrr/`, quindi la copia pubblicata usava i nomi dell'Anteprima 5.5 (`v55/tabellone-lega.html`, 404). Ora `sincronizza.py` la imposta in modalità sito, con la base calcolata dalla posizione dello script. Copia rigenerata con `sincronizza.py`: cambia solo quel file. Nessuna modifica al sito vero.
 
 ## 16 novembre (2) — Claude: 6.2 ONLINE
 

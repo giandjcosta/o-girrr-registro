@@ -1,0 +1,81 @@
+"""6.2.1, seconda parte (Claude, 16 novembre 2026): bug del sito vero segnalati da Gianluca. Usato da applica.py."""
+
+APP_HOST = r"""    /* host62 */ if((a.hasAttribute('data-v62-precedenti')&&b.hasAttribute('data-v62-precedenti'))||(a.hasAttribute('data-v62-sondaggi')&&b.hasAttribute('data-v62-sondaggi')))continue;"""
+APP_HOST_NEW = r"""    /* 6.2.1: un riquadro dei sondaggi o dei Precedenti non si trasforma in un'altra scheda (altrimenti i sondaggi ricomparivano nella Moviola) */ if(a.hasAttribute('data-v62-sondaggi')!==b.hasAttribute('data-v62-sondaggi')||a.hasAttribute('data-v62-precedenti')!==b.hasAttribute('data-v62-precedenti')){o.replaceChild(b.cloneNode(true),a);continue}
+""" + APP_HOST
+
+SEG = r"""var h='<div class="seg" role="group" aria-label="Sfide">'"""
+SEG_NEW = r"""var h=sfCont()+'<div class="seg" role="group" aria-label="Sfide">'"""
+HUB = "function sfidaHub(){var n=rxCount();"
+SFCONT = r"""/* 6.2.1: quante sfide hai lanciato in questa stagione (due all'anno) */
+function sfCont(){try{if(GUEST||!ME||typeof DBS==='undefined'||!DBS||!DBS.sfide)return '';var u=DBS.sfide.filter(function(s){return s.da===ME&&s.stagione===LV.stag}).length;return '<p class="sf-cont" style="display:inline-flex;align-items:center;gap:8px;margin:0 0 12px;padding:6px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06);font-weight:700;font-size:13px"><b style="font-size:15px">'+Math.min(u,2)+'/2</b> sfide lanciate quest\'anno'+(u>=2?' · Nuove sfide dalla prossima stagione':'')+'</p>'}catch(e){return ''}}
+"""
+
+SOND_DRAW = "for(const h of hosts){if(h.isConnected)mount(h,h.dataset.v62Sondaggi);else hosts.delete(h)}"
+SOND_DRAW_NEW = "for(const h of hosts){if(h.isConnected&&h.hasAttribute('data-v62-sondaggi'))mount(h,h.dataset.v62Sondaggi);else hosts.delete(h)}"
+SOND_PREC = "async function precedenti(host){if(!host)return;"
+SOND_PREC_NEW = "async function precedenti(host){if(!host)return;const era=host.hasAttribute('data-v62-precedenti');"
+SOND_PREC2 = "conf={prima,dopo};"
+SOND_PREC2_NEW = "if(!host.isConnected||(era&&!host.hasAttribute('data-v62-precedenti')))return;conf={prima,dopo};"
+SOND_CAMBIA = ".v62-cambia{font:inherit;font-size:.85em;font-weight:600;background:none;border:0;padding:4px 2px;margin-left:6px;color:inherit;opacity:.8;text-decoration:underline;cursor:pointer;min-height:32px}.v62-cambia:hover{opacity:1}"
+SOND_CAMBIA_NEW = (".v62-cambia{display:inline-flex;align-items:center;font:inherit;font-size:13px;font-weight:800;line-height:1;border:0;border-radius:999px;padding:9px 16px;margin:8px 0 0 8px;"
+                   "'+(/\\/stadio\\//.test(location.pathname)?'background:#ffd166;color:#1d2a52':'background:#d62839;color:#fff')+';cursor:pointer;min-height:36px;text-decoration:none;opacity:1}"
+                   ".v62-cambia:hover{filter:brightness(1.1)}.v62-cambia:focus-visible{outline:3px solid #89d9ff;outline-offset:2px}.v62-cambia[disabled]{opacity:.55;cursor:default}")
+
+PILL_FILE = "  var FILE = '.seg,.at,.dtab,nav .nvi,.chips,.ptabs,#tabs,.pt-competition';"
+PILL_FILE_NEW = PILL_FILE + "\n  /* 6.2.1 (Gianluca): menu dell'Albo, sottomenu dei Derby e pulsanti Campionato / Champions Cup dei Derby: il colore passa\n     dalla pillola di prima alla nuova senza scivolare; le pillole restano ferme (sul telefono la scelta resta in vista). */\n  var FERME = '.at,.dtab,.pt-competition';"
+PILL_GHOST = "      /* il colore scivola dalla pillola di prima a quella nuova */"
+PILL_GHOST_NEW = "      if (c2.matches && c2.matches(FERME)) return;\n" + PILL_GHOST
+
+LATTA = "  b.innerHTML=h+(LS.p==='sempre'?latSempre():latAnno())}"
+LATTA_NEW = r"""  /* 6.2.1: al tocco restano titolo e pulsanti; cambia solo il contenuto, in dissolvenza (prima si ricaricava tutto il riquadro) */
+  var corpo=LS.p==='sempre'?latSempre():latAnno(),lb=b.querySelector('.lbody');
+  if(lb&&b.querySelector('.lseg [data-lp]')){[].forEach.call(b.querySelectorAll('.lseg [data-lp]'),function(x){x.setAttribute('aria-pressed',String(x.getAttribute('data-lp')===LS.p))});lb.innerHTML=corpo;
+   if(!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches))try{lb.animate([{opacity:.3,transform:'translateY(4px)'},{opacity:1,transform:'none'}],{duration:260,easing:'cubic-bezier(.22,.61,.36,1)'})}catch(e){}return}
+  b.innerHTML=h+'<div class="lbody">'+corpo+'</div>'}"""
+
+DERBY_FINE = r"""
+/* 6.2.1 (Gianluca): nei Derby la linea sotto la sezione scorre da una voce all'altra e il contenuto entra in dissolvenza,
+   senza saltare in alto. Con «riduci movimento» cambia e basta. */
+(function(){if(window.__dline)return;window.__dline=1;
+var STA=/\/stadio\//.test(location.pathname),R=function(){try{return matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){return false}};
+var st=document.createElement('style');st.textContent='.dtab{position:relative}.dtab>.dline{position:absolute;left:0;bottom:0;height:3px;border-radius:3px;background:'+(STA?'#ffd166':'var(--acc,#d62839)')+';pointer-events:none;transition:transform .38s cubic-bezier(.22,.61,.36,1),width .38s cubic-bezier(.22,.61,.36,1)}.dtab button[aria-selected=true]{border-bottom-color:transparent!important}';document.head.appendChild(st);
+function linea(t,anim){var a=t.querySelector('[aria-selected=true]');if(!a)return;var l=t.querySelector('.dline');if(!l){l=document.createElement('i');l.className='dline';l.setAttribute('aria-hidden','true');t.appendChild(l);anim=false}
+ if(!anim||R())l.style.transition='none';l.style.width=a.offsetWidth+'px';l.style.transform='translateX('+a.offsetLeft+'px)';if(!anim||R()){void l.offsetWidth;l.style.transition=''}}
+var attesa=false;function tutte(){if(attesa)return;attesa=true;requestAnimationFrame(function(){attesa=false;[].forEach.call(document.querySelectorAll('.dtab'),function(t){linea(t,false)})})}
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-dsez]');if(!b)return;var t=b.closest('.dtab'),top=t?t.getBoundingClientRect().top:0;
+ requestAnimationFrame(function(){if(!t)return;linea(t,true);var d=t.getBoundingClientRect().top-top;if(Math.abs(d)>1)window.scrollBy(0,d);
+  var p=document.querySelector('[data-dp="'+b.getAttribute('data-dsez')+'"]');if(p&&!R())try{p.animate([{opacity:0,transform:'translateY(6px)'},{opacity:1,transform:'none'}],{duration:280,easing:'cubic-bezier(.22,.61,.36,1)'})}catch(x){}})});
+if(window.MutationObserver)new MutationObserver(tutte).observe(document.documentElement,{childList:true,subtree:true});window.addEventListener('resize',tutte);window.addEventListener('load',tutte);tutte();
+})();
+"""
+
+LAVORI = {
+    'girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW)],
+    'stadio/girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW)],
+    'sondaggi62.js': [(SOND_DRAW, SOND_DRAW_NEW), (SOND_PREC, SOND_PREC_NEW), (SOND_PREC2, SOND_PREC2_NEW), (SOND_CAMBIA, SOND_CAMBIA_NEW)],
+    'pillole.js': [(PILL_FILE, PILL_FILE_NEW), (PILL_GHOST, PILL_GHOST_NEW)],
+    'girrr/novita.js': [(LATTA, LATTA_NEW)],
+    'stadio/girrr/novita.js': [(LATTA, LATTA_NEW)],
+}
+
+
+def extra(base):
+    """Funzioni aggiunte una volta sola (rieseguibile)."""
+    for p in ('girrr/app.html', 'stadio/girrr/app.html'):
+        f = base / p; t = f.read_text(encoding='utf-8')
+        if 'function sfCont(' not in t:
+            i = t.index(HUB)  # prima definizione: sfCont è visibile da entrambe
+            t = t[:i] + SFCONT + t[i:]; f.write_text(t, encoding='utf-8')
+    for p in ('girrr/derby.js', 'stadio/girrr/derby.js'):
+        f = base / p; t = f.read_text(encoding='utf-8')
+        if '__dline' not in t:
+            f.write_text(t + DERBY_FINE, encoding='utf-8')
+
+
+def versioni(t):
+    import re
+    t = t.replace('pillole.js?v=1"', 'pillole.js?v=621"')
+    t = re.sub(r'derby\.js\?v=\d+', 'derby.js?v=621', t)
+    t = re.sub(r'novita\.js\?v=\d+', 'novita.js?v=621', t)
+    return t

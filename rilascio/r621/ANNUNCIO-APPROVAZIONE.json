@@ -1,0 +1,20 @@
+{
+  "titolo": "Correzioni e personaggi in Curva",
+  "messaggio": "🔧 **O Girrr 6.2.1 è online!** Nella Home ogni collegamento ti porta alla giornata giusta del Tabellone. Nell’MVP dei tifosi ora votano undici personaggi della Curva, uno alla volta durante la settimana, fino alla chiusura. «Cambia il mio voto» è una pillola ben visibile e nelle Sfide vedi quante ne hai già lanciate. Albo d’oro e Derby si sfogliano senza scatti. Buona giornata a tutti! ⚽",
+  "voci": [
+    "Home: I cerchi del «Cammino in classifica» aprono il Tabellone sulla Classifica dopo quella giornata, anche su Firefox e sui Safari meno recenti.",
+    "Home: Ultimo risultato, Le ultime cinque, Prossima sfida e Le prossime tre aprono il Tabellone sui Risultati della giornata.",
+    "Girrr Sport: Nei Sondaggi, dopo il voto, i risultati hanno le barre e le percentuali ben separate dal nome della sfida.",
+    "Girrr Sport: I sondaggi non compaiono più per errore nelle altre schede, come la Moviola.",
+    "Girrr Sport: «Cambia il mio voto» è una pillola ben visibile, rossa nella grafica Lega e oro nella grafica Stadio, nei sondaggi e nell’MVP dei tifosi.",
+    "Girrr Sport: Nelle Sfide un contatore mostra quante delle due sfide della stagione hai già lanciato.",
+    "Curva: Nell’MVP dei tifosi votano undici personaggi della Curva, ognuno con il suo criterio, dalla votazione della 8ª giornata.",
+    "Curva: I voti dei personaggi arrivano uno alla volta durante la settimana e la classifica provvisoria si aggiorna fino alla chiusura.",
+    "Curva: In «Giurie e criteri» si legge quanti personaggi hanno già votato, e la scheda resta aperta durante gli aggiornamenti.",
+    "Albo d’oro: Nel menu il colore passa da una voce all’altra senza far scorrere le pillole; sul telefono la voce scelta resta in vista.",
+    "Albo d’oro: Nell’Albo di Latta, cambiando periodo o giornata, cambia solo il contenuto, in dissolvenza.",
+    "Albo d’oro: Nei Derby la linea sotto la sezione scorre da una voce all’altra e la pagina non salta in alto.",
+    "Albo d’oro: Nella Classifica dei Derby, Campionato e Champions Cup sono due pulsanti separati, senza effetto interruttore.",
+    "Albo d’oro: Nei Record la serie di vittorie più lunga non è più evidenziata in oro."
+  ]
+}

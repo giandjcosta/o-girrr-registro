@@ -1,11 +1,5 @@
 name: Claude - Collaudo 5.5 telefono e PC (Chromium e WebKit)
 on:
-  push:
-    paths:
-      - 'anteprima/**'
-      - 'lab/**'
-      - 'prove/collaudo_55_browser.js'
-      - '.github/workflows/claude-collaudo-55.yml'
   workflow_dispatch:
 jobs:
   collaudo:
