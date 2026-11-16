@@ -51,6 +51,13 @@
             "Lo sfondo della grafica Lega è blu con le strisce e quello della grafica Stadio ha i riflessi rosso e azzurro, come nelle altre pagine.",
             "Cambiando stile dal menu «Grafica» la pagina passa con una dissolvenza invece di cambiare di colpo."
           ]
+        },
+        {
+          "area": "Curva",
+          "voci": [
+            "È uguale nella grafica Lega e nella grafica Stadio; cambia solo tra la grafica per iPhone e quella per Android.",
+            "Toccando la «C» in alto a sinistra non si torna più alla Home; per tornare c’è «O Girrr» nella barra in basso."
+          ]
         }
       ]
     },

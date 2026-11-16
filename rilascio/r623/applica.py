@@ -14,9 +14,9 @@
   nel Totogirrr non c'è più «Esci». Totogirrr con lo sfondo un po' più grigio in Lega e Stadio.
 - Condividi: pulsanti con il testo al centro in tutte le finestre; l'anteprima (video, Radio, immagini) sta tutta nella finestra.
 - «‹ O Girrr» senza alone in tutte le pagine, anche nell'app (.oback).
-- Cambio Lega/Stadio della Home senza pezzi che compaiono di colpo; Spogliatoio con sfondi diversi per Lega e Stadio e
-  cambio di stile con dissolvenza.
-- Curva: uguale in Lega e Stadio (cambia solo tra iPhone e Android); la «C» in alto non porta più alla Home.
+- Cambio Lega/Stadio della Home senza pezzi che compaiono di colpo; Spogliatoio con sfondi diversi per Lega e Stadio,
+  cambio di stile con dissolvenza e, nella Lega, rosso e azzurro alternati al posto dell'oro.
+- Curva: la «C» in alto non porta più alla Home.
 
 Uso: python3 rilascio/r623/applica.py COPIA_GH_PAGES_6_2_2
 Si ferma se il sito non è la 6.2.2 pubblicata (gh-pages 64a243b). Rieseguibile: la seconda volta non cambia niente.
@@ -211,30 +211,26 @@ SPO_CSS = ('</head>', """<style data-spogliatoio623>/* 6.2.3 (Gianluca): sfondi 
 :root[data-skin="girrr"]{--body:repeating-linear-gradient(115deg,rgba(255,255,255,.04) 0 36px,transparent 36px 72px),radial-gradient(1200px 700px at 80% -10%,#2c3f7c 0,#1d2a52 55%,#141d3d 100%)}
 :root[data-skin="stadio"]{--body:radial-gradient(900px 520px at 85% -8%,rgba(214,40,57,.26),transparent 62%),radial-gradient(1000px 640px at -10% 18%,rgba(61,147,214,.26),transparent 60%),linear-gradient(180deg,#2c3f7c,#1d2a52 45%,#141d3d)}
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.35s;animation-timing-function:ease}
+/* Grafica Lega: rosso e azzurro al posto di rosso e oro (Gianluca). Lo Stadio resta oro. Le schede e i pulsanti si alternano:
+   la scheda scelta è rossa o azzurra secondo la posizione; Svincolati: ruolo rosso, ordine azzurro; Calendario: Classic League
+   rossa, Champions Cup azzurra (come nel sito); tra due pulsanti vicini il secondo è azzurro. I colori dello stato («In dubbio»…) restano. */
+:root[data-skin="girrr"]{--hl:#8fd0ff;--hl-ink:#0d1f3c;--hl-bg:rgba(61,147,214,.18);--hl-name:#8fd0ff;--num:#8fd0ff}
+:root[data-skin="girrr"] header .sub{color:#8fd0ff}
+:root[data-skin="girrr"] header::after{background:linear-gradient(90deg,#d62839 0 60%,#3d93d6 60% 100%)}
+:root[data-skin="girrr"] nav button[data-alt="az"][aria-selected=true],:root[data-skin="girrr"] .seg button[data-sort][aria-pressed=true],:root[data-skin="girrr"] .seg button[data-comp="cup"][aria-pressed=true]{background:#3d93d6;border-color:#3d93d6;color:#fff;box-shadow:none}
+:root[data-skin="girrr"] .btn:not(.o):not(.ghost)+.btn:not(.o):not(.ghost):nth-of-type(even){background:#3d93d6;border-color:#3d93d6;color:#fff}
+:root[data-skin="girrr"] nav button,:root[data-skin="girrr"] .seg button{transition:background-color .25s ease,border-color .25s ease,color .25s ease}
 </style>
+<script>/* 6.2.3: alternanza rosso / azzurro delle schede visibili (da ospite alcune sono nascoste) */(function(){function alt(){var t=document.getElementById('tabs');if(!t)return;var i=0;[].forEach.call(t.querySelectorAll('button'),function(b){var v=b.hidden?null:(i++%2?'az':'ro');if(b.getAttribute('data-alt')!==v){if(v)b.setAttribute('data-alt',v);else b.removeAttribute('data-alt')}})}
+document.addEventListener('DOMContentLoaded',function(){alt();var t=document.getElementById('tabs');if(t&&window.MutationObserver)new MutationObserver(alt).observe(t,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden']})})})()</script>
 </head>""")
 SPO_JS = ("try{document.cookie='gskin='+LS.skin+'; max-age=31536000; path=/; SameSite=Lax'}catch(e){}render()}});",
           "try{document.cookie='gskin='+LS.skin+'; max-age=31536000; path=/; SameSite=Lax'}catch(e){}/* 6.2.3: cambio di stile con dissolvenza */var _rid=false;try{_rid=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}if(!_rid&&document.startViewTransition){document.startViewTransition(function(){render()})}else if(!_rid&&document.body.animate){var _a=document.body.animate([{opacity:1},{opacity:0}],{duration:140,easing:'ease-in'});_a.onfinish=function(){render();document.body.animate([{opacity:0},{opacity:1}],{duration:240,easing:'ease-out'})}}else render()}});")
 
-# 6.2.3 · Curva (Gianluca, 16 novembre): «tra Lega e Stadio non dovrebbe cambiare niente: cambia se è la grafica per Android o
-# per iPhone». Nella Curva dello Stadio via il corsivo (skin-nuova, Lobster) e le regole Stadio di tifosi.css (data-pt-skin);
-# i collegamenti restano quelli dello Stadio (data-v53-skin e i percorsi non cambiano).
-# E la «C» in alto a sinistra non porta più alla Home (aveva data-lega): alla Home si va da «O Girrr» nella barra in basso.
+# 6.2.3 · Curva: la «C» in alto a sinistra non porta più alla Home (aveva data-lega): alla Home si va da «O Girrr» nella barra
+# in basso. (Il corsivo della Curva nello Stadio resta: Gianluca ci ha ripensato, «lo manteniamo».)
 CURVA_C = ('<i class="lg" data-lega="1" style="width:28px;height:28px;cursor:pointer"></i>',
            '<i class="lg" aria-hidden="true" style="width:28px;height:28px"></i>')
-CURVA_ST = [
-    ('<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" media="print" onload="this.media=\'all\'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"></noscript>', ''),
-    ('<style id="skin-nuova">.bar .tt,.bar .tt>span,h2{font-family:Lobster,\'Brush Script MT\',cursive!important;font-weight:400!important;letter-spacing:0!important}.bar .tt{font-size:25px!important}.bar .tt small{font-family:Inter,system-ui,sans-serif!important;font-size:12px!important;font-weight:500!important}</style>', ''),
-    ('</body>', '<script>/* 6.2.3 (Gianluca): la Curva è uguale in Lega e Stadio, cambia solo tra iPhone e Android */document.documentElement.dataset.ptSkin=\'lega\'</script></body>'),
-    # ui.css (v55) ha regole proprie dello Stadio legate a data-v53-skin, che serve anche ai collegamenti: qui si rimettono i valori della Lega
-    ('</head>', '<style data-curva623>/* 6.2.3: Curva come nella Lega (titoli, accento, riquadri, menu, tirare per aggiornare) */'
-     'body[data-v53=curva][data-v53-skin=stadio]{--v53-title-font:Inter,system-ui,sans-serif;--v53-title-weight:900;--g-card:4px 14px 14px 4px;--g-box:10px;--g-acc:#d62839;--g-onacc:#fbf6ec}'
-     'body[data-v53=curva][data-v53-skin=stadio] .v53-h1{font-family:Inter,system-ui,sans-serif!important;font-size:clamp(23px,4vw,33px)!important;font-weight:900!important;letter-spacing:-.025em!important}'
-     'body[data-v53=curva][data-v53-skin=stadio] .v53-panel h2{font-family:Inter,system-ui,sans-serif!important;font-size:21px!important;font-weight:900!important;letter-spacing:-.015em!important}'
-     'body[data-v53=curva][data-v53-skin=stadio] .v53-panel{border-radius:16px}body[data-v53=curva][data-v53-skin=stadio] .v53-menu a{border-radius:10px}'
-     'body[data-v53=curva][data-v53-skin=stadio] .v53-select{border-color:rgba(255,255,255,.27)}body[data-v53=curva][data-v53-skin=stadio] .v53-pill[aria-selected=true],body[data-v53=curva][data-v53-skin=stadio] .v53-pill.active{color:var(--v53-onaccent)}'
-     'body[data-v53=curva][data-v53-skin=stadio] .v55-ptr.pronto{background:rgba(214,40,57,.62);border-color:rgba(214,40,57,.8);color:inherit}</style></head>'),
-]
 
 BOA = ('<small class="gb-versione">6.1 · Bilancio della stagione</small>', '')
 
@@ -322,9 +318,6 @@ def main(argv):
 
     def curva(t, rel):
         t = sostituisci(t, rel, *CURVA_C)
-        if rel.startswith('stadio/'):
-            for a, b in CURVA_ST:
-                t = sostituisci(t, rel, a, b)
         return t
     for rel in ('girrr/curva.html', 'stadio/girrr/curva.html'):
         scrivi(rel, curva)

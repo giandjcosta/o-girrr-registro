@@ -419,7 +419,18 @@ h2.sec{font-size:1.35rem;margin-block:18px 8px}
 :root[data-skin="girrr"]{--body:repeating-linear-gradient(115deg,rgba(255,255,255,.04) 0 36px,transparent 36px 72px),radial-gradient(1200px 700px at 80% -10%,#2c3f7c 0,#1d2a52 55%,#141d3d 100%)}
 :root[data-skin="stadio"]{--body:radial-gradient(900px 520px at 85% -8%,rgba(214,40,57,.26),transparent 62%),radial-gradient(1000px 640px at -10% 18%,rgba(61,147,214,.26),transparent 60%),linear-gradient(180deg,#2c3f7c,#1d2a52 45%,#141d3d)}
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.35s;animation-timing-function:ease}
+/* Grafica Lega: rosso e azzurro al posto di rosso e oro (Gianluca). Lo Stadio resta oro. Le schede e i pulsanti si alternano:
+   la scheda scelta è rossa o azzurra secondo la posizione; Svincolati: ruolo rosso, ordine azzurro; Calendario: Classic League
+   rossa, Champions Cup azzurra (come nel sito); tra due pulsanti vicini il secondo è azzurro. I colori dello stato («In dubbio»…) restano. */
+:root[data-skin="girrr"]{--hl:#8fd0ff;--hl-ink:#0d1f3c;--hl-bg:rgba(61,147,214,.18);--hl-name:#8fd0ff;--num:#8fd0ff}
+:root[data-skin="girrr"] header .sub{color:#8fd0ff}
+:root[data-skin="girrr"] header::after{background:linear-gradient(90deg,#d62839 0 60%,#3d93d6 60% 100%)}
+:root[data-skin="girrr"] nav button[data-alt="az"][aria-selected=true],:root[data-skin="girrr"] .seg button[data-sort][aria-pressed=true],:root[data-skin="girrr"] .seg button[data-comp="cup"][aria-pressed=true]{background:#3d93d6;border-color:#3d93d6;color:#fff;box-shadow:none}
+:root[data-skin="girrr"] .btn:not(.o):not(.ghost)+.btn:not(.o):not(.ghost):nth-of-type(even){background:#3d93d6;border-color:#3d93d6;color:#fff}
+:root[data-skin="girrr"] nav button,:root[data-skin="girrr"] .seg button{transition:background-color .25s ease,border-color .25s ease,color .25s ease}
 </style>
+<script>/* 6.2.3: alternanza rosso / azzurro delle schede visibili (da ospite alcune sono nascoste) */(function(){function alt(){var t=document.getElementById('tabs');if(!t)return;var i=0;[].forEach.call(t.querySelectorAll('button'),function(b){var v=b.hidden?null:(i++%2?'az':'ro');if(b.getAttribute('data-alt')!==v){if(v)b.setAttribute('data-alt',v);else b.removeAttribute('data-alt')}})}
+document.addEventListener('DOMContentLoaded',function(){alt();var t=document.getElementById('tabs');if(t&&window.MutationObserver)new MutationObserver(alt).observe(t,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden']})})})()</script>
 </head>
 <body>
 <div class="wrap">
