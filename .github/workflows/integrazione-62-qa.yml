@@ -21,6 +21,7 @@ on:
       - 'lab/integrata-62/**'
       - 'rilascio/r621/**'
       - 'rilascio/r622/**'
+      - 'rilascio/r63/**'
   workflow_dispatch:
 permissions:
   contents: read
@@ -246,19 +247,19 @@ jobs:
         with:
           python-version: '3.12'
       - name: Sintassi degli strumenti 6.2.1
-        run: python3 -m py_compile rilascio/r621/applica.py rilascio/r621/backend.py rilascio/r621/bug621.py prove/v62/postgres_personaggi.py prove/v62/check621.py
-      - name: Applica 6.2.1 solo a due checkout temporanei, due volte per verificare idempotenza
+        run: python3 -m py_compile rilascio/r63/applica.py rilascio/r63/lab.py rilascio/r621/applica.py rilascio/r621/backend.py rilascio/r621/bug621.py prove/v62/postgres_personaggi.py prove/v62/check621.py
+      - name: Applica 6.3 solo a due checkout temporanei, due volte per verificare idempotenza
         run: |
-          python3 rilascio/r621/applica.py qa-site
-          python3 rilascio/r621/applica.py qa-site
+          # Claude, 16 novembre 2026: la 6.2.2 è online (gh-pages 64a243b), quindi rilascio/r621/applica.py non si applica più
+          # al sito (si ferma su derby.js, già cambiato dalla 6.2.2). Restano backend e controlli 6.2.1; sopra si prova la 6.3.
           python3 rilascio/r621/backend.py qa-site-backend
           python3 rilascio/r621/backend.py qa-site-backend
           python3 prove/v62/check621.py qa-site qa-site-backend
-          # 6.2.2 (Claude, 16 novembre 2026): le migliorie sopra la 6.2.1 pubblicata, due volte per l'idempotenza
           python3 rilascio/r622/applica.py qa-site
-          python3 rilascio/r622/applica.py qa-site
-          for f in qa-site/pillole.js qa-site/tv.js qa-site/girrr/v60/tifosi.js qa-site/girrr/derby.js qa-site/stadio/girrr/derby.js; do node --check "$f"; done
-          grep -q 'entrata:1' qa-site/girrr/app.html && grep -q 'entrata:1' lab/integrata-62/girrr/app.html
+          python3 rilascio/r63/applica.py qa-site
+          python3 rilascio/r63/applica.py qa-site | grep -q 'File cambiati: 0'
+          for f in qa-site/pillole.js qa-site/tv.js qa-site/giro-di-boa.js qa-site/condividi.js qa-site/girrr/v60/tifosi.js qa-site/girrr/derby.js qa-site/stadio/girrr/derby.js; do node --check "$f"; done
+          grep -q 'data-toto63' qa-site/girrr/totogirrr.html && grep -q 'data-toto63' lab/integrata-62/stadio/girrr/totogirrr.html
       - name: Sintassi JavaScript del sito preparato e del Lab
         run: |
           for f in qa-site/girrr/v55/ui.js qa-site/girrr/v55/home55.js qa-site/girrr/v60/tifosi.js qa-site/sondaggi62.js qa-site/pillole.js qa-site/girrr/novita.js qa-site/stadio/girrr/novita.js qa-site/girrr/derby.js qa-site/stadio/girrr/derby.js qa-site-backend/calcoli/tifosi/contesto.cjs lab/integrata-62/sondaggi62.js lab/integrata-62/pillole.js lab/integrata-62/girrr/novita.js lab/integrata-62/stadio/girrr/novita.js lab/integrata-62/girrr/derby.js lab/integrata-62/stadio/girrr/derby.js; do node --check "$f"; done

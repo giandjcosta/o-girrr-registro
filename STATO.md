@@ -1,5 +1,17 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 16 novembre 2026)
 
+## 16 novembre (8) — Claude: 6.3 «Il Totogirrr su ogni schermo» in prova nel Lab (NON pubblicata)
+- Sul sito c'è la **6.2.2** (`gh-pages` `64a243b`). Richieste di Gianluca dopo la 6.2.2, preparate in `rilascio/r63/applica.py` (sopra la 6.2.2 pubblicata, si ferma se il sito è cambiato, rieseguibile) e nel Lab con `rilascio/r63/lab.py` (`lab/integrata-62/`), pagina `lab/novita-6-3.html`, annuncio da approvare in `rilascio/r63/ANNUNCIO-BOZZA.json` (tipo medio → 6.3, come proposto da Gianluca: «potremmo far sì che questa sia una nuova versione»).
+  - **Schede del Totogirrr, scheda toccata tagliata:** la fila che scorre è il `<nav>`, ma `pillole.js` controllava `.nvi` (largo quanto le schede, non scorre mai) e la pagina la spostava solo nei ridisegni completi: toccando «Probabilità» sul bordo restava tagliata. Ora `pillole.js` la sposta quanto basta per vederla tutta (14 px di margine, senza centrarla) ed è l'unico codice che muove la fila (`navPost` della pagina non scorre più).
+  - **Tocco:** via `scale(.94)` (sembrava un pulsante tenuto premuto), segnale `opacity:.78`; colore che scivola in 220 ms invece di 380 (solo Totogirrr).
+  - **Trasparenza e scorrimento:** schede `rgba(255,255,255,.07)` con bordo sottile, niente fascia scura dietro, non più `position:sticky`: scorrendo vanno via con la pagina.
+  - **Schermi:** da 700 px pagina più larga e partite/schedine in 2 colonne, da 1240 px 3, da 1760 px 4, da 2200 px tutto più grande; telefono invariato. A 320 px il titolo «Totogirrr» non va più a capo dopo la T (difetto già presente online).
+  - **Carriera › Giro di boa:** tolta la targhetta «6.1 · Bilancio della stagione» (`giro-di-boa.js?v=63`, anche nel caricamento da `condividi.js?v=63`).
+  - **Sfondo del Totogirrr:** nel codice è lo stesso dalla 5.0 (gradiente blu + strisce animate, uguali all'app); confrontate le foto di 5.2, 5.5, 5.8.2, 6.0, 6.0.1 e 6.2.2: identiche. Chiesto a Gianluca quale sfondo ricorda.
+- **Prove** (solo Chromium): `prove/v63/prova_toto63.js` su 16 schermi × Lega/Stadio = 32 casi superati (colonne attese, niente scorrimento laterale, nessun errore, schede che scorrono via, tocco vero sulla scheda tagliata), sia sulla copia del sito sia sul Lab; Carriera › Giro di boa senza targhetta in Lega e Stadio. Non provati: Safari, Firefox, telefoni e TV veri.
+- CI `integrazione-62-qa.yml`: lo step «Applica 6.2.1» falliva già con la 6.2.2 online (`r621/applica.py` si ferma su `derby.js`); ora prova backend 6.2.1, `check621.py`, poi la 6.3 due volte sul `gh-pages` vero.
+- **Aspetta Gianluca**: prova nel Lab, approvazione del messaggio e «Vai». Al rilascio: `r63/applica.py` su `gh-pages`, `aggiungi.py --tipo medio`, controllo sul sito vero, poi `ufficiale/src/sito/`.
+
 ## 16 novembre (7) — Claude: 6.2.1 ONLINE, migliorie del pomeriggio spostate nella 6.2.2 (in prova nel Lab)
 - **6.2.1 pubblicata** con il «Vai» di Gianluca («Facciamo il rilascio della 6.2.1 e la miglioriamo con la 6.2.2»), così come era nel Lab stamattina (registro `main` `1987fd6`, `rilascio/r621/`):
   - `gh-pages` `19653ba` (da `b4114fb`): 37 file, `versioni.json` 6.2.1 «Correzioni e personaggi in Curva» con l'annuncio approvato.
