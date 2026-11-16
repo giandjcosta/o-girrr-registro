@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
-      - name: Controlla versione pubblicata: niente aggiornamenti a ogni commit o PR
+      - name: 'Controlla versione pubblicata: niente aggiornamenti a ogni commit o PR'
         id: versione
         env:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
