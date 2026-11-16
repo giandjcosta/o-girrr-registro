@@ -14,6 +14,8 @@
 Uso: python3 rilascio/r621/applica.py COPIA_GH_PAGES   (si ferma se il file non è quello atteso; rieseguibile)
 """
 import pathlib, re, sys
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import bug621
 
 LAVORI = {
     'girrr/v55/ui.js': [
@@ -65,10 +67,15 @@ def main(argv):
     if len(argv) != 1:
         raise SystemExit(__doc__)
     base = pathlib.Path(argv[0])
-    uscite = [(base / p, applica((base / p).read_text(encoding='utf-8'), p, c)) for p, c in LAVORI.items()]
+    tutti = {}
+    for d in (LAVORI, bug621.LAVORI):
+        for p, c in d.items():
+            tutti.setdefault(p, []).extend(c)
+    uscite = [(base / p, applica((base / p).read_text(encoding='utf-8'), p, c)) for p, c in tutti.items()]
     for dst, t in uscite:
         dst.write_text(t, encoding='utf-8')
         print('Scritto', dst)
+    bug621.extra(base)
     # «Giurie e criteri»: ricorda se è aperta (l'evento toggle non risale, si ascolta in cattura)
     t = (base / 'girrr/v60/tifosi.js').read_text(encoding='utf-8')
     if 'ptGiurieAperte=d.open' not in t:
@@ -81,6 +88,7 @@ def main(argv):
         n = t.replace('v55/ui.js?v=55r10', 'v55/ui.js?v=621').replace('v55/home55.js?v=55r8', 'v55/home55.js?v=621')
         n = re.sub(r'v60/tifosi\.js(?=["\'])', 'v60/tifosi.js?v=621', n)
         n = n.replace('sondaggi62.js?v=62-nativa1', 'sondaggi62.js?v=621')
+        n = bug621.versioni(n)
         if n != t:
             html.write_text(n, encoding='utf-8'); cambiate += 1
     if not cambiate and not any('v55/ui.js?v=621' in h.read_text(encoding='utf-8') for h in base.rglob('*.html')):
