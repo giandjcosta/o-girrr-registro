@@ -1,10 +1,7 @@
 name: Collaudo completo release 5.2
 on:
-  push:
-    paths:
-      - 'prove/collaudo_produzione52_browser.py'
-      - 'prove/collaudo_milestone_ufficiali52.js'
-      - '.github/workflows/produzione52-qa.yml'
+  # Claude, 16 novembre 2026 (Gianluca: «i check superflui non si possono eliminare?»): collaudo di una versione passata,
+  # solo a mano (Actions › questo workflow › Run workflow). Prima partiva da solo su push e Pull Request.
   workflow_dispatch:
 jobs:
   test:

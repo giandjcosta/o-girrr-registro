@@ -1,11 +1,7 @@
 name: Fiducia 5.2 Browser QA
 on:
-  push:
-    paths:
-      - 'lab/index.html'
-      - 'anteprima/**'
-      - 'prove/collaudo_fiducia52_browser.py'
-      - '.github/workflows/fiducia52-qa.yml'
+  # Claude, 16 novembre 2026 (Gianluca: «i check superflui non si possono eliminare?»): collaudo di una versione passata,
+  # solo a mano (Actions › questo workflow › Run workflow). Prima partiva da solo su push e Pull Request.
   workflow_dispatch:
 jobs:
   test:

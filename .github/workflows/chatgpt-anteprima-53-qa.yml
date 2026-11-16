@@ -1,11 +1,7 @@
 name: ChatGPT Anteprima 5.5 · UI reale
 on:
-  push:
-    branches: [chatgpt/anteprima-53-integrata]
-    paths:
-      - 'anteprima/5.5/**'
-      - 'prove/collaudo_anteprima_53_browser.py'
-      - '.github/workflows/chatgpt-anteprima-53-qa.yml'
+  # Claude, 16 novembre 2026 (Gianluca: «i check superflui non si possono eliminare?»): collaudo di una versione passata,
+  # solo a mano (Actions › questo workflow › Run workflow). Prima partiva da solo su push e Pull Request.
   workflow_dispatch:
 jobs:
   test:

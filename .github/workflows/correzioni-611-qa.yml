@@ -1,8 +1,7 @@
 name: ChatGPT - Carriera e Curva 6.1.1
 on:
-  pull_request:
-    branches: [main]
-    paths: ['rilascio/r611/**', 'rilascio/stagione/**', 'rilascio/curva-os/**', 'prove/prova_611.js', 'lab/novita-6-1-1.html', '.github/workflows/correzioni-611-qa.yml']
+  # Claude, 16 novembre 2026 (Gianluca: «i check superflui non si possono eliminare?»): collaudo di una versione passata,
+  # solo a mano (Actions › questo workflow › Run workflow). Prima partiva da solo su push e Pull Request.
   workflow_dispatch:
 permissions:
   contents: read

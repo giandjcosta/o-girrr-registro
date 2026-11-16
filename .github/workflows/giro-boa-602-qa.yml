@@ -1,8 +1,7 @@
 name: ChatGPT - Bilanci della stagione 6.1
 on:
-  pull_request:
-    branches: [main]
-    paths: ['calcoli/giro_di_boa.py', 'rilascio/r602/**', 'rilascio/r61/**', 'lab/giro-di-boa-61/**', 'lab/giro-di-boa-602/**', 'rilascio/r601/**', 'rilascio/cerca/**', 'rilascio/condividi/**', 'voci-src/**', 'prove/*giro_di_boa*', 'prove/browser_certificato.js', 'prove/server_range.py', 'prove/prova_cerca_pubblica.js', 'prove/prova_cartellini_602.js', 'prove/prova_condividi_radio_602.js', '.github/workflows/giro-boa-602-qa.yml']
+  # Claude, 16 novembre 2026 (Gianluca: «i check superflui non si possono eliminare?»): collaudo di una versione passata,
+  # solo a mano (Actions › questo workflow › Run workflow). Prima partiva da solo su push e Pull Request.
   workflow_dispatch:
 concurrency:
   group: giro-boa-602-${{ github.ref }}
