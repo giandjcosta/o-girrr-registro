@@ -1,5 +1,14 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 16 novembre 2026)
 
+## 16 novembre (8) — Claude: 6.2.2 ONLINE «Carriera e Derby più fluidi»
+- **6.2.2 pubblicata** con il «Vai» di Gianluca e il messaggio di `rilascio/r622/ANNUNCIO-BOZZA.json` approvato così com'è: `gh-pages` `64a243b` (da `19653ba`), solo pagine e `versioni.json`; `main` del sito e del registro non cambiano per la 6.2.2.
+  - `rilascio/r622/applica.py` lanciato due volte sulla copia di `gh-pages` (29 pagine con i file nuovi, poi 0); `aggiungi.py --tipo minore` ha dato 6.2.2; `node --check` superato su `pillole.js`, `tv.js`, `girrr/v60/tifosi.js`, `girrr/derby.js`, `stadio/girrr/derby.js`.
+  - **Per tornare indietro: `git revert 64a243b` su `gh-pages`.**
+  - Niente SQL e niente Supabase toccato; la 6.2.2 non ha SQL. Resta da incollare da Gianluca `sql/mvp-personaggi-621.sql` (vedi voce 7).
+- **Controllo sul sito vero** (Chromium, 320 px e 1280 px, Lega e Stadio: Home, Albo, Albo › Derby, Notifiche, Carriera aperta con `#carriera`): `versioni.json` online mostra 6.2.2, pillola «V6.2.2» in Home, nessun errore di script, nessuno scorrimento laterale, logo delle Notifiche 61×70 su telefono. Le richieste di rete fallite sono solo verso servizi esterni (font, statistiche, Supabase), bloccati nell'ambiente di prova; `app.html` reindirizza a `index.html` e le sue richieste interrotte sono quel reindirizzamento.
+  - **Non provato:** il tocco vero sulle pillole della Carriera su telefono (serve la scheda con i dati della squadra), Safari, Firefox e telefoni veri.
+- `ufficiale/src/sito/` allineato a `gh-pages` `64a243b`: 24 file sorgente cambiati (quelli già presenti, tra cui `versioni.json`; niente `data.json`, quote o riepiloghi).
+
 ## 16 novembre (7) — Claude: 6.2.1 ONLINE, migliorie del pomeriggio spostate nella 6.2.2 (in prova nel Lab)
 - **6.2.1 pubblicata** con il «Vai» di Gianluca («Facciamo il rilascio della 6.2.1 e la miglioriamo con la 6.2.2»), così come era nel Lab stamattina (registro `main` `1987fd6`, `rilascio/r621/`):
   - `gh-pages` `19653ba` (da `b4114fb`): 37 file, `versioni.json` 6.2.1 «Correzioni e personaggi in Curva» con l'annuncio approvato.
