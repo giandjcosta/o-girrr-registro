@@ -5,3 +5,4 @@
 - Passi: `python3 rilascio/r622/applica.py COPIA_GH_PAGES` due volte (29 pagine, poi 0) · `rilascio/versioni/aggiungi.py --tipo minore` · `node --check` sui cinque `.js` toccati · commit su `gh-pages`, `git pull --rebase`, push.
 - **Per tornare indietro: `git revert 64a243b` su `gh-pages`.**
 - Niente SQL nella 6.2.2.
+- Registro: `registro-stato.json`, `archivio.html`, `rilascio/versioni/versioni.json` e l'Anteprima si allineano da soli con `sincronizza-registro.yml` (versione nuova sul sito: entro 6 ore, oppure «Run workflow»). Non copiati a mano.
