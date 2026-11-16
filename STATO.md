@@ -1,4 +1,15 @@
-# Stato del progetto O Girrr (ultimi giorni — aggiornato 15 novembre 2026)
+# Stato del progetto O Girrr (ultimi giorni — aggiornato 16 novembre 2026)
+
+## 16 novembre (5) — ChatGPT: completamento verificabile della 6.2.1 (NON pubblicata)
+
+- Base: lavoro Claude PR #112, ramo separato `chatgpt/621-completamento`; niente merge sul sito vero, niente SQL Supabase, niente invio annuncio.
+- Riparata riproducibilità della vecchia Anteprima 5.5: quattro HTML rigenerati ora includono il link alla nuova anteprima 6.2.1. Prima la CI `percorsi-e-cronache` falliva su questo diff.
+- Le ultime correzioni di Claude (isolamento sondaggi nella Moviola, contatore Sfide, colore della pillola «Cambia il mio voto», pillole ferme Albo, transizione Albo di Latta, linea e dissolvenza Derby) erano nel generatore del sito, ma mancavano nella copia `lab/integrata-62`; ora anche il Lab le contiene per entrambe le grafiche.
+- Test dedicati 6.2.1: `prove/v62/check621.py` controlla copia del sito, Lab, backend e 11 personaggi; il workflow nel ramo applica `applica.py` e `backend.py` due volte su checkout **temporanei**, verifica JavaScript con `node --check` ed esegue `postgres_personaggi.py` su PostgreSQL locale.
+- Le vecchie prove 6.2 su base 6.1 sono escluse dal ramo 6.2.1 per non generare falsi errori: la 6.2 è già pubblicata. Concorrenza CI configurata per cancellare run superate del medesimo ramo.
+- I collaudi della storica 5.5 sono conservati come avvio manuale, per non consumare runner ad ogni modifica del Lab.
+- **Resta necessario:** vedere l'esito del workflow sull'ultimo commit, browser QA su Firefox/WebKit della patch 6.2.1, revisione visiva dell'anteprima e nuovo «Vai, pubblica» per SQL, backend e sito. Non dichiarare GO o rilascio fino a quei controlli.
+
 
 ## 15 novembre (14) — ChatGPT: release candidate 6.2 integrata, in certificazione (nessun deploy)
 
