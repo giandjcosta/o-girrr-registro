@@ -1,0 +1,20 @@
+/* O Girrr, tema evento sperimentale. Non altera data-skin Lega/Stadio. */
+:root[data-event-theme="vice-city"] {
+  --event-background:#131a38;
+  --event-pink:#f57db3;
+  --event-purple:#8654b8;
+  --event-sunset:#ffad72;
+  --event-turquoise:#62d0cb;
+  --event-text:#fff4ed;
+  --event-panel:rgba(29,26,64,.72);
+  --event-border:rgba(255,171,203,.32);
+  --event-shadow:0 16px 48px rgba(9,9,36,.38);
+}
+@media (prefers-reduced-motion:reduce) {
+  :root[data-event-theme="vice-city"] *,
+  :root[data-event-theme="vice-city"] *::before,
+  :root[data-event-theme="vice-city"] *::after {
+    animation-duration:.01ms!important;
+    transition-duration:.01ms!important;
+  }
+}
