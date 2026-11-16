@@ -87,6 +87,10 @@ def prepara(sito, eventi, testi, uscita, scripts_pdf=None):
                 scripts.mkdir(exist_ok=True)
                 for name in ('pdf_giornale.py', 'pdf_settimana.py', 'toto_quote.py'):
                     shutil.copyfile(Path(scripts_pdf)/name, scripts/name)
+                # Il generatore 6.2 importa il modulo MVP dalla stessa cartella degli script.
+                mvp_pdf = R/'rilascio/r62/editoriale/mvp_giornale62.py'
+                if mvp_pdf.is_file():
+                    shutil.copyfile(mvp_pdf, scripts/mvp_pdf.name)
                 # Il renderer pubblicato dalla 6.0 legge anche le aspettative editoriali.
                 attese_pdf=Path(scripts_pdf)/'aspettative.json'
                 if attese_pdf.is_file():
