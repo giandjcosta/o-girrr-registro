@@ -150,7 +150,7 @@
 
   function stile() {
     if (document.getElementById('gb-stile')) return;
-    const l = document.createElement('link'); l.id='gb-stile';l.rel='stylesheet';l.href=new URL('giro-di-boa.css?v=61-periodi1',ROOT);document.head.append(l);
+    const l = document.createElement('link'); l.id='gb-stile';l.rel='stylesheet';l.href=new URL('giro-di-boa.css?v=621',ROOT);document.head.append(l);
   }
   function opzioni(j) {return Object.entries(j.periodi).map(([k,p])=>`<option value="${k}">${E(p.etichetta||k)}</option>`).join('');}
   function opzioniComp(){return Object.entries(COMP).map(([k,n])=>`<option value="${k}">${E(n)}</option>`).join('');}

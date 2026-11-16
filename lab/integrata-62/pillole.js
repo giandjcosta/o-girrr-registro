@@ -12,8 +12,10 @@
 (function () {
   if (window.__pillole) return; window.__pillole = 1;
   var FILE = '.seg,.at,.dtab,nav .nvi,.chips,.ptabs,#tabs,.pt-competition';
-  /* 6.2.1: menu Albo, Derby e competizioni senza pillola mobile; colore soltanto */
-  var FERME = '.at,.dtab,.pt-competition';
+  /* 6.2.1 (Gianluca): menu dell'Albo e della Carriera (.oro-scroll), sottomenu dei Derby e pulsanti Campionato / Champions Cup dei Derby: il colore passa
+     dalla pillola di prima alla nuova senza scivolare; le pillole restano ferme (sul telefono la scelta resta in vista). */
+  var FERME = '.at,.dtab,.pt-competition,.oro-scroll';
+  try { var _fs = document.createElement('style'); _fs.textContent = FERME + '{scroll-snap-type:none!important}'; (document.head || document.documentElement).appendChild(_fs); } catch (e) {}   /* l'aggancio riportava indietro la fila e l'ultima voce restava tagliata */
   var ridotto = function () { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } };
   var EASE = 'cubic-bezier(.22,.61,.36,1)';
   function attiva(c) {
@@ -56,9 +58,15 @@
       if (!c2) return;
       var n = attiva(c2);
       if (!n) return;
+      /* 6.2.1: nelle file ferme (Albo, Carriera, Derby) la fila non viene riportata indietro e si sposta solo se la voce scelta
+         è fuori vista: prima tre scorrimenti insieme (questo, l'app e il ritorno indietro) la fermavano a metà, con l'ultima voce tagliata */
+      var ferma = c2.matches && c2.matches(FERME);
+      if (ferma) { var _r = n.getBoundingClientRect(), _e = c2.getBoundingClientRect(); if (_r.left < _e.left - 1 || _r.right > _e.right + 1) centra(c2, n); }
+      else {
       /* la fila non torna all'inizio */
       if (scorri(c2) && c2.scrollLeft < sl - 2) { var sb = c2.style.scrollBehavior; c2.style.scrollBehavior = 'auto'; c2.scrollLeft = sl; c2.style.scrollBehavior = sb; }
       centra(c2, n);
+      }
       if (ridotto()) return;
       /* il contenuto sotto entra con una dissolvenza */
       contenuto(c2).forEach(function (el) {

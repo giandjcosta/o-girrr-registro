@@ -74,9 +74,16 @@ NOTIFICHE_NEW = ('<style>/* 6.2.1 (da ChatGPT nel Lab): logo della Lega senza al
                  'body[data-v53="notifications"] .hero>a{background:transparent!important;box-shadow:none!important;border:0!important}'
                  'a[href]:focus:not(:focus-visible),button:focus:not(:focus-visible){outline:none!important;box-shadow:none!important}</style></head>')
 
+WEEK_MORPH = "  morphDom(_vw,_nv);"
+WEEK_MORPH_NEW = ("  /* 6.2.1: «La mia settimana» la aggiunge tifosi.js dopo il disegno: fuori dal confronto, poi di nuovo al suo posto, con la fila ferma.\n"
+                  "     Prima il confronto la trasformava in «Regole» e cancellava l'ultimo pulsante: la fila saltava e i pulsanti cambiavano sotto il dito. */\n"
+                  "  var _wk=_vw.querySelector('[data-pt-week]'),_wfr=_wk&&_wk.parentNode,_wsl=_wfr?_wfr.scrollLeft:0;if(_wk)_wk.remove();\n"
+                  "  morphDom(_vw,_nv);\n"
+                  "  if(_wk){var _rg=_vw.querySelector('[data-ctab=\"reg\"]');if(_rg&&_rg.parentNode){var _rf=_rg.parentNode,_rsb=_rf.style.scrollBehavior;_rf.insertBefore(_wk,_rg);_rf.style.scrollBehavior='auto';_rf.scrollLeft=_wsl;_rf.style.scrollBehavior=_rsb}}")
+
 LAVORI = {
-    'girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW), (ORO_SCROLL, ORO_SCROLL_NEW)],
-    'stadio/girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW), (ORO_SCROLL, ORO_SCROLL_NEW)],
+    'girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW), (ORO_SCROLL, ORO_SCROLL_NEW), (WEEK_MORPH, WEEK_MORPH_NEW)],
+    'stadio/girrr/app.html': [(APP_HOST, APP_HOST_NEW), (SEG, SEG_NEW), (ORO_SCROLL, ORO_SCROLL_NEW), (WEEK_MORPH, WEEK_MORPH_NEW)],
     'sondaggi62.js': [(SOND_DRAW, SOND_DRAW_NEW), (SOND_PREC, SOND_PREC_NEW), (SOND_PREC2, SOND_PREC2_NEW), (SOND_CAMBIA, SOND_CAMBIA_NEW)],
     'girrr/curva.html': [(CURVA_LOGO, CURVA_LOGO_NEW)],
     'stadio/girrr/curva.html': [(CURVA_LOGO, CURVA_LOGO_NEW)],
