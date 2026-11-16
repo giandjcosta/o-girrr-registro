@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="it">
-<head><script src="../../lab62.js"></script><script src="../../tv.js?v=622"></script>
+<head><script src="../../lab62.js"></script><script src="../../tv.js?v=623"></script>
 <script src="../../nomi.js"></script>
 
 <script src="ospite.js?v=1"></script>
@@ -185,13 +185,13 @@ html,body{overscroll-behavior-y:none;touch-action:manipulation;-webkit-text-size
 <style>@media(hover:none){.post:hover,.nav button:hover,.ib:hover,.tabs button:hover,.acts button:hover{background:transparent!important}.acts .rsp:hover:not(.on),.acts .ril:hover:not(.on),.acts .app:hover:not(.on),.acts .del:hover{color:var(--mu)!important}.pn b:hover{text-decoration:none}}.post,.acts button,.tabs button{-webkit-tap-highlight-color:transparent}</style>
 <script src="novita-dati.js?v=1792337985"></script>
 <script src="transizioni.js"></script>
-<link rel="stylesheet" href="../../font/originali.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="../../font/originali.css"></noscript>
-<style id="skin-nuova">.bar .tt,.bar .tt>span,h2{font-family:Lobster,'Brush Script MT',cursive!important;font-weight:400!important;letter-spacing:0!important}.bar .tt{font-size:25px!important}.bar .tt small{font-family:Inter,system-ui,sans-serif!important;font-size:12px!important;font-weight:500!important}</style>
+
+
 
 
 <script>window.goatcounter={path:function(){return location.pathname},no_onload:/[?&]demo/.test(location.search)}</script>
 <script data-goatcounter="https://djcosta18.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><link rel="stylesheet" href="../../girrr/v55/ui.css?v=55r10"><script src="../../girrr/v55/home55.js?v=621" defer></script><script src="../../girrr/v55/destinazioni55.js?v=55r8" defer></script><script src="../../girrr/v55/ui.js?v=621" defer></script><script src="../../offline.js" defer></script>
-<script src="../../curva-os.js?v=611-1"></script><link rel="stylesheet" href="../../curva-os.css?v=611-1"><link rel="stylesheet" href="../../girrr/v60/tifosi.css" data-girrr-tifosi><script src="../../sondaggi62.js?v=621"></script></head>
+<script src="../../curva-os.js?v=611-1"></script><link rel="stylesheet" href="../../curva-os.css?v=611-1"><link rel="stylesheet" href="../../girrr/v60/tifosi.css" data-girrr-tifosi><script src="../../sondaggi62.js?v=621"></script><style data-curva623>/* 6.2.3: Curva come nella Lega (titoli, accento, riquadri, menu, tirare per aggiornare) */body[data-v53=curva][data-v53-skin=stadio]{--v53-title-font:Inter,system-ui,sans-serif;--v53-title-weight:900;--g-card:4px 14px 14px 4px;--g-box:10px;--g-acc:#d62839;--g-onacc:#fbf6ec}body[data-v53=curva][data-v53-skin=stadio] .v53-h1{font-family:Inter,system-ui,sans-serif!important;font-size:clamp(23px,4vw,33px)!important;font-weight:900!important;letter-spacing:-.025em!important}body[data-v53=curva][data-v53-skin=stadio] .v53-panel h2{font-family:Inter,system-ui,sans-serif!important;font-size:21px!important;font-weight:900!important;letter-spacing:-.015em!important}body[data-v53=curva][data-v53-skin=stadio] .v53-panel{border-radius:16px}body[data-v53=curva][data-v53-skin=stadio] .v53-menu a{border-radius:10px}body[data-v53=curva][data-v53-skin=stadio] .v53-select{border-color:rgba(255,255,255,.27)}body[data-v53=curva][data-v53-skin=stadio] .v53-pill[aria-selected=true],body[data-v53=curva][data-v53-skin=stadio] .v53-pill.active{color:var(--v53-onaccent)}body[data-v53=curva][data-v53-skin=stadio] .v55-ptr.pronto{background:rgba(214,40,57,.62);border-color:rgba(214,40,57,.8);color:inherit}</style></head>
 <body data-v53="curva" data-v53-skin="stadio" data-v53-skinname="stadio">
 <div class="shell">
   <nav class="nav" id="nav"></nav>
@@ -623,7 +623,7 @@ function navR(){
 function topR(titolo,sott,tabs){
  var back=(vista==='u'&&vprof!==meH)||vista==='info'||vista==='adm'||vista==='seg',m=nomeMio();
  morfaIn(document.getElementById('top'),'<div class="bar">'+(back?'<button class="ib" '+(vista==='seg'&&vseg&&vseg!==meH?'data-u="'+vseg+'"':'data-v="'+(vista==='seg'?'profilo':'home')+'"')+' aria-label="Indietro">'+I.back+'</button>':(m?AV(m,'sm me','data-v="profilo"'):'<span class="me"></span>'))+
-  '<div class="tt">'+(vista==='home'?'<span style="display:flex;align-items:center;gap:8px"><i class="lg" data-lega="1" style="width:28px;height:28px;cursor:pointer"></i>Curva</span>':esc(titolo)+(sott?'<small>'+esc(sott)+'</small>':''))+'</div>'+
+  '<div class="tt">'+(vista==='home'?'<span style="display:flex;align-items:center;gap:8px"><i class="lg" aria-hidden="true" style="width:28px;height:28px"></i>Curva</span>':esc(titolo)+(sott?'<small>'+esc(sott)+'</small>':''))+'</div>'+
   (me===ADMIN&&S.v>=5?'<button class="ib" data-v="adm" aria-label="Per Me" title="Per Me">'+I.adm+'</button>':'')+'<button class="ib" data-v="info" aria-label="Info" title="Come funziona">'+I.info+'</button><button class="ib" id="rfb" aria-label="Aggiorna" title="Aggiorna"><svg viewBox="0 0 24 24" '+S0+'><path d="M20 12a8 8 0 1 1-2.5-5.8"/><path d="M20 4v5h-5"/></svg></button><button class="ib" id="tg" aria-label="Cambia tema">'+(curTema()==='dark'?I.sun:I.moon)+'</button></div>'+(tabs?'<div class="tabs">'+tabs+'</div>':'')+(NET===false?'<div class="net">Non riesco a collegarmi ai cori: puoi leggere, ma non scrivere.</div>':''));
  document.getElementById('rfb').onclick=function(){rinfresca()};
  document.getElementById('tg').onclick=function(){cvImpostazioni()};document.getElementById('tg').setAttribute('aria-label','Impostazioni: aspetto e suoni');
@@ -1230,5 +1230,5 @@ setInterval(function(){if(document.hidden||occupato()||rif)return;var f0=firma()
 </script>
 
 
-<script src="../../girrr/v60/model.js"></script><script src="../../girrr/v60/tifosi.js?v=622"></script></body>
+<script src="../../girrr/v60/model.js"></script><script src="../../girrr/v60/tifosi.js?v=622"></script><script>/* 6.2.3 (Gianluca): la Curva è uguale in Lega e Stadio, cambia solo tra iPhone e Android */document.documentElement.dataset.ptSkin='lega'</script></body>
 </html>
