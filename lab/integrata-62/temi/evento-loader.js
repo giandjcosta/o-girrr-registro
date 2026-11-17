@@ -10,7 +10,8 @@
   'use strict';
   var EVENTI = [
     /* id, inizio e fine (fine esclusa) in ora italiana, foglio di stile accanto a questo file */
-    { id: 'vice-city', inizio: '2026-11-18T00:00:00+01:00', fine: '2026-11-21T00:00:00+01:00', css: 'vice-city.css' },
+    /* 18 novembre: tolta la voce «vice-city» (prova di ChatGPT, non scelta): era prima nell'elenco, avrebbe vinto per data e senza il suo
+       file la skin non si sarebbe accesa. Resta una sola skin per il 18–20 novembre. */
     { id: 'notte-tropicale', inizio: '2026-11-18T00:00:00+01:00', fine: '2026-11-21T00:00:00+01:00', css: 'notte-tropicale/notte-tropicale.css', js: 'notte-tropicale/notte-tropicale.js',
       /* la Curva ha la sua grafica chiara/scura da app (iPhone e Android): il tema non la tocca, lì il testo diventava illeggibile */
       escludi: /\/curva\.html$/,

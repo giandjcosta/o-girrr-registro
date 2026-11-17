@@ -7,7 +7,7 @@
   try {
     var p = location.pathname;
     /* ChatGPT 17/11/2026: forme visive anche nello Spogliatoio radice del Lab. Nessuna funzione o navigazione aggiuntiva. */
-    if (p.endsWith('/lab/integrata-62/index.html')) { forme(); return; }
+    if (!/\/girrr\//.test(p)) { forme(); return; }   /* Spogliatoio (index.html della radice, nel Lab e sul sito): solo le forme */
     if (!/\/girrr\/([a-z0-9-]+\.html)?$/.test(p)) return;          /* solo le pagine di Lega e Stadio, non lo Spogliatoio */
     var pag = (p.match(/\/([a-z0-9-]+\.html)$/) || [])[1] || 'index.html';
     if (pag === 'curva.html') return;
