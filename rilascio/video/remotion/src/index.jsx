@@ -18,9 +18,9 @@ const TEMA = { lega: { acc: '#d62839', acc2: '#8e1a2a', logo: 'logo-lega.png', t
 // colorato ma trasparente come le altre righe; le altre righe hanno il numero bianco e la banda del colore ufficiale.
 const MEDAGLIE = [[255, 209, 102], [223, 230, 243], [231, 164, 106]], ULTIMO = [158, 15, 34];
 const rgb = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
-const Riga = ({ pos, nome, pt, t, med, ult, s, mossa, conta }) => { const c = ult ? ULTIMO : med;
+const Riga = ({ pos, nome, pt, t, med, ult, s, mossa, conta }) => { const sp=speciale65(), c = ult ? ULTIMO : med;
   return <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '11px 18px', borderRadius: 14, background: c ? rgb(c, ult ? .42 : .2) : 'rgba(255,255,255,.08)', borderLeft: `8px solid ${c ? rgb(ult ? [196, 30, 52] : c, 1) : TEMA[t].acc}`, opacity: s, transform: mossa }}>
-    <b style={{ font: F(900, 26), color: ult ? '#ff6578' : med ? rgb(med, 1) : CHIARO, width: 34 }}>{pos}</b><span style={{ font: F(800, 25), color: CHIARO, flex: 1 }}>{nm(nome)}</span><b style={{ font: F(900, 28), color: CHIARO }}>{conta}</b></div>; };
+    <b style={{ font: F(900, 26), color: sp && ult ? '#ff6578' : med && !ult ? rgb(med, 1) : CHIARO, width: 34 }}>{pos}</b><span style={{ font: F(800, 25), color: CHIARO, flex: 1 }}>{nm(nome)}</span><b style={{ font: F(900, 28), color: CHIARO }}>{conta}</b></div>; };
 const F = (w, s) => `${w} ${s}px Inter, system-ui, sans-serif`;
 const cl = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' };
 
