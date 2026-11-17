@@ -682,8 +682,8 @@ function ctxDi(D,SQ,ST,seed){
   var pos=ST.cls.map(function(t){return t.n}).indexOf(c.sq);c.pos=pos<0?'?':pos+1;
   var pt='?';if(ST.ult)ST.ult.m.forEach(function(m){if(m[0]===c.sq)pt=m[1];else if(m[3]===c.sq)pt=m[2]});
   c.pt=String(pt).replace('.',',');
-  var pool=(ST.ult?ST.ult.m:[]).concat(ST.ultC?ST.ultC.m:[]);var mm=pool.length?pool[Math.floor(r()*pool.length)]:null;
-  if(mm){var gc=mm[4].split('-').map(Number),w=mm[1]>=mm[2];c.vinc=w?mm[0]:mm[3];c.perd=w?mm[3]:mm[0];c.pv=String(Math.max(mm[1],mm[2])).replace('.',',');c.pp=String(Math.min(mm[1],mm[2])).replace('.',',');c.sc=(w?gc[0]+'-'+gc[1]:gc[1]+'-'+gc[0]);c.scarto=(Math.abs(mm[1]-mm[2])).toFixed(1).replace('.',',').replace(',0','')}
+  /* 6.5 (Gianluca: «perché dice che AFA SELECCION vince se ha pareggiato?»): niente pareggi, vincitore dai gol, coppa letta con il suo schema */var pool=(ST.ult?ST.ult.m:[]).concat((ST.ultC?ST.ultC.m:[]).map(function(x){return [x[1],x[2],x[3],x[4],x[5]]})).filter(function(x){var g=String(x[4]||'').split('-').map(Number);return g.length===2&&!isNaN(g[0])&&!isNaN(g[1])&&g[0]!==g[1]});var mm=pool.length?pool[Math.floor(r()*pool.length)]:null;
+  if(mm){var gc=mm[4].split('-').map(Number),w=gc[0]>gc[1];c.vinc=w?mm[0]:mm[3];c.perd=w?mm[3]:mm[0];c.pv=String(Math.max(mm[1],mm[2])).replace('.',',');c.pp=String(Math.min(mm[1],mm[2])).replace('.',',');c.sc=(w?gc[0]+'-'+gc[1]:gc[1]+'-'+gc[0]);c.scarto=(Math.abs(mm[1]-mm[2])).toFixed(1).replace('.',',').replace(',0','')}
   else{c.vinc=c.sq;c.perd=c.sq2;c.pv='70';c.pp='65';c.sc='2-1';c.scarto='5'}
   return c;
  };

@@ -8,7 +8,8 @@ Preparato da Claude il 17 novembre 2026. Numero scelto da Gianluca: **6.5** al p
    - Il contenuto non sparisce più per un attimo: dopo un tocco su una pillola partivano due animazioni d'entrata (quella di `app.html`/`transizioni.js`, da trasparente, e quella di `pillole.js`); ora solo quella delle pillole, con un rimbalzo morbido di 0,56 s. Totogirrr invariato.
    - Pillole della Carriera e dell'Albo d'oro che scivolano come le altre.
    - Conferenze stampa senza errore se il codice della squadra non è riconosciuto.
-2. **Tema evento** (`temi/`): caricatore `temi/evento-loader.js` e skin `temi/notte-tropicale/`. **Da decidere con Gianluca** come entra nel rilascio: nome definitivo, date, «Vai, pubblica». Va incluso nelle pagine con uno script di rilascio (come `temi/notte-tropicale/lab.py` fa nel Lab), non a mano.
+2. **Skin Notte Tropicale** (`rilascio/r65/evento.py`): copia `temi/evento-loader.js` e `temi/notte-tropicale/` nel sito e aggiunge il caricatore alle pagine. Si accende da sola dal 18 novembre 00:00 al 21 novembre 00:00 (ora italiana), poi si spegne senza altri rilasci. Grafica unica, Curva esclusa.
+3. **Curva**: i messaggi sui risultati non dicono più «vince» per un pareggio (vincitore dai gol, coppa letta con il suo schema).
 
 ## Prove fatte (Chromium)
 - `prove/v65/prova_fluidita_65.js`: sito vero 6.2.4 e Lab 6.5 a confronto su iPhone 13. Sul sito vero il contenuto arrivava a opacità 0 e la Carriera saltava di 160 px; nel Lab opacità minima 0,6 e nessun salto.
@@ -20,6 +21,6 @@ Preparato da Claude il 17 novembre 2026. Numero scelto da Gianluca: **6.5** al p
 - Pagina delle novità `lab/novita-6-5.html` e messaggio definitivo (`ANNUNCIO-BOZZA.json`), dopo il nome dell'evento.
 
 ## Pubblicazione (con il «Vai» di Gianluca)
-1. Copia di `gh-pages` del sito, `python3 rilascio/r65/applica.py COPIA` (seconda esecuzione: «File cambiati: 0»).
+1. Copia di `gh-pages` del sito, `python3 rilascio/r65/applica.py COPIA` e poi `python3 rilascio/r65/evento.py COPIA` (seconda esecuzione di entrambi: nessun file cambiato). Provato il 18 novembre sulla copia di `gh-pages`: 36 controlli, skin accesa per data, Curva esclusa, Stadio → Lega, nessun errore.
 2. `versioni.json` con `aggiungi.py --tipo medio --v 6.5` e il testo di `ANNUNCIO-BOZZA.json`.
 3. PR verso `gh-pages` del sito, controllo sul sito vero, poi `STATO.md`. Per tornare indietro: «Revert» della PR.

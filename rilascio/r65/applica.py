@@ -20,6 +20,9 @@
   animazioni a ogni scatto lo riaccendevano per un istante, schiacciato (il «39» sbiadito sopra). Ora resta sempre nascosto. I
   cartellini hanno il retro nascosto anche con il prefisso di Safari, così non restano sovrapposti, e il giro dura un po' di più
   (1,5–2,4 s invece di 1,1–1,9 s) perché le cifre riescano a seguirlo.
+- Curva, messaggi sui risultati: «AFA SELECCION vince 1-1» (foto di Gianluca). Si sceglieva una partita qualsiasi, anche un
+  pareggio, il vincitore era chi aveva più fantapunti e le partite di coppa erano lette con lo schema del campionato. Ora solo
+  partite con un vincitore, deciso dai gol, e coppa letta con il suo schema.
 - Con «riduci movimento» niente animazioni, come prima.
 
 Uso: python3 rilascio/r65/applica.py COPIA_GH_PAGES_6_2_4
@@ -39,6 +42,16 @@ APP = [
      "     attimo, la pagina tornava su e tremava); poi, se serve, si accorcia con calma */\n"
      "  var _h0=_vw.offsetHeight;if(_h0>0){_vw.style.minHeight=_h0+'px';clearTimeout(render._mh);render._mh=setTimeout(function(){var _a=parseFloat(_vw.style.minHeight)||0;_vw.style.minHeight='';var _h1=_vw.offsetHeight;if(_h1<_a-2&&_vw.animate&&!matchMedia('(prefers-reduced-motion: reduce)').matches){_vw.style.minHeight=_h1+'px';var _an=_vw.animate([{minHeight:_a+'px'},{minHeight:_h1+'px'}],{duration:350,easing:'cubic-bezier(.22,.61,.36,1)'});_an.onfinish=_an.oncancel=function(){_vw.style.minHeight=''}}else _vw.style.minHeight=''},800)}\n"
      "  morphDom(_vw,_nv);"),
+]
+CURVA = [
+    # Curva, messaggi sui risultati («{vinc} vince {sc}»): la partita si sceglie solo tra quelle con un vincitore; il vincitore
+    # è chi ha fatto più gol (non più fantapunti); le partite di coppa hanno il girone davanti e si leggono con il loro schema.
+    ("var pool=(ST.ult?ST.ult.m:[]).concat(ST.ultC?ST.ultC.m:[]);var mm=pool.length?pool[Math.floor(r()*pool.length)]:null;",
+     "/* 6.5 (Gianluca: «perché dice che AFA SELECCION vince se ha pareggiato?»): niente pareggi, vincitore dai gol, coppa letta con il suo schema */"
+     "var pool=(ST.ult?ST.ult.m:[]).concat((ST.ultC?ST.ultC.m:[]).map(function(x){return [x[1],x[2],x[3],x[4],x[5]]})).filter(function(x){var g=String(x[4]||'').split('-').map(Number);return g.length===2&&!isNaN(g[0])&&!isNaN(g[1])&&g[0]!==g[1]});"
+     "var mm=pool.length?pool[Math.floor(r()*pool.length)]:null;"),
+    ("if(mm){var gc=mm[4].split('-').map(Number),w=mm[1]>=mm[2];",
+     "if(mm){var gc=mm[4].split('-').map(Number),w=gc[0]>gc[1];"),
 ]
 FIDUCIA = [
     # numero nascosto sotto i cartellini: le sue animazioni lo riaccendevano a ogni scatto (il «39» sbiadito e schiacciato)
@@ -112,11 +125,13 @@ def main(argv):
             t = sostituisci(t, rel, a, b)
         return t
     scrivi('pillole.js', pill)
+    for rel in ('girrr/curva-banca.js', 'stadio/girrr/curva-banca.js'):
+        scrivi(rel, lambda t, rel: sostituisci(sostituisci(t, rel, *CURVA[0]), rel, *CURVA[1]))
     for rel in ('girrr/transizioni.js', 'stadio/girrr/transizioni.js'):
         scrivi(rel, lambda t, rel: sostituisci(t, rel, FX[0], FX[1], tutte=True))
     for html in sorted(base.rglob('*.html')):
         rel = str(html.relative_to(base))
-        scrivi(rel, lambda t, rel: re.sub(r'(?<=["/])transizioni\.js(\?v=\w+)?(?=["\'])', 'transizioni.js?v=' + V, re.sub(r'pillole\.js\?v=\w+', 'pillole.js?v=' + V, t)))
+        scrivi(rel, lambda t, rel: re.sub(r'(?<=["/])transizioni\.js(\?v=\w+)?(?=["\'])', 'transizioni.js?v=' + V, re.sub(r'curva-banca\.js\?v=\w+', 'curva-banca.js?v=' + V, re.sub(r'pillole\.js\?v=\w+', 'pillole.js?v=' + V, t))))
     print('6.5 applicata · File cambiati:', cambiati)
 
 
