@@ -1,6 +1,8 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 16 novembre 2026)
 
 ## 17 novembre 2026 — ChatGPT: Notte Tropicale su tutte le pagine (solo laboratorio)
+- **Correzione Home dopo screenshot Gianluca 20:30 (17/11)**: nella grafica evento la fila `Tutto il Girrr` contiene adesso anche Curva, Notifiche, Statistiche e sponsor (nodi reali spostati senza duplicazioni); titolo esterno alla fila e in posizione visiva sopra di essa (`order:6/7`); pulsanti delle due competizioni allineati in basso. Sorgenti `temi/notte-tropicale/notte-tropicale.{js,css}` sincronizzate nel Lab, nuova sezione CSS `4n`. [QA 44161549656](https://github.com/giandjcosta/o-girrr-registro/actions/runs/44161549656) Chromium **41/41** (37 regressioni + 4 Home con verifica layout visivo, scorrimento, CTA e screenshot). **PR #128 resta bozza**, nessuna pubblicazione, nessuna modifica a Supabase.
+
 - Ramo `chatgpt/notte-tropicale-pagine`, creato dal commit Claude `f3c1088`, PR bozza [#128](https://github.com/giandjcosta/o-girrr-registro/pull/128) verso `claude/totogirrr-ui-responsive-b2pgee`.
 - Estesa la funzione `forme()` del tema (elenchi BOX/TAB), senza sostituire il motore di Claude; CSS aggiunto esclusivamente nella nuova sezione `4m` (sezioni 4i–4k inalterate). Pagine: Totogirrr, Carriera, Girrr Sport, Albo, Giornale, Spogliatoio, Squadre, Versioni, Notifiche, Derby. Curva esclusa.
 - Copie JS e CSS del tema nel Lab sincronizzate con le sorgenti; copia del loader allineata senza cambiare la logica. Verifiche statiche: sintassi JS valida, CSS bilanciato, copie identiche. Il workflow della PR esegue `python3 temi/notte-tropicale/lab.py`, poi Chromium a 320/390/1440 e produce screenshot.
