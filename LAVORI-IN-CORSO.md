@@ -9,7 +9,7 @@ Stati: `Da fare` · `In corso` · `In prova nel Lab` · `Aspetta Gianluca` · `B
 Ultimo aggiornamento: 16 novembre 2026, Claude.
 
 ## Aspetta Gianluca
-- **6.2.4** (Spogliatoio completo nel Lab, numeri neutri, Calendario fluido, «‹ O Girrr» senza fondo al passaggio, schede del Totogirrr senza scorrimento del colore) · Claude · `Da fare` stanotte all'1 · Gianluca ha dato il «Vai» anche per pubblicarla («son correzioni minori»).
+- **6.2.4** (Spogliatoio completo nel Lab, numeri neutri, Calendario fluido, «‹ O Girrr» senza fondo al passaggio, schede del Totogirrr senza scorrimento del colore) · Claude · `In corso` dall'1 del 17 novembre · ramo `claude/totogirrr-ui-responsive-b2pgee`, `rilascio/r624/` · Gianluca ha dato il «Vai» anche per pubblicarla («son correzioni minori»).
 - **SQL dei personaggi che votano durante la settimana** (`sql/mvp-personaggi-621.sql`) · Claude · `Aspetta Gianluca` · Provato su PostgreSQL locale (`prove/v62/postgres_personaggi.py`, 10 prove). La 6.2.1 è online: Gianluca lo incolla nell'SQL Editor di Supabase prima dell'apertura della votazione della 8ª giornata.
 
 ## Online con la 6.2.2 (16 novembre, `gh-pages` `64a243b`)
