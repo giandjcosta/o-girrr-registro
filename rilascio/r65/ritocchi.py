@@ -20,7 +20,7 @@ def main(args):
         t=f.read_text(encoding='utf-8')
         for a,b in pairs:
             if a==b:raise SystemExit(rel+': sostituzione identica')
-            if b in t and a not in t:continue
+            if b in t:continue  # 6.5: anche nelle inserzioni, il testo originale è dentro il nuovo
             n=t.count(a)
             if n!=1:raise SystemExit(rel+': testo atteso '+str(n)+' volte: '+a[:85])
             t=t.replace(a,b)
