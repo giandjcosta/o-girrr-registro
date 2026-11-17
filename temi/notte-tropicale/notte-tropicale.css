@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Yellowtail&family=Barlow+Condensed:ital,wght@1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Yellowtail&family=Mr+Dafoe&family=Barlow+Condensed:ital,wght@1,800;1,900&display=swap');
 /* O Girrr · Tema evento «Notte Tropicale» (Claude, 17 novembre 2026). Proposta che si appoggia sulle pagine VERE dell'app.
    Si accende solo con data-event-theme="notte-tropicale" (temi/evento-loader.js). Non cambia dati, struttura né significato
    dei colori: Lega rossa e azzurra, Stadio oro, Campionato rosso, Champions Cup azzurra, retrocessione rossa restano.
@@ -87,11 +87,11 @@
 :root[data-event-theme="notte-tropicale"] .hero h1{font-family:'Barlow Condensed',Inter,sans-serif!important;font-style:italic!important;font-weight:900!important;text-transform:uppercase!important;
   letter-spacing:-.01em!important;line-height:.86!important;font-size:clamp(50px,8.4vw,104px)!important;margin:.06em 0 .02em!important;color:#fff!important;
   text-shadow:0 3px 0 #2a0738,0 0 18px rgba(255,79,163,.45)!important;white-space:nowrap;position:relative;padding-bottom:.62em}
-:root[data-event-theme="notte-tropicale"] .hero h1 span{font:inherit!important;background:linear-gradient(180deg,#ffd6ec 0 18%,#ff7cc0 45%,#ff5f8a 70%,#ffb86b)!important;
+:root[data-event-theme="notte-tropicale"] .hero h1 span{font:inherit!important;background:linear-gradient(180deg,#2b60da 0%,#ff4cb9 50%,#e6953e 100%)!important;   /* scelta di Gianluca (18 novembre): sfumatura 2 di Grok, blu-magenta-arancio */
   -webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important;
   filter:drop-shadow(0 3px 0 #2a0738) drop-shadow(0 0 14px rgba(255,79,163,.6))!important;text-shadow:none!important;padding:0 .08em 0 0!important;margin:0!important}
 :root[data-event-theme="notte-tropicale"] .hero h1::after{content:'Notte Tropicale';position:absolute;left:.5em;bottom:-.06em;transform:rotate(-7deg);transform-origin:0 100%;
-  font:400 .5em/1 Yellowtail,'Kaushan Script',cursive;text-transform:none;letter-spacing:0;color:#ffe3f1;-webkit-text-fill-color:#ffe3f1;white-space:nowrap;
+  font:400 .58em/1 'Mr Dafoe',Yellowtail,cursive;   /* scelta di Gianluca: corsivo B, pennellata legata */text-transform:none;letter-spacing:0;color:#ffe3f1;-webkit-text-fill-color:#ffe3f1;white-space:nowrap;
   text-shadow:0 0 2px #fff,0 0 8px #ff5ca8,0 0 18px #ff5ca8,0 0 36px rgba(255,79,163,.7);
   padding-bottom:.08em;background:linear-gradient(90deg,transparent,var(--nt-ciano) 18%,var(--nt-ciano) 82%,transparent) 0 100%/100% 2px no-repeat}
 /* titoli delle pagine: corsivo da insegna bianco con l'alone rosa */
