@@ -34,4 +34,13 @@ def check(name):
     print(f"OK statico: {name}, {len(p.links)} riferimenti")
 check("anteprima-home.html")
 check("anteprima-tabellone.html")
+check("anteprima-carriera.html")
+check("anteprima-totogirrr.html")
+hub = Links()
+hub.feed((HERE / "index.html").read_text(encoding="utf-8"))
+for link in hub.links:
+    if link.startswith(("http:", "https:", "#", "data:")):
+        continue
+    assert (HERE / link.split("?", 1)[0].split("#", 1)[0]).is_file(), f"Hub: collegamento mancante {link}"
+print(f"OK statico: index.html, {len(hub.links)} riferimenti")
 print("NOTA: non sostituisce prove reali Chromium/WebKit/Firefox o touch.")
