@@ -407,9 +407,14 @@
 /* senza il bordo rosso il contenuto restava attaccato al lato: spazio a sinistra al posto della banda */
 :root[data-event-theme="notte-tropicale"] :is(#v53board,.v53-home,.v53-panel,.vv-avviso,.lg-leghe,.turnoprossimo).nt-obl.nt-obl{padding-left:22px!important}
 :root[data-event-theme="notte-tropicale"] #big.nt-obl.nt-obl{padding-left:clamp(24px,4vw,40px)!important}
-/* «Gentilmente offerto da»: chiaro, così i marchi degli sponsor si leggono (Gianluca: «troppo scuro») */
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .sp.nt-obl.nt-obl.nt-obl::before{background:linear-gradient(160deg,#fff7fb,#f3e6ff)!important;box-shadow:inset 0 3px 0 var(--nt-ciano),0 12px 30px rgba(5,0,20,.35)!important}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .sp.nt-obl span{color:#5b2d90!important}
+/* «Gentilmente offerto da» su tutte le pagine (Gianluca: «troppo scuro», «pubblicità fuori posto»): riquadro chiaro e dritto
+   (niente inclinazione: i marchi restano dentro), scritta viola leggibile */
+:root[data-event-theme="notte-tropicale"] .sp.nt-obl.nt-obl.nt-obl{--nt-sk:0deg;padding:16px 18px!important}
+:root[data-event-theme="notte-tropicale"] .sp.nt-obl.nt-obl.nt-obl::before{transform:none!important;background:linear-gradient(160deg,#fff7fb,#f3e6ff)!important;box-shadow:inset 0 3px 0 var(--nt-ciano),inset 0 -3px 0 var(--nt-rosa),0 12px 30px rgba(5,0,20,.35)!important}
+:root[data-event-theme="notte-tropicale"] .sp.nt-obl span:first-child{color:#5b2d90!important;opacity:1!important;font-weight:800!important}
+:root[data-event-theme="notte-tropicale"] .sp.nt-obl .lg{max-width:100%;overflow:hidden}
+/* Curva: il logo «C» non esce più dal riquadro */
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] #cvw.nt-obl.nt-obl{padding-left:22px!important;overflow:hidden}
 
 /* 4f. Grafica unica durante l'evento (Gianluca): niente interruttore Lega/Stadio nella Home né nel Campo */
 :root[data-event-theme="notte-tropicale"] :is(#gsw,.skin){display:none!important}

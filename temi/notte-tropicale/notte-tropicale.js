@@ -186,7 +186,9 @@
     function presto() { if (giro) return; giro = true; requestAnimationFrame(passa); }
     function via() {
       passa();
-      try { oss = new MutationObserver(presto); oss.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['class', 'aria-current', 'aria-pressed', 'aria-selected'] }); } catch (e) {}
+      try { oss = new MutationObserver(presto); oss.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['class', 'aria-current', 'aria-pressed', 'aria-selected', 'open'] }); } catch (e) {}
+      /* riquadri che cambiano altezza (riepilogo e notifiche aperti, dati in arrivo): l'inclinazione si ricalcola */
+      try { var ro = new ResizeObserver(presto); [].forEach.call(document.querySelectorAll('.wrap > *, .board > *, .grid > *'), function (el) { ro.observe(el); }); } catch (e) {}
       addEventListener('resize', presto);
       setTimeout(presto, 1500);
     }
