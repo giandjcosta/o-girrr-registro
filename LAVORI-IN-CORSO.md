@@ -20,6 +20,9 @@ Ultimo aggiornamento: 16 novembre 2026, Claude.
 - **Schede del Derby e Campionato/Champions Cup** · Claude · `In prova nel Lab` · `rilascio/r622/`: su PC le schede sono di nuovo al centro. La regola cercava l'ultimo elemento della fila, che ora è la linea, non un pulsante. `rilascio/r622/` (aggiunta in `tifosi.js`): i due pulsanti stanno affiancati su iPhone SE (andavano a capo per 1 px); nello Stadio sono tutto oro, anche in Champions Cup.
 - **Registro: barra in alto più piccola e un solo interruttore Lega/Stadio** · Claude · `In prova nel Lab` · `registro.css`, `registro.js` e `rilascio/r62/lab62.js`, che ora ha una riga di prova compatta al posto dei link blu sottolineati.
 
+## In prova · 17 novembre 2026 (ChatGPT)
+- **Miami Nights — vera prova grafica** · ChatGPT · `In prova nel Lab (solo branch)` · ramo `chatgpt/miami-ux-claude-base`, file `temi/miami-ui.css` + `temi/miami-prova.html`. Questo ramo nasce da `claude/totogirrr-ui-responsive-b2pgee` commit `98f1b16` (Lab 6.2.4 con il tema di Claude). Un'unica cornice carica le pagine vere del Lab in iframe same-origin e inietta il CSS solo in quella sessione: Home, Tabellone, Carriera e Totogirrr, Lega e Stadio. Tab, card, navigazione e intestazioni profondamente riprogettate. Nessun merge, deploy, Supabase o modifica ai file di Claude. Prove: esistenza delle sette sorgenti e parsing dello script JS; **non ancora browser QA**. Prossimo passo: Gianluca apre raw.githack della pagina prova, segue test Chrome/iPhone e review Claude.
+
 ## Da fare
 - **Verificare Spogliatoio e Totogirrr nella 6.2.1** (elenco di Gianluca del 16 novembre) · Nessuno ancora · `Da fare`.
 - **Safari e Firefox veri, e telefoni veri** · Tutti · `Da fare` · Nell'ambiente di Claude c'è solo Chromium. I workflow di GitHub provano anche WebKit e Firefox, ma non i dispositivi veri.
