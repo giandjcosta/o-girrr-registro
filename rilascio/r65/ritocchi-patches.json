@@ -95,18 +95,6 @@
   ],
   "girrr/v60/tifosi.js": [
     [
-      "link('curva.html','pt-mvp','Il voto nella Curva')",
-      "link(page==='curva.html'?'app.html':'curva.html',page==='curva.html'?'sport':'pt-mvp',page==='curva.html'?'Squadra della settimana in Girrr Sport':'Il voto nella Curva')"
-    ],
-    [
-      "function redrawPoll(){const p=document.getElementById('pt-mvp');if(p)p.outerHTML=poll();",
-      "function redrawPoll(){const p=document.getElementById('pt-mvp');if(p){const x=p.querySelector('[data-pt-giurie]');if(x)window.ptGiurieAperte=x.open;p.outerHTML=poll();}"
-    ],
-    [
-      "if(d&&d.matches&&d.matches('[data-pt-giurie]'))window.ptGiurieAperte=d.open",
-      "if(d&&d.isConnected&&d.matches&&d.matches('[data-pt-giurie]'))window.ptGiurieAperte=d.open"
-    ],
-    [
       "+link('curva.html','pt-mvp','Il voto nella Curva')+",
       "+(page==='curva.html'?link('app.html','sport','Squadra della settimana in Girrr Sport'):link('curva.html','pt-mvp','Il voto nella Curva'))+"
     ],
@@ -125,37 +113,17 @@
   ],
   "girrr/v60/tifosi.css": [
     [
-      "color:#d62839}#pt-derby[data-pt-competition=cup]{border-left-color:#3d93d6}\n\n.pt-box .pt-status{color:var(--pt-sub)}.pt-box button[disabled]{cursor:wait;opacity:.6}\n",
-      "color:#d62839}#pt-derby[data-pt-competition=cup]{border-left-color:#3d93d6}\n\n.pt-box .pt-status{color:var(--pt-sub)}.pt-box button[disabled]{cursor:wait;opacity:.6}\n\n/* 6.5 (Gianluca, 18 novembre): tendina stabile, pallini interni e sondaggi incorniciati. */\nbody[data-v53=curva] #v53sondaggio{margin:12px 14px!important;padding:8px 0!important;background:var(--bg2)!important;border:1px solid var(--ln)!important;border-radius:16px!important;min-width:0}\nbody[data-v53=curva] #v53sondaggio .v55-pollpost{padding:12px 14px}\nbody[data-v53=curva] #pt-mvp details[data-pt-giurie] ul{padding-inline-start:1.65em;margin-inline:0;list-style-position:outside}\nbody[data-v53=curva] #pt-mvp details[data-pt-giurie] li{overflow-wrap:anywhere;padding-inline-start:2px}\nbody[data-v53=curva] #pt-mvp details[data-pt-giurie][open]>:not(summary){animation:none!important}\nbody[data-v53=curva] #pt-mvp button.v62-cambia,body[data-v53=curva] .v55-pollpost button.v62-cambia{display:inline-flex;align-items:center;justify-content:center;background:#d62839!important;border:0!important;color:#fff!important;border-radius:999px!important;padding:9px 16px!important;margin:8px 0 0!important;min-height:36px;opacity:1}\nbody[data-v53=curva] .v55-pollpost .v53-muted button.v62-cambia{display:flex}\nhtml[data-colori-sq] body[data-v53=curva] #pt-mvp button.v62-cambia,html[data-colori-sq] body[data-v53=curva] .v55-pollpost button.v62-cambia{background:var(--sq1)!important}\n@media(max-width:359px){body[data-v53=curva] #v53sondaggio{margin-inline:8px!important}}\n@media(prefers-reduced-motion:reduce){body[data-v53=curva] #pt-mvp details[data-pt-giurie] *{animation:none!important;transition:none!important}}\n"
-    ],
-    [
       "93d6}\n\n.pt-box .pt-status{color:var(--pt-sub)}.pt-box button[disabled]{cursor:wait;opacity:.6}\n",
       "93d6}\n\n.pt-box .pt-status{color:var(--pt-sub)}.pt-box button[disabled]{cursor:wait;opacity:.6}\n\n/* 6.5 · Fix permanenti della Curva (Lega e Stadio, iPhone/Android, chiaro/scuro), non della skin evento. */\nbody[data-v53=curva] #v53sondaggio{margin:12px 14px!important;padding:10px 0!important;background:var(--bg2)!important;border:1px solid var(--ln)!important;border-radius:16px!important;min-width:0}\nbody[data-v53=curva] #v53sondaggio .v55-pollpost{padding:12px 14px}\nbody[data-v53=curva] #pt-mvp details[data-pt-giurie] ul{padding-inline-start:1.6em;margin-inline:0;list-style-position:outside}\nbody[data-v53=curva] #pt-mvp details[data-pt-giurie] li{overflow-wrap:anywhere;padding-inline-start:2px}\nbody[data-v53=curva] #pt-mvp details[data-pt-giurie][open]>:not(summary){animation:none!important}\nbody[data-v53=curva] #pt-mvp button.v62-cambia,\nbody[data-v53=curva] .v55-pollpost button.v62-cambia{display:inline-flex;align-items:center;justify-content:center;border:0!important;border-radius:999px!important;min-height:36px;padding:9px 16px!important;margin:8px 0 0!important;background:#d62839!important;color:#fff!important;font:800 13px/1.2 Inter,system-ui,sans-serif!important}\nhtml[data-colori-sq] body[data-v53=curva] #pt-mvp button.v62-cambia,\nhtml[data-colori-sq] body[data-v53=curva] .v55-pollpost button.v62-cambia{background:var(--sq1)!important}\n@media(max-width:359px){body[data-v53=curva] #v53sondaggio{margin-inline:8px!important}}\n@media(prefers-reduced-motion:reduce){body[data-v53=curva] #pt-mvp details[data-pt-giurie] *{animation:none!important;transition:none!important}}\n"
     ]
   ],
   "sondaggi62.js": [
     [
-      "(/\\/stadio\\//.test(location.pathname)?'background:#ffd166;color:#1d2a52':'background:#d62839;color:#fff')",
-      "'background:#d62839;color:#fff'"
-    ],
-    [
       "'+(/\\/stadio\\//.test(location.pathname)?'background:#ffd166;color:#1d2a52':'background:#d62839;color:#fff')+'",
       "'+'background:#d62839;color:#fff'+'"
     ]
   ],
   "girrr/curva.html": [
-    [
-      "sondaggi62.js?v=621",
-      "sondaggi62.js?v=65rit"
-    ],
-    [
-      "tifosi.css\" data-girrr-tifosi",
-      "tifosi.css?v=65rit\" data-girrr-tifosi"
-    ],
-    [
-      "tifosi.js?v=622",
-      "tifosi.js?v=65rit"
-    ],
     [
       "tifosi.css\" data-girrr-tifosi",
       "tifosi.css?v=65fix\" data-girrr-tifosi"
@@ -170,18 +138,6 @@
     ]
   ],
   "stadio/girrr/curva.html": [
-    [
-      "sondaggi62.js?v=621",
-      "sondaggi62.js?v=65rit"
-    ],
-    [
-      "tifosi.css\" data-girrr-tifosi",
-      "tifosi.css?v=65rit\" data-girrr-tifosi"
-    ],
-    [
-      "tifosi.js?v=622",
-      "tifosi.js?v=65rit"
-    ],
     [
       "tifosi.css\" data-girrr-tifosi",
       "tifosi.css?v=65fix\" data-girrr-tifosi"
