@@ -1,7 +1,7 @@
-/* O GIRRR / Miami Nights — prova visuale reale, 17/11/2026
-   Si applica SOLO quando la cornice temi/miami-prova.html lo inietta nelle pagine Lab.
-   Non modifica dati, script di gioco, temi permanenti né il tema di Claude.
-   I componenti reali restano cliccabili. Respect reduced motion and Lega/Stadio semantics. */
+/* O GIRRR / Miami Nights — UNICA GRAFICA EVENTO, 17/11/2026
+   Una sola identità visiva indipendente dalle due basi precedenti.
+   Si applica soltanto alle copie sperimentali del Lab con .miami-ux; non alla produzione.
+   Non modifica dati, motore di Claude o componenti funzionali. */
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&family=Yellowtail&display=swap');
 :root.miami-ux{
   --miami-ink:#fff8f5; --miami-muted:#d9c8e8; --miami-bg:#100820;
@@ -11,12 +11,24 @@
   --miami-shadow:0 18px 42px rgba(5,3,23,.45),inset 0 1px 0 rgba(255,255,255,.15);
   background:#100820!important; color:var(--miami-ink)!important; color-scheme:dark;
 }
-:root.miami-ux[data-skin=stadio],:root.miami-ux body[data-v53-skin=stadio]{
-  --miami-primary:#ffd166; --miami-primary2:#ed973e; --miami-status:#ffd166;
-}
-:root.miami-ux:not([data-skin=stadio]){
+/* Un unico set di token, SENZA varianti Lega/Stadio. */
+:root.miami-ux{
   --miami-primary:#ff4ab2; --miami-primary2:#ff9866; --miami-status:#ff4ab2;
+  /* Le variabili della grafica base vengono normalizzate durante la sola prova. */
+  --acc:#ff4ab2!important; --hi:#ffb56e!important; --az:#68f7ea!important;
+  --bg:#130a29!important; --bg2:#3b1b57!important; --bg3:#100820!important;
+  --chiaro:#fff8f5!important; --sub:#eed1e8!important;
+  --red:#e63c62!important; --blue:#45bde9!important; --gold:#ffb56e!important;
 }
+:root.miami-ux body{
+  --acc:#ff4ab2!important; --hi:#ffb56e!important; --az:#68f7ea!important;
+  --bg:#130a29!important; --bg2:#3b1b57!important; --bg3:#100820!important;
+  --chiaro:#fff8f5!important; --sub:#eed1e8!important;
+}
+/* Il vecchio selettore "Grafica: Lega/Stadio" non compare nell'esperienza evento. */
+:root.miami-ux #gsw{display:none!important}
+:root.miami-ux .hero:not(.gsw-su){padding-top:inherit}
+:root.miami-ux body .wrap .cards>.c{border-left-color:var(--miami-outline)!important}
 :root.miami-ux::before{
   content:""!important;position:fixed!important;inset:0!important;z-index:-2!important;
   display:block!important;pointer-events:none!important;opacity:1!important;
@@ -426,3 +438,24 @@
     scroll-behavior:auto!important;transition-duration:.01ms!important
   }
 }
+
+/* Neutralizzazione delle differenze residue fra le vecchie skin nelle pagine Lab.
+   A livello evento nessuna scelta di grafica; restano distinte solo le competizioni e gli stati funzionali. */
+:root.miami-ux body[data-v53-skin=stadio] :is(.v53-home,.v53-metric,.v53-pill,.c,.mn,.st,.lg-leghe,.card,.panel),
+:root.miami-ux body[data-v53-skin=lega] :is(.v53-home,.v53-metric,.v53-pill,.c,.mn,.st,.lg-leghe,.card,.panel){
+  color:var(--miami-ink)!important;
+}
+:root.miami-ux body[data-v53-skin=stadio] :is(.v53-pill,.go,.btn),
+:root.miami-ux body[data-v53-skin=lega] :is(.v53-pill,.go,.btn){
+  border-color:var(--miami-outline)!important;
+}
+:root.miami-ux body[data-v53-skin=stadio] header.hero::after{
+  background:linear-gradient(90deg,#ff5fae,#ffb56e,#68f7ea)!important;
+  height:4px!important;border-radius:999px!important;
+}
+:root.miami-ux body[data-v53-skin=lega] header.hero::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:4px!important;
+  background:linear-gradient(90deg,#ff5fae,#ffb56e,#68f7ea)!important;
+  border-radius:999px!important;
+}
+:root.miami-ux .miami-event-head{max-width:1400px;margin-left:auto;margin-right:auto}
