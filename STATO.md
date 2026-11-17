@@ -1,5 +1,12 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 16 novembre 2026)
 
+## 17 novembre 2026 — ChatGPT: Notte Tropicale su tutte le pagine (solo laboratorio)
+- Ramo `chatgpt/notte-tropicale-pagine`, creato dal commit Claude `f3c1088`, PR bozza [#128](https://github.com/giandjcosta/o-girrr-registro/pull/128) verso `claude/totogirrr-ui-responsive-b2pgee`.
+- Estesa la funzione `forme()` del tema (elenchi BOX/TAB), senza sostituire il motore di Claude; CSS aggiunto esclusivamente nella nuova sezione `4m` (sezioni 4i–4k inalterate). Pagine: Totogirrr, Carriera, Girrr Sport, Albo, Giornale, Spogliatoio, Squadre, Versioni, Notifiche, Derby. Curva esclusa.
+- Copie JS e CSS del tema nel Lab sincronizzate con le sorgenti; copia del loader allineata senza cambiare la logica. Verifiche statiche: sintassi JS valida, CSS bilanciato, copie identiche. Il workflow della PR esegue `python3 temi/notte-tropicale/lab.py`, poi Chromium a 320/390/1440 e produce screenshot.
+- Stato al momento di questa nota: in collaudo browser, nessun rilascio. Nessun merge, nessuna modifica al sito vero né a Supabase.
+
+
 ## 16 novembre (8) — Claude: 6.2.3 «Il Totogirrr su ogni schermo» in prova nel Lab (NON pubblicata)
 - Sul sito c'è la **6.2.2** (`gh-pages` `64a243b`). Richieste di Gianluca dopo la 6.2.2, preparate in `rilascio/r623/applica.py` (sopra la 6.2.2 pubblicata, si ferma se il sito è cambiato, rieseguibile) e nel Lab con `rilascio/r623/lab.py` (`lab/integrata-62/`), pagina `lab/novita-6-2-3.html`, annuncio da approvare in `rilascio/r623/ANNUNCIO-BOZZA.json` (tipo minore → 6.2.3: Gianluca, «per una correzione così piccola 6.2.3 è più adeguato»; prima preparata come 6.3).
   - **Schede del Totogirrr, scheda toccata tagliata:** la fila che scorre è il `<nav>`, ma `pillole.js` controllava `.nvi` (largo quanto le schede, non scorre mai) e la pagina la spostava solo nei ridisegni completi: toccando «Probabilità» sul bordo restava tagliata. Ora `pillole.js` la sposta quanto basta per vederla tutta (14 px di margine, senza centrarla) ed è l'unico codice che muove la fila (`navPost` della pagina non scorre più).
