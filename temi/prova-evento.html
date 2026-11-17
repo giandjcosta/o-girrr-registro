@@ -1,0 +1,8 @@
+<!doctype html>
+<html lang="it" data-skin="girrr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Prova caricatore evento · O Girrr</title>
+<script src="evento-loader.js"></script>
+<style>body{margin:0;font:16px/1.5 system-ui,sans-serif;background:#1d2a52;color:#fbf6ec;padding:24px}:root[data-event-theme] body{background:var(--event-background,#131a38)}code{color:#ffd166}</style>
+</head><body><h1>Prova del caricatore</h1><p>Tema: <code id="t">—</code> · Modo: <code id="m">—</code></p>
+<p>Prova con <code>?evento-data=2026-11-17T23:59</code>, <code>2026-11-18T00:00</code>, <code>2026-11-21T00:00</code>, <code>?evento=on</code>, <code>?evento=off</code>, <code>?evento=auto</code>.</p>
+<script>document.getElementById('t').textContent=document.documentElement.dataset.eventTheme||'spento';document.getElementById('m').textContent=(window.OGirrrEvento||{}).modo||'?'</script>
+</body></html>
