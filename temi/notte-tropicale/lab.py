@@ -16,7 +16,7 @@ TEMI = OUT / 'temi'
 def main():
     (TEMI / 'notte-tropicale').mkdir(parents=True, exist_ok=True)
     shutil.copyfile(R / 'temi/evento-loader.js', TEMI / 'evento-loader.js')
-    for f in ('notte-tropicale.css', 'scena.svg', 'miami-tramonto.jpg', 'miami-palme.jpg', 'ocean-drive-notte.jpg'):
+    for f in ('notte-tropicale.css', 'notte-tropicale.js', 'scena.svg', 'miami-tramonto.jpg', 'miami-palme.jpg', 'ocean-drive-notte.jpg'):
         shutil.copyfile(R / 'temi/notte-tropicale' / f, TEMI / 'notte-tropicale' / f)
     n = 0
     for p in sorted(OUT.rglob('*.html')):

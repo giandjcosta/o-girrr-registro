@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Yellowtail&family=Rubik+Mono+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Yellowtail&family=Barlow+Condensed:ital,wght@1,800;1,900&display=swap');
 /* O Girrr · Tema evento «Notte Tropicale» (Claude, 17 novembre 2026). Proposta che si appoggia sulle pagine VERE dell'app.
    Si accende solo con data-event-theme="notte-tropicale" (temi/evento-loader.js). Non cambia dati, struttura né significato
    dei colori: Lega rossa e azzurra, Stadio oro, Campionato rosso, Champions Cup azzurra, retrocessione rossa restano.
@@ -81,18 +81,25 @@
 :root[data-event-theme="notte-tropicale"] :is(.hero h1,.top h1,header h1){animation:nt-accendi 1.4s ease-out 1 both}
 :root[data-event-theme="notte-tropicale"] :is(.v53-panel h2,h2.sec,.ph,section > h2){color:#fff!important;text-shadow:0 0 8px rgba(255,79,163,.55),0 0 22px rgba(255,79,163,.25)!important}
 :root[data-event-theme="notte-tropicale"] :is(.hero h1 span,.top h1 span){padding-right:.14em;margin-right:-.06em}
-/* 3c. «O Girrr» da insegna (Gianluca: «più stile Vice City»): la O in un riquadro al neon azzurro, «Girrr» in corsivo da
-   insegna rosa (Yellowtail, Google Fonts, OFL) con il contorno scuro e l'alone, tutta la scritta inclinata in salita.
-   Carattere e disegno nostri: richiama l'atmosfera, non copia nessun logo. */
-:root[data-event-theme="notte-tropicale"] .hero h1{transform:rotate(-5deg);transform-origin:0 100%;margin-top:.12em!important;line-height:1.05!important;white-space:nowrap;font-size:clamp(44px,7.5vw,92px)!important}
-:root[data-event-theme="notte-tropicale"] .hero h1 span{font-family:Yellowtail,'Kaushan Script',cursive!important;font-size:1.22em;
-  background:linear-gradient(180deg,#ffe8f4 0 20%,#ff8ccb 38%,#ff3f9a 72%,#c21f78)!important;-webkit-background-clip:text!important;background-clip:text!important;
-  filter:drop-shadow(0 0 1px #2a0738) drop-shadow(0 0 1px #2a0738) drop-shadow(0 0 12px rgba(255,79,163,.85)) drop-shadow(0 0 30px rgba(255,79,163,.45))!important;
-  padding:0 .16em .12em 0}
-:root[data-event-theme="notte-tropicale"] .hero h1::first-letter{font-family:'Rubik Mono One',Inter,sans-serif!important;font-size:.7em;color:#d9fcff!important;-webkit-text-fill-color:#d9fcff!important;
-  text-shadow:0 0 1px #fff,0 0 5px var(--nt-ciano),0 0 12px rgba(111,240,255,.65)!important}
-/* gli altri titoli grandi: stessa scrittura da insegna, bianchi con l'alone rosa */
-:root[data-event-theme="notte-tropicale"] :is(.top h1,.v53-h1,.gs-title,header h1,.v53-panel h2,h2.sec,.ph,.oggi h2,section > h2){font-family:Yellowtail,'Kaushan Script',cursive!important}
+/* 3c. Titolo della Home dal bozzetto che ChatGPT ha mostrato a Gianluca: «O GIRRR» in stampatello corsivo grosso (Barlow
+   Condensed, Google Fonts, OFL), «Girrr» sfumato rosa e arancio, e sopra in diagonale la scritta al neon «Notte Tropicale»
+   (Yellowtail, OFL) con la sottolineatura azzurra. Carattere e disegno nostri: richiama l'atmosfera, non copia nessun logo. */
+:root[data-event-theme="notte-tropicale"] .hero h1{font-family:'Barlow Condensed',Inter,sans-serif!important;font-style:italic!important;font-weight:900!important;text-transform:uppercase!important;
+  letter-spacing:-.01em!important;line-height:.86!important;font-size:clamp(50px,8.4vw,104px)!important;margin:.06em 0 .02em!important;color:#fff!important;
+  text-shadow:0 3px 0 #2a0738,0 0 18px rgba(255,79,163,.45)!important;white-space:nowrap;position:relative;padding-bottom:.62em}
+:root[data-event-theme="notte-tropicale"] .hero h1 span{font:inherit!important;background:linear-gradient(180deg,#ffd6ec 0 18%,#ff7cc0 45%,#ff5f8a 70%,#ffb347)!important;
+  -webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important;
+  filter:drop-shadow(0 3px 0 #2a0738) drop-shadow(0 0 14px rgba(255,79,163,.6))!important;text-shadow:none!important;padding:0 .08em 0 0!important;margin:0!important}
+:root[data-event-theme="notte-tropicale"] .hero h1::after{content:'Notte Tropicale';position:absolute;left:.5em;bottom:-.06em;transform:rotate(-7deg);transform-origin:0 100%;
+  font:400 .5em/1 Yellowtail,'Kaushan Script',cursive;text-transform:none;letter-spacing:0;color:#ffe3f1;-webkit-text-fill-color:#ffe3f1;white-space:nowrap;
+  text-shadow:0 0 2px #fff,0 0 8px #ff4fa3,0 0 18px #ff4fa3,0 0 36px rgba(255,79,163,.7);
+  padding-bottom:.08em;background:linear-gradient(90deg,transparent,var(--nt-ciano) 18%,var(--nt-ciano) 82%,transparent) 0 100%/100% 2px no-repeat}
+/* titoli delle pagine: corsivo da insegna bianco con l'alone rosa */
+:root[data-event-theme="notte-tropicale"] :is(.top h1,.v53-h1,.gs-title,header:not(.hero) h1){font-family:Yellowtail,'Kaushan Script',cursive!important}
+/* titoli delle sezioni come nel bozzetto: stampatello corsivo con le tre barre rosa «///» davanti */
+:root[data-event-theme="notte-tropicale"] :is(.v53-panel h2,h2.sec,.ph,.oggi h2,section > h2){font-family:'Barlow Condensed',Inter,sans-serif!important;font-style:italic!important;font-weight:800!important;
+  text-transform:uppercase!important;letter-spacing:.01em!important;padding-left:1.25em!important;
+  background:repeating-linear-gradient(115deg,var(--nt-rosa) 0 .16em,transparent .16em .3em) 0 52%/.95em .78em no-repeat!important}
 @keyframes nt-accendi{0%{opacity:.15;filter:brightness(.6)}12%{opacity:1}18%{opacity:.35}26%{opacity:1}34%{opacity:.7}46%,100%{opacity:1;filter:none}}
 
 /* 4. Schede scure con bordo luminoso: le bande laterali (rosse, azzurre, oro) restano dove sono */
@@ -148,10 +155,34 @@
 :root[data-event-theme="notte-tropicale"] body .giornata-nav.giornata-nav.giornata-nav > :is(button[aria-selected=true],a[aria-current]){box-shadow:0 0 16px rgba(255,79,163,.55)!important}
 
 /* 4c. Riga con le date sotto il titolo della Home (idea di ChatGPT nella sua anteprima) */
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .hero .tag::before{content:'Notte Tropicale · 18–20 novembre';display:block;
-  margin:16px 0 8px;padding-left:34px;background:linear-gradient(var(--nt-ciano),var(--nt-ciano)) 0 .7em/24px 2px no-repeat;
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .hero .tag::before{content:'Edizione speciale · 18–20 novembre';display:block;
+  margin:6px 0 8px;padding-left:34px;background:linear-gradient(var(--nt-ciano),var(--nt-ciano)) 0 .7em/24px 2px no-repeat;
   font:800 11px/1.4 Inter,system-ui,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--nt-ciano);text-shadow:0 0 10px rgba(111,240,255,.6)}
 @media (max-width:520px){:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .hero .tag::before{letter-spacing:.12em;font-size:10px;padding-left:28px;background-size:18px 2px}}
+
+/* 4d. Barra in basso (notte-tropicale.js, idea dal bozzetto di ChatGPT): solo sul telefono, col pallone al centro per il
+   Totogirrr. Sparisce quando c'è la schedina del Totogirrr e sopra i 760 px; entra con una dissolvenza dal basso. */
+.nt-barra{display:none}
+@media (max-width:760px){
+  :root[data-event-theme="notte-tropicale"] .nt-barra{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;position:fixed;z-index:25;left:10px;right:10px;
+    bottom:calc(10px + env(safe-area-inset-bottom,0px));padding:6px 6px 7px;border-radius:22px;
+    background:linear-gradient(180deg,rgba(46,16,84,.96),rgba(16,6,38,.97));box-shadow:0 0 0 1px var(--nt-bordo) inset,0 10px 30px rgba(5,0,20,.6),0 0 24px rgba(255,79,163,.22);
+    opacity:0;transform:translateY(18px);transition:opacity .35s ease,transform .45s cubic-bezier(.22,.61,.36,1)}
+  :root[data-event-theme="notte-tropicale"] .nt-barra.su{opacity:1;transform:none}
+  :root[data-event-theme="notte-tropicale"] .nt-barra a{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px 3px;color:rgba(255,255,255,.72);text-decoration:none;
+    font:700 10.5px/1.1 Inter,system-ui,sans-serif;-webkit-tap-highlight-color:transparent;position:relative;transition:color .2s ease}
+  :root[data-event-theme="notte-tropicale"] .nt-barra a svg{width:23px;height:23px}
+  :root[data-event-theme="notte-tropicale"] .nt-barra a[aria-current]{color:var(--nt-rosa-chiaro)}
+  :root[data-event-theme="notte-tropicale"] .nt-barra a[aria-current]::after{content:'';position:absolute;bottom:-4px;left:28%;right:28%;height:3px;border-radius:3px;background:var(--nt-rosa);box-shadow:0 0 10px var(--nt-rosa)}
+  :root[data-event-theme="notte-tropicale"] .nt-barra a.nt-palla svg{width:36px;height:36px;padding:9px;margin-top:-26px;box-sizing:content-box;border-radius:50%;color:#fff;
+    background:radial-gradient(circle at 35% 30%,#ff9ccd,#ff4fa3 45%,#a01f8a);box-shadow:0 0 0 3px rgba(16,6,38,.95),0 0 0 5px rgba(255,140,205,.55),0 0 22px rgba(255,79,163,.75)}
+  :root[data-event-theme="notte-tropicale"] .nt-barra a:active{opacity:.75}
+  /* nel Lab il bollino «Versione di prova» sale sopra la barra (sul sito vero non c'è) */
+  :root[data-event-theme="notte-tropicale"].nt-con-barra small[aria-label^="Versione di prova"]{bottom:calc(98px + env(safe-area-inset-bottom,0px))!important}
+  :root[data-event-theme="notte-tropicale"].nt-con-barra body{padding-bottom:calc(92px + env(safe-area-inset-bottom,0px))!important}
+  :root[data-event-theme="notte-tropicale"] body:has(.slip) .nt-barra{opacity:0!important;pointer-events:none;transform:translateY(30px)}
+}
+@media (prefers-reduced-motion:reduce){:root[data-event-theme="notte-tropicale"] .nt-barra{transition:none!important}}
 
 /* 5. Firma dell'evento in fondo alla Home */
 :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap::after{
