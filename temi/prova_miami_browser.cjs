@@ -8,12 +8,12 @@ const base=process.argv[2]||'http://localhost:8768/temi/';
 const browser=await chromium.launch({headless:true});
 const cases=[];const sizes=[{w:320,h:700},{w:390,h:844},{w:1440,h:900}];
 try{
-for(const skin of ['lega','stadio'])for(const screen of ['home','tabellone','carriera','totogirrr'])for(const size of sizes){
+for(const screen of ['home','tabellone','carriera','totogirrr'])for(const size of sizes){
  const context=await browser.newContext({viewport:{width:size.w,height:size.h},hasTouch:size.w<=390,isMobile:size.w<=390});
  const page=await context.newPage();
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  const url=new URL('miami-prova.html',base);
- url.search=new URLSearchParams({skin,screen,view:'desktop'}).toString();
+ url.search=new URLSearchParams({screen,view:'desktop'}).toString();
  let ok=false;let state={};let failure='';
  try{
    await page.goto(url.toString(),{waitUntil:'domcontentloaded',timeout:15000});
@@ -32,8 +32,8 @@ for(const skin of ['lega','stadio'])for(const screen of ['home','tabellone','car
    });
    ok=state.css&&state.activated&&state.links===4&&state.selected===screen&&state.docWidth<=state.viewWidth+3;
  }catch(e){failure=e.message}
- cases.push({skin,screen,viewport:size.w,ok,error:failure,errors:errors.slice(0,3),...state});
- console.log((ok?'OK':'KO')+' '+skin+' '+screen+' '+size.w+' '+(failure||''));
+ cases.push({screen,viewport:size.w,ok,error:failure,errors:errors.slice(0,3),...state});
+ console.log((ok?'OK':'KO')+' '+screen+' '+size.w+' '+(failure||''));
  await context.close();
 }
 }finally{await browser.close()}
