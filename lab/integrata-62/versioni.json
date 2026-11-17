@@ -2,11 +2,38 @@
   "nota": "Fonte unica della pagina Versioni (girrr/versioni.html e stadio/girrr/versioni.html). A ogni rilascio si aggiunge la versione in cima con rilascio/versioni/aggiungi.py. Numeri: correzione minore = terza cifra (5.6.1), aggiornamento medio = seconda cifra (5.7.0), aggiornamento grande = prima cifra (6.0). Dove manca la storia: «Dato non conservato». Le versioni 1.0-4.5 e il Mercato Scambi vengono dai messaggi recuperati da Claude chat (9 novembre 2026), date controllate con i commit del sito. Il campo «nota» e «altre_varianti» non si mostrano nella pagina.",
   "versioni": [
     {
+      "v": "6.2.4",
+      "data": "2026-11-17",
+      "tipo": "minore",
+      "titolo": "Spogliatoio e Totogirrr più fluidi",
+      "messaggio": "🔧 **O Girrr 6.2.4 è online!** Nello Spogliatoio il Calendario cambia giornata con un passaggio morbido e la pagina resta dove sei. Nel Totogirrr le sezioni in alto passano da una all’altra con una dissolvenza, come pulsanti separati. «‹ O Girrr» non si colora più quando lo tocchi o ci passi sopra. Buona giornata a tutti! ⚽",
+      "novita": [
+        {
+          "area": "Spogliatoio",
+          "voci": [
+            "Nel Calendario, cambiando giornata o competizione, la freccia resta dove l’hai toccata e la nuova giornata entra con una dissolvenza dal lato della freccia."
+          ]
+        },
+        {
+          "area": "Totogirrr",
+          "voci": [
+            "Le sezioni in alto sono pulsanti separati: quella lasciata perde il colore e quella toccata lo prende con una dissolvenza breve, senza colore che scivola."
+          ]
+        },
+        {
+          "area": "App",
+          "voci": [
+            "«‹ O Girrr» non ha più il fondo grigio quando ci passi sopra o lo tocchi, nelle pagine Versioni, Notifiche e nelle altre."
+          ]
+        }
+      ]
+    },
+    {
       "v": "6.2.3",
       "data": "2026-11-16",
       "tipo": "minore",
       "titolo": "Il Totogirrr su ogni schermo",
-      "messaggio": "🔧 **O Girrr 6.2.3 è online!** Il Totogirrr si adatta al tuo schermo: su tablet, PC e TV le partite stanno affiancate e vedi tutta la giornata in un colpo d’occhio, con uno sfondo nuovo un po’ più grigio. Sul telefono le sezioni in alto rispondono subito al tocco, la sezione che scegli si vede sempre per intero e scorrendo lasciano spazio alle partite. In fondo alla Home ora trovi «Esci», per cambiare squadra quando vuoi. Quando condividi un video o un’immagine, l’anteprima sta tutta nella finestra e i pulsanti sono in ordine. Il passaggio tra Lega e Stadio è più morbido, e nello Spogliatoio le due grafiche hanno finalmente il loro sfondo, con il rosso e l’azzurro nella Lega. Buona giornata a tutti! ⚽",
+      "messaggio": "🔧 **O Girrr 6.2.3 è online!** Il Totogirrr si adatta al tuo schermo: su tablet, PC e TV le partite stanno affiancate potendo vedere tutta la giornata in un colpo d’occhio, con uno sfondo nuovo un po’ più grigio. Sul telefono le sezioni in alto rispondono subito al tocco, la sezione che scegli si vede sempre per intero e scorrendo lasciano spazio alle partite. In fondo alla Home ora trovi «Esci», per cambiare squadra quando vuoi. Quando condividi un video o un’immagine, l’anteprima sta tutta nella finestra e i pulsanti sono in ordine. Il passaggio tra Lega e Stadio è più morbido, e nello Spogliatoio le due grafiche hanno finalmente il loro sfondo, con il rosso e l’azzurro nella Lega. Buona giornata a tutti! ⚽",
       "novita": [
         {
           "area": "Totogirrr",

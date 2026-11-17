@@ -1,0 +1,11 @@
+{
+ "stato": "Bozza: Gianluca ha dato il «Vai» per pubblicare la 6.2.4 (correzioni minori); regole in REGOLE-VERSIONI.md",
+ "tipo": "minore",
+ "titolo": "Spogliatoio e Totogirrr più fluidi",
+ "messaggio": "🔧 **O Girrr 6.2.4 è online!** Nello Spogliatoio il Calendario cambia giornata con un passaggio morbido e la pagina resta dove sei. Nel Totogirrr le sezioni in alto passano da una all’altra con una dissolvenza, come pulsanti separati. «‹ O Girrr» non si colora più quando lo tocchi o ci passi sopra. Buona giornata a tutti! ⚽",
+ "voci": [
+  "Spogliatoio: Nel Calendario, cambiando giornata o competizione, la freccia resta dove l’hai toccata e la nuova giornata entra con una dissolvenza dal lato della freccia.",
+  "Totogirrr: Le sezioni in alto sono pulsanti separati: quella lasciata perde il colore e quella toccata lo prende con una dissolvenza breve, senza colore che scivola.",
+  "App: «‹ O Girrr» non ha più il fondo grigio quando ci passi sopra o lo tocchi, nelle pagine Versioni, Notifiche e nelle altre."
+ ]
+}

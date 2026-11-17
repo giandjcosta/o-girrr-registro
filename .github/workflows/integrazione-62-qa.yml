@@ -22,6 +22,7 @@ on:
       - 'rilascio/r621/**'
       - 'rilascio/r622/**'
       - 'rilascio/r623/**'
+      - 'rilascio/r624/**'
   workflow_dispatch:
 permissions:
   contents: read
@@ -247,7 +248,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Sintassi degli strumenti 6.2.1
-        run: python3 -m py_compile rilascio/r623/applica.py rilascio/r623/lab.py rilascio/r621/applica.py rilascio/r621/backend.py rilascio/r621/bug621.py prove/v62/postgres_personaggi.py prove/v62/check621.py
+        run: python3 -m py_compile rilascio/r624/applica.py rilascio/r624/lab.py rilascio/r623/applica.py rilascio/r623/lab.py rilascio/r621/applica.py rilascio/r621/backend.py rilascio/r621/bug621.py prove/v62/postgres_personaggi.py prove/v62/check621.py
       - name: Applica 6.2.3 solo a due checkout temporanei, due volte per verificare idempotenza
         run: |
           # Claude, 16 novembre 2026: la 6.2.2 è online (gh-pages 64a243b), quindi rilascio/r621/applica.py non si applica più
@@ -255,9 +256,12 @@ jobs:
           python3 rilascio/r621/backend.py qa-site-backend
           python3 rilascio/r621/backend.py qa-site-backend
           python3 prove/v62/check621.py qa-site qa-site-backend
-          python3 rilascio/r622/applica.py qa-site
+          # 6.2.3 online (gh-pages 4b0fc71): r623 non cambia più niente; sopra si prova la 6.2.4 due volte
           python3 rilascio/r623/applica.py qa-site
-          python3 rilascio/r623/applica.py qa-site | grep -q 'File cambiati: 0'
+          python3 rilascio/r624/applica.py qa-site
+          python3 rilascio/r624/applica.py qa-site | grep -q 'File cambiati: 0'
+          node --check qa-site/assets/spogliatoio-lazy.js
+          grep -q 'function calCambia(' qa-site/index.html && grep -q '6.2.4 · «‹ O Girrr» senza fondo' qa-site/tv.js
           for f in qa-site/pillole.js qa-site/tv.js qa-site/giro-di-boa.js qa-site/condividi.js qa-site/versioni.js qa-site/girrr/grafica.js qa-site/stadio/girrr/grafica.js qa-site/girrr/v60/tifosi.js qa-site/girrr/derby.js qa-site/stadio/girrr/derby.js; do node --check "$f"; done
           grep -q 'stringi(f.box)' qa-site/condividi.js && grep -q 'data-spogliatoio623' qa-site/index.html && grep -q 'data-alt="az"' qa-site/index.html && ! grep -q 'data-lega="1" style="width:28px' qa-site/girrr/curva.html && grep -q '6.2.3 · arrivo' qa-site/stadio/girrr/grafica.js && grep -q '6.2.3 · alone' qa-site/tv.js && grep -q 'data-toto623' qa-site/girrr/totogirrr.html && grep -q 'data-toto623' lab/integrata-62/stadio/girrr/totogirrr.html
       - name: Sintassi JavaScript del sito preparato e del Lab
