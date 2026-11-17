@@ -1,0 +1,48 @@
+{
+  "condividi.js": [
+    [
+      "  function E(s) {",
+      "  /* 6.5 (Gianluca, 18 novembre): numeri delle immagini colorati per competizione, indipendenti dalla skin. */\n  function numeroSfumato(ctx,coppa) {\n    var grad=ctx.createLinearGradient(0,0,W,0);\n    if(coppa){grad.addColorStop(0,'#185486');grad.addColorStop(.55,'#3d93d6');grad.addColorStop(1,'#a5e7ff');}\n    else{grad.addColorStop(0,'#851329');grad.addColorStop(.55,'#d62839');grad.addColorStop(1,'#ff9a9e');}\n    return grad;\n  }\n  function E(s) {"
+    ],
+    [
+      "  function giornataVista(d) {\n    var t = (document.getElementById('tit') || {}).textContent || '';\n    var coppa = /champions/i.test(t), m = /(\\d+)\\s*ª/.exec(t);",
+      "  /* La competizione selezionata viene dal Tabellone, non dal titolo (che può essere precedente al ridisegno). */\n  function giornataVista(d) {\n    var t = (document.getElementById('tit') || {}).textContent || '';\n    var coppa = document.body.getAttribute('data-mode')==='coppa' || /champions/i.test(t), m = /(\\d+)\\s*ª/.exec(t);"
+    ],
+    [
+      "  function giornataVista(d) {",
+      "  /* Classifica dei due gironi: le partite di Cup hanno [girone,casa,FP casa,FP ospite,ospite,risultato]. */\n  function classificaCup(d,fino) {\n    var teams={},nomi=Object.create(null);\n    function row(gr,name){var k=gr+'|'+name;if(!teams[k])teams[k]={gir:gr,n:name,pt:0,v:0,p:0,s:0,gf:0,gs:0,fp:0};return teams[k];}\n    (d.cal.cup||[]).forEach(function(g){\n      (g.m||[]).forEach(function(m){\n        var a=row(m[0],m[1]),b=row(m[0],m[4]);\n        if(g.n>fino||!giocata(g,true)||!pubblicato(d,g))return;\n        var r=/^(\\d+)\\s*-\\s*(\\d+)$/.exec(String(m[5]));if(!r)return;\n        var x=+r[1],y=+r[2];a.gf+=x;a.gs+=y;b.gf+=y;b.gs+=x;\n        a.fp+=+m[2]||0;b.fp+=+m[3]||0;\n        if(x>y){a.pt+=3;a.v++;b.s++;}else if(x<y){b.pt+=3;b.v++;a.s++;}else{a.pt++;b.pt++;a.p++;b.p++;}\n      });\n      (g.rest||[]).forEach(function(r){row(r[0],r[1]);});\n    });\n    return Object.values(teams).sort(function(a,b){return a.gir.localeCompare(b.gir)||b.pt-a.pt||b.fp-a.fp||(b.gf-b.gs)-(a.gf-a.gs)||b.gf-a.gf||a.n.localeCompare(b.n);});\n  }\n  function giornataVista(d) {"
+    ],
+    [
+      "    ctx.fillStyle = ACC; ctx.font = '900 190px Inter, system-ui, sans-serif';",
+      "    ctx.fillStyle = numeroSfumato(ctx,v.coppa); ctx.font = '900 190px Inter, system-ui, sans-serif';"
+    ],
+    [
+      "      ctx.textAlign = 'center'; ctx.fillStyle = ev ? '#ffd166' : ACC; ctx.font = '900 60px Inter, system-ui, sans-serif';",
+      "      ctx.textAlign = 'center'; ctx.fillStyle = numeroSfumato(ctx,v.coppa); ctx.font = '900 60px Inter, system-ui, sans-serif';"
+    ],
+    [
+      "  function tabella(ctx, d, v, mio) {\n    var c = classifica(d, v.g.n);",
+      "  function tabella(ctx, d, v, mio) {\n    var c = v.coppa ? classificaCup(d,v.g.n) : classifica(d,v.g.n);\n    if(v.coppa){\n      ctx.textAlign='center';ctx.fillStyle='#bfe3ff';ctx.font='800 35px Inter,system-ui,sans-serif';\n      ctx.fillText('Classifica della Champions Cup dopo la '+v.g.n+'ª giornata',W/2,305);ctx.textAlign='left';\n      var gruppi=[...new Set(c.map(function(t){return t.gir;}))];\n      var y=334;gruppi.forEach(function(gr){\n        var rows=c.filter(function(t){return t.gir===gr;});\n        ctx.fillStyle='#a5e7ff';ctx.font='900 30px Inter,system-ui,sans-serif';ctx.fillText('GIRONE '+gr,86,y+27);y+=39;\n        rows.forEach(function(t,i){\n          var own=t.n===mio;riquadro(ctx,66,y,W-132,64,own);\n          ctx.fillStyle=i===rows.length-1?'#ff6578':i<3?'#ffd166':'#fbf6ec';\n          ctx.font='900 36px Inter,system-ui,sans-serif';ctx.fillText(String(i+1),99,y+44);\n          ctx.fillStyle='#fbf6ec';adatta(ctx,t.n,164,y+43,480,32,own?'900':'800','Inter,system-ui,sans-serif');\n          ctx.fillStyle=numeroSfumato(ctx,true);ctx.font='900 33px Inter,system-ui,sans-serif';\n          ctx.fillText(String(t.pt)+' punti',800,y+43);y+=72;\n        });y+=14;\n      });\n      return 'Classifica della Champions Cup dopo la '+v.g.n+'ª giornata';\n    }"
+    ],
+    [
+      "      ctx.fillStyle = i < 3 ? '#ffd166' : '#fbf6ec'; ctx.font = '900 40px Inter, system-ui, sans-serif';",
+      "      ctx.fillStyle = i === c.length-1 ? '#ff6578' : i < 3 ? '#ffd166' : '#fbf6ec'; ctx.font = '900 40px Inter, system-ui, sans-serif';"
+    ],
+    [
+      "      ctx.fillStyle = ev ? '#ffd166' : '#fbf6ec'; ctx.font = '900 40px Inter, system-ui, sans-serif';",
+      "      ctx.fillStyle = numeroSfumato(ctx,false); ctx.font = '900 40px Inter, system-ui, sans-serif';"
+    ],
+    [
+      "      var piede = 'O Fant A Girrr · ' + (v.coppa && tipo !== 'classifica' ? 'Champions Cup' : 'Campionato') + ' 2026/27';",
+      "      var piede = 'O Fant A Girrr · ' + (v.coppa ? 'Champions Cup' : 'Campionato') + ' 2026/27';"
+    ],
+    [
+      "      banda = v.coppa ? COPPA : ACC;",
+      "      banda = v.coppa ? COPPA : '#d62839';"
+    ],
+    [
+      "        '<button type=\"button\" data-t=\"classifica\"><b>Classifica</b><small>Campionato, con vittorie, pareggi, sconfitte e punti</small></button>' +",
+      "        '<button type=\"button\" data-t=\"classifica\"><b>Classifica</b><small>' + (v.coppa ? 'Gironi della Champions Cup, con dati reali e punti' : 'Campionato, con vittorie, pareggi, sconfitte e punti') + '</small></button>' +"
+    ]
+  ]
+}
