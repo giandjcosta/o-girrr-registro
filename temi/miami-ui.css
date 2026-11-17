@@ -2,10 +2,12 @@
    Una sola identità visiva indipendente dalle due basi precedenti.
    Si applica soltanto alle copie sperimentali del Lab con .miami-ux; non alla produzione.
    Non modifica dati, motore di Claude o componenti funzionali. */
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&family=Yellowtail&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=League+Gothic&family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&family=Yellowtail&display=swap');
 :root.miami-ux{
   --miami-ink:#fff8f5; --miami-muted:#d9c8e8; --miami-bg:#100820;
-  --miami-aqua:#68f7ea; --miami-pink:#ff4ab2; --miami-peach:#ffb36e; --miami-purple:#a45ef9;
+  --miami-cobalt:#3b63d6; --miami-blue:#2b60da; --miami-magenta:#ff2b90;
+  --miami-orange:#e6953e; --miami-aqua:#68f7ea; --miami-pink:#ff4cb9; --miami-peach:#e6953e; --miami-purple:#9b55c6;
+  --miami-sunset:linear-gradient(115deg,#3b63d6 0%,#9b55c6 28%,#ff2b90 61%,#e6953e 100%);
   --miami-panel:linear-gradient(137deg,rgba(81,23,103,.94),rgba(25,14,56,.97) 55%,rgba(12,13,44,.97));
   --miami-outline:rgba(255,151,218,.5);
   --miami-shadow:0 18px 42px rgba(5,3,23,.45),inset 0 1px 0 rgba(255,255,255,.15);
@@ -61,7 +63,7 @@
   background:linear-gradient(115deg,transparent 0 10%,#ff4ab2 10% 26%,transparent 26% 38%,#ff4ab2 38% 54%,transparent 54% 66%,#ff4ab2 66% 82%,transparent 82%);
   transform:skew(-12deg);filter:drop-shadow(0 0 10px #f83eae77)
 }
-:root.miami-ux .miami-title{display:block;font:900 clamp(27px,4.6vw,43px)/.85 "Barlow Condensed",Impact,sans-serif;letter-spacing:.02em;font-style:italic}
+:root.miami-ux .miami-title{display:block;font:900 clamp(27px,4.6vw,43px)/.85 "Bebas Neue","Bebas Neue","Barlow Condensed",Impact,sans-serif;letter-spacing:.02em;font-style:italic}
 :root.miami-ux .miami-eyebrow{display:block;font:800 9px/1.5 "DM Sans",sans-serif;letter-spacing:.24em;color:#ffc2e5;margin-top:6px}
 :root.miami-ux .miami-event-script{
   font:400 clamp(22px,4vw,39px)/1 "Yellowtail","Brush Script MT",cursive;
@@ -86,12 +88,12 @@
 :root.miami-ux .miami-tabs a:hover{background:rgba(147,49,155,.7);transform:translateY(-1px)}
 :root.miami-ux .miami-tabs a[aria-current=page]{
   border-color:#ffdfa7;
-  background:linear-gradient(112deg,#ffad57 0%,#ff478e 45%,#e733ce 100%)!important;
+  background:var(--miami-sunset)!important;
   box-shadow:0 3px 20px #ff4ab27a,0 0 0 1px #ffffff55 inset;
   color:white!important;text-shadow:0 1px 4px #43113599;
 }
 :root.miami-ux .miami-tabs a:focus-visible{outline:3px solid var(--miami-aqua);outline-offset:3px}
-:root.miami-ux .miami-tabs .miami-tab-icon{font:900 20px/1 "Barlow Condensed",sans-serif;color:#ffecf5}
+:root.miami-ux .miami-tabs .miami-tab-icon{font:900 20px/1 "Bebas Neue","League Gothic","Barlow Condensed",sans-serif;color:#ffecf5}
 :root.miami-ux .miami-ux-label{
   font:900 11px/1.2 "DM Sans",sans-serif;letter-spacing:.23em;
   display:inline-flex;align-items:center;gap:9px;text-transform:uppercase;
@@ -120,7 +122,7 @@
 }
 :root.miami-ux body[data-v53=home] header.hero::before{
   content:"MIAMI NIGHTS";position:absolute;z-index:-1;right:3%;top:12%;
-  font:900 clamp(56px,11vw,165px)/.8 "Barlow Condensed",sans-serif;
+  font:900 clamp(56px,11vw,165px)/.8 "Bebas Neue","League Gothic","Barlow Condensed",sans-serif;
   letter-spacing:-.07em;font-style:italic;color:rgba(255,210,224,.17);
   text-transform:uppercase;transform:rotate(-6deg);pointer-events:none
 }
@@ -132,7 +134,7 @@
   letter-spacing:.26em!important;text-shadow:0 0 14px #68f7ea90;
 }
 :root.miami-ux body[data-v53=home] .hero h1{
-  font:900 clamp(60px,10vw,120px)/.8 "Barlow Condensed",sans-serif!important;
+  font:900 clamp(60px,10vw,120px)/.8 "Bebas Neue","League Gothic","Barlow Condensed",sans-serif!important;
   font-style:italic!important;letter-spacing:-.035em!important;
   margin:10px 0!important;color:#fff8f9!important;text-shadow:0 6px 26px #160020dc;
 }
@@ -155,7 +157,7 @@
   color:var(--miami-aqua)!important;letter-spacing:.28em!important;font-size:11px!important
 }
 :root.miami-ux body[data-v53=home] :is(.v53-h1,.c h2){
-  font-family:"Barlow Condensed",Impact,sans-serif!important;font-weight:900!important;
+  font-family:"Bebas Neue","Bebas Neue","Barlow Condensed",Impact,sans-serif!important;font-weight:900!important;
   text-transform:uppercase!important;font-style:italic!important;letter-spacing:.008em!important;
 }
 :root.miami-ux body[data-v53=home] .v53-h1{
@@ -173,7 +175,7 @@
 }
 :root.miami-ux body[data-v53=home] .v53-metric strong,
 :root.miami-ux body[data-v53=home] .v53-metric b{
-  font:900 clamp(27px,4vw,42px) "Barlow Condensed",Impact,sans-serif!important;
+  font:900 clamp(27px,4vw,42px) "Bebas Neue","Bebas Neue","Barlow Condensed",Impact,sans-serif!important;
   color:#fff9f8!important
 }
 :root.miami-ux body[data-v53=home] .strip{gap:12px!important}
@@ -183,7 +185,7 @@
 }
 :root.miami-ux body[data-v53=home] a.st:nth-child(even){border-top-color:var(--miami-aqua)!important}
 :root.miami-ux body[data-v53=home] a.st b{
-  font:900 clamp(23px,3vw,31px)/1 "Barlow Condensed",Impact,sans-serif!important;
+  font:900 clamp(23px,3vw,31px)/1 "Bebas Neue","Bebas Neue","Barlow Condensed",Impact,sans-serif!important;
   font-style:italic!important;
 }
 :root.miami-ux body[data-v53=home] .cards{
@@ -203,7 +205,7 @@
 :root.miami-ux body[data-v53=home] a.c .go,
 :root.miami-ux body[data-v53=home] .lg-leghe a.go{
   display:inline-flex!important;align-items:center!important;justify-content:center!important;
-  background:linear-gradient(110deg,#ff9d51,#ff438a,#e033c9)!important;
+  background:linear-gradient(110deg,#3b63d6,#ff2b90,#e6953e)!important;
   border:1px solid #ffc5ce!important;border-radius:13px!important;color:#fff!important;
   padding:11px 19px!important;box-shadow:0 5px 22px #f743a653!important;
   font:900 13px "DM Sans",sans-serif!important;letter-spacing:.1em;
@@ -215,7 +217,7 @@
   box-shadow:var(--miami-shadow)!important
 }
 :root.miami-ux :is(header.top h1,.ohead h1){
-  font:900 clamp(37px,6vw,69px)/.95 "Barlow Condensed",Impact,sans-serif!important;
+  font:900 clamp(37px,6vw,69px)/.95 "Bebas Neue","Bebas Neue","Barlow Condensed",Impact,sans-serif!important;
   text-transform:uppercase!important;font-style:italic!important;letter-spacing:-.025em!important;
 }
 :root.miami-ux :is(header.top .kick,.ohead .okick){
@@ -241,7 +243,7 @@
   font:900 clamp(11px,1.5vw,15px) "DM Sans",sans-serif!important;
 }
 :root.miami-ux body[data-v53=board] .giornata-nav a[aria-current=page]{
-  background:linear-gradient(115deg,#ffac64,#ff478e,#a936cb)!important;
+  background:linear-gradient(115deg,#3b63d6 0%,#ff2b90 55%,#e6953e 100%)!important;
   border-color:#ffd4b2!important;box-shadow:0 0 17px #ff47a66b!important
 }
 :root.miami-ux body[data-v53=board] .sw{
@@ -251,7 +253,7 @@
 }
 :root.miami-ux body[data-v53=board] .sw i{
   border-radius:12px!important;
-  background:linear-gradient(110deg,#ffad59,#ff478e,#ef39cf)!important;
+  background:linear-gradient(110deg,#3b63d6,#ff2b90 54%,#e6953e)!important;
   box-shadow:0 3px 14px #ff39be99!important;
 }
 :root.miami-ux body[data-v53=board] .sw button{
@@ -264,7 +266,7 @@
   background:#311a4b!important;color:#ffe6fa!important;font-weight:900!important;
 }
 :root.miami-ux body[data-v53=board] .chips button.sel{
-  background:linear-gradient(130deg,#ffa258,#ff47a0)!important;
+  background:linear-gradient(120deg,#3b63d6,#ff2b90,#e6953e)!important;
   color:#fff!important;box-shadow:0 0 16px #ff4ab270!important;border-color:#ffc6de!important
 }
 :root.miami-ux body[data-v53=board] .gs .ar{
@@ -285,7 +287,7 @@
   box-shadow:var(--miami-shadow),0 0 24px #f83db65b!important
 }
 :root.miami-ux body[data-v53=board] .m .sc b{
-  font:900 clamp(29px,5vw,48px)/1 "Barlow Condensed",sans-serif!important;
+  font:900 clamp(29px,5vw,48px)/1 "Bebas Neue","League Gothic","Barlow Condensed",sans-serif!important;
   background:linear-gradient(170deg,#6c2f8f,#4c1b6a)!important;
   border:1px solid #fa8ed3!important;border-radius:12px!important;
   box-shadow:0 0 16px #ed3dbc38!important
@@ -310,7 +312,7 @@
 }
 :root.miami-ux #app nav button.on{
   color:#fff!important;border-color:#ffd0a9!important;
-  background:linear-gradient(110deg,#ffad5e,#ff4d9a,#c63be3)!important;
+  background:linear-gradient(110deg,#3b63d6,#ff2b90,#e6953e)!important;
   box-shadow:0 0 18px #ff4ab27a!important
 }
 :root.miami-ux #app :is(.card,.fc,.feat>.fc,.tick,.slip,.pbar){
@@ -334,7 +336,7 @@
   color:#fff!important;min-height:51px!important;
 }
 :root.miami-ux #app .q.on{
-  background:linear-gradient(110deg,#ffba63,#ff4c97,#d83ce1)!important;
+  background:linear-gradient(110deg,#3b63d6,#ff2b90,#e6953e)!important;
   border-color:#ffdab0!important;box-shadow:0 0 19px #ff3ab172!important;
   color:#fff!important
 }
@@ -349,7 +351,7 @@
   border:1px solid var(--miami-outline)!important;border-radius:21px!important;padding:20px!important;
 }
 :root.miami-ux #app .gate h1{
-  font-family:"Barlow Condensed",Impact,sans-serif!important;
+  font-family:"Bebas Neue","Bebas Neue","Barlow Condensed",Impact,sans-serif!important;
   font-style:italic!important;letter-spacing:-.035em!important;
 }
 :root.miami-ux #app .who,:root.miami-ux #app .bal{
@@ -369,7 +371,7 @@
   min-height:43px!important;opacity:1!important
 }
 :root.miami-ux body .col .tabs button[aria-selected=true]{
-  background:linear-gradient(110deg,#ffab56,#ff478e,#d538c3)!important;
+  background:linear-gradient(110deg,#3b63d6,#ff2b90,#e6953e)!important;
   border-color:#ffd6b6!important;box-shadow:0 0 18px #ff4ab270!important;
 }
 :root.miami-ux body .col .seg{
@@ -384,7 +386,7 @@
 :root.miami-ux body .col .seg button[aria-pressed=true],
 :root.miami-ux body .col .seg button[aria-selected=true]{
   border-color:#ffd2bd!important;color:#fff!important;
-  background:linear-gradient(110deg,#ffa359,#fc498e,#c83dda)!important;
+  background:linear-gradient(110deg,#3b63d6,#ff2b90,#e6953e)!important;
   box-shadow:0 0 14px #ff469c62!important
 }
 :root.miami-ux body .col .card,
@@ -443,3 +445,36 @@
    senza varianti di grafica né navigazione alternativa. */
 :root.miami-ux .miami-event-head{max-width:1400px;margin-left:auto;margin-right:auto}
 :root.miami-ux .hero::after{border-radius:999px!important}
+
+/* Color direction 17/11: cobalt → magenta → sunset orange; non usiamo loghi Rockstar.
+   Colori evocativi, non codici Pantone ufficiali. Bebas Neue/League Gothic OFL,
+   Yellowtail solo come calligrafia secondaria. */
+:root.miami-ux .miami-title{
+  font-family:"Bebas Neue","Barlow Condensed",Impact,sans-serif!important;
+  font-style:italic;letter-spacing:.015em!important;
+  background:var(--miami-sunset);
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent!important;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 2px 6px #0a0625a0);
+}
+:root.miami-ux .miami-mark{
+  background:linear-gradient(110deg,transparent 0 10%,#3b63d6 10% 26%,transparent 26% 38%,#ff2b90 38% 54%,transparent 54% 66%,#e6953e 66% 82%,transparent 82%)!important;
+}
+:root.miami-ux .miami-tabs a[aria-current=page]{
+  background:var(--miami-sunset)!important;
+  border-color:#fff7ef!important;
+  box-shadow:0 0 20px #ff2b907a,inset 0 0 0 1px #ffffff8a!important;
+}
+:root.miami-ux .miami-tabs a:not([aria-current=page]){
+  border-color:rgba(102,120,237,.44)!important;
+  background:linear-gradient(130deg,#213c83bd,#401452d9)!important;
+}
+:root.miami-ux body[data-v53=home] .v53-h1{
+  background:linear-gradient(180deg,#fffafa 25%,#e2e4ff 40%,#ff89c0 75%,#e6953e);
+  -webkit-background-clip:text;background-clip:text;color:transparent!important;
+}
+:root.miami-ux body[data-v53=board] .m.dby{
+  border-top-color:#e6953e!important;
+  background:linear-gradient(125deg,#273474f2 0%,#68215bf0 52%,#271143f5)!important;
+}
+:root.miami-ux body .wrap :is(.v53-actionrow a,.go):focus-visible{outline-color:#80c8ff!important}
