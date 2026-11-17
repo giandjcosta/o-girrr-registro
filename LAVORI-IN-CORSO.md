@@ -8,6 +8,9 @@ Stati: `Da fare` · `In corso` · `In prova nel Lab` · `Aspetta Gianluca` · `B
 
 Ultimo aggiornamento: 16 novembre 2026, Claude.
 
+## Grafica evento unica — ChatGPT, 17 novembre 2026
+- **Takeover visivo unico per l'evento, non più due varianti Lega/Stadio** · ChatGPT · `In prova nel Lab` sul solo branch `chatgpt/miami-nights-fusione-lab`. Aggiunto `EVENT TAKEOVER UNICO` al CSS tema di Claude e sua copia Lab: accent fucsia, tramonto, ciano, titolo/brand comune, menu e componenti identici sopra entrambe le basi. Controlli statici 10/10 passati, demo HTML locale resa in Chromium su 5 larghezze senza overflow e interazioni base superate; **non** test browser del Lab reale. Script `temi/prova_ui_unica.cjs` predisposto, non eseguito. Report `temi/RAPPORTO-GRAFICA-UNICA-2026-11-17.md`. Prossimo passo: browser QA vero (due origini, varie pagine), confronto visivo, integrazione coordinata con Claude, poi approvazione Gianluca. Nessun deploy.
+
 ## In prova nel ramo di fusione — ChatGPT, 17 novembre 2026
 - **Tema evento Notte Tropicale × Miami Nights V3** · ChatGPT (grafica) + base Claude (motore) · `In prova nel Lab` solo sul branch `chatgpt/miami-nights-fusione-lab`, derivato dal branch Claude al commit `9431b587`. Aggiornati esclusivamente CSS evento e copia Lab con nuovi header, tab, card, KPI, big match e pannelli fotografici sulle pagine vere. Controlli statici 10/10; browser reale NON verificato. Dettagli in `temi/FUSIONE-MIAMI-NIGHTS-RAPPORTO.md`. Prossimo passo: visual QA Lega/Stadio 320–2560 px, test clic/touch e review di Claude; non pubblicare senza «Vai, pubblica».
 
