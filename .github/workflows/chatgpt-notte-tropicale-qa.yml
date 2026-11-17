@@ -1,5 +1,12 @@
 name: "ChatGPT: QA Notte Tropicale · Pagine"
 on:
+  push:
+    branches:
+      - chatgpt/notte-tropicale-pagine
+    paths:
+      - "temi/notte-tropicale/**"
+      - "lab/integrata-62/temi/notte-tropicale/**"
+      - ".github/workflows/chatgpt-notte-tropicale-qa.yml"
   pull_request:
     branches:
       - claude/totogirrr-ui-responsive-b2pgee
