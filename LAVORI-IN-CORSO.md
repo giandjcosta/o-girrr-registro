@@ -1,5 +1,10 @@
 # Lavori in corso · O Girrr
 
+## In corso · 18 novembre 2026 · ChatGPT
+- **6.5 · Tabellone e Curva** · ChatGPT · `In prova nel Lab` · ramo `chatgpt/65-tabellone-curva`, script unico `rilascio/r65/ritocchi.py` con sostituzioni esatte e secondo passaggio a 0 file. Tabellone: sfumature numeriche di Campionato e Champions Cup, classifica di Coppa in Condividi, ultimi posti rossi, approfondimenti richiudibili e contestuali. Curva: giurie che ricordano l'apertura, pallini interni, ritorno a Girrr Sport, pulsanti di voto uniformati, sondaggio incorniciato. Correzione della durata della skin dal 18 al 23 novembre, spegnimento il 24 alle 00 italiane. Prove predisposte in `prove/v65/prova_tabellone_curva_65.py` e workflow con artifact di screenshot. **Mancano** esito Playwright sullo SHA finale, prove fisiche iPhone/Android/Safari e revisione di Gianluca. Nessun merge, deploy o Supabase.
+- **6.5 · Numeri e Giro di boa** · ChatGPT · `Da fare` · da integrare nello stesso rilascio: statistiche complete del Tabellone, collegamento dalla Home Notte Tropicale, voci della Curva nei bilanci solo se realmente conservate (vedi `BILANCI-STAGIONE.md`). Non inventare commenti attribuiti alla Curva.
+
+
 Quaderno comune di tutti gli assistenti (Claude, ChatGPT, Grok, Copilot, Perplexity…) e di Gianluca. Regole in `REGOLE-LAVORO.md`, punto 6.
 **Aggiornalo quando cominci e quando ti fermi.** Chi riprende il lavoro parte da qui, poi legge `STATO.md`.
 
