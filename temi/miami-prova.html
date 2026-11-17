@@ -38,11 +38,9 @@
     <div>
       <span class="lab-note">● LABORATORIO · SOLO VISIVO</span>
       <strong>O GIRRR / MIAMI NIGHTS — UI REALE</strong>
-      <small>Pagine reali 6.2.4 del Lab con dati demo/ospite, trasformate temporaneamente via CSS.</small>
+      <small>Un’unica grafica evento sulle pagine reali 6.2.4 del Lab Claude. Nessuna scelta Lega/Stadio.</small>
     </div>
-    <div class="selectors" role="group" aria-label="Seleziona grafica e dimensioni">
-      <button type="button" data-skin="lega" aria-pressed="true">Lega</button>
-      <button type="button" data-skin="stadio" aria-pressed="false">Stadio</button>
+    <div class="selectors" role="group" aria-label="Dimensioni della prova">
       <button type="button" data-mode="mobile" aria-pressed="false">Telefono</button>
       <button type="button" data-mode="desktop" aria-pressed="true">Schermo</button>
     </div>
@@ -60,19 +58,17 @@
     const toolbar=document.getElementById("toolbar");
     const params=new URLSearchParams(location.search);
     const screens={home:"index.html",tabellone:"tabellone.html",carriera:"app.html#carriera",totogirrr:"totogirrr.html?demo"};
-    let skin=params.get("skin")==="stadio"?"stadio":"lega";
     let screen=Object.hasOwn(screens,params.get("screen"))?params.get("screen"):"home";
     let view=params.get("view")==="mobile"?"mobile":"desktop";
     const cssPath=new URL("./miami-ui.css",location.href).href;
-    function base(){return "../lab/integrata-62/"+(skin==="stadio"?"stadio/":"")+"girrr/"}
+    function base(){return "../lab/integrata-62/girrr/"}
     function urlFor(id){return base()+screens[id]}
     function sync(){
       toolbar.style.setProperty("--bar-height",toolbar.getBoundingClientRect().height+"px");
       document.documentElement.style.setProperty("--bar-height",toolbar.getBoundingClientRect().height+"px");
       wrap.classList.toggle("mobile",view==="mobile");
-      document.querySelectorAll("[data-skin]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.skin===skin)));
       document.querySelectorAll("[data-mode]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.mode===view)));
-      const p=new URLSearchParams({skin,screen,view});
+      const p=new URLSearchParams({screen,view});
       history.replaceState(null,"","?"+p.toString());
     }
     function open(id){screen=id;sync();frame.src=urlFor(id)}
@@ -109,7 +105,6 @@
       sync();
     }
     frame.addEventListener("load",decorate);
-    document.querySelectorAll("[data-skin]").forEach(b=>b.addEventListener("click",()=>{skin=b.dataset.skin;open(screen)}));
     document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>{view=b.dataset.mode;sync()}));
     window.addEventListener("resize",()=>toolbar.style.setProperty("--bar-height",toolbar.getBoundingClientRect().height+"px"));
     open(screen);
