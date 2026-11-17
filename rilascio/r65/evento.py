@@ -3,7 +3,7 @@
 
 Copia nel sito temi/evento-loader.js e la cartella temi/notte-tropicale/ (CSS, script, foto locali, crediti) e aggiunge in
 <head> di ogni pagina il caricatore, una volta sola. Il caricatore decide da solo, nel browser e in ora italiana: acceso dal
-18 novembre 00:00 al 21 novembre 00:00, poi spento senza altri rilasci. Durante l'evento grafica unica (le pagine Stadio portano
+18 novembre 00:00 al 24 novembre 00:00 (fine della giornata 8), poi spento senza altri rilasci. Durante l'evento grafica unica (le pagine Stadio portano
 alla stessa pagina della Lega) e la Curva resta com'è. Per provarlo prima o dopo: ?evento=notte-tropicale, ?evento=off.
 
 Uso: python3 rilascio/r65/evento.py COPIA_GH_PAGES   (dopo rilascio/r65/applica.py)

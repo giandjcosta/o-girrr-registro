@@ -8,7 +8,7 @@ Preparato da Claude il 17 novembre 2026. Numero scelto da Gianluca: **6.5** al p
    - Il contenuto non sparisce più per un attimo: dopo un tocco su una pillola partivano due animazioni d'entrata (quella di `app.html`/`transizioni.js`, da trasparente, e quella di `pillole.js`); ora solo quella delle pillole, con un rimbalzo morbido di 0,56 s. Totogirrr invariato.
    - Pillole della Carriera e dell'Albo d'oro che scivolano come le altre.
    - Conferenze stampa senza errore se il codice della squadra non è riconosciuto.
-2. **Skin Notte Tropicale** (`rilascio/r65/evento.py`): copia `temi/evento-loader.js` e `temi/notte-tropicale/` nel sito e aggiunge il caricatore alle pagine. Si accende da sola dal 18 novembre 00:00 al 21 novembre 00:00 (ora italiana), poi si spegne senza altri rilasci. Grafica unica, Curva esclusa.
+2. **Skin Notte Tropicale** (`rilascio/r65/evento.py`): copia `temi/evento-loader.js` e `temi/notte-tropicale/` nel sito e aggiunge il caricatore alle pagine. Si accende da sola dal 18 novembre 00:00 al 24 novembre 00:00, cioè fino alla fine della giornata 8 (ora italiana), poi si spegne senza altri rilasci. Grafica unica, Curva esclusa.
 3. **Curva**: i messaggi sui risultati non dicono più «vince» per un pareggio (vincitore dai gol, coppa letta con il suo schema).
 
 ## Prove fatte (Chromium)
