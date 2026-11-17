@@ -1,4 +1,10 @@
-# Stato del progetto O Girrr (ultimi giorni — aggiornato 16 novembre 2026)
+# Stato del progetto O Girrr (ultimi giorni — aggiornato 17 novembre 2026)
+
+## 17 novembre — Grok: campioni di colore della Notte tropicale (solo registro, NON sul sito)
+- Gianluca ha chiesto i colori e i caratteri del marchio di riferimento, e la lettura delle sfumature del numero. Sono in `temi/grok/PALETTE.md`, con la pagina `temi/grok/index.html` e i token in `temi/grok/palette.css`.
+- Rockstar non ha pubblicato i codici. I campioni vengono da una ricostruzione pubblica del marchio del 2023: riempimento verticale `#2B60DA` → `#FF4CB9` → `#E6953E`. Nel 2026 il contorno del numero è bianco; nel 2023 era una sfumatura calda (`#FFBC24` in alto, `#6D016D` in basso).
+- Nessun logo e nessun carattere commerciale nel repository. Lega e Stadio non cambiano. Il ramo del tema (`chatgpt/theme-engine-vice-city-event`) non è stato toccato. Prova: `python3 temi/grok/prova_palette.py`. Non provato nel browser: la pagina non ha script.
+
 
 ## 16 novembre (8) — Claude: 6.2.3 «Il Totogirrr su ogni schermo» in prova nel Lab (NON pubblicata)
 - Sul sito c'è la **6.2.2** (`gh-pages` `64a243b`). Richieste di Gianluca dopo la 6.2.2, preparate in `rilascio/r623/applica.py` (sopra la 6.2.2 pubblicata, si ferma se il sito è cambiato, rieseguibile) e nel Lab con `rilascio/r623/lab.py` (`lab/integrata-62/`), pagina `lab/novita-6-2-3.html`, annuncio da approvare in `rilascio/r623/ANNUNCIO-BOZZA.json` (tipo minore → 6.2.3: Gianluca, «per una correzione così piccola 6.2.3 è più adeguato»; prima preparata come 6.3).

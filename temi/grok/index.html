@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notte tropicale · Campioni di colore</title>
+  <link rel="stylesheet" href="palette.css">
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--nt-profondita);
+      color: var(--nt-testo);
+      font: 17px/1.45 Georgia, "Iowan Old Style", Palatino, serif;
+    }
+    main { max-width: 760px; margin: 0 auto; padding: 28px 16px 48px; }
+    h1 {
+      margin: 0 0 8px;
+      font-family: "Arial Black", Impact, sans-serif;
+      font-weight: 900;
+      letter-spacing: .02em;
+      font-size: clamp(32px, 8vw, 56px);
+      line-height: .95;
+      background: var(--nt-riempimento);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    h2 { font-size: 1.15rem; margin: 28px 0 8px; }
+    p, li { margin: 0 0 10px; }
+    .nota { opacity: .86; }
+    .barra {
+      height: 220px;
+      border-radius: 18px;
+      border: 3px solid var(--nt-filo);
+    }
+    .barra.a { background: var(--nt-riempimento); }
+    .cornice { padding: 4px; border-radius: 22px; background: var(--nt-contorno-2023); }
+    .barra.b { background: var(--nt-riempimento-smorzato); border: 0; height: 212px; }
+    .fila { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    @media (min-width: 700px) {
+      .fila { grid-template-columns: 1fr 1fr; }
+    }
+    figure { margin: 0; }
+    figcaption { margin-top: 8px; font-size: .95rem; }
+    ul { padding-left: 1.1rem; }
+    code { font-family: ui-monospace, monospace; font-size: .9em; }
+    a { color: var(--nt-testo); }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="nota">O Girrr · Registro di prova · 17 novembre 2026</p>
+    <h1>Notte tropicale</h1>
+    <p>Campioni della sfumatura verticale: blu in alto, magenta al centro, arancio in basso. Il disegno è nostro. Non è il logo di riferimento e non usa i suoi caratteri.</p>
+    <div class="fila">
+      <figure>
+        <div class="barra a" role="img" aria-label="Sfumatura da blu a magenta ad arancio, con filo bianco"></div>
+        <figcaption>Riempimento · Filo bianco, come il contorno del 2026</figcaption>
+      </figure>
+      <figure>
+        <div class="cornice">
+          <div class="barra b" role="img" aria-label="Sfumatura più smorzata con contorno caldo del 2023"></div>
+        </div>
+        <figcaption>Variante smorzata · Contorno caldo del 2023, solo come confronto</figcaption>
+      </figure>
+    </div>
+    <h2>Caratteri</h2>
+    <ul>
+      <li>La scritta del marchio di riferimento è un nero commerciale con contorno bianco. Non è inclusa.</li>
+      <li>Il numero di quel marchio è un disegno con le palme, non un font.</li>
+      <li>Qui il titolo usa un nero di sistema, riempito con la sfumatura. Nello Stadio il corsivo resta Lobster.</li>
+    </ul>
+    <p class="nota">La lettura completa, con i codici e le due versioni del marchio, è in <a href="PALETTE.md">PALETTE.md</a>.</p>
+  </main>
+</body>
+</html>
