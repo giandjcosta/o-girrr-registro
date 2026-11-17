@@ -83,7 +83,21 @@
       }).join('');
       var box = document.createElement('div'); box.className = 'nt-cruscotto';
       hero.parentNode.insertBefore(nav, hero.nextSibling); nav.parentNode.insertBefore(box, nav.nextSibling);
-      fetch('../data.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) {
+      /* Derby votati o bocciati dai tifosi: la stessa lettura della pagina Derby (solo lettura); se non risponde in 2,5 secondi
+         si va avanti con le sole rivalità storiche */
+      var DBU = 'https://qmjqfgmvimsuxvghetgi.supabase.co', DBK = 'sb_publishable_qPhimkrF4iUvIad7JPoH8A_i-eOqG7n';
+      var kk = function (a, b) { return [a, b].map(function (x) { return String(x).toLowerCase(); }).sort().join('|'); };
+      var derbyVoti = Promise.race([
+        fetch(DBU + '/rest/v1/rpc/derby_stato', { method: 'POST', headers: { apikey: DBK, Authorization: 'Bearer ' + DBK, 'Content-Type': 'application/json' }, body: '{}' })
+          .then(function (r) { return r.json(); }).then(function (r) {
+            var o = { voti: {}, veto: {}, nomi: {} };
+            (r.voti || []).forEach(function (v) { var k = kk(v.a, v.b); if (v.si > v.no) o.voti[k] = 1; else if (v.no > v.si) o.veto[k] = 1; });
+            (r.sfide || []).slice().reverse().forEach(function (x) { if (x.stato === 'accettata' && x.nome_ok) { var k = kk(x.da, x.a); o.voti[k] = 1; delete o.veto[k]; o.nomi[k] = x.nome; } });
+            window.__ntDerby = o;
+          }),
+        new Promise(function (ok) { setTimeout(ok, 2500); })
+      ]).catch(function () {});
+      Promise.all([fetch('../data.json', { cache: 'no-store' }).then(function (r) { return r.json(); }), derbyVoti]).then(function (x) { var d = x[0];
         d = window.CVPUB ? window.CVPUB(d) : d;
         var L = (d.cal && d.cal.lega) || [], pl = L.filter(function (g) { return g.m.some(function (m) { return m[4] !== '-'; }); });
         if (!pl.length) return;
@@ -91,19 +105,31 @@
         cl.forEach(function (x, i) { pos[x.n] = i + 1; });
         var nx = L.filter(function (g) { return g.m.every(function (m) { return m[4] === '-'; }); })[0], h = '';
         if (nx) {
-          /* la partita in evidenza (Gianluca: «perché la prima contro la quinta dovrebbe essere un big match?»): lo scontro più
-             equilibrato in alto. Tra le partite con almeno una squadra nelle prime quattro, quella con meno punti di distacco;
-             a parità, quella tra squadre più in alto. Se nessuna tocca le prime quattro, la più equilibrata di tutte. */
+          /* la partita in evidenza (Gianluca, 17 novembre: «un Derby, o chi può superare chi, o tra la seconda e la terza se hanno
+             pochi punti; con 1 o 0 punti la coppia più alta in classifica»). In ordine:
+             1. un Derby (stessa regola della pagina Derby: rivalità forte da 80 in su o votata dai tifosi, mai se bocciata);
+             2. un sorpasso possibile: chi sta dietro, vincendo, raggiunge o supera l'altra (3 punti o meno); la coppia più in alto;
+             3. altrimenti la partita più equilibrata, a parità la coppia più in alto. */
           var ptn = {}; cl.forEach(function (x) { ptn[x.n] = x.pt; });
           var gap = function (m) { return Math.abs(ptn[m[0]] - ptn[m[3]]); };
-          var alte = nx.m.filter(function (m) { return pos[m[0]] <= 4 || pos[m[3]] <= 4; });
-          var bm = (alte.length ? alte : nx.m).slice().sort(function (a, b) { return gap(a) - gap(b) || (pos[a[0]] + pos[a[3]]) - (pos[b[0]] + pos[b[3]]); })[0];
-          var dist = gap(bm);
+          var alto = function (a, b) { return (pos[a[0]] + pos[a[3]]) - (pos[b[0]] + pos[b[3]]); };
+          var key = function (a, b) { return [a, b].map(function (x) { return String(x).toLowerCase(); }).sort().join('|'); };
+          var RIV = {}; try { (window.NOV && window.NOV.riv || []).forEach(function (o) { RIV[key(o.a, o.b)] = o; }); } catch (e) {}
+          var DV = window.__ntDerby || { voti: {}, veto: {}, nomi: {} };
+          var derby = function (m) { var k = key(m[0], m[3]), o = RIV[k]; return DV.veto[k] ? null : (DV.voti[k] || (o && o.r >= 80)) ? (DV.nomi[k] || (o && o.n) || ('Derby ' + CAP(m[0]) + ' – ' + CAP(m[3]))) : null; };
+          var der = nx.m.filter(derby).sort(alto), sorp = nx.m.filter(function (m) { return gap(m) <= 3; }).sort(alto);
+          var bm = der[0] || sorp[0] || nx.m.slice().sort(function (a, b) { return gap(a) - gap(b) || alto(a, b); })[0];
+          var dist = gap(bm), dietro = ptn[bm[0]] < ptn[bm[3]] ? bm[0] : bm[3], nomeDerby = derby(bm);
+          var perche = nomeDerby ? 'Derby · ' + ESC(nomeDerby)
+            : dist === 0 ? 'A pari punti: chi vince passa davanti'
+            : dist <= 2 ? ESC(CAP(dietro)) + ' a ' + (dist === 1 ? 'un punto' : '2 punti') + ': vincendo fa il sorpasso'
+            : dist === 3 ? ESC(CAP(dietro)) + ' a 3 punti: vincendo aggancia'
+            : dist + ' punti di distacco';
           var quando = '';
           try { if (window.NEXT && window.NEXT.n === nx.n) quando = new Date(window.NEXT.t).toLocaleString('it-IT', { timeZone: 'Europe/Rome', weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }); } catch (e) {}
-          h += '<a class="nt-match" href="tabellone.html#lega-' + nx.n + '"><small>Big match · ' + nx.n + 'ª giornata</small>' +
+          h += '<a class="nt-match' + (nomeDerby ? ' derby' : '') + '" href="tabellone.html#lega-' + nx.n + '"><small>' + (nomeDerby ? 'Derby' : 'Big match') + ' · ' + nx.n + 'ª giornata</small>' +
             '<b>' + ESC(CAP(bm[0])) + '<i>' + pos[bm[0]] + 'ª</i></b><b>' + ESC(CAP(bm[3])) + '<i>' + pos[bm[3]] + 'ª</i></b>' +
-            '<span>' + (dist === 0 ? 'A pari punti' : (dist === 1 ? 'Un punto' : dist + ' punti') + ' di distacco') + ' · Campionato · Serie A, giornata ' + ESC(nx.sa) + (quando ? ' · Si comincia ' + ESC(quando) : '') + '</span><em>Il calendario ›</em></a>';
+            '<strong>' + perche + '</strong><span>Campionato · Serie A, giornata ' + ESC(nx.sa) + (quando ? ' · Si comincia ' + ESC(quando) : '') + '</span><em>Il calendario ›</em></a>';
         }
         var gol = 0, par = 0, pp = 0;
         pl.forEach(function (g) { g.m.forEach(function (m) { if (m[4] === '-') return; var s = m[4].split('-').map(Number); gol += s[0] + s[1]; pp++; if (s[0] === s[1]) par++; }); });

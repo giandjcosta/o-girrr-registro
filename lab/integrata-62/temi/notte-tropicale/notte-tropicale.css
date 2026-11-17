@@ -282,7 +282,9 @@
 :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-match small{font:italic 900 14px/1 'Barlow Condensed',Inter,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--nt-arancio);margin-bottom:6px}
 :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-match b{font:italic 900 clamp(26px,7.4vw,46px)/.98 'Barlow Condensed',Inter,sans-serif;text-transform:uppercase;letter-spacing:-.005em;text-shadow:0 2px 12px rgba(0,0,0,.5)}
 :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-match b i{font:800 12px Inter,sans-serif;color:var(--nt-ciano);margin-left:8px;vertical-align:middle;letter-spacing:.06em}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-match span{font:700 11px/1.4 Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#f0d6ea;margin-top:8px}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-match strong{font:italic 900 17px/1.15 'Barlow Condensed',Inter,sans-serif;text-transform:uppercase;color:var(--nt-ciano);margin-top:10px;letter-spacing:.02em}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-match.derby strong{color:#ffd166}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-match span{font:700 11px/1.4 Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#f0d6ea;margin-top:4px}
 :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-match em{justify-self:start;margin-top:10px;padding:9px 16px;font:italic 900 15px/1 'Barlow Condensed',Inter,sans-serif;text-transform:uppercase;color:#22052e;
   background:linear-gradient(100deg,#ffb347,#ff4fa3);clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}
 /* classifica (prime quattro) e stagione, affiancate; sotto i 560 px una sopra l'altra */
