@@ -20,6 +20,10 @@ JS = """() => {
  const fila=document.querySelector('.wrap > .cards');
  const s=sel=>document.querySelector(sel);
  const vis=e=>e&&getComputedStyle(e).display!=='none'&&e.getBoundingClientRect().height>0;
+ const tituloOrdine=()=>({
+   titolo:getComputedStyle(titolo).order,
+   fila:getComputedStyle(fila).order
+ });
  const ct=[...document.querySelectorAll('#strip > .st')].filter(vis)
    .map(e=>{const v=e.querySelector('.vai');return {label:v?.textContent.trim()||'',top:e.getBoundingClientRect().top,
       bottom:v?.getBoundingClientRect().bottom||0}});
@@ -27,6 +31,10 @@ JS = """() => {
   tema:root.getAttribute('data-event-theme'),integrata:root.classList.contains('nt-rail-integrata'),
   titolo:!!titolo,fuoriDallaFila:!!(titolo&&fila&&!fila.contains(titolo)),
   ordine:!!(titolo&&fila&&titolo.nextElementSibling===fila),
+  titoloVisivamenteSopra:!!(titolo&&fila&&
+    titolo.getBoundingClientRect().bottom<=fila.getBoundingClientRect().top+2&&
+    fila.getBoundingClientRect().top-titolo.getBoundingClientRect().bottom<65),
+  ordineCSS:tituloOrdine(),
   carte:fila?.querySelectorAll(':scope > .c').length||0,
   altre:fila?.querySelectorAll(':scope > .nt-slide').length||0,
   curva:!!(s('#cvw')&&fila?.contains(s('#cvw'))),
@@ -59,7 +67,7 @@ def run():
                     page.wait_for_timeout(3100)  # completa i dati read-only e la classifica
                     measure=page.evaluate(JS)
                     problems=[]
-                    for key in ("integrata","titolo","fuoriDallaFila","ordine","curva","notifiche","statistiche","sponsor"):
+                    for key in ("integrata","titolo","fuoriDallaFila","ordine","titoloVisivamenteSopra","curva","notifiche","statistiche","sponsor"):
                         if not measure.get(key):problems.append("manca "+key)
                     if measure.get("carte")!=6:problems.append("schede originali non sono sei")
                     if measure.get("altre")!=4:problems.append("schede aggiunte non sono quattro")
