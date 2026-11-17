@@ -51,6 +51,8 @@ jobs:
             --out qa_artifacts/notte-tropicale
           # Regressione Home: schede complete, titolo fuori dallo scroll, CTA allineate.
           python3 temi/notte-tropicale/prova_home_schede.py
+          # Navigazione e nuova pagina con dati del Campionato, sei foto e menu Campionato/Coppa.
+          python3 temi/notte-tropicale/prova_numeri_foto.py
       - name: Allega screenshot e rapporto alla verifica della PR
         if: always()
         uses: actions/upload-artifact@v4
