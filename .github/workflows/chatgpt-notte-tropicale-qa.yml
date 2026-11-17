@@ -1,0 +1,56 @@
+name: "ChatGPT: QA Notte Tropicale · Pagine"
+on:
+  pull_request:
+    branches:
+      - claude/totogirrr-ui-responsive-b2pgee
+    paths:
+      - "temi/notte-tropicale/**"
+      - "lab/integrata-62/temi/notte-tropicale/**"
+      - ".github/workflows/chatgpt-notte-tropicale-qa.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  qa-pagine:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Clona il ramo della PR, senza merge
+        uses: actions/checkout@v4
+      - name: Prepara Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Rigenera i file tema nel Lab con la procedura di Claude
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 temi/notte-tropicale/lab.py
+          # Le copie dei file devono essere identiche a quelle già salvate sul ramo.
+          cmp temi/notte-tropicale/notte-tropicale.js lab/integrata-62/temi/notte-tropicale/notte-tropicale.js
+          cmp temi/notte-tropicale/notte-tropicale.css lab/integrata-62/temi/notte-tropicale/notte-tropicale.css
+          git diff --exit-code -- lab/integrata-62/
+      - name: Prepara Chromium con Playwright
+        shell: bash
+        run: |
+          python3 -m pip install --disable-pip-version-check playwright==1.62.0
+          python3 -m playwright install --with-deps chromium
+      - name: Prova pagine vere a 320 / 390 / 1440 e acquisisci screenshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8767 --bind 127.0.0.1 >/tmp/notte-tropicale-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" || true' EXIT
+          sleep 2
+          python3 temi/notte-tropicale/prova_pagine.py \
+            --base http://127.0.0.1:8767/lab/integrata-62/ \
+            --out qa_artifacts/notte-tropicale
+      - name: Allega screenshot e rapporto alla verifica della PR
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chatgpt-notte-tropicale-screenshot
+          path: qa_artifacts/notte-tropicale/
+          if-no-files-found: warn
+          retention-days: 14
