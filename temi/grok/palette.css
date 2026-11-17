@@ -1,0 +1,25 @@
+/* 17 novembre 2026 (Grok): campioni della Notte tropicale.
+   Non cambia Lega o Stadio da solo. Una pagina li usa solo se importa questo file.
+   I colori sono campioni di una ricostruzione pubblica, non una guida ufficiale,
+   e non disegnano il marchio di riferimento. */
+:root {
+  --nt-cielo: #2b60da;
+  --nt-cielo-smorzato: #2e49bf;
+  --nt-neon: #ff4cb9;
+  --nt-neon-smorzato: #c045b6;
+  --nt-sole: #e6953e;
+  --nt-sole-smorzato: #df7b4d;
+  --nt-contorno-oro: #ffbc24;
+  --nt-contorno-rosa: #ff49b9;
+  --nt-contorno-magenta: #bc0082;
+  --nt-contorno-viola: #8b0179;
+  --nt-contorno-fondo: #6d016d;
+  --nt-notte: #350054;
+  --nt-notte-fondo: #6d016d;
+  --nt-filo: #ffffff;
+  --nt-testo: #fff4ed;
+  --nt-riempimento: linear-gradient(to bottom, var(--nt-cielo) 0%, var(--nt-neon) 50%, var(--nt-sole) 100%);
+  --nt-riempimento-smorzato: linear-gradient(to bottom, var(--nt-cielo-smorzato) 0%, var(--nt-neon-smorzato) 49%, var(--nt-sole-smorzato) 100%);
+  --nt-contorno-2023: linear-gradient(to bottom, var(--nt-contorno-oro) 0%, var(--nt-contorno-rosa) 29%, var(--nt-contorno-magenta) 75%, var(--nt-contorno-viola) 94%, var(--nt-contorno-fondo) 100%);
+  --nt-profondita: linear-gradient(to bottom, var(--nt-notte) 0%, var(--nt-notte-fondo) 100%);
+}

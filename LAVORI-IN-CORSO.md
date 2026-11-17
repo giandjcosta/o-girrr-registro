@@ -6,7 +6,10 @@ Quaderno comune di tutti gli assistenti (Claude, ChatGPT, Grok, Copilot, Perplex
 Formato di ogni voce: **cosa** · chi · stato · dove (rami, file, PR) · prossimo passo.
 Stati: `Da fare` · `In corso` · `In prova nel Lab` · `Aspetta Gianluca` · `Bloccato`.
 
-Ultimo aggiornamento: 16 novembre 2026, Claude.
+Ultimo aggiornamento: 17 novembre 2026, Grok.
+
+## In corso
+- **Colori e caratteri della Notte tropicale** · Grok · `Aspetta Gianluca` · ramo `grok/palette-notte-tropicale`, cartella `temi/grok/`. Campioni della sfumatura verticale (blu `#2B60DA`, magenta `#FF4CB9`, arancio `#E6953E`) e nota sui caratteri: la scritta del marchio di riferimento è commerciale e non è inclusa, il numero è un disegno. Niente app e niente pagina. Non tocca Lega, Stadio, il sito vero né il ramo del tema già aperto. Prossimo passo: Gianluca dice se questi campioni entrano nel tema di ChatGPT e Claude.
 
 ## Aspetta Gianluca
 - **Tema evento temporaneo (18–20 novembre)** · ChatGPT con Claude · `In corso` · ramo `chatgpt/theme-engine-vice-city-event` del registro. Claude rivede alle 4:30 e propone. Consigli di Claude: un solo caricatore in tv.js con finestra di date in ora italiana (si spegne da solo anche nella copia offline), ?evento=on/off per provarlo, nome e grafica originali (niente «Vice City», logo o caratteri Rockstar), niente animazioni continue sopra i contenuti, Lega/Stadio riconoscibili. Serve il «Vai, pubblica» di Gianluca prima del 18.
