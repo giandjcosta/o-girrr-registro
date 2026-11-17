@@ -411,6 +411,161 @@
 :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .sp.nt-obl.nt-obl.nt-obl::before{background:linear-gradient(160deg,#fff7fb,#f3e6ff)!important;box-shadow:inset 0 3px 0 var(--nt-ciano),0 12px 30px rgba(5,0,20,.35)!important}
 :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .sp.nt-obl span{color:#5b2d90!important}
 
+/* 4m. ChatGPT (17/11/2026) · Estensione ai menu veri non ancora vestiti da Claude.
+   Usa soltanto .nt-obl / .nt-tab già applicati da forme(), senza copiare le pagine
+   o interferire con dati, eventi, testate e scelta di competizione. La Curva è esclusa.
+   Tutti i nuovi pannelli sono VIOLA OPACO e lo stato attivo generico è rosa/lilla.
+   Campionato e Champions Cup mantengono i gradienti definiti nella sezione 4k. */
+:root[data-event-theme="notte-tropicale"] :is(
+  #app,#view,#al,#sch,#versioni,#ultimo,#lista,.v53-notifications
+) .nt-obl.nt-obl.nt-obl{
+  --nt-banda:var(--nt-rosa)!important;
+  --nt-banda2:var(--nt-ciano)!important;
+  background:transparent!important;border-left:0!important;
+  box-shadow:none!important;border-radius:15px!important;
+  isolation:isolate!important;
+}
+/* Superficie non trasparente, angoli morbidi, contenuti non inclinati. */
+:root[data-event-theme="notte-tropicale"] :is(
+  #app,#view,#al,#sch,#versioni,#ultimo,#lista,.v53-notifications
+) .nt-obl.nt-obl.nt-obl::before{
+  background:linear-gradient(155deg,#321557 0%,#1b0a39 58%,#130827 100%)!important;
+  border-radius:15px!important;
+  box-shadow:inset 0 3px 0 var(--nt-ciano),
+             inset 5px 0 0 var(--nt-rosa),
+             inset 0 0 0 1px rgba(241,144,223,.48),
+             0 12px 30px rgba(5,0,20,.44)!important;
+  transform:skewX(calc(-1 * var(--nt-sk,3deg)))!important;
+}
+/* Fili invertiti sui riquadri pari: rosa sotto, ciano sul lato. */
+:root[data-event-theme="notte-tropicale"] :is(
+  #app,#view,#al,#sch,#versioni,#ultimo,#lista,.v53-notifications
+) .nt-obl.nt-obl.nt-obl:nth-child(even)::before{
+  box-shadow:inset 0 -3px 0 var(--nt-rosa),
+             inset 5px 0 0 var(--nt-ciano),
+             inset 0 0 0 1px rgba(111,240,255,.44),
+             0 12px 30px rgba(5,0,20,.44)!important;
+}
+/* Niente vecchie bande rosse generiche (Derby, annunci, contenitori). */
+:root[data-event-theme="notte-tropicale"] :is(
+  #app,#view,#al,#sch,#versioni,#ultimo,#lista,.v53-notifications
+) .nt-obl.nt-obl.nt-obl:not(.comp-sw){
+  border-color:transparent!important;
+}
+:root[data-event-theme="notte-tropicale"] :is(#app,#view,#al,#sch,#versioni,#ultimo,#lista,.v53-notifications)
+  .nt-tab.nt-tab:not(.nt-forte){
+  --nt-tab-bg:linear-gradient(150deg,#492270,#240d49)!important;
+  color:#fff4fe!important;
+  border-color:transparent!important;
+}
+:root[data-event-theme="notte-tropicale"] :is(#app,#view,#al,#sch,#versioni,#ultimo,#lista,.v53-notifications)
+  .nt-tab.nt-tab.nt-on:not(.nt-forte){
+  --nt-tab-bg:linear-gradient(110deg,#ff5ca8,#bc6cff)!important;
+  color:#fff!important;
+}
+/* Totogirrr: la barra dinamica continua a scorrere grazie al suo JS originale. */
+:root[data-event-theme="notte-tropicale"] #app nav:has(.nvi){
+  background:#190935!important;border:1px solid var(--nt-bordo)!important;
+  border-radius:13px!important;padding:7px!important;
+  -webkit-tap-highlight-color:transparent;
+}
+:root[data-event-theme="notte-tropicale"] #app nav .nvi button.nt-tab{
+  min-height:42px;padding:10px 14px!important;white-space:nowrap;
+}
+:root[data-event-theme="notte-tropicale"] #app .q.nt-tab{
+  min-width:0;min-height:45px;padding:8px 5px!important;
+}
+:root[data-event-theme="notte-tropicale"] #app .q.nt-tab:disabled{
+  opacity:.5!important;cursor:not-allowed!important;
+}
+:root[data-event-theme="notte-tropicale"] #app .fc.nt-obl::before{
+  background:linear-gradient(155deg,#321457,#180932)!important;
+}
+:root[data-event-theme="notte-tropicale"] #app .gate.nt-obl,
+:root[data-event-theme="notte-tropicale"] #app .prize-corner.nt-obl{
+  padding:17px!important;
+}
+:root[data-event-theme="notte-tropicale"] #app .slip{
+  background:#16072e!important;border-top-color:var(--nt-rosa)!important;
+}
+/* Carriera, Girrr Sport, Albo dentro app.html: layout e eventi invariati. */
+:root[data-event-theme="notte-tropicale"] #view .seg,
+:root[data-event-theme="notte-tropicale"] #view .frs,
+:root[data-event-theme="notte-tropicale"] .tabs{
+  background:#1b0a39!important;
+  border-color:var(--nt-bordo)!important;border-radius:13px!important;
+}
+:root[data-event-theme="notte-tropicale"] #view .derby.nt-obl{
+  border-color:transparent!important;
+  --nt-banda:var(--nt-rosa)!important;
+}
+:root[data-event-theme="notte-tropicale"] #view .derby .hd{
+  color:#ffb7db!important;
+}
+/* Albo d'oro, Squadre e Derby su pagine indipendenti */
+:root[data-event-theme="notte-tropicale"] .swap .card.nt-obl,
+:root[data-event-theme="notte-tropicale"] .swap .sto.nt-obl,
+:root[data-event-theme="notte-tropicale"] .swap .sheet.nt-obl{
+  padding:clamp(13px,2vw,18px)!important;
+}
+:root[data-event-theme="notte-tropicale"] .swap .card.nt-obl h3{
+  color:var(--nt-arancio)!important;
+}
+/* Giornale: anteprima del numero e vecchi numeri */
+:root[data-event-theme="notte-tropicale"] #ultimo .last.nt-obl,
+:root[data-event-theme="notte-tropicale"] #lista .it.nt-obl{
+  padding:clamp(13px,2vw,20px)!important;
+}
+:root[data-event-theme="notte-tropicale"] #ultimo .btn.nt-tab{
+  color:#fff!important;
+}
+/* Versioni: .vv-v e .vv-seg sono generate dal versioni.js originale. */
+:root[data-event-theme="notte-tropicale"] #versioni .vv-seg{
+  border:1px solid var(--nt-bordo)!important;
+  border-radius:12px!important;background:#1b0a39!important;padding:6px!important;
+}
+:root[data-event-theme="notte-tropicale"] #versioni .vv-v.nt-obl{
+  overflow:visible!important;
+  margin:0 0 14px!important;padding:0!important;
+}
+:root[data-event-theme="notte-tropicale"] #versioni .vv-v.nt-obl::before{
+  transform:skewX(-1.5deg)!important;
+}
+:root[data-event-theme="notte-tropicale"] #versioni .vv-h.nt-tab{
+  width:100%!important;min-height:45px!important;
+}
+:root[data-event-theme="notte-tropicale"] #versioni .vv-c{
+  overflow:visible!important;
+}
+/* Notifiche: schede di filtro, notifiche e pulsante di conferma. */
+:root[data-event-theme="notte-tropicale"] .v53-notifications .v53-pills{
+  border-radius:12px!important;background:#1c0a3d!important;
+  padding:6px!important;
+}
+:root[data-event-theme="notte-tropicale"] .v53-notifications .v53-notifcard.nt-obl{
+  padding:9px!important;
+}
+:root[data-event-theme="notte-tropicale"] .v53-notifications .v53-btn.nt-tab:not(.nt-on){
+  color:#fff!important;
+}
+/* Spogliatoio: nessuna alterazione dei campi e dei movimenti dei giocatori. */
+:root[data-event-theme="notte-tropicale"] #app .seg,
+:root[data-event-theme="notte-tropicale"] #app .calnav,
+:root[data-event-theme="notte-tropicale"] #app .tools{
+  background:#1a0a39!important;border-color:var(--nt-bordo)!important;
+}
+/* A 320px il fondale obliquo rimane entro i margini senza causare overflow. */
+@media(max-width:390px){
+  :root[data-event-theme="notte-tropicale"] :is(
+    #app,#view,#al,#sch,#versioni,#ultimo,#lista,.v53-notifications
+  ) .nt-obl.nt-obl.nt-obl{
+    --nt-sk:1.5deg!important;
+    min-width:0!important;
+  }
+  :root[data-event-theme="notte-tropicale"] :is(#app,#view,#al,#sch,#versioni,#ultimo,#lista,.v53-notifications)
+    .nt-tab.nt-tab{max-width:100%}
+}
+
 /* 4f. Grafica unica durante l'evento (Gianluca): niente interruttore Lega/Stadio nella Home né nel Campo */
 :root[data-event-theme="notte-tropicale"] :is(#gsw,.skin){display:none!important}
 
