@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#160b2a">
+<title>O Girrr · Edizione speciale · Unica anteprima</title>
+<meta name="description" content="Un solo ingresso alla grafica speciale temporanea di O Girrr, basata sul tema Notte Tropicale di Claude.">
+<style>
+:root{color-scheme:dark;background:#160b2a;color:#fff4fb;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
+body{min-height:100vh;margin:0;display:grid;place-items:center;padding:24px;box-sizing:border-box;
+background:radial-gradient(ellipse at 50% 30%,#572467,#160b2a 70%)}
+main{max-width:440px;text-align:center;padding:30px;border:1px solid #ff4bac88;border-radius:18px;background:#27123b}
+h1{font-size:clamp(28px,7vw,43px);line-height:1;margin:16px 0}
+p{color:#f2d4e9;line-height:1.5}
+a{display:inline-block;margin-top:15px;background:#ff4bac;color:#1a0928;font-weight:900;padding:15px 20px;text-decoration:none;border-radius:10px}
+a:focus-visible{outline:3px solid #86eeff;outline-offset:3px}
+small{color:#eac0dc}
+</style>
+<script>
+/* 17 novembre 2026, Gianluca: un solo link, un solo tema, nessuna scelta Lega/Stadio.
+   La pagina di destinazione è la Home vera della copia Lab con il tema Claude attivo.
+   Si usa replace per evitare ritorni ciclici, e l'URL di fallback resta cliccabile. */
+(function(){
+  var url='../integrata-62/girrr/index.html?evento=notte-tropicale&ospite=1';
+  if(location.search.indexOf('sfondo=notte')!==-1)url+='&evento-sfondo=notte';
+  location.replace(url);
+})();
+</script>
+</head>
+<body>
+<main>
+  <div aria-hidden="true">🌴 ✦ ⚽</div>
+  <h1>O GIRRR<br>NOTTE TROPICALE</h1>
+  <p>La grafica dell'evento è una sola. Apertura dell'anteprima navigabile in corso.</p>
+  <a href="../integrata-62/girrr/index.html?evento=notte-tropicale&amp;ospite=1">Apri l'anteprima unica</a>
+  <p><small>Solo Lab. L'app pubblica non è stata modificata.</small></p>
+</main>
+</body>
+</html>
