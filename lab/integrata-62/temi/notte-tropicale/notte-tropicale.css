@@ -763,6 +763,45 @@
   margin-top:auto!important;padding-top:14px!important;
 }
 
+/* 4p. Sei fotografie libere per le sei schede principali (ChatGPT, 17 novembre 2026).
+   Fonte e licenza di ognuna: FOTO-SEI-SCHEDE.md · Unsplash License.
+   SOLO nel tema Notte Tropicale, nessuna variazione ai link, loghi o dati.
+   Il gradiente è un overlay di leggibilità; gli originali sono foto, non arte GTA. */
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c:nth-child(1){
+  background:linear-gradient(0deg,#120725fa,#14083250),
+    url("https://images.unsplash.com/photo-1670349218709-1c246063c319?auto=format&fit=crop&w=760&q=78") center/cover no-repeat!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c:nth-child(2){
+  background:linear-gradient(0deg,#120725fa,#1408324a),
+    url("https://images.unsplash.com/photo-1759171053149-d5cce4261405?auto=format&fit=crop&w=760&q=78") center/cover no-repeat!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c:nth-child(3){
+  background:linear-gradient(0deg,#120725fa,#1408324a),
+    url("https://images.unsplash.com/photo-1767397194546-c51509f4a715?auto=format&fit=crop&w=760&q=78") center/cover no-repeat!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c:nth-child(4){
+  background:linear-gradient(0deg,#120725fa,#1408324a),
+    url("https://images.unsplash.com/photo-1700085626695-6532f02cc961?auto=format&fit=crop&w=760&q=78") center/cover no-repeat!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c:nth-child(5){
+  background:linear-gradient(0deg,#120725fa,#14083250),
+    url("https://images.unsplash.com/photo-1637203727770-3fff478fb1ef?auto=format&fit=crop&w=760&q=78") center/cover no-repeat!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c:nth-child(6){
+  background:linear-gradient(0deg,#120725fa,#1408324a),
+    url("https://images.unsplash.com/photo-1770237710424-7ffa780f68d1?auto=format&fit=crop&w=760&q=78") center/cover no-repeat!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"][data-mode="coppa"] .giornata-nav .nt-numeri-link{
+  display:none!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"][data-mode="lega"] .giornata-nav .nt-numeri-link{
+  border-color:#ff5ca8!important;
+  background:linear-gradient(130deg,#43204c,#231137)!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav .nt-numeri-link:focus-visible{
+  outline:3px solid #00f0ff!important;outline-offset:3px!important;
+}
+
 /* 4f. Grafica unica durante l'evento (Gianluca): niente interruttore Lega/Stadio nella Home né nel Campo */
 :root[data-event-theme="notte-tropicale"] :is(#gsw,.skin){display:none!important}
 
