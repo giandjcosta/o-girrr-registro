@@ -1,0 +1,60 @@
+name: "ChatGPT: QA Tabellone e Curva 6.5"
+on:
+  pull_request:
+    branches:
+      - claude/totogirrr-ui-responsive-b2pgee
+    paths:
+      - "rilascio/r65/ritocchi.py"
+      - "prove/v65/prova_tabellone_curva_65.py"
+      - ".github/workflows/chatgpt-65-tabellone-curva-qa.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: reg
+      - uses: actions/checkout@v4
+        with:
+          repository: giandjcosta/o-fant-a-girrr
+          ref: gh-pages
+          path: site
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Applica 6.5 soltanto alla copia del sito
+        run: |
+          set -euo pipefail
+          python3 reg/rilascio/r65/applica.py site/
+          python3 reg/rilascio/r65/evento.py site/
+          python3 reg/rilascio/r65/ritocchi.py site/
+          python3 reg/rilascio/r65/ritocchi.py site/ | tee /tmp/ritocchi-seconda.txt
+          grep -q 'File cambiati: 0' /tmp/ritocchi-seconda.txt
+      - name: Rigenera il Lab dalla stessa copia (mai il sito vero)
+        run: |
+          cd reg
+          python3 rilascio/r65/lab.py ../site/
+          python3 temi/notte-tropicale/lab.py
+      - name: Playwright Chromium
+        run: |
+          python3 -m pip install --disable-pip-version-check playwright==1.62.0
+          python3 -m playwright install --with-deps chromium
+      - name: Collauda 320/390/1440 e acquisisci screenshot
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8767 --directory reg --bind 127.0.0.1 >/tmp/reg65-http.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" || true' EXIT
+          sleep 2
+          python3 reg/prove/v65/prova_tabellone_curva_65.py --base http://127.0.0.1:8767/lab/integrata-62/ --out qa_artifacts/tabellone-curva-65
+      - name: Allega foto e rapporto alla PR
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chatgpt-65-tabellone-curva-foto
+          path: qa_artifacts/tabellone-curva-65/
+          if-no-files-found: warn
+          retention-days: 14
