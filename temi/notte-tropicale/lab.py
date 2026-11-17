@@ -16,8 +16,12 @@ TEMI = OUT / 'temi'
 def main():
     (TEMI / 'notte-tropicale').mkdir(parents=True, exist_ok=True)
     shutil.copyfile(R / 'temi/evento-loader.js', TEMI / 'evento-loader.js')
-    for f in ('notte-tropicale.css', 'notte-tropicale.js', 'scena.svg', 'miami-tramonto.jpg', 'miami-palme.jpg', 'ocean-drive-notte.jpg'):
+    for f in ('notte-tropicale.css', 'notte-tropicale.js', 'scena.svg', 'miami-tramonto.jpg', 'miami-palme.jpg', 'ocean-drive-notte.jpg',
+              'stats-campionato.js', 'numeri-campionato.css'):
         shutil.copyfile(R / 'temi/notte-tropicale' / f, TEMI / 'notte-tropicale' / f)
+    # ChatGPT, 17/11/2026: nuova pagina di approfondimento dei Numeri del Campionato.
+    # La copia sorgente resta in temi/, l'HTML apribile viene generato nel Lab canonico.
+    shutil.copyfile(R / 'temi/notte-tropicale/numeri-campionato.html', OUT / 'girrr/numeri-campionato.html')
     n = 0
     for p in sorted(OUT.rglob('*.html')):
         rel = p.relative_to(OUT)
