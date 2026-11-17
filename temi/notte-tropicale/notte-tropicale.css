@@ -160,86 +160,88 @@
   font:800 11px/1.4 Inter,system-ui,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--nt-ciano);text-shadow:0 0 10px rgba(111,240,255,.6)}
 @media (max-width:520px){:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .hero .tag::before{letter-spacing:.12em;font-size:10px;padding-left:28px;background-size:18px 2px}}
 
-/* 4d. Barra in basso (notte-tropicale.js, idea dal bozzetto di ChatGPT): solo sul telefono, col pallone al centro per il
+/* 4d. Barra in basso (notte-tropicale.js, idea dal bozzetto di ChatGPT): MESSA DA PARTE (Gianluca, 17 novembre: «non credo di volere la banda in basso fissa»):
+   si accende solo a mano con ?evento-extra=barra. Solo sul telefono, col pallone al centro per il
    Totogirrr. Sparisce quando c'è la schedina del Totogirrr e sopra i 760 px; entra con una dissolvenza dal basso. */
 .nt-barra{display:none}
 @media (max-width:760px){
-  :root[data-event-theme="notte-tropicale"] .nt-barra{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;align-items:end;position:fixed;z-index:25;left:10px;right:10px;
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="barra"] .nt-barra{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;align-items:end;position:fixed;z-index:25;left:10px;right:10px;
     bottom:calc(10px + env(safe-area-inset-bottom,0px));padding:6px 6px 7px;border-radius:22px;
     background:linear-gradient(180deg,rgba(46,16,84,.96),rgba(16,6,38,.97));box-shadow:0 0 0 1px var(--nt-bordo) inset,0 10px 30px rgba(5,0,20,.6),0 0 24px rgba(255,79,163,.22);
     opacity:0;transform:translateY(18px);transition:opacity .35s ease,transform .45s cubic-bezier(.22,.61,.36,1)}
-  :root[data-event-theme="notte-tropicale"] .nt-barra.su{opacity:1;transform:none}
-  :root[data-event-theme="notte-tropicale"] .nt-barra a{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px 3px;color:rgba(255,255,255,.72);text-decoration:none;
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="barra"] .nt-barra.su{opacity:1;transform:none}
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="barra"] .nt-barra a{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px 3px;color:rgba(255,255,255,.72);text-decoration:none;
     font:700 10.5px/1.1 Inter,system-ui,sans-serif;-webkit-tap-highlight-color:transparent;position:relative;transition:color .2s ease}
-  :root[data-event-theme="notte-tropicale"] .nt-barra a svg{width:23px;height:23px}
-  :root[data-event-theme="notte-tropicale"] .nt-barra a[aria-current]{color:var(--nt-rosa-chiaro)}
-  :root[data-event-theme="notte-tropicale"] .nt-barra a[aria-current]::after{content:'';position:absolute;bottom:-4px;left:28%;right:28%;height:3px;border-radius:3px;background:var(--nt-rosa);box-shadow:0 0 10px var(--nt-rosa)}
-  :root[data-event-theme="notte-tropicale"] .nt-barra a.nt-palla svg{width:36px;height:36px;padding:9px;margin-top:-26px;box-sizing:content-box;border-radius:50%;color:#fff;
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="barra"] .nt-barra a svg{width:23px;height:23px}
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="barra"] .nt-barra a[aria-current]{color:var(--nt-rosa-chiaro)}
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="barra"] .nt-barra a[aria-current]::after{content:'';position:absolute;bottom:-4px;left:28%;right:28%;height:3px;border-radius:3px;background:var(--nt-rosa);box-shadow:0 0 10px var(--nt-rosa)}
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="barra"] .nt-barra a.nt-palla svg{width:36px;height:36px;padding:9px;margin-top:-26px;box-sizing:content-box;border-radius:50%;color:#fff;
     background:radial-gradient(circle at 35% 30%,#ff9ccd,#ff4fa3 45%,#a01f8a);box-shadow:0 0 0 3px rgba(16,6,38,.95),0 0 0 5px rgba(255,140,205,.55),0 0 22px rgba(255,79,163,.75)}
-  :root[data-event-theme="notte-tropicale"] .nt-barra a:active{opacity:.75}
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="barra"] .nt-barra a:active{opacity:.75}
   /* nel Lab il bollino «Versione di prova» sale sopra la barra (sul sito vero non c'è) */
-  :root[data-event-theme="notte-tropicale"].nt-con-barra small[aria-label^="Versione di prova"]{bottom:calc(98px + env(safe-area-inset-bottom,0px))!important}
-  :root[data-event-theme="notte-tropicale"].nt-con-barra body{padding-bottom:calc(92px + env(safe-area-inset-bottom,0px))!important}
-  :root[data-event-theme="notte-tropicale"] body:has(.slip) .nt-barra{opacity:0!important;pointer-events:none;transform:translateY(30px)}
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="barra"].nt-con-barra small[aria-label^="Versione di prova"]{bottom:calc(98px + env(safe-area-inset-bottom,0px))!important}
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="barra"].nt-con-barra body{padding-bottom:calc(92px + env(safe-area-inset-bottom,0px))!important}
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="barra"] body:has(.slip) .nt-barra{opacity:0!important;pointer-events:none;transform:translateY(30px)}
 }
-@media (prefers-reduced-motion:reduce){:root[data-event-theme="notte-tropicale"] .nt-barra{transition:none!important}}
+@media (prefers-reduced-motion:reduce){:root[data-event-theme="notte-tropicale"][data-event-extra~="barra"] .nt-barra{transition:none!important}}
 
-/* 4e. Home da «console» (Gianluca, 17 novembre: «tab con grandezze e forme diverse, più squadrate, posizioni diverse, una UI
+/* 4e. MESSA DA PARTE (Gianluca, 17 novembre: «non sono sicuro mi piacciano i tasti con quella grafica»): si accende solo a
+   mano con ?evento-extra=menu (insieme alla barra: ?evento-extra=menu,barra). Home da «console» (Gianluca, 17 novembre: «tab con grandezze e forme diverse, più squadrate, posizioni diverse, una UI
    differente»). Solo durante l'evento, solo nella Home, solo CSS: stessi collegamenti e stessi dati, cambiano ordine, forma e
    posto. Telefono: subito sotto il titolo il menu a tasti quadrati (3 per riga), poi le quattro schede da sfogliare di lato,
    poi notifiche, Giornale e Curva. PC: il menu sta in una colonna fissa a sinistra, il resto a destra. Angoli vivi con lo
    spigolo tagliato, come i menu dei videogiochi. */
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap{display:flex;flex-direction:column}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>*{order:20}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>header.hero{order:1}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap::after{order:99}   /* la firma «Notte Tropicale» resta in fondo */
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>.cards{order:2}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>.vv-avviso{order:3}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>#strip{order:4}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>#agg{order:5}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>.v53-home{order:6}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>#big{order:7}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>#cvw{order:8}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap{display:flex;flex-direction:column}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap>*{order:20}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap>header.hero{order:1}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap::after{order:99}   /* la firma «Notte Tropicale» resta in fondo */
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap>.cards{order:2}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap>.vv-avviso{order:3}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap>#strip{order:4}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap>#agg{order:5}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap>.v53-home{order:6}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap>#big{order:7}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap>#cvw{order:8}
 /* il menu: tasti quadrati numerati */
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;counter-reset:nt-menu;margin:14px 0 18px!important}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards::before{content:'Scegli dove andare';grid-column:1/-1;display:block;margin:0 0 4px;padding-left:1.25em;
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .cards{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;counter-reset:nt-menu;margin:14px 0 18px!important}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .cards::before{content:'Scegli dove andare';grid-column:1/-1;display:block;margin:0 0 4px;padding-left:1.25em;
   font:italic 800 19px/1.1 'Barlow Condensed',Inter,sans-serif;text-transform:uppercase;color:#fff;letter-spacing:.01em;
   background:repeating-linear-gradient(115deg,var(--nt-rosa) 0 .16em,transparent .16em .3em) 0 52%/.95em .78em no-repeat}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c{display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:2px;aspect-ratio:1/1;min-height:0!important;
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c{display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:2px;aspect-ratio:1/1;min-height:0!important;
   padding:10px!important;margin:0!important;border-radius:2px!important;position:relative;overflow:hidden;counter-increment:nt-menu;
   clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%);
   background:linear-gradient(160deg,rgba(70,24,118,.96),rgba(20,7,44,.96))!important;
   box-shadow:0 0 0 1px var(--nt-bordo) inset,inset 0 -3px 0 var(--nt-rosa)!important;transition:transform .18s ease,box-shadow .2s ease!important}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c:active{transform:scale(.97)}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c::after{content:counter(nt-menu,decimal-leading-zero);position:absolute;top:7px;right:20px;
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c:active{transform:scale(.97)}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c::after{content:counter(nt-menu,decimal-leading-zero);position:absolute;top:7px;right:20px;
   font:italic 900 13px/1 'Barlow Condensed',Inter,sans-serif;color:var(--nt-ciano);text-shadow:0 0 8px rgba(111,240,255,.6);letter-spacing:.04em}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c .ic{position:absolute;top:10px;left:10px;width:auto;max-width:calc(100% - 44px);overflow:hidden;height:40px;margin:0!important;display:flex;align-items:center;background:none!important;box-shadow:none!important}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c .ic img{max-height:40px;width:auto;max-width:100%;height:auto;object-fit:contain}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c.bet .ic{display:none!important}   /* il nome «Totogirrr» c'è già sotto: il logo scritto non ci stava */
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c.bet .ic span{font-size:24px!important}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c h2{margin:0!important;padding:0!important;background:none!important;font:italic 900 clamp(15px,4.4vw,21px)/1 'Barlow Condensed',Inter,sans-serif!important;
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c .ic{position:absolute;top:10px;left:10px;width:auto;max-width:calc(100% - 44px);overflow:hidden;height:40px;margin:0!important;display:flex;align-items:center;background:none!important;box-shadow:none!important}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c .ic img{max-height:40px;width:auto;max-width:100%;height:auto;object-fit:contain}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c.bet .ic{display:none!important}   /* il nome «Totogirrr» c'è già sotto: il logo scritto non ci stava */
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c.bet .ic span{font-size:24px!important}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c h2{margin:0!important;padding:0!important;background:none!important;font:italic 900 clamp(15px,4.4vw,21px)/1 'Barlow Condensed',Inter,sans-serif!important;
   text-transform:uppercase!important;color:#fff!important;letter-spacing:.01em!important;text-shadow:0 2px 8px rgba(0,0,0,.6)!important;overflow-wrap:normal;hyphens:none;white-space:nowrap;max-width:100%}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c :is(p,.go,.nv,.new,small){display:none!important}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c :is(p,.go,.nv,.new,small){display:none!important}
 /* le quattro schede (In testa, Ultima giornata, Prossimo turno, Champions Cup): si sfogliano di lato, una alla volta */
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] #strip{display:flex!important;gap:10px!important;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:2px 2px 8px;margin:0 0 6px!important;overscroll-behavior-x:contain}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] #strip::-webkit-scrollbar{display:none}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] #strip>.st{flex:0 0 78%;scroll-snap-align:start;border-radius:2px!important;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%);min-height:0!important;height:auto!important}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] #agg{margin-top:8px!important}
-@media (max-width:360px){:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c h2{font-size:14px!important;letter-spacing:0!important} :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c.bet .ic span{font-size:19px!important}}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] #strip{display:flex!important;gap:10px!important;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:2px 2px 8px;margin:0 0 6px!important;overscroll-behavior-x:contain}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] #strip::-webkit-scrollbar{display:none}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] #strip>.st{flex:0 0 78%;scroll-snap-align:start;border-radius:2px!important;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%);min-height:0!important;height:auto!important}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] #agg{margin-top:8px!important}
+@media (max-width:360px){:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c h2{font-size:14px!important;letter-spacing:0!important} :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c.bet .ic span{font-size:19px!important}}
 /* tutto il resto della Home con gli angoli vivi */
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] :is(.vv-avviso,.v53-home,#big,#cvw,.mini .mn){border-radius:3px!important}
+:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] :is(.vv-avviso,.v53-home,#big,#cvw,.mini .mn){border-radius:3px!important}
 /* PC: il menu in una colonna a sinistra che resta ferma mentre scorri, il resto a destra */
 @media (min-width:1000px){
-  :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap{display:grid;grid-template-columns:290px minmax(0,1fr);column-gap:26px;align-items:start}
-  :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>*{grid-column:2}
-  :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>header.hero{grid-column:1/-1;grid-row:1}
-  :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap::after{grid-column:1/-1}
-  :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>.cards{grid-column:1;grid-row:2/span 40;position:sticky;top:16px;align-self:start;grid-template-columns:repeat(2,minmax(0,1fr))!important;margin-top:0!important}
-  :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c h2{font-size:20px!important}
-  :root[data-event-theme="notte-tropicale"] body[data-v53="home"] #strip{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible}
-  :root[data-event-theme="notte-tropicale"] body[data-v53="home"] #strip>.st{min-height:140px}
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap{display:grid;grid-template-columns:290px minmax(0,1fr);column-gap:26px;align-items:start}
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap>*{grid-column:2}
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap>header.hero{grid-column:1/-1;grid-row:1}
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap::after{grid-column:1/-1}
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap>.cards{grid-column:1;grid-row:2/span 40;position:sticky;top:16px;align-self:start;grid-template-columns:repeat(2,minmax(0,1fr))!important;margin-top:0!important}
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c h2{font-size:20px!important}
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] #strip{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible}
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] #strip>.st{min-height:140px}
 }
-@media (prefers-reduced-motion:reduce){:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c{transition:none!important}}
+@media (prefers-reduced-motion:reduce){:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c{transition:none!important}}
 
 /* 4f. Grafica unica durante l'evento (Gianluca): niente interruttore Lega/Stadio nella Home né nel Campo */
 :root[data-event-theme="notte-tropicale"] :is(#gsw,.skin){display:none!important}

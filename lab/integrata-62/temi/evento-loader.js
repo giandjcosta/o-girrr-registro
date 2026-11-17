@@ -55,6 +55,10 @@
     var sf = q.get('evento-sfondo');
     if (sf) { try { sessionStorage.setItem(K + '-sfondo', sf); } catch (e) {} } else { try { sf = sessionStorage.getItem(K + '-sfondo'); } catch (e) {} }
     if (sf && /^[a-z-]{1,20}$/.test(sf)) h.setAttribute('data-event-sfondo', sf);
+    /* parti messe da parte, solo a mano per provarle: ?evento-extra=barra,menu (ricordate per la sessione), ?evento-extra=no per toglierle */
+    var ex = q.get('evento-extra');
+    if (ex) { try { sessionStorage.setItem(K + '-extra', ex); } catch (e) {} } else { try { ex = sessionStorage.getItem(K + '-extra'); } catch (e) {} }
+    if (ex && ex !== 'no') h.setAttribute('data-event-extra', ex.split(',').filter(function (v) { return /^[a-z-]{1,20}$/.test(v); }).join(' '));
     var l = document.createElement('link');
     l.rel = 'stylesheet'; l.href = new URL(ev.css, base).href; l.setAttribute('data-evento', ev.id);
     l.onerror = function () { h.removeAttribute('data-event-theme'); };   /* senza CSS niente tema a metà */

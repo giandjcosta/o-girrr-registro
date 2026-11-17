@@ -14,6 +14,8 @@
       var lega = function () { if (document.body && document.body.dataset.skin && document.body.dataset.skin !== 'lega') document.body.dataset.skin = 'lega'; };
       if (document.body) lega(); else document.addEventListener('DOMContentLoaded', lega);
     }
+    /* la barra è messa da parte (Gianluca, 17 novembre): compare solo con ?evento-extra=barra */
+    if (!/(^| )barra( |$)/.test(document.documentElement.getAttribute('data-event-extra') || '')) return;
     var I = {
       home: '<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/>',
       tab: '<path d="M7 4h10v4a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8"/>',
