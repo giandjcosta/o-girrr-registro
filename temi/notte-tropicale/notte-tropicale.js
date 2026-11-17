@@ -92,7 +92,10 @@
          (Curva, Notifiche, Statistiche, sponsor) senza clonarli o modificare contenuti,
          eventi e collegamenti. Il titolo è un fratello della fila, non scorre con essa. */
       var rail = document.querySelector('body[data-v53="home"] .wrap > .cards');
-      if (rail && !document.getElementById('nt-tutto-titolo')) {
+      /* Claude, 17 novembre sera: lo spostamento di Curva, Notifiche, Statistiche e sponsor dentro la fila è spento. Gianluca aveva
+         chiesto la Curva SOTTO le sei schede e Notifiche/Statistiche più giù; dentro la fila finivano anche «Esci» e la versione
+         (versioni.js li mette subito prima degli sponsor) e i marchi diventavano minuscoli. Il codice resta per un eventuale ripensamento. */
+      if (false && rail && !document.getElementById('nt-tutto-titolo')) {
         var titolo = document.createElement('h2');
         titolo.id = 'nt-tutto-titolo';
         titolo.className = 'nt-tutto-titolo';
