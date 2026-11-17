@@ -1,0 +1,55 @@
+# Prompt per ChatGPT · 6.5 e lavori successivi
+
+Preparato da Claude il 18 novembre 2026 su richiesta di Gianluca. Copiare tutto il blocco qui sotto in ChatGPT.
+
+```
+Sei l'assistente di Gianluca per O Fant A Girrr. Repository: giandjcosta/o-girrr-registro (laboratorio, registro, script di rilascio) e giandjcosta/o-fant-a-girrr (sito vero: ramo gh-pages pubblicato, ramo main con workflow e calcoli). Rispondi in italiano semplice.
+
+REGOLE (obbligatorie, sono in AGENTS.md, REGOLE-LAVORO.md, REGOLE-VERSIONI.md e LAVORI-IN-CORSO.md del registro: leggili prima di tutto)
+- Rami che iniziano con chatgpt/…, commit e titoli di PR che iniziano con «ChatGPT: », messaggi in italiano. Mai push forzati, mai riscrivere storia di rami già su GitHub, mai cancellare rami di altri.
+- Niente merge e niente pubblicazione senza il «Vai» esplicito di Gianluca. Niente modifiche al database Supabase. Non toccare i file scritti dai workflow (data.json, formazioni.json, toto-quote.json, riepiloghi/, girrr/dati/).
+- Ogni modifica al sito si fa con uno script Python di sostituzioni esatte, come rilascio/r65/applica.py: si ferma se il testo atteso non c'è, la seconda esecuzione cambia 0 file, alza il ?v= dei file JS/CSS cambiati. Si applica a una copia di gh-pages, poi al Lab con lo script lab.py della versione, e si prova lì prima di andare online.
+- Testi: livello sportivo/tecnico/editoriale come in AGENTS.md; dopo «·» sempre la maiuscola; «Derby» con la D; mai scommesse nei post ufficiali; «Dato non conservato» dove mancano dati. Pagine a 320 px senza scorrimento laterale e senza errori nuovi in console. Animazioni fluide, ferme con «riduci movimento».
+- Prove: Playwright con Chromium (python3 -m http.server per servire la cartella). Dì sempre cosa è eseguito, simulato o non provato (Safari/WebKit e telefoni veri di solito non disponibili).
+
+STATO AL 18 NOVEMBRE (ramo claude/totogirrr-ui-responsive-b2pgee del registro, commit a55fabc, PR #126 aperta verso main del registro)
+- rilascio/r65/applica.py (sopra la 6.2.4 pubblicata, gh-pages): Carriera e Girrr Sport senza tremolio e senza contenuto che sparisce (una sola animazione d'entrata, rimbalzo 0,56 s; altezza ferma durante il cambio scheda), pillole di Carriera e Albo che scivolano, Conferenze stampa senza errore, Fiducia del presidente senza numero «fantasma» (cartellini puliti anche su Safari), Curva che non scrive più «vince» per un pareggio.
+- rilascio/r65/evento.py: porta nel sito temi/evento-loader.js e temi/notte-tropicale/ e aggiunge il caricatore alle pagine. La skin «Notte Tropicale» si accende da sola dal 18 novembre 00:00 al 21 novembre 00:00 (ora italiana) e si spegne da sola. Grafica unica (le pagine Stadio portano alla stessa pagina della Lega, interruttore Lega/Stadio nascosto), Curva esclusa. Titolo: «O GIRRR» con sfumatura blu #2B60DA → magenta #FF4CB9 → arancio #E6953E, «Notte Tropicale» in Mr Dafoe (scelta di Gianluca). Home: big match (Derby, poi sorpasso possibile, poi la più equilibrata) che porta al Campo, classifica, stagione, «Tutto il Girrr» a schede fotografiche, Curva sotto. Foto locali con licenza in temi/notte-tropicale/CREDITI.md.
+- Lab: lab/integrata-62 (6.5 + skin), lab/novita-6-5.html, negozio delle skin lab/skin.html con temi/catalogo.json.
+- Prove salvate: prove/v65/prova_schermi_65.js, prova_fluidita_65.js, prova_fiducia_65.js; temi/prova_evento.js (date di accensione).
+
+PARTE A · FAR USCIRE LA 6.5 OGGI (solo dopo il «Vai, pubblica» di Gianluca)
+1. Nel sito: ramo nuovo chatgpt/65-pubblicazione da gh-pages aggiornato. Copia di lavoro.
+2. Dal registro (ramo claude/totogirrr-ui-responsive-b2pgee): python3 rilascio/r65/applica.py COPIA e python3 rilascio/r65/evento.py COPIA. Rilancia entrambi: devono dire 0 file cambiati.
+3. Annuncio: aggiorna rilascio/r65/ANNUNCIO-BOZZA.json seguendo REGOLE-VERSIONI.md (tipo medio, v 6.5, titolo da 3 a 8 parole, messaggio che comincia con «⚽ **O Girrr 6.5 è online!**», da 3 a 6 frasi col tu, niente fantapunti né scommesse, chiusura «Buona giornata a tutti! ⚽»). Proposta da far approvare a Gianluca: titolo «Notte Tropicale su O Girrr»; messaggio: «⚽ **O Girrr 6.5 è online!** Fino al 20 novembre O Girrr si veste da Notte Tropicale: foto di Miami, neon e una Home nuova con il big match della giornata, la classifica e i numeri della stagione. Dal 21 torna la grafica di sempre, da sola. Intanto Carriera e Girrr Sport sono più fluidi: niente più pagina che trema quando cambi sezione, e le pillole della Carriera scivolano come le altre. Buona giornata a tutti! ⚽». Voci del changelog: quelle già nel file più «Home: Fino al 20 novembre la grafica speciale Notte Tropicale, uguale per tutti, con big match, classifica e numeri della stagione.»
+4. python3 rilascio/versioni/aggiungi.py --tipo medio --v 6.5 --titolo … --messaggio … --voce … (prima con --prova), poi copia versioni.json nella radice della copia.
+5. Prova la copia servendola in locale, senza parametri (la data vera accende la skin): iPhone SE, Pixel 7, PC 1440, pagine girrr/index, tabellone, campo, app.html#carriera, app.html#sport, totogirrr, albo, curva (skin spenta), stadio/girrr/index (deve portare a girrr/index), index.html (Spogliatoio), versioni (pillola V6.5). Controlla: data-event-theme="notte-tropicale", niente scorrimento laterale, niente errori nuovi. Poi ?evento=off: tutto come prima.
+6. Commit «ChatGPT: pubblicazione 6.5 …», push, PR verso gh-pages con titolo «Gianluca: pubblicazione 6.5 Notte Tropicale». La unisce Gianluca.
+7. Dopo l'unione, sul sito vero (1-2 minuti): https://giandjcosta.github.io/o-fant-a-girrr/girrr/ e /stadio/girrr/ (porta alla Lega), Curva, Carriera, Girrr Sport, Totogirrr; console senza errori nuovi. Se qualcosa non va: «Revert» della PR.
+8. Registro: STATO.md (6.5 online, hash del merge, come tornare indietro), LAVORI-IN-CORSO.md, temi/catalogo.json (stato «Online 18–20 novembre 2026»), ufficiale/src/sito/ allineato ai file cambiati su gh-pages. Lancia a mano l'allineamento del Registro (Actions › sincronizza-registro › Run workflow).
+
+PARTE B · CORREZIONI DELLA 6.5.1 (dopo l'uscita; script rilascio/r651/applica.py sopra la 6.5 pubblicata, prova nel Lab, PR con foto)
+Tabellone (girrr/tabellone.html e stadio/girrr/tabellone.html):
+1. Immagini «Condividi» (La mia partita, Risultati, Classifica): Champions Cup con numeri e risultato in sfumato azzurro dal più scuro al più chiaro, Campionato in sfumato rosso dal più scuro al più chiaro; banda laterale dello stesso colore della competizione. Mai rosso nella coppa.
+2. Condividi la classifica dalla Champions Cup: oggi esce la classifica del Campionato (sbagliata) con il titolo «Classifica del Campionato dopo la 4ª giornata». Deve uscire la classifica dei gironi della Champions Cup (dati in data.json, d.cal.cup: ogni partita è [girone, casa, fantapunti casa, fantapunti ospite, ospite, risultato]) con titolo «Classifica della Champions Cup dopo la Nª giornata» e piede «Champions Cup 2026/27».
+3. Ultimo posto: numero della posizione in rosso in tutte le classifiche (Campionato, ogni girone di coppa), nella pagina e nelle immagini da condividere.
+4. «Approfondimenti · Dentro la partita»: chiuso all'inizio, si apre e chiude con un'animazione morbida sull'altezza (come le tendine <details> già usate in app.html), freccia che ruota; contenuto e statistiche diversi per competizione (Campionato: confronto giornate e centro partita del Campionato; Champions Cup: gironi, punti nel girone, qualificazione); banda laterale rossa per Campionato e azzurra per Champions Cup nella Lega, oro nello Stadio (regola grafica in AGENTS.md).
+Curva (girrr/curva.html e stadio/girrr/curva.html, grafiche iPhone e Android, tema chiaro e scuro):
+5. «Giurie e criteri» della Squadra della settimana: a volte si richiude da solo mentre lo leggi (sparisce per un attimo) e i pallini dell'elenco escono dal riquadro. Deve restare aperto finché lo chiudi, pallini dentro (list-style-position o padding a sinistra).
+6. Il link «Il voto nella Curva ›» dentro la Curva non serve: deve portare alla Squadra della settimana in Girrr Sport (app.html#sport).
+7. I due «Cambia il mio voto» (Squadra della settimana e sondaggio) uguali: rossi, stessa forma, allineati; con «Colori della mia squadra» attivo nelle Impostazioni prendono --sq1.
+8. Il sondaggio della giornata senza riquadro: stesso riquadro degli altri post.
+Giro di boa (Carriera › Giro di boa, condivisione a due foto):
+9. «Dalla Curva» deve avere sempre un commento: uno per il Campionato e uno per la Champions Cup, coerenti con squadra e periodo (regole in BILANCI-STAGIONE.md); nella vista «Entrambe» un giudizio sul totale delle due competizioni. Oggi la coppa mostra «Dato non conservato» anche quando i risultati ci sono.
+
+PARTE C · AGGIUNTE
+10. Sezione «Numeri» nel Tabellone, accanto a Classifica, Risultati e Campo, in Lega, Stadio e skin evento: statistiche di tutto il Campionato calcolate da d.cal.lega (partita = [casa, fantapunti casa, fantapunti ospite, ospite, risultato «2-1» o «-»]): giornate giocate, gol totali e a partita, vittorie in casa/fuori/pareggi, vittoria più larga, partita con più gol, miglior attacco e miglior difesa, serie più lunga di vittorie e di imbattibilità, squadra con più pareggi, punteggio di squadra più alto e più basso in fantapunti (con giornata, unità chiara), squadre imbattute in casa e fuori. Stessa cosa per la Champions Cup quando è scelta. Il riquadro «Stagione» della Home della skin (temi/notte-tropicale/notte-tropicale.js, link nt-stagione) deve portare lì (tabellone.html?sezione=numeri).
+11. Pagina delle novità della versione (lab/novita-6-5-1.html come lab/novita-6-5.html) e voce nel Lab.
+
+COME PROVARE OGNI PARTE
+- Applica lo script a una copia di gh-pages e rilancialo (0 file cambiati). Rigenera il Lab con lo script lab.py della versione e python3 temi/notte-tropicale/lab.py.
+- Servi il registro (python3 -m http.server 8767) e apri lab/integrata-62/girrr/… con e senza ?evento=notte-tropicale.
+- Lancia node prove/v65/prova_schermi_65.js (11 schermi × pagine × con e senza skin: 0 problemi) e una prova mirata per ogni correzione con tocchi veri (page.touchscreen.tap) su iPhone SE e Pixel 7, foto prima/dopo.
+- Per le immagini da condividere: genera le immagini nel browser e controlla colori e titoli con una foto.
+- Scrivi nella PR cosa hai provato e cosa no. Aggiorna LAVORI-IN-CORSO.md e STATO.md.
+```
