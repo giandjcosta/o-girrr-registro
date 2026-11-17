@@ -20,6 +20,9 @@ Ultimo aggiornamento: 16 novembre 2026, Claude.
 - **Schede del Derby e Campionato/Champions Cup** · Claude · `In prova nel Lab` · `rilascio/r622/`: su PC le schede sono di nuovo al centro. La regola cercava l'ultimo elemento della fila, che ora è la linea, non un pulsante. `rilascio/r622/` (aggiunta in `tifosi.js`): i due pulsanti stanno affiancati su iPhone SE (andavano a capo per 1 px); nello Stadio sono tutto oro, anche in Champions Cup.
 - **Registro: barra in alto più piccola e un solo interruttore Lega/Stadio** · Claude · `In prova nel Lab` · `registro.css`, `registro.js` e `rilascio/r62/lab62.js`, che ora ha una riga di prova compatta al posto dei link blu sottolineati.
 
+## In corso · 17 novembre 2026
+- **Prova grafica reale Miami Nights, app Lab 6.2.x** · ChatGPT · `In corso` · `temi/miami-ui.css`, `temi/miami-prova.html` nel ramo `chatgpt/theme-engine-vice-city-event`. Applica CSS alle pagine vere del Lab in iframe same-origin senza scrivere su `lab/`, mantiene le due skin, riprogetta tab, card, titoli, background e nav. Claude conserva caricatore temporale/infrastruttura della PR #125/126. Nessun deploy o fusione; prossimo passo: test di visualizzazione su telefono e PC e revisione di Gianluca.
+
 ## Da fare
 
 - **Vice City Edition — Theme Engine e prototipi** · ChatGPT · `In corso` · branch `chatgpt/theme-engine-vice-city-event`, cartella `temi/`: homepage e Tabellone demo navigabili tra loro, tema evento separato da Lega/Stadio; report `temi/RAPPORTO-2026-11-17-0105.md`. Prossimo passo: test browser e integrazione Lab dalla sorgente aggiornata, senza toccare il sito pubblico. Autorizzazione notturna fino alle 08:00 del 17/11.
