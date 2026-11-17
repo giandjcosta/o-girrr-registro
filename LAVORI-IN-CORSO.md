@@ -20,6 +20,9 @@ Ultimo aggiornamento: 16 novembre 2026, Claude.
 - **Schede del Derby e Campionato/Champions Cup** · Claude · `In prova nel Lab` · `rilascio/r622/`: su PC le schede sono di nuovo al centro. La regola cercava l'ultimo elemento della fila, che ora è la linea, non un pulsante. `rilascio/r622/` (aggiunta in `tifosi.js`): i due pulsanti stanno affiancati su iPhone SE (andavano a capo per 1 px); nello Stadio sono tutto oro, anche in Champions Cup.
 - **Registro: barra in alto più piccola e un solo interruttore Lega/Stadio** · Claude · `In prova nel Lab` · `registro.css`, `registro.js` e `rilascio/r62/lab62.js`, che ora ha una riga di prova compatta al posto dei link blu sottolineati.
 
+## In corso · 17 novembre 2026 · ChatGPT
+- **Notte Tropicale · Estensione delle forme alle pagine rimanenti** · ChatGPT · `In corso` · branch `chatgpt/notte-tropicale-pagine`, derivato da `f3c1088` di Claude; modifica solo `temi/notte-tropicale/notte-tropicale.js` (elenchi BOX/TAB), nuova sezione `4m` nel CSS e output `lab/integrata-62/temi/` rigenerato da `lab.py`. Pagine: Totogirrr, Carriera/Girrr Sport, Albo, Giornale, Spogliatoio, Squadre, Versioni, Notifiche, Derby; Curva esclusa. Obiettivo: riquadri obliqui viola pieni, tab evento e colori competizione preservati. Prossimo passo: verifiche responsive e browser, screenshot se disponibili, PR verso ramo Claude. Nessun merge, deploy, modifiche sito/Supabase.
+
 ## Da fare
 - **Verificare Spogliatoio e Totogirrr nella 6.2.1** (elenco di Gianluca del 16 novembre) · Nessuno ancora · `Da fare`.
 - **Safari e Firefox veri, e telefoni veri** · Tutti · `Da fare` · Nell'ambiente di Claude c'è solo Chromium. I workflow di GitHub provano anche WebKit e Firefox, ma non i dispositivi veri.
