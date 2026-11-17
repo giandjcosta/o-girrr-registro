@@ -562,6 +562,52 @@
     .nt-tab.nt-tab{max-width:100%}
 }
 
+/* 4m-bis. ChatGPT 17/11/2026 · Spogliatoio (index.html della radice Lab).
+   Il selettore Lega/Stadio resta nascosto: l'evento ha UNA grafica.
+   Le schede, la testata e il menu restano quelli reali, con nuovi fondi e fili neon. */
+:root[data-event-theme="notte-tropicale"] body:has(> .wrap > #tabs) .skin-menu{
+  display:none!important;
+}
+:root[data-event-theme="notte-tropicale"] body:has(> .wrap > #tabs) > .wrap > header.nt-obl{
+  --nt-banda:var(--nt-rosa)!important;
+}
+:root[data-event-theme="notte-tropicale"] body:has(> .wrap > #tabs) > .wrap > header.nt-obl::before{
+  background:linear-gradient(155deg,#311457,#170831)!important;
+  box-shadow:inset 0 3px 0 var(--nt-ciano),inset 5px 0 0 var(--nt-rosa),
+    inset 0 0 0 1px rgba(255,140,205,.4),0 10px 24px #07031766!important;
+}
+:root[data-event-theme="notte-tropicale"] body:has(> .wrap > #tabs) #tabs{
+  background:#1a0a38!important;border:1px solid var(--nt-bordo)!important;
+  border-radius:13px!important;padding:6px!important;
+}
+:root[data-event-theme="notte-tropicale"] body:has(> .wrap > #tabs) #tabs button.nt-tab{
+  min-height:41px!important;
+  --nt-tab-bg:linear-gradient(150deg,#45236d,#210d42)!important;
+  color:#ffeefd!important;
+}
+:root[data-event-theme="notte-tropicale"] body:has(> .wrap > #tabs) #tabs button.nt-tab.nt-on{
+  --nt-tab-bg:linear-gradient(100deg,#ff5ca8,#bc6cff)!important;
+  color:white!important;
+}
+:root[data-event-theme="notte-tropicale"] body:has(> .wrap > #tabs) #app .btn.nt-tab.pri{
+  --nt-tab-bg:linear-gradient(100deg,#ff5ca8,#bc6cff)!important;
+  color:#fff!important;
+}
+:root[data-event-theme="notte-tropicale"] body:has(> .wrap > #tabs) #app :is(input,select){
+  border-color:var(--nt-bordo)!important;background:#251244!important;
+  color:#fff!important;
+}
+/* Squadre: gli sfondi obliqui sporgevano 2px su iPhone. Rientrano nei margini
+   lasciando invariata la vera fila orizzontale delle squadre. */
+@media(max-width:480px){
+  :root[data-event-theme="notte-tropicale"] body:has(#sch) > .wrap{
+    overflow-x:clip!important;
+  }
+  :root[data-event-theme="notte-tropicale"] body:has(#sch) .swap .nt-obl.nt-obl.nt-obl::before{
+    inset:0 4px!important;
+  }
+}
+
 /* 4f. Grafica unica durante l'evento (Gianluca): niente interruttore Lega/Stadio nella Home né nel Campo */
 :root[data-event-theme="notte-tropicale"] :is(#gsw,.skin){display:none!important}
 
