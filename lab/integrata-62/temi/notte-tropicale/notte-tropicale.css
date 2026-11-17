@@ -613,6 +613,158 @@
   }
 }
 
+/* 4n. Home, tutte le sezioni nella stessa fila (ChatGPT, 17 novembre 2026).
+   Il titolo è FUORI dal contenitore orizzontalmente scorrevole; Curva, Notifiche,
+   Statistiche e sponsor vengono riposizionati da homeEvento() senza duplicare dati. */
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-tutto-titolo{
+  position:relative;display:block;margin:18px 0 10px;padding:0 0 0 1.25em;
+  font:italic 900 clamp(21px,5.2vw,29px)/1.15 'Barlow Condensed',Inter,sans-serif;
+  text-transform:uppercase;color:#fff;letter-spacing:.01em;
+  background:repeating-linear-gradient(115deg,var(--nt-rosa) 0 .16em,transparent .16em .3em)
+    0 50%/.95em .78em no-repeat;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards{
+  padding-top:5px!important;margin-top:0!important;
+  scroll-padding-inline:4px;scrollbar-width:none;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards::before{
+  content:none!important;display:none!important;
+}
+/* Le nuove quattro schede usano dimensioni e scorrimento delle sei schede esistenti. */
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.nt-slide{
+  flex:0 0 46%;min-width:0;min-height:150px;max-height:178px;
+  scroll-snap-align:start;position:relative;box-sizing:border-box;
+  padding:12px!important;margin:0!important;
+  transform:skewX(-4deg);border-radius:16px!important;
+  overflow:hidden;isolation:isolate;
+  color:#fff;text-decoration:none;
+  box-shadow:inset 0 3px 0 var(--nt-ciano),inset 4px 0 0 var(--nt-rosa),
+    inset 0 0 0 1px rgba(255,140,205,.58)!important;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.nt-slide:nth-child(even){
+  box-shadow:inset 0 -3px 0 var(--nt-rosa),inset 4px 0 0 var(--nt-ciano),
+    inset 0 0 0 1px rgba(111,240,255,.54)!important;
+}
+/* Curva conserva link e anteprima, ma in formato card: un messaggio sintetico. */
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.nt-slide-curva{
+  display:flex!important;flex-direction:column;justify-content:flex-end;
+  grid-template-columns:none!important;gap:6px!important;
+  background:linear-gradient(0deg,rgba(20,6,40,.97),rgba(26,6,46,.35)),
+    url(ocean-drive-notte.jpg) center/cover no-repeat!important;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.nt-slide-curva>*{
+  transform:skewX(4deg);min-width:0;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-slide-curva .cvh{
+  display:flex;align-items:center;gap:6px;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-slide-curva .cvl{
+  flex:0 0 30px;width:30px!important;height:30px!important;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-slide-curva .cvh b{
+  font:italic 900 22px/1 'Barlow Condensed',Inter,sans-serif!important;
+  text-transform:uppercase;color:#fff!important;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-slide-curva .cvh span:not(.cvl){
+  font-size:11px!important;line-height:1.2!important;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-slide-curva .cvp{
+  display:block!important;grid-column:auto!important;
+  overflow:hidden;max-height:39px;min-height:0;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-slide-curva .cvp>div{
+  border:0!important;background:#120725be!important;
+  padding:5px 7px!important;overflow:hidden!important;
+  font-size:10px!important;line-height:1.25!important;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-slide-curva .cvp>div~div{display:none!important}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-slide-curva .cvp :is(p,small){
+  font-size:10px!important;line-height:1.2!important;
+  margin:0!important;overflow:hidden!important;text-overflow:ellipsis;
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:1;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-slide-curva .cvg{
+  align-self:flex-start;margin:0!important;padding:0!important;
+  font:italic 900 14px/1 'Barlow Condensed',Inter,sans-serif!important;
+  color:#ffb86b!important;
+}
+/* Notifiche e Statistiche: i loro link autentici rimangono cliccabili. */
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.nt-slide-mini{
+  display:flex!important;align-items:stretch;justify-content:stretch;
+  background:linear-gradient(0deg,rgba(20,6,40,.96),rgba(20,6,40,.34)),
+    url(miami-palme.jpg) 58% center/cover no-repeat!important;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.nt-slide-mini:nth-child(even){
+  background:linear-gradient(0deg,rgba(20,6,40,.96),rgba(20,6,40,.34)),
+    url(miami-tramonto.jpg) 45% center/cover no-repeat!important;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-slide-mini>.mn{
+  width:100%;height:100%;min-width:0;display:flex!important;
+  flex-direction:column!important;justify-content:flex-end!important;
+  align-items:flex-start!important;gap:6px!important;
+  padding:0!important;margin:0!important;
+  border:0!important;background:transparent!important;box-shadow:none!important;
+  transform:skewX(4deg);
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-slide-mini>.mn.nt-obl::before{
+  display:none!important;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-slide-mini .mi{
+  display:grid;place-items:center;position:absolute;top:0;left:0;
+  width:36px!important;height:36px!important;
+  font-size:22px!important;border-radius:9px!important;
+  background:#3b1a6bc9!important;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-slide-mini>.mn>div:last-child{
+  min-width:0;max-width:100%;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-slide-mini .mn b{
+  display:block;font:italic 900 23px/1 'Barlow Condensed',Inter,sans-serif!important;
+  text-transform:uppercase;color:#fff!important;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-slide-mini .mn span{
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;
+  overflow:hidden;font-size:11px!important;line-height:1.25!important;
+  color:#f4d8ed!important;
+}
+/* Gli sponsor sono un'unica scheda scorrevole, mantenendo i quattro loghi originali. */
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.nt-slide-sponsor{
+  display:flex!important;flex-direction:column!important;justify-content:center;
+  gap:6px;background:linear-gradient(150deg,#fff9ff,#eee1fc)!important;
+  color:#4b236f!important;border:0!important;text-align:center;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-slide-sponsor>*{
+  transform:skewX(4deg);min-width:0;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-slide-sponsor>span{
+  font:800 12px/1.3 Inter,system-ui,sans-serif!important;
+  color:#582b82!important;margin:0!important;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-slide-sponsor .lg{
+  width:100%;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:5px!important;margin:2px 0 0!important;align-items:center;
+}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-slide-sponsor .lg img{
+  display:block;max-height:44px!important;width:100%!important;
+  max-width:100%;object-fit:contain;background:#fff;
+  border-radius:5px!important;
+}
+@media(min-width:900px){
+  :root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.nt-slide{
+    min-height:170px;max-height:none;
+  }
+}
+/* Ultima giornata e Champions Cup: azioni ancorate allo stesso bordo inferiore. */
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] #strip>.st{
+  display:flex!important;flex-direction:column!important;
+  align-items:stretch;justify-content:flex-start;
+  min-width:0;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] #strip>.st .vai{
+  display:block;align-self:flex-start;
+  margin-top:auto!important;padding-top:14px!important;
+}
+
 /* 4f. Grafica unica durante l'evento (Gianluca): niente interruttore Lega/Stadio nella Home né nel Campo */
 :root[data-event-theme="notte-tropicale"] :is(#gsw,.skin){display:none!important}
 
