@@ -16,6 +16,10 @@
   animazione, da completamente trasparenti e a scaletta fino a quasi mezzo secondo, insieme alla dissolvenza delle pillole. Ora,
   quando il cambio lo anima già pillole.js, la seconda animazione non parte (app.html e transizioni.js; misurato sul sito vero:
   il contenuto restava invisibile per circa un decimo di secondo).
+- Carriera, Fiducia del presidente (foto di Gianluca dall'iPhone): sotto i cartellini c'è il numero vero, nascosto; le sue
+  animazioni a ogni scatto lo riaccendevano per un istante, schiacciato (il «39» sbiadito sopra). Ora resta sempre nascosto. I
+  cartellini hanno il retro nascosto anche con il prefisso di Safari, così non restano sovrapposti, e il giro dura un po' di più
+  (1,5–2,4 s invece di 1,1–1,9 s) perché le cifre riescano a seguirlo.
 - Con «riduci movimento» niente animazioni, come prima.
 
 Uso: python3 rilascio/r65/applica.py COPIA_GH_PAGES_6_2_4
@@ -35,6 +39,16 @@ APP = [
      "     attimo, la pagina tornava su e tremava); poi, se serve, si accorcia con calma */\n"
      "  var _h0=_vw.offsetHeight;if(_h0>0){_vw.style.minHeight=_h0+'px';clearTimeout(render._mh);render._mh=setTimeout(function(){var _a=parseFloat(_vw.style.minHeight)||0;_vw.style.minHeight='';var _h1=_vw.offsetHeight;if(_h1<_a-2&&_vw.animate&&!matchMedia('(prefers-reduced-motion: reduce)').matches){_vw.style.minHeight=_h1+'px';var _an=_vw.animate([{minHeight:_a+'px'},{minHeight:_h1+'px'}],{duration:350,easing:'cubic-bezier(.22,.61,.36,1)'});_an.onfinish=_an.oncancel=function(){_vw.style.minHeight=''}}else _vw.style.minHeight=''},800)}\n"
      "  morphDom(_vw,_nv);"),
+]
+FIDUCIA = [
+    # numero nascosto sotto i cartellini: le sue animazioni lo riaccendevano a ogni scatto (il «39» sbiadito e schiacciato)
+    (".trust-visual .trust-number{opacity:0}",
+     ".trust-visual .trust-number,.trust-visual .trust-number.trust-tick,.trust-visual .trust-number.trust-flip{opacity:0!important;animation:none!important}"
+     "/* 6.5 (Gianluca, foto dall'iPhone): cartellini senza sovrapposizioni su Safari (rotazioni 3D con il retro nascosto anche con il prefisso -webkit-) e un po' più lenti */"
+     ".tab-fid .fl{transform-style:preserve-3d;-webkit-transform-style:preserve-3d}.tab-fid .fl>span{-webkit-backface-visibility:hidden;transform:translateZ(0)}"
+     ".tab-fid .fl.gira .a{animation-duration:.22s!important}.tab-fid .fl.gira .b{animation-duration:.22s!important;animation-delay:.22s!important}"),
+    # il giro del numero dura un po' di più: le cifre riescono a seguire il conteggio
+    ("duration:Math.max(1100,Math.min(1900,v*30))", "duration:Math.max(1500,Math.min(2400,v*40))"),
 ]
 FX = ("  if(Date.now()-last>800)return;",
       "  if(Date.now()-last>800||Date.now()-(window.__pilloleT||0)<900)return;   /* 6.5: il cambio lo anima già pillole.js */")
@@ -87,6 +101,8 @@ def main(argv):
         t = sostituisci(t, rel, APP[1][0], APP[1][1], tutte=True)
         t = sostituisci(t, rel, APP[2][0], APP[2][1])
         t = sostituisci(t, rel, FX[0], FX[1], tutte=True)
+        for x, y in FIDUCIA:
+            t = sostituisci(t, rel, x, y)
         return t
     for rel in ('girrr/app.html', 'stadio/girrr/app.html'):
         scrivi(rel, app)

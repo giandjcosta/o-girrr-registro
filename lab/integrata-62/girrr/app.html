@@ -250,7 +250,7 @@ svg text{fill:var(--mute);font-family:var(--fb)}
 <style id="cartellini-fiducia">.oro-scroll{scroll-padding-inline:4px}
 .trust-visual{position:relative;width:100%;max-width:260px;margin-inline:auto;aspect-ratio:220/128;isolation:isolate}
 .trust-visual .gauge{display:block;width:100%;height:auto;margin:0 auto}
-.trust-visual .trust-number{opacity:0}
+.trust-visual .trust-number,.trust-visual .trust-number.trust-tick,.trust-visual .trust-number.trust-flip{opacity:0!important;animation:none!important}/* 6.5 (Gianluca, foto dall'iPhone): cartellini senza sovrapposizioni su Safari (rotazioni 3D con il retro nascosto anche con il prefisso -webkit-) e un po' più lenti */.tab-fid .fl{transform-style:preserve-3d;-webkit-transform-style:preserve-3d}.tab-fid .fl>span{-webkit-backface-visibility:hidden;transform:translateZ(0)}.tab-fid .fl.gira .a{animation-duration:.22s!important}.tab-fid .fl.gira .b{animation-duration:.22s!important;animation-delay:.22s!important}
 .tab-fid{--fl-h:1.22em;position:absolute;left:50%;top:62.5%;transform:translate(-50%,-50%);display:flex;gap:5px;font:900 clamp(30px,10vw,42px)/1 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;pointer-events:none}
 .tab-fid .fl{position:relative;width:.82em;height:var(--fl-h);perspective:500px;border-radius:7px;box-shadow:0 4px 12px #0006}
 .tab-fid .fl>span{position:absolute;left:0;right:0;height:50%;overflow:hidden;background:linear-gradient(#253867,#19284d);color:#fbf6ec;backface-visibility:hidden}
@@ -917,7 +917,7 @@ function animaFiducia(t,v){
      (dalla Home o da un altro menu); cambiando scheda dentro la Carriera non ripartono. Prima: al massimo ogni 5 minuti. */
   var G=TRUSTANIM.giro,giro=false;
   if(G&&G.team===t&&G.v===v)giro=true;   /* la pagina si è ridisegnata durante il giro: si continua da dove era */
-  else if(!reduce&&TRUSTANIM.entrata){TRUSTANIM.entrata=0;giro=true;G=TRUSTANIM.giro={team:t,v:v,start:null,duration:Math.max(1100,Math.min(1900,v*30))}}
+  else if(!reduce&&TRUSTANIM.entrata){TRUSTANIM.entrata=0;giro=true;G=TRUSTANIM.giro={team:t,v:v,start:null,duration:Math.max(1500,Math.min(2400,v*40))}}
   var previous=giro?0:TRUSTANIM.value==null?v:TRUSTANIM.value,shown=null;
   if(!giro)TRUSTANIM.giro=null;
   TRUSTANIM.team=t;var id=++TRUSTANIM.token,from=previous,start=performance.now(),duration=reduce?0:520;
