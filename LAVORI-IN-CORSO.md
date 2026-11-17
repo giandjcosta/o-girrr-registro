@@ -21,6 +21,8 @@ Ultimo aggiornamento: 16 novembre 2026, Claude.
 - **Registro: barra in alto più piccola e un solo interruttore Lega/Stadio** · Claude · `In prova nel Lab` · `registro.css`, `registro.js` e `rilascio/r62/lab62.js`, che ora ha una riga di prova compatta al posto dei link blu sottolineati.
 
 ## Da fare
+
+- **Vice City Edition — Theme Engine e prototipi** · ChatGPT · `In corso` · branch `chatgpt/theme-engine-vice-city-event`, cartella `temi/`: homepage e Tabellone demo navigabili tra loro, tema evento separato da Lega/Stadio; report `temi/RAPPORTO-2026-11-17-0105.md`. Prossimo passo: test browser e integrazione Lab dalla sorgente aggiornata, senza toccare il sito pubblico. Autorizzazione notturna fino alle 08:00 del 17/11.
 - **Verificare Spogliatoio e Totogirrr nella 6.2.1** (elenco di Gianluca del 16 novembre) · Nessuno ancora · `Da fare`.
 - **Safari e Firefox veri, e telefoni veri** · Tutti · `Da fare` · Nell'ambiente di Claude c'è solo Chromium. I workflow di GitHub provano anche WebKit e Firefox, ma non i dispositivi veri.
 
