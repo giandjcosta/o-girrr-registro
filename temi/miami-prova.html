@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="color-scheme" content="dark">
+  <title>O Girrr · Miami Nights · PROVA REALE</title>
+  <style>
+    *{box-sizing:border-box}
+    :root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#0f0820;color:#f9ecf9}
+    body{margin:0;min-height:100dvh}
+    .lab-head{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:10px;
+      flex-wrap:wrap;padding:10px max(12px,calc((100% - 1400px)/2));background:#15102b;border-bottom:1px solid #9b3e87;
+      box-shadow:0 2px 20px #10051ea9}
+    .lab-head strong{font-size:13px;letter-spacing:.025em}
+    .lab-head small{display:block;font-size:10px;color:#d6b9db;margin-top:4px}
+    .lab-head .lab-note{color:#79f7ed;font-weight:800;font-size:10px;letter-spacing:.12em}
+    .selectors{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+    button{font:800 11px system-ui;cursor:pointer;border:1px solid #aa69ab;border-radius:10px;
+      background:#2b1b43;color:#fff;padding:10px 12px;min-height:39px}
+    button[aria-pressed=true]{background:linear-gradient(115deg,#ffa65b,#f048a8);border-color:#fbcfbb;color:#170d2b}
+    button:focus-visible,a:focus-visible{outline:3px solid #70fff0;outline-offset:3px}
+    .stage-wrap{height:calc(100dvh - var(--bar-height,69px));min-height:540px;display:flex;justify-content:center;
+      background:linear-gradient(160deg,#170f2d,#0a071a);padding:0}
+    .stage-wrap.mobile{padding:14px}
+    #stage{height:100%;width:100%;border:0;background:#130c2c;display:block}
+    .stage-wrap.mobile #stage{width:390px;max-width:100%;border:1px solid #d169b1;border-radius:20px;
+      box-shadow:0 0 0 7px #07040e,0 8px 42px #07030fd0}
+    .note{font-size:11px;color:#d5bbd8;text-align:center;padding:7px 12px}
+    @media(max-width:700px){.lab-head{padding:8px 10px}.lab-head small{display:none}
+      .lab-head strong{font-size:11px}.selectors{gap:5px}button{font-size:10px;padding:8px 10px;min-height:35px}
+      .stage-wrap.mobile{padding:3px}.stage-wrap.mobile #stage{border-radius:0;box-shadow:none}}
+  </style>
+</head>
+<body>
+  <header id="toolbar" class="lab-head">
+    <div>
+      <span class="lab-note">● LABORATORIO · SOLO VISIVO</span>
+      <strong>O GIRRR / MIAMI NIGHTS — UI REALE</strong>
+      <small>Pagine reali 6.2.4 del Lab con dati demo/ospite, trasformate temporaneamente via CSS.</small>
+    </div>
+    <div class="selectors" role="group" aria-label="Seleziona grafica e dimensioni">
+      <button type="button" data-skin="lega" aria-pressed="true">Lega</button>
+      <button type="button" data-skin="stadio" aria-pressed="false">Stadio</button>
+      <button type="button" data-mode="mobile" aria-pressed="false">Telefono</button>
+      <button type="button" data-mode="desktop" aria-pressed="true">Schermo</button>
+    </div>
+  </header>
+  <main class="stage-wrap" id="stage-wrap">
+    <iframe id="stage" title="Prova grafica interattiva di O Girrr" loading="eager"></iframe>
+  </main>
+  <script>
+  /* ChatGPT 17/11/2026: tema a iniezione, senza scrivere o cambiare i file reali del Lab.
+     Claude mantiene il proprio loader e il proprio tema; qui il motore di prova è indipendente. */
+  (() => {
+    "use strict";
+    const frame=document.getElementById("stage");
+    const wrap=document.getElementById("stage-wrap");
+    const toolbar=document.getElementById("toolbar");
+    const params=new URLSearchParams(location.search);
+    const screens={home:"index.html",tabellone:"tabellone.html",carriera:"app.html#carriera",totogirrr:"totogirrr.html?demo"};
+    let skin=params.get("skin")==="stadio"?"stadio":"lega";
+    let screen=Object.hasOwn(screens,params.get("screen"))?params.get("screen"):"home";
+    let view=params.get("view")==="mobile"?"mobile":"desktop";
+    const cssPath=new URL("./miami-ui.css",location.href).href;
+    function base(){return "../lab/integrata-62/"+(skin==="stadio"?"stadio/":"")+"girrr/"}
+    function urlFor(id){return base()+screens[id]}
+    function sync(){
+      toolbar.style.setProperty("--bar-height",toolbar.getBoundingClientRect().height+"px");
+      document.documentElement.style.setProperty("--bar-height",toolbar.getBoundingClientRect().height+"px");
+      wrap.classList.toggle("mobile",view==="mobile");
+      document.querySelectorAll("[data-skin]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.skin===skin)));
+      document.querySelectorAll("[data-mode]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.mode===view)));
+      const p=new URLSearchParams({skin,screen,view});
+      history.replaceState(null,"","?"+p.toString());
+    }
+    function open(id){screen=id;sync();frame.src=urlFor(id)}
+    function decorate(){
+      let d;
+      try{d=frame.contentDocument;if(!d||!d.body)return}catch(e){console.warn("La preview non può accedere all'iframe (origine diversa)",e);return}
+      const root=d.documentElement;
+      root.classList.add("miami-ux");
+      let style=d.getElementById("miami-ui-live-css");
+      if(!style){style=d.createElement("link");style.id="miami-ui-live-css";style.rel="stylesheet";style.href=cssPath;d.head.appendChild(style)}
+      let nav=d.getElementById("miami-event-navigation");
+      if(!nav){
+        nav=d.createElement("div");nav.id="miami-event-navigation";nav.className="miami-event-head";
+        const brand=d.createElement("div");brand.className="miami-brand";
+        brand.innerHTML='<span class="miami-mark" aria-hidden="true"></span><span><strong class="miami-title">O GIRRR</strong><small class="miami-eyebrow">SPECIAL EVENT · 18–20 NOVEMBRE</small></span>';
+        const script=d.createElement("div");script.className="miami-event-script";script.textContent="Miami Nights";
+        const tabs=d.createElement("nav");tabs.className="miami-tabs";tabs.setAttribute("aria-label","Sezioni O Girrr · tema speciale");
+        const labels=[["home","⌂","Home"],["tabellone","🏆","Tabellone"],["carriera","▥","Carriera"],["totogirrr","◇","Totogirrr"]];
+        for(const [key,icon,label] of labels){
+          const a=d.createElement("a");a.href=new URL(urlFor(key),location.href).href;a.dataset.miamiPage=key;
+          a.innerHTML='<span class="miami-tab-icon" aria-hidden="true">'+icon+'</span><span>'+label+'</span>';
+          if(key===screen)a.setAttribute("aria-current","page");
+          a.addEventListener("click",e=>{e.preventDefault();open(key)});
+          tabs.appendChild(a);
+        }
+        nav.append(brand,script,tabs);
+        d.body.insertBefore(nav,d.body.firstChild);
+      }
+      const path=frame.contentWindow.location.pathname;
+      screen=path.endsWith("tabellone.html")?"tabellone":path.endsWith("totogirrr.html")?"totogirrr":path.endsWith("app.html")?"carriera":"home";
+      d.querySelectorAll("[data-miami-page]").forEach(x=>{
+        if(x.dataset.miamiPage===screen)x.setAttribute("aria-current","page");else x.removeAttribute("aria-current");
+      });
+      sync();
+    }
+    frame.addEventListener("load",decorate);
+    document.querySelectorAll("[data-skin]").forEach(b=>b.addEventListener("click",()=>{skin=b.dataset.skin;open(screen)}));
+    document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>{view=b.dataset.mode;sync()}));
+    window.addEventListener("resize",()=>toolbar.style.setProperty("--bar-height",toolbar.getBoundingClientRect().height+"px"));
+    open(screen);
+  })();
+  </script>
+</body>
+</html>
