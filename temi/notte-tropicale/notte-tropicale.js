@@ -88,6 +88,33 @@
       /* la fila di icone non si mostra più (Gianluca: «se sotto ci sono le schede con le foto, le piccole tab in alto sono un
          doppione»); il codice resta per un eventuale ripensamento */
       hero.parentNode.insertBefore(box, hero.nextSibling);
+      /* ChatGPT 17/11/2026: una sola fila «Tutto il Girrr». Riusiamo i nodi reali
+         (Curva, Notifiche, Statistiche, sponsor) senza clonarli o modificare contenuti,
+         eventi e collegamenti. Il titolo è un fratello della fila, non scorre con essa. */
+      var rail = document.querySelector('body[data-v53="home"] .wrap > .cards');
+      if (rail && !document.getElementById('nt-tutto-titolo')) {
+        var titolo = document.createElement('h2');
+        titolo.id = 'nt-tutto-titolo';
+        titolo.className = 'nt-tutto-titolo';
+        titolo.textContent = 'Tutto il Girrr';
+        rail.setAttribute('aria-labelledby', titolo.id);
+        rail.parentNode.insertBefore(titolo, rail);
+        var curva = document.getElementById('cvw');
+        if (curva) {
+          curva.classList.add('nt-slide', 'nt-slide-curva');
+          rail.appendChild(curva);
+        }
+        [].forEach.call(document.querySelectorAll('body[data-v53="home"] .wrap > .mini'), function (mini) {
+          mini.classList.add('nt-slide', 'nt-slide-mini');
+          rail.appendChild(mini);
+        });
+        var sponsor = document.querySelector('body[data-v53="home"] .wrap > .sp');
+        if (sponsor) {
+          sponsor.classList.add('nt-slide', 'nt-slide-sponsor');
+          rail.appendChild(sponsor);
+        }
+        document.documentElement.classList.add('nt-rail-integrata');
+      }
       /* Derby votati o bocciati dai tifosi: la stessa lettura della pagina Derby (solo lettura); se non risponde in 2,5 secondi
          si va avanti con le sole rivalità storiche */
       var DBU = 'https://qmjqfgmvimsuxvghetgi.supabase.co', DBK = 'sb_publishable_qPhimkrF4iUvIad7JPoH8A_i-eOqG7n';
