@@ -81,6 +81,16 @@
         ['app.html#carriera', 'Carriera', 'car'], ['notifiche.html', 'Notifiche', 'noti']].map(function (v, i) {
         return '<a href="' + v[0] + '"' + (i === 0 ? ' aria-current="page"' : '') + '>' + IC[v[2]] + '<span>' + v[1] + '</span></a>';
       }).join('');
+      /* inclinazione degli sfondi: 4 gradi, meno nei riquadri molto alti, così lo sfondo inclinato non esce di lato più di 11 px */
+      var inclina = function () {
+        [].forEach.call(document.querySelectorAll('.wrap > :is(.vv-avviso,.v53-home,.lg-leghe,#big,#cvw,.sp), .wrap .mini .mn'), function (el) {
+          var h = el.offsetHeight || 1, g = Math.min(4, Math.atan(22 / h) * 180 / Math.PI);
+          el.style.setProperty('--nt-sk', g.toFixed(2) + 'deg');
+        });
+      };
+      inclina();
+      if (window.ResizeObserver) { var ro = new ResizeObserver(inclina); [].forEach.call(document.querySelectorAll('.wrap > *'), function (el) { ro.observe(el); }); }
+      else addEventListener('resize', inclina);
       var box = document.createElement('div'); box.className = 'nt-cruscotto';
       hero.parentNode.insertBefore(nav, hero.nextSibling); nav.parentNode.insertBefore(box, nav.nextSibling);
       /* Derby votati o bocciati dai tifosi: la stessa lettura della pagina Derby (solo lettura); se non risponde in 2,5 secondi
