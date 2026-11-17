@@ -164,7 +164,7 @@
    Totogirrr. Sparisce quando c'è la schedina del Totogirrr e sopra i 760 px; entra con una dissolvenza dal basso. */
 .nt-barra{display:none}
 @media (max-width:760px){
-  :root[data-event-theme="notte-tropicale"] .nt-barra{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;position:fixed;z-index:25;left:10px;right:10px;
+  :root[data-event-theme="notte-tropicale"] .nt-barra{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;align-items:end;position:fixed;z-index:25;left:10px;right:10px;
     bottom:calc(10px + env(safe-area-inset-bottom,0px));padding:6px 6px 7px;border-radius:22px;
     background:linear-gradient(180deg,rgba(46,16,84,.96),rgba(16,6,38,.97));box-shadow:0 0 0 1px var(--nt-bordo) inset,0 10px 30px rgba(5,0,20,.6),0 0 24px rgba(255,79,163,.22);
     opacity:0;transform:translateY(18px);transition:opacity .35s ease,transform .45s cubic-bezier(.22,.61,.36,1)}
