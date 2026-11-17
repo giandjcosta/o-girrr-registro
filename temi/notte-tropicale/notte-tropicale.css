@@ -530,7 +530,6 @@
   border-radius:12px!important;background:#1b0a39!important;padding:6px!important;
 }
 :root[data-event-theme="notte-tropicale"] #versioni .vv-v.nt-obl{
-  overflow:visible!important;
   margin:0 0 14px!important;padding:0!important;
 }
 :root[data-event-theme="notte-tropicale"] #versioni .vv-v.nt-obl::before{
@@ -538,9 +537,6 @@
 }
 :root[data-event-theme="notte-tropicale"] #versioni .vv-h.nt-tab{
   width:100%!important;min-height:45px!important;
-}
-:root[data-event-theme="notte-tropicale"] #versioni .vv-c{
-  overflow:visible!important;
 }
 /* Notifiche: schede di filtro, notifiche e pulsante di conferma. */
 :root[data-event-theme="notte-tropicale"] .v53-notifications .v53-pills{
