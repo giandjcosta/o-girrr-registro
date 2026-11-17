@@ -1,0 +1,86 @@
+/* O Girrr · Tema evento «Notte Tropicale» (Claude, 17 novembre 2026). Proposta che si appoggia sulle pagine VERE dell'app.
+   Si accende solo con data-event-theme="notte-tropicale" (temi/evento-loader.js). Non cambia dati, struttura né significato
+   dei colori: Lega rossa e azzurra, Stadio oro, Campionato rosso, Champions Cup azzurra, retrocessione rossa restano.
+   Cambiano luce e atmosfera: scena originale al tramonto, griglia neon sull'acqua, schede scure con bordo luminoso, titoli
+   «al tramonto». Movimento solo con transform (fluido sul telefono), fermo con «riduci movimento». Niente backdrop-filter. */
+:root[data-event-theme="notte-tropicale"]{
+  --nt-rosa:#ff4fa3; --nt-rosa-chiaro:#ff9ccd; --nt-ciano:#6ff0ff; --nt-arancio:#ffb347; --nt-giallo:#fff59a;
+  --nt-notte:#0b0624; --nt-viola:#2a0c52;
+  --nt-scheda:linear-gradient(160deg,rgba(46,16,84,.90),rgba(16,6,38,.93));
+  --nt-fila:rgba(18,7,42,.78);
+  --nt-bordo:rgba(255,140,205,.38);
+  --nt-ombra:0 0 0 1px rgba(111,240,255,.07) inset,0 12px 30px rgba(5,0,20,.45),0 0 26px rgba(255,79,163,.14);
+  background-color:var(--nt-notte)!important;
+  color-scheme:dark;
+}
+/* 1. Scena fissa al posto dello sfondo blu (in Lega e Stadio le pagine usano html::before) */
+:root[data-event-theme="notte-tropicale"]::before{
+  content:''!important;position:fixed!important;top:0!important;left:0!important;right:0!important;bottom:0!important;inset:0!important;
+  z-index:-2!important;pointer-events:none!important;display:block!important;opacity:1!important;transform:none!important;
+  /* un velo scuro sopra la scena, così il testo delle schede si legge sempre */
+  background:linear-gradient(rgba(11,6,36,.30),rgba(11,6,36,.38)),url(scena.svg) 62% 100%/cover no-repeat,linear-gradient(#0b0624,#2a0c52 40%,#6a1670 62%,#ff6a5c 80%)!important;
+}
+@media (max-aspect-ratio:3/4){:root[data-event-theme="notte-tropicale"]::before{
+  background:linear-gradient(rgba(11,6,36,.42),rgba(11,6,36,.55)),url(scena.svg) 80% 100%/cover no-repeat,linear-gradient(#0b0624,#2a0c52 40%,#6a1670 62%,#ff6a5c 80%)!important}}
+/* 2. Griglia neon sull'acqua: un solo livello, scorre con transform */
+:root[data-event-theme="notte-tropicale"]::after{
+  content:''!important;position:fixed!important;left:-60%!important;right:-60%!important;bottom:-8vh!important;top:auto!important;height:40vh!important;
+  z-index:-1!important;pointer-events:none!important;display:block!important;opacity:.55!important;
+  background:repeating-linear-gradient(90deg,rgba(255,94,190,.55) 0 2px,transparent 2px 90px),
+             repeating-linear-gradient(0deg,rgba(255,94,190,.6) 0 2px,transparent 2px 46px)!important;
+  -webkit-mask-image:linear-gradient(to top,#000 0,#000 25%,transparent 92%);mask-image:linear-gradient(to top,#000 0,#000 25%,transparent 92%);
+  transform-origin:50% 100%;transform:perspective(320px) rotateX(62deg) translateY(0);
+  animation:nt-griglia 2.6s linear infinite;
+}
+@keyframes nt-griglia{to{transform:perspective(320px) rotateX(62deg) translateY(46px)}}
+/* le strisce animate di Lega e Totogirrr spariscono sotto la scena (resta la barra in alto dell'app) */
+:root[data-event-theme="notte-tropicale"] body{background:transparent!important}
+:root[data-event-theme="notte-tropicale"] body::before,:root[data-event-theme="notte-tropicale"] body::after{background-image:none!important;animation:none!important}
+
+/* 3. Titoli «al tramonto» e scritte al neon */
+:root[data-event-theme="notte-tropicale"] .hero h1,:root[data-event-theme="notte-tropicale"] .top h1,
+:root[data-event-theme="notte-tropicale"] .v53-h1,:root[data-event-theme="notte-tropicale"] .gs-title,
+:root[data-event-theme="notte-tropicale"] header h1{
+  text-shadow:0 0 10px rgba(255,79,163,.65),0 0 28px rgba(255,79,163,.35)!important;
+}
+:root[data-event-theme="notte-tropicale"] .hero h1 span,:root[data-event-theme="notte-tropicale"] .top h1 span{
+  background:linear-gradient(180deg,var(--nt-giallo) 8%,var(--nt-arancio) 46%,var(--nt-rosa) 92%);
+  -webkit-background-clip:text;background-clip:text;color:transparent!important;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 12px rgba(255,79,163,.55));text-shadow:none!important;
+}
+:root[data-event-theme="notte-tropicale"] .kick,:root[data-event-theme="notte-tropicale"] .v53-kicker,
+:root[data-event-theme="notte-tropicale"] .top .k,:root[data-event-theme="notte-tropicale"] .gh{
+  color:var(--nt-ciano)!important;text-shadow:0 0 10px rgba(111,240,255,.55)!important;
+}
+
+/* 4. Schede scure con bordo luminoso: le bande laterali (rosse, azzurre, oro) restano dove sono */
+:root[data-event-theme="notte-tropicale"] :is(.c,.big,.lg-leghe,.v53-home,.v53-panel,.v53-metric,.strip .st,.card,.cd-box,.v55-card,.tw,.empty,.note,.sq,.row-card,.match,.feat > *,.slip){
+  background:var(--nt-scheda)!important;
+  box-shadow:var(--nt-ombra)!important;
+  border-top-color:var(--nt-bordo)!important;border-right-color:var(--nt-bordo)!important;border-bottom-color:var(--nt-bordo)!important;
+}
+:root[data-event-theme="notte-tropicale"] :is(.c,.big,.lg-leghe,.card,.v53-panel):hover{box-shadow:var(--nt-ombra),0 0 34px rgba(255,79,163,.28)!important}
+/* righe, collegamenti e file di pillole che prima erano trasparenti: fondo scuro, così sopra la scena si leggono */
+:root[data-event-theme="notte-tropicale"] :is(.vv-avviso,.cvw,a.mn,.sqb,.cd-btn,.turnoprossimo,.v53-box,.cov,.rac,.prize-corner,.v55-striscia){
+  background:var(--nt-scheda)!important;box-shadow:var(--nt-ombra)!important;
+}
+:root[data-event-theme="notte-tropicale"] :is(.giornata-nav,.sw,.seg,.oro-scroll,.v55-schede){background:var(--nt-fila)!important;border-color:var(--nt-bordo)!important}
+:root[data-event-theme="notte-tropicale"] .tick{background:rgba(11,6,36,.7)!important}
+/* pulsanti e schede scelte: stesso colore di sempre, con un alone neon */
+:root[data-event-theme="notte-tropicale"] :is(nav button.on,nav button[aria-selected=true],.seg button[aria-pressed=true],.v53-pill.active,.v53-pill[aria-selected=true],#gsw .th,.go,.btn:not(.o):not(.ghost)){
+  box-shadow:0 0 14px rgba(255,79,163,.45),0 0 2px rgba(255,255,255,.6) inset!important;
+}
+/* testo secondario un filo più chiaro sopra il viola */
+:root[data-event-theme="notte-tropicale"] :is(.tag,.v53-desc,.sub,.meta,small){text-shadow:0 1px 2px rgba(0,0,0,.55)}
+
+/* 5. Firma dell'evento in fondo alla Home */
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap::after{
+  content:'Notte Tropicale · 18–20 novembre';display:block;text-align:center;margin:26px 0 8px;
+  font:800 12px/1 Inter,system-ui,sans-serif;letter-spacing:.32em;text-transform:uppercase;color:var(--nt-ciano);
+  text-shadow:0 0 12px rgba(111,240,255,.7);
+}
+
+/* 6. Riduci movimento: tutto fermo */
+@media (prefers-reduced-motion:reduce){
+  :root[data-event-theme="notte-tropicale"]::after{animation:none!important;transform:perspective(320px) rotateX(62deg)!important}
+}

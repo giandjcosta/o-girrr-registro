@@ -9,7 +9,7 @@ Stati: `Da fare` · `In corso` · `In prova nel Lab` · `Aspetta Gianluca` · `B
 Ultimo aggiornamento: 16 novembre 2026, Claude.
 
 ## Aspetta Gianluca
-- **Tema evento temporaneo (18–20 novembre)** · ChatGPT con Claude · `In corso` · ramo `chatgpt/theme-engine-vice-city-event` del registro. Claude rivede alle 4:30 e propone. Consigli di Claude: un solo caricatore in tv.js con finestra di date in ora italiana (si spegne da solo anche nella copia offline), ?evento=on/off per provarlo, nome e grafica originali (niente «Vice City», logo o caratteri Rockstar), niente animazioni continue sopra i contenuti, Lega/Stadio riconoscibili. Serve il «Vai, pubblica» di Gianluca prima del 18.
+- **Tema evento temporaneo (18–20 novembre)** · ChatGPT e Claude · `In corso`. ChatGPT: demo a sé in `temi/` sul ramo `chatgpt/theme-engine-vice-city-event`. Claude: caricatore con le date `temi/evento-loader.js` (prova `temi/prova_evento.js`) e proposta «Notte Tropicale» sopra le pagine vere (`temi/notte-tropicale/`: scena originale, griglia neon, schede scure; nel Lab solo a mano con `?evento=notte-tropicale`, aggiunta da `temi/notte-tropicale/lab.py`, da rilanciare dopo ogni `rilascio/rXYZ/lab.py`). Serve il «Vai, pubblica» di Gianluca prima del 18; nome definitivo da scegliere (non «Vice City»).
 - **SQL dei personaggi che votano durante la settimana** (`sql/mvp-personaggi-621.sql`) · Claude · `Aspetta Gianluca` · Provato su PostgreSQL locale (`prove/v62/postgres_personaggi.py`, 10 prove). La 6.2.1 è online: Gianluca lo incolla nell'SQL Editor di Supabase prima dell'apertura della votazione della 8ª giornata.
 
 ## Online con la 6.2.2 (16 novembre, `gh-pages` `64a243b`)
