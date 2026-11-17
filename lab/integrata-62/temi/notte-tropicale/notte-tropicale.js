@@ -20,6 +20,7 @@
        schede principali con l'icona, la partita in evidenza del prossimo turno, la classifica (prime quattro) e i numeri della
        stagione. Dati veri: data.json come la Home, stessi risultati pubblicati (CVPUB) e stessa classifica (stessi criteri). */
     if (pag === 'index.html') homeEvento();
+    if (pag === 'tabellone.html') menuNumeriCampionato();
     forme();
     /* la barra è messa da parte (Gianluca, 17 novembre): compare solo con ?evento-extra=barra */
     if (!/(^| )barra( |$)/.test(document.documentElement.getAttribute('data-event-extra') || '')) return;
@@ -168,7 +169,7 @@
         pl.forEach(function (g) { g.m.forEach(function (m) { if (m[4] === '-') return; var s = m[4].split('-').map(Number); gol += s[0] + s[1]; pp++; if (s[0] === s[1]) par++; }); });
         h += '<section class="nt-pannelli"><a class="nt-classifica" href="tabellone.html#lega-' + last.n + '"><header><b>Classifica</b><small>Dopo la ' + last.n + 'ª ›</small></header><ol>' +
           cl.slice(0, 4).map(function (x, i) { return '<li' + (i === 0 ? ' class="primo"' : '') + '><em>' + (i + 1) + '</em><span>' + ESC(CAP(x.n)) + '</span><b>' + x.pt + '<small>pt</small></b></li>'; }).join('') + '</ol></a>' +
-          '<a class="nt-stagione" href="tabellone.html#lega-' + last.n + '"><header><b>Stagione</b><small>Campionato ›</small></header><div>' +
+          '<a class="nt-stagione" href="numeri-campionato.html?evento=notte-tropicale"><header><b>Stagione</b><small>Numeri del Campionato ›</small></header><div>' +
           '<p><b>' + pl.length + '</b><small>Giornate</small></p><p><b>' + gol + '</b><small>Gol</small></p>' +
           '<p><b>' + String(Math.round(gol / Math.max(pp, 1) * 10) / 10).replace('.', ',') + '</b><small>Gol a partita</small></p><p><b>' + par + '</b><small>Pareggi</small></p></div></a></section>';
         box.innerHTML = h;
@@ -176,6 +177,24 @@
       }).catch(function () {});
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', metti); else metti();
+  }
+  /* ChatGPT, 17/11/2026: i Numeri sono un approfondimento del Campionato.
+     Nuova voce solo nel Tabellone quando il tema è attivo. La Champions Cup rimane separata.
+     Il collegamento conserva i dati e non interviene sul selettore Campionato/Coppa. */
+  function menuNumeriCampionato() {
+    function metti() {
+      var nav=document.querySelector('body[data-v53="board"] .giornata-nav');
+      if (!nav || nav.querySelector('.nt-numeri-link')) return;
+      var a=document.createElement('a');
+      a.className='nt-numeri-link';
+      a.href='numeri-campionato.html?evento=notte-tropicale';
+      a.textContent='Numeri del Campionato';
+      var campo=nav.querySelector('#campo-link');
+      if(campo) nav.insertBefore(a,campo);
+      else nav.appendChild(a);
+    }
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',metti);
+    else metti();
   }
   /* Forme dell'evento su TUTTE le sezioni, non solo Home, Tabellone e Campo (ChatGPT, 17 novembre 2026).
      La Curva resta esclusa dal caricatore di Claude. MutationObserver già in uso: copre i riquadri
