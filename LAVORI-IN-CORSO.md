@@ -9,7 +9,7 @@ Stati: `Da fare` · `In corso` · `In prova nel Lab` · `Aspetta Gianluca` · `B
 Ultimo aggiornamento: 16 novembre 2026, Claude.
 
 ## Aspetta Gianluca
-- **6.2.4** (Spogliatoio completo nel Lab, numeri neutri, Calendario fluido, «‹ O Girrr» senza fondo al passaggio, schede del Totogirrr senza scorrimento del colore) · Claude · `In corso` dall'1 del 17 novembre · ramo `claude/totogirrr-ui-responsive-b2pgee`, `rilascio/r624/` · Gianluca ha dato il «Vai» anche per pubblicarla («son correzioni minori»).
+- **Tema evento temporaneo (18–20 novembre)** · ChatGPT con Claude · `In corso` · ramo `chatgpt/theme-engine-vice-city-event` del registro. Claude rivede alle 4:30 e propone. Consigli di Claude: un solo caricatore in tv.js con finestra di date in ora italiana (si spegne da solo anche nella copia offline), ?evento=on/off per provarlo, nome e grafica originali (niente «Vice City», logo o caratteri Rockstar), niente animazioni continue sopra i contenuti, Lega/Stadio riconoscibili. Serve il «Vai, pubblica» di Gianluca prima del 18.
 - **SQL dei personaggi che votano durante la settimana** (`sql/mvp-personaggi-621.sql`) · Claude · `Aspetta Gianluca` · Provato su PostgreSQL locale (`prove/v62/postgres_personaggi.py`, 10 prove). La 6.2.1 è online: Gianluca lo incolla nell'SQL Editor di Supabase prima dell'apertura della votazione della 8ª giornata.
 
 ## Online con la 6.2.2 (16 novembre, `gh-pages` `64a243b`)
@@ -25,6 +25,7 @@ Ultimo aggiornamento: 16 novembre 2026, Claude.
 - **Safari e Firefox veri, e telefoni veri** · Tutti · `Da fare` · Nell'ambiente di Claude c'è solo Chromium. I workflow di GitHub provano anche WebKit e Firefox, ma non i dispositivi veri.
 
 ## Fatto di recente
+- 17 novembre 2026 · Claude · **6.2.4 online** (con il «Vai» di Gianluca): `gh-pages` `6276dc6` (PR #22 del sito), 63 pagine controllate sul sito vero. Per tornare indietro: «Revert» della PR #22.
 - 16 novembre 2026 · Gianluca e Claude · **6.2.3 online**: `gh-pages` `4b0fc71` (PR #21 del sito, unita da Gianluca), 63 pagine controllate sul sito vero. Per tornare indietro: «Revert» della PR #21.
 - 16 novembre 2026 · Gianluca · **First Pull Request made by me**: una riga nel quaderno, commit e merge dal browser
 - 16 novembre 2026 · Claude · **6.2.2 online**: `gh-pages` `64a243b` («Carriera e Derby più fluidi»).
