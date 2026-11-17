@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """17/11/2026 ChatGPT: applica lo stile Miami Nights alle copie REALI nel Lab.
-L'operazione e' idempotente e limitata a 8 pagine del ramo sperimentale.
+L'operazione e' idempotente e limitata alle 4 pagine canoniche del Lab.
 La sorgente del tema e' temi/miami-ui.css + temi/miami-nav.js.
 Non tocca originale di Claude, sito pubblico, database, workflow e rilasci."""
 from pathlib import Path
@@ -10,8 +10,8 @@ FILENAMES = ('index.html', 'tabellone.html', 'app.html', 'totogirrr.html')
 
 def main():
     count = 0
-    for skin in ('girrr', 'stadio/girrr'):
-        prefix = '../../../' if skin == 'girrr' else '../../../../'
+    for skin in ('girrr',):
+        prefix = '../../../'
         for name in FILENAMES:
             p = ROOT / 'lab' / 'integrata-62' / skin / name
             if not p.is_file():
