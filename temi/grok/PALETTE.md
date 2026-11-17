@@ -91,7 +91,7 @@ I token pronti da copiare sono in `palette.css`. Non c'è una pagina e non c'è 
 
 ### Quelli del marchio
 
-- La scritta della serie, da GTA III in poi, è **Pricedown** di Ray Larabie (Typodermic): nero, bianco, contorno. Rockstar non ha pubblicato l'elenco dei caratteri di questo capitolo. Il file non è in questo repository: è un carattere commerciale, non nostro.
+- La scritta della serie, da GTA III in poi, è **Pricedown** di Ray Larabie (Typodermic): nero, bianco, contorno. Rockstar non ha pubblicato l'elenco dei caratteri di questo capitolo. Il nero si scarica gratis per usarlo sul proprio computer. Il file non si può copiare in un repository né nel sito: lo vieta la licenza desktop di Typodermic del 17 agosto 2026. Istruzioni per Claude in `CARATTERI.md`.
 - Il numero **non è un font**. È un disegno con le palme. Alcuni siti parlano di un carattere «Art Deco» per quel numero: Rockstar non lo ha confermato, e nel marchio quelle due lettere non sono testo. Non lo usiamo.
 
 ### Quelli che richiamano il gioco e si possono usare
