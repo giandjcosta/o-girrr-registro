@@ -6,6 +6,7 @@ on:
     paths:
       - "temi/notte-tropicale/**"
       - "lab/integrata-62/temi/notte-tropicale/**"
+      - "lab/integrata-62/temi/evento-loader.js"
       - ".github/workflows/chatgpt-notte-tropicale-qa.yml"
   workflow_dispatch:
 permissions:
