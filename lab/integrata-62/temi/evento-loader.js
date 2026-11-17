@@ -28,11 +28,21 @@
     var ora = new Date(), sim = q.get('evento-data');
     if (sim) { var d = new Date(/[zZ]|[+-]\d\d:?\d\d$/.test(sim) ? sim : sim + '+01:00'); if (!isNaN(d)) ora = d; }
     var ev = null;
+    /* Skin che tornano ogni anno (negozio delle skin, Gianluca 17 novembre): con ogniAnno inizio e fine sono «MM-GGTHH:MM» e la
+       finestra si calcola sull'anno in corso (anche a cavallo di Capodanno). Le skin archiviate restano qui con le loro date passate:
+       non si accendono più da sole, ma si provano sempre a mano con ?evento=<nome>. */
+    var finestra = function (e) {
+      if (!e.ogniAnno) return [new Date(e.inizio), new Date(e.fine)];
+      var y = ora.getFullYear(), a = new Date(y + '-' + e.inizio + ':00+01:00'), b = new Date(y + '-' + e.fine + ':00+01:00');
+      if (b <= a) { if (ora < b) a = new Date((y - 1) + '-' + e.inizio + ':00+01:00'); else b = new Date((y + 1) + '-' + e.fine + ':00+01:00'); }
+      return [a, b];
+    };
     for (var i = 0; i < EVENTI.length; i++) {
       var e = EVENTI[i];
       if (modo === e.id) { ev = e; break; }
       if (nomi.indexOf(modo) >= 0) continue;   /* scelto un altro tema per nome */
-      if (modo === 'on' || (!manuale && modo !== 'off' && ora >= new Date(e.inizio) && ora < new Date(e.fine))) { ev = e; break; }
+      var fw = finestra(e);
+      if (modo === 'on' || (!manuale && modo !== 'off' && ora >= fw[0] && ora < fw[1])) { ev = e; break; }
     }
     window.OGirrrEvento = Object.freeze({ attivo: ev ? ev.id : null, modo: modo || 'auto', ora: ora.toISOString() });
     /* Grafica unica: durante l'evento tutti vedono le pagine della Lega con il tema sopra, e l'interruttore Lega/Stadio sparisce.
