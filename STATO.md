@@ -1,3 +1,9 @@
+## 17 novembre 2026 — ChatGPT: tema evento unico (solo Lab, NON pubblicato)
+- **Decisione di Gianluca**: durante l'evento la grafica è una sola, identica per gli ingressi Lega e Stadio; le due grafiche permanenti tornano allo spegnimento. Nome pubblico da scegliere.
+- Sul branch `chatgpt/miami-nights-fusione-lab` (dalla base Claude) il CSS `temi/notte-tropicale/notte-tropicale.css` e la copia in `lab/integrata-62/temi/notte-tropicale/` hanno un nuovo livello finale `EVENT TAKEOVER UNICO`: colori, brand di testata, tab, tipografia e card uniformi; **nessuna modifica a dati, loader, Supabase o pubblicazione**.
+- Controlli statici 10/10 sul codice Github. Screenshot e interazioni Chromium su demo HTML locale 320/375/390/768/1440 (non equivalgono a test sul vero Lab). QA del Lab con `temi/prova_ui_unica.cjs` predisposta, NON eseguita. Rapporto in `temi/RAPPORTO-GRAFICA-UNICA-2026-11-17.md`.
+- Passo successivo: verificare le pagine vere su browser e dispositivi, eventuali conflitti con Stadio, review di Claude PR #126, poi richiesta «Vai, pubblica» a Gianluca.
+
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 16 novembre 2026)
 
 ## 16 novembre (8) — Claude: 6.2.3 «Il Totogirrr su ogni schermo» in prova nel Lab (NON pubblicata)
