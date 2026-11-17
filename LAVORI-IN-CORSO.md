@@ -8,6 +8,9 @@ Stati: `Da fare` · `In corso` · `In prova nel Lab` · `Aspetta Gianluca` · `B
 
 Ultimo aggiornamento: 16 novembre 2026, Claude.
 
+## In corso · 18 novembre 2026 · ChatGPT
+- **6.5 · Edizione speciale Radio, Video e Curva** · ChatGPT · `In prova nel Lab` · ramo `chatgpt/65-edizione-speciale`, PR verso `main` ancora senza merge. Radio: la battuta su Miami/forme della giornata si aggiunge **solo** se la puntata riguarda la giornata 8, dopo la fine delle partite. Video Remotion: grafica Notte Tropicale **solo** su giornata 8, con `SKIN=notte-tropicale` per la prova esplicita della 7 e `SKIN=off` per la regressione. Curva: post dei soli personaggi in date prestabilite 18–23/11, spariscono automaticamente il 24/11 alle 00:00 (ora italiana); banca sorgente e copie Lab sincronizzate. **Non eseguire** prove con Gemini, non pubblicare puntate né video e non unire la PR senza «Vai» esplicito. Da fare: prove di rendering reale Remotion, screenshot e controllo della puntata 8 quando i dati saranno disponibili; aggiornare la data finale dell'evento anche nel caricatore 6.5 di Claude.
+
 ## Aspetta Gianluca
 - **Tema evento temporaneo (18–20 novembre)** · ChatGPT con Claude · `In corso` · ramo `chatgpt/theme-engine-vice-city-event` del registro. Claude rivede alle 4:30 e propone. Consigli di Claude: un solo caricatore in tv.js con finestra di date in ora italiana (si spegne da solo anche nella copia offline), ?evento=on/off per provarlo, nome e grafica originali (niente «Vice City», logo o caratteri Rockstar), niente animazioni continue sopra i contenuti, Lega/Stadio riconoscibili. Serve il «Vai, pubblica» di Gianluca prima del 18.
 - **SQL dei personaggi che votano durante la settimana** (`sql/mvp-personaggi-621.sql`) · Claude · `Aspetta Gianluca` · Provato su PostgreSQL locale (`prove/v62/postgres_personaggi.py`, 10 prove). La 6.2.1 è online: Gianluca lo incolla nell'SQL Editor di Supabase prima dell'apertura della votazione della 8ª giornata.
