@@ -191,8 +191,8 @@ var NOTTE_POST=[
  ['mister_divano',23,19,10,"Vi siete allenati a guidare tutta la settimana. Adesso vediamo chi sa mettere in campo undici giocatori."]
 ];
 function postNotteTropicale(ms,SQ){
- /* Solo dal 18 al 23 novembre, inclusi; dal 24 non resta alcun post a tema. */
- if(ms<NOTTE_INIZIO||ms>=NOTTE_FINE)return [];
+ /* Si possono pubblicare nuovi messaggi solo fra il 18 e il 23 novembre.
+    Dopo il 24 gli stessi messaggi rimangono nello storico della Curva. */
  var fuori=[],i,p,x,c,rs,j;
  for(i=0;i<NOTTE_POST.length;i++){
   x=NOTTE_POST[i];p={k:'v:notte-tropicale:'+i,a:x[0],x:x[4],ts:ts(2026,11,x[1],x[2],x[3]),r:[],cat:'gen'};
