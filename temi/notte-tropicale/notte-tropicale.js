@@ -219,6 +219,8 @@
         if (!el.classList.contains('nt-obl')) {
           var cs = getComputedStyle(el), bl = parseFloat(cs.borderLeftWidth) || 0;
           if (bl >= 3 && !trasp(cs.borderLeftColor)) el.style.setProperty('--nt-banda', cs.borderLeftColor);
+          /* senza il bordo di sempre il testo toccava il lato: almeno 18 px a sinistra */
+          if (parseFloat(cs.paddingLeft) < 16) el.style.setProperty('padding-left', '18px', 'important');
           el.classList.add('nt-obl');
         }
         var h = el.offsetHeight || 1; el.style.setProperty('--nt-sk', Math.min(4, Math.atan(14 / h) * 180 / Math.PI).toFixed(2) + 'deg');
