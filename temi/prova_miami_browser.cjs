@@ -17,14 +17,14 @@ for(const skin of ['lega','stadio'])for(const screen of ['home','tabellone','car
  let ok=false;let state={};let failure='';
  try{
    await page.goto(url.toString(),{waitUntil:'domcontentloaded',timeout:15000});
-   await page.waitForFunction(()=>{let f=document.getElementById('stage');return f&&f.contentDocument&&f.contentDocument.documentElement.classList.contains('miami-ux')},{timeout:10000});
+   await page.waitForFunction(()=>{let f=document.getElementById('stage');return f&&f.contentDocument&&f.contentDocument.documentElement.classList.contains('miami-ux')},null,{timeout:10000});
    state=await page.evaluate(()=>{
      const f=document.getElementById('stage'),d=f.contentDocument,root=d.documentElement;
      const nav=d.getElementById('miami-event-navigation');
      const css=d.getElementById('miami-ui-live-css');
      const navLinks=nav?[...nav.querySelectorAll('a')]:[];
      const selected=navLinks.find(x=>x.getAttribute('aria-current')==='page');
-     const box=nav&&getComputedStyle(nav).getPropertyValue('display');
+     const box=nav&&d.defaultView.getComputedStyle(nav).getPropertyValue('display');
      const docWidth=d.documentElement.scrollWidth,viewWidth=d.documentElement.clientWidth;
      return {css:!!css,activated:root.classList.contains('miami-ux'),links:navLinks.length,
        selected:selected?.dataset.miamiPage||null,navDisplay:box,docWidth,viewWidth,
