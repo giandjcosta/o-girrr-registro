@@ -35,7 +35,7 @@
   background:
     linear-gradient(180deg,rgba(17,8,45,.35) 0%,rgba(18,9,46,.81) 58%,#100820 97%),
     linear-gradient(90deg,rgba(22,5,51,.46),transparent 70%),
-    url("https://images.unsplash.com/photo-1605723517503-3cadb5818a0c?auto=format&fit=crop&w=1800&q=78")
+    url("../lab/integrata-62/temi/notte-tropicale/miami-palme.jpg")
     center top/cover no-repeat,
     radial-gradient(ellipse at 70% 0%,#ec5e9d 0%,#512a72 45%,#100820 100%)!important;
   transform:none!important;animation:none!important;
@@ -112,7 +112,7 @@
   background:
     linear-gradient(90deg,rgba(17,8,41,.93),rgba(22,8,51,.34) 77%),
     linear-gradient(0deg,#170e37,transparent 70%),
-    url("https://images.pexels.com/photos/11457824/pexels-photo-11457824.jpeg?auto=compress&cs=tinysrgb&w=1600")
+    url("../lab/integrata-62/temi/notte-tropicale/ocean-drive-notte.jpg")
     center/cover no-repeat,
     linear-gradient(130deg,#a3457c,#19133e)!important;
   box-shadow:var(--miami-shadow),0 0 30px #ff44ad2a;
@@ -193,7 +193,7 @@
   min-height:235px!important;padding:22px!important;
   background:
    linear-gradient(155deg,rgba(89,30,122,.81),rgba(15,9,40,.95)),
-   url("https://images.unsplash.com/photo-1605723517503-3cadb5818a0c?auto=format&fit=crop&w=900&q=65")
+   url("../lab/integrata-62/temi/notte-tropicale/miami-palme.jpg")
    center/cover no-repeat!important;
   overflow:hidden!important;position:relative!important;
   border:1px solid var(--miami-outline)!important;border-top:4px solid var(--miami-primary)!important;
@@ -439,23 +439,7 @@
   }
 }
 
-/* Neutralizzazione delle differenze residue fra le vecchie skin nelle pagine Lab.
-   A livello evento nessuna scelta di grafica; restano distinte solo le competizioni e gli stati funzionali. */
-:root.miami-ux body[data-v53-skin=stadio] :is(.v53-home,.v53-metric,.v53-pill,.c,.mn,.st,.lg-leghe,.card,.panel),
-:root.miami-ux body[data-v53-skin=lega] :is(.v53-home,.v53-metric,.v53-pill,.c,.mn,.st,.lg-leghe,.card,.panel){
-  color:var(--miami-ink)!important;
-}
-:root.miami-ux body[data-v53-skin=stadio] :is(.v53-pill,.go,.btn),
-:root.miami-ux body[data-v53-skin=lega] :is(.v53-pill,.go,.btn){
-  border-color:var(--miami-outline)!important;
-}
-:root.miami-ux body[data-v53-skin=stadio] header.hero::after{
-  background:linear-gradient(90deg,#ff5fae,#ffb56e,#68f7ea)!important;
-  height:4px!important;border-radius:999px!important;
-}
-:root.miami-ux body[data-v53-skin=lega] header.hero::after{
-  content:"";position:absolute;left:0;right:0;bottom:0;height:4px!important;
-  background:linear-gradient(90deg,#ff5fae,#ffb56e,#68f7ea)!important;
-  border-radius:999px!important;
-}
+/* Un solo tema Miami Nights: questa regola usa la pagina canonica di Claude,
+   senza varianti di grafica né navigazione alternativa. */
 :root.miami-ux .miami-event-head{max-width:1400px;margin-left:auto;margin-right:auto}
+:root.miami-ux .hero::after{border-radius:999px!important}
