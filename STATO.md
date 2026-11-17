@@ -1,5 +1,11 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 16 novembre 2026)
 
+## 18 novembre 2026 — ChatGPT: Tabellone e Curva per la 6.5 in prova, non pubblicata
+- Ramo `chatgpt/65-tabellone-curva`, nato dal commit Claude `a55fabc`. Aggiunto `rilascio/r65/ritocchi.py` su copia `gh-pages` successiva a `rilascio/r65/applica.py`, senza pubblicare o unire rami: graduatorie di Coppa corrette nelle immagini, score sfumati, posizione ultima rossa, tendina «Dentro la partita» e dati per competizione. Curva: giurie persistenti, post del sondaggio incorniciati, link verso Girrr Sport e pulsanti «Cambia il mio voto» coerenti con i colori squadra.
+- Skin Notte Tropicale: scadenza spostata al **24 novembre 2026 ore 00:00** italiane in `temi/evento-loader.js`, catalogo e test. Annuncio `rilascio/r65/ANNUNCIO-BOZZA.json` aggiornato come bozza da approvare, versione sempre **6.5**.
+- QA previsto: workflow `chatgpt-65-tabellone-curva-qa.yml` su copia del sito, idempotenza e screenshot Chromium 320/390/1440. **Non ancora dichiarare test completati** finché la run non restituisce risultati e foto. Rimangono da integrare Numeri e correzione Giro di boa, oltre a collaudi dei browser e telefoni veri.
+
+
 ## 17 novembre 2026 — ChatGPT: Notte Tropicale su tutte le pagine (solo laboratorio)
 - **Correzione Home dopo screenshot Gianluca 20:30 (17/11)**: nella grafica evento la fila `Tutto il Girrr` contiene adesso anche Curva, Notifiche, Statistiche e sponsor (nodi reali spostati senza duplicazioni); titolo esterno alla fila e in posizione visiva sopra di essa (`order:6/7`); pulsanti delle due competizioni allineati in basso. Sorgenti `temi/notte-tropicale/notte-tropicale.{js,css}` sincronizzate nel Lab, nuova sezione CSS `4n`. [QA 44161549656](https://github.com/giandjcosta/o-girrr-registro/actions/runs/44161549656) Chromium **41/41** (37 regressioni + 4 Home con verifica layout visivo, scorrimento, CTA e screenshot). **PR #128 resta bozza**, nessuna pubblicazione, nessuna modifica a Supabase.
 
