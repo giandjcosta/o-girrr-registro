@@ -4,7 +4,8 @@
 - Ramo `chatgpt/notte-tropicale-pagine`, creato dal commit Claude `f3c1088`, PR bozza [#128](https://github.com/giandjcosta/o-girrr-registro/pull/128) verso `claude/totogirrr-ui-responsive-b2pgee`.
 - Estesa la funzione `forme()` del tema (elenchi BOX/TAB), senza sostituire il motore di Claude; CSS aggiunto esclusivamente nella nuova sezione `4m` (sezioni 4i–4k inalterate). Pagine: Totogirrr, Carriera, Girrr Sport, Albo, Giornale, Spogliatoio, Squadre, Versioni, Notifiche, Derby. Curva esclusa.
 - Copie JS e CSS del tema nel Lab sincronizzate con le sorgenti; copia del loader allineata senza cambiare la logica. Verifiche statiche: sintassi JS valida, CSS bilanciato, copie identiche. Il workflow della PR esegue `python3 temi/notte-tropicale/lab.py`, poi Chromium a 320/390/1440 e produce screenshot.
-- Stato al momento di questa nota: in collaudo browser, nessun rilascio. Nessun merge, nessuna modifica al sito vero né a Supabase.
+- **Esito verificato:** [GitHub Actions run 44155578566](https://github.com/giandjcosta/o-girrr-registro/actions/runs/44155578566) — 37/37 controlli superati in Chromium: 36 screenshot (12 viste × 320/390/1440 px) + controllo Curva esclusa; rapporto JSON e screenshot nell'artifact `chatgpt-notte-tropicale-screenshot`. Baseline tema spento per errori console, nessun nuovo errore. La prima run aveva 5 errori (Spogliatoio 3, Squadre 2), corretti prima del secondo ciclo. QA WebKit/Firefox/dispositivi reali non eseguito.
+- Stato: PR #128 in bozza, pronta per revisione di Gianluca/Claude, nessun rilascio. Nessun merge, nessuna modifica al sito vero né a Supabase.
 
 
 ## 16 novembre (8) — Claude: 6.2.3 «Il Totogirrr su ogni schermo» in prova nel Lab (NON pubblicata)
