@@ -616,6 +616,9 @@
 /* 4n. Home, tutte le sezioni nella stessa fila (ChatGPT, 17 novembre 2026).
    Il titolo è FUORI dal contenitore orizzontalmente scorrevole; Curva, Notifiche,
    Statistiche e sponsor vengono riposizionati da homeEvento() senza duplicare dati. */
+/* La Home usa order:1..14 sul contenitore flex: rispettare l'ordine VISIVO. */
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap > .nt-tutto-titolo{order:6!important}
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap > .cards{order:7!important}
 :root.nt-rail-integrata[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-tutto-titolo{
   position:relative;display:block;margin:18px 0 10px;padding:0 0 0 1.25em;
   font:italic 900 clamp(21px,5.2vw,29px)/1.15 'Barlow Condensed',Inter,sans-serif;
