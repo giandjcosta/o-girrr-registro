@@ -1,0 +1,428 @@
+/* O GIRRR / Miami Nights — prova visuale reale, 17/11/2026
+   Si applica SOLO quando la cornice temi/miami-prova.html lo inietta nelle pagine Lab.
+   Non modifica dati, script di gioco, temi permanenti né il tema di Claude.
+   I componenti reali restano cliccabili. Respect reduced motion and Lega/Stadio semantics. */
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&family=Yellowtail&display=swap');
+:root.miami-ux{
+  --miami-ink:#fff8f5; --miami-muted:#d9c8e8; --miami-bg:#100820;
+  --miami-aqua:#68f7ea; --miami-pink:#ff4ab2; --miami-peach:#ffb36e; --miami-purple:#a45ef9;
+  --miami-panel:linear-gradient(137deg,rgba(81,23,103,.94),rgba(25,14,56,.97) 55%,rgba(12,13,44,.97));
+  --miami-outline:rgba(255,151,218,.5);
+  --miami-shadow:0 18px 42px rgba(5,3,23,.45),inset 0 1px 0 rgba(255,255,255,.15);
+  background:#100820!important; color:var(--miami-ink)!important; color-scheme:dark;
+}
+:root.miami-ux[data-skin=stadio],:root.miami-ux body[data-v53-skin=stadio]{
+  --miami-primary:#ffd166; --miami-primary2:#ed973e; --miami-status:#ffd166;
+}
+:root.miami-ux:not([data-skin=stadio]){
+  --miami-primary:#ff4ab2; --miami-primary2:#ff9866; --miami-status:#ff4ab2;
+}
+:root.miami-ux::before{
+  content:""!important;position:fixed!important;inset:0!important;z-index:-2!important;
+  display:block!important;pointer-events:none!important;opacity:1!important;
+  background:
+    linear-gradient(180deg,rgba(17,8,45,.35) 0%,rgba(18,9,46,.81) 58%,#100820 97%),
+    linear-gradient(90deg,rgba(22,5,51,.46),transparent 70%),
+    url("https://images.unsplash.com/photo-1605723517503-3cadb5818a0c?auto=format&fit=crop&w=1800&q=78")
+    center top/cover no-repeat,
+    radial-gradient(ellipse at 70% 0%,#ec5e9d 0%,#512a72 45%,#100820 100%)!important;
+  transform:none!important;animation:none!important;
+}
+:root.miami-ux::after{display:none!important;animation:none!important}
+:root.miami-ux body{
+  background:transparent!important;color:var(--miami-ink)!important;
+  font-family:"DM Sans",Inter,system-ui,sans-serif!important;
+  -webkit-tap-highlight-color:transparent;
+}
+:root.miami-ux body::before,:root.miami-ux body::after{
+  animation:none!important;
+}
+/* Custom navigation added inside the ORIGINAL pages by the opt-in preview */
+:root.miami-ux .miami-event-head{
+  margin:0 0 21px; padding:13px 0 8px;
+  display:flex;align-items:center;gap:15px;justify-content:space-between;flex-wrap:wrap;
+  position:relative;isolation:isolate;color:#fff!important
+}
+:root.miami-ux .miami-brand{display:flex;align-items:center;gap:10px;min-width:0}
+:root.miami-ux .miami-mark{
+  display:inline-block;width:43px;height:26px;flex:none;
+  background:linear-gradient(115deg,transparent 0 10%,#ff4ab2 10% 26%,transparent 26% 38%,#ff4ab2 38% 54%,transparent 54% 66%,#ff4ab2 66% 82%,transparent 82%);
+  transform:skew(-12deg);filter:drop-shadow(0 0 10px #f83eae77)
+}
+:root.miami-ux .miami-title{display:block;font:900 clamp(27px,4.6vw,43px)/.85 "Barlow Condensed",Impact,sans-serif;letter-spacing:.02em;font-style:italic}
+:root.miami-ux .miami-eyebrow{display:block;font:800 9px/1.5 "DM Sans",sans-serif;letter-spacing:.24em;color:#ffc2e5;margin-top:6px}
+:root.miami-ux .miami-event-script{
+  font:400 clamp(22px,4vw,39px)/1 "Yellowtail","Brush Script MT",cursive;
+  color:#ffe3ed;text-shadow:0 0 7px #ff4ab2,0 0 24px #ff4ab2aa;
+  transform:rotate(-3deg);white-space:nowrap;margin-right:6px
+}
+:root.miami-ux .miami-tabs{
+  width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;padding:8px;border:1px solid rgba(255,164,229,.36);border-radius:21px;
+  background:linear-gradient(135deg,rgba(36,14,66,.95),rgba(58,16,69,.92));
+  box-shadow:0 12px 35px #08021288,inset 0 1px 0 #ffffff27;
+}
+:root.miami-ux .miami-tabs a{
+  display:flex;align-items:center;justify-content:center;gap:7px;min-width:0;
+  padding:12px 6px;border-radius:15px;
+  color:#fff4f9!important;text-decoration:none!important;
+  border:1px solid transparent;
+  background:rgba(88,28,100,.54);
+  font:800 clamp(11px,1.4vw,14px)/1.15 "DM Sans",sans-serif;
+  transition:transform .18s ease,background .18s ease,box-shadow .18s ease;
+}
+:root.miami-ux .miami-tabs a:hover{background:rgba(147,49,155,.7);transform:translateY(-1px)}
+:root.miami-ux .miami-tabs a[aria-current=page]{
+  border-color:#ffdfa7;
+  background:linear-gradient(112deg,#ffad57 0%,#ff478e 45%,#e733ce 100%)!important;
+  box-shadow:0 3px 20px #ff4ab27a,0 0 0 1px #ffffff55 inset;
+  color:white!important;text-shadow:0 1px 4px #43113599;
+}
+:root.miami-ux .miami-tabs a:focus-visible{outline:3px solid var(--miami-aqua);outline-offset:3px}
+:root.miami-ux .miami-tabs .miami-tab-icon{font:900 20px/1 "Barlow Condensed",sans-serif;color:#ffecf5}
+:root.miami-ux .miami-ux-label{
+  font:900 11px/1.2 "DM Sans",sans-serif;letter-spacing:.23em;
+  display:inline-flex;align-items:center;gap:9px;text-transform:uppercase;
+  color:var(--miami-aqua);text-shadow:0 0 9px #68f7ea66;
+}
+:root.miami-ux .miami-ux-label::before{content:"";display:inline-block;width:21px;height:4px;transform:skew(-25deg);background:linear-gradient(90deg,var(--miami-pink),var(--miami-peach));box-shadow:0 0 12px var(--miami-pink)}
+:root.miami-ux body .wrap,:root.miami-ux body .col{position:relative;z-index:0}
+:root.miami-ux a:focus-visible,:root.miami-ux button:focus-visible,:root.miami-ux select:focus-visible{
+  outline:3px solid var(--miami-aqua)!important;outline-offset:3px!important
+}
+/* Home: photographic editorial hero, not a color replacement */
+:root.miami-ux body[data-v53=home] header.hero{
+  display:flex!important;position:relative!important;isolation:isolate;
+  min-height:290px;align-items:flex-end!important;justify-content:flex-start;
+  padding:clamp(24px,4vw,48px)!important;gap:clamp(12px,2vw,26px)!important;
+  margin-bottom:18px!important;
+  border-radius:24px!important;border:1px solid #ff91d99c!important;
+  background:
+    linear-gradient(90deg,rgba(17,8,41,.93),rgba(22,8,51,.34) 77%),
+    linear-gradient(0deg,#170e37,transparent 70%),
+    url("https://images.pexels.com/photos/11457824/pexels-photo-11457824.jpeg?auto=compress&cs=tinysrgb&w=1600")
+    center/cover no-repeat,
+    linear-gradient(130deg,#a3457c,#19133e)!important;
+  box-shadow:var(--miami-shadow),0 0 30px #ff44ad2a;
+  overflow:hidden;
+}
+:root.miami-ux body[data-v53=home] header.hero::before{
+  content:"MIAMI NIGHTS";position:absolute;z-index:-1;right:3%;top:12%;
+  font:900 clamp(56px,11vw,165px)/.8 "Barlow Condensed",sans-serif;
+  letter-spacing:-.07em;font-style:italic;color:rgba(255,210,224,.17);
+  text-transform:uppercase;transform:rotate(-6deg);pointer-events:none
+}
+:root.miami-ux body[data-v53=home] .hero img{
+  height:clamp(78px,11vw,125px)!important;max-width:40vw;object-fit:contain;
+}
+:root.miami-ux body[data-v53=home] .hero .kick{
+  color:var(--miami-aqua)!important;font:800 10px "DM Sans",sans-serif!important;
+  letter-spacing:.26em!important;text-shadow:0 0 14px #68f7ea90;
+}
+:root.miami-ux body[data-v53=home] .hero h1{
+  font:900 clamp(60px,10vw,120px)/.8 "Barlow Condensed",sans-serif!important;
+  font-style:italic!important;letter-spacing:-.035em!important;
+  margin:10px 0!important;color:#fff8f9!important;text-shadow:0 6px 26px #160020dc;
+}
+:root.miami-ux body[data-v53=home] .hero h1 span{
+  background:linear-gradient(120deg,#ffc5e4,#ff4ab2 54%,#ffbc89);
+  background-clip:text;-webkit-background-clip:text;color:transparent!important;
+  -webkit-text-fill-color:transparent;
+}
+:root.miami-ux body[data-v53=home] .hero .tag{
+  color:#ffe4f4!important;font-weight:700!important;line-height:1.5!important;
+  text-shadow:0 2px 8px #10051d;
+}
+/* True homepage Oggi al Girrr features and navigation */
+:root.miami-ux body[data-v53=home] :is(.v53-home,.lg-leghe,.cvw){
+  background:var(--miami-panel)!important;border:1px solid var(--miami-outline)!important;
+  border-radius:21px!important;box-shadow:var(--miami-shadow)!important;
+}
+:root.miami-ux body[data-v53=home] .v53-home{padding:clamp(17px,2.8vw,33px)!important}
+:root.miami-ux body[data-v53=home] .v53-kicker{
+  color:var(--miami-aqua)!important;letter-spacing:.28em!important;font-size:11px!important
+}
+:root.miami-ux body[data-v53=home] :is(.v53-h1,.c h2){
+  font-family:"Barlow Condensed",Impact,sans-serif!important;font-weight:900!important;
+  text-transform:uppercase!important;font-style:italic!important;letter-spacing:.008em!important;
+}
+:root.miami-ux body[data-v53=home] .v53-h1{
+  font-size:clamp(40px,7vw,76px)!important;
+  color:#fff5f4!important;text-shadow:0 4px 18px #ff37bd33
+}
+:root.miami-ux body[data-v53=home] :is(.v53-metric,.st,.c,.mn,.v53-team,.v53-pill,.v53-live){
+  background:var(--miami-panel)!important;
+  border:1px solid var(--miami-outline)!important;
+  border-radius:18px!important;box-shadow:var(--miami-shadow)!important;
+}
+:root.miami-ux body[data-v53=home] .v53-metric{
+  min-height:95px!important;padding:17px!important;
+  border-bottom:3px solid var(--miami-pink)!important
+}
+:root.miami-ux body[data-v53=home] .v53-metric strong,
+:root.miami-ux body[data-v53=home] .v53-metric b{
+  font:900 clamp(27px,4vw,42px) "Barlow Condensed",Impact,sans-serif!important;
+  color:#fff9f8!important
+}
+:root.miami-ux body[data-v53=home] .strip{gap:12px!important}
+:root.miami-ux body[data-v53=home] a.st{
+  padding:18px!important;min-height:115px!important;
+  border-left:0!important;border-top:3px solid var(--miami-pink)!important;
+}
+:root.miami-ux body[data-v53=home] a.st:nth-child(even){border-top-color:var(--miami-aqua)!important}
+:root.miami-ux body[data-v53=home] a.st b{
+  font:900 clamp(23px,3vw,31px)/1 "Barlow Condensed",Impact,sans-serif!important;
+  font-style:italic!important;
+}
+:root.miami-ux body[data-v53=home] .cards{
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))!important;gap:16px!important
+}
+:root.miami-ux body[data-v53=home] a.c{
+  min-height:235px!important;padding:22px!important;
+  background:
+   linear-gradient(155deg,rgba(89,30,122,.81),rgba(15,9,40,.95)),
+   url("https://images.unsplash.com/photo-1605723517503-3cadb5818a0c?auto=format&fit=crop&w=900&q=65")
+   center/cover no-repeat!important;
+  overflow:hidden!important;position:relative!important;
+  border:1px solid var(--miami-outline)!important;border-top:4px solid var(--miami-primary)!important;
+  border-radius:20px!important;box-shadow:var(--miami-shadow)!important
+}
+:root.miami-ux body[data-v53=home] a.c:nth-child(2n){border-top-color:var(--miami-aqua)!important}
+:root.miami-ux body[data-v53=home] a.c .go,
+:root.miami-ux body[data-v53=home] .lg-leghe a.go{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  background:linear-gradient(110deg,#ff9d51,#ff438a,#e033c9)!important;
+  border:1px solid #ffc5ce!important;border-radius:13px!important;color:#fff!important;
+  padding:11px 19px!important;box-shadow:0 5px 22px #f743a653!important;
+  font:900 13px "DM Sans",sans-serif!important;letter-spacing:.1em;
+}
+/* Page headers shared by Tabellone and Carriera */
+:root.miami-ux :is(header.top,.ohead){
+  background:var(--miami-panel)!important;border-radius:22px!important;
+  padding:clamp(14px,3vw,24px)!important;border:1px solid var(--miami-outline)!important;
+  box-shadow:var(--miami-shadow)!important
+}
+:root.miami-ux :is(header.top h1,.ohead h1){
+  font:900 clamp(37px,6vw,69px)/.95 "Barlow Condensed",Impact,sans-serif!important;
+  text-transform:uppercase!important;font-style:italic!important;letter-spacing:-.025em!important;
+}
+:root.miami-ux :is(header.top .kick,.ohead .okick){
+  color:var(--miami-aqua)!important;letter-spacing:.23em!important;
+}
+:root.miami-ux :is(.back,.oback){color:#ffd3e9!important;font-weight:900!important}
+:root.miami-ux :is(.v53-panel,.v53-board,.v53-extras,.panel,.card,.derby,.cov,.rac){
+  background:var(--miami-panel)!important;border-radius:20px!important;
+  border:1px solid var(--miami-outline)!important;
+  box-shadow:var(--miami-shadow)!important;color:var(--miami-ink)!important;
+}
+/* Tabellone: redesigned multi-level tabs, selector, match score rows and table */
+:root.miami-ux body[data-v53=board] .giornata-nav{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:9px!important;border:1px solid var(--miami-outline);padding:7px!important;
+  border-radius:20px!important;background:#231039e8!important
+}
+:root.miami-ux body[data-v53=board] .giornata-nav a{
+  min-width:0!important;text-align:center!important;
+  border:1px solid #ba65b9aa!important;border-radius:14px!important;
+  background:linear-gradient(110deg,#44215b,#2c1a49)!important;
+  color:#fff!important;padding:15px 11px!important;
+  font:900 clamp(11px,1.5vw,15px) "DM Sans",sans-serif!important;
+}
+:root.miami-ux body[data-v53=board] .giornata-nav a[aria-current=page]{
+  background:linear-gradient(115deg,#ffac64,#ff478e,#a936cb)!important;
+  border-color:#ffd4b2!important;box-shadow:0 0 17px #ff47a66b!important
+}
+:root.miami-ux body[data-v53=board] .sw{
+  width:100%!important;max-width:none!important;padding:6px!important;
+  border-radius:17px!important;border:1px solid #fd88c7!important;
+  background:rgba(26,9,44,.94)!important;margin:18px 0!important
+}
+:root.miami-ux body[data-v53=board] .sw i{
+  border-radius:12px!important;
+  background:linear-gradient(110deg,#ffad59,#ff478e,#ef39cf)!important;
+  box-shadow:0 3px 14px #ff39be99!important;
+}
+:root.miami-ux body[data-v53=board] .sw button{
+  font:900 clamp(12px,1.7vw,17px) "DM Sans",sans-serif!important;
+  padding:15px 8px!important;letter-spacing:.035em!important;
+}
+:root.miami-ux body[data-v53=board] .chips button{
+  min-width:43px!important;height:43px!important;
+  border:1px solid #bb6bc4!important;border-radius:12px!important;
+  background:#311a4b!important;color:#ffe6fa!important;font-weight:900!important;
+}
+:root.miami-ux body[data-v53=board] .chips button.sel{
+  background:linear-gradient(130deg,#ffa258,#ff47a0)!important;
+  color:#fff!important;box-shadow:0 0 16px #ff4ab270!important;border-color:#ffc6de!important
+}
+:root.miami-ux body[data-v53=board] .gs .ar{
+  width:44px!important;height:44px!important;border-radius:12px!important;
+  background:#51266f!important;border:1px solid #bc7bcb!important
+}
+:root.miami-ux body[data-v53=board] .m{
+  border-left:0!important;border-top:3px solid var(--miami-primary)!important;
+  border-bottom:1px solid var(--miami-outline)!important;
+  border-right:1px solid var(--miami-outline)!important;
+  border-radius:19px!important;
+  padding:clamp(14px,2vw,23px)!important;margin-bottom:13px!important;
+  background:linear-gradient(120deg,rgba(83,23,100,.96),rgba(20,13,50,.98))!important;
+  box-shadow:var(--miami-shadow)!important
+}
+:root.miami-ux body[data-v53=board] .m.dby{
+  border-top-color:#ffae5c!important;
+  box-shadow:var(--miami-shadow),0 0 24px #f83db65b!important
+}
+:root.miami-ux body[data-v53=board] .m .sc b{
+  font:900 clamp(29px,5vw,48px)/1 "Barlow Condensed",sans-serif!important;
+  background:linear-gradient(170deg,#6c2f8f,#4c1b6a)!important;
+  border:1px solid #fa8ed3!important;border-radius:12px!important;
+  box-shadow:0 0 16px #ed3dbc38!important
+}
+:root.miami-ux body[data-v53=board] :is(.panel,.v53-panel){
+  padding:clamp(13px,2vw,21px)!important;border-top:3px solid #fa62bd!important
+}
+:root.miami-ux body[data-v53=board] :is(.v53-kicker,.v53-sectionhead){color:var(--miami-aqua)!important}
+/* Totogirrr: REAL dynamic rendered buttons, odds and cards */
+:root.miami-ux #app nav{
+  position:relative!important;top:auto!important;z-index:3!important;
+  border:1px solid #e77cc6!important;border-radius:20px!important;padding:8px!important;
+  margin:15px 0 19px!important;background:rgba(29,11,50,.95)!important;
+}
+:root.miami-ux #app .nvi{gap:8px!important}
+:root.miami-ux #app nav button{
+  border:1px solid #a867c0!important;border-radius:13px!important;
+  background:linear-gradient(135deg,#47235e,#2b174d)!important;
+  color:#ffeefa!important;min-height:46px!important;
+  font:900 12px "DM Sans",sans-serif!important;
+  padding:13px 17px!important;text-transform:uppercase;
+}
+:root.miami-ux #app nav button.on{
+  color:#fff!important;border-color:#ffd0a9!important;
+  background:linear-gradient(110deg,#ffad5e,#ff4d9a,#c63be3)!important;
+  box-shadow:0 0 18px #ff4ab27a!important
+}
+:root.miami-ux #app :is(.card,.fc,.feat>.fc,.tick,.slip,.pbar){
+  background:var(--miami-panel)!important;border:1px solid var(--miami-outline)!important;
+  border-radius:19px!important;box-shadow:var(--miami-shadow)!important;
+}
+:root.miami-ux #app :is(.gh,.tg){color:var(--miami-aqua)!important}
+:root.miami-ux #app :is(.seg2,.chips){
+  background:#26113da6!important;border-radius:15px!important;padding:5px!important
+}
+:root.miami-ux #app .seg2 button{
+  background:#43205d!important;border:1px solid #a36dba!important;
+  border-radius:11px!important;color:#fff!important;min-height:42px!important
+}
+:root.miami-ux #app .seg2 button.on{
+  background:linear-gradient(100deg,#ffa95a,#ff4ab2)!important;border-color:#ffe0b2!important
+}
+:root.miami-ux #app .q{
+  border:1px solid #b96abe!important;border-radius:13px!important;
+  background:linear-gradient(125deg,#512763,#281647)!important;
+  color:#fff!important;min-height:51px!important;
+}
+:root.miami-ux #app .q.on{
+  background:linear-gradient(110deg,#ffba63,#ff4c97,#d83ce1)!important;
+  border-color:#ffdab0!important;box-shadow:0 0 19px #ff3ab172!important;
+  color:#fff!important
+}
+:root.miami-ux #app .q.on small{color:#fff!important}
+:root.miami-ux #app .slip{
+  border-top:2px solid #ff4ab2!important;
+  border-radius:20px 20px 0 0!important;background:#231035f8!important;
+  box-shadow:0 -8px 27px #ff4ab238!important;
+}
+:root.miami-ux #app .gate{
+  background:linear-gradient(120deg,#35105d,#141036)!important;
+  border:1px solid var(--miami-outline)!important;border-radius:21px!important;padding:20px!important;
+}
+:root.miami-ux #app .gate h1{
+  font-family:"Barlow Condensed",Impact,sans-serif!important;
+  font-style:italic!important;letter-spacing:-.035em!important;
+}
+:root.miami-ux #app .who,:root.miami-ux #app .bal{
+  background:#2f1747!important;border:1px solid #8a4ea1!important;border-radius:14px!important
+}
+/* Career app: nested tabs, sub-tabs, panels and progress */
+:root.miami-ux body[data-v53=albo] .tabs,
+:root.miami-ux body .col .tabs{
+  display:flex!important;gap:8px!important;padding:8px!important;
+  margin:15px 0!important;position:relative!important;top:auto!important;
+  background:#271241ee!important;border:1px solid #e67ac5!important;border-radius:20px!important
+}
+:root.miami-ux body .col .tabs button{
+  border:1px solid #c279bb!important;border-radius:13px!important;
+  background:linear-gradient(140deg,#512568,#2a184e)!important;
+  color:#fff!important;font:900 12px "DM Sans",sans-serif!important;
+  min-height:43px!important;opacity:1!important
+}
+:root.miami-ux body .col .tabs button[aria-selected=true]{
+  background:linear-gradient(110deg,#ffab56,#ff478e,#d538c3)!important;
+  border-color:#ffd6b6!important;box-shadow:0 0 18px #ff4ab270!important;
+}
+:root.miami-ux body .col .seg{
+  gap:7px!important;padding:7px!important;border:1px solid #a35eb1!important;
+  background:#27123fdc!important;border-radius:17px!important
+}
+:root.miami-ux body .col .seg button{
+  border:1px solid #8c58aa!important;border-radius:12px!important;
+  background:linear-gradient(140deg,#4d2669,#291845)!important;
+  color:#fbe9f6!important;min-height:39px!important
+}
+:root.miami-ux body .col .seg button[aria-pressed=true],
+:root.miami-ux body .col .seg button[aria-selected=true]{
+  border-color:#ffd2bd!important;color:#fff!important;
+  background:linear-gradient(110deg,#ffa359,#fc498e,#c83dda)!important;
+  box-shadow:0 0 14px #ff469c62!important
+}
+:root.miami-ux body .col .card,
+:root.miami-ux body .col .rac{
+  background:var(--miami-panel)!important;border:1px solid var(--miami-outline)!important;
+  box-shadow:var(--miami-shadow)!important;border-radius:20px!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important
+}
+:root.miami-ux body .col :is(.pbar,.bar,.trust-fill){border-radius:99px!important}
+/* Shared premium user controls; preserve meaning of semantic gold/red/blue */
+:root.miami-ux :is(.v53-pill,.go,.btn,.v53-actionrow a,.sqb){
+  transition:transform .18s ease,box-shadow .18s ease!important;
+}
+:root.miami-ux :is(.v53-pill,.go,.btn,.v53-actionrow a):hover{
+  transform:translateY(-2px)!important
+}
+:root.miami-ux :is(.v53-pill,.go,.btn,.v53-actionrow a):active{
+  transform:none!important;opacity:.8!important
+}
+:root.miami-ux .wrap :is(button,a,select){-webkit-tap-highlight-color:transparent}
+:root.miami-ux body .wrap :is(p,small,.sub,.tag){text-wrap:pretty}
+:root.miami-ux body .wrap :is(h1,h2,h3){overflow-wrap:normal}
+:root.miami-ux :is(.panel,.v53-panel,.card,.c,.m){contain:layout style}
+@media(max-width:680px){
+  :root.miami-ux .miami-event-head{gap:7px!important;margin-bottom:15px!important}
+  :root.miami-ux .miami-event-script{font-size:27px!important}
+  :root.miami-ux .miami-tabs{gap:5px!important;padding:5px!important;border-radius:15px!important}
+  :root.miami-ux .miami-tabs a{padding:11px 3px!important;border-radius:11px!important;font-size:10px!important;flex-direction:column!important;gap:5px!important}
+  :root.miami-ux .miami-tabs .miami-tab-icon{font-size:19px!important}
+  :root.miami-ux body[data-v53=home] header.hero{
+    min-height:260px!important;padding:24px 17px!important;
+    flex-direction:column!important;align-items:flex-start!important;justify-content:flex-end!important
+  }
+  :root.miami-ux body[data-v53=home] .hero img{height:68px!important;max-width:120px!important}
+  :root.miami-ux body[data-v53=home] .hero h1{font-size:clamp(55px,15vw,86px)!important}
+  :root.miami-ux body[data-v53=home] .hero .tag{font-size:12px!important}
+  :root.miami-ux body[data-v53=home] .strip{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  :root.miami-ux body[data-v53=home] a.st{padding:13px!important;min-height:118px!important}
+  :root.miami-ux body[data-v53=home] a.st b{font-size:21px!important}
+  :root.miami-ux body[data-v53=board] .giornata-nav a{font-size:11px!important;padding:11px 7px!important}
+  :root.miami-ux body[data-v53=board] .sw button{font-size:11px!important}
+}
+@media(max-width:370px){
+  :root.miami-ux .miami-event-script{font-size:23px!important}
+  :root.miami-ux .miami-tabs a{font-size:9px!important}
+  :root.miami-ux body[data-v53=home] .strip{grid-template-columns:1fr!important}
+}
+@media(prefers-reduced-motion:reduce){
+  :root.miami-ux *, :root.miami-ux *::before,:root.miami-ux *::after{
+    animation-duration:.01ms!important;animation-iteration-count:1!important;
+    scroll-behavior:auto!important;transition-duration:.01ms!important
+  }
+}
