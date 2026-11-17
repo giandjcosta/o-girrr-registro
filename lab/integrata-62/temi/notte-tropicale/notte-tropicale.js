@@ -53,7 +53,13 @@
       home: SV('<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/>'),
       tab: SV('<path d="M7 4h10v4a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8"/>'),
       car: SV('<path d="M5 20V12M10 20V8M15 20v-6M20 20V4"/>'),
-      toto: SV('<rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r="1.3" fill="currentColor"/><circle cx="15" cy="15" r="1.3" fill="currentColor"/><circle cx="15" cy="9" r="1.3" fill="currentColor"/><circle cx="9" cy="15" r="1.3" fill="currentColor"/>')
+      toto: SV('<rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r="1.3" fill="currentColor"/><circle cx="15" cy="15" r="1.3" fill="currentColor"/><circle cx="15" cy="9" r="1.3" fill="currentColor"/><circle cx="9" cy="15" r="1.3" fill="currentColor"/>'),
+      spo: SV('<path d="M12 3 4 6v6c0 4.5 3.4 7.8 8 9 4.6-1.2 8-4.5 8-9V6z"/><path d="M9 12l2 2 4-4"/>'),
+      tv: SV('<rect x="3" y="7" width="18" height="13" rx="2"/><path d="m8 3 4 4 4-4"/>'),
+      gio: SV('<path d="M5 4h11v16H6a2 2 0 0 1-2-2V6"/><path d="M16 8h3v10a2 2 0 0 1-2 2M8 8h5M8 12h5M8 16h3"/>'),
+      albo: SV('<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M12 13v3M8 20h8M10 16h4v4h-4z"/><path d="M5 5H3v2a3 3 0 0 0 3 3M19 5h2v2a3 3 0 0 1-3 3"/>'),
+      curva: SV('<path d="M4 5h16v10H9l-5 4z"/><path d="M8 9h8M8 12h5"/>'),
+      noti: SV('<path d="M6 16V11a6 6 0 1 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>')
     };
     /* stessa classifica della Home (index.html): punti, poi fantapunti, differenza reti, gol fatti, ordine della lega */
     var ORD = ["The Blue brothers", "Apo team", "Mariana Coneja", "stif dc", "Real Madrink", "Atletico ma non troppo", "Oranje VC", "AFA SELECCION", "Grodah", "WOA"];
@@ -69,7 +75,10 @@
       var hero = document.querySelector('.wrap > header.hero');
       if (!hero || document.querySelector('.nt-schede')) return;
       var nav = document.createElement('nav'); nav.className = 'nt-schede'; nav.setAttribute('aria-label', 'Sezioni principali');
-      nav.innerHTML = [['index.html', 'Home', 'home'], ['tabellone.html', 'Tabellone', 'tab'], ['app.html#carriera', 'Carriera', 'car'], ['totogirrr.html', 'Totogirrr', 'toto']].map(function (v, i) {
+      /* tutte le sezioni della Home, con gli stessi collegamenti dei riquadri (l'ospite non vede il Totogirrr, come oggi) */
+      nav.innerHTML = [['index.html', 'Home', 'home'], ['../index.html', 'Spogliatoio', 'spo'], ['tabellone.html', 'Tabellone', 'tab'], ['totogirrr.html', 'Totogirrr', 'toto'],
+        ['app.html#sport', 'Girrr Sport', 'tv'], ['giornale.html', 'Giornale', 'gio'], ['curva.html', 'Curva', 'curva'], ['albo.html', 'Albo d\u2019oro', 'albo'],
+        ['app.html#carriera', 'Carriera', 'car'], ['notifiche.html', 'Notifiche', 'noti']].map(function (v, i) {
         return '<a href="' + v[0] + '"' + (i === 0 ? ' aria-current="page"' : '') + '>' + IC[v[2]] + '<span>' + v[1] + '</span></a>';
       }).join('');
       var box = document.createElement('div'); box.className = 'nt-cruscotto';
