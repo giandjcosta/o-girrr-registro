@@ -289,7 +289,7 @@
   transition:background .18s ease,box-shadow .18s ease,transform .18s ease!important;
 }
 :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-menu a[aria-current="page"]{
-  background:linear-gradient(110deg,var(--v53-accent,var(--hi)),#e83c98)!important;
+  background:var(--v53-accent,var(--hi))!important;
   border-color:#fff1cf!important;box-shadow:0 0 19px rgba(255,79,163,.58)!important;
   color:var(--v53-onaccent,#19112d)!important;
 }
