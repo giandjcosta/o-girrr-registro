@@ -34,6 +34,10 @@
     if (!ev || modo === 'off') return;
     var h = document.documentElement;
     h.setAttribute('data-event-theme', ev.id);
+    /* variante dello sfondo (per ora solo «foto» in Notte Tropicale): ?evento-sfondo=foto|scena, ricordata per la sessione */
+    var sf = q.get('evento-sfondo');
+    if (sf) { try { sessionStorage.setItem(K + '-sfondo', sf); } catch (e) {} } else { try { sf = sessionStorage.getItem(K + '-sfondo'); } catch (e) {} }
+    if (sf && sf !== 'scena') h.setAttribute('data-event-sfondo', sf);
     var l = document.createElement('link');
     l.rel = 'stylesheet'; l.href = new URL(ev.css, base).href; l.setAttribute('data-evento', ev.id);
     l.onerror = function () { h.removeAttribute('data-event-theme'); };   /* senza CSS niente tema a metà */
