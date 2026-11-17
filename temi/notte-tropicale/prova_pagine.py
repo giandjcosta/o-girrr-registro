@@ -163,13 +163,16 @@ def main():
                     print(("OK" if r["ok"] else "KO"), label, w,
                           ",".join(r["problemi"]), flush=True)
             # La Curva NON deve ricevere il tema (decisione Claude/Gianluca).
-            with browser.new_page() as pg:
+            pg = browser.new_page(viewport={"width":390,"height":844})
+            try:
                 pg.goto(url(a.base, "girrr/curva.html", "", True),
                         wait_until="domcontentloaded", timeout=20000)
                 pg.wait_for_timeout(400)
                 excluded = pg.evaluate("document.documentElement.getAttribute('data-event-theme') !== 'notte-tropicale'")
                 results.append({"pagina": "curva-esclusa", "width": 390,
                                 "ok": excluded, "problemi": [] if excluded else ["Curva tematizzata per errore"]})
+            finally:
+                pg.close()
         finally:
             browser.close()
     report = {"totale":len(results), "superati":sum(x["ok"] for x in results),
