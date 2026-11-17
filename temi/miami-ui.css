@@ -478,3 +478,37 @@
   background:linear-gradient(125deg,#273474f2 0%,#68215bf0 52%,#271143f5)!important;
 }
 :root.miami-ux body .wrap :is(.v53-actionrow a,.go):focus-visible{outline-color:#80c8ff!important}
+
+/* Le pillole native del Lab (Claude 6.2.4) fanno parte del redesign:
+   manteniamo DOM ed eventi esistenti, cambiamo superficie e stato attivo. */
+:root.miami-ux .v53-pills{
+  display:flex!important;flex-flow:row nowrap!important;gap:8px!important;
+  overflow-x:auto!important;overscroll-behavior-x:contain!important;
+  padding:7px!important;background:#21133cbd!important;border:1px solid #a66dd5!important;
+  border-radius:16px!important;scrollbar-width:none!important
+}
+:root.miami-ux .v53-pills::-webkit-scrollbar{display:none}
+:root.miami-ux .v53-pill{
+  flex:0 0 auto!important;white-space:nowrap!important;
+  border:1px solid #a17ada!important;border-radius:11px!important;
+  min-height:42px!important;padding:10px 16px!important;
+  background:linear-gradient(125deg,#203b81dd,#391854e3)!important;
+  color:#fff5fd!important;box-shadow:inset 0 1px 0 #ffffff17!important;
+  font:800 12px "DM Sans",system-ui,sans-serif!important;
+  -webkit-tap-highlight-color:transparent;
+}
+:root.miami-ux .v53-pill[aria-selected=true],
+:root.miami-ux .v53-pill.active{
+  background:var(--miami-sunset)!important;color:white!important;
+  border-color:#fff4e3!important;box-shadow:0 5px 19px #ff2b9077,inset 0 1px 0 #ffffff55!important;
+}
+:root.miami-ux .v53-panel h2,
+:root.miami-ux .v53-panel h3,
+:root.miami-ux .v53-panel h4{
+  font-family:"Bebas Neue","Barlow Condensed",Impact,sans-serif!important;
+  font-style:italic!important;letter-spacing:.018em!important;
+  color:#fff7f5!important;
+}
+:root.miami-ux :is(.v53-pill, .miami-tabs a):focus-visible{
+  outline:3px solid #8cdbff!important;outline-offset:2px!important;
+}
