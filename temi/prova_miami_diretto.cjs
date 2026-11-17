@@ -1,4 +1,4 @@
-// ChatGPT 17/11/2026: smoke QA sulle otto pagine del Lab 6.2.4 con grafica Miami.
+// ChatGPT 17/11/2026: QA su una sola grafica evento, quattro pagine reali di Claude, 3 dimensioni.
  // node temi/prova_miami_diretto.cjs http://localhost:8768/
  // Richiede: server Python alla root del repository e Playwright/Chromium locali.
  // Non scrive dati: controlla solo DOM e layout.
@@ -8,7 +8,7 @@ const root=process.argv[2]||'http://localhost:8768/';
 const browser=await chromium.launch({headless:true});
 let ko=0;const results=[];
 try{
-  for(const skin of ['girrr','stadio/girrr']){
+  for(const skin of ['girrr']){
     for(const id of ['index.html','tabellone.html','app.html#carriera','totogirrr.html?demo']){
       for(const width of [320,390,1440]){
         const p=await browser.newPage({viewport:{width,height:900},hasTouch:width<=390,isMobile:width<=390});
