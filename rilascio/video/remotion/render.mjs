@@ -62,7 +62,7 @@ const serveUrl = await bundle({ entryPoint: './src/index.jsx', publicDir: './pub
 const composition = await selectComposition({ serveUrl, id: 'Giornata', inputProps: props, browserExecutable });
 if (process.env.SOLO_FOTOGRAMMI === '1') {
   // 6.5: collaudo senza musica né pubblicazione. Tre fotogrammi originali e durata misurata della composizione.
-  const SC_QA = eval(/const SC = (\\[.*?\\]);/s.exec(fs.readFileSync('./src/index.jsx', 'utf8'))[1])
+  const SC_QA = eval(/const SC = (\[.*?\]);/s.exec(fs.readFileSync('./src/index.jsx', 'utf8'))[1])
     .filter(([k]) => (k !== 'prossime' || props.big || props.bigC) && (['introCoppa','coppa','gironi'].indexOf(k) < 0 || props.mc.length));
   let at = 0; const starts = {};
   for (const [name, len] of SC_QA) { starts[name] = at; at += len; }
