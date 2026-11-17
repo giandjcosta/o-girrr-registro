@@ -1,33 +1,33 @@
-# Miami Nights · PROVA GRAFICA REALE sul Lab 6.2.4
+# Miami Nights — variante grafica unica sperimentale · 17/11/2026
 
-**17 novembre 2026 · Branch di prova `chatgpt/miami-ux-claude-base` · Non pubblicato.**
+## Obiettivo
+**Due lavori paralleli, non due varianti Lega/Stadio.** 
+1. **Claude**: il suo tema `Notte Tropicale`, loader e Lab restano intatti nel suo branch e nella PR #126.
+2. **ChatGPT**: una proposta alternativa `Miami Nights`, su un ramo a parte **derivato esattamente dal commit Claude `98f1b16a9f131ecabf3d46581dad0f20e2fc9530`**. Nessun merge o deploy.
 
-Questa NON è una serie di screenshot AI. Sono le otto pagine originali del Lab 6.2.4 (Home, Tabellone, Carriera, Totogirrr, Lega e Stadio), con due file di tema aggiunti ai veri documenti:
-- `temi/miami-ui.css` (regole grafiche per header, tab, pillole, card, score, schedine e mobile).
-- `temi/miami-nav.js` (barra di navigazione evento nativa tra pagine vere).
-- `temi/applica-miami-lab.py` (script idempotente per rigenerare le otto copie del Lab dal loro HTML originale dopo aggiornamenti di Claude).
+La grafica Miami Nights è **una sola**: non si può alternare Lega/Stadio e il selettore vecchio è nascosto nel solo prototipo. Le pagine Stadio del nostro branch sono state ripristinate byte-per-byte al commit Claude, senza hook Miami. L'eventuale integrazione definitiva potrà essere: tema Claude, tema ChatGPT, oppure fusione selettiva dopo confronto.
 
-## Aprire
-- **Lega (Home)**: `https://raw.githack.com/giandjcosta/o-girrr-registro/chatgpt/miami-ux-claude-base/lab/integrata-62/girrr/index.html`
-- **Stadio (Home)**: `https://raw.githack.com/giandjcosta/o-girrr-registro/chatgpt/miami-ux-claude-base/lab/integrata-62/stadio/girrr/index.html`
-- Nav all'inizio delle pagine: Home, Tabellone, Carriera, Totogirrr.
-- Una cornice di confronto alternativa è in `temi/miami-prova.html`, ma **i due link sopra sono diretti e non usano iframe**.
+## Prova vera
+- Apertura diretta HTML su vera Home Lab: 
+  `https://raw.githack.com/giandjcosta/o-girrr-registro/chatgpt/miami-ux-claude-base/lab/integrata-62/girrr/index.html?evento=off`
+- Dentro la pagina, navigazione **Home / Tabellone / Carriera / Totogirrr** e funzioni originali Lab 6.2.4.
+- Cornice alternativa, con soltanto Telefono/Schermo: `temi/miami-prova.html`.
+- La versione originale Claude è confrontabile a `https://raw.githack.com/giandjcosta/o-girrr-registro/98f1b16a9f131ecabf3d46581dad0f20e2fc9530/lab/integrata-62/girrr/index.html?evento=notte-tropicale`.
 
-## Provenienza e isolamento
-- Branch derivato dal commit Claude `98f1b16` (PR #126), che include il Lab 6.2.4.
-- Il lavoro su `temi/notte-tropicale/`, `temi/evento-loader.js` e le altre modifiche Claude resta intatto.
-- Le modifiche a `lab/integrata-62/` esistono solo nel branch ChatGPT, non nel Lab pubblico, non nel repo del sito, non in Supabase.
-- Nessun merge, nessun deploy, nessun costo esterno.
-- Il CSS porta foto remote con fallback gradiente: prima del rilascio bisogna incorporare asset/fallback offline e verificare le licenze.
-- Dati e componenti sono quelli delle pagine originali del Lab (possono essere in stato demo/ospite, non inventati per immagini).
+## Come è implementata
+- `temi/miami-ui.css`: nuova direzione UI: tab, chips, score, schedine, pannelli e header rinnovati.
+- `temi/miami-nav.js`: navigazione evento autonoma sulle pagine vere del Lab.
+- CSS/JS collegati **soltanto alle 4 pagine canoniche girrr** del nostro branch, con `data-miami-ui`, senza cambiare gli altri script/app.
+- `temi/applica-miami-lab.py`: riapplica in modo idempotente i due hook dopo eventuale rigenerazione del Lab.
+- Dal lavoro di Claude riprendiamo la base HTML/JS 6.2.4 e le fotografie **locali** `lab/integrata-62/temi/notte-tropicale/miami-palme.jpg` e `ocean-drive-notte.jpg` (licenze in `temi/notte-tropicale/CREDITI.md`).
+- **Grok come moodboard**, non come licenza: palette ispirazionale cobalto `#3B63D6`, magenta `#FF2B90`, arancione `#E6953E`; font OFL **Bebas Neue**, **League Gothic** e corsivo **Yellowtail**. Niente font custom GTAArtDeco o loghi GTA/Rockstar.
 
-## Verifiche reali fatte
-- Ho verificato via API GitHub l'esistenza e il contenuto delle otto pagine, presenza di un solo link CSS e un solo script JS per pagina, e la correttezza dei percorsi relativi (Lega vs Stadio).
-- Ho effettuato parsing sintattico JS di `miami-nav.js` e dello script della cornice: esito positivo.
-- **Test browser reale NON eseguito da questa sessione.** I test automatici `temi/prova_miami_diretto.cjs` (24 combinazioni: 2 skin × 4 sezioni × 320/390/1440) e `temi/prova_miami_browser.cjs` sono predisposti per Playwright Chromium in ambiente con clone e browser. Non dichiararli superati senza esecuzione.
+## Verifica e limiti
+- GitHub: verifica statica dei file e dei link CSS/JS, parsing di script JS.
+- `temi/prova_miami_diretto.cjs`: test Chromium predisposto su 12 combinazioni (4 pagine × 320/390/1440 px), **non ancora eseguito**.
+- `temi/prova_miami_browser.cjs`: test della cornice, 12 combinazioni, **non ancora eseguito**.
+- Non verificata l'apertura diretta tramite visualizzatore e il browser mobile; immagini e font possono richiedere fallback nel rilascio.
+- Il nuovo tema **non è online nel Lab pubblico**, non fa parte dell'app di produzione; nessuna modifica al repo `o-fant-a-girrr` o a Supabase, nessun servizio a pagamento.
 
-## Da completare
-- QA visivo e funzionale Chromium, Firefox, WebKit e su telefono vero; evitare overflow, errori console e incompatibilità.
-- Le immagini remote e l'eventuale interferenza di CSS generati dinamicamente richiedono verifica in browser.
-- Dopo approvazione estetica: integrare la variante approvata nel generatore della versione corrente, con il loader di Claude come unico controller evento.
-- Per ogni rilascio: nuova autorizzazione esplicita «Vai, pubblica».
+## Da fare dopo la valutazione
+QA reale Chromium/WebKit/Firefox e su telefono; risolvere overflow e doppie navigazioni se emergono; scegliere con Gianluca quali elementi conservare; integrare eventualmente nel loader di Claude come **una sola esperienza evento**, dopo nuovo «Vai, pubblica».
