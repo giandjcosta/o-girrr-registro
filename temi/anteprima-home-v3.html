@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="it" data-skin="girrr" data-event-theme="vice-city" data-night="false">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex"><meta name="theme-color" content="#170e29">
+<title>O Girrr · Miami Nights — Home V3 DEMO</title>
+<meta name="description" content="Prototipo grafico originale della Home speciale O Girrr, con dati esclusivamente sintetici.">
+<link rel="stylesheet" href="home-v3.css">
+<script src="home-v3.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#contenuti">Vai al contenuto</a>
+<div class="hero">
+  <img id="hero-photo" class="hero__photo" alt="" loading="eager" fetchpriority="high"
+    src="https://images.unsplash.com/photo-1605723517503-3cadb5818a0c?auto=format&amp;fit=crop&amp;w=2000&amp;q=82">
+  <div class="hero__shade" aria-hidden="true"></div>
+  <header class="sitebar shell">
+    <a class="brand" href="index.html" aria-label="O Girrr, indice delle demo">
+      <span class="brand__streaks" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span><span class="brand__name">O GIRRR</span><span class="brand__tag">SPECIAL EDITION</span></span>
+    </a>
+    <div class="sitebar__tools">
+      <span class="mode-label" id="mode-label">TRAMONTO</span>
+      <button class="icon-btn" type="button" id="mode-toggle" aria-label="Attiva la modalità notturna" aria-pressed="false" title="Cambia fotografia: tramonto o notte">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6 7 7m10 10 1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/><circle cx="12" cy="12" r="4"/></svg>
+      </button>
+      <a class="icon-btn" href="#oggi" aria-label="Vai alle novità della lega"><span class="dot" aria-hidden="true"></span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 8-3 9h18c0-1-3-2-3-9ZM10 21h4"/></svg>
+      </a>
+      <a class="icon-btn" href="anteprima-carriera.html" aria-label="Apri la demo Carriera">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg>
+      </a>
+    </div>
+  </header>
+  <div class="hero__content shell">
+    <div class="eyebrow">18—20 NOVEMBRE · EVENTO GRAFICO</div>
+    <h1 class="masthead">O GIRRR<span>MIAMI</span></h1>
+    <div class="script">City Nights</div>
+    <p class="hero__sub">Una città si accende, le rivalità restano. Un'esperienza speciale per O Girrr.</p>
+    <div class="hero__demo">PROTOTIPO VISIVO · DATI DIMOSTRATIVI</div>
+  </div>
+</div>
+<main class="main shell" id="contenuti">
+  <nav class="tabs" aria-label="Sezioni principali demo">
+    <a class="tab" aria-current="page" href="anteprima-home-v3.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8M5 10v11h14V10M9 21v-7h6v7"/></svg>Home
+    </a>
+    <a class="tab" href="anteprima-tabellone.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8v4a4 4 0 0 1-8 0V3ZM8 5H4v3a5 5 0 0 0 5 5M16 5h4v3a5 5 0 0 1-5 5M12 11v6m-5 4h10m-9-4h8"/></svg>Tabellone
+    </a>
+    <a class="tab" href="anteprima-carriera.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M5 17v-4h4v4M10 17V8h4v9M15 17V4h4v13"/></svg>Carriera
+    </a>
+    <a class="tab" href="anteprima-totogirrr.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 9 5v10l-9 5-9-5V7l9-5Zm0 7v6m-3-3h6"/></svg>Totogirrr
+    </a>
+  </nav>
+
+  <section class="match" aria-labelledby="big-match-title">
+    <img class="match__photo" alt="" loading="lazy" src="https://images.pexels.com/photos/11457824/pexels-photo-11457824.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400">
+    <div class="match__inner">
+      <div class="match__left">
+        <span class="kicker">Big Match · Demo</span>
+        <h2 class="match__title" id="big-match-title">Aurora FC<br>vs Neon United</h2>
+        <span class="match__meta">Girrr League · Giornata dimostrativa</span>
+      </div>
+      <div class="match__right">
+        <div><span class="kicker">Oggi · Demo</span><div class="match__time">21:00</div></div>
+        <a class="cta" href="anteprima-tabellone.html" aria-label="Esplora il Tabellone demo">▶ TABELLONE</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="panels">
+    <section class="panel" aria-labelledby="classifica-title">
+      <div class="panel__top"><h2 id="classifica-title">Classifica Live</h2><a href="anteprima-tabellone.html" aria-label="Vedi il tabellone demo">DEMO ↗</a></div>
+      <ol class="ranklist">
+        <li class="rank rank--first"><span class="rank__pos">1</span><span class="rank__crest" aria-hidden="true"></span><span class="rank__name">Aurora FC</span><span class="rank__points">24<small>PT</small></span></li>
+        <li class="rank"><span class="rank__pos">2</span><span class="rank__crest" aria-hidden="true"></span><span class="rank__name">Neon United</span><span class="rank__points">22<small>PT</small></span></li>
+        <li class="rank"><span class="rank__pos">3</span><span class="rank__crest" aria-hidden="true"></span><span class="rank__name">Sunset City</span><span class="rank__points">20<small>PT</small></span></li>
+        <li class="rank"><span class="rank__pos">4</span><span class="rank__crest" aria-hidden="true"></span><span class="rank__name">Bayside FC</span><span class="rank__points">18<small>PT</small></span></li>
+      </ol>
+    </section>
+    <section class="panel" aria-labelledby="stagione-title">
+      <div class="panel__top"><h2 id="stagione-title">Stagione</h2><span class="match__meta">DEMO</span></div>
+      <div class="statgrid">
+        <div class="stat"><strong>9</strong><span>Giornate</span></div>
+        <div class="stat"><strong>48</strong><span>Gol</span></div>
+        <div class="stat"><strong>2.8</strong><span>Media gol</span></div>
+        <div class="stat"><strong>12</strong><span>Clean sheet</span></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="section" id="oggi" aria-labelledby="oggi-title">
+    <div class="section__bar"><h2 class="section__title" id="oggi-title">Oggi al Girrr</h2><a href="index.html">TUTTE LE DEMO ↗</a></div>
+    <div class="storygrid">
+      <a class="story" href="anteprima-tabellone.html">
+        <img alt="" loading="lazy" src="https://images.unsplash.com/photo-1605723517503-3cadb5818a0c?auto=format&amp;fit=crop&amp;w=700&amp;q=70">
+        <div class="story__body"><span class="story__title">Risultati<br>e partite</span><span class="story__arrow" aria-hidden="true">›</span></div>
+      </a>
+      <a class="story" href="anteprima-carriera.html">
+        <img alt="" loading="lazy" src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&amp;fit=crop&amp;w=700&amp;q=70">
+        <div class="story__body"><span class="story__title">Analisi<br>e carriera</span><span class="story__arrow" aria-hidden="true">›</span></div>
+      </a>
+      <a class="story" href="anteprima-totogirrr.html">
+        <img alt="" loading="lazy" src="https://images.pexels.com/photos/11457824/pexels-photo-11457824.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=700">
+        <div class="story__body"><span class="story__title">Le sfide<br>Totogirrr</span><span class="story__arrow" aria-hidden="true">›</span></div>
+      </a>
+    </div>
+  </section>
+  <div class="footer">Home V3 sperimentale: nessuna partita, statistica o classifica è reale.<br>Foto da <a href="https://unsplash.com/license" target="_blank" rel="noopener">Unsplash</a> e <a href="https://www.pexels.com/license/" target="_blank" rel="noopener">Pexels</a>. Non affiliata a Rockstar Games.</div>
+</main>
+<nav class="dock" aria-label="Navigazione mobile demo">
+  <a href="anteprima-home-v3.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8M5 10v11h14V10"/></svg>Home</a>
+  <a href="anteprima-tabellone.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8v5a4 4 0 0 1-8 0V3ZM8 5H4v4l5 4M16 5h4v4l-5 4M12 12v6m-5 3h10"/></svg>Tabellone</a>
+  <a href="index.html" class="dock__ball" aria-label="Apri l'indice delle demo">⚽</a>
+  <a href="anteprima-carriera.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V12h4v8m3 0V7h4v13m3 0V4h3v16"/></svg>Carriera</a>
+  <a href="anteprima-totogirrr.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 9 5v10l-9 5-9-5V7l9-5Z"/></svg>Totogirrr</a>
+</nav>
+</body></html>
