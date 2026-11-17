@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Negozio delle skin · O Girrr Lab</title>
+<!-- Negozio delle skin (Claude, 17 novembre 2026; richiesta di Gianluca: «un posto dove avere le skin in store, per riguardarle
+     o rimetterle»). Legge temi/catalogo.json: ogni skin con anteprime, date, stato e i link per provarla nel Lab. -->
+<style>
+:root{--bg:#141d3d;--card:#1d2a52;--tx:#fbf6ec;--sub:#b9c2dd;--gold:#ffd166;--ln:rgba(255,255,255,.14)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:500 15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:1000px;margin:0 auto;padding:22px 16px 60px}
+a{color:var(--gold)}
+.back{display:inline-block;margin-bottom:14px;font-weight:800;text-decoration:none}
+h1{margin:0 0 4px;font-size:clamp(26px,5vw,38px);line-height:1.1}
+.intro{color:var(--sub);margin:0 0 22px;max-width:70ch}
+.skin{background:var(--card);border:1px solid var(--ln);border-left:6px solid var(--gold);border-radius:4px 14px 14px 4px;padding:18px;margin:0 0 18px;
+  opacity:0;transform:translateY(10px);animation:entra .5s cubic-bezier(.22,.61,.36,1) forwards}
+@keyframes entra{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.skin{animation:none;opacity:1;transform:none}}
+.skin header{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;justify-content:space-between}
+.skin h2{margin:0;font-size:22px}
+.stato{font:800 11px/1 Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;padding:6px 10px;border-radius:999px;background:rgba(255,209,102,.16);color:var(--gold)}
+.stato.idea{background:rgba(255,255,255,.08);color:var(--sub)}
+.meta{color:var(--sub);font-size:13px;margin:6px 0 10px}
+.foto{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.4fr);gap:10px;margin:12px 0}
+.foto img{width:100%;height:auto;border-radius:10px;border:1px solid var(--ln);display:block}
+@media (max-width:560px){.foto{grid-template-columns:1fr 1fr}}
+.prova{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.prova a{display:inline-block;padding:9px 14px;border-radius:999px;background:var(--gold);color:#182649;font-weight:900;text-decoration:none;font-size:14px}
+.prova a+a{background:rgba(255,255,255,.1);color:var(--tx)}
+.nota{color:var(--sub);font-size:13px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <a class="back" href="index.html">‹ Lab</a>
+ <h1>Negozio delle skin</h1>
+ <p class="intro">Le grafiche speciali di O Girrr. Si accendono da sole nelle loro date e si spengono da sole dopo; qui restano conservate, si possono riguardare quando vuoi e rimettere quando l'occasione si ripete.</p>
+ <div id="lista"><p class="intro">Carico le skin…</p></div>
+</div>
+<script>
+(function(){
+  function E(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  /* i percorsi del catalogo partono dalla radice del registro; questa pagina sta in lab/ */
+  function P(x){return '../'+x}
+  fetch('../temi/catalogo.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(c){
+    document.getElementById('lista').innerHTML=c.skin.map(function(s,i){
+      var idea=s.stato==='Idea';
+      return '<section class="skin" style="animation-delay:'+(i*80)+'ms">'+
+        '<header><h2>'+E(s.nome)+'</h2><span class="stato'+(idea?' idea':'')+'">'+E(s.stato)+'</span></header>'+
+        '<div class="meta">'+E(s.occasione)+' · '+E(s.date)+'</div>'+
+        '<p>'+E(s.descrizione)+'</p>'+
+        (s.anteprime&&s.anteprime.length?'<div class="foto">'+s.anteprime.map(function(a){return '<img loading="lazy" src="'+E(P(a))+'" alt="Anteprima della skin '+E(s.nome)+'">'}).join('')+'</div>':'')+
+        (s.prova&&s.prova.length?'<div class="prova">'+s.prova.map(function(p){return '<a href="'+E(P(p[1]))+'">Prova: '+E(p[0])+' ›</a>'}).join('')+'</div>':'')+
+        (s.varianti?'<p class="nota">'+E(s.varianti)+'</p>':'')+
+        (s.crediti?'<p class="nota">Crediti delle foto: <a href="https://github.com/giandjcosta/o-girrr-registro/blob/main/'+E(s.crediti)+'">'+E(s.crediti)+'</a></p>':'')+
+      '</section>'}).join('');
+  }).catch(function(){document.getElementById('lista').innerHTML='<p class="intro">Il catalogo delle skin non si è caricato. Riprova tra poco.</p>'});
+})();
+</script>
+</body>
+</html>

@@ -18,3 +18,30 @@
 /* 6.2.2 · Niente alone al tocco (Gianluca): su telefono il browser colorava di azzurro o di grigio il riquadro
    di «‹ O Girrr» e degli altri link mentre si premono. tv.js è in tutte le pagine di Lega, Stadio e Spogliatoio. */
 (function () { try { var s = document.createElement('style'); s.textContent = 'a,button,summary,label,[role=button]{-webkit-tap-highlight-color:transparent}a:focus:not(:focus-visible),button:focus:not(:focus-visible){outline:none}.back:active{opacity:.7}'; (document.head || document.documentElement).appendChild(s); } catch (e) {} })();
+/* 6.2.3 · alone su «‹ O Girrr» (Gianluca): nell'app il link indietro si chiama .oback (la 6.2.2 copriva solo .back). Né evidenziazione
+   del tocco né contorno né anteprima del tocco lungo; dopo il tocco e al ritorno con «Indietro» il link non resta col fuoco. */
+(function () { try {
+  var s = document.createElement('style');
+  s.textContent = '.back,.oback{-webkit-tap-highlight-color:transparent!important;-webkit-touch-callout:none;outline:none!important;box-shadow:none!important}'
+    + '.back:focus,.oback:focus,.back:focus-visible,.oback:focus-visible{outline:none!important;box-shadow:none!important;background:transparent!important}.oback:active{opacity:.7}';
+  (document.head || document.documentElement).appendChild(s);
+  var giu = function () { var a = document.activeElement; if (a && a.matches && a.matches('.back,.oback')) a.blur(); };
+  document.addEventListener('click', function (e) { var a = e.target && e.target.closest && e.target.closest('.back,.oback'); if (a) a.blur(); }, true);
+  addEventListener('pageshow', giu); document.addEventListener('visibilitychange', giu);
+} catch (e) {} })();
+/* 6.2.4 · «‹ O Girrr» senza fondo (Gianluca: «avevo detto che quell'alone non lo volevo più»). Nelle pagine con la testata v55
+   (Versioni, Notifiche…) il link indietro .v55-return prendeva un fondo grigio con gli angoli arrotondati al passaggio del mouse
+   e, sul telefono, dopo il tocco (.v55-header a:hover di v55/ui.css). Nessun link indietro ha più fondo, contorno o alone. */
+(function () { try {
+  var L = '.v55-return,.back,.oback', S = function (q) { return L.split(',').map(function (x) { return x + q; }).join(','); };
+  var s = document.createElement('style');
+  s.textContent = S('') + '{-webkit-tap-highlight-color:transparent!important;-webkit-touch-callout:none}'
+    + S(':hover') + ',' + S(':active') + ',' + S(':focus') + ',' + S(':focus-visible')
+    + ',.v55-header a.v55-return:hover,.v55-header a.v55-return:active,.v55-header a.v55-return:focus'
+    + '{background:transparent!important;background-color:transparent!important;box-shadow:none!important;outline:none!important}'
+    + '.v55-return:active{opacity:.7}';
+  (document.head || document.documentElement).appendChild(s);
+  var giu = function () { var a = document.activeElement; if (a && a.matches && a.matches(L)) a.blur(); };
+  document.addEventListener('click', function (e) { var a = e.target && e.target.closest && e.target.closest(L); if (a) setTimeout(function () { a.blur(); }, 0); }, true);
+  addEventListener('pageshow', giu);
+} catch (e) {} })();

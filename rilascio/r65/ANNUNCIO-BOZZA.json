@@ -1,0 +1,13 @@
+{
+ "stato": "Bozza: 6.5 (numero scelto da Gianluca il 17 novembre: «non 6.2.5 ma 6.5, visto il grande cambiamento di grafica»); in prova nel Lab; serve il «Vai» per pubblicarla; regole in REGOLE-VERSIONI.md",
+ "tipo": "medio",
+ "titolo": "Carriera e Girrr Sport più fluidi",
+ "messaggio": "⚽ **O Girrr 6.5 è online!** In Carriera, cambiando sezione, la pagina resta dov’è e il nuovo contenuto entra con un rimbalzo morbido, senza tremare. Le pillole della Carriera e dell’Albo d’oro ora scivolano da una all’altra come quelle di Girrr Sport. In Girrr Sport le pillole non si bloccano più dopo le Conferenze stampa. Buona giornata a tutti! ⚽",
+ "voci": [
+  "Carriera: Cambiando sezione la pagina resta ferma e il nuovo contenuto entra con un rimbalzo morbido, senza tornare su né sparire per un attimo.",
+  "Carriera: Le pillole delle sezioni scivolano dalla scelta di prima alla nuova, come nelle altre file di pillole.",
+  "Albo d’oro: Anche qui il colore della pillola scelta scivola dalla sezione di prima alla nuova.",
+  "Girrr Sport: Le pillole non si bloccano più dopo aver aperto Conferenze stampa e il contenuto entra senza sparire per un attimo."
+ ],
+ "v": "6.5"
+}
