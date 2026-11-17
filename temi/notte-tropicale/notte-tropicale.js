@@ -163,7 +163,7 @@
       /* Spogliatoio */
       '#app .tw', '#app .bench', '#app .sec', '#app .stats',
       /* Versioni e Notifiche */
-      '#versioni .vv-avviso', '#versioni .vv-item', '#versioni .vv-card', '#versioni article',
+      '#versioni .vv-v', '#versioni .vv-msg', '#versioni .vv-area',
       '.v53-notifications .v53-panel', '.v53-notifications .v53-notifcard'];
     var TAB = ['.chips button', '.gs .ar', '.sqb', '.cd-btn', '.round button', '.partite-nav button', '.matches .gamebtn', '.sidebar nav a',
       '.v53-pill', '#big .tx a', '.lg-leghe .go', '.vv-esci', '.vv-fondo', '.v53-pills button', '.giornata-nav > button', '.giornata-nav > a',
@@ -175,7 +175,7 @@
       /* Spogliatoio e pagine indipendenti */
       '#app .seg button', '#app .btn', '#app .chip', '#app .tpt', '#app .mkchip',
       '#app .calnav button', '.tools button', '#ultimo .btn', '#lista .btn',
-      '#versioni button', '.v53-notifications .v53-btn'];
+      '#versioni .vv-seg button', '#versioni .vv-h', '.v53-notifications .v53-btn'];
     var FORTI = '#big .tx a:not(.s), .lg-leghe .go';
     var ON = '.sel,.active,.on,[aria-current],[aria-pressed="true"],[aria-selected="true"]';
     var trasp = function (c) { var m = /rgba?\(([^)]+)\)/.exec(c || ''); if (!m) return true; var p = m[1].split(','); return p.length > 3 && parseFloat(p[3]) < .5; };
