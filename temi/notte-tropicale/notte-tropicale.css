@@ -241,6 +241,9 @@
 }
 @media (prefers-reduced-motion:reduce){:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c{transition:none!important}}
 
+/* 4f. Grafica unica durante l'evento (Gianluca): niente interruttore Lega/Stadio nella Home né nel Campo */
+:root[data-event-theme="notte-tropicale"] :is(#gsw,.skin){display:none!important}
+
 /* 5. Firma dell'evento in fondo alla Home */
 :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap::after{
   content:'Notte Tropicale · 18–20 novembre';display:block;text-align:center;margin:26px 0 8px;

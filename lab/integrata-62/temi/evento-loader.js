@@ -13,7 +13,9 @@
     { id: 'vice-city', inizio: '2026-11-18T00:00:00+01:00', fine: '2026-11-21T00:00:00+01:00', css: 'vice-city.css' },
     { id: 'notte-tropicale', inizio: '2026-11-18T00:00:00+01:00', fine: '2026-11-21T00:00:00+01:00', css: 'notte-tropicale/notte-tropicale.css', js: 'notte-tropicale/notte-tropicale.js',
       /* la Curva ha la sua grafica chiara/scura da app (iPhone e Android): il tema non la tocca, lì il testo diventava illeggibile */
-      escludi: /\/curva\.html$/ }
+      escludi: /\/curva\.html$/,
+      /* grafica unica (Gianluca, 17 novembre: «non ci sarà Lega o Stadio, sarà una grafica unica») */
+      unica: true }
   ];
   try {
     var me = document.currentScript, base = me && me.src ? me.src : location.href;
@@ -33,7 +35,19 @@
       if (modo === 'on' || (!manuale && modo !== 'off' && ora >= new Date(e.inizio) && ora < new Date(e.fine))) { ev = e; break; }
     }
     window.OGirrrEvento = Object.freeze({ attivo: ev ? ev.id : null, modo: modo || 'auto', ora: ora.toISOString() });
-    if (!ev || modo === 'off') return;
+    /* Grafica unica: durante l'evento tutti vedono le pagine della Lega con il tema sopra, e l'interruttore Lega/Stadio sparisce.
+       Chi aveva scelto Stadio (orr_gv = n) se lo ritrova da solo quando l'evento finisce: la scelta è messa da parte, non persa. */
+    var GV = 'orr_gv', GVP = 'orr_gv_prima_evento', path = location.pathname;
+    function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k); if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} return null; }
+    if (!ev || modo === 'off') {
+      var prima = ls(GVP);
+      if (prima) { ls(GV, prima); ls(GVP, null); if (prima === 'n' && /\/girrr\//.test(path) && !/\/stadio\/girrr\//.test(path)) { location.replace(path.replace('/girrr/', '/stadio/girrr/') + location.search + location.hash); } }
+      return;
+    }
+    if (ev.unica) {
+      if (ls(GV) === 'n') { ls(GVP, 'n'); ls(GV, 'a'); }
+      if (/\/stadio\/girrr\//.test(path)) { location.replace(path.replace('/stadio/girrr/', '/girrr/') + location.search + location.hash); return; }
+    }
     if (ev.escludi && ev.escludi.test(location.pathname)) { window.OGirrrEvento = Object.freeze({ attivo: null, modo: modo || 'auto', ora: ora.toISOString(), escluso: ev.id }); return; }
     var h = document.documentElement;
     h.setAttribute('data-event-theme', ev.id);
