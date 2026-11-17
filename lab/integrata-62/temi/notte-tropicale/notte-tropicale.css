@@ -567,3 +567,131 @@
    transition:none!important;transform:none!important;animation:none!important;
  }
 }
+
+
+/* ─── 17/11/2026 · EVENT TAKEOVER UNICO (Gianluca) ──────────────────────────────
+   Un'identità unica, non due declinazioni Lega e Stadio.
+   Questo strato è applicato DOPO la base Claude + Home V3 ChatGPT.
+   Solo tema ON: OFF rimuove data-event-theme e ripristina il design originale.
+   Non cambiare logiche punteggi, scorrimenti o dati.
+   Rosso/verde di esiti e gli stati di gioco mantengono significato.
+   ─────────────────────────────────────────────────────────────────────────── */
+:root[data-event-theme="notte-tropicale"] {
+  --event-primary:#ff4bac; --event-primary-2:#ec248d;
+  --event-ink:#fff4fb; --event-violet:#2f154e;
+  --event-cyan:#86eeff; --event-sunset:#ffb875;
+  --acc:#ff4bac!important; --hi:#ffb875!important;
+  --sub:#f3d6ed!important; --bg:#160b2a!important;
+  --bg2:#301550!important; --bg3:#10081f!important;
+  --v53-gold:#ffb875; --v53-navy:#160b2a;
+  --v53-ink:#fff4fb; --v53-muted:#ecd4ea;
+  --v53-caption:#86eeff; --v53-accent:#ff4bac;
+  --v53-onaccent:#170b25; --v53-line:rgba(255,130,207,.43);
+  --v53-soft:rgba(72,27,95,.67);
+  --v53-surface:linear-gradient(140deg,rgba(69,21,88,.94),rgba(24,10,48,.95));
+  --v53-title-font:'Barlow Condensed',Impact,'Arial Narrow',sans-serif;
+  --v53-title-weight:900;
+}
+/* Variabili di pagina per le viste che impostano i token sul body. */
+:root[data-event-theme="notte-tropicale"] body {
+  --acc:#ff4bac!important; --hi:#ffb875!important;
+  --sub:#f3d6ed!important; --bg:#160b2a!important;
+  --bg2:#301550!important; --bg3:#10081f!important;
+  --chiaro:#fff4fb!important; --az:#86eeff!important;
+  --v53-accent:#ff4bac!important; --v53-onaccent:#170b25!important;
+  --v53-caption:#86eeff!important; --v53-ink:#fff4fb!important;
+  --v53-muted:#ecd4ea!important; --v53-title-font:'Barlow Condensed',Impact,sans-serif!important;
+  --v53-title-weight:900!important;
+  color:var(--event-ink)!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53-skin="lega"],
+:root[data-event-theme="notte-tropicale"] body[data-v53-skin="stadio"] {
+  --v53-accent:#ff4bac!important;
+  --v53-onaccent:#170b25!important;
+  --v53-caption:#86eeff!important;
+  --v53-title-font:'Barlow Condensed',Impact,sans-serif!important;
+  --v53-title-weight:900!important;
+}
+/* Il logo di testata diventa un'identità evento unica in entrambi gli ingressi.
+   Si conserva il vero link alla Home, ma non si replica visivamente lo stemma di skin. */
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero>a {
+  display:grid!important;align-items:center;justify-items:center;flex:none!important;
+  width:clamp(78px,14vw,170px);min-height:110px;isolation:isolate;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero>a img{
+  display:none!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero>a::before {
+  content:'///';display:block;color:#ff4bac;
+  font:italic 900 clamp(43px,7vw,74px)/.7 'Barlow Condensed',Impact,sans-serif;
+  letter-spacing:-.21em;transform:skew(-12deg);
+  text-shadow:0 0 12px #f944b4,0 0 28px #f944b478;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero>a::after {
+  content:'O GIRRR';display:block;text-align:center;margin-top:16px;
+  font:italic 900 clamp(16px,2.5vw,29px)/.88 'Barlow Condensed',Impact,sans-serif;
+  color:#fff;text-shadow:0 2px 5px #160321;white-space:nowrap;
+}
+@media(max-width:580px){
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero>a {
+   width:56px!important;min-height:76px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero>a::before{
+   font-size:38px!important
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero>a::after{
+   font-size:14px!important;margin-top:11px;
+ }
+}
+/* Le tab del menu sono sempre corallo+fucsia, indipendentemente dall'origine. */
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-menu a[aria-current="page"] {
+  background:linear-gradient(110deg,#ffb875,#ff4bac 76%)!important;
+  border-color:#ffd1aa!important;color:#160b2a!important;
+}
+/* Grafica coerente delle tab native, in tutte le schermate. */
+:root[data-event-theme="notte-tropicale"] :is(.v53-menu a,.v53-pill,nav .nvi button,.seg button,.giornata-nav button,.sw button){
+  font-family:'Barlow Condensed',Impact,'Arial Narrow',sans-serif!important;
+  font-weight:900!important;text-transform:uppercase!important;letter-spacing:.035em;
+}
+:root[data-event-theme="notte-tropicale"] :is(.v53-pill[aria-selected="true"],.v53-pill.active,.seg button[aria-pressed="true"]){
+  background:#ff4bac!important;color:#160b2a!important;border-color:#ffb875!important;
+}
+/* Il selettore Campionato/Champions conserva il testo della competizione e
+   gli esiti, ma non cambia identità cromatica: accento fucsia per tutte le tab. */
+:root[data-event-theme="notte-tropicale"] body .sw.sw.sw i{
+  background:linear-gradient(125deg,#ffb875,#ff4bac)!important;
+  box-shadow:0 0 18px rgba(255,75,172,.65)!important;
+}
+:root[data-event-theme="notte-tropicale"] nav>.nvi button.on{
+  background:linear-gradient(125deg,#ffb875,#ff4bac)!important;
+  color:#160b2a!important;
+}
+/* Un'unica atmosfera per classifica, Carriera, Curva e modali senza cambiare
+   le barre di risultato verdi/rosse, i dati e le etichette. */
+:root[data-event-theme="notte-tropicale"] :is(.v53-home,.v53-panel,.v53-box,.v53-item,.v55-card,.card,.cd-box,.row-card,.tw){
+  border-color:rgba(255,141,217,.42)!important;
+}
+:root[data-event-theme="notte-tropicale"] :is(.v53-panel h2,.v53-panel h3,.v55-card h2,.v53-sectionhead h2,.ph){
+  font-family:'Barlow Condensed',Impact,sans-serif!important;
+  font-style:italic!important;font-weight:900!important;
+  text-transform:uppercase!important;letter-spacing:.01em!important;
+}
+/* Titoli di pagina coerenti tra i due ingressi originali. */
+:root[data-event-theme="notte-tropicale"] :is(.top h1,.gs-title,header:not(.hero) h1) {
+  color:#fff4fb!important;text-shadow:0 0 18px rgba(255,75,172,.5)!important;
+}
+:root[data-event-theme="notte-tropicale"] .nt-barra a[aria-current]{
+  color:#ff92d1!important;
+}
+:root[data-event-theme="notte-tropicale"] .nt-barra a.nt-palla svg{
+  background:radial-gradient(circle at 30% 24%,#ffb875,#ff4bac 52%,#83297c)!important;
+}
+/* Leggibilità e focus. */
+:root[data-event-theme="notte-tropicale"] :is(a,button,select,input,summary):focus-visible{
+  outline:3px solid #86eeff!important;outline-offset:3px!important;
+}
+@media(prefers-reduced-motion:reduce){
+  :root[data-event-theme="notte-tropicale"] :is(.v53-menu a,.v53-pill,.nt-barra a){
+    transition:none!important;animation:none!important;
+  }
+}
