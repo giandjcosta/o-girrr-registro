@@ -130,17 +130,18 @@
             : dist + ' punti di distacco';
           var quando = '';
           try { if (window.NEXT && window.NEXT.n === nx.n) quando = new Date(window.NEXT.t).toLocaleString('it-IT', { timeZone: 'Europe/Rome', weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }); } catch (e) {}
-          h += '<a class="nt-match' + (nomeDerby ? ' derby' : '') + '" href="tabellone.html#lega-' + nx.n + '"><small>' + (nomeDerby ? 'Derby' : 'Big match') + ' · ' + nx.n + 'ª giornata</small>' +
+          /* il big match porta al Campo, su quella partita (Gianluca) */
+          h += '<a class="nt-match' + (nomeDerby ? ' derby' : '') + '" href="campo.html?giornata=' + nx.n + '&partita=' + nx.m.indexOf(bm) + '"><small>' + (nomeDerby ? 'Derby' : 'Big match') + ' · ' + nx.n + 'ª giornata</small>' +
             '<b>' + ESC(CAP(bm[0])) + '<i>' + pos[bm[0]] + 'ª</i></b><b>' + ESC(CAP(bm[3])) + '<i>' + pos[bm[3]] + 'ª</i></b>' +
-            '<strong>' + perche + '</strong><span>Campionato · Serie A, giornata ' + ESC(nx.sa) + (quando ? ' · Si comincia ' + ESC(quando) : '') + '</span><em>Il calendario ›</em></a>';
+            '<strong>' + perche + '</strong><span>Campionato · Serie A, giornata ' + ESC(nx.sa) + (quando ? ' · Si comincia ' + ESC(quando) : '') + '</span><em>Vai al Campo ›</em></a>';
         }
         var gol = 0, par = 0, pp = 0;
         pl.forEach(function (g) { g.m.forEach(function (m) { if (m[4] === '-') return; var s = m[4].split('-').map(Number); gol += s[0] + s[1]; pp++; if (s[0] === s[1]) par++; }); });
         h += '<section class="nt-pannelli"><a class="nt-classifica" href="tabellone.html#lega-' + last.n + '"><header><b>Classifica</b><small>Dopo la ' + last.n + 'ª ›</small></header><ol>' +
           cl.slice(0, 4).map(function (x, i) { return '<li' + (i === 0 ? ' class="primo"' : '') + '><em>' + (i + 1) + '</em><span>' + ESC(CAP(x.n)) + '</span><b>' + x.pt + '<small>pt</small></b></li>'; }).join('') + '</ol></a>' +
-          '<div class="nt-stagione"><header><b>Stagione</b><small>Campionato</small></header><div>' +
+          '<a class="nt-stagione" href="tabellone.html#lega-' + last.n + '"><header><b>Stagione</b><small>Campionato ›</small></header><div>' +
           '<p><b>' + pl.length + '</b><small>Giornate</small></p><p><b>' + gol + '</b><small>Gol</small></p>' +
-          '<p><b>' + String(Math.round(gol / Math.max(pp, 1) * 10) / 10).replace('.', ',') + '</b><small>Gol a partita</small></p><p><b>' + par + '</b><small>Pareggi</small></p></div></div></section>';
+          '<p><b>' + String(Math.round(gol / Math.max(pp, 1) * 10) / 10).replace('.', ',') + '</b><small>Gol a partita</small></p><p><b>' + par + '</b><small>Pareggi</small></p></div></a></section>';
         box.innerHTML = h;
         document.documentElement.classList.add('nt-cruscotto-pronto');
       }).catch(function () {});
@@ -154,7 +155,7 @@
     var BOX = ['.wrap > .vv-avviso', '.wrap > .v53-home', '.wrap > .lg-leghe', '.wrap > #big', '.wrap > #cvw', '.wrap > .sp', '.wrap .mini .mn',
       '.grid .panel', '.swap > .m', '#v53board', '.gs', 'section.card', 'aside.card', '.toolbar'];
     var TAB = ['.chips button', '.gs .ar', '.sqb', '.cd-btn', '.round button', '.partite-nav button', '.matches .gamebtn', '.sidebar nav a',
-      '.v53-pill', '#big .tx a', '.lg-leghe .go', '.vv-esci', '.vv-fondo', '.v53-pills button'];
+      '.v53-pill', '#big .tx a', '.lg-leghe .go', '.vv-esci', '.vv-fondo', '.v53-pills button', '.giornata-nav > button', '.giornata-nav > a'];
     var FORTI = '#big .tx a:not(.s), .lg-leghe .go';
     var ON = '.sel,.active,.on,[aria-current],[aria-pressed="true"],[aria-selected="true"]';
     var trasp = function (c) { var m = /rgba?\(([^)]+)\)/.exec(c || ''); if (!m) return true; var p = m[1].split(','); return p.length > 3 && parseFloat(p[3]) < .5; };

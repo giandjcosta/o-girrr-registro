@@ -351,7 +351,7 @@
    notte-tropicale.js mette .nt-obl ai riquadri e .nt-tab ai pulsanti e alle schede di Home, Tabellone e Campo. Si inclina solo lo
    sfondo (::before) con angoli morbidi; testo e numeri restano dritti. Il colore di fondo e la banda laterale li prende dalla
    grafica di sempre (--nt-tab-bg, --nt-banda), così Campionato rosso e Champions Cup azzurra restano; il resto è viola pieno. */
-:root[data-event-theme="notte-tropicale"] .nt-obl.nt-obl.nt-obl{position:relative;isolation:isolate;background:transparent!important;box-shadow:none!important;border-color:transparent!important;border-radius:16px!important}
+:root[data-event-theme="notte-tropicale"] .nt-obl.nt-obl.nt-obl{--g-band:0px!important;border-left-width:0!important;padding-left:calc(var(--nt-pl,0px) + 0px);position:relative;isolation:isolate;background:transparent!important;box-shadow:none!important;border-color:transparent!important;border-radius:16px!important}
 :root[data-event-theme="notte-tropicale"] .nt-obl.nt-obl.nt-obl::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:16px;background:var(--nt-scheda);
   box-shadow:inset 0 0 0 1px var(--nt-bordo),inset 5px 0 0 var(--nt-banda,var(--nt-rosa)),0 12px 30px rgba(5,0,20,.4);transform:skewX(calc(-1 * var(--nt-sk,4deg)))}
 :root[data-event-theme="notte-tropicale"] .sp.nt-obl.nt-obl.nt-obl::before{box-shadow:inset 0 0 0 1px var(--nt-bordo),0 12px 30px rgba(5,0,20,.4)}
@@ -361,7 +361,7 @@
 :root[data-event-theme="notte-tropicale"] .nt-tab.nt-tab.nt-on::before{box-shadow:inset 0 0 0 1px rgba(255,255,255,.55),0 0 14px rgba(255,79,163,.45)}
 :root[data-event-theme="notte-tropicale"] .nt-tab.nt-tab.nt-forte{color:#22052e!important}
 :root[data-event-theme="notte-tropicale"] .nt-tab.nt-tab.nt-forte::before{background:linear-gradient(100deg,#ffb86b,#ff5ca8 70%)}
-:root[data-event-theme="notte-tropicale"] .v53-select{border-radius:10px!important}
+:root[data-event-theme="notte-tropicale"] .v53-select{border-radius:10px!important;background-color:#22093f!important;border-color:var(--nt-bordo)!important;color:#fff!important}
 /* Tabellone: la striscia «Serie A · giornata» fa parte del riquadro della classifica, non è più una pillola a sé */
 :root[data-event-theme="notte-tropicale"] .panel .v55-striscia{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;border-bottom:1px solid var(--nt-bordo)!important;margin:0 0 6px!important}
 :root[data-event-theme="notte-tropicale"] .gs.nt-obl{padding:8px 10px!important}
@@ -373,12 +373,43 @@
 :root[data-event-theme="notte-tropicale"] .chips button.nt-tab{opacity:1!important}
 :root[data-event-theme="notte-tropicale"] .chips button.nt-tab:not(.pl):not(.sel){color:rgba(255,255,255,.5)!important}
 
-/* 4j. Filo di colore in alto, rosa e azzurro a giro (idea di ChatGPT che piace a Gianluca): sulle schede fotografiche, sui
-   riquadri inclinati e sulle due schede dei risultati */
-:root[data-event-theme="notte-tropicale"] .nt-obl.nt-obl.nt-obl::before{box-shadow:inset 0 3px 0 var(--nt-filo,var(--nt-rosa)),inset 0 0 0 1px var(--nt-bordo),inset 5px 0 0 var(--nt-banda,var(--nt-rosa)),0 12px 30px rgba(5,0,20,.4)}
-:root[data-event-theme="notte-tropicale"] .nt-obl:nth-child(even){--nt-filo:var(--nt-ciano)}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c{box-shadow:inset 0 3px 0 var(--nt-rosa),inset 0 0 0 1px rgba(255,140,205,.45)!important}
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c:nth-child(even){box-shadow:inset 0 3px 0 var(--nt-ciano),inset 0 0 0 1px rgba(111,240,255,.45)!important}
+/* 4j. Fili di colore alternati (Gianluca, 17 novembre): un riquadro ciano sopra e rosa di lato, il successivo rosa sotto e
+   ciano di lato, e così via; lo stesso per le schede fotografiche */
+:root[data-event-theme="notte-tropicale"] .nt-obl.nt-obl.nt-obl::before{box-shadow:inset 0 3px 0 var(--nt-ciano),inset 0 0 0 1px var(--nt-bordo),inset 5px 0 0 var(--nt-banda,var(--nt-rosa)),0 12px 30px rgba(5,0,20,.4)}
+:root[data-event-theme="notte-tropicale"] .nt-obl.nt-obl.nt-obl:nth-child(even)::before{box-shadow:inset 0 -3px 0 var(--nt-rosa),inset 0 0 0 1px var(--nt-bordo),inset 5px 0 0 var(--nt-banda2,var(--nt-ciano)),0 12px 30px rgba(5,0,20,.4)}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c{box-shadow:inset 0 3px 0 var(--nt-ciano),inset 4px 0 0 var(--nt-rosa),inset 0 0 0 1px rgba(255,140,205,.45)!important}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c:nth-child(even){box-shadow:inset 0 -3px 0 var(--nt-rosa),inset 4px 0 0 var(--nt-ciano),inset 0 0 0 1px rgba(111,240,255,.45)!important}
+
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-classifica{box-shadow:inset 0 3px 0 var(--nt-ciano),inset 5px 0 0 var(--nt-rosa),inset 0 0 0 1px var(--nt-bordo)!important}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-stagione{box-shadow:inset 0 -3px 0 var(--nt-rosa),inset 5px 0 0 var(--nt-ciano),inset 0 0 0 1px var(--nt-bordo)!important}
+
+/* 4k. Colori delle competizioni nella grafica unica (Gianluca, 17 novembre): Campionato sfumato arancio, rosa e rosso;
+   Champions Cup sfumata ciano e lilla, in modo uniforme. Il resto della Home non è più rosso: bande rosa, scritte pesca. */
+:root[data-event-theme="notte-tropicale"] :is(body[data-mode="lega"] .sw.sw.sw i,.comp-sw:not([data-on=coppa]) i){background:linear-gradient(100deg,#ffb86b,#ff5ca8 55%,#e8364f)!important;box-shadow:0 0 16px rgba(255,92,168,.55)!important}
+:root[data-event-theme="notte-tropicale"] :is(body[data-mode="coppa"] .sw.sw.sw i,.comp-sw[data-on=coppa] i){background:linear-gradient(100deg,#00f0ff,#5aa8ff 55%,#bc6cff)!important;box-shadow:0 0 16px rgba(0,240,255,.45)!important}
+:root[data-event-theme="notte-tropicale"] :is(.sw,.comp-sw) button{color:#fff!important}
+:root[data-event-theme="notte-tropicale"] :is(body[data-mode="lega"] .giornata-nav button.nt-on,.giornata-nav button[aria-selected=true]){--nt-tab-bg:linear-gradient(100deg,#ffb86b,#ff5ca8 55%,#e8364f)!important;color:#22052e!important}
+:root[data-event-theme="notte-tropicale"] body[data-mode="coppa"] .giornata-nav button[aria-selected=true]{--nt-tab-bg:linear-gradient(100deg,#00f0ff,#5aa8ff 55%,#bc6cff)!important}
+:root[data-event-theme="notte-tropicale"] .chips button.sel.nt-tab{--nt-tab-bg:linear-gradient(100deg,#ffb86b,#ff5ca8 55%,#e8364f)!important;color:#22052e!important}
+:root[data-event-theme="notte-tropicale"] body[data-mode="coppa"] .chips button.sel.nt-tab{--nt-tab-bg:linear-gradient(100deg,#00f0ff,#5aa8ff 55%,#bc6cff)!important}
+:root[data-event-theme="notte-tropicale"] .matches .gamebtn.nt-tab:is(.active,.on,[aria-pressed=true],[aria-selected=true]){--nt-tab-bg:linear-gradient(100deg,#ffb86b,#ff5ca8 55%,#e8364f)!important}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] :is(.vv-avviso,.v53-home,.lg-leghe,.mini .mn,#cvw,.sp).nt-obl{--nt-banda:var(--nt-rosa)!important}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .vv-avviso i{color:var(--nt-arancio)!important}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .pt-box{border-left-color:var(--nt-rosa)!important}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] #strip>.st{border-left:0!important;box-shadow:inset 5px 0 0 0 transparent!important;background-image:linear-gradient(180deg,#ffb86b,#ff5ca8 55%,#e8364f),var(--nt-scheda)!important;background-size:5px 100%,100% 100%!important;background-repeat:no-repeat!important}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] #strip>.st[href*="coppa"]{background-image:linear-gradient(180deg,#00f0ff,#5aa8ff 55%,#bc6cff),var(--nt-scheda)!important}
+/* niente rosso fuori dalle competizioni: pannelli e pillole generiche in rosa e lilla */
+:root[data-event-theme="notte-tropicale"] :is(#v53board,.turnoprossimo,.grid .panel).nt-obl{--nt-banda:var(--nt-rosa)!important}
+:root[data-event-theme="notte-tropicale"] body .turnoprossimo.turnoprossimo{--g-band:4px!important;--g-acc:var(--nt-rosa)!important;border-left-color:var(--nt-rosa)!important}
+:root[data-event-theme="notte-tropicale"] .card.nt-obl{--nt-banda:#ff5ca8!important}
+:root[data-event-theme="notte-tropicale"]:has(.comp-sw[data-on=coppa]) .card.nt-obl{--nt-banda:#00f0ff!important}
+:root[data-event-theme="notte-tropicale"] :is(.v53-pill,.v53-pills button).nt-tab.nt-on{--nt-tab-bg:linear-gradient(100deg,#ff5ca8,#bc6cff)!important;color:#fff!important}
+/* senza il bordo rosso il contenuto restava attaccato al lato: spazio a sinistra al posto della banda */
+:root[data-event-theme="notte-tropicale"] :is(#v53board,.v53-home,.v53-panel,.vv-avviso,.lg-leghe,.turnoprossimo).nt-obl.nt-obl{padding-left:22px!important}
+:root[data-event-theme="notte-tropicale"] #big.nt-obl.nt-obl{padding-left:clamp(24px,4vw,40px)!important}
+/* «Gentilmente offerto da»: chiaro, così i marchi degli sponsor si leggono (Gianluca: «troppo scuro») */
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .sp.nt-obl.nt-obl.nt-obl::before{background:linear-gradient(160deg,#fff7fb,#f3e6ff)!important;box-shadow:inset 0 3px 0 var(--nt-ciano),0 12px 30px rgba(5,0,20,.35)!important}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .sp.nt-obl span{color:#5b2d90!important}
 
 /* 4f. Grafica unica durante l'evento (Gianluca): niente interruttore Lega/Stadio nella Home né nel Campo */
 :root[data-event-theme="notte-tropicale"] :is(#gsw,.skin){display:none!important}

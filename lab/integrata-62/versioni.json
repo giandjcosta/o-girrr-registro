@@ -2,6 +2,34 @@
   "nota": "Fonte unica della pagina Versioni (girrr/versioni.html e stadio/girrr/versioni.html). A ogni rilascio si aggiunge la versione in cima con rilascio/versioni/aggiungi.py. Numeri: correzione minore = terza cifra (5.6.1), aggiornamento medio = seconda cifra (5.7.0), aggiornamento grande = prima cifra (6.0). Dove manca la storia: «Dato non conservato». Le versioni 1.0-4.5 e il Mercato Scambi vengono dai messaggi recuperati da Claude chat (9 novembre 2026), date controllate con i commit del sito. Il campo «nota» e «altre_varianti» non si mostrano nella pagina.",
   "versioni": [
     {
+      "v": "6.5",
+      "data": "2026-11-17",
+      "tipo": "medio",
+      "titolo": "Carriera e Girrr Sport più fluidi",
+      "messaggio": "⚽ **O Girrr 6.5 è online!** In Carriera, cambiando sezione, la pagina resta dov’è e il nuovo contenuto entra con un rimbalzo morbido, senza tremare. Le pillole della Carriera e dell’Albo d’oro ora scivolano da una all’altra come quelle di Girrr Sport. In Girrr Sport le pillole non si bloccano più dopo le Conferenze stampa. Buona giornata a tutti! ⚽",
+      "novita": [
+        {
+          "area": "Carriera",
+          "voci": [
+            "Cambiando sezione la pagina resta ferma e il nuovo contenuto entra con un rimbalzo morbido, senza tornare su né sparire per un attimo.",
+            "Le pillole delle sezioni scivolano dalla scelta di prima alla nuova, come nelle altre file di pillole."
+          ]
+        },
+        {
+          "area": "Albo d’oro",
+          "voci": [
+            "Anche qui il colore della pillola scelta scivola dalla sezione di prima alla nuova."
+          ]
+        },
+        {
+          "area": "Girrr Sport",
+          "voci": [
+            "Le pillole non si bloccano più dopo aver aperto Conferenze stampa e il contenuto entra senza sparire per un attimo."
+          ]
+        }
+      ]
+    },
+    {
       "v": "6.2.4",
       "data": "2026-11-17",
       "tipo": "minore",

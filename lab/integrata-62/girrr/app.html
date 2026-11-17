@@ -244,7 +244,7 @@ svg text{fill:var(--mute);font-family:var(--fb)}
 
 </style>
 
-<link rel="stylesheet" href="v55/ui.css?v=55r10"><script src="v55/destinazioni55.js?v=55r8" defer></script><script src="v55/ui.js?v=621" defer></script><script src="../condividi.js?v=623" defer></script><script src="../pillole.js?v=624" defer></script><script src="../offline.js" defer></script>
+<link rel="stylesheet" href="v55/ui.css?v=55r10"><script src="v55/destinazioni55.js?v=55r8" defer></script><script src="v55/ui.js?v=621" defer></script><script src="../condividi.js?v=623" defer></script><script src="../pillole.js?v=65" defer></script><script src="../offline.js" defer></script>
 <script src="../stagione.js?v=611-1" defer></script>
 <script src="../conferenze.js" defer></script><!-- Claude, conferenze 10/11 -->
 <style id="cartellini-fiducia">.oro-scroll{scroll-padding-inline:4px}
@@ -467,13 +467,13 @@ function ok(n){return n.nodeType===1&&!/^(SCRIPT|STYLE|LINK|AUDIO|VIDEO|OPTION|I
 function anim(n,i){n.style.setProperty('--fxd',Math.min(i,6));n.classList.add('fx-in');n.addEventListener('animationend',function f(e){if(e.target!==n)return;n.classList.remove('fx-in');n.style.removeProperty('--fxd');n.removeEventListener('animationend',f)})}
 function avvia(){
 new MutationObserver(function(ms){
-  if(Date.now()-last>800)return;
+  if(Date.now()-last>800||Date.now()-(window.__pilloleT||0)<900)return;   /* 6.5: il cambio lo anima già pillole.js */
   var i=0;
   ms.forEach(function(m){m.addedNodes.forEach(function(n){if(ok(n)&&n.getBoundingClientRect().height>12)anim(n,i++)})})
 }).observe(document.body,{childList:true,subtree:true});
 /* pannelli mostrati/nascosti con l'attributo hidden (es. tab dell'Albo d'oro) */
 new MutationObserver(function(ms){
-  if(Date.now()-last>800)return;
+  if(Date.now()-last>800||Date.now()-(window.__pilloleT||0)<900)return;   /* 6.5: il cambio lo anima già pillole.js */
   ms.forEach(function(m){var n=m.target;if(m.attributeName==='hidden'&&!n.hidden&&ok(n))anim(n,0)})
 }).observe(document.body,{attributes:true,subtree:true,attributeFilter:['hidden']});
 }
@@ -1222,8 +1222,8 @@ var REP=[['Ciro Trattativa','Parole da campione. Ora però servono i punti.'],['
 S.cf=S.cf||{a:[],free:['','',''],pub:false,esito:null};
 var CFMAX=80;
 /* Claude, redazione 5.8: domande della redazione di Girrr Sport, se ci sono per questa squadra e giornata */
-function confSalvate(){var G=D.cal[0]&&D.cal[0].n,c=DBS.conf.filter(function(x){return x.giornata===G})[0];return c&&Array.isArray(c.risposte)?c.risposte:null}
-function confQs(t){var RQ=window.GirrrRedazioneQs&&window.GirrrRedazioneQs(t,D.cal[0]&&D.cal[0].n,confSalvate(),!confSalvate()&&S.cf.a.some(function(x){return x!==undefined&&x!==null}));if(RQ)return RQ;
+function confSalvate(){var G=D.cal[0]&&D.cal[0].n,c=(DBS.conf||[]).filter(function(x){return x.giornata===G})[0];return c&&Array.isArray(c.risposte)?c.risposte:null}
+function confQs(t){var RQ=window.GirrrRedazioneQs&&window.GirrrRedazioneQs(t,D.cal[0]&&D.cal[0].n,confSalvate(),!confSalvate()&&(S.cf.a||[]).some(function(x){return x!==undefined&&x!==null}));if(RQ)return RQ;
  var r=row(t),o=nextOpp(t),ro=row(o),f=fid(t),g=r.g||0,left=NG-g,der=isDer(t,o),ob=OB[t],pr=ob.pres,ok=r.pos<=EXP[t],X=function(x){return x.replace(/\{O\}/g,o)};
   var q1=ok?'Siete '+r.pos+'° e il presidente chiede: «'+pr+'». Come vedete l\'obiettivo?':'Siete '+r.pos+'° e il presidente chiede: «'+pr+'». Non siete in ritardo?';
   if(g/NG>.5)q1+=' Mancano '+left+' giornate.';
@@ -1517,6 +1517,9 @@ function render(){try{var _t=TABS.filter(function(z){return z[0]===cur})[0];$('#
   /* 6.2.1: «La mia settimana» la aggiunge tifosi.js dopo il disegno: fuori dal confronto, poi di nuovo al suo posto, con la fila ferma.
      Prima il confronto la trasformava in «Regole» e cancellava l'ultimo pulsante: la fila saltava e i pulsanti cambiavano sotto il dito. */
   var _wk=_vw.querySelector('[data-pt-week]'),_wfr=_wk&&_wk.parentNode,_wsl=_wfr?_wfr.scrollLeft:0;if(_wk)_wk.remove();
+  /* 6.5 (Gianluca): durante il cambio di scheda l'altezza resta ferma (prima, se il nuovo contenuto era più corto per un
+     attimo, la pagina tornava su e tremava); poi, se serve, si accorcia con calma */
+  var _h0=_vw.offsetHeight;if(_h0>0){_vw.style.minHeight=_h0+'px';clearTimeout(render._mh);render._mh=setTimeout(function(){var _a=parseFloat(_vw.style.minHeight)||0;_vw.style.minHeight='';var _h1=_vw.offsetHeight;if(_h1<_a-2&&_vw.animate&&!matchMedia('(prefers-reduced-motion: reduce)').matches){_vw.style.minHeight=_h1+'px';var _an=_vw.animate([{minHeight:_a+'px'},{minHeight:_h1+'px'}],{duration:350,easing:'cubic-bezier(.22,.61,.36,1)'});_an.onfinish=_an.oncancel=function(){_vw.style.minHeight=''}}else _vw.style.minHeight=''},800)}
   morphDom(_vw,_nv);
   if(_wk){var _rg=_vw.querySelector('[data-ctab="reg"]');if(_rg&&_rg.parentNode){var _rf=_rg.parentNode,_rsb=_rf.style.scrollBehavior;_rf.insertBefore(_wk,_rg);/* 6.2.2: lo scorrimento si rimette solo se è cambiato, altrimenti fermava quello in corso */if(Math.abs(_rf.scrollLeft-_wsl)>1){_rf.style.scrollBehavior='auto';_rf.scrollLeft=_wsl;_rf.style.scrollBehavior=_rsb}}}
   if(cur==='carriera')animaFiducia(S.cteam,fid(S.cteam));
@@ -1657,7 +1660,7 @@ function dbApply(){
   /* conferenza della prossima giornata già pubblicata: la ricarico solo la prima volta, poi le modifiche sono quelle dell'utente */
   var lastS=DBS.sfide.filter(function(x){return x.da===ME})[0];S.lancio.ok=null;S.lancio.stato=null;
   if(lastS&&(lastS.stato==='rifiutata'||lastS.stato==='scaduta'||(lastS.stato==='accettata'&&lastS.nome_ok))){S.lancio.ok={r:lastS.a,f:lastS.frase};S.lancio.stato=lastS.stato}
-  var G=D.cal[0]&&D.cal[0].n,row=DBS.conf.filter(function(c){return c.giornata===G})[0];S.cf.esito=row&&row.esito?(row.esito==='v'?'v':'p'):null;
+  var G=D.cal[0]&&D.cal[0].n,row=(DBS.conf||[]).filter(function(c){return c.giornata===G})[0];S.cf.esito=row&&row.esito?(row.esito==='v'?'v':'p'):null;
   if(row&&!S.cfok&&Array.isArray(row.risposte)){S.cfok=true;S.cf.a=[];S.cf.free=['','',''];row.risposte.forEach(function(r,i){S.cf.a[i]=r.a==='free'?'free':r.a;if(r.a==='free')S.cf.free[i]=r.t||''});S.cf.pub=true}
 }
 var LVTRY=0,LVBUSY=false,LVTIM=null;
@@ -1802,7 +1805,7 @@ function vSfide(){
 
 /* ---------- Conferenza stampa ---------- */
 function lvDopo(t,ch,pw){
-  var G=D.cal[0]&&D.cal[0].n,row=DBS.conf.filter(function(c){return c.giornata===G})[0];
+  var G=D.cal[0]&&D.cal[0].n,row=(DBS.conf||[]).filter(function(c){return c.giornata===G})[0];
   var h='<div class="card"><h3>Dopo la partita</h3>';
   h+='<p class="sm mut" style="margin-bottom:8px">'+(pw?'Hai fatto '+pw+(pw===1?' promessa':' promesse')+'. Il risultato decide cosa pensa la dirigenza.':'Non hai promesso niente: la dirigenza non ha niente da contestarti.')+'</p>';
   var e=row&&row.esito;
