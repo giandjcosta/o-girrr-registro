@@ -1,6 +1,6 @@
 // Calcola i dati veri da data.json e fa il video con Remotion (usando il Chromium già installato).
 import { bundle } from '@remotion/bundler';
-import { renderMedia, selectComposition } from '@remotion/renderer';
+import { renderMedia, renderStill, selectComposition } from '@remotion/renderer';
 import fs from 'fs';
 const SITO = process.env.SITO || '/tmp/claude-0/srv/o-fant-a-girrr/';
 const CHIAVE = 'sb_publishable_qPhimkrF4iUvIad7JPoH8A_i-eOqG7n';   /* chiave pubblica delle pagine, solo lettura */
@@ -18,7 +18,7 @@ const C = Object.values(T).sort((a, b) => b.pt - a.pt || b.fp - a.fp);
 global.window = {}; await import(SITO + 'girrr/novita-dati.js'); const RIV = {}; const dk = (a, b) => [a, b].map(x => String(x).toLowerCase()).sort().join('|');
 (window.NOV.riv || []).forEach(o => { RIV[dk(o.a, o.b)] = o; });
 const DV = {}, DX = {}, DN = {};
-try { const r = await (await fetch('https://qmjqfgmvimsuxvghetgi.supabase.co/rest/v1/rpc/derby_stato', { method: 'POST', headers: { apikey: CHIAVE, Authorization: 'Bearer ' + CHIAVE, 'Content-Type': 'application/json' }, body: '{}' })).json();   /* sola lettura, come il Tabellone */
+try { const r = process.env.QA_NO_RPC === '1' ? {voti:[],sfide:[]} : await (await fetch('https://qmjqfgmvimsuxvghetgi.supabase.co/rest/v1/rpc/derby_stato', { method: 'POST', headers: { apikey: CHIAVE, Authorization: 'Bearer ' + CHIAVE, 'Content-Type': 'application/json' }, body: '{}' })).json();   /* sola lettura, come il Tabellone */
   (r.voti || []).forEach(x => { const k = dk(x.a, x.b); if (x.si > x.no) DV[k] = 1; else if (x.no > x.si) DX[k] = 1; });
   (r.sfide || []).slice().reverse().forEach(x => { if (x.stato === 'accettata' && x.nome_ok) { const k = dk(x.da, x.a); DV[k] = 1; delete DX[k]; DN[k] = x.nome; } });
 } catch (e) { console.log('Derby votati non letti, uso solo le rivalità:', e.message); }
@@ -60,7 +60,21 @@ if (speciale) {
 const browserExecutable = process.argv[2] || null;   /* senza percorso Remotion scarica il suo Chrome (sul workflow) */
 const serveUrl = await bundle({ entryPoint: './src/index.jsx', publicDir: './public' });
 const composition = await selectComposition({ serveUrl, id: 'Giornata', inputProps: props, browserExecutable });
-await renderMedia({ composition, serveUrl, codec: 'h264', outputLocation: process.env.USCITA || '/home/user/o-girrr-registro/lab/video-giornata/strada-b-remotion.mp4', inputProps: props, browserExecutable, crf: 22 });
+if (process.env.SOLO_FOTOGRAMMI === '1') {
+  // 6.5: collaudo senza musica né pubblicazione. Tre fotogrammi originali e durata misurata della composizione.
+  const SC_QA = eval(/const SC = (\\[.*?\\]);/s.exec(fs.readFileSync('./src/index.jsx', 'utf8'))[1])
+    .filter(([k]) => (k !== 'prossime' || props.big || props.bigC) && (['introCoppa','coppa','gironi'].indexOf(k) < 0 || props.mc.length));
+  let at = 0; const starts = {};
+  for (const [name, len] of SC_QA) { starts[name] = at; at += len; }
+  const out = process.env.SCREENSHOT_DIR || 'qa-speciale';
+  fs.mkdirSync(out, {recursive:true});
+  for (const [nome, frame] of [['copertina',starts.introLega+54],['classifica',starts.classifica+70],['chiusura',starts.fine+48]]) {
+    await renderStill({composition,serveUrl,output:out+'/'+nome+'.png',frame,inputProps:props,browserExecutable,imageFormat:'png'});
+  }
+  fs.writeFileSync(out+'/durata.json', JSON.stringify({giornata:n,skin:props.skin,durata_secondi:composition.durationInFrames/composition.fps,fotogrammi:composition.durationInFrames,fps:composition.fps},null,2));
+} else {
+  await renderMedia({ composition, serveUrl, codec: 'h264', outputLocation: process.env.USCITA || '/home/user/o-girrr-registro/lab/video-giornata/strada-b-remotion.mp4', inputProps: props, browserExecutable, crf: 22 });
+}
 // tempi delle scene per la musica (rilascio/video/musica.py): stessa scaletta di src/index.jsx
 const SCENE = eval(/const SC = (\[.*?\]);/s.exec(fs.readFileSync('./src/index.jsx', 'utf8'))[1]).filter(([k]) => (k !== 'prossime' || props.big || props.bigC) && (['introCoppa', 'coppa', 'gironi'].indexOf(k) < 0 || props.mc.length));
 fs.writeFileSync('scene.json', JSON.stringify({ fps: 30, scene: SCENE, m: props.m.length, mc: props.mc.length, cl: props.cl.length, derby: !!((props.big && props.big.k === 'derby') || (props.bigC && props.bigC.k === 'derby')) }));   /* per gli effetti di monta_musica.py */
