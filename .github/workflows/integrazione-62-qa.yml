@@ -256,8 +256,7 @@ jobs:
           python3 rilascio/r621/backend.py qa-site-backend
           python3 rilascio/r621/backend.py qa-site-backend
           python3 prove/v62/check621.py qa-site qa-site-backend
-          # 6.2.3 online (gh-pages 4b0fc71): r623 non cambia più niente; sopra si prova la 6.2.4 due volte
-          python3 rilascio/r623/applica.py qa-site
+          # 6.2.4 online (gh-pages 6276dc6): gli script della 6.2.3 e prima si fermano sul sito nuovo; si prova la 6.2.4 due volte
           python3 rilascio/r624/applica.py qa-site
           python3 rilascio/r624/applica.py qa-site | grep -q 'File cambiati: 0'
           node --check qa-site/assets/spogliatoio-lazy.js
