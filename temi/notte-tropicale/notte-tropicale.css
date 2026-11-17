@@ -695,3 +695,14 @@
     transition:none!important;animation:none!important;
   }
 }
+
+/* 17/11/2026 — Gianluca: UNA SOLA grafica evento e UN SOLO ingresso.
+   Il selettore della grafica permanente #gsw non ha significato durante
+   il takeover temporaneo. A tema spento ritorna intatto. */
+:root[data-event-theme="notte-tropicale"] #gsw,
+:root[data-event-theme="notte-tropicale"] [aria-label="Grafica"]#gsw{
+  display:none!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .hero.gsw-su{
+  padding-top:clamp(22px,4.5vw,60px)!important;
+}
