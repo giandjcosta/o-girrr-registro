@@ -173,7 +173,7 @@ function cxPiu(cx,ST){try{if(ST.ult){cx.g=ST.ult.n;cx.ris=ST.ult.m.map(function(
 
 /* 6.5 · Edizione speciale nella Curva: 18–23 novembre 2026, ora italiana.
    Sono post di PERSONAGGI, non degli account ufficiali. Si pubblicano una sola
-   volta all'ora stabilita e restano nello storico: NON filtrare con ms < fine.
+   volta all'ora stabilita e spariscono automaticamente alla scadenza dell'evento.
    I normali post automatici mantengono invece la loro finestra di 14 giorni. */
 var NOTTE_INIZIO=ts(2026,11,18,0,0),NOTTE_FINE=ts(2026,11,24,0,0);
 var NOTTE_POST=[
@@ -191,6 +191,8 @@ var NOTTE_POST=[
  ['mister_divano',23,19,10,"Vi siete allenati a guidare tutta la settimana. Adesso vediamo chi sa mettere in campo undici giocatori."]
 ];
 function postNotteTropicale(ms,SQ){
+ /* Solo dal 18 al 23 novembre, inclusi; dal 24 non resta alcun post a tema. */
+ if(ms<NOTTE_INIZIO||ms>=NOTTE_FINE)return [];
  var fuori=[],i,p,x,c,rs,j;
  for(i=0;i<NOTTE_POST.length;i++){
   x=NOTTE_POST[i];p={k:'v:notte-tropicale:'+i,a:x[0],x:x[4],ts:ts(2026,11,x[1],x[2],x[3]),r:[],cat:'gen'};
