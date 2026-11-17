@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#0b0f2b">
+  <title>Numeri del Campionato · O Fant A Girrr</title>
+  <script src="../temi/evento-loader.js" data-solo-manuale></script>
+  <link rel="stylesheet" href="../temi/notte-tropicale/numeri-campionato.css?v=1">
+  <script src="pub.js"></script>
+  <script src="../temi/notte-tropicale/stats-campionato.js?v=1"></script>
+</head>
+<body class="nt-numeri-pagina" data-nt-page="numeri">
+  <main class="nt-numeri-wrap">
+    <a class="nt-ritorno" href="index.html?evento=notte-tropicale">‹ O Girrr</a>
+    <header class="nt-numeri-header">
+      <p class="nt-etichetta">O Fant A Girrr · Stagione 2026/27</p>
+      <h1>Campionato</h1>
+      <p>Record, risultati e statistiche dell'intera stagione.</p>
+    </header>
+    <nav class="nt-numeri-nav" aria-label="Menu del Campionato">
+      <a href="tabellone.html?evento=notte-tropicale">Risultati e classifica</a>
+      <a href="numeri-campionato.html?evento=notte-tropicale" aria-current="page">Numeri del Campionato</a>
+      <a href="campo.html?evento=notte-tropicale">Campo · Centro della giornata</a>
+    </nav>
+    <div class="nt-numeri-meta">
+      <span id="nt-numeri-periodo">Caricamento del Campionato…</span>
+      <span id="nt-numeri-aggiornamento">Fonte: Calendario della lega</span>
+    </div>
+    <div id="nt-numeri-contenuto" aria-live="polite" aria-busy="true">
+      <p class="nt-numeri-caricamento">Carico le statistiche del Campionato…</p>
+    </div>
+    <p class="nt-numeri-nota">I gol si riferiscono ai risultati delle partite. I punti in classifica derivano da vittorie e pareggi. I Fantapunti sono i punteggi tecnici delle squadre: sono valori differenti.</p>
+    <footer class="nt-numeri-footer">
+      <a href="tabellone.html?evento=notte-tropicale">Torna al Tabellone ›</a>
+      <span>O Fant A Girrr · 2026/27</span>
+    </footer>
+  </main>
+  <script>
+  (function () {
+    'use strict';
+    var out = document.getElementById('nt-numeri-contenuto');
+    function errore() {
+      out.innerHTML = '<p class="nt-numeri-errore" role="alert">Statistiche non disponibili. Riprova più tardi.</p>';
+      out.setAttribute('aria-busy','false');
+    }
+    /* ChatGPT, 17/11/2026: il dato si legge dalla stessa sorgente usata nella Home.
+       Nessun salvataggio, nessuna scrittura e nessun dato dimostrativo. */
+    fetch('../data.json', {cache:'no-store'}).then(function (r) {
+      if (!r.ok) throw new Error('Dati della lega non raggiungibili');
+      return r.json();
+    }).then(function (d) {
+      d = window.CVPUB ? window.CVPUB(d) : d;
+      var s = statsCampionato(d);
+      if (!s.partiteGiocate) {
+        out.innerHTML = '<p class="nt-numeri-errore">Il Campionato non ha ancora partite disputate.</p>';
+      } else {
+        out.innerHTML = renderStats(s);
+      }
+      var period = document.getElementById('nt-numeri-periodo');
+      period.textContent = s.giornateGiocate + ' giornate completate · ' +
+        s.partiteGiocate + ' partite disputate';
+      if (d.updated) {
+        document.getElementById('nt-numeri-aggiornamento').textContent =
+          'Dati aggiornati al ' + String(d.updated).replace(/^(\d{4})-(\d{2})-(\d{2})$/, '$3/$2/$1');
+      }
+      out.setAttribute('aria-busy','false');
+    }).catch(errore);
+  })();
+  </script>
+</body>
+</html>
