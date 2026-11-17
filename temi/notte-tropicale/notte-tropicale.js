@@ -18,6 +18,7 @@
        schede principali con l'icona, la partita in evidenza del prossimo turno, la classifica (prime quattro) e i numeri della
        stagione. Dati veri: data.json come la Home, stessi risultati pubblicati (CVPUB) e stessa classifica (stessi criteri). */
     if (pag === 'index.html') homeEvento();
+    forme();
     /* la barra è messa da parte (Gianluca, 17 novembre): compare solo con ?evento-extra=barra */
     if (!/(^| )barra( |$)/.test(document.documentElement.getAttribute('data-event-extra') || '')) return;
     var I = {
@@ -81,18 +82,10 @@
         ['app.html#carriera', 'Carriera', 'car'], ['notifiche.html', 'Notifiche', 'noti']].map(function (v, i) {
         return '<a href="' + v[0] + '"' + (i === 0 ? ' aria-current="page"' : '') + '>' + IC[v[2]] + '<span>' + v[1] + '</span></a>';
       }).join('');
-      /* inclinazione degli sfondi: 4 gradi, meno nei riquadri molto alti, così lo sfondo inclinato non esce di lato più di 11 px */
-      var inclina = function () {
-        [].forEach.call(document.querySelectorAll('.wrap > :is(.vv-avviso,.v53-home,.lg-leghe,#big,#cvw,.sp), .wrap .mini .mn'), function (el) {
-          var h = el.offsetHeight || 1, g = Math.min(4, Math.atan(22 / h) * 180 / Math.PI);
-          el.style.setProperty('--nt-sk', g.toFixed(2) + 'deg');
-        });
-      };
-      inclina();
-      if (window.ResizeObserver) { var ro = new ResizeObserver(inclina); [].forEach.call(document.querySelectorAll('.wrap > *'), function (el) { ro.observe(el); }); }
-      else addEventListener('resize', inclina);
       var box = document.createElement('div'); box.className = 'nt-cruscotto';
-      hero.parentNode.insertBefore(nav, hero.nextSibling); nav.parentNode.insertBefore(box, nav.nextSibling);
+      /* la fila di icone non si mostra più (Gianluca: «se sotto ci sono le schede con le foto, le piccole tab in alto sono un
+         doppione»); il codice resta per un eventuale ripensamento */
+      hero.parentNode.insertBefore(box, hero.nextSibling);
       /* Derby votati o bocciati dai tifosi: la stessa lettura della pagina Derby (solo lettura); se non risponde in 2,5 secondi
          si va avanti con le sole rivalità storiche */
       var DBU = 'https://qmjqfgmvimsuxvghetgi.supabase.co', DBK = 'sb_publishable_qPhimkrF4iUvIad7JPoH8A_i-eOqG7n';
@@ -153,5 +146,49 @@
       }).catch(function () {});
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', metti); else metti();
+  }
+  /* Forme dell'evento su Home, Tabellone e Campo (Gianluca, 17 novembre): .nt-obl ai riquadri, .nt-tab a pulsanti e schede.
+     Il colore di fondo dei pulsanti scelti (rosso, azzurro, oro) e la banda laterale dei riquadri si leggono dalla grafica di
+     sempre, togliendo un attimo la classe; così le competizioni tengono il loro colore. Si ripete quando la pagina cambia. */
+  function forme() {
+    var BOX = ['.wrap > .vv-avviso', '.wrap > .v53-home', '.wrap > .lg-leghe', '.wrap > #big', '.wrap > #cvw', '.wrap > .sp', '.wrap .mini .mn',
+      '.grid .panel', '.swap > .m', '#v53board', '.gs', 'section.card', 'aside.card', '.toolbar'];
+    var TAB = ['.chips button', '.gs .ar', '.sqb', '.cd-btn', '.round button', '.partite-nav button', '.matches .gamebtn', '.sidebar nav a',
+      '.v53-pill', '#big .tx a', '.lg-leghe .go', '.vv-esci', '.vv-fondo', '.v53-pills button'];
+    var FORTI = '#big .tx a:not(.s), .lg-leghe .go';
+    var ON = '.sel,.active,.on,[aria-current],[aria-pressed="true"],[aria-selected="true"]';
+    var trasp = function (c) { var m = /rgba?\(([^)]+)\)/.exec(c || ''); if (!m) return true; var p = m[1].split(','); return p.length > 3 && parseFloat(p[3]) < .5; };
+    var giro = false, oss = null;
+    function passa() {
+      giro = false;
+      [].forEach.call(document.querySelectorAll(BOX.join(',')), function (el) {
+        if (!el.offsetHeight) return;
+        if (!el.classList.contains('nt-obl')) {
+          var cs = getComputedStyle(el), bl = parseFloat(cs.borderLeftWidth) || 0;
+          if (bl >= 3 && !trasp(cs.borderLeftColor)) el.style.setProperty('--nt-banda', cs.borderLeftColor);
+          el.classList.add('nt-obl');
+        }
+        var h = el.offsetHeight || 1; el.style.setProperty('--nt-sk', Math.min(4, Math.atan(14 / h) * 180 / Math.PI).toFixed(2) + 'deg');
+      });
+      [].forEach.call(document.querySelectorAll(TAB.join(',')), function (el) {
+        if (!el.offsetWidth) return;
+        var on = el.matches(ON);
+        if (el.matches(FORTI)) { el.classList.add('nt-tab', 'nt-forte'); return; }
+        el.classList.remove('nt-tab');
+        var bg = getComputedStyle(el).backgroundColor;
+        el.classList.add('nt-tab');
+        el.classList.toggle('nt-on', on);
+        if (!trasp(bg)) el.style.setProperty('--nt-tab-bg', bg); else el.style.removeProperty('--nt-tab-bg');
+      });
+      if (oss) oss.takeRecords();   /* i cambi fatti qui non fanno ripartire il giro */
+    }
+    function presto() { if (giro) return; giro = true; requestAnimationFrame(passa); }
+    function via() {
+      passa();
+      try { oss = new MutationObserver(presto); oss.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['class', 'aria-current', 'aria-pressed', 'aria-selected'] }); } catch (e) {}
+      addEventListener('resize', presto);
+      setTimeout(presto, 1500);
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', via); else via();
   }
 })();
