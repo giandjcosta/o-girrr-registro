@@ -49,6 +49,8 @@ jobs:
           python3 temi/notte-tropicale/prova_pagine.py \
             --base http://127.0.0.1:8767/lab/integrata-62/ \
             --out qa_artifacts/notte-tropicale
+          # Regressione Home: schede complete, titolo fuori dallo scroll, CTA allineate.
+          python3 temi/notte-tropicale/prova_home_schede.py
       - name: Allega screenshot e rapporto alla verifica della PR
         if: always()
         uses: actions/upload-artifact@v4
