@@ -91,13 +91,19 @@
         cl.forEach(function (x, i) { pos[x.n] = i + 1; });
         var nx = L.filter(function (g) { return g.m.every(function (m) { return m[4] === '-'; }); })[0], h = '';
         if (nx) {
-          /* la partita in evidenza: tra le due squadre più in alto in classifica */
-          var bm = nx.m.slice().sort(function (a, b) { return (pos[a[0]] + pos[a[3]]) - (pos[b[0]] + pos[b[3]]); })[0];
+          /* la partita in evidenza (Gianluca: «perché la prima contro la quinta dovrebbe essere un big match?»): lo scontro più
+             equilibrato in alto. Tra le partite con almeno una squadra nelle prime quattro, quella con meno punti di distacco;
+             a parità, quella tra squadre più in alto. Se nessuna tocca le prime quattro, la più equilibrata di tutte. */
+          var ptn = {}; cl.forEach(function (x) { ptn[x.n] = x.pt; });
+          var gap = function (m) { return Math.abs(ptn[m[0]] - ptn[m[3]]); };
+          var alte = nx.m.filter(function (m) { return pos[m[0]] <= 4 || pos[m[3]] <= 4; });
+          var bm = (alte.length ? alte : nx.m).slice().sort(function (a, b) { return gap(a) - gap(b) || (pos[a[0]] + pos[a[3]]) - (pos[b[0]] + pos[b[3]]); })[0];
+          var dist = gap(bm);
           var quando = '';
           try { if (window.NEXT && window.NEXT.n === nx.n) quando = new Date(window.NEXT.t).toLocaleString('it-IT', { timeZone: 'Europe/Rome', weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }); } catch (e) {}
           h += '<a class="nt-match" href="tabellone.html#lega-' + nx.n + '"><small>Big match · ' + nx.n + 'ª giornata</small>' +
             '<b>' + ESC(CAP(bm[0])) + '<i>' + pos[bm[0]] + 'ª</i></b><b>' + ESC(CAP(bm[3])) + '<i>' + pos[bm[3]] + 'ª</i></b>' +
-            '<span>Campionato · Serie A, giornata ' + ESC(nx.sa) + (quando ? ' · Si comincia ' + ESC(quando) : '') + '</span><em>Il calendario ›</em></a>';
+            '<span>' + (dist === 0 ? 'A pari punti' : (dist === 1 ? 'Un punto' : dist + ' punti') + ' di distacco') + ' · Campionato · Serie A, giornata ' + ESC(nx.sa) + (quando ? ' · Si comincia ' + ESC(quando) : '') + '</span><em>Il calendario ›</em></a>';
         }
         var gol = 0, par = 0, pp = 0;
         pl.forEach(function (g) { g.m.forEach(function (m) { if (m[4] === '-') return; var s = m[4].split('-').map(Number); gol += s[0] + s[1]; pp++; if (s[0] === s[1]) par++; }); });
