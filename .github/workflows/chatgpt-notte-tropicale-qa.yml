@@ -15,8 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - name: Clona il ramo della PR, senza merge
+      - name: Clona il commit del ramo della PR, senza unire i rami
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - name: Prepara Python
         uses: actions/setup-python@v5
         with:
