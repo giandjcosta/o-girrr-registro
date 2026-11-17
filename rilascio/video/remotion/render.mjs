@@ -47,9 +47,16 @@ const CU = D.cal.cup, cg = CU.filter(x => x.m.every(m => m[5] && m[5] !== '-') &
 const TC = {}; cg.forEach(x => { x.m.forEach(m => { const r = m[5].split('-').map(Number); [[m[1], r[0], r[1], m[2]], [m[4], r[1], r[0], m[3]]].forEach(([s, a, b, fp]) => { const t = TC[s] = TC[s] || { n: s, g: m[0], pt: 0, fp: 0 }; t.fp += fp; t.pt += a > b ? 3 : a === b ? 1 : 0; }); }); (x.rest || []).forEach(([gr, s]) => { TC[s] = TC[s] || { n: s, g: gr, pt: 0, fp: 0 }; }); });
 const gir = {}; Object.values(TC).sort((a, b) => b.pt - a.pt || b.fp - a.fp).forEach(t => { (gir[t.g] = gir[t.g] || []).push({ n: t.n, pt: t.pt }); });
 const prossC = CU.find(x => x.n === nc + 1), bcS = prossC && cg.length ? scegli(prossC.m.map(m => [m[1], m[4]]), storia(cg, m => [m[1], m[2], m[3], m[4], m[5]], m => m[0])) : null;
-const props = { cl: C.map(t => ({ n: t.n, pt: t.pt })), nc2: prossC ? prossC.n : null, bigC: bcS,  n, nc, m: g.m.map(m => ({ a: m[0], b: m[3], sc: m[4] })), mc: !gc ? [] : gc.m.map(m => ({ g: m[0], a: m[1], b: m[4], sc: m[5] })), c: C.slice(0, 3).map(t => ({ n: t.n, pt: t.pt })), gir, big: bmS };
+// 6.5 (Gianluca, 18 novembre): giornata 8 soltanto. SKIN=notte-tropicale forza la prova sulla 7, SKIN=off la disattiva.
+const speciale = process.env.SKIN === 'notte-tropicale' || (n === 8 && process.env.SKIN !== 'off');
+const props = { skin: speciale ? 'notte-tropicale' : null, cl: C.map(t => ({ n: t.n, pt: t.pt })), nc2: prossC ? prossC.n : null, bigC: bcS,  n, nc, m: g.m.map(m => ({ a: m[0], b: m[3], sc: m[4] })), mc: !gc ? [] : gc.m.map(m => ({ g: m[0], a: m[1], b: m[4], sc: m[5] })), c: C.slice(0, 3).map(t => ({ n: t.n, pt: t.pt })), gir, big: bmS };
 fs.mkdirSync('public', { recursive: true }); const LG = SITO + 'assets/loghi/';
 [['logo-lega-o-fant-a-girrr.png', 'logo-lega.png'], ['logo-cup-champions-cup.png', 'logo-coppa.png'], ['logo-tv-girrr-sport-live.png', 'tv-lega.png'], ['logo-tv-cup-girrr-live.png', 'tv-coppa.png']].forEach(([a, b]) => fs.copyFileSync(LG + a, 'public/' + b));
+if (speciale) {
+ const foto = new URL('../../../temi/notte-tropicale/miami-palme.jpg', import.meta.url);
+ if (!fs.existsSync(foto)) throw Error('Foto Notte Tropicale mancante: non generare un video incompleto');
+ fs.copyFileSync(foto, 'public/miami-palme.jpg');
+}
 const browserExecutable = process.argv[2] || null;   /* senza percorso Remotion scarica il suo Chrome (sul workflow) */
 const serveUrl = await bundle({ entryPoint: './src/index.jsx', publicDir: './public' });
 const composition = await selectComposition({ serveUrl, id: 'Giornata', inputProps: props, browserExecutable });
