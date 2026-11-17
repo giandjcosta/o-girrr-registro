@@ -6,6 +6,8 @@
   'use strict';
   try {
     var p = location.pathname;
+    /* ChatGPT 17/11/2026: forme visive anche nello Spogliatoio radice del Lab. Nessuna funzione o navigazione aggiuntiva. */
+    if (p.endsWith('/lab/integrata-62/index.html')) { forme(); return; }
     if (!/\/girrr\/([a-z0-9-]+\.html)?$/.test(p)) return;          /* solo le pagine di Lega e Stadio, non lo Spogliatoio */
     var pag = (p.match(/\/([a-z0-9-]+\.html)$/) || [])[1] || 'index.html';
     if (pag === 'curva.html') return;
@@ -161,7 +163,7 @@
       /* Albo, Squadre, Derby, Giornale */
       '.swap .card', '.swap .sto', '.swap .sheet', '.swap .top5', '#ultimo .last', '#lista .it',
       /* Spogliatoio */
-      '#app .tw', '#app .bench', '#app .sec', '#app .stats',
+      '#app .tw', '#app .bench', '#app .sec', '#app .stats', 'body:has(> .wrap > #tabs) > .wrap > header',
       /* Versioni e Notifiche */
       '#versioni .vv-v', '#versioni .vv-msg', '#versioni .vv-area',
       '.v53-notifications .v53-panel', '.v53-notifications .v53-notifcard'];
@@ -174,7 +176,7 @@
       '#view .opts button', '#view .cards button', '#view .ch',
       /* Spogliatoio e pagine indipendenti */
       '#app .seg button', '#app .btn', '#app .chip', '#app .tpt', '#app .mkchip',
-      '#app .calnav button', '.tools button', '#ultimo .btn', '#lista .btn',
+      '#app .calnav button', '.tools button', '#tabs button', '#ultimo .btn', '#lista .btn',
       '#versioni .vv-seg button', '#versioni .vv-h', '.v53-notifications .v53-btn'];
     var FORTI = '#big .tx a:not(.s), .lg-leghe .go';
     var ON = '.sel,.active,.on,[aria-current],[aria-pressed="true"],[aria-selected="true"]';
