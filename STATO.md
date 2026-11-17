@@ -1,7 +1,7 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 17 novembre 2026)
 
 ## 17 novembre — Grok: campioni di colore della Notte tropicale (solo registro, NON sul sito)
-- Gianluca ha chiesto i colori e i caratteri del marchio di riferimento, e la lettura delle sfumature del numero. Sono in `temi/grok/PALETTE.md`, con la pagina `temi/grok/index.html` e i token in `temi/grok/palette.css`.
+- Gianluca ha chiesto i colori e i caratteri del marchio di riferimento, e la lettura delle sfumature del numero. Sono in `temi/grok/PALETTE.md`, con i token in `temi/grok/palette.css`. Nessuna app e nessuna pagina.
 - Rockstar non ha pubblicato i codici. I campioni vengono da una ricostruzione pubblica del marchio del 2023: riempimento verticale `#2B60DA` → `#FF4CB9` → `#E6953E`. Nel 2026 il contorno del numero è bianco; nel 2023 era una sfumatura calda (`#FFBC24` in alto, `#6D016D` in basso).
 - Nessun logo e nessun carattere commerciale nel repository. Lega e Stadio non cambiano. Il ramo del tema (`chatgpt/theme-engine-vice-city-event`) non è stato toccato. Prova: `python3 temi/grok/prova_palette.py`. Non provato nel browser: la pagina non ha script.
 

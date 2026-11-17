@@ -85,7 +85,7 @@ Regole che restano, da `AGENTS.md`:
 - Niente animazione continua sopra i risultati. `prefers-reduced-motion` va rispettato.
 - Nome e disegno originali. Niente logo, niente caratteri del marchio, niente scritta «Vice City» nella grafica che vedono i giocatori.
 
-I token pronti da copiare sono in `palette.css`. La pagina `index.html` li mostra. Non sono collegati alle pagine del Lab: ChatGPT e Claude stanno già sul tema, e non sovrappongo il loro lavoro.
+I token pronti da copiare sono in `palette.css`. Non c'è una pagina e non c'è un'app: non sono collegati al Lab. ChatGPT e Claude stanno già sul tema, e non sovrappongo il loro lavoro.
 
 ## Caratteri
 
