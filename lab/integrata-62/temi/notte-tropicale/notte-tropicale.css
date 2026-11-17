@@ -196,3 +196,374 @@
   :root[data-event-theme="notte-tropicale"]::after{animation:none!important;transform:perspective(320px) rotateX(62deg)!important}
   :root[data-event-theme="notte-tropicale"] :is(.hero h1,.top h1,header h1){animation:none!important}
 }
+
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   O Girrr · Miami Nights / fusione della UI (ChatGPT, 17 novembre 2026).
+   Base: Notte Tropicale di Claude. Fonte: mockup Home V3 di ChatGPT.
+   Tutte le regole dipendono da data-event-theme. Nessuna alterazione dati.
+   Conservare Lega (rosso/azzurro) e Stadio (oro) e i colori di stato.
+   Applicato con il loader esistente di Claude, senza seconda navigazione JS.
+   ═════════════════════════════════════════════════════════════════════════════ */
+:root[data-event-theme="notte-tropicale"]{
+  --nt-sport:'Barlow Condensed',Impact,'Arial Narrow',sans-serif;
+  --nt-neon:#ff57af;
+  --nt-edge:rgba(255,125,210,.53);
+  --nt-ink:#fff4f8;
+}
+
+/* HOME: testata fotografica a tutta superficie, non uno sfondo generico.
+   Il logo vero non si perde; O Girrr e Notte Tropicale restano leggibili. */
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"]>.wrap{
+  max-width:1340px!important;padding-inline:clamp(12px,2.5vw,30px)!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero{
+  position:relative;isolation:isolate;min-height:clamp(295px,34vw,465px);
+  align-items:center;gap:clamp(12px,3vw,40px);padding:clamp(22px,4.5vw,60px)!important;
+  border-radius:clamp(16px,2vw,30px);border:1px solid rgba(255,170,214,.58);
+  background:linear-gradient(90deg,rgba(20,9,42,.88),rgba(37,8,56,.48) 55%,rgba(19,9,38,.18)),
+    linear-gradient(0deg,rgba(17,8,31,.45),transparent 55%),
+    url(miami-palme.jpg) 60% 57%/cover no-repeat,#25123c;
+  box-shadow:0 28px 64px rgba(5,3,22,.58),inset 0 0 0 1px rgba(255,200,228,.12);
+  overflow:hidden;margin:0 0 20px;
+}
+:root[data-event-theme="notte-tropicale"][data-event-sfondo="notte"] body[data-v53="home"] header.hero{
+  background-image:linear-gradient(90deg,rgba(20,9,42,.89),rgba(37,8,56,.52) 60%,rgba(19,9,38,.20)),
+    linear-gradient(0deg,rgba(17,8,31,.55),transparent 64%),
+    url(ocean-drive-notte.jpg);
+}
+:root[data-event-theme="notte-tropicale"][data-event-sfondo="tramonto"] body[data-v53="home"] header.hero,
+:root[data-event-theme="notte-tropicale"][data-event-sfondo="foto"] body[data-v53="home"] header.hero{
+  background-image:linear-gradient(90deg,rgba(20,9,42,.82),rgba(37,8,56,.38) 62%,rgba(19,9,38,.18)),
+    linear-gradient(0deg,rgba(17,8,31,.42),transparent 64%),
+    url(miami-tramonto.jpg);
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero::before{
+  content:"SPECIAL EDITION · 18—20 NOV";position:absolute;top:clamp(12px,2.5vw,26px);left:clamp(16px,4.5vw,60px);
+  padding:7px 11px;background:linear-gradient(90deg,#f72e94,#9d319e);
+  border-radius:4px;transform:skewX(-9deg);font:900 10px/1.1 Inter,system-ui,sans-serif;
+  letter-spacing:.16em;color:#fff;box-shadow:0 0 20px rgba(255,69,167,.5);
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero>a{position:relative;z-index:1}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero>a img{
+  max-width:clamp(84px,15vw,180px)!important;height:auto!important;max-height:180px;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero>div{position:relative;z-index:1;min-width:0}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero .kick{
+  color:#a7f3ff!important;font-size:clamp(10px,1.2vw,14px);letter-spacing:.23em;
+  text-shadow:0 0 12px rgba(111,240,255,.65)!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero h1{
+  font-size:clamp(62px,10vw,145px)!important;line-height:.82!important;
+  letter-spacing:-.055em!important;margin:.12em 0 .05em!important;
+  padding-bottom:.48em!important;white-space:normal!important;max-width:100%;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero h1::after{
+  left:.35em!important;font-size:.42em!important;bottom:-.02em!important;
+  max-width:85vw;white-space:nowrap;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero .tag{
+  color:#ffe6f5!important;line-height:1.5;font-size:clamp(12px,1.4vw,16px)!important;
+  max-width:490px;text-shadow:0 2px 14px rgba(0,0,0,.7);
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero .tag::before{
+  padding-left:0!important;background:none!important;margin:5px 0 10px!important;
+  font-size:clamp(9px,1vw,11px);letter-spacing:.15em;
+}
+
+/* Navigazione in stile sports UI, non più le pillole standard.
+   La v53-menu è generata dall'app: link e percorsi autentici conservati. */
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-menu{
+  display:grid!important;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));
+  gap:9px!important;overflow:visible!important;margin:12px 0 22px!important;
+  padding:0!important;max-width:none!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-menu a{
+  min-width:0!important;white-space:normal!important;text-align:center;
+  min-height:57px!important;padding:12px 10px!important;
+  border:1px solid rgba(255,143,211,.58)!important;border-radius:10px!important;
+  background:linear-gradient(135deg,rgba(69,20,86,.96),rgba(31,13,61,.94))!important;
+  box-shadow:0 8px 18px rgba(5,2,19,.48),inset 0 0 0 1px rgba(255,255,255,.05);
+  font:italic 800 clamp(13px,1.35vw,17px)/1.12 var(--nt-sport)!important;
+  letter-spacing:.025em;text-transform:uppercase;color:#fdf0fa!important;
+  transition:background .18s ease,box-shadow .18s ease,transform .18s ease!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-menu a[aria-current="page"]{
+  background:linear-gradient(110deg,var(--v53-accent,var(--hi)),#e83c98)!important;
+  border-color:#fff1cf!important;box-shadow:0 0 19px rgba(255,79,163,.58)!important;
+  color:var(--v53-onaccent,#19112d)!important;
+}
+@media(hover:hover) and (pointer:fine){
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-menu a:hover{
+   transform:translateY(-2px);box-shadow:0 9px 22px rgba(5,2,19,.45),0 0 15px rgba(255,79,163,.45)!important
+ }
+}
+
+/* Hero interno con informazioni VERE della lega: punteggi, squadra e news
+   restano alimentati dagli script della 6.2.4, cambia solo la loro estetica. */
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-home{
+  padding:clamp(19px,2.5vw,32px)!important;margin:0 0 19px!important;border:1px solid var(--nt-edge)!important;
+  border-radius:22px!important;background:linear-gradient(125deg,rgba(69,22,83,.96),rgba(21,11,49,.94))!important;
+  box-shadow:0 20px 48px rgba(10,2,24,.52),0 0 29px rgba(255,79,163,.13)!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-homehead .v53-h1{
+  font:italic 900 clamp(32px,4vw,47px)/.95 var(--nt-sport)!important;
+  text-transform:uppercase!important;letter-spacing:-.015em!important;
+  color:#fff5fa!important;background:none!important;padding-left:0!important;
+  text-shadow:0 3px 10px #180827!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-kicker{
+  font-size:10px!important;letter-spacing:.24em;color:#ffa6d4!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-desc{font-size:13px!important;color:#eed4ee!important}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-select{
+  border:1px solid #b95fbd!important;background:#2f164d!important;
+  min-height:47px;border-radius:9px!important;color:#fff4fa!important
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-metrics{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px!important;margin:20px 0 15px;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-metric{
+  min-width:0;padding:clamp(14px,1.5vw,21px)!important;border:1px solid rgba(222,101,211,.67)!important;
+  border-radius:14px!important;background:linear-gradient(138deg,rgba(115,40,119,.63),rgba(35,19,69,.78))!important;
+  box-shadow:0 6px 21px #0b062a55,inset 0 1px rgba(255,255,255,.08)!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-metric.featured{
+  background:linear-gradient(110deg,rgba(115,39,104,.76),rgba(45,17,77,.9))!important;
+  border-color:var(--v53-accent,var(--hi))!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-metric b,
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v55-position strong,
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v55-points strong{
+  font:italic 900 clamp(24px,3.6vw,47px)/1 var(--nt-sport)!important;color:#fff!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-metric small{
+  font-size:10px!important;font-weight:850;text-transform:uppercase;letter-spacing:.08em;color:#efd2eb!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-actionrow a{
+  font:italic 800 17px var(--nt-sport)!important;text-transform:uppercase;
+  color:var(--nt-rosa-chiaro)!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-live{
+  border-top:1px solid rgba(255,190,225,.26);padding-top:14px
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-pill,
+:root[data-event-theme="notte-tropicale"] .v53-pills .v53-pill{
+  min-height:42px!important;padding:9px 15px!important;border-radius:7px!important;
+  border:1px solid rgba(255,137,207,.62)!important;
+  background:linear-gradient(160deg,#52215e,#211341)!important;
+  font:italic 800 14px var(--nt-sport)!important;text-transform:uppercase;
+  color:#fff2fa!important;
+}
+:root[data-event-theme="notte-tropicale"] .v53-pills .v53-pill:is([aria-selected="true"],.active){
+  background:var(--v53-accent,var(--hi))!important;color:var(--v53-onaccent,var(--bg))!important;
+  box-shadow:0 0 22px rgba(255,79,163,.4)!important;
+}
+
+/* Spotlight / partite vere: trasforma il grande annuncio in un Big Match */
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .big.on{
+  min-height:225px!important;border-radius:22px!important;border:2px solid #fa51ae;
+  background:linear-gradient(100deg,rgba(28,9,40,.96),rgba(45,10,68,.86) 56%,rgba(52,15,76,.36)),
+    url(ocean-drive-notte.jpg) center 48%/cover no-repeat,#290f45!important;
+  box-shadow:0 0 24px rgba(253,47,165,.32),0 20px 40px rgba(10,3,23,.5)!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .big h2{
+  font:italic 900 clamp(34px,5.4vw,73px)/.98 var(--nt-sport)!important;
+  text-transform:uppercase;color:#fff!important;letter-spacing:-.017em!important;
+  text-shadow:0 4px 18px rgba(11,2,27,.9)!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .big .bk{
+  color:#ffb673!important;font:italic 900 18px var(--nt-sport)!important;letter-spacing:.17em;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .big .bt a{
+  min-height:44px;padding:13px 17px!important;border-radius:999px!important;
+  font:italic 900 16px var(--nt-sport)!important;text-transform:uppercase;
+  background:linear-gradient(100deg,#ffae61,#ed319b)!important;color:#fff!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .big .bt a.s{
+  background:rgba(30,10,53,.87)!important;border:1px solid var(--nt-edge)!important;
+}
+
+/* Striscia di risultati / giornate: ora cards sportive ad alta leggibilità,
+   senza cambiare i marcatori del risultato o le classi di stato. */
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .strip{
+  gap:12px!important;margin:14px 0 25px!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .strip .st{
+  position:relative;border:1px solid rgba(255,143,211,.59)!important;border-left:5px solid var(--acc)!important;
+  border-radius:13px!important;min-height:115px;padding:18px 16px!important;
+  background:linear-gradient(130deg,rgba(81,22,88,.96),rgba(26,12,51,.94))!important;
+  box-shadow:0 9px 27px rgba(8,2,24,.56)!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .strip .st b{
+  font:italic 900 clamp(19px,2.15vw,29px)/1 var(--nt-sport)!important;
+  text-transform:uppercase;color:#fff!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .strip .st small{
+  font-weight:900;letter-spacing:.17em;color:#ffc2e0!important;
+}
+
+/* Cards editoriali: il blocco più caratteristico della Home V3.
+   Restano i sei link originali: Spogliatoio, Girrr Sport, Tabellone,
+   Totogirrr, Albo e Carriera, senza dati dimostrativi o scorciatoie finte. */
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap .cards{
+  display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:16px!important;margin-bottom:22px!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap .cards>.c{
+  display:flex!important;flex-direction:column!important;align-items:stretch!important;
+  min-width:0;min-height:270px!important;padding:22px!important;
+  border-radius:18px!important;border:1px solid rgba(255,128,210,.58)!important;
+  background:linear-gradient(0deg,rgba(23,8,40,.95),rgba(52,14,70,.43) 65%,rgba(15,7,31,.45)),
+    url(miami-palme.jpg) center/cover no-repeat!important;
+  box-shadow:0 13px 35px rgba(8,3,21,.57)!important;
+  transition:transform .22s ease,box-shadow .22s ease!important;
+  grid-template:none!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap .cards>.c:nth-child(3n+2){
+  background-image:linear-gradient(0deg,rgba(23,8,40,.96),rgba(52,14,70,.38) 70%,rgba(15,7,31,.40)),url(ocean-drive-notte.jpg)!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap .cards>.c:nth-child(3n){
+  background-image:linear-gradient(0deg,rgba(23,8,40,.96),rgba(52,14,70,.38) 70%,rgba(15,7,31,.40)),url(miami-tramonto.jpg)!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap .cards>.c .ic{
+  height:75px!important;margin:0 0 30px!important;justify-content:flex-start!important;
+  flex:0 0 auto;grid-area:auto!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap .cards>.c .ic img{
+  width:auto!important;height:auto!important;max-height:75px;max-width:180px;object-fit:contain;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap .cards>.c h2{
+  margin:auto 0 8px!important;align-self:stretch!important;grid-area:auto!important;
+  font:italic 900 clamp(26px,3vw,35px)/.92 var(--nt-sport)!important;
+  letter-spacing:.01em!important;text-transform:uppercase!important;
+  text-shadow:0 4px 14px rgba(8,0,18,.94)!important;
+  padding:0!important;background:none!important;color:#fff!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap .cards>.c p{
+  margin:0 0 14px!important;font-size:12px!important;line-height:1.45;color:#ffe5f5!important;
+  grid-area:auto!important;flex:0 1 auto!important;align-self:stretch!important;
+  text-shadow:0 2px 7px #180b25;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap .cards>.c .go{
+  margin:0!important;width:max-content;max-width:100%;padding:8px 13px;border-radius:999px;
+  grid-area:auto!important;align-self:flex-start!important;
+  background:linear-gradient(110deg,#ff9e63,#ed288e)!important;
+  font:italic 900 15px var(--nt-sport)!important;letter-spacing:.07em;color:#fff!important;
+  box-shadow:0 7px 16px rgba(5,0,20,.5)!important;
+}
+@media(hover:hover) and (pointer:fine){
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap .cards>.c:hover{
+   transform:translateY(-5px)!important;box-shadow:0 16px 37px rgba(6,2,18,.62),0 0 18px rgba(255,80,180,.35)!important
+ }
+}
+
+/* Extra: Curva, pulsanti social e pannelli che non erano ancora molto caratterizzati. */
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cvw{
+  background:linear-gradient(110deg,rgba(60,22,91,.93),rgba(21,10,44,.94))!important;
+  border:1px solid var(--nt-edge)!important;border-radius:16px!important;
+  box-shadow:0 12px 30px rgba(6,3,23,.47)!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cvh b,
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .mini .mn b{
+  font:italic 900 26px var(--nt-sport)!important;text-transform:uppercase;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .mini .mn{
+  min-height:70px!important;border-radius:14px!important;
+  border:1px solid var(--nt-edge)!important;
+  background:linear-gradient(125deg,rgba(57,20,86,.93),rgba(20,10,43,.94))!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .mini .mn .mi{
+  background:linear-gradient(135deg,#7c319e,#d12d89)!important;
+}
+
+/* Mobile / TV: componenti grandi, nessuna copertura dal dock di Claude. */
+@media(max-width:900px){
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap .cards{
+   grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero{
+   min-height:350px!important;
+ }
+}
+@media(max-width:580px){
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero{
+   min-height:340px!important;gap:12px!important;
+   align-items:center;padding:48px 18px 24px!important;
+   background-position:63% 55%!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero::before{
+   top:12px!important;left:18px!important;font-size:9px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero>a img{
+   max-width:76px!important;max-height:96px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero h1{
+   font-size:clamp(56px,13vw,82px)!important;padding-bottom:.6em!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero h1::after{
+   font-size:.40em!important;left:.04em!important;bottom:.01em!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero .tag{
+   font-size:11.5px!important;max-width:270px;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-menu{
+   grid-template-columns:repeat(3,minmax(0,1fr));gap:6px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-menu a{
+   font-size:13px!important;padding:9px 5px!important;min-height:49px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-metrics{
+   grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-metric.featured{
+   grid-column:1/-1!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-metric{
+   padding:13px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap .cards{
+   grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap .cards>.c{
+   min-height:237px!important;padding:15px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap .cards>.c .ic{
+   height:48px!important;margin-bottom:22px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap .cards>.c .ic img{
+   max-height:52px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap .cards>.c h2{
+   font-size:25px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap .cards>.c p{
+   font-size:11px!important;
+ }
+}
+@media(max-width:365px){
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .v53-menu{
+   grid-template-columns:repeat(2,minmax(0,1fr));
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero{
+   padding:43px 13px 20px!important;gap:9px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero h1{
+   font-size:50px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] header.hero>a img{
+   max-width:58px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap .cards{
+   grid-template-columns:1fr!important;
+ }
+}
+/* Focus e riduzione del movimento: navigabile anche senza mouse. */
+:root[data-event-theme="notte-tropicale"] :is(.v53-menu a,.cards>.c,.big .bt a,.v53-pill,.nt-barra a):focus-visible{
+  outline:3px solid #93f6ff!important;outline-offset:3px!important;
+}
+@media(prefers-reduced-motion:reduce){
+ :root[data-event-theme="notte-tropicale"] body[data-v53="home"] :is(.v53-menu a,.cards>.c,.big .bt a){
+   transition:none!important;transform:none!important;animation:none!important;
+ }
+}
