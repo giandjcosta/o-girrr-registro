@@ -14,6 +14,10 @@
       var lega = function () { if (document.body && document.body.dataset.skin && document.body.dataset.skin !== 'lega') document.body.dataset.skin = 'lega'; };
       if (document.body) lega(); else document.addEventListener('DOMContentLoaded', lega);
     }
+    /* Home dal bozzetto (Gianluca, 17 novembre: «qualcosa del genere era carino, ma senza la barra in fondo»): sotto la foto le
+       schede principali con l'icona, la partita in evidenza del prossimo turno, la classifica (prime quattro) e i numeri della
+       stagione. Dati veri: data.json come la Home, stessi risultati pubblicati (CVPUB) e stessa classifica (stessi criteri). */
+    if (pag === 'index.html') homeEvento();
     /* la barra è messa da parte (Gianluca, 17 novembre): compare solo con ?evento-extra=barra */
     if (!/(^| )barra( |$)/.test(document.documentElement.getAttribute('data-event-extra') || '')) return;
     var I = {
@@ -41,4 +45,62 @@
     }
     if (document.body) metti(); else document.addEventListener('DOMContentLoaded', metti);
   } catch (e) {}
+  function homeEvento() {
+    var ESC = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+    var CAP = function (s) { s = String(s); return s.charAt(0).toUpperCase() + s.slice(1); };
+    var SV = function (p) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + p + '</svg>'; };
+    var IC = {
+      home: SV('<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/>'),
+      tab: SV('<path d="M7 4h10v4a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8"/>'),
+      car: SV('<path d="M5 20V12M10 20V8M15 20v-6M20 20V4"/>'),
+      toto: SV('<rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r="1.3" fill="currentColor"/><circle cx="15" cy="15" r="1.3" fill="currentColor"/><circle cx="15" cy="9" r="1.3" fill="currentColor"/><circle cx="9" cy="15" r="1.3" fill="currentColor"/>')
+    };
+    /* stessa classifica della Home (index.html): punti, poi fantapunti, differenza reti, gol fatti, ordine della lega */
+    var ORD = ["The Blue brothers", "Apo team", "Mariana Coneja", "stif dc", "Real Madrink", "Atletico ma non troppo", "Oranje VC", "AFA SELECCION", "Grodah", "WOA"];
+    function classifica(rounds) {
+      var sq = {}; function r(n) { return sq[n] || (sq[n] = { n: n, g: 0, pt: 0, fp: 0, gf: 0, gs: 0 }); }
+      rounds.forEach(function (g) { g.m.forEach(function (m) {
+        var a = r(m[0]), b = r(m[3]); if (m[4] === '-') return; var s = m[4].split('-').map(Number);
+        [[a, s[0], s[1], m[1]], [b, s[1], s[0], m[2]]].forEach(function (x) { x[0].g++; x[0].gf += x[1]; x[0].gs += x[2]; x[0].fp += x[3]; x[0].pt += x[1] > x[2] ? 3 : (x[1] === x[2] ? 1 : 0); });
+      }); });
+      return Object.keys(sq).map(function (k) { return sq[k]; }).sort(function (x, y) { return y.pt - x.pt || y.fp - x.fp || (y.gf - y.gs) - (x.gf - x.gs) || y.gf - x.gf || ((ORD.indexOf(x.n) < 0 ? 99 : ORD.indexOf(x.n)) - (ORD.indexOf(y.n) < 0 ? 99 : ORD.indexOf(y.n))); });
+    }
+    function metti() {
+      var hero = document.querySelector('.wrap > header.hero');
+      if (!hero || document.querySelector('.nt-schede')) return;
+      var nav = document.createElement('nav'); nav.className = 'nt-schede'; nav.setAttribute('aria-label', 'Sezioni principali');
+      nav.innerHTML = [['index.html', 'Home', 'home'], ['tabellone.html', 'Tabellone', 'tab'], ['app.html#carriera', 'Carriera', 'car'], ['totogirrr.html', 'Totogirrr', 'toto']].map(function (v, i) {
+        return '<a href="' + v[0] + '"' + (i === 0 ? ' aria-current="page"' : '') + '>' + IC[v[2]] + '<span>' + v[1] + '</span></a>';
+      }).join('');
+      var box = document.createElement('div'); box.className = 'nt-cruscotto';
+      hero.parentNode.insertBefore(nav, hero.nextSibling); nav.parentNode.insertBefore(box, nav.nextSibling);
+      fetch('../data.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) {
+        d = window.CVPUB ? window.CVPUB(d) : d;
+        var L = (d.cal && d.cal.lega) || [], pl = L.filter(function (g) { return g.m.some(function (m) { return m[4] !== '-'; }); });
+        if (!pl.length) return;
+        var cl = classifica(pl), last = pl[pl.length - 1], pos = {};
+        cl.forEach(function (x, i) { pos[x.n] = i + 1; });
+        var nx = L.filter(function (g) { return g.m.every(function (m) { return m[4] === '-'; }); })[0], h = '';
+        if (nx) {
+          /* la partita in evidenza: tra le due squadre più in alto in classifica */
+          var bm = nx.m.slice().sort(function (a, b) { return (pos[a[0]] + pos[a[3]]) - (pos[b[0]] + pos[b[3]]); })[0];
+          var quando = '';
+          try { if (window.NEXT && window.NEXT.n === nx.n) quando = new Date(window.NEXT.t).toLocaleString('it-IT', { timeZone: 'Europe/Rome', weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }); } catch (e) {}
+          h += '<a class="nt-match" href="tabellone.html#lega-' + nx.n + '"><small>Big match · ' + nx.n + 'ª giornata</small>' +
+            '<b>' + ESC(CAP(bm[0])) + '<i>' + pos[bm[0]] + 'ª</i></b><b>' + ESC(CAP(bm[3])) + '<i>' + pos[bm[3]] + 'ª</i></b>' +
+            '<span>Campionato · Serie A, giornata ' + ESC(nx.sa) + (quando ? ' · Si comincia ' + ESC(quando) : '') + '</span><em>Il calendario ›</em></a>';
+        }
+        var gol = 0, par = 0, pp = 0;
+        pl.forEach(function (g) { g.m.forEach(function (m) { if (m[4] === '-') return; var s = m[4].split('-').map(Number); gol += s[0] + s[1]; pp++; if (s[0] === s[1]) par++; }); });
+        h += '<section class="nt-pannelli"><a class="nt-classifica" href="tabellone.html#lega-' + last.n + '"><header><b>Classifica</b><small>Dopo la ' + last.n + 'ª ›</small></header><ol>' +
+          cl.slice(0, 4).map(function (x, i) { return '<li' + (i === 0 ? ' class="primo"' : '') + '><em>' + (i + 1) + '</em><span>' + ESC(CAP(x.n)) + '</span><b>' + x.pt + '<small>pt</small></b></li>'; }).join('') + '</ol></a>' +
+          '<div class="nt-stagione"><header><b>Stagione</b><small>Campionato</small></header><div>' +
+          '<p><b>' + pl.length + '</b><small>Giornate</small></p><p><b>' + gol + '</b><small>Gol</small></p>' +
+          '<p><b>' + String(Math.round(gol / Math.max(pp, 1) * 10) / 10).replace('.', ',') + '</b><small>Gol a partita</small></p><p><b>' + par + '</b><small>Pareggi</small></p></div></div></section>';
+        box.innerHTML = h;
+        document.documentElement.classList.add('nt-cruscotto-pronto');
+      }).catch(function () {});
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', metti); else metti();
+  }
 })();

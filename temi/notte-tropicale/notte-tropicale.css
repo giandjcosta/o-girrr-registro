@@ -243,6 +243,87 @@
 }
 @media (prefers-reduced-motion:reduce){:root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c{transition:none!important}}
 
+/* 4g. Home dal bozzetto scelto da Gianluca (17 novembre), senza barra in basso. Forme ad angoli tagliati (in alto a sinistra e
+   in basso a destra), niente pillole tonde della grafica di sempre. Ordine: titolo, schede principali, partita in evidenza,
+   classifica e stagione, i due riquadri rimasti (Ultima giornata, Champions Cup), le sezioni come schede fotografiche da
+   sfogliare, poi novità, notifiche, Giornale e Curva. */
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap{display:flex;flex-direction:column}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>*{order:20}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>header.hero{order:1}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>.nt-schede{order:2}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>.nt-cruscotto{order:3}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>#strip{order:4}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>#agg{order:5}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>.cards{order:6}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>.vv-avviso{order:7}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>.v53-home{order:8}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>#big{order:9}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>#cvw{order:10}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap::after{order:99}
+/* schede principali con l'icona: la scelta è sfumata arancio-rosa, le altre scure col bordo */
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-schede{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:8px;margin:14px 0 14px}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-schede a{display:flex;align-items:center;justify-content:center;gap:7px;min-height:46px;padding:8px 6px;color:#fff;text-decoration:none;
+  font:italic 800 15px/1 'Barlow Condensed',Inter,sans-serif;text-transform:uppercase;letter-spacing:.02em;clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);
+  background:linear-gradient(180deg,rgba(60,22,104,.95),rgba(24,8,52,.95));box-shadow:inset 0 0 0 1px var(--nt-bordo);transition:filter .2s ease,transform .15s ease}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-schede a svg{width:19px;height:19px;flex:none}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-schede a[aria-current]{background:linear-gradient(100deg,#ffb347,#ff4fa3 70%);color:#22052e;box-shadow:none}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-schede a:active{transform:scale(.97)}
+@media (max-width:400px){:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-schede{gap:5px} :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-schede a{flex-direction:column;gap:3px;font-size:12.5px;min-height:54px}}
+/* partita in evidenza: foto di Ocean Drive dietro, squadre grandi */
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-match{display:grid;gap:2px;position:relative;margin:0 0 12px;padding:18px 18px 16px 22px;color:#fff;text-decoration:none;overflow:hidden;
+  clip-path:polygon(18px 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%,0 18px);
+  background:linear-gradient(90deg,rgba(28,8,48,.95) 0%,rgba(40,12,64,.82) 55%,rgba(40,12,64,.45)),url(ocean-drive-notte.jpg) 70% 50%/cover no-repeat;
+  box-shadow:inset 4px 0 0 var(--nt-rosa)}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-match small{font:italic 900 14px/1 'Barlow Condensed',Inter,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--nt-arancio);margin-bottom:6px}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-match b{font:italic 900 clamp(26px,7.4vw,46px)/.98 'Barlow Condensed',Inter,sans-serif;text-transform:uppercase;letter-spacing:-.005em;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-match b i{font:800 12px Inter,sans-serif;color:var(--nt-ciano);margin-left:8px;vertical-align:middle;letter-spacing:.06em}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-match span{font:700 11px/1.4 Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#f0d6ea;margin-top:8px}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-match em{justify-self:start;margin-top:10px;padding:9px 16px;font:italic 900 15px/1 'Barlow Condensed',Inter,sans-serif;text-transform:uppercase;color:#22052e;
+  background:linear-gradient(100deg,#ffb347,#ff4fa3);clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px)}
+/* classifica (prime quattro) e stagione, affiancate; sotto i 560 px una sopra l'altra */
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-pannelli{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:10px;margin:0 0 12px}
+@media (max-width:560px){:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-pannelli{grid-template-columns:1fr}}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] :is(.nt-classifica,.nt-stagione){display:block;padding:14px;color:#fff;text-decoration:none;background:var(--nt-scheda);box-shadow:inset 0 0 0 1px var(--nt-bordo);clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px)}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] :is(.nt-classifica,.nt-stagione) header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] :is(.nt-classifica,.nt-stagione) header b{font:italic 900 22px/1 'Barlow Condensed',Inter,sans-serif;text-transform:uppercase;padding-left:1.25em;
+  background:repeating-linear-gradient(115deg,var(--nt-rosa) 0 .16em,transparent .16em .3em) 0 52%/.95em .78em no-repeat}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] :is(.nt-classifica,.nt-stagione) header small{font:800 11px Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#f7c2df}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-classifica ol{list-style:none;margin:0;padding:0}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-classifica li{display:grid;grid-template-columns:22px 10px minmax(0,1fr) auto;align-items:center;gap:8px;padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.1);font:700 15px Inter,sans-serif}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-classifica li::before{content:'';grid-column:2;grid-row:1;width:8px;height:16px;transform:skewX(-18deg);background:linear-gradient(#ff7cc0,#a04bff)}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-classifica li em{grid-column:1;grid-row:1;font:italic 900 17px 'Barlow Condensed',Inter,sans-serif;font-style:italic}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-classifica li span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-classifica li b{font:italic 900 19px 'Barlow Condensed',Inter,sans-serif}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-classifica li b small{font:700 10px Inter;margin-left:3px;color:#f7c2df}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-classifica li.primo{background:linear-gradient(90deg,#ff4fa3,#c2307a);border:0;clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px)}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-classifica li.primo::before{background:#fff}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-stagione>div{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-stagione p{margin:0;padding:10px 6px;text-align:center;background:rgba(10,3,28,.55);box-shadow:inset 0 0 0 1px rgba(255,180,220,.35);clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px)}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-stagione p b{display:block;font:italic 900 30px/1 'Barlow Condensed',Inter,sans-serif}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .nt-stagione p small{display:block;margin-top:4px;font:800 10px Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#f0d6ea}
+/* i riquadri doppioni (In testa, Prossimo turno) spariscono quando classifica e partita in evidenza sono pronte */
+:root.nt-cruscotto-pronto[data-event-theme="notte-tropicale"] body[data-v53="home"] #strip>.st:is(:nth-child(1),:nth-child(3)){display:none!important}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] #strip{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] #strip>.st{border-radius:0!important;clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px)}
+@media (max-width:360px){:root[data-event-theme="notte-tropicale"] body[data-v53="home"] #strip{grid-template-columns:1fr!important}}
+/* le sezioni come schede fotografiche da sfogliare di lato (sul PC in griglia) */
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards{display:flex!important;gap:10px!important;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:34px 2px 8px!important;margin:6px 0 12px!important;position:relative;overscroll-behavior-x:contain}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards::-webkit-scrollbar{display:none}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards::before{content:'Tutto il Girrr';position:absolute;top:0;left:2px;padding-left:1.25em;font:italic 900 22px/1 'Barlow Condensed',Inter,sans-serif;text-transform:uppercase;color:#fff;
+  background:repeating-linear-gradient(115deg,var(--nt-rosa) 0 .16em,transparent .16em .3em) 0 52%/.95em .78em no-repeat}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c{flex:0 0 46%;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:flex-end;min-height:150px;padding:12px!important;margin:0!important;
+  position:relative;overflow:hidden;border-radius:0!important;clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);box-shadow:inset 0 0 0 1px rgba(255,140,205,.55)!important;
+  background:linear-gradient(0deg,rgba(20,6,40,.95) 0%,rgba(20,6,40,.35) 70%),url(miami-palme.jpg) 60% 40%/cover no-repeat!important}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c:nth-child(3n+2){background:linear-gradient(0deg,rgba(20,6,40,.95) 0%,rgba(20,6,40,.35) 70%),url(ocean-drive-notte.jpg) 50% 50%/cover no-repeat!important}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c:nth-child(3n){background:linear-gradient(0deg,rgba(20,6,40,.95) 0%,rgba(20,6,40,.35) 70%),url(miami-tramonto.jpg) 50% 45%/cover no-repeat!important}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c .ic{position:absolute;top:10px;left:10px;margin:0!important;height:34px;max-width:calc(100% - 20px);overflow:hidden;background:none!important;box-shadow:none!important}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c .ic img{max-height:34px;width:auto;max-width:100%}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c.bet .ic span{font-size:22px!important}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c h2{margin:0!important;padding:0 34px 0 0!important;background:none!important;font:italic 900 22px/1 'Barlow Condensed',Inter,sans-serif!important;text-transform:uppercase!important;color:#fff!important;text-shadow:0 2px 10px rgba(0,0,0,.6)!important;letter-spacing:.005em!important}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c :is(p,.go){display:none!important}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c::after{content:'›';position:absolute;right:10px;bottom:10px;width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:rgba(255,79,163,.75);font:900 18px/1 Inter,sans-serif;color:#fff}
+@media (min-width:900px){:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;overflow:visible} :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .cards>.c{min-height:170px}}
+
 /* 4f. Grafica unica durante l'evento (Gianluca): niente interruttore Lega/Stadio nella Home né nel Campo */
 :root[data-event-theme="notte-tropicale"] :is(#gsw,.skin){display:none!important}
 
