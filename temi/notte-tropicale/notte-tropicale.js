@@ -148,14 +148,34 @@
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', metti); else metti();
   }
-  /* Forme dell'evento su Home, Tabellone e Campo (Gianluca, 17 novembre): .nt-obl ai riquadri, .nt-tab a pulsanti e schede.
-     Il colore di fondo dei pulsanti scelti (rosso, azzurro, oro) e la banda laterale dei riquadri si leggono dalla grafica di
-     sempre, togliendo un attimo la classe; così le competizioni tengono il loro colore. Si ripete quando la pagina cambia. */
+  /* Forme dell'evento su TUTTE le sezioni, non solo Home, Tabellone e Campo (ChatGPT, 17 novembre 2026).
+     La Curva resta esclusa dal caricatore di Claude. MutationObserver già in uso: copre i riquadri
+     e le schede ricostruiti da Totogirrr, Carriera, Albo, Derby, Spogliatoio e notifiche. */
   function forme() {
     var BOX = ['.wrap > .vv-avviso', '.wrap > .v53-home', '.wrap > .lg-leghe', '.wrap > #big', '.wrap > #cvw', '.wrap > .sp', '.wrap .mini .mn',
-      '.grid .panel', '.swap > .m', '#v53board', '.gs', 'section.card', 'aside.card', '.toolbar'];
+      '.grid .panel', '.swap > .m', '#v53board', '.gs', 'section.card', 'aside.card', '.toolbar',
+      /* Totogirrr (dati e schede generate da JS) */
+      '#app .card', '#app .feat > .fc', '#app .prize-corner', '#app .gate', '#app .bal',
+      /* Carriera, Girrr Sport, Albo dell'app e Derby */
+      '#view .card', '#view .derby', '#view .rac', '#view .cov', '#view .ann-cell', '#view .ob', '#view .fidg', '#view .garch',
+      /* Albo, Squadre, Derby, Giornale */
+      '.swap .card', '.swap .sto', '.swap .sheet', '.swap .top5', '#ultimo .last', '#lista .it',
+      /* Spogliatoio */
+      '#app .tw', '#app .bench', '#app .sec', '#app .stats',
+      /* Versioni e Notifiche */
+      '#versioni .vv-avviso', '#versioni .vv-item', '#versioni .vv-card', '#versioni article',
+      '.v53-notifications .v53-panel', '.v53-notifications .v53-notifcard'];
     var TAB = ['.chips button', '.gs .ar', '.sqb', '.cd-btn', '.round button', '.partite-nav button', '.matches .gamebtn', '.sidebar nav a',
-      '.v53-pill', '#big .tx a', '.lg-leghe .go', '.vv-esci', '.vv-fondo', '.v53-pills button', '.giornata-nav > button', '.giornata-nav > a'];
+      '.v53-pill', '#big .tx a', '.lg-leghe .go', '.vv-esci', '.vv-fondo', '.v53-pills button', '.giornata-nav > button', '.giornata-nav > a',
+      /* Totogirrr: tab di pagina, schede dei pronostici e pulsanti 1/X/2 */
+      '#app nav .nvi button', '#app .q', '#app .seg2 button', '#app .go', '#app .chips button',
+      /* Carriera, Girrr Sport, Albo, Derby */
+      '#tabs button', '#view .seg button', '#view .frs button', '#view .btn', '#view .fidg-tab button',
+      '#view .opts button', '#view .cards button', '#view .ch',
+      /* Spogliatoio e pagine indipendenti */
+      '#app .seg button', '#app .btn', '#app .chip', '#app .tpt', '#app .mkchip',
+      '#app .calnav button', '.tools button', '#ultimo .btn', '#lista .btn',
+      '#versioni button', '.v53-notifications .v53-btn'];
     var FORTI = '#big .tx a:not(.s), .lg-leghe .go';
     var ON = '.sel,.active,.on,[aria-current],[aria-pressed="true"],[aria-selected="true"]';
     var trasp = function (c) { var m = /rgba?\(([^)]+)\)/.exec(c || ''); if (!m) return true; var p = m[1].split(','); return p.length > 3 && parseFloat(p[3]) < .5; };
