@@ -1,5 +1,10 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 16 novembre 2026)
 
+## 18 novembre 2026 — Anteprima separata della 6.5
+- Creato `lab/prova-6-5.html` sul ramo `chatgpt/65-tabellone-curva`: pagina di ingresso per tutte le anteprime del Lab, visibile tramite GitHack puntando a un commit del ramo. Nessun deploy su GitHub Pages, nessun merge, nessuna modifica a Supabase.
+- Il Lab intercetta le richieste al database tramite `lab62.js`; Radio e Video della giornata 8 restano in PR #129, non pubblicati. Il proxy esterno non è stato verificato in Chromium o Safari; la compatibilità completa è ancora da certificare.
+
+
 ## 18 novembre 2026 — ChatGPT: Tabellone e Curva per la 6.5 in prova, non pubblicata
 - Ramo `chatgpt/65-tabellone-curva`, nato dal commit Claude `a55fabc`. Aggiunto `rilascio/r65/ritocchi.py` su copia `gh-pages` successiva a `rilascio/r65/applica.py`, senza pubblicare o unire rami: graduatorie di Coppa corrette nelle immagini, score sfumati, posizione ultima rossa, tendina «Dentro la partita» e dati per competizione. Curva: giurie persistenti, post del sondaggio incorniciati, link verso Girrr Sport e pulsanti «Cambia il mio voto» coerenti con i colori squadra.
 - Skin Notte Tropicale: scadenza spostata al **24 novembre 2026 ore 00:00** italiane in `temi/evento-loader.js`, catalogo e test. Annuncio `rilascio/r65/ANNUNCIO-BOZZA.json` aggiornato come bozza da approvare, versione sempre **6.5**.
