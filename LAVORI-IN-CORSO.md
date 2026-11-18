@@ -1,5 +1,20 @@
 # Lavori in corso · O Girrr
 
+## Rifinitura iPhone SE e Smart TV · 18 novembre 2026 · ChatGPT
+- **Ramo `chatgpt/65-tab-uniche-curva-separata`, PR #131 bozza (non unire).** Da screenshot precedente, su iPhone SE quattro tab erano troppo piccole e «Le squadre» andava a capo male; su Smart TV la larghezza del Tabellone era limitata a 1380 px, con font troppo piccoli. Solo skin Notte Tropicale.
+- **Mobile ≤480 px:** quattro tab su una fila, testo condensato più leggibile, target ≥52 px, scheda squadre riallineata, padding e classifica adattati. **Smart TV ≥1600 px:** contenitore fino a 1840/2160 px, scala tipografica maggiore, giornate e controllo competizione ingranditi, prossimo turno su due colonne.
+- CSS fonte `temi/notte-tropicale/notte-tropicale.css` e copia `lab/integrata-62/temi/notte-tropicale/notte-tropicale.css` sincronizzati. Nessuna modifica a JavaScript, Supabase, dati o produzione. **QA Chromium superato** sulla run [44297475210](https://github.com/giandjcosta/o-girrr-registro/actions/runs/44297475210), screenshot nell'artifact `14425440557`: 320/390/1024/1440/1920/2560 px, quattro tab nella stessa riga, nessun pageerror né overflow; Home con Curva autonoma, link Classifica/Risultati/Numeri verificati nei profili mobili. Le sorgenti CSS tema e Lab sono identiche (blob `1226703ccd0f962e95480f9a40733b6e815313c1`). Verifica fisica iPhone/Safari e Smart TV non effettuata.
+
+## QA visivo 6.5 · 18 novembre 2026 · ChatGPT
+- Correzione definitiva delle quattro tab **su una riga anche a 320 px**: Classifica, Risultati, Numeri › e Campo ›, stile sfumato uniforme. Le frecce compaiono solo sui due link che navigano; una regola CSS inizialmente sostituiva una griglia della Home invece del Tabellone, rilevata e corretta dopo il primo screenshot.
+- Sistemate le due date visibili «18–20» in «18–23 novembre» secondo la scadenza ufficiale (24 novembre 00:00). Curva autonoma sotto «Tutto il Girrr».
+- **QA Chromium completato, verde:** [run 44290021189](https://github.com/giandjcosta/o-girrr-registro/actions/runs/44290021189) su branch tecnico di prova `chatgpt/65-qa-screenshots` con stesso JS/CSS del tema: 320, 390, 1024, 1440, 1920 e 2560 CSS px; tutte e quattro le schede sulla stessa riga; nessun errore JS, nessun overflow orizzontale; click Classifica/Risultati/Numeri verificati su telefono e iPad; Curva fuori dalla fila in Home. Screenshot Tabellone e Home caricati nell'artifact `chatgpt-65-visual-pc-ipad-tv`.
+- **Limite:** browser Chromium con viewport simulati; non test fisico iPad, Smart TV, Safari o WebKit. Un solo percorso Campionato per default; nessuna certificazione completa Champions Cup, Campo o Condividi. Nessun merge, deploy, Supabase o servizio a pagamento.
+
+## Correzione 6.5 · 18 novembre 2026 · ChatGPT
+- **Tabellone: tab uniche, Curva indipendente** · `In prova nel Lab` · ramo `chatgpt/65-tab-uniche-curva-separata`, derivato da `chatgpt/65-tabellone-curva`. Una sola fila di navigazione (quattro voci, sfumature delle prime due), su telefono griglia 2×2; «Numeri» resta una pagina funzionante anche tornando alle altre schede. Curva sotto «Tutto il Girrr», senza spostare Notifiche/Statistiche/sponsor. Aggiornati `rilascio/r65/ritocchi-patches.json`, `temi/notte-tropicale/` e copie `lab/integrata-62/`.
+- **Prova**: controlli statici superati, nessun deploy. Serve verifica visiva e funzionale su anteprima GitHack da parte di Gianluca; browser reale, Safari e Android non certificati.
+
 ## Anteprima navigabile 6.5 · 18 novembre 2026 · ChatGPT
 - Gianluca ha chiesto **solo un link di prova**, senza GitHub Pages o merge. Ingresso `lab/prova-6-5.html` sul ramo `chatgpt/65-tabellone-curva`, da aprire tramite GitHack dal commit del ramo. Collega Home Notte Tropicale, Tabellone, Numeri, Campo, Curva, Girrr Sport, Carriera, Totogirrr e grafiche classiche Lega/Stadio.
 - L'anteprima usa `lab/integrata-62/lab62.js`: Supabase viene intercettato e sostituito da dati di prova; lo Spogliatoio e le votazioni non devono toccare dati reali. Radio/Video speciali della giornata 8 non si generano qui: sono nel ramo e nella PR #129, in attesa di verifica e approvazione.

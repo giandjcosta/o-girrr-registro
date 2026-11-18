@@ -1,0 +1,45 @@
+name: "ChatGPT: Layout Tabellone 6.5 · iPhone, iPad, PC, TV"
+on:
+  pull_request:
+    branches:
+      - chatgpt/65-tabellone-curva
+      - chatgpt/65-qa-base
+      - claude/totogirrr-ui-responsive-b2pgee
+    paths:
+      - "temi/notte-tropicale/**"
+      - "lab/integrata-62/temi/notte-tropicale/**"
+      - "lab/integrata-62/girrr/v55/ui.js"
+      - "rilascio/r65/ritocchi-patches.json"
+      - "prove/v65/prova_layout_65.py"
+      - ".github/workflows/chatgpt-65-layout-qa.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  screenshot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Installa Chromium per screenshot reali (solo GitHub Actions)
+        run: |
+          python3 -m pip install --disable-pip-version-check playwright==1.56.0
+          python3 -m playwright install --with-deps chromium
+      - name: Collaudo visivo e interattivo senza backend vero
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8767 --directory . --bind 127.0.0.1 >/tmp/o-girrr-layout.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" || true' EXIT
+          sleep 2
+          python3 prove/v65/prova_layout_65.py
+      - name: Screenshot disponibili anche se un controllo non passa
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chatgpt-65-visual-pc-ipad-tv
+          path: qa_artifacts/65-layout/
+          if-no-files-found: warn
+          retention-days: 14
