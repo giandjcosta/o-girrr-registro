@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""6.5 (Gianluca, 18 novembre) · schermate browser reale: iPhone, iPad, PC, Smart TV.
+"""6.5 (Gianluca, 18 novembre) · screenshot QA: iPhone, iPad, PC, Smart TV.
 Solo lettura e locale, senza Supabase o browser a pagamento.
 """
 import asyncio
