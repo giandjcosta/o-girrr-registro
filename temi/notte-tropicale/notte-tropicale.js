@@ -291,3 +291,4 @@
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', via); else via();
 })();
+;(function(){var source=document.currentScript&&document.currentScript.src;function load(){if(document.documentElement.getAttribute('data-event-theme')!=='notte-tropicale'||!document.body||document.body.getAttribute('data-v53')!=='home'||document.querySelector('script[data-nt-entrata]'))return;var ref=source||(document.querySelector('script[data-evento="notte-tropicale"]')||{}).src;if(!ref)return;var s=document.createElement('script');s.src=new URL('entrata.js',ref).href;s.async=true;s.setAttribute('data-nt-entrata','');document.head.appendChild(s)}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load,{once:true});else load()})();

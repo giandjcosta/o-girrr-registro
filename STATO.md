@@ -1,4 +1,13 @@
-# Stato del progetto O Girrr (ultimi giorni — aggiornato 16 novembre 2026)
+# Stato del progetto O Girrr (ultimi giorni — aggiornato 18 novembre 2026)
+
+## 18 novembre 2026 — ChatGPT: ingresso 6.5 pronto per Claude (solo ramo)
+- Ramo `chatgpt/65-entrata` da `claude/65-uscita`; la 6.5 è ancora candidata nella PR #23 del sito, online 6.2.4. **Non è una 6.5.1.** Nessun merge, deploy o modifica Supabase.
+- Copertina nuova `temi/notte-tropicale/entrata.js`, `entrata.css`, `gta6-lucia-jason-cover.webp` (locandina fornita da Gianluca, 156 KB). Un solo caricamento da `notte-tropicale.js` sulla Home con tema attivo; file aggiunti agli elenchi di `rilascio/r65/evento.py` e `temi/notte-tropicale/lab.py`, crediti aggiornati. Un ingresso al giorno in ora italiana (localStorage protetto), 0,3 s di comparsa + 1,6 s ferma + 0,5 s dissolvenza; chiusura al tocco o con tasto, riduci movimento per 1 s, watchdog 4 s. Sul solo Lab `?evento=notte-tropicale&entrata-prova=1` consente di ripeterla.
+- Patch aggiuntive a `rilascio/r65/ritocchi-patches.json`: Condividi con bande rosse in Campionato/azzurre in Coppa nella Lega e oro nello Stadio; `letter-spacing:.015em` nel titolo Classifica di Lega e Stadio. Giro di boa per Coppa/Entrambe è già presente nel codice di Claude `calcoli/giro_di_boa.py`, senza doppioni.
+- **Prove statiche:** sintassi JS verificata, asset e file-list controllati, date originali del loader 19/11 00:00–28/11 00:00 mantenute. Simulazione completa delle 61 coppie su 23 file della candidata `claude/65-pubblicazione`: primo passaggio cambia 3 file, secondo 0, nessun errore; include le ultime sostituzioni dei collegamenti aggiunte da Claude. Simulazione DOM verificata su prima visita, successiva, tema disattivato e riduci movimento.
+- **Non verificati:** copia locale `gh-pages` con esecuzione effettiva di `applica.py`/`evento.py`/`ritocchi.py`, Chromium/Playwright, Safari/WebKit, iPhone e TV reali. Claude dovrà rigenerare il Lab, fare screenshot e riprovare prima di proporre il rilascio. Radio/video G8 restano in una PR separata verso main del registro (#129), da aggiornare e non unire senza il «Vai».
+
+
 
 ## 17 novembre 2026 — ChatGPT: Notte Tropicale su tutte le pagine (solo laboratorio)
 - **Correzione Home dopo screenshot Gianluca 20:30 (17/11)**: nella grafica evento la fila `Tutto il Girrr` contiene adesso anche Curva, Notifiche, Statistiche e sponsor (nodi reali spostati senza duplicazioni); titolo esterno alla fila e in posizione visiva sopra di essa (`order:6/7`); pulsanti delle due competizioni allineati in basso. Sorgenti `temi/notte-tropicale/notte-tropicale.{js,css}` sincronizzate nel Lab, nuova sezione CSS `4n`. [QA 44161549656](https://github.com/giandjcosta/o-girrr-registro/actions/runs/44161549656) Chromium **41/41** (37 regressioni + 4 Home con verifica layout visivo, scorrimento, CTA e screenshot). **PR #128 resta bozza**, nessuna pubblicazione, nessuna modifica a Supabase.

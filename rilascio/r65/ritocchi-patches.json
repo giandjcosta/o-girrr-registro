@@ -43,6 +43,18 @@
   [
    "        '<button type=\"button\" data-t=\"classifica\"><b>Classifica</b><small>Campionato, con vittorie, pareggi, sconfitte e punti</small></button>' +",
    "        '<button type=\"button\" data-t=\"classifica\"><b>Classifica</b><small>' + (v.coppa ? 'Gironi della Champions Cup, con dati reali e punti' : 'Campionato, con vittorie, pareggi, sconfitte e punti') + '</small></button>' +"
+  ],
+  [
+   "      banda = v.coppa ? COPPA : '#d62839';",
+   "      banda = v.coppa ? COPPA : '#d62839'; if (stadio) banda = ACC;"
+  ],
+  [
+   "      '.cd-sc{display:grid;gap:8px}.cd-sc button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;font:inherit;color:inherit;cursor:pointer;padding:12px 14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);' + (stadio ? 'border-left:6px solid ' + ACC + ';border-radius:12px' : 'border-left:8px solid ' + ACC + ';border-radius:4px 14px 14px 4px') + '}' +",
+   "      '.cd-sc{display:grid;gap:8px}.cd-sc button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;font:inherit;color:inherit;cursor:pointer;padding:12px 14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);' + (stadio ? 'border-left:6px solid var(--cd-banda,' + ACC + ');border-radius:12px' : 'border-left:8px solid var(--cd-banda,' + ACC + ');border-radius:4px 14px 14px 4px') + '}' +"
+  ],
+  [
+   "      var v = giornataVista(d); if (!v.g) throw new Error('Nessuna giornata da condividere');",
+   "      var v = giornataVista(d); if (!v.g) throw new Error('Nessuna giornata da condividere');\n      /* 6.5 · Le bande dei sei pulsanti seguono il torneo. Nello Stadio restano oro. */\n      f.box.style.setProperty('--cd-banda',stadio ? ACC : (v.coppa ? COPPA : '#d62839'));"
   ]
  ],
  "girrr/v55/ui.js": [
@@ -81,6 +93,10 @@
   [
    "destinazioni55.js?v=55r8",
    "destinazioni55.js?v=65"
+  ],
+  [
+   ".panel h3:not(:first-child){margin-top:22px}",
+   ".panel h3:not(:first-child){margin-top:22px}.panel .swap h3{letter-spacing:.015em}"
   ]
  ],
  "stadio/girrr/tabellone.html": [
@@ -107,6 +123,10 @@
   [
    "destinazioni55.js?v=55r8",
    "destinazioni55.js?v=65"
+  ],
+  [
+   ".panel h3:not(:first-child){margin-top:22px}",
+   ".panel h3:not(:first-child){margin-top:22px}.panel .swap h3{letter-spacing:.015em}"
   ]
  ],
  "girrr/v60/tifosi.js": [

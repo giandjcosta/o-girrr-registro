@@ -1,5 +1,14 @@
 # Lavori in corso · O Girrr
 
+## 18 novembre 2026 — ChatGPT: rifiniture della 6.5, consegna a Claude
+- **Nessuna 6.5.1** · ChatGPT · `Aspetta Claude e Gianluca` · ramo `chatgpt/65-entrata` derivato da `claude/65-uscita`. La PR #23 del sito è ancora aperta; online 6.2.4. Non pubblicare o modificare PR #23.
+- **Copertina d'ingresso** · file nuovi `temi/notte-tropicale/{entrata.css,entrata.js,gta6-lucia-jason-cover.webp}`, una riga in fondo a `notte-tropicale.js`, liste di copia `rilascio/r65/evento.py` e `temi/notte-tropicale/lab.py`, CREDITI. Una volta al giorno, solo Home con skin 19–27 novembre, fade 0,3/1,6/0,5 s, tocco per saltare, riduci movimento, watchdog; screenshot **ancora da eseguire nel browser reale**. `?evento=notte-tropicale&entrata-prova=1` ripete nel solo Lab.
+- **Condividi e Classifica** · aggiunte 5 coppie esatte a `rilascio/r65/ritocchi-patches.json`: bande rosso/azzurro in Lega, oro nello Stadio, letter-spacing normale al titolo Classifica. Simulazione delle 61 patch totali sui 23 file della candidata di Claude: applicazione 1 modifica 3 file, applicazione 2 ne modifica 0, nessun conflitto. Mancano prove visive Playwright.
+- **Giro di boa** · già implementato in `calcoli/giro_di_boa.py` sulla base Claude per Campionato, Coppa ed Entrambe, fatti e citazioni reali, non duplicato. **Radio e video G8** · rimangono nella PR separata #129 verso main, ancora da aggiornare; non unirla senza autorizzazione.
+- **Prossimo passo per Claude**: copia gh-pages su worktree temporaneo, `rilascio/r65/applica.py`, `evento.py`, `ritocchi.py` due volte (seconda `File cambiati: 0`), `lab.py`, screenshot e test su 320–1920 px prima del «Vai».
+
+
+
 Quaderno comune di tutti gli assistenti (Claude, ChatGPT, Grok, Copilot, Perplexity…) e di Gianluca. Regole in `REGOLE-LAVORO.md`, punto 6.
 **Aggiornalo quando cominci e quando ti fermi.** Chi riprende il lavoro parte da qui, poi legge `STATO.md`.
 
