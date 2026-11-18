@@ -392,11 +392,11 @@ function schede(){
  [['classifica','Classifica'],['risultati','Risultati']].forEach(function(x){
   var b=document.createElement('button');b.type='button';b.dataset.sez=x[0];b.textContent=x[1];b.setAttribute('role','tab');nav.appendChild(b);
  });
- var numeri=document.createElement('a');numeri.dataset.v65Numeri='';numeri.textContent='Numeri del Campionato';nav.appendChild(numeri);
+ var numeri=document.createElement('a');numeri.dataset.v65Numeri='';numeri.textContent='Numeri';numeri.setAttribute('aria-label','Numeri del Campionato');nav.appendChild(numeri);
  if(campo){campo.textContent='Campo';campo.removeAttribute('aria-current');nav.appendChild(campo);}
  function aggiornaNumeri(){
   var coppa=document.body.getAttribute('data-mode')==='coppa';
-  numeri.textContent=coppa?'Numeri della Champions Cup':'Numeri del Campionato';
+  numeri.textContent='Numeri';numeri.setAttribute('aria-label',coppa?'Numeri della Champions Cup':'Numeri del Campionato');numeri.title=numeri.getAttribute('aria-label');
   var hash=location.hash||'';if(!hash.startsWith(coppa?'#coppa':'#lega'))hash=coppa?'#coppa':'#lega';
   numeri.href='tabellone.html?sezione=numeri'+hash;
  }
