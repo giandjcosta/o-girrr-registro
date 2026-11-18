@@ -100,8 +100,9 @@
       script.setAttribute('data-evento',ev.id);(document.head||h).appendChild(script);
     }
     function quandoPaginaPronta(cb){
-      if(document.readyState==='complete')cb();
-      else addEventListener('load',cb,{once:true});
+      /* DOM pronto + CSS caricato: non attendere analytics o immagini esterne. */
+      if(document.readyState!=='loading')cb();
+      else document.addEventListener('DOMContentLoaded',cb,{once:true});
     }
     l.addEventListener('load',function(){
       if(!intro){caricaScriptTema();return;}
