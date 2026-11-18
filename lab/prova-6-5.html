@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>O Girrr 6.5 · Anteprima separata</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#f6f2ff;background:#0b0f2b}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 85% 5%,#75225970,transparent 32rem),linear-gradient(160deg,#0b0f2b,#2a0c52)}
+main{width:min(1100px,100%);margin:auto;padding:clamp(22px,4vw,45px) clamp(16px,4vw,36px) 70px}
+header{padding:15px 0 30px}
+header small{display:inline-block;letter-spacing:.15em;color:#00f0ff;font-weight:800}
+h1{font-size:clamp(34px,7vw,67px);line-height:1;letter-spacing:-.04em;margin:16px 0 14px;font-style:italic;
+background:linear-gradient(92deg,#2b60da,#ff4cb9,#e6953e);background-clip:text;-webkit-background-clip:text;color:transparent}
+p{line-height:1.6;max-width:75ch;color:#d4d2e8}
+strong{color:#fff}
+.status{font-size:13px;background:#ffffff10;border:1px solid #ffffff3d;border-radius:14px;padding:14px 16px;margin:20px 0 32px;max-width:75ch}
+h2{margin:32px 0 13px;font-size:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:13px}
+a.tile{border:1px solid #ffffff35;background:linear-gradient(125deg,#ffffff14,#ffffff05);border-radius:18px;padding:22px 20px;min-height:138px;text-decoration:none;color:#fff;display:flex;flex-direction:column;justify-content:space-between;transition:transform .2s,border-color .2s;-webkit-tap-highlight-color:transparent}
+a.tile:hover,a.tile:focus-visible{transform:translateY(-3px);border-color:#00f0ff;outline:0}
+a.tile b{font-size:19px}
+a.tile small{color:#d6d5ed;line-height:1.5;font-size:13px}
+a.tile span{align-self:flex-end;color:#00f0ff;font-weight:900}
+.rowlinks{display:flex;flex-wrap:wrap;gap:10px}
+.rowlinks a{color:#f6f2ff;border:1px solid #ffffff55;padding:10px 14px;border-radius:99px;text-decoration:none;font-size:14px}
+.rowlinks a:hover{background:#ffffff20}
+.note{border-top:1px solid #ffffff33;padding-top:24px;margin-top:40px;font-size:14px}
+@media(prefers-reduced-motion:reduce){a.tile{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<small>O FANT A GIRRR / LAB / NOVEMBRE 2026</small>
+<h1>La 6.5 da provare</h1>
+<p>La nuova grafica Notte Tropicale, il Tabellone, la Curva e le altre pagine in un'anteprima distinta da O Girrr pubblicato. Questa anteprima è una bozza: puoi confrontarla e segnalare ciò che non funziona, senza effettuare un rilascio.</p>
+<div class="status"><strong>Questa è una copia del Lab, non il sito vero.</strong> I voti di prova usano il backend dimostrativo e non modificano Supabase. Alcune pagine mostrano dati già presenti nel Lab; Radio e Video della giornata 8 non sono ancora stati pubblicati né sono ascoltabili qui.</div>
+</header>
+<h2>Notte Tropicale · Grafica evento</h2>
+<div class="grid">
+<a class="tile" href="integrata-62/girrr/index.html?evento=notte-tropicale"><b>Home speciale</b><small>Big match, classifica, sezioni fotografiche e navigazione.</small><span>Apri ›</span></a>
+<a class="tile" href="integrata-62/girrr/tabellone.html?evento=notte-tropicale"><b>Tabellone</b><small>Campionato, Champions Cup, Condividi e approfondimenti.</small><span>Apri ›</span></a>
+<a class="tile" href="integrata-62/girrr/tabellone.html?sezione=numeri&evento=notte-tropicale"><b>Numeri</b><small>Statistiche stagionali del Campionato e della Champions Cup.</small><span>Apri ›</span></a>
+<a class="tile" href="integrata-62/girrr/campo.html?evento=notte-tropicale"><b>Campo</b><small>Partite e collegamenti del Tabellone.</small><span>Apri ›</span></a>
+<a class="tile" href="integrata-62/girrr/app.html?evento=notte-tropicale#carriera"><b>Carriera</b><small>Pillole, Giro di boa e cambi di sezione.</small><span>Apri ›</span></a>
+<a class="tile" href="integrata-62/girrr/app.html?evento=notte-tropicale#sport"><b>Girrr Sport</b><small>Sezioni, Squadra della settimana, Radio e Video già disponibili.</small><span>Apri ›</span></a>
+<a class="tile" href="integrata-62/girrr/totogirrr.html?evento=notte-tropicale&demo"><b>Totogirrr</b><small>Prova in modalità demo, senza voti reali.</small><span>Apri ›</span></a>
+<a class="tile" href="integrata-62/girrr/curva.html?evento=off"><b>Curva</b><small>Sondaggi, votazioni e personaggi. La grafica resta chiara/scura.</small><span>Apri ›</span></a>
+</div>
+<h2>Confronta le grafiche normali</h2>
+<div class="rowlinks">
+<a href="integrata-62/girrr/index.html?evento=off">Home · Lega</a>
+<a href="integrata-62/stadio/girrr/index.html?evento=off">Home · Stadio</a>
+<a href="integrata-62/girrr/tabellone.html?evento=off">Tabellone · Lega</a>
+<a href="integrata-62/stadio/girrr/tabellone.html?evento=off">Tabellone · Stadio</a>
+<a href="integrata-62/stadio/girrr/curva.html?evento=off">Curva · Stadio</a>
+<a href="integrata-62/index.html?evento=off">Spogliatoio di prova</a>
+</div>
+<p class="note">In questa fase l'anteprima della Radio e del Video speciale è documentata nella <a href="https://github.com/giandjcosta/o-girrr-registro/pull/129" style="color:#00f0ff">PR #129</a>; le correzioni della versione 6.5 sono nella <a href="https://github.com/giandjcosta/o-girrr-registro/pull/130" style="color:#00f0ff">PR #130</a>. Nessuna delle due PR viene unita da questa pagina. Alcune correzioni restano ancora in verifica e Giro di boa non è stato dichiarato completato.</p>
+</main>
+</body>
+</html>
