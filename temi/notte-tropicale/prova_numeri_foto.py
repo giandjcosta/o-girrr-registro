@@ -148,6 +148,18 @@ def main():
                         "inset" in x["ombra"] and
                         "gradient" in x["fondo"] for x in menu["fili"]))
                     checks["Quattro voci senza overflow"]=menu["oltre"]<=2
+                    # Le prime due voci scorrono ai pannelli autentici, senza
+                    # creare nuove schermate o cambiare risultati/classifiche.
+                    page.locator(".giornata-nav .nt-classifica-link").click()
+                    checks["Classifica apre il pannello esistente"]=(
+                        page.url.endswith("#tab") and
+                        page.locator("#tab").is_visible() and
+                        page.locator(".nt-classifica-link").get_attribute("aria-current")=="location")
+                    page.locator(".giornata-nav .nt-risultati-link").click()
+                    checks["Risultati apre il pannello esistente"]=(
+                        page.url.endswith("#board") and
+                        page.locator("#board").is_visible() and
+                        page.locator(".nt-risultati-link").get_attribute("aria-current")=="location")
                     if width in (390,1440):
                         page.screenshot(path=str(OUT/f"tabellone-quattro-voci-{width}.jpg"),
                             type="jpeg",quality=81,full_page=False)
