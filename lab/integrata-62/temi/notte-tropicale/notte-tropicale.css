@@ -823,3 +823,195 @@
 @media(prefers-reduced-motion:reduce){
  :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede>*{transition:none!important}
 }
+
+
+/* 6.5 (Gianluca, 18 novembre 2026): rifinitura reale per iPhone SE e Smart TV.
+   Una sola griglia di quattro tab su 320 px, ingrandendo il testo grazie al font condensato.
+   TV: il Tabellone occupa davvero lo schermo, con leggibilità a distanza.
+   Nessun cambio di dati, script, navigazione o grafica Lega/Stadio fuori dall'evento. */
+@media (max-width:480px) {
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede {
+   max-width:none!important;gap:3px!important;padding:5px 4px!important;
+   grid-template-columns:repeat(4,minmax(0,1fr))!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede>:is(button,a) {
+   font:italic 900 clamp(12px,3.2vw,14px)/1.08 'Barlow Condensed',Inter,system-ui,sans-serif!important;
+   letter-spacing:-.015em!important;white-space:nowrap!important;
+   justify-content:center!important;align-items:center!important;
+   min-height:52px!important;padding:8px 2px!important;gap:0!important;
+   overflow:visible!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede>a::after {
+   margin-left:2px!important;font-size:1.25em!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .sqb {
+   max-width:none!important;width:100%;display:grid!important;
+   grid-template-columns:26px minmax(0,1fr)!important;
+   grid-template-rows:auto auto;gap:2px 10px!important;
+   padding:12px 14px!important;min-height:68px!important;
+   align-items:center!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .sqb>span {
+   grid-column:1;grid-row:1/span 2;align-self:center;font-size:22px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .sqb>b {
+   grid-column:2;grid-row:1;font-size:16px!important;white-space:nowrap!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .sqb>i {
+   grid-column:2;grid-row:2;font-size:11.5px!important;
+   line-height:1.3!important;opacity:.85!important;margin:0!important;
+   overflow-wrap:normal!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .grid .panel.nt-obl {
+   padding:12px 10px 16px 13px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .panel h3 {
+   font-size:clamp(17px,4.6vw,21px)!important;
+   line-height:1.15!important;letter-spacing:.045em!important;
+   overflow-wrap:normal!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .panel .poswrap {
+   grid-template-columns:1.05em 1.25em!important;gap:2px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .panel td.p {
+   min-width:36px!important;padding-left:5px!important;padding-right:2px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .panel td.n .clubgraph {
+   font-size:12px!important;line-height:1.22!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .gs .ar {
+   width:44px!important;height:46px!important;min-height:44px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .chips button {
+   min-width:38px!important;height:44px!important;font-size:14px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .sw.sw.sw button {
+   min-height:50px!important;font-size:13px!important;
+ }
+}
+@media (max-width:359px) {
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .wrap {
+   padding-left:8px!important;padding-right:8px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede>:is(button,a) {
+   font-size:12px!important;letter-spacing:-.03em!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .grid .panel.nt-obl {
+   padding-left:10px!important;padding-right:8px!important;
+ }
+}
+@media (min-width:1600px) {
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .wrap {
+   width:calc(100% - 80px)!important;max-width:1840px!important;
+   padding:24px 32px 48px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .top {
+   gap:30px!important;min-height:145px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .shield {
+   height:140px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .tv {
+   height:74px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .top h1 {
+   font-size:clamp(42px,3.2vw,66px)!important;line-height:1.07!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] :is(.back,.kick) {
+   font-size:16px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .sqb {
+   width:min(100%,720px)!important;max-width:720px!important;
+   min-height:72px!important;padding:16px 22px!important;
+   font-size:20px!important;gap:16px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .sqb i {
+   font-size:16px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede {
+   width:min(100%,1240px)!important;max-width:1240px!important;
+   gap:14px!important;padding:10px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede>:is(button,a) {
+   min-height:72px!important;font-size:20px!important;padding:14px 22px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .sw.sw.sw {
+   max-width:660px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .sw.sw.sw button {
+   min-height:64px!important;font-size:19px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .gs .ar {
+   width:58px!important;height:58px!important;font-size:26px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .chips button {
+   min-width:47px!important;height:55px!important;font-size:18px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .grid {
+   gap:28px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .grid .panel.nt-obl {
+   padding:26px 32px 30px 38px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .panel h3 {
+   font-size:27px!important;letter-spacing:.09em!important;
+   line-height:1.2!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .panel table {
+   font-size:18px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .panel th {
+   font-size:14px!important;padding:14px 9px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .panel td {
+   padding:15px 9px!important;font-size:18px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .panel td.n .clubgraph {
+   font-size:18px!important;line-height:1.15!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .panel td.dr,
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .panel td.pt,
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .panel td.fp {
+   font-size:19px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .panel .numpos {
+   font-size:23px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .panel .legenda-zona {
+   font-size:15px!important;gap:12px 26px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .turnoprossimo {
+   display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));
+   gap:0 28px!important;padding:24px 26px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .turnoprossimo>:is(h4,p) {
+   grid-column:1/-1;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .turnoprossimo h4 {
+   font-size:21px!important;margin-bottom:14px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .turnoprossimo .rpartita {
+   min-height:60px!important;font-size:17px!important;
+   line-height:1.35!important;padding:12px 0!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] #v53board summary {
+   min-height:110px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] #v53board .v53-sub {
+   font-size:17px!important;
+ }
+}
+@media (min-width:2200px) {
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .wrap {
+   max-width:2160px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .panel td,
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .panel td.n .clubgraph {
+   font-size:21px!important;
+ }
+}
+@media(prefers-reduced-motion:reduce) {
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede>* {
+   transition:none!important;
+ }
+}
