@@ -46,6 +46,10 @@ Le due grafiche devono essere davvero diverse, e ognuna uguale su tutte le pagin
 - Colori: nella **Lega** l'accento è il rosso (#d62839): interruttori, bande, scheda attiva. Nello **Stadio** più oro che rosso (Gianluca, 1° novembre): bande, scheda attiva, interruttore e pillole selezionate in oro (#ffd166). **Regola fissa in tutte e due le grafiche:** Campionato rosso e Champions Cup azzurra (interruttore Campionato/Champions Cup, scheda attiva del Tabellone, bande delle partite); rossi anche retrocessione ed eliminate. Prima di cambiare un colore, confrontalo con la pagina vera.
 - **Regola di Gianluca (15 novembre 2026), prevale sulla riga sopra:** la grafica **Lega** è quella che tiene i colori: Campionato rosso, Champions Cup azzurra. La grafica **Stadio** tiene **tutto oro**, anche in Champions Cup (interruttore, bande, scheda attiva). Applicata dalla 6.2 nel Campo e nel Tabellone dello Stadio; nello Stadio restano gli sfondi azzurrati (Coppa) e rosati, e il rosso di retrocessione ed eliminate.
 
+## Skin speciali (Gianluca, 17–18 novembre 2026)
+- Le skin vivono in `temi/<id>/`, con una riga in `EVENTI` di `temi/evento-loader.js` e una scheda in `temi/catalogo.json` (negozio `lab/skin.html`). Si accendono e si spengono da sole per data (ora italiana).
+- **Regola fissa:** l'avviso della nuova versione («È uscita la …») sta **sempre in cima alla Home**, subito sotto il titolo e sopra ogni altro blocco, con qualsiasi skin presente e futura. La impone `evento-loader.js` (stile `data-evento-regola="avviso-versione-in-cima"`): non toglierla e non spostare l'avviso nelle skin.
+
 ## Regole sui contenuti — tre livelli di scrittura (decisione di Gianluca, 1° novembre 2026)
 O Girrr si racconta come un campionato vero, ma i dati sono quelli ufficiali di Leghe Fantacalcio. Realismo nel racconto, precisione nei dati.
 1. **Sportivo** (Home, risultati, classifica, titoli, rivalità, presentazioni delle partite): squadre, allenatori, gol, vittorie, pareggi, sconfitte, punti in classifica, giornata, Campionato, Champions Cup, Derby.
