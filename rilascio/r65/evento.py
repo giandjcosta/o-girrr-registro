@@ -12,7 +12,7 @@ Rieseguibile: la seconda volta «Pagine cambiate: 0».
 import pathlib, re, shutil, sys
 
 R = pathlib.Path(__file__).resolve().parents[2]
-FILE = ('notte-tropicale.css', 'notte-tropicale.js', 'scena.svg', 'miami-tramonto.jpg', 'miami-palme.jpg', 'ocean-drive-notte.jpg', 'CREDITI.md')
+FILE = ('notte-tropicale.css', 'notte-tropicale.js', 'scena.svg', 'miami-tramonto.jpg', 'miami-palme.jpg', 'ocean-drive-notte.jpg', 'tutto-1.jpg', 'tutto-2.jpg', 'tutto-3.jpg', 'tutto-4.jpg', 'tutto-5.jpg', 'tutto-6.jpg', 'CREDITI.md')
 
 
 def main(argv):
