@@ -70,6 +70,48 @@ def main():
                     checks["Titolo Numeri del Campionato"]=detail["title"]=="Numeri del Campionato"
                     checks["Pagina statistiche senza overflow"]=detail["overflow"]<=1
                     checks["Tema attivo nella pagina"]=detail["theme"]=="notte-tropicale"
+                    # Screenshot Gianluca: il solo ritorno è ‹ Tabellone;
+                    # niente tre link intermedi, secondo ritorno o sponsor.
+                    struttura=page.evaluate("""() => {
+                        const back=document.querySelector('.nt-ritorno');
+                        const box=document.querySelector('.nt-stat');
+                        const before=box?getComputedStyle(box,'::before'):null;
+                        const header=document.querySelector('.nt-numeri-header');
+                        const headBefore=header?getComputedStyle(header,'::before'):null;
+                        return {
+                            backText:back?back.textContent.trim():'',
+                            backHref:back?back.getAttribute('href'):'',
+                            nav:document.querySelectorAll('.nt-numeri-nav').length,
+                            backLinks:document.querySelectorAll('a.nt-ritorno').length,
+                            footerLinks:document.querySelectorAll('.nt-numeri-footer a').length,
+                            sponsors:document.querySelectorAll('.sp,.sponsor,.nt-slide-sponsor').length,
+                            sponsorWords:document.body.textContent.indexOf('Gentilmente offerto da')>=0,
+                            cardsBackground:box?getComputedStyle(box).backgroundColor:'',
+                            cardSkew:before?before.transform:'',
+                            cardInlay:before?before.boxShadow:'',
+                            cardBeforeFill:before?before.backgroundImage:'',
+                            headerSkew:headBefore?headBefore.transform:'',
+                            headerInlay:headBefore?headBefore.boxShadow:''
+                        };
+                    }""")
+                    checks["Unico ritorno in alto verso Tabellone"]=(
+                        struttura["backText"]=="‹ Tabellone" and
+                        struttura["backHref"]=="tabellone.html?evento=notte-tropicale" and
+                        struttura["backLinks"]==1 and struttura["footerLinks"]==0)
+                    checks["Tre link superflui eliminati"]=struttura["nav"]==0
+                    checks["Nessuna pubblicità in Numeri"]=struttura["sponsors"]==0 and not struttura["sponsorWords"]
+                    checks["Filo integrato nella sagoma obliqua"]=(
+                        struttura["cardSkew"]!="none" and
+                        "inset" in struttura["cardInlay"] and
+                        "rgb(" in struttura["cardInlay"] and
+                        struttura["headerSkew"]!="none")
+                    # Controllo di ritorno anche sul link reale, non solo sull'href.
+                    page.locator(".nt-ritorno").click()
+                    page.wait_for_url("**/tabellone.html?evento=notte-tropicale",timeout=12000)
+                    checks["Tocco sul ritorno apre Tabellone"]=page.url.endswith(
+                        "tabellone.html?evento=notte-tropicale")
+                    page.go_back(wait_until="domcontentloaded")
+                    page.locator(".nt-stat").first.wait_for(timeout=15000)
                     if width in (320,390,1440):
                         page.screenshot(path=str(OUT/f"numeri-campionato-{width}.jpg"),type="jpeg",quality=83,full_page=True)
 
