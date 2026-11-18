@@ -81,6 +81,10 @@
   [
    "</body>",
    "<script src=\"v65/numeri.js?v=65fix\" defer></script>\n</body>"
+  ],
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
   ]
  ],
  "stadio/girrr/tabellone.html": [
@@ -107,6 +111,10 @@
   [
    "</body>",
    "<script src=\"../../girrr/v65/numeri.js?v=65fix\" defer></script>\n</body>"
+  ],
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
   ]
  ],
  "girrr/v60/tifosi.js": [
@@ -151,6 +159,10 @@
   [
    "sondaggi62.js?v=621",
    "sondaggi62.js?v=65fix"
+  ],
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
   ]
  ],
  "stadio/girrr/curva.html": [
@@ -165,6 +177,10 @@
   [
    "sondaggi62.js?v=621",
    "sondaggi62.js?v=65fix"
+  ],
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
   ]
  ],
  "girrr/curva-banca.js": [
@@ -185,6 +201,72 @@
   [
    " /* Lega e Giornale legati ai risultati */",
    " postNotteTropicale(ms,SQ).forEach(function(p){all.push(p)});\n /* Lega e Giornale legati ai risultati */"
+  ]
+ ],
+ "girrr/v55/destinazioni55.js": [
+  [
+   "var sito=/^\\/o-fant-a-girrr\\//.test(location.pathname),base=new URL('/o-fant-a-girrr/',location.href).href,",
+   "/* 6.5 (Claude): la base degli indirizzi si ricava anche dalla posizione di questo file (girrr/v55/), così i link funzionano anche in una copia di prova fuori da /o-fant-a-girrr/. Sul sito vero il risultato è identico a prima. */var cs65=document.currentScript,vero65=/^\\/o-fant-a-girrr\\//.test(location.pathname),sb65=cs65&&/\\/girrr\\/v55\\/destinazioni55\\.js/.test(cs65.src)?new URL('../../',cs65.src):null,sito=vero65||!!(sb65&&location.pathname.indexOf(sb65.pathname)===0&&/^(stadio\\/)?girrr\\/[^\\/]*$/.test(location.pathname.slice(sb65.pathname.length))),base=vero65||!sb65?new URL('/o-fant-a-girrr/',location.href).href:sb65.href,"
+  ]
+ ],
+ "girrr/campo.html": [
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ]
+ ],
+ "girrr/app.html": [
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ]
+ ],
+ "girrr/index.html": [
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ]
+ ],
+ "girrr/versioni.html": [
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ]
+ ],
+ "girrr/notifiche.html": [
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ]
+ ],
+ "stadio/girrr/campo.html": [
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ]
+ ],
+ "stadio/girrr/app.html": [
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ]
+ ],
+ "stadio/girrr/index.html": [
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ]
+ ],
+ "stadio/girrr/versioni.html": [
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ]
+ ],
+ "stadio/girrr/notifiche.html": [
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
   ]
  ]
 }
