@@ -3,6 +3,7 @@ on:
   pull_request:
     branches:
       - chatgpt/65-tabellone-curva
+      - chatgpt/65-qa-base
       - claude/totogirrr-ui-responsive-b2pgee
     paths:
       - "temi/notte-tropicale/**"
