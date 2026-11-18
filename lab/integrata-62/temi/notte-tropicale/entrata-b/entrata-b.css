@@ -25,7 +25,9 @@ html.girrr-b::view-transition-new(girrr-fx5) { animation: none; opacity: 1; }
 
 /* Strati decorativi (polvere, fumo): elementi vuoti con una texture di sfondo, aggiunti solo per la durata dell'effetto.
    Con le View Transitions diventano gruppi a sé (animati sul pseudo-elemento), senza restano elementi fissi animati. */
-.girrr-b-fx { position: fixed; inset: 0; pointer-events: none; z-index: 2147483000; contain: strict;
+/* agganciati a <html> e grandi quanto tutta la finestra, barra di scorrimento compresa: prima, dentro il body, sugli schermi grandi
+   lo strato finiva sotto la barra in alto e prima della barra di scorrimento, e il fumo mostrava un lato dritto */
+.girrr-b-fx { position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; height: 100lvh; margin: 0; pointer-events: none; z-index: 2147483000; contain: strict;
   background-repeat: repeat; will-change: transform, opacity; opacity: 0; }
 /* con le View Transitions lo strato va fotografato visibile: l'opacità la gestisce il suo gruppo */
 html.girrr-b:not(.girrr-b-ripiego) .girrr-b-fx { opacity: 1; }
@@ -49,7 +51,7 @@ html.girrr-b[data-b="nuvola-morbida"]::view-transition-image-pair(girrr-vecchia)
   -webkit-mask-image: url(nuvola.webp); mask-image: url(nuvola.webp);
   -webkit-mask-size: auto 100%; mask-size: auto 100%;
   -webkit-mask-repeat: repeat-x; mask-repeat: repeat-x;
-  animation: gb-scatola-giu var(--gb-durata, 2400ms) var(--gb-curva, cubic-bezier(.42, .02, .36, 1)) both;
+  animation: gb-scatola-giu var(--gb-durata, 3000ms) var(--gb-curva, cubic-bezier(.42, .02, .36, 1)) both;
   will-change: transform;
 }
 html.girrr-b[data-b="nuvola-morbida"]::view-transition-image-pair(girrr-vecchia) {
@@ -59,15 +61,15 @@ html.girrr-b[data-b="nuvola"]::view-transition-old(girrr-vecchia),
 html.girrr-b[data-b="nuvola-morbida"]::view-transition-old(girrr-vecchia) {
   position: absolute; inset: auto; left: 0; top: 66.6667%; width: 100%; height: 33.3333%;
   transform-origin: 50% 30%;
-  animation: gb-pagina-su var(--gb-durata, 2400ms) var(--gb-curva, cubic-bezier(.42, .02, .36, 1)) both,
-             gb-svanisce var(--gb-durata, 2400ms) linear both;
+  animation: gb-pagina-su var(--gb-durata, 3000ms) var(--gb-curva, cubic-bezier(.42, .02, .36, 1)) both,
+             gb-svanisce var(--gb-durata, 3000ms) linear both;
   will-change: transform, opacity;
 }
 html.girrr-b[data-b="nuvola"]::view-transition-new(girrr-nuova),
 html.girrr-b[data-b="nuvola-morbida"]::view-transition-new(girrr-nuova),
 html.girrr-b[data-b="nuvola-maskpos"]::view-transition-new(girrr-nuova),
 html.girrr-b[data-b="vento"]::view-transition-new(girrr-nuova) {
-  animation: gb-nuova-emerge var(--gb-durata, 2400ms) cubic-bezier(.2, .6, .3, 1) both;
+  animation: gb-nuova-emerge var(--gb-durata, 3000ms) cubic-bezier(.2, .6, .3, 1) both;
 }
 html.girrr-b[data-b="nuvola"]::view-transition-group(girrr-nuova),
 html.girrr-b[data-b="nuvola-morbida"]::view-transition-group(girrr-nuova),
@@ -75,7 +77,7 @@ html.girrr-b[data-b="nuvola-maskpos"]::view-transition-group(girrr-nuova),
 html.girrr-b[data-b="vento"]::view-transition-group(girrr-nuova) { animation: none; }
 html.girrr-b[data-b="nuvola"] .girrr-b-fx1 { background-image: url(polvere.webp); background-size: 300px 300px; }
 html.girrr-b[data-b="nuvola"]::view-transition-group(girrr-fx1) {
-  animation: gb-polvere-e var(--gb-durata, 2400ms) cubic-bezier(.42, .02, .36, 1) both;
+  animation: gb-polvere-e var(--gb-durata, 3000ms) cubic-bezier(.42, .02, .36, 1) both;
   -webkit-mask-image: linear-gradient(transparent, #000 30%, #000 60%, transparent);
   mask-image: linear-gradient(transparent, #000 30%, #000 60%, transparent);
 }
@@ -86,7 +88,7 @@ html.girrr-b[data-b="nuvola-maskpos"]::view-transition-group(girrr-vecchia) { an
 html.girrr-b[data-b="nuvola-maskpos"]::view-transition-old(girrr-vecchia) {
   -webkit-mask-image: url(nuvola.webp); mask-image: url(nuvola.webp);
   -webkit-mask-size: auto 300%; mask-size: auto 300%; -webkit-mask-repeat: repeat-x; mask-repeat: repeat-x;
-  animation: gb-maskpos var(--gb-durata, 2400ms) cubic-bezier(.42, .02, .36, 1) both, gb-svanisce var(--gb-durata, 2400ms) linear both;
+  animation: gb-maskpos var(--gb-durata, 3000ms) cubic-bezier(.42, .02, .36, 1) both, gb-svanisce var(--gb-durata, 3000ms) linear both;
 }
 
 /* ───────────── D · Polvere nel vento (da sinistra a destra, scie orizzontali) ───────────── */
@@ -98,18 +100,18 @@ html.girrr-b[data-b="vento"]::view-transition-image-pair(girrr-vecchia) {
   -webkit-mask-image: url(vento.webp); mask-image: url(vento.webp);
   -webkit-mask-size: 100% auto; mask-size: 100% auto;
   -webkit-mask-repeat: repeat-y; mask-repeat: repeat-y;
-  animation: gb-scatola-destra var(--gb-durata, 2600ms) var(--gb-curva, cubic-bezier(.45, .05, .4, 1)) both;
+  animation: gb-scatola-destra var(--gb-durata, 3200ms) var(--gb-curva, cubic-bezier(.45, .05, .4, 1)) both;
   will-change: transform;
 }
 html.girrr-b[data-b="vento"]::view-transition-old(girrr-vecchia) {
   position: absolute; inset: auto; top: 0; left: 66.6667%; width: 33.3333%; height: 100%;
-  animation: gb-pagina-vento var(--gb-durata, 2600ms) var(--gb-curva, cubic-bezier(.45, .05, .4, 1)) both,
-             gb-svanisce var(--gb-durata, 2600ms) linear both;
+  animation: gb-pagina-vento var(--gb-durata, 3200ms) var(--gb-curva, cubic-bezier(.45, .05, .4, 1)) both,
+             gb-svanisce var(--gb-durata, 3200ms) linear both;
   will-change: transform, opacity;
 }
 html.girrr-b[data-b="vento"] .girrr-b-fx1 { background-image: url(polvere.webp); background-size: 260px 260px; }
 html.girrr-b[data-b="vento"]::view-transition-group(girrr-fx1) {
-  animation: gb-polvere-d var(--gb-durata, 2600ms) cubic-bezier(.45, .05, .4, 1) both;
+  animation: gb-polvere-d var(--gb-durata, 3200ms) cubic-bezier(.45, .05, .4, 1) both;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 35%, #000 60%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 35%, #000 60%, transparent);
 }
@@ -124,20 +126,26 @@ html.girrr-b[data-b="vento"]::view-transition-group(girrr-fx1) {
 @keyframes gb-velo { 0% { opacity: 0; } 42% { opacity: .62; } 58% { opacity: .62; } 100% { opacity: 0; } }
 html.girrr-b[data-b="fumo"]::view-transition-group(girrr-vecchia),
 html.girrr-b[data-b="fumo"]::view-transition-group(girrr-nuova) { animation: none; }
-html.girrr-b[data-b="fumo"]::view-transition-old(girrr-vecchia) { animation: gb-fumo-vecchia var(--gb-durata, 2500ms) cubic-bezier(.4, 0, .3, 1) both; }
-html.girrr-b[data-b="fumo"]::view-transition-new(girrr-nuova) { animation: gb-fumo-nuova var(--gb-durata, 2500ms) cubic-bezier(.3, 0, .2, 1) both; }
+html.girrr-b[data-b="fumo"]::view-transition-old(girrr-vecchia) { animation: gb-fumo-vecchia var(--gb-durata, 3100ms) cubic-bezier(.4, 0, .3, 1) both; }
+html.girrr-b[data-b="fumo"]::view-transition-new(girrr-nuova) { animation: gb-fumo-nuova var(--gb-durata, 3100ms) cubic-bezier(.3, 0, .2, 1) both; }
 html.girrr-b[data-b="fumo"] .girrr-b-fx1, html.girrr-b[data-b="fumo"] .girrr-b-fx3 { background: url(fumo-a.webp) center / contain no-repeat; }
 html.girrr-b[data-b="fumo"] .girrr-b-fx2, html.girrr-b[data-b="fumo"] .girrr-b-fx4 { background: url(fumo-b.webp) center / contain no-repeat; }
 html.girrr-b[data-b="fumo"] .girrr-b-fx5 { background: radial-gradient(ellipse at 50% 55%, rgba(236, 214, 255, .95), rgba(190, 150, 230, .7) 55%, rgba(120, 80, 170, .5)); }
-html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx1) { animation: gb-fumo-1 var(--gb-durata, 2500ms) cubic-bezier(.35, .1, .3, 1) both; }
-html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx2) { animation: gb-fumo-2 var(--gb-durata, 2500ms) cubic-bezier(.35, .1, .3, 1) both; }
-html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx3) { animation: gb-fumo-3 var(--gb-durata, 2500ms) cubic-bezier(.35, .1, .3, 1) both; }
-html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx4) { animation: gb-fumo-4 var(--gb-durata, 2500ms) cubic-bezier(.35, .1, .3, 1) both; }
-html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx5) { z-index: 2; animation: gb-velo var(--gb-durata, 2500ms) ease-in-out both; }
+html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx1) { animation: gb-fumo-1 var(--gb-durata, 3100ms) cubic-bezier(.35, .1, .3, 1) both; }
+html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx2) { animation: gb-fumo-2 var(--gb-durata, 3100ms) cubic-bezier(.35, .1, .3, 1) both; }
+html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx3) { animation: gb-fumo-3 var(--gb-durata, 3100ms) cubic-bezier(.35, .1, .3, 1) both; }
+html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx4) { animation: gb-fumo-4 var(--gb-durata, 3100ms) cubic-bezier(.35, .1, .3, 1) both; }
+html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx5) { z-index: 2; animation: gb-velo var(--gb-durata, 3100ms) ease-in-out both; }
 html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx1),
 html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx2),
 html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx3),
 html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx4) { z-index: 4; }
+
+/* Sugli schermi con la barra di scorrimento visibile (PC, TV, Mac con il mouse) la fascia della barra resta scura sotto il fumo e
+   sembra un lato dritto. Per tutta l'entrata la barra non c'è (la classe la mette il caricatore prima del primo disegno, così la Home non
+   si sposta quando parte l'effetto); torna al primo scorrimento, tasto o tocco dopo la fine. */
+html.girrr-b-senza-barra { scrollbar-width: none; }
+html.girrr-b-senza-barra::-webkit-scrollbar { display: none; }
 
 /* Versione leggera (TV, 4K): nel fumo restano due sbuffi e il velo. */
 html.girrr-b[data-b-leggero] .girrr-b-fx3, html.girrr-b[data-b-leggero] .girrr-b-fx4 { display: none; }
@@ -147,13 +155,13 @@ html.girrr-b-ripiego .girrr-b-fx { view-transition-name: none; }
 html.girrr-b-ripiego .girrr-b-fx1, html.girrr-b-ripiego .girrr-b-fx3 { background: url(fumo-a.webp) center / contain no-repeat; }
 html.girrr-b-ripiego .girrr-b-fx2, html.girrr-b-ripiego .girrr-b-fx4 { background: url(fumo-b.webp) center / contain no-repeat; }
 html.girrr-b-ripiego .girrr-b-fx5 { background: radial-gradient(ellipse at 50% 55%, #ecd6ff, #be96e6 55%, #7850aa); }
-html.girrr-b-ripiego .girrr-b-fx1 { animation: gb-fumo-1 var(--gb-durata, 2500ms) cubic-bezier(.35, .1, .3, 1) both; }
-html.girrr-b-ripiego .girrr-b-fx2 { animation: gb-fumo-2 var(--gb-durata, 2500ms) cubic-bezier(.35, .1, .3, 1) both; }
-html.girrr-b-ripiego .girrr-b-fx3 { animation: gb-fumo-3 var(--gb-durata, 2500ms) cubic-bezier(.35, .1, .3, 1) both; }
-html.girrr-b-ripiego .girrr-b-fx4 { animation: gb-fumo-4 var(--gb-durata, 2500ms) cubic-bezier(.35, .1, .3, 1) both; }
+html.girrr-b-ripiego .girrr-b-fx1 { animation: gb-fumo-1 var(--gb-durata, 3100ms) cubic-bezier(.35, .1, .3, 1) both; }
+html.girrr-b-ripiego .girrr-b-fx2 { animation: gb-fumo-2 var(--gb-durata, 3100ms) cubic-bezier(.35, .1, .3, 1) both; }
+html.girrr-b-ripiego .girrr-b-fx3 { animation: gb-fumo-3 var(--gb-durata, 3100ms) cubic-bezier(.35, .1, .3, 1) both; }
+html.girrr-b-ripiego .girrr-b-fx4 { animation: gb-fumo-4 var(--gb-durata, 3100ms) cubic-bezier(.35, .1, .3, 1) both; }
 /* il velo nel ripiego copre del tutto il cambio, al centro dell'effetto (resta visibile solo il fumo) */
 @keyframes gb-velo-pieno { 0% { opacity: 0; } 40%, 56% { opacity: 1; } 100% { opacity: 0; } }
-html.girrr-b-ripiego .girrr-b-fx5 { z-index: 2147482999; animation: gb-velo-pieno var(--gb-durata, 2500ms) ease-in-out both; }
+html.girrr-b-ripiego .girrr-b-fx5 { z-index: 2147482999; animation: gb-velo-pieno var(--gb-durata, 3100ms) ease-in-out both; }
 
 @media (prefers-reduced-motion: reduce) {
   html.girrr-b::view-transition-group(*), html.girrr-b::view-transition-image-pair(*),

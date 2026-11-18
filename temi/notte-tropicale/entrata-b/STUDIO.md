@@ -8,15 +8,16 @@ Senza `b=` resta la transizione attuale di ChatGPT.
 
 | Parametro `b=` | Alternativa | Durata |
 |---|---|---|
-| `nuvola` | E · Nuvola e polvere (tecnica F) | 2,4 s |
-| `fumo` | C · Fumo | 2,5 s |
-| `vento` | D · Polvere nel vento (tecnica F) | 2,6 s |
-| `nuvola-morbida` | A · Nuvola morbida | 2,4 s |
-| `nuvola-maskpos` | Solo misura: E con `mask-position` animata | 2,4 s |
+| `nuvola` | E · Nuvola e polvere (tecnica F) | 3,0 s |
+| `fumo` | C · Fumo | 3,1 s |
+| `vento` | D · Polvere nel vento (tecnica F) | 3,2 s |
+| `nuvola-morbida` | A · Nuvola morbida | 3,0 s |
+| `nuvola-maskpos` | Solo misura: E con `mask-position` animata | 3,0 s |
 
-Facoltativi: `b-durata=1600…3600` (ms) e `b-leggero=1|0` per forzare la versione leggera.
+Durate allungate di circa un quarto il 19 novembre (Gianluca: «leggermente più lente»); le misure e i video qui sotto sono stati fatti con le durate di prima (2,4–2,6 s). Facoltativi: `b-durata=1600…4500` (ms) e `b-leggero=1|0` per forzare la versione leggera.
 
 ## Come funziona
+0. I caratteri della skin si scaricano prima della foto della nuova Home (altrimenti l'iPhone mostrava il suo corsivo di sistema). Per tutta l'entrata non c'è la barra di scorrimento: sugli schermi grandi la sua fascia scura sotto il fumo sembrava un lato dritto; torna al primo scorrimento o tocco.
 1. Le texture vengono decodificate prima (al massimo 1,5 s di attesa): la maschera non arriva a effetto iniziato.
 2. La vecchia Home viene fotografata come gruppo `girrr-vecchia`. Nel callback della View Transition la skin si accende e si aspetta che il tema abbia riempito la Home (`nt-cruscotto-pronto`, al massimo 1,2 s). Intanto resta ferma la foto della vecchia Home. La nuova (`girrr-nuova`) quindi non si ricompone durante l'effetto: con la transizione attuale lo script del tema girava a metà animazione.
 3. La maschera (nuvola o vento) non si sposta con `mask-position`, perché si ridisegnerebbe a ogni fotogramma. Si sposta la scatola mascherata con `transform` e la pagina vecchia al contrario della stessa quantità. Polvere e fumo sono strati vuoti con una texture di sfondo, animati sul loro gruppo. Risultato: solo `transform` e `opacity`, tutto sul compositor.

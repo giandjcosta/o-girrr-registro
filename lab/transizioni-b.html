@@ -74,7 +74,7 @@ ul{padding-left:20px;margin:6px 0}
 </section>
 
 <h2>Video a 60 fps</h2>
-<p class="mute">Ogni fotogramma è stato disegnato dal browser a 1/60 di secondo dal precedente (animazioni ferme e spostate una per una, Chromium). È la resa visiva fedele, non una misura di fluidità: quella è nella tabella sotto.</p>
+<p class="mute">Ogni fotogramma è stato disegnato dal browser a 1/60 di secondo dal precedente (animazioni ferme e spostate una per una, Chromium). È la resa visiva fedele, non una misura di fluidità: quella è nella tabella sotto. Video e misure sono stati fatti con le durate di prima (2,4–2,6 s); la prova dal vivo usa quelle nuove, un po' più lente (3,0–3,2 s).</p>
 <figure style="margin:0 0 14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px"><video controls muted playsinline loop preload="metadata" src="transizioni-b/confronto-iphone.mp4" style="width:100%;border-radius:8px;background:#000;display:block"></video><figcaption style="font-weight:700;margin-top:6px">Confronto · E Nuvola e polvere · C Fumo · D Polvere nel vento · Attuale (iPhone 390)</figcaption></figure>
 <div class="video" id="video"></div>
 
@@ -82,13 +82,13 @@ ul{padding-left:20px;margin:6px 0}
 <div class="alt">
  <article class="top"><span class="voto">Proposta 1 · Consigliata</span><h3>E · Nuvola e polvere</h3>
   <p>La Home normale si apre in chiazze nuvolose che scendono dall'alto; i frammenti salgono appena e svaniscono, qualche granello luminoso accompagna il bordo. La skin è già ferma sotto.</p>
-  <ul><li>Tecnica F: maschera di nuvola (43 KB) e polvere (41 KB).</li><li>Solo transform e opacity: la maschera non si ridisegna (vedi «Come funziona»).</li><li>2,4 s. Parametro <code>b=nuvola</code>.</li></ul></article>
+  <ul><li>Tecnica F: maschera di nuvola (43 KB) e polvere (41 KB).</li><li>Solo transform e opacity: la maschera non si ridisegna (vedi «Come funziona»).</li><li>3,0 s. Parametro <code>b=nuvola</code>.</li></ul></article>
  <article class="top"><span class="voto">Proposta 2</span><h3>C · Fumo</h3>
   <p>Una cortina leggera rosa e lilla attraversa la Home, la vecchia grafica sparisce dietro, il fumo si dirada e lascia la Notte Tropicale.</p>
-  <ul><li>Quattro sbuffi (47–52 KB) e un velo, sempre e solo transform e opacity.</li><li>È anche il ripiego per i browser senza View Transitions: lì il fumo nasconde il cambio.</li><li>2,5 s. Parametro <code>b=fumo</code>.</li></ul></article>
+  <ul><li>Quattro sbuffi (47–52 KB) e un velo, sempre e solo transform e opacity.</li><li>È anche il ripiego per i browser senza View Transitions: lì il fumo nasconde il cambio.</li><li>3,1 s. Parametro <code>b=fumo</code>.</li></ul></article>
  <article class="top"><span class="voto">Proposta 3</span><h3>D · Polvere nel vento</h3>
   <p>La grafica viene portata via da sinistra a destra in scie orizzontali, con la polvere che scorre; la nuova pagina resta ferma sotto. Non è uno swipe: il bordo è a brandelli e irregolare.</p>
-  <ul><li>Maschera a scie (42 KB) e polvere.</li><li>2,6 s. Parametro <code>b=vento</code>.</li></ul></article>
+  <ul><li>Maschera a scie (42 KB) e polvere.</li><li>3,2 s. Parametro <code>b=vento</code>.</li></ul></article>
  <article><span class="voto">Provabile</span><h3>A · Nuvola morbida</h3>
   <p>Come E, senza grana né granelli: più elegante e più «dissolvenza». Tenuta come variante di E (<code>b=nuvola-morbida</code>), perché il confronto diretto è utile, ma da sola somiglia di più a una dissolvenza.</p></article>
  <article><span class="voto">Assorbita in E</span><h3>B · Disintegrazione in polvere</h3>

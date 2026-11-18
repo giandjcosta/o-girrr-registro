@@ -1,7 +1,7 @@
 /* O Girrr 6.5 · Studio della transizione B (Claude, 18 novembre 2026). SOLO anteprima, caricato da evento-loader.js
    quando l'indirizzo ha ?evento-intro=trasformazione&b=<variante>. Varianti: nuvola (E, Nuvola e polvere),
    nuvola-morbida (A), vento (D, Polvere nel vento), fumo (C, Fumo), nuvola-maskpos (solo per misurare).
-   Facoltativo ?b-durata=2400 (1600–3600 ms) per provare durate diverse, ?b-leggero=1|0 per forzare la versione leggera.
+   Facoltativo ?b-durata=3000 (1600–4500 ms) per provare durate diverse, ?b-leggero=1|0 per forzare la versione leggera.
 
    Sequenza: 1) le texture sono già decodificate (niente maschera che arriva a metà); 2) la vecchia Home viene fotografata;
    3) dentro il callback della View Transition si accende la skin e si aspetta che il tema abbia finito di riempire la Home
@@ -12,13 +12,13 @@
   'use strict';
   var BASE = document.currentScript && document.currentScript.src ? document.currentScript.src : location.href;
   var VARIANTI = {
-    nuvola: { durata: 2400, fx: 1, texture: ['nuvola.webp', 'polvere.webp'] },
-    'nuvola-morbida': { durata: 2400, fx: 0, texture: ['nuvola-morbida.webp'] },
-    'nuvola-maskpos': { durata: 2400, fx: 0, texture: ['nuvola.webp'] },
-    vento: { durata: 2600, fx: 1, texture: ['vento.webp', 'polvere.webp'] },
-    fumo: { durata: 2500, fx: 5, texture: ['fumo-a.webp', 'fumo-b.webp'] }
+    nuvola: { durata: 3000, fx: 1, texture: ['nuvola.webp', 'polvere.webp'] },
+    'nuvola-morbida': { durata: 3000, fx: 0, texture: ['nuvola-morbida.webp'] },
+    'nuvola-maskpos': { durata: 3000, fx: 0, texture: ['nuvola.webp'] },
+    vento: { durata: 3200, fx: 1, texture: ['vento.webp', 'polvere.webp'] },
+    fumo: { durata: 3100, fx: 5, texture: ['fumo-a.webp', 'fumo-b.webp'] }
   };
-  var RIPIEGO = { durata: 2500, fx: 5, texture: ['fumo-a.webp', 'fumo-b.webp'] };
+  var RIPIEGO = { durata: 3100, fx: 5, texture: ['fumo-a.webp', 'fumo-b.webp'] };
   var h = document.documentElement;
 
   function precarica(lista) {
@@ -40,7 +40,7 @@
     for (var i = 1; i <= n; i++) {
       var d = document.createElement('div');
       d.className = 'girrr-b-fx girrr-b-fx' + i; d.setAttribute('aria-hidden', 'true');
-      document.body.appendChild(d); out.push(d);
+      document.documentElement.appendChild(d); out.push(d);
     }
     return out;
   }
@@ -59,10 +59,10 @@
     var v = VARIANTI[variante];
     var ridotto = matchMedia('(prefers-reduced-motion: reduce)').matches;
     var vt = typeof document.startViewTransition === 'function';
-    if (!v || ridotto) { accendi(function () {}); fine(); return; }
+    if (!v || ridotto) { h.classList.remove('girrr-b-senza-barra'); accendi(function () {}); fine(); return; }
     if (!vt) v = RIPIEGO;
     var q = new URLSearchParams(location.search), dur = Number(q.get('b-durata'));
-    if (!(dur >= 1600 && dur <= 3600)) dur = v.durata;
+    if (!(dur >= 1600 && dur <= 4500)) dur = v.durata;
     h.style.setProperty('--gb-durata', dur + 'ms');
     h.setAttribute('data-b', vt ? variante : 'ripiego');
     /* Schermi con molti pixel (TV, monitor 4K, iPad in alta densità): meno strati a tutto schermo, la parte che costa di più
@@ -78,6 +78,10 @@
       h.classList.remove('girrr-b', 'girrr-b-vecchia', 'girrr-b-nuova', 'girrr-b-ripiego');
       h.removeAttribute('data-b'); h.removeAttribute('data-b-leggero'); h.style.removeProperty('--gb-durata');
       misura('fine'); fine();
+      if (h.classList.contains('girrr-b-senza-barra')) {
+        var torna = function () { h.classList.remove('girrr-b-senza-barra'); ['wheel', 'keydown', 'pointerdown', 'touchstart'].forEach(function (e) { removeEventListener(e, torna, true); }); };
+        ['wheel', 'keydown', 'pointerdown', 'touchstart'].forEach(function (e) { addEventListener(e, torna, { capture: true, passive: true }); });
+      }
     }
     entro(2500, Promise.all([precarica(v.texture), caratteri()])).then(function () {
       if (!vt) {

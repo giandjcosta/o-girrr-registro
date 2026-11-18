@@ -84,7 +84,7 @@
       /* Studio della transizione B (Claude, 18 novembre): ?b=nuvola|nuvola-morbida|vento|fumo|nuvola-maskpos. Solo anteprima;
          senza ?b= resta la transizione attuale. */
       if(intro==='trasformazione'&&/^(nuvola|nuvola-morbida|nuvola-maskpos|vento|fumo)$/.test(q.get('b')||'')){
-        studioB=q.get('b');
+        studioB=q.get('b');h.classList.add('girrr-b-senza-barra');
         var bCss=document.createElement('link');bCss.rel='stylesheet';
         bCss.href=new URL('notte-tropicale/entrata-b/entrata-b.css',base).href;(document.head||h).appendChild(bCss);
         var bJs=document.createElement('script');bJs.src=new URL('notte-tropicale/entrata-b/entrata-b.js',base).href;
