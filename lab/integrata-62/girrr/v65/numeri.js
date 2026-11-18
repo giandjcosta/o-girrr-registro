@@ -2,7 +2,7 @@
 (function(){
 'use strict';
 if(document.body.dataset.v53!=='board'||new URLSearchParams(location.search).get('sezione')!=='numeri')return;
-var src=document.currentScript,root=new URL('../../../',src.src),g=document.querySelector('.grid'),nav=document.querySelector('.giornata-nav');
+var src=document.currentScript,root=new URL('../../',src.src),g=document.querySelector('.grid'),nav=document.querySelector('.giornata-nav');
 if(!g||!nav)return;
 var box=document.createElement('section');box.id='v65numeri';box.setAttribute('aria-label','Numeri della stagione');
 g.parentNode.insertBefore(box,g);g.hidden=true;g.style.display='none';
@@ -21,7 +21,11 @@ function F(n){return Number(n).toLocaleString('it-IT',{maximumFractionDigits:2})
 function numeri(d,coppa){
 var rows=[],teams={};
 function team(s){return teams[s]||(teams[s]={nome:s,gf:0,gs:0,pari:0,casa:[],fuori:[],tutte:[]})}
-(d.cal[coppa?'cup':'lega']||[]).forEach(function(g){(g.m||[]).forEach(function(m){
+(d.cal[coppa?'cup':'lega']||[]).forEach(function(g){
+/* 6.5: i risultati non diventano pubblici prima dell'ora successiva a voti e calcoli. */
+var v=(d.votiTs||{})[g.sa],c=(d.calcTs||{})[g.sa];
+if((v||c)&&Date.now()<Math.max(v?Date.parse(v):0,c?Date.parse(c):0)+3600000)return;
+(g.m||[]).forEach(function(m){
 var a=coppa?m[1]:m[0],b=coppa?m[4]:m[3],score=coppa?m[5]:m[4],r=/^(\d+)-(\d+)$/.exec(String(score));
 if(!r)return;var x=+r[1],y=+r[2],px=Number(coppa?m[2]:m[1]),py=Number(coppa?m[3]:m[2]);
 var z={a:a,b:b,x:x,y:y,px:px,py:py,day:g.n,tot:x+y,diff:Math.abs(x-y)};rows.push(z);
