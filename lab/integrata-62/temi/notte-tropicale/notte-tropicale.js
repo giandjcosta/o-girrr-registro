@@ -88,37 +88,22 @@
       /* la fila di icone non si mostra più (Gianluca: «se sotto ci sono le schede con le foto, le piccole tab in alto sono un
          doppione»); il codice resta per un eventuale ripensamento */
       hero.parentNode.insertBefore(box, hero.nextSibling);
-      /* ChatGPT 17/11/2026: una sola fila «Tutto il Girrr». Riusiamo i nodi reali
-         (Curva, Notifiche, Statistiche, sponsor) senza clonarli o modificare contenuti,
-         eventi e collegamenti. Il titolo è un fratello della fila, non scorre con essa. */
-      var rail = document.querySelector('body[data-v53="home"] .wrap > .cards');
-      /* Claude, 17 novembre sera: lo spostamento di Curva, Notifiche, Statistiche e sponsor dentro la fila è spento. Gianluca aveva
-         chiesto la Curva SOTTO le sei schede e Notifiche/Statistiche più giù; dentro la fila finivano anche «Esci» e la versione
-         (versioni.js li mette subito prima degli sponsor) e i marchi diventavano minuscoli. Il codice resta per un eventuale ripensamento. */
-      if (false && rail && !document.getElementById('nt-tutto-titolo')) {
-        var titolo = document.createElement('h2');
-        titolo.id = 'nt-tutto-titolo';
-        titolo.className = 'nt-tutto-titolo';
-        titolo.textContent = 'Tutto il Girrr';
-        rail.setAttribute('aria-labelledby', titolo.id);
-        rail.parentNode.insertBefore(titolo, rail);
-        var curva = document.getElementById('cvw');
-        if (curva) {
-          curva.classList.add('nt-slide', 'nt-slide-curva');
-          rail.appendChild(curva);
-        }
-        [].forEach.call(document.querySelectorAll('body[data-v53="home"] .wrap > .mini'), function (mini) {
-          mini.classList.add('nt-slide', 'nt-slide-mini');
-          rail.appendChild(mini);
-        });
-        var sponsor = document.querySelector('body[data-v53="home"] .wrap > .sp');
-        if (sponsor) {
-          sponsor.classList.add('nt-slide', 'nt-slide-sponsor');
-          rail.appendChild(sponsor);
-        }
-        document.documentElement.classList.add('nt-rail-integrata');
-      }
-      /* Derby votati o bocciati dai tifosi: la stessa lettura della pagina Derby (solo lettura); se non risponde in 2,5 secondi
+      /* 6.5 (Gianluca, 18 novembre): la Curva è una sezione AUTONOMA sotto
+          «Tutto il Girrr». Non ricreare schede, né spostare Notifiche,
+          Statistiche, pubblicità e versione nella fila delle sei card. */
+       var rail = document.querySelector('body[data-v53="home"] .wrap > .cards');
+       if (rail) {
+         var curva = document.getElementById('cvw');
+         var punto = rail;
+         if (curva) { rail.insertAdjacentElement('afterend', curva); punto = curva; }
+         [].forEach.call(document.querySelectorAll('body[data-v53="home"] .wrap .cards > .mini'), function (mini) {
+           punto.insertAdjacentElement('afterend', mini); punto = mini;
+         });
+         var sponsor = document.querySelector('body[data-v53="home"] .wrap .cards > .sp');
+         if (sponsor) punto.insertAdjacentElement('afterend', sponsor);
+         document.documentElement.classList.remove('nt-rail-integrata');
+       }
+       /* Derby votati o bocciati dai tifosi: la stessa lettura della pagina Derby (solo lettura); se non risponde in 2,5 secondi
          si va avanti con le sole rivalità storiche */
       var DBU = 'https://qmjqfgmvimsuxvghetgi.supabase.co', DBK = 'sb_publishable_qPhimkrF4iUvIad7JPoH8A_i-eOqG7n';
       var kk = function (a, b) { return [a, b].map(function (x) { return String(x).toLowerCase(); }).sort().join('|'); };
