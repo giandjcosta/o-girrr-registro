@@ -86,6 +86,40 @@
       introCss.href=new URL('notte-tropicale/entrata-65.css',base).href;
       (document.head||h).appendChild(introCss);
     }
+    /* La copertina A deve comparire appena il DOM esiste, SENZA aspettare
+       che tema, immagini esterne, altri script o fogli di stile abbiano finito.
+       Una volta creata, rimane visibile per almeno 4,5 secondi dopo il load
+       dell'immagine prima di dissolversi per 1,8 secondi. */
+    var cover=null, portrait=null, copertinaIniziata=false;
+    function preparaCopertina(){
+      if(intro!=='copertina'||cover||!document.body)return;
+      h.setAttribute('data-intro-state','copertina');
+      cover=document.createElement('div');
+      cover.className='nt-cover-overlay';
+      cover.setAttribute('role','img');
+      cover.setAttribute('aria-label','GTA VI, Lucia e Jason davanti a un\u2019auto. Edizione speciale O Girrr dal 19 al 27 novembre.');
+      portrait=document.createElement('img');
+      portrait.className='nt-cover-poster';portrait.alt='';
+      portrait.decoding='async';portrait.fetchPriority='high';
+      portrait.src=new URL('notte-tropicale/gta6-lucia-jason-cover.webp',base).href;
+      var alternativa=new URL('notte-tropicale/miami-tramonto.jpg',base).href;
+      portrait.addEventListener('error',function(){
+        if(portrait.src!==alternativa)portrait.src=alternativa;
+      });
+      cover.appendChild(portrait);
+      var caption=document.createElement('span');
+      caption.className='nt-cover-caption';
+      caption.textContent='O FANT A GIRRR · EDIZIONE SPECIALE · 19–27 NOVEMBRE';
+      cover.appendChild(caption);
+      document.body.insertBefore(cover,document.body.firstChild);
+      if(introCss.sheet)h.classList.add('nt-cover-ready');
+      else introCss.addEventListener('load',function(){h.classList.add('nt-cover-ready');},{once:true});
+    }
+    if(intro==='copertina'){
+      if(document.readyState==='loading')
+        document.addEventListener('DOMContentLoaded',preparaCopertina,{once:true});
+      else preparaCopertina();
+    }
     /* Morph: lascia prima visibile la Home ordinaria. La nuova skin è precaricata
        ma non applicata fino al momento della transizione. */
     if(intro!=='trasformazione')h.setAttribute('data-event-theme',ev.id);
@@ -120,46 +154,34 @@
       if(!intro){caricaScriptTema();return;}
       quandoPaginaPronta(function(){
         if(intro==='copertina'){
-          /* Copertina vera: DOM dedicato, non ::before/::after del body (il tema
-             li azzera). Mostra la foto per almeno 2,3 secondi dopo il decode. */
-          h.setAttribute('data-intro-state','copertina');
-          var cover=document.createElement('div');
-          cover.className='nt-cover-overlay';
-          cover.setAttribute('role','img');
-          cover.setAttribute('aria-label','GTA VI, Lucia e Jason davanti a un\u2019auto. Edizione speciale O Girrr dal 19 al 27 novembre.');
-          var portrait=document.createElement('img');
-          portrait.className='nt-cover-poster';
-          portrait.alt='';portrait.decoding='async';portrait.fetchPriority='high';
-          portrait.src=new URL('notte-tropicale/gta6-lucia-jason-cover.webp',base).href;
-          var fallback=new URL('notte-tropicale/miami-tramonto.jpg',base).href;
-          portrait.addEventListener('error',function(){if(portrait.src!==fallback)portrait.src=fallback;},{once:true});
-          cover.appendChild(portrait);
-          var caption=document.createElement('span');
-          caption.className='nt-cover-caption';
-          caption.textContent='O FANT A GIRRR · EDIZIONE SPECIALE · 19–27 NOVEMBRE';
-          cover.appendChild(caption);
-          document.body.insertBefore(cover,document.body.firstChild);
-          /* Il fallback resta sopra finché il CSS dedicato non è disponibile,
-             così non compare mai un fotogramma della Home non coperto. */
-          if (introCss.sheet) h.classList.add('nt-cover-ready');
-          else introCss.addEventListener('load',function(){h.classList.add('nt-cover-ready');},{once:true});
+          preparaCopertina();
+          if(copertinaIniziata)return;
+          copertinaIniziata=true;
           caricaScriptTema();
-          var minVisibile=new Promise(function(ok){setTimeout(ok,2300);});
-          var prontoFoto=new Promise(function(ok){
-            if(portrait.complete){ok();return;}
-            portrait.addEventListener('load',ok,{once:true});
-            portrait.addEventListener('error',ok,{once:true});
-            setTimeout(ok,950);
+          /* Aspetta di avere un'immagine utilizzabile. La durata della copertina
+             parte ORA, non dall'inizio del caricamento della pagina. */
+          var immaginePronta=new Promise(function(ok){
+            if(!portrait){ok();return;}
+            if(portrait.complete&&portrait.naturalWidth>0){ok();return;}
+            var risolto=false;
+            function conclude(){if(risolto)return;risolto=true;ok();}
+            portrait.addEventListener('load',conclude,{once:true});
+            portrait.addEventListener('error',conclude,{once:true});
+            setTimeout(conclude,2200); /* la pagina non deve bloccarsi */
           });
-          Promise.all([minVisibile,prontoFoto]).then(function(){
-            h.classList.add('nt-intro-uscita');
-            h.setAttribute('data-intro-state','uscita');
-            cover.classList.add('nt-cover-uscita');
+          immaginePronta.then(function(){
+            h.setAttribute('data-intro-state','copertina');
             setTimeout(function(){
-              cover.remove();
-              h.classList.remove('nt-intro-copertina','nt-intro-uscita','nt-cover-ready');
-              h.setAttribute('data-intro-state','completo');
-            },1250);
+              if(!cover||!cover.isConnected)return;
+              h.setAttribute('data-intro-state','uscita');
+              h.classList.add('nt-intro-uscita');
+              cover.classList.add('nt-cover-uscita');
+              setTimeout(function(){
+                cover.remove();
+                h.classList.remove('nt-intro-copertina','nt-intro-uscita','nt-cover-ready');
+                h.setAttribute('data-intro-state','completo');
+              },1850);
+            },4500);
           });
         } else {
           h.setAttribute('data-intro-state','grafica-originale');
