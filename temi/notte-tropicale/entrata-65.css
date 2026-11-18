@@ -16,7 +16,7 @@ html.nt-intro-copertina body::before {
  transform:scale(1.015)!important;
 }
 html.nt-intro-copertina body::after {
- content:"O FANT A GIRRR\\A NOTTE TROPICALE\\A 19 — 27 NOVEMBRE 2026\\A EDIZIONE SPECIALE GTA 6"!important;
+ content:"O FANT A GIRRR\A NOTTE TROPICALE\A 19 — 27 NOVEMBRE 2026\A EDIZIONE SPECIALE GTA 6"!important;
  white-space:pre-line!important;text-align:center!important;box-sizing:border-box!important;
  width:min(92vw,800px)!important;min-height:260px!important;
  top:50%!important;left:50%!important;
