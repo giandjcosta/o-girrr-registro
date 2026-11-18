@@ -1,5 +1,8 @@
 # Lavori in corso · O Girrr
 
+## Transizione B 6.5 · 18 novembre 2026 · Claude
+- **Studio Cloud / Dust / Smoke** · Claude · `Aspetta Gianluca` · ramo `claude/girrr-transition-effects-zpfofz`, pagina `lab/transizioni-b.html`, file `temi/notte-tropicale/entrata-b/` (+ copia in `lab/integrata-62/temi/`, aggancio con `?b=` in `temi/evento-loader.js`). Tre proposte (E Nuvola e polvere, C Fumo, D Polvere nel vento) con video a 60 fps e misure. Prossimo passo: Gianluca prova sul telefono e sceglie; poi la variante scelta diventa quella predefinita della transizione B. Nessun merge né deploy.
+
 ## Rifinitura iPhone SE e Smart TV · 18 novembre 2026 · ChatGPT
 - **Ramo `chatgpt/65-tab-uniche-curva-separata`, PR #131 bozza (non unire).** Da screenshot precedente, su iPhone SE quattro tab erano troppo piccole e «Le squadre» andava a capo male; su Smart TV la larghezza del Tabellone era limitata a 1380 px, con font troppo piccoli. Solo skin Notte Tropicale.
 - **Mobile ≤480 px:** quattro tab su una fila, testo condensato più leggibile, target ≥52 px, scheda squadre riallineata, padding e classifica adattati. **Smart TV ≥1600 px:** contenitore fino a 1840/2160 px, scala tipografica maggiore, giornate e controllo competizione ingranditi, prossimo turno su due colonne.
