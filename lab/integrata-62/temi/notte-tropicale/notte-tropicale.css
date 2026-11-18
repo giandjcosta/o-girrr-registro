@@ -236,7 +236,7 @@
   :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap>*{grid-column:2}
   :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap>header.hero{grid-column:1/-1;grid-row:1}
   :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap::after{grid-column:1/-1}
-  :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap>.cards{grid-column:1;grid-row:2/span 40;position:sticky;top:16px;align-self:start;grid-template-columns:repeat(4,minmax(0,1fr))!important;margin-top:0!important}
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap>.cards{grid-column:1;grid-row:2/span 40;position:sticky;top:16px;align-self:start;grid-template-columns:repeat(2,minmax(0,1fr))!important;margin-top:0!important}
   :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c h2{font-size:20px!important}
   :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] #strip{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible}
   :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] #strip>.st{min-height:140px}
@@ -789,7 +789,7 @@
    Quattro schede con la stessa grafica sfumata, in riga anche su iPhone; nessuna
    seconda fila di link bordati ciano/rosa. Il testo non viene deformato. */
 :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede{
- display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
  width:100%;max-width:740px!important;margin:18px 0 16px!important;
  gap:clamp(3px,1vw,9px)!important;padding:clamp(4px,1vw,9px)!important;transform:none!important;
  overflow:visible!important;border-radius:18px!important;
