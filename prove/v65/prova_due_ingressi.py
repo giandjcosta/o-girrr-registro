@@ -73,8 +73,8 @@ async def main():
     (OUT/"rapporto.json").write_text(json.dumps(results,ensure_ascii=False,indent=2),encoding="utf-8")
     problems=[]
     for name,r in results.items():
-        if r["pageErrors"] or r["finalState"]["state"]!="completo" or
-           r["finalState"]["theme"]!="notte-tropicale":
+        if (r["pageErrors"] or r["finalState"]["state"]!="completo" or
+            r["finalState"]["theme"]!="notte-tropicale"):
             problems.append(name)
         states=[x["state"] for x in r["states"]]
         if r["variant"]=="copertina" and "uscita" not in states:
