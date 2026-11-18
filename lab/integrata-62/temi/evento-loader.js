@@ -73,7 +73,8 @@
         /* Fallback istantaneo, già nel <head>, anche mentre si caricano i CSS:
            il poster non dipende dal primo rendering della Home. */
         var immediato=document.createElement('style');
-        immediato.textContent='html.nt-intro-copertina[data-event-theme="notte-tropicale"]:not(.nt-cover-ready)::after{content:""!important;position:fixed!important;inset:0!important;width:100%!important;height:100%!important;z-index:2147483000!important;background:#1b0b35!important;opacity:1!important;display:block!important;transform:none!important;filter:none!important;animation:none!important;mask:none!important;-webkit-mask:none!important}';
+        var primaFoto=new URL('notte-tropicale/gta6-lucia-jason-cover.webp',base).href;
+        immediato.textContent='html.nt-intro-copertina[data-event-theme="notte-tropicale"]:not(.nt-cover-ready)::after{content:""!important;position:fixed!important;inset:0!important;width:100%!important;height:100%!important;z-index:2147483000!important;background-color:#1b0b35!important;background-image:url('+JSON.stringify(primaFoto)+')!important;background-position:center!important;background-size:auto 100%!important;background-repeat:no-repeat!important;opacity:1!important;display:block!important;transform:none!important;filter:none!important;animation:none!important;mask:none!important;-webkit-mask:none!important}';
         (document.head||h).appendChild(immediato);
         var coverPreload=document.createElement('link');
         coverPreload.rel='preload';coverPreload.as='image';
@@ -138,7 +139,10 @@
           caption.textContent='O FANT A GIRRR · EDIZIONE SPECIALE · 19–27 NOVEMBRE';
           cover.appendChild(caption);
           document.body.insertBefore(cover,document.body.firstChild);
-          h.classList.add('nt-cover-ready');
+          /* Il fallback resta sopra finché il CSS dedicato non è disponibile,
+             così non compare mai un fotogramma della Home non coperto. */
+          if (introCss.sheet) h.classList.add('nt-cover-ready');
+          else introCss.addEventListener('load',function(){h.classList.add('nt-cover-ready');},{once:true});
           caricaScriptTema();
           var minVisibile=new Promise(function(ok){setTimeout(ok,2300);});
           var prontoFoto=new Promise(function(ok){
