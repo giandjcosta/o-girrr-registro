@@ -938,6 +938,7 @@ function genera(D,SQ,ST,ms){
   }
  }
  (window.CVB&&CVB.PRS||[]).forEach(function(l){var pp=null;try{pp=prestitoPost(l,ms,SQ)}catch(e){}if(pp&&pp.ts>=WC)all.push(pp)});
+ postNotteTropicale(ms,SQ).forEach(function(p){all.push(p)});
  /* Lega e Giornale legati ai risultati */
 
  /* Post di Girrr Sport e Lega legati a una giornata: voti, risultato, sala stampa, MVP, moviola, record, big match */
@@ -1258,5 +1259,40 @@ var COMUNI_N=[['gianfra_77','Gianfra77','s'],['la_vale_tifa','LaValeTifa','g'],[
 function comuneG(r,g){return g>=TAGLIO_N?pick(r,COMUNI.concat(COMUNI_N)):comune(r)}
 /* Dati veri per le immagini nuove: risultati dell'ultima giornata, prime della classifica, prossimo turno */
 function cxPiu(cx,ST){try{if(ST.ult){cx.g=ST.ult.n;cx.ris=ST.ult.m.map(function(m){return [m[0],m[3],m[4]]})}if(ST.cls)cx.cls=ST.cls.slice(0,6).map(function(t){return [t.n,t.pt]});if(ST.next){cx.gn=ST.next.n;cx.prox=ST.next.m.map(function(m){return [m[0],m[3]]})}}catch(e){}}
+
+
+/* 6.5 · Edizione speciale nella Curva: 18–23 novembre 2026, ora italiana.
+   Sono post di PERSONAGGI, non degli account ufficiali. Si pubblicano una sola
+   volta all'ora stabilita e spariscono automaticamente alla scadenza dell'evento.
+   I normali post automatici mantengono invece la loro finestra di 14 giorni. */
+var NOTTE_INIZIO=ts(2026,11,18,0,0),NOTTE_FINE=ts(2026,11,24,0,0);
+var NOTTE_POST=[
+ ['il_barista',18,10,30,"Al bancone è arrivata Notte Tropicale: caffè freddo, luci rosa e la solita discussione sul 3-5-2."],
+ ['la_suocera',18,19,20,"Mio genero è chiuso in camera da stamattina. Dice che sta esplorando Miami, ma la formazione l'ha fatta?"],
+ ['telecronista_stanco',19,11,10,"Ho passato la notte al nuovo GTA 6. E adesso dovrei pure commentare il calcio: mi serve un supplementare di sonno."],
+ ['nonno_cesare',19,20,10,"Ai miei tempi si correva dietro a un pallone vero, non a un'auto sullo schermo. Però quella Miami ha delle belle palme."],
+ ['tifoso_arrabbiato',20,12,15,"Tutti sul nuovo gioco e nessuno a preparare la formazione! Poi la domenica vi lamentate dei risultati!"],
+ ['pizzeria_fuorigioco',20,19,30,"La pizza Notte Tropicale è in carta per questa settimana: sapori accesi e tanta voglia di calcio, anche dopo il gioco."],
+ ['il_romantico_del_pallone',21,10,55,"Neon, inseguimenti, clacson: a me GTA 6 sembra un po' caotico. Preferisco il silenzio prima di un calcio di rigore."],
+ ['il_filosofo_del_pallone',21,21,5,"Qualcuno chiama quel gioco buzzurro, qualcuno lo chiama libertà. Io chiamo libertà scegliere il modulo senza polemiche."],
+ ['il_super_tifoso',22,10,25,"GTA 6 avrà tutte le auto di Miami, ma il sorpasso più importante resta quello in classifica. Sempre che arrivi."],
+ ['fidanzata_stufa',22,18,35,"Ha detto: solo un'ultima missione. La stessa frase che usa quando manca un minuto alla chiusura delle formazioni."],
+ ['il_tassista',23,9,50,"Tutti vogliono correre per Miami in un videogioco. Io oggi ho fatto due chilometri nel traffico e non mi sono divertito."],
+ ['mister_divano',23,19,10,"Vi siete allenati a guidare tutta la settimana. Adesso vediamo chi sa mettere in campo undici giocatori."]
+];
+function postNotteTropicale(ms,SQ){
+ /* Si possono pubblicare nuovi messaggi solo fra il 18 e il 23 novembre.
+    Dopo il 24 gli stessi messaggi rimangono nello storico della Curva. */
+ var fuori=[],i,p,x,c,rs,j;
+ for(i=0;i<NOTTE_POST.length;i++){
+  x=NOTTE_POST[i];p={k:'v:notte-tropicale:'+i,a:x[0],x:x[4],ts:ts(2026,11,x[1],x[2],x[3]),r:[],cat:'gen'};
+  if(p.ts<NOTTE_INIZIO||p.ts>=NOTTE_FINE||p.ts>ms)continue;
+  c=conta(p.k,1);p.ap=c.ap;p.ril=c.ril;p.v=c.v;
+  rs=[];for(j=0;j<7;j++)rs=rs.concat(reazioni(p.k+'#'+j,p.ts,ms,SQ,p.x).r);
+  p.r=rs.filter(function(q){return q.ts<=ms}).sort(function(a,b){return a.ts-b.ts});
+  fuori.push(p);
+ }
+ return fuori;
+}
 window.CVB={MISTER:MISTER,COMUNI:COMUNI,COMUNI_N:COMUNI_N,NUOVI:NUOVI,cupUlt:cupUlt,ufficiale:ufficiale,anteprima:anteprima,reazioni:reazioni,ultimo:ultimo,genera:genera,tendenze:tendenze,PERS:PERS,RISP:RISP,CIRO:CIRO,roma:roma,giorno:giorno,h32:h32};
 })();

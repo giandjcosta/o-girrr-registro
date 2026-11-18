@@ -1,5 +1,11 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 16 novembre 2026)
 
+## 18 novembre 2026 — ChatGPT: Parte D della 6.5 in prova, non pubblicata
+- Ramo `chatgpt/65-edizione-speciale` verso `main` del Registro, senza merge o pubblicazione. Radio: battuta della giornata 8 soltanto. Video: skin speciale per giornata 8, con test forzabile sulla 7 via `SKIN=notte-tropicale` e regressione via `SKIN=off`. Curva: post dei personaggi dal 18 al 23/11; il 24 novembre alle 00:00, ora italiana, non vengono più visualizzati.
+- Font speciali Barlow Condensed e Mr Dafoe, foto `temi/notte-tropicale/miami-palme.jpg` di Claude con licenza in `CREDITI.md`. La foto deve arrivare in `main` prima del rendering video. Non sono state generate puntate Gemini né modificato Supabase.
+- Ancora da certificare: screenshot di copertina/classifica/chiusura, durata del video, copione finale con dati veri della giornata 8 e prove browser. Il caricatore del tema deve spegnersi il 24/11 alle 00:00, anziché il 21/11 della bozza di Claude.
+
+
 ## 16 novembre (8) — Claude: 6.2.3 «Il Totogirrr su ogni schermo» in prova nel Lab (NON pubblicata)
 - Sul sito c'è la **6.2.2** (`gh-pages` `64a243b`). Richieste di Gianluca dopo la 6.2.2, preparate in `rilascio/r623/applica.py` (sopra la 6.2.2 pubblicata, si ferma se il sito è cambiato, rieseguibile) e nel Lab con `rilascio/r623/lab.py` (`lab/integrata-62/`), pagina `lab/novita-6-2-3.html`, annuncio da approvare in `rilascio/r623/ANNUNCIO-BOZZA.json` (tipo minore → 6.2.3: Gianluca, «per una correzione così piccola 6.2.3 è più adeguato»; prima preparata come 6.3).
   - **Schede del Totogirrr, scheda toccata tagliata:** la fila che scorre è il `<nav>`, ma `pillole.js` controllava `.nvi` (largo quanto le schede, non scorre mai) e la pagina la spostava solo nei ridisegni completi: toccando «Probabilità» sul bordo restava tagliata. Ora `pillole.js` la sposta quanto basta per vederla tutta (14 px di margine, senza centrarla) ed è l'unico codice che muove la fila (`navPost` della pagina non scorre più).
