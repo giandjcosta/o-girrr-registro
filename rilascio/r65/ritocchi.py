@@ -25,6 +25,15 @@ def main(args):
             if n!=1:raise SystemExit(rel+': testo atteso '+str(n)+' volte: '+a[:85])
             t=t.replace(a,b)
         if t!=f.read_text(encoding='utf-8'):changed[f]=t
-    for f,t in changed.items():f.write_text(t,encoding='utf-8')
+    # 6.5: modulo Numeri aggiunto alla stessa copia del sito; nuova sorgente unica nel Registro.
+    src=(ROOT/'rilascio/r65/numeri.js').read_text(encoding='utf-8')
+    num=base/'girrr/v65/numeri.js'
+    if num.is_file():
+        if num.read_text(encoding='utf-8')!=src:raise SystemExit('Numeri: file già presente ma diverso dalla sorgente attesa')
+    else:
+        changed[num]=src
+    for f,t in changed.items():
+        f.parent.mkdir(parents=True,exist_ok=True)
+        f.write_text(t,encoding='utf-8')
     print('6.5 · File cambiati:',len(changed))
 if __name__=='__main__':main(sys.argv[1:])

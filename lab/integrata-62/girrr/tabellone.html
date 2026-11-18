@@ -225,7 +225,7 @@ body::before{content:'';position:fixed;inset:-120px;z-index:-1;pointer-events:no
     <div class="crossfade"><img class="tv" src="../assets/loghi/logo-tv-girrr-sport-live.png" alt=""><img class="tv" src="../assets/loghi/logo-tv-cup-girrr-live.png" alt=""><i class="rec r1"></i><i class="rec r2"></i></div>
   </header>
   <a class="sqb" href="squadre.html"><span>🛡️</span><b>Le squadre</b><i>Rosa, risultati e forma di ognuno ›</i></a>
-  <nav class="giornata-nav" aria-label="Giornata"><a aria-current="page" href="tabellone.html">Risultati e classifica</a><a id="campo-link" href="campo.html">Campo · Centro della giornata ›</a></nav><div class="sw" role="tablist"><i></i><button data-m="lega" role="tab">Campionato</button><button data-m="coppa" role="tab">Champions Cup</button></div>
+  <nav class="giornata-nav" aria-label="Sezioni del Tabellone"><a href="tabellone.html?sezione=risultati">Risultati</a><a href="tabellone.html?sezione=classifica">Classifica</a><a id="campo-link" href="campo.html">Campo</a><a href="tabellone.html?sezione=numeri" data-v65-numeri>Numeri</a></nav><div class="sw" role="tablist"><i></i><button data-m="lega" role="tab">Campionato</button><button data-m="coppa" role="tab">Champions Cup</button></div>
   <div class="gs"><button class="ar" id="prev" aria-label="Giornata precedente">‹</button><div class="chips" id="chips"></div><button class="ar" id="next" aria-label="Giornata successiva">›</button></div>
   <div class="grid">
     <section><div class="swap" id="board"></div><details class="v53 v53-extras v53-panel" id="v53board">
@@ -394,5 +394,6 @@ var a=L.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+
 var e=document.querySelector('.sp .lg');if(e)e.innerHTML=a.slice(0,4).map(function(n){return '<img src="../assets/loghi/'+n+'.png" alt="">'}).join('')})();
 </script>
 <script src="../assets/app.js"></script>
+<script src="v65/numeri.js?v=65fix" defer></script>
 </body>
 </html>

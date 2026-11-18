@@ -73,6 +73,14 @@
     [
       "condividi.js?v=623",
       "condividi.js?v=65fix"
+    ],
+    [
+      "<nav class=\"giornata-nav\" aria-label=\"Giornata\"><a aria-current=\"page\" href=\"tabellone.html\">Risultati e classifica</a><a id=\"campo-link\" href=\"campo.html\">Campo · Centro della giornata ›</a></nav>",
+      "<nav class=\"giornata-nav\" aria-label=\"Sezioni del Tabellone\"><a href=\"tabellone.html?sezione=risultati\">Risultati</a><a href=\"tabellone.html?sezione=classifica\">Classifica</a><a id=\"campo-link\" href=\"campo.html\">Campo</a><a href=\"tabellone.html?sezione=numeri\" data-v65-numeri>Numeri</a></nav>"
+    ],
+    [
+      "</body>",
+      "<script src=\"v65/numeri.js?v=65fix\" defer></script>\n</body>"
     ]
   ],
   "stadio/girrr/tabellone.html": [
@@ -91,6 +99,14 @@
     [
       "condividi.js?v=623",
       "condividi.js?v=65fix"
+    ],
+    [
+      "<nav class=\"giornata-nav\" aria-label=\"Giornata\"><a aria-current=\"page\" href=\"tabellone.html\">Risultati e classifica</a><a id=\"campo-link\" href=\"campo.html\">Campo · Centro della giornata ›</a></nav>",
+      "<nav class=\"giornata-nav\" aria-label=\"Sezioni del Tabellone\"><a href=\"tabellone.html?sezione=risultati\">Risultati</a><a href=\"tabellone.html?sezione=classifica\">Classifica</a><a id=\"campo-link\" href=\"campo.html\">Campo</a><a href=\"tabellone.html?sezione=numeri\" data-v65-numeri>Numeri</a></nav>"
+    ],
+    [
+      "</body>",
+      "<script src=\"../../girrr/v65/numeri.js?v=65fix\" defer></script>\n</body>"
     ]
   ],
   "girrr/v60/tifosi.js": [
