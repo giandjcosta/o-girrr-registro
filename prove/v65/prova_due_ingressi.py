@@ -35,7 +35,18 @@ async def capture(pw,mode,width,height,device):
         size=(390,844) if device=="mobile" else (960,600)
         im.thumbnail(size,Image.Resampling.LANCZOS)
         frames.append(im)
-        states.append(await page.evaluate("({state:document.documentElement.getAttribute('data-intro-state'),theme:document.documentElement.getAttribute('data-event-theme'),mode:document.documentElement.getAttribute('data-intro-preview'),vt:!!document.startViewTransition})"))
+        states.append(await page.evaluate("""() => {
+          const h=document.documentElement, image=document.querySelector('.nt-cover-poster');
+          const cover=document.querySelector('.nt-cover-overlay');
+          return {
+            state:h.getAttribute('data-intro-state'),theme:h.getAttribute('data-event-theme'),
+            mode:h.getAttribute('data-intro-preview'),vt:!!document.startViewTransition,
+            posterLoaded:!!image&&image.naturalWidth>=800,
+            posterWidth:image?.naturalWidth||0,
+            coverVisible:!!cover&&getComputedStyle(cover).opacity!=='0',
+            posterFile:image?.currentSrc?.split('/').pop()||''
+          };
+        }"""))
         await page.wait_for_timeout(interval)
     await page.screenshot(path=str(OUT/f"{mode}-{device}-final.png"),full_page=True)
     target=OUT/f"{mode}-{device}.gif"
@@ -79,6 +90,13 @@ async def main():
         states=[x["state"] for x in r["states"]]
         if r["variant"]=="copertina" and "uscita" not in states:
             problems.append(name+"-uscita")
+        if r["variant"]=="copertina":
+            if not any(x["posterLoaded"] for x in r["states"]):
+                problems.append(name+"-copertina-utente-mancante")
+            if not any(x["coverVisible"] for x in r["states"]):
+                problems.append(name+"-splash-mai-visibile")
+            if not any(x["posterFile"].startswith("gta6-lucia-jason-cover") for x in r["states"]):
+                problems.append(name+"-copertina-sbagliata")
         if r["variant"]=="trasformazione" and "transizione" not in states:
             problems.append(name+"-transizione")
     print("PROBLEMI:",problems)
