@@ -236,7 +236,7 @@
   :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap>*{grid-column:2}
   :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap>header.hero{grid-column:1/-1;grid-row:1}
   :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap::after{grid-column:1/-1}
-  :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap>.cards{grid-column:1;grid-row:2/span 40;position:sticky;top:16px;align-self:start;grid-template-columns:repeat(2,minmax(0,1fr))!important;margin-top:0!important}
+  :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .wrap>.cards{grid-column:1;grid-row:2/span 40;position:sticky;top:16px;align-self:start;grid-template-columns:repeat(4,minmax(0,1fr))!important;margin-top:0!important}
   :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c h2{font-size:20px!important}
   :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] #strip{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible}
   :root[data-event-theme="notte-tropicale"][data-event-extra~="menu"] body[data-v53="home"] #strip>.st{min-height:140px}
@@ -786,20 +786,20 @@
 
 
 /* 6.5 (Gianluca, 18 novembre): UNICO gruppo Classifica, Risultati, Numeri, Campo.
-   Quattro schede con la stessa grafica sfumata (due per riga su iPhone); nessuna
+   Quattro schede con la stessa grafica sfumata, in riga anche su iPhone; nessuna
    seconda fila di link bordati ciano/rosa. Il testo non viene deformato. */
 :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede{
  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
  width:100%;max-width:740px!important;margin:18px 0 16px!important;
- gap:9px!important;padding:9px!important;transform:none!important;
+ gap:clamp(3px,1vw,9px)!important;padding:clamp(4px,1vw,9px)!important;transform:none!important;
  overflow:visible!important;border-radius:18px!important;
  background:var(--nt-fila)!important;
 }
 :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede>:is(button,a){
  display:flex!important;flex:initial!important;min-width:0!important;width:100%;
- min-height:58px!important;height:auto!important;margin:0!important;padding:11px 9px!important;
+ min-height:48px!important;height:auto!important;margin:0!important;padding:10px 3px!important;
  white-space:normal!important;text-align:center!important;line-height:1.18!important;
- font:italic 800 clamp(12px,3.3vw,16px)/1.18 Inter,system-ui,sans-serif!important;
+ font:italic 800 clamp(10px,2.85vw,16px)/1.18 Inter,system-ui,sans-serif!important;
  -webkit-tap-highlight-color:transparent;
 }
 :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede>a::after{content:none!important}
@@ -815,8 +815,9 @@
 }
 @media(min-width:800px){
  :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede{
-  grid-template-columns:repeat(4,minmax(0,1fr))!important;max-width:960px!important;
+  max-width:960px!important;
  }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede>:is(button,a){min-height:58px!important;padding:12px 10px!important}
 }
 @media(prefers-reduced-motion:reduce){
  :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede>*{transition:none!important}
