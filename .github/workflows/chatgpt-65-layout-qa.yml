@@ -2,11 +2,15 @@ name: "ChatGPT: Layout Tabellone 6.5 · iPhone, iPad, PC, TV"
 on:
   pull_request:
     branches:
+      - chatgpt/65-tab-uniche-curva-separata
       - chatgpt/65-tabellone-curva
       - chatgpt/65-qa-base
       - claude/totogirrr-ui-responsive-b2pgee
     paths:
       - "temi/notte-tropicale/**"
+      - "temi/evento-loader.js"
+      - "lab/integrata-62/temi/evento-loader.js"
+      - "prove/v65/prova_due_ingressi.py"
       - "lab/integrata-62/temi/notte-tropicale/**"
       - "lab/integrata-62/girrr/v55/ui.js"
       - "rilascio/r65/ritocchi-patches.json"
@@ -25,7 +29,7 @@ jobs:
         with: { python-version: "3.12" }
       - name: Installa Chromium per screenshot reali (solo GitHub Actions)
         run: |
-          python3 -m pip install --disable-pip-version-check playwright==1.56.0
+          python3 -m pip install --disable-pip-version-check playwright==1.56.0 pillow==12.0.0
           python3 -m playwright install --with-deps chromium
       - name: Collaudo visivo e interattivo senza backend vero
         run: |
@@ -35,11 +39,20 @@ jobs:
           trap 'kill "$pid" || true' EXIT
           sleep 2
           python3 prove/v65/prova_layout_65.py
+          python3 prove/v65/prova_due_ingressi.py
       - name: Screenshot disponibili anche se un controllo non passa
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: chatgpt-65-visual-pc-ipad-tv
           path: qa_artifacts/65-layout/
+          if-no-files-found: warn
+          retention-days: 14
+      - name: GIF animate di confronto A e B
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chatgpt-65-ingressi-animati
+          path: qa_artifacts/65-ingressi/
           if-no-files-found: warn
           retention-days: 14
