@@ -38,9 +38,18 @@ JS = """() => {
   carte:fila?.querySelectorAll(':scope > .c').length||0,
   altre:fila?.querySelectorAll(':scope > .nt-slide').length||0,
   curva:!!(s('#cvw')&&fila?.contains(s('#cvw'))),
-  notifiche:!!(s('.mini .mn[href="notifiche.html"]')&&fila?.contains(s('.mini .mn[href="notifiche.html"]'))),
-  statistiche:!!(s('.mini .mn[href="statistiche.html"]')&&fila?.contains(s('.mini .mn[href="statistiche.html"]'))),
-  sponsor:!!(s('.sp')&&fila?.contains(s('.sp'))),
+  /* Correzione 18/11: Notifiche, Statistiche e sponsor appartengono al fondo
+     della Home, NON alla fila scorrevole e NON devono essere ridimensionati. */
+  notificheFuori:!!(s('.wrap>.mini .mn[href="notifiche.html"]')&&
+    !fila?.contains(s('.mini .mn[href="notifiche.html"]'))),
+  statisticheFuori:!!(s('.wrap>.mini .mn[href="statistiche.html"]')&&
+    !fila?.contains(s('.mini .mn[href="statistiche.html"]'))),
+  sponsorFuori:!!(s('.wrap>.sp')&&!fila?.contains(s('.sp'))),
+  ordineSezioni:!!(fila&&fila.nextElementSibling&&
+    fila.nextElementSibling.matches('.mini')&&
+    fila.nextElementSibling.nextElementSibling?.matches('.mini')&&
+    fila.nextElementSibling.nextElementSibling.nextElementSibling?.matches('.sp')),
+  nessunaMiniNelCarosello:fila?.querySelectorAll('.mini,.sp,.nt-slide-mini,.nt-slide-sponsor').length===0,
   titoliInPagina:[...document.querySelectorAll('#nt-tutto-titolo')].length,
   overflow:root.scrollWidth-root.clientWidth,client:root.clientWidth,scroll:fila?.scrollWidth||0,
   scrollPort:fila?.clientWidth||0,ct:ct
@@ -67,10 +76,10 @@ def run():
                     page.wait_for_timeout(3100)  # completa i dati read-only e la classifica
                     measure=page.evaluate(JS)
                     problems=[]
-                    for key in ("integrata","titolo","fuoriDallaFila","ordine","titoloVisivamenteSopra","curva","notifiche","statistiche","sponsor"):
+                    for key in ("integrata","titolo","fuoriDallaFila","ordine","titoloVisivamenteSopra","curva","notificheFuori","statisticheFuori","sponsorFuori","ordineSezioni","nessunaMiniNelCarosello"):
                         if not measure.get(key):problems.append("manca "+key)
                     if measure.get("carte")!=6:problems.append("schede originali non sono sei")
-                    if measure.get("altre")!=4:problems.append("schede aggiunte non sono quattro")
+                    if measure.get("altre")!=1:problems.append("la Curva deve essere l'unica scheda aggiunta al carosello")
                     if measure.get("titoliInPagina")!=1:problems.append("titolo duplicato")
                     if measure.get("overflow",100)>0:problems.append("overflow documento")
                     if measure.get("tema")!="notte-tropicale":problems.append("tema disattivato")
