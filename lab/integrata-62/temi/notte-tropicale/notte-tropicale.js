@@ -177,19 +177,46 @@
     function metti() {
       var nav = document.querySelector('body[data-v53="board"] .giornata-nav');
       if (!nav) return;
-      /* ChatGPT 18/11/2026: il collegamento vive nel markup reale del Tabellone
-         ed è nascosto senza tema. Lo attiviamo senza creare duplicati. */
-      var a = nav.querySelector('.nt-numeri-link');
-      if (!a) {
-        a = document.createElement('a');
-        a.className = 'nt-numeri-link';
-        var campo = nav.querySelector('#campo-link');
-        if (campo) nav.insertBefore(a, campo);
-        else nav.appendChild(a);
+      /* ChatGPT 18/11/2026 · Quattro voci graficamente coerenti con Numeri.
+         Risultati e Classifica scorrono ai pannelli autentici dello stesso Tabellone;
+         Numeri e Campo aprono le rispettive pagine, senza duplicare contenuti.
+         Il menu storico combinato resta intatto e visibile senza il tema. */
+      var original = nav.querySelector('.nt-nav-original');
+      var cls = nav.querySelector('.nt-classifica-link');
+      var res = nav.querySelector('.nt-risultati-link');
+      var numeri = nav.querySelector('.nt-numeri-link');
+      var campo = nav.querySelector('#campo-link');
+      function linkSeManca(classe,href,titolo,prima) {
+        var a = nav.querySelector('.' + classe.replace(/\s+/g,'.'));
+        if (!a) {
+          a = document.createElement('a');
+          a.className = classe;
+          if (prima) nav.insertBefore(a,prima);
+          else nav.appendChild(a);
+        }
+        a.href = href;
+        a.textContent = titolo;
+        a.removeAttribute('hidden');
+        return a;
       }
-      a.href = 'numeri-campionato.html?evento=notte-tropicale';
-      a.textContent = 'Numeri del Campionato ›';
-      a.removeAttribute('hidden');
+      cls = linkSeManca('nt-quattro-link nt-classifica-link','#tab','Classifica',res || numeri || campo);
+      res = linkSeManca('nt-quattro-link nt-risultati-link','#board','Risultati',numeri || campo);
+      numeri = linkSeManca('nt-numeri-link','numeri-campionato.html?evento=notte-tropicale','Numeri del Campionato',campo);
+      if (original) original.setAttribute('hidden','');
+      if (campo) campo.textContent = 'Campo';
+      nav.classList.add('nt-quattro-menu');
+      function aggiorna() {
+        var h = location.hash;
+        if (h === '#tab') cls.setAttribute('aria-current','location');
+        else cls.removeAttribute('aria-current');
+        if (h === '#board') res.setAttribute('aria-current','location');
+        else res.removeAttribute('aria-current');
+      }
+      aggiorna();
+      if (!nav.getAttribute('data-nt-nav-pronta')) {
+        window.addEventListener('hashchange',aggiorna);
+        nav.setAttribute('data-nt-nav-pronta','1');
+      }
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', metti);
     else metti();
