@@ -23,6 +23,7 @@
 - Curva, messaggi sui risultati: «AFA SELECCION vince 1-1» (foto di Gianluca). Si sceglieva una partita qualsiasi, anche un
   pareggio, il vincitore era chi aveva più fantapunti e le partite di coppa erano lette con lo schema del campionato. Ora solo
   partite con un vincitore, deciso dai gol, e coppa letta con il suo schema.
+- Home, «La tua lega, oggi»: la prima volta parte chiuso; poi resta come l'hai lasciato (aperto o chiuso).
 - Con «riduci movimento» niente animazioni, come prima.
 
 Uso: python3 rilascio/r65/applica.py COPIA_GH_PAGES_6_2_4
@@ -63,6 +64,8 @@ FIDUCIA = [
     # il giro del numero dura un po' di più: le cifre riescono a seguire il conteggio
     ("duration:Math.max(1100,Math.min(1900,v*30))", "duration:Math.max(1500,Math.min(2400,v*40))"),
 ]
+RIEPILOGO = ("dashboard.open=get('home-open',true)!==false;",
+             "dashboard.open=get('home-open',false)===true;   /* 6.5 (Gianluca): «La tua lega, oggi» parte chiuso, poi ricorda l'ultimo tocco */")
 FX = ("  if(Date.now()-last>800)return;",
       "  if(Date.now()-last>800||Date.now()-(window.__pilloleT||0)<900)return;   /* 6.5: il cambio lo anima già pillole.js */")
 PILL = [
@@ -125,13 +128,18 @@ def main(argv):
             t = sostituisci(t, rel, a, b)
         return t
     scrivi('pillole.js', pill)
+    scrivi('girrr/v55/ui.js', lambda t, rel: sostituisci(t, rel, *RIEPILOGO))
     for rel in ('girrr/curva-banca.js', 'stadio/girrr/curva-banca.js'):
         scrivi(rel, lambda t, rel: sostituisci(sostituisci(t, rel, *CURVA[0]), rel, *CURVA[1]))
     for rel in ('girrr/transizioni.js', 'stadio/girrr/transizioni.js'):
         scrivi(rel, lambda t, rel: sostituisci(t, rel, FX[0], FX[1], tutte=True))
     for html in sorted(base.rglob('*.html')):
         rel = str(html.relative_to(base))
-        scrivi(rel, lambda t, rel: re.sub(r'(?<=["/])transizioni\.js(\?v=\w+)?(?=["\'])', 'transizioni.js?v=' + V, re.sub(r'curva-banca\.js\?v=\w+', 'curva-banca.js?v=' + V, re.sub(r'pillole\.js\?v=\w+', 'pillole.js?v=' + V, t))))
+        def ver(t, rel):
+            for nome in ('pillole', 'curva-banca', 'v55/ui'):
+                t = re.sub(re.escape(nome) + r'\.js\?v=\w+', nome + '.js?v=' + V, t)
+            return re.sub(r'(?<=["/])transizioni\.js(\?v=\w+)?(?=["\'])', 'transizioni.js?v=' + V, t)
+        scrivi(rel, ver)
     print('6.5 applicata · File cambiati:', cambiati)
 
 

@@ -413,6 +413,8 @@
 :root[data-event-theme="notte-tropicale"] .sp.nt-obl.nt-obl.nt-obl::before{transform:none!important;background:linear-gradient(160deg,#fff7fb,#f3e6ff)!important;box-shadow:inset 0 3px 0 var(--nt-ciano),inset 0 -3px 0 var(--nt-rosa),0 12px 30px rgba(5,0,20,.35)!important}
 :root[data-event-theme="notte-tropicale"] .sp.nt-obl span:first-child{color:#5b2d90!important;opacity:1!important;font-weight:800!important}
 :root[data-event-theme="notte-tropicale"] .sp.nt-obl .lg{max-width:100%;overflow:hidden}
+/* Curva più staccata dalle sei schede di «Tutto il Girrr» (Gianluca: «troppo vicina») */
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>#cvw{margin-top:30px!important;margin-bottom:24px!important}
 /* Curva: il logo «C» non esce più dal riquadro */
 :root[data-event-theme="notte-tropicale"] body[data-v53="home"] #cvw.nt-obl.nt-obl{padding-left:22px!important;overflow:hidden}
 
