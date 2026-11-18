@@ -1,5 +1,10 @@
 # Lavori in corso · O Girrr
 
+## Rifinitura iPhone SE e Smart TV · 18 novembre 2026 · ChatGPT
+- **Ramo `chatgpt/65-tab-uniche-curva-separata`, PR #131 bozza (non unire).** Da screenshot precedente, su iPhone SE quattro tab erano troppo piccole e «Le squadre» andava a capo male; su Smart TV la larghezza del Tabellone era limitata a 1380 px, con font troppo piccoli. Solo skin Notte Tropicale.
+- **Mobile ≤480 px:** quattro tab su una fila, testo condensato più leggibile, target ≥52 px, scheda squadre riallineata, padding e classifica adattati. **Smart TV ≥1600 px:** contenitore fino a 1840/2160 px, scala tipografica maggiore, giornate e controllo competizione ingranditi, prossimo turno su due colonne.
+- CSS fonte `temi/notte-tropicale/notte-tropicale.css` e copia `lab/integrata-62/temi/notte-tropicale/notte-tropicale.css` sincronizzati. Nessuna modifica a JavaScript, Supabase, dati o produzione. QA visivo e regressioni sulla run GitHub Actions `44297475210`, esito ancora in attesa in questo punto della cronologia. iPhone/Safari e Smart TV reali non collaudati.
+
 ## QA visivo 6.5 · 18 novembre 2026 · ChatGPT
 - Correzione definitiva delle quattro tab **su una riga anche a 320 px**: Classifica, Risultati, Numeri › e Campo ›, stile sfumato uniforme. Le frecce compaiono solo sui due link che navigano; una regola CSS inizialmente sostituiva una griglia della Home invece del Tabellone, rilevata e corretta dopo il primo screenshot.
 - Sistemate le due date visibili «18–20» in «18–23 novembre» secondo la scadenza ufficiale (24 novembre 00:00). Curva autonoma sotto «Tutto il Girrr».
