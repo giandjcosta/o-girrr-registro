@@ -25,6 +25,12 @@ def main(argv):
     shutil.copyfile(R / 'temi/evento-loader.js', base / 'temi/evento-loader.js')
     for f in FILE:
         shutil.copyfile(R / 'temi/notte-tropicale' / f, base / 'temi/notte-tropicale' / f)
+    # Nuvola: solo i quattro file selezionati, non le altre varianti del Lab.
+    entrata_b = ('entrata-b.css', 'entrata-b.js', 'polvere.webp', 'nuvola.webp')
+    (base / 'temi/notte-tropicale/entrata-b').mkdir(parents=True, exist_ok=True)
+    for f in entrata_b:
+        shutil.copyfile(R / 'temi/notte-tropicale/entrata-b' / f,
+                        base / 'temi/notte-tropicale/entrata-b' / f)
     n = 0
     for p in sorted(base.rglob('*.html')):
         rel = p.relative_to(base)
