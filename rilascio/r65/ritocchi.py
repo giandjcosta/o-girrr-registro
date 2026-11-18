@@ -13,6 +13,10 @@ def main(args):
     base=pathlib.Path(args[0])
     if not (base/'pillole.js').is_file() or 'NOSCIVOLO' not in (base/'pillole.js').read_text(encoding='utf-8'):
         raise SystemExit('Prima applicare r65/applica.py sulla copia di gh-pages')
+    # 6.5 (Gianluca): vietato applicare su una copia di una versione diversa.
+    version=json.loads((base/'versioni.json').read_text(encoding='utf-8'))['versioni'][0]['v']
+    if version not in ('6.2.4','6.5'):
+        raise SystemExit('Versione di gh-pages inattesa: '+version)
     changed={}
     for rel,pairs in PATCHES.items():
         f=base/rel
