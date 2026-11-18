@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Transizione B · Studio 6.5</title>
+<meta name="robots" content="noindex">
+<style>
+:root{--bg:#120a24;--card:#1e1238;--line:#3a2a62;--txt:#f3ecff;--mute:#b9a9d9;--rosa:#ff5ca8;--ciano:#4fe3f0;--oro:#ffd166}
+*{box-sizing:border-box}
+html{background:var(--bg);color:var(--txt);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-text-size-adjust:100%}
+body{margin:0;padding:max(14px,env(safe-area-inset-top)) 16px 40px}
+main{max-width:1180px;margin:0 auto}
+h1{font-size:clamp(22px,5vw,34px);margin:6px 0 4px;line-height:1.15}
+h2{font-size:clamp(18px,3.6vw,23px);margin:34px 0 10px}
+h3{margin:0 0 6px;font-size:17px}
+p{margin:6px 0}
+small,.mute{color:var(--mute)}
+a{color:var(--ciano)}
+.nota{border-left:4px solid var(--oro);background:#2a1a44;padding:10px 12px;border-radius:4px 12px 12px 4px;margin:12px 0}
+.prova{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+@media(min-width:900px){.prova{grid-template-columns:330px minmax(0,1fr)}}
+.pannello{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.scelte{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+.scelte button{appearance:none;border:1px solid var(--line);background:#2a1a4a;color:var(--txt);border-radius:999px;padding:9px 14px;font:inherit;font-weight:600;cursor:pointer;min-height:44px;transition:background .25s ease,border-color .25s ease,color .25s ease}
+.scelte button[aria-pressed="true"]{background:var(--rosa);border-color:var(--rosa);color:#1a0820}
+.azioni{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.azioni a,.azioni button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:999px;border:0;font:inherit;font-weight:700;text-decoration:none;cursor:pointer}
+.primario{background:linear-gradient(90deg,#ff9a6b,#ff5ca8);color:#1a0820}
+.secondario{background:#2f2056;color:var(--txt)}
+.schermo{position:relative;background:#000;border-radius:18px;overflow:hidden;border:1px solid var(--line);margin:0 auto;transition:width .35s ease,height .35s ease;max-width:100%}
+.schermo iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;background:#141d3d}
+.descr{min-height:3em}
+.video{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr))}
+.video figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px}
+.video video{width:100%;border-radius:8px;background:#000;display:block}
+.video figcaption{font-weight:700;margin-top:6px}
+.tabella{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:#24164a;position:sticky;top:0}
+td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.alt{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr))}
+.alt article{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.alt article.top{border-color:var(--rosa);box-shadow:0 0 0 1px var(--rosa) inset}
+.voto{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:2px 9px;margin-bottom:6px;background:#2f2056;color:var(--oro)}
+.top .voto{background:var(--rosa);color:#1a0820}
+ul{padding-left:20px;margin:6px 0}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+<p class="mute"><a href="index.html">‹ Lab</a> · Studio · Non pubblicato</p>
+<h1>Transizione B · Dalla Home normale alla Notte Tropicale</h1>
+<p>Tre proposte animate davvero, più quella attuale per confronto. Scegli la variante, scegli lo schermo e premi «Riprova». Per vederla sul telefono come sarà davvero usa «Apri a tutto schermo».</p>
+<div class="nota">Prova solo nel Lab, con dati di prova. Il sito vero non cambia: serve il «Vai, pubblica» di Gianluca. La copertina A non è toccata.</div>
+
+<h2>Prova dal vivo</h2>
+<section class="prova">
+ <div class="pannello">
+  <h3>Variante</h3>
+  <div class="scelte" id="varianti" role="group" aria-label="Variante"></div>
+  <p class="descr" id="descr"></p>
+  <h3>Schermo</h3>
+  <div class="scelte" id="schermi" role="group" aria-label="Schermo"></div>
+  <div class="azioni">
+   <button class="primario" id="riprova" type="button">Riprova</button>
+   <a class="secondario" id="apri" target="_blank" rel="noopener">Apri a tutto schermo</a>
+  </div>
+  <p class="mute" style="margin-top:10px">Indirizzo diretto: <code id="url" style="word-break:break-all"></code></p>
+ </div>
+ <div class="pannello"><div class="schermo" id="schermo"><iframe id="fr" title="Anteprima della Home" loading="eager"></iframe></div></div>
+</section>
+
+<h2>Video a 60 fps</h2>
+<p class="mute">Ogni fotogramma è stato disegnato dal browser a 1/60 di secondo dal precedente (animazioni ferme e spostate una per una, Chromium). È la resa visiva fedele, non una misura di fluidità: quella è nella tabella sotto.</p>
+<figure style="margin:0 0 14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px"><video controls muted playsinline loop preload="metadata" src="transizioni-b/confronto-iphone.mp4" style="width:100%;border-radius:8px;background:#000;display:block"></video><figcaption style="font-weight:700;margin-top:6px">Confronto · E Nuvola e polvere · C Fumo · D Polvere nel vento · Attuale (iPhone 390)</figcaption></figure>
+<div class="video" id="video"></div>
+
+<h2>Le sei alternative</h2>
+<div class="alt">
+ <article class="top"><span class="voto">Proposta 1 · Consigliata</span><h3>E · Nuvola e polvere</h3>
+  <p>La Home normale si apre in chiazze nuvolose che scendono dall'alto; i frammenti salgono appena e svaniscono, qualche granello luminoso accompagna il bordo. La skin è già ferma sotto.</p>
+  <ul><li>Tecnica F: maschera di nuvola (43 KB) e polvere (41 KB).</li><li>Solo transform e opacity: la maschera non si ridisegna (vedi «Come funziona»).</li><li>2,4 s. Parametro <code>b=nuvola</code>.</li></ul></article>
+ <article class="top"><span class="voto">Proposta 2</span><h3>C · Fumo</h3>
+  <p>Una cortina leggera rosa e lilla attraversa la Home, la vecchia grafica sparisce dietro, il fumo si dirada e lascia la Notte Tropicale.</p>
+  <ul><li>Quattro sbuffi (47–52 KB) e un velo, sempre e solo transform e opacity.</li><li>È anche il ripiego per i browser senza View Transitions: lì il fumo nasconde il cambio.</li><li>2,5 s. Parametro <code>b=fumo</code>.</li></ul></article>
+ <article class="top"><span class="voto">Proposta 3</span><h3>D · Polvere nel vento</h3>
+  <p>La grafica viene portata via da sinistra a destra in scie orizzontali, con la polvere che scorre; la nuova pagina resta ferma sotto. Non è uno swipe: il bordo è a brandelli e irregolare.</p>
+  <ul><li>Maschera a scie (42 KB) e polvere.</li><li>2,6 s. Parametro <code>b=vento</code>.</li></ul></article>
+ <article><span class="voto">Provabile</span><h3>A · Nuvola morbida</h3>
+  <p>Come E, senza grana né granelli: più elegante e più «dissolvenza». Tenuta come variante di E (<code>b=nuvola-morbida</code>), perché il confronto diretto è utile, ma da sola somiglia di più a una dissolvenza.</p></article>
+ <article><span class="voto">Assorbita in E</span><h3>B · Disintegrazione in polvere</h3>
+  <p>Con particelle vere (centinaia di elementi o un canvas) costa troppo su iPhone SE e sulle TV, e servirebbe una foto della pagina in un canvas (librerie pesanti, testi sfocati). La sensazione di polvere si ottiene con la grana della maschera e la texture di granelli: è la parte «polvere» di E.</p></article>
+ <article><span class="voto">Tecnica</span><h3>F · Maschera nuvolosa</h3>
+  <p>Non è un effetto a sé ma il modo in cui sono costruite E, A e D. Animare la posizione della maschera (<code>mask-position</code>) costringe a ridisegnarla a ogni fotogramma sul thread principale; qui invece si sposta la scatola mascherata con transform e la pagina al contrario della stessa quantità. Variante solo di misura: <code>b=nuvola-maskpos</code>.</p></article>
+</div>
+
+<h2>Misure</h2>
+<p class="mute" id="misure-nota">Caricamento…</p>
+<div class="tabella"><table id="misure"></table></div>
+
+<h2>Come funziona</h2>
+<ul>
+ <li>La vecchia e la nuova Home diventano due gruppi della View Transition (<code>girrr-vecchia</code> sopra, <code>girrr-nuova</code> sotto), così si maschera solo la vecchia.</li>
+ <li>La skin si accende dentro il callback della transizione e si aspetta che il tema abbia riempito la Home (al massimo 1,2 s, mentre resta ferma la foto della vecchia): durante l'effetto la nuova Home non si ricompone.</li>
+ <li>Alla fine si tolgono strati, classi e nomi: nessun overlay resta sopra la pagina, i tocchi arrivano subito.</li>
+ <li>Senza View Transitions (Safari prima della 18, browser vecchi) tutte le varianti usano il fumo, che copre il cambio. Con «Riduci movimento» il cambio è immediato.</li>
+</ul>
+</main>
+<script>
+(function(){
+ var BASE='integrata-62/girrr/index.html?evento=notte-tropicale&evento-intro=trasformazione';
+ var V=[
+  {id:'nuvola',t:'E · Nuvola e polvere',d:'La Home si apre in chiazze nuvolose dall’alto, i frammenti salgono e svaniscono con qualche granello di polvere.'},
+  {id:'fumo',t:'C · Fumo',d:'Una cortina leggera di fumo copre la vecchia Home e si dirada sulla Notte Tropicale.'},
+  {id:'vento',t:'D · Polvere nel vento',d:'Scie di polvere portano via la grafica da sinistra a destra; la nuova resta ferma sotto.'},
+  {id:'nuvola-morbida',t:'A · Nuvola morbida',d:'Come E, senza grana: più morbida, più vicina a una dissolvenza.'},
+  {id:'attuale',t:'Attuale',d:'La transizione di oggi (PR #134): dissolvenza con un leggero spostamento laterale.'}
+ ];
+ var S=[{id:'iphone-se',t:'iPhone SE',w:320,h:568},{id:'iphone',t:'iPhone',w:390,h:844},{id:'ipad',t:'iPad',w:1024,h:768},{id:'pc',t:'PC',w:1440,h:900},{id:'tv',t:'TV',w:1920,h:1080}];
+ var q=new URLSearchParams(location.search), v=q.get('b')||'nuvola', s=q.get('schermo')||(innerWidth<700?'iphone':'pc');
+ var fr=document.getElementById('fr'), box=document.getElementById('schermo');
+ function url(){return BASE+(v==='attuale'?'':'&b='+v)}
+ function bottoni(el,lista,cur,cb){el.innerHTML='';lista.forEach(function(x){var b=document.createElement('button');b.type='button';b.textContent=x.t;b.setAttribute('aria-pressed',String(x.id===cur));b.onclick=function(){cb(x.id)};el.appendChild(b)})}
+ function misura(){var sc=S.filter(function(x){return x.id===s})[0];var max=box.parentNode.clientWidth-28;var k=Math.min(1,max/sc.w,(innerHeight*0.78)/sc.h);
+  box.style.width=Math.round(sc.w*k)+'px';box.style.height=Math.round(sc.h*k)+'px';fr.style.width=sc.w+'px';fr.style.height=sc.h+'px';fr.style.transform='scale('+k+')'}
+ function disegna(){bottoni(document.getElementById('varianti'),V,v,function(id){v=id;disegna();carica()});bottoni(document.getElementById('schermi'),S,s,function(id){s=id;disegna();misura();carica()});
+  document.getElementById('descr').textContent=V.filter(function(x){return x.id===v})[0].d;var u=new URL(url(),location.href).href;document.getElementById('apri').href=u;document.getElementById('url').textContent=u;
+  try{history.replaceState(null,'','?b='+v+'&schermo='+s)}catch(e){}}
+ function carica(){fr.src='about:blank';setTimeout(function(){fr.src=url()+'&_='+Date.now()},60)}
+ document.getElementById('riprova').onclick=carica;addEventListener('resize',misura);
+ disegna();misura();carica();
+ var vid=document.getElementById('video');
+ [['nuvola','E · Nuvola e polvere'],['fumo','C · Fumo'],['vento','D · Polvere nel vento'],['attuale','Attuale']].forEach(function(x){['iphone','pc'].forEach(function(d){
+  var f=document.createElement('figure');f.innerHTML='<video controls muted playsinline loop preload="metadata" src="transizioni-b/video-'+x[0]+'-'+d+'.mp4"></video><figcaption>'+x[1]+' · '+(d==='pc'?'PC 1440':'iPhone 390')+'</figcaption>';vid.appendChild(f)})});
+ /* misure: rapporti JSON prodotti da prove/v65/prova_transizioni_b.js */
+ var F=[['rapporto-misura-chromium.json','Chromium'],['rapporto-misura-chromium-cpu4.json','Chromium · CPU 4× più lenta'],['rapporto-misura-webkit.json','WebKit']];
+ Promise.all(F.map(function(f){return fetch('transizioni-b/'+f[0]).then(function(r){return r.ok?r.json():null}).catch(function(){return null})})).then(function(rr){
+  var righe=[];rr.forEach(function(r,i){if(!r)return;Object.keys(r.risultati).forEach(function(k){var x=r.risultati[k];if(/ridotto/.test(k)||x.errore)return;var p=k.split('@');righe.push([F[i][1],p[0],p[1],x])})});
+  var t=document.getElementById('misure');
+  if(!righe.length){document.getElementById('misure-nota').textContent='Misure non ancora disponibili.';return}
+  document.getElementById('misure-nota').textContent='Rendering headless senza GPU vera: i valori servono a confrontare le varianti tra loro e a trovare blocchi o lavoro inutile, non promettono 60 fps su un dispositivo preciso.';
+  t.innerHTML='<thead><tr><th>Browser</th><th>Variante</th><th>Schermo</th><th>Fps medio</th><th>Frame mediano</th><th>Frame p95</th><th>Frame &gt; 25 ms</th><th>Long task</th><th>Thread principale</th><th>Fine pulita</th></tr></thead><tbody>'+
+   righe.map(function(r){var x=r[3];return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td class="n">'+x.fpsMedio+'</td><td class="n">'+x.frameMs.mediana+' ms</td><td class="n">'+x.frameMs.p95+' ms</td><td class="n">'+x.sopra25ms+'</td><td class="n">'+(x.longTask.length?x.longTask.join(', ')+' ms':'Nessuno')+'</td><td class="n">'+(x.cdp?x.cdp.lavoroThreadMs+' ms':'Dato non disponibile')+'</td><td>'+((x.residui===0&&x.cliccabile&&!x.scorreDiLato&&x.stato==='completo'&&!x.errori.length)?'Sì':'No')+'</td></tr>'}).join('')+'</tbody>';
+ });
+})();
+</script>
+</body>
+</html>

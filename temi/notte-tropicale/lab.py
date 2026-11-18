@@ -18,6 +18,12 @@ def main():
     shutil.copyfile(R / 'temi/evento-loader.js', TEMI / 'evento-loader.js')
     for f in ('notte-tropicale.css', 'notte-tropicale.js', 'scena.svg', 'miami-tramonto.jpg', 'miami-palme.jpg', 'ocean-drive-notte.jpg'):
         shutil.copyfile(R / 'temi/notte-tropicale' / f, TEMI / 'notte-tropicale' / f)
+    # Studio della transizione B 6.5 (Claude, 18 novembre): solo anteprima con ?b=<variante>
+    if (R / 'temi/notte-tropicale/entrata-b').is_dir():
+        (TEMI / 'notte-tropicale/entrata-b').mkdir(parents=True, exist_ok=True)
+        for f in sorted((R / 'temi/notte-tropicale/entrata-b').iterdir()):
+            if f.suffix in ('.css', '.js', '.webp'):
+                shutil.copyfile(f, TEMI / 'notte-tropicale/entrata-b' / f.name)
     n = 0
     for p in sorted(OUT.rglob('*.html')):
         rel = p.relative_to(OUT)

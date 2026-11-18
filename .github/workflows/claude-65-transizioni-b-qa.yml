@@ -1,0 +1,42 @@
+name: "Claude: Studio transizione B 6.5 · Chromium e WebKit"
+# Solo misura nel Lab (nessun deploy, nessun dato reale): varianti attuale, nuvola, vento, fumo su 5 schermi.
+on:
+  push:
+    branches:
+      - claude/girrr-transition-effects-zpfofz
+    paths:
+      - "temi/notte-tropicale/entrata-b/**"
+      - "temi/evento-loader.js"
+      - "prove/v65/prova_transizioni_b.js"
+      - ".github/workflows/claude-65-transizioni-b-qa.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  misura:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        motore: [chromium, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - name: Playwright
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.0
+          npx playwright install --with-deps ${{ matrix.motore }}
+      - name: Misura
+        run: |
+          python3 -m http.server 8767 --bind 127.0.0.1 >/tmp/server.log 2>&1 &
+          sleep 2
+          node prove/v65/prova_transizioni_b.js misura --motore ${{ matrix.motore }} --varianti attuale,nuvola,vento,fumo --out qa_artifacts/65-transizioni-b | tee misura.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: transizioni-b-${{ matrix.motore }}
+          path: |
+            qa_artifacts/65-transizioni-b
+            misura.log

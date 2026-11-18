@@ -1,0 +1,162 @@
+/* O Girrr 6.5 · Studio della transizione B (Claude, 18 novembre 2026). SOLO anteprima: si accende con
+   ?evento=notte-tropicale&evento-intro=trasformazione&b=<variante>. Non tocca la copertina A né la skin.
+
+   Idea comune: la vecchia Home e la nuova sono due gruppi separati della View Transition
+   (girrr-vecchia sopra, girrr-nuova sotto), così si può mascherare SOLO la vecchia.
+   La maschera è una texture di nuvola/vento ferma rispetto alla sua scatola: per farla scorrere non si anima
+   mask-position (si ridisegnerebbe a ogni fotogramma sul thread principale) ma si sposta la scatola con transform
+   e si sposta la pagina vecchia al contrario, della stessa quantità: solo transform e opacity, tutto sul compositor.
+   La variante «nuvola-maskpos» fa la stessa cosa animando mask-position: serve solo per misurare la differenza. */
+
+html.girrr-b-vecchia { view-transition-name: girrr-vecchia; }
+html.girrr-b-nuova { view-transition-name: girrr-nuova; }
+html.girrr-b::view-transition-group(girrr-vecchia) { z-index: 2; }
+html.girrr-b::view-transition-group(girrr-nuova) { z-index: 1; }
+html.girrr-b::view-transition-group(girrr-fx1),
+html.girrr-b::view-transition-group(girrr-fx2),
+html.girrr-b::view-transition-group(girrr-fx3),
+html.girrr-b::view-transition-group(girrr-fx4),
+html.girrr-b::view-transition-group(girrr-fx5) { z-index: 3; }
+html.girrr-b::view-transition-old(*),
+html.girrr-b::view-transition-new(*) { mix-blend-mode: normal; }
+html.girrr-b::view-transition-new(girrr-fx1), html.girrr-b::view-transition-new(girrr-fx2),
+html.girrr-b::view-transition-new(girrr-fx3), html.girrr-b::view-transition-new(girrr-fx4),
+html.girrr-b::view-transition-new(girrr-fx5) { animation: none; opacity: 1; }
+
+/* Strati decorativi (polvere, fumo): elementi vuoti con una texture di sfondo, aggiunti solo per la durata dell'effetto.
+   Con le View Transitions diventano gruppi a sé (animati sul pseudo-elemento), senza restano elementi fissi animati. */
+.girrr-b-fx { position: fixed; inset: 0; pointer-events: none; z-index: 2147483000; contain: strict;
+  background-repeat: repeat; will-change: transform, opacity; opacity: 0; }
+/* con le View Transitions lo strato va fotografato visibile: l'opacità la gestisce il suo gruppo */
+html.girrr-b:not(.girrr-b-ripiego) .girrr-b-fx { opacity: 1; }
+.girrr-b-fx1 { view-transition-name: girrr-fx1; } .girrr-b-fx2 { view-transition-name: girrr-fx2; }
+.girrr-b-fx3 { view-transition-name: girrr-fx3; } .girrr-b-fx4 { view-transition-name: girrr-fx4; }
+.girrr-b-fx5 { view-transition-name: girrr-fx5; }
+
+/* ───────────── E · Nuvola e polvere (ibrido, la maschera scende dall'alto, i frammenti salgono) ───────────── */
+@keyframes gb-scatola-giu { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, 66.6667%, 0); } }
+@keyframes gb-pagina-su { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(0, calc(-200% - 26px), 0) scale(1.012); } }
+@keyframes gb-svanisce { 0%, 72% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes gb-nuova-emerge { 0% { opacity: 0; transform: scale(1.022); } 22% { opacity: 1; } 100% { opacity: 1; transform: scale(1); } }
+@keyframes gb-polvere-e { 0% { opacity: 0; transform: translate3d(0, -40%, 0); } 25% { opacity: .75; } 70% { opacity: .55; } 100% { opacity: 0; transform: translate3d(0, 55%, 0); } }
+
+html.girrr-b[data-b="nuvola"]::view-transition-group(girrr-vecchia),
+html.girrr-b[data-b="nuvola-morbida"]::view-transition-group(girrr-vecchia),
+html.girrr-b[data-b="vento"]::view-transition-group(girrr-vecchia) { animation: none; overflow: clip; }
+html.girrr-b[data-b="nuvola"]::view-transition-image-pair(girrr-vecchia),
+html.girrr-b[data-b="nuvola-morbida"]::view-transition-image-pair(girrr-vecchia) {
+  inset: auto; left: 0; top: -200%; width: 100%; height: 300%;
+  -webkit-mask-image: url(nuvola.webp); mask-image: url(nuvola.webp);
+  -webkit-mask-size: auto 100%; mask-size: auto 100%;
+  -webkit-mask-repeat: repeat-x; mask-repeat: repeat-x;
+  animation: gb-scatola-giu var(--gb-durata, 2400ms) var(--gb-curva, cubic-bezier(.42, .02, .36, 1)) both;
+  will-change: transform;
+}
+html.girrr-b[data-b="nuvola-morbida"]::view-transition-image-pair(girrr-vecchia) {
+  -webkit-mask-image: url(nuvola-morbida.webp); mask-image: url(nuvola-morbida.webp);
+}
+html.girrr-b[data-b="nuvola"]::view-transition-old(girrr-vecchia),
+html.girrr-b[data-b="nuvola-morbida"]::view-transition-old(girrr-vecchia) {
+  position: absolute; inset: auto; left: 0; top: 66.6667%; width: 100%; height: 33.3333%;
+  transform-origin: 50% 30%;
+  animation: gb-pagina-su var(--gb-durata, 2400ms) var(--gb-curva, cubic-bezier(.42, .02, .36, 1)) both,
+             gb-svanisce var(--gb-durata, 2400ms) linear both;
+  will-change: transform, opacity;
+}
+html.girrr-b[data-b="nuvola"]::view-transition-new(girrr-nuova),
+html.girrr-b[data-b="nuvola-morbida"]::view-transition-new(girrr-nuova),
+html.girrr-b[data-b="nuvola-maskpos"]::view-transition-new(girrr-nuova),
+html.girrr-b[data-b="vento"]::view-transition-new(girrr-nuova) {
+  animation: gb-nuova-emerge var(--gb-durata, 2400ms) cubic-bezier(.2, .6, .3, 1) both;
+}
+html.girrr-b[data-b="nuvola"]::view-transition-group(girrr-nuova),
+html.girrr-b[data-b="nuvola-morbida"]::view-transition-group(girrr-nuova),
+html.girrr-b[data-b="nuvola-maskpos"]::view-transition-group(girrr-nuova),
+html.girrr-b[data-b="vento"]::view-transition-group(girrr-nuova) { animation: none; }
+html.girrr-b[data-b="nuvola"] .girrr-b-fx1 { background-image: url(polvere.webp); background-size: 300px 300px; }
+html.girrr-b[data-b="nuvola"]::view-transition-group(girrr-fx1) {
+  animation: gb-polvere-e var(--gb-durata, 2400ms) cubic-bezier(.42, .02, .36, 1) both;
+  -webkit-mask-image: linear-gradient(transparent, #000 30%, #000 60%, transparent);
+  mask-image: linear-gradient(transparent, #000 30%, #000 60%, transparent);
+}
+
+/* Solo misura: stessa maschera, ma animando mask-position (ridisegno a ogni fotogramma). */
+@keyframes gb-maskpos { from { -webkit-mask-position: 0 100%; mask-position: 0 100%; } to { -webkit-mask-position: 0 0; mask-position: 0 0; } }
+html.girrr-b[data-b="nuvola-maskpos"]::view-transition-group(girrr-vecchia) { animation: none; }
+html.girrr-b[data-b="nuvola-maskpos"]::view-transition-old(girrr-vecchia) {
+  -webkit-mask-image: url(nuvola.webp); mask-image: url(nuvola.webp);
+  -webkit-mask-size: auto 300%; mask-size: auto 300%; -webkit-mask-repeat: repeat-x; mask-repeat: repeat-x;
+  animation: gb-maskpos var(--gb-durata, 2400ms) cubic-bezier(.42, .02, .36, 1) both, gb-svanisce var(--gb-durata, 2400ms) linear both;
+}
+
+/* ───────────── D · Polvere nel vento (da sinistra a destra, scie orizzontali) ───────────── */
+@keyframes gb-scatola-destra { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(66.6667%, 0, 0); } }
+@keyframes gb-pagina-vento { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(calc(-200% + 34px), -8px, 0); } }
+@keyframes gb-polvere-d { 0% { opacity: 0; transform: translate3d(-45%, 0, 0); } 25% { opacity: .8; } 75% { opacity: .55; } 100% { opacity: 0; transform: translate3d(60%, -2%, 0); } }
+html.girrr-b[data-b="vento"]::view-transition-image-pair(girrr-vecchia) {
+  inset: auto; top: 0; left: -200%; width: 300%; height: 100%;
+  -webkit-mask-image: url(vento.webp); mask-image: url(vento.webp);
+  -webkit-mask-size: 100% auto; mask-size: 100% auto;
+  -webkit-mask-repeat: repeat-y; mask-repeat: repeat-y;
+  animation: gb-scatola-destra var(--gb-durata, 2600ms) var(--gb-curva, cubic-bezier(.45, .05, .4, 1)) both;
+  will-change: transform;
+}
+html.girrr-b[data-b="vento"]::view-transition-old(girrr-vecchia) {
+  position: absolute; inset: auto; top: 0; left: 66.6667%; width: 33.3333%; height: 100%;
+  animation: gb-pagina-vento var(--gb-durata, 2600ms) var(--gb-curva, cubic-bezier(.45, .05, .4, 1)) both,
+             gb-svanisce var(--gb-durata, 2600ms) linear both;
+  will-change: transform, opacity;
+}
+html.girrr-b[data-b="vento"] .girrr-b-fx1 { background-image: url(polvere.webp); background-size: 260px 260px; }
+html.girrr-b[data-b="vento"]::view-transition-group(girrr-fx1) {
+  animation: gb-polvere-d var(--gb-durata, 2600ms) cubic-bezier(.45, .05, .4, 1) both;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 35%, #000 60%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 35%, #000 60%, transparent);
+}
+
+/* ───────────── C · Fumo (una cortina leggera attraversa la Home, la vecchia sparisce dietro, il fumo si dirada) ───────────── */
+@keyframes gb-fumo-vecchia { 0%, 30% { opacity: 1; transform: scale(1); } 58% { opacity: 0; transform: scale(1.012); } 100% { opacity: 0; transform: scale(1.012); } }
+@keyframes gb-fumo-nuova { 0%, 40% { opacity: 0; transform: scale(1.018); } 72% { opacity: 1; } 100% { opacity: 1; transform: scale(1); } }
+@keyframes gb-fumo-1 { 0% { opacity: 0; transform: translate3d(-38%, 18%, 0) scale(1.5); } 40% { opacity: .92; } 62% { opacity: .85; } 100% { opacity: 0; transform: translate3d(30%, -14%, 0) scale(2.1); } }
+@keyframes gb-fumo-2 { 0% { opacity: 0; transform: translate3d(42%, 26%, 0) scale(1.6) rotate(8deg); } 44% { opacity: .9; } 64% { opacity: .8; } 100% { opacity: 0; transform: translate3d(-24%, -22%, 0) scale(2.2) rotate(-6deg); } }
+@keyframes gb-fumo-3 { 0% { opacity: 0; transform: translate3d(-8%, 45%, 0) scale(1.4); } 46% { opacity: .85; } 66% { opacity: .7; } 100% { opacity: 0; transform: translate3d(6%, -40%, 0) scale(2.4); } }
+@keyframes gb-fumo-4 { 0% { opacity: 0; transform: translate3d(20%, -30%, 0) scale(1.3) rotate(-10deg); } 42% { opacity: .75; } 66% { opacity: .6; } 100% { opacity: 0; transform: translate3d(-30%, 20%, 0) scale(2) rotate(4deg); } }
+@keyframes gb-velo { 0% { opacity: 0; } 42% { opacity: .62; } 58% { opacity: .62; } 100% { opacity: 0; } }
+html.girrr-b[data-b="fumo"]::view-transition-group(girrr-vecchia),
+html.girrr-b[data-b="fumo"]::view-transition-group(girrr-nuova) { animation: none; }
+html.girrr-b[data-b="fumo"]::view-transition-old(girrr-vecchia) { animation: gb-fumo-vecchia var(--gb-durata, 2500ms) cubic-bezier(.4, 0, .3, 1) both; }
+html.girrr-b[data-b="fumo"]::view-transition-new(girrr-nuova) { animation: gb-fumo-nuova var(--gb-durata, 2500ms) cubic-bezier(.3, 0, .2, 1) both; }
+html.girrr-b[data-b="fumo"] .girrr-b-fx1, html.girrr-b[data-b="fumo"] .girrr-b-fx3 { background: url(fumo-a.webp) center / contain no-repeat; }
+html.girrr-b[data-b="fumo"] .girrr-b-fx2, html.girrr-b[data-b="fumo"] .girrr-b-fx4 { background: url(fumo-b.webp) center / contain no-repeat; }
+html.girrr-b[data-b="fumo"] .girrr-b-fx5 { background: radial-gradient(ellipse at 50% 55%, rgba(236, 214, 255, .95), rgba(190, 150, 230, .7) 55%, rgba(120, 80, 170, .5)); }
+html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx1) { animation: gb-fumo-1 var(--gb-durata, 2500ms) cubic-bezier(.35, .1, .3, 1) both; }
+html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx2) { animation: gb-fumo-2 var(--gb-durata, 2500ms) cubic-bezier(.35, .1, .3, 1) both; }
+html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx3) { animation: gb-fumo-3 var(--gb-durata, 2500ms) cubic-bezier(.35, .1, .3, 1) both; }
+html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx4) { animation: gb-fumo-4 var(--gb-durata, 2500ms) cubic-bezier(.35, .1, .3, 1) both; }
+html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx5) { z-index: 2; animation: gb-velo var(--gb-durata, 2500ms) ease-in-out both; }
+html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx1),
+html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx2),
+html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx3),
+html.girrr-b[data-b="fumo"]::view-transition-group(girrr-fx4) { z-index: 4; }
+
+/* Versione leggera (TV, 4K): nel fumo restano due sbuffi e il velo. */
+html.girrr-b[data-b-leggero] .girrr-b-fx3, html.girrr-b[data-b-leggero] .girrr-b-fx4 { display: none; }
+
+/* ───────────── Senza View Transitions (Safari prima della 18, browser vecchi): il fumo copre il cambio ───────────── */
+html.girrr-b-ripiego .girrr-b-fx { view-transition-name: none; }
+html.girrr-b-ripiego .girrr-b-fx1, html.girrr-b-ripiego .girrr-b-fx3 { background: url(fumo-a.webp) center / contain no-repeat; }
+html.girrr-b-ripiego .girrr-b-fx2, html.girrr-b-ripiego .girrr-b-fx4 { background: url(fumo-b.webp) center / contain no-repeat; }
+html.girrr-b-ripiego .girrr-b-fx5 { background: radial-gradient(ellipse at 50% 55%, #ecd6ff, #be96e6 55%, #7850aa); }
+html.girrr-b-ripiego .girrr-b-fx1 { animation: gb-fumo-1 var(--gb-durata, 2500ms) cubic-bezier(.35, .1, .3, 1) both; }
+html.girrr-b-ripiego .girrr-b-fx2 { animation: gb-fumo-2 var(--gb-durata, 2500ms) cubic-bezier(.35, .1, .3, 1) both; }
+html.girrr-b-ripiego .girrr-b-fx3 { animation: gb-fumo-3 var(--gb-durata, 2500ms) cubic-bezier(.35, .1, .3, 1) both; }
+html.girrr-b-ripiego .girrr-b-fx4 { animation: gb-fumo-4 var(--gb-durata, 2500ms) cubic-bezier(.35, .1, .3, 1) both; }
+/* il velo nel ripiego copre del tutto il cambio, al centro dell'effetto (resta visibile solo il fumo) */
+@keyframes gb-velo-pieno { 0% { opacity: 0; } 40%, 56% { opacity: 1; } 100% { opacity: 0; } }
+html.girrr-b-ripiego .girrr-b-fx5 { z-index: 2147482999; animation: gb-velo-pieno var(--gb-durata, 2500ms) ease-in-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.girrr-b::view-transition-group(*), html.girrr-b::view-transition-image-pair(*),
+  html.girrr-b::view-transition-old(*), html.girrr-b::view-transition-new(*) { animation: none !important; }
+  .girrr-b-fx { display: none !important; }
+}

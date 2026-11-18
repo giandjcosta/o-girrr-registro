@@ -1,0 +1,551 @@
+{
+ "motore": "chromium",
+ "versione": "157.0.8103.78",
+ "cpu": 4,
+ "modo": "misura",
+ "data": "2026-11-18T22:11:27.631Z",
+ "risultati": {
+  "attuale@iphone-se": {
+   "effettoMs": 2379,
+   "fotogrammi": 125,
+   "fpsMedio": 55.6,
+   "frameMs": {
+    "mediana": 16.7,
+    "p95": 16.8,
+    "max": 83.3
+   },
+   "sopra25ms": 6,
+   "longTask": [
+    69
+   ],
+   "stato": "completo",
+   "tema": "notte-tropicale",
+   "residui": 0,
+   "cliccabile": true,
+   "scorreDiLato": false,
+   "vt": true,
+   "cdp": {
+    "ricalcoliStile": 218,
+    "layout": 59,
+    "stileMs": 322,
+    "layoutMs": 78,
+    "lavoroThreadMs": 1109
+   },
+   "errori": []
+  },
+  "nuvola@iphone-se": {
+   "effettoMs": 2509,
+   "fotogrammi": 146,
+   "fpsMedio": 58.4,
+   "frameMs": {
+    "mediana": 16.7,
+    "p95": 16.8,
+    "max": 50
+   },
+   "sopra25ms": 3,
+   "longTask": [],
+   "stato": "completo",
+   "tema": "notte-tropicale",
+   "residui": 0,
+   "cliccabile": true,
+   "scorreDiLato": false,
+   "vt": true,
+   "cdp": {
+    "ricalcoliStile": 239,
+    "layout": 57,
+    "stileMs": 366,
+    "layoutMs": 76,
+    "lavoroThreadMs": 1205
+   },
+   "errori": []
+  },
+  "vento@iphone-se": {
+   "effettoMs": 2794,
+   "fotogrammi": 157,
+   "fpsMedio": 56.7,
+   "frameMs": {
+    "mediana": 16.7,
+    "p95": 16.8,
+    "max": 116.7
+   },
+   "sopra25ms": 4,
+   "longTask": [],
+   "stato": "completo",
+   "tema": "notte-tropicale",
+   "residui": 0,
+   "cliccabile": true,
+   "scorreDiLato": false,
+   "vt": true,
+   "cdp": {
+    "ricalcoliStile": 252,
+    "layout": 58,
+    "stileMs": 471,
+    "layoutMs": 86,
+    "lavoroThreadMs": 1487
+   },
+   "errori": []
+  },
+  "fumo@iphone-se": {
+   "effettoMs": 2639,
+   "fotogrammi": 152,
+   "fpsMedio": 58.1,
+   "frameMs": {
+    "mediana": 16.7,
+    "p95": 16.8,
+    "max": 50
+   },
+   "sopra25ms": 3,
+   "longTask": [
+    52
+   ],
+   "stato": "completo",
+   "tema": "notte-tropicale",
+   "residui": 0,
+   "cliccabile": true,
+   "scorreDiLato": false,
+   "vt": true,
+   "cdp": {
+    "ricalcoliStile": 256,
+    "layout": 62,
+    "stileMs": 567,
+    "layoutMs": 109,
+    "lavoroThreadMs": 1568
+   },
+   "errori": []
+  },
+  "nuvola-maskpos@iphone-se": {
+   "effettoMs": 2531,
+   "fotogrammi": 146,
+   "fpsMedio": 58,
+   "frameMs": {
+    "mediana": 16.7,
+    "p95": 16.8,
+    "max": 66.6
+   },
+   "sopra25ms": 3,
+   "longTask": [],
+   "stato": "completo",
+   "tema": "notte-tropicale",
+   "residui": 0,
+   "cliccabile": true,
+   "scorreDiLato": false,
+   "vt": true,
+   "cdp": {
+    "ricalcoliStile": 230,
+    "layout": 53,
+    "stileMs": 258,
+    "layoutMs": 75,
+    "lavoroThreadMs": 1101
+   },
+   "errori": []
+  },
+  "attuale@iphone": {
+   "effettoMs": 2328,
+   "fotogrammi": 124,
+   "fpsMedio": 56.8,
+   "frameMs": {
+    "mediana": 16.7,
+    "p95": 16.8,
+    "max": 49.9
+   },
+   "sopra25ms": 5,
+   "longTask": [
+    112
+   ],
+   "stato": "completo",
+   "tema": "notte-tropicale",
+   "residui": 0,
+   "cliccabile": true,
+   "scorreDiLato": false,
+   "vt": true,
+   "cdp": {
+    "ricalcoliStile": 215,
+    "layout": 57,
+    "stileMs": 258,
+    "layoutMs": 71,
+    "lavoroThreadMs": 920
+   },
+   "errori": []
+  },
+  "attuale@iphone@ridotto": {
+   "effettoMs": 153,
+   "fotogrammi": 2,
+   "fpsMedio": 30,
+   "frameMs": {
+    "mediana": 50,
+    "p95": 50,
+    "max": 50
+   },
+   "sopra25ms": 1,
+   "longTask": [
+    50
+   ],
+   "stato": "completo",
+   "tema": "notte-tropicale",
+   "residui": 0,
+   "cliccabile": true,
+   "scorreDiLato": false,
+   "vt": true,
+   "cdp": {
+    "ricalcoliStile": 39,
+    "layout": 19,
+    "stileMs": 44,
+    "layoutMs": 21,
+    "lavoroThreadMs": 206
+   },
+   "errori": []
+  },
+  "nuvola@iphone": {
+   "effettoMs": 2512,
+   "fotogrammi": 143,
+   "fpsMedio": 57.2,
+   "frameMs": {
+    "mediana": 16.7,
+    "p95": 16.8,
+    "max": 50
+   },
+   "sopra25ms": 5,
+   "longTask": [],
+   "stato": "completo",
+   "tema": "notte-tropicale",
+   "residui": 0,
+   "cliccabile": true,
+   "scorreDiLato": false,
+   "vt": true,
+   "cdp": {
+    "ricalcoliStile": 236,
+    "layout": 54,
+    "stileMs": 394,
+    "layoutMs": 80,
+    "lavoroThreadMs": 1234
+   },
+   "errori": []
+  },
+  "nuvola@iphone@ridotto": {
+   "effettoMs": 171,
+   "fotogrammi": 2,
+   "fpsMedio": 17.1,
+   "frameMs": {
+    "mediana": 100,
+    "p95": 100,
+    "max": 100
+   },
+   "sopra25ms": 1,
+   "longTask": [
+    51
+   ],
+   "stato": "completo",
+   "tema": "notte-tropicale",
+   "residui": 0,
+   "cliccabile": true,
+   "scorreDiLato": false,
+   "vt": true,
+   "cdp": {
+    "ricalcoliStile": 51,
+    "layout": 26,
+    "stileMs": 71,
+    "layoutMs": 37,
+    "lavoroThreadMs": 256
+   },
+   "errori": []
+  },
+  "vento@iphone": {
+   "effettoMs": 2735,
+   "fotogrammi": 155,
+   "fpsMedio": 57.1,
+   "frameMs": {
+    "mediana": 16.7,
+    "p95": 16.8,
+    "max": 66.6
+   },
+   "sopra25ms": 6,
+   "longTask": [
+    50
+   ],
+   "stato": "completo",
+   "tema": "notte-tropicale",
+   "residui": 0,
+   "cliccabile": true,
+   "scorreDiLato": false,
+   "vt": true,
+   "cdp": {
+    "ricalcoliStile": 248,
+    "layout": 55,
+    "stileMs": 425,
+    "layoutMs": 71,
+    "lavoroThreadMs": 1395
+   },
+   "errori": []
+  },
+  "vento@iphone@ridotto": {
+   "effettoMs": 99,
+   "fotogrammi": 2,
+   "fpsMedio": 30,
+   "frameMs": {
+    "mediana": 33.3,
+    "p95": 33.3,
+    "max": 33.3
+   },
+   "sopra25ms": 2,
+   "longTask": [],
+   "stato": "completo",
+   "tema": "notte-tropicale",
+   "residui": 0,
+   "cliccabile": true,
+   "scorreDiLato": false,
+   "vt": true,
+   "cdp": {
+    "ricalcoliStile": 41,
+    "layout": 24,
+    "stileMs": 53,
+    "layoutMs": 25,
+    "lavoroThreadMs": 198
+   },
+   "errori": []
+  },
+  "fumo@iphone": {
+   "effettoMs": 2634,
+   "fotogrammi": 140,
+   "fpsMedio": 53.5,
+   "frameMs": {
+    "mediana": 16.7,
+    "p95": 33.4,
+    "max": 66.7
+   },
+   "sopra25ms": 15,
+   "longTask": [],
+   "stato": "completo",
+   "tema": "notte-tropicale",
+   "residui": 0,
+   "cliccabile": true,
+   "scorreDiLato": false,
+   "vt": true,
+   "cdp": {
+    "ricalcoliStile": 234,
+    "layout": 57,
+    "stileMs": 564,
+    "layoutMs": 69,
+    "lavoroThreadMs": 1483
+   },
+   "errori": []
+  },
+  "fumo@iphone@ridotto": {
+   "effettoMs": 81,
+   "fotogrammi": 1,
+   "fpsMedio": 30,
+   "frameMs": {
+    "mediana": 33.3,
+    "p95": 33.3,
+    "max": 33.3
+   },
+   "sopra25ms": 1,
+   "longTask": [],
+   "stato": "completo",
+   "tema": "notte-tropicale",
+   "residui": 0,
+   "cliccabile": true,
+   "scorreDiLato": false,
+   "vt": true,
+   "cdp": {
+    "ricalcoliStile": 54,
+    "layout": 27,
+    "stileMs": 79,
+    "layoutMs": 29,
+    "lavoroThreadMs": 249
+   },
+   "errori": []
+  },
+  "nuvola-maskpos@iphone": {
+   "effettoMs": 2549,
+   "fotogrammi": 146,
+   "fpsMedio": 57.6,
+   "frameMs": {
+    "mediana": 16.7,
+    "p95": 16.8,
+    "max": 66.6
+   },
+   "sopra25ms": 3,
+   "longTask": [
+    72
+   ],
+   "stato": "completo",
+   "tema": "notte-tropicale",
+   "residui": 0,
+   "cliccabile": true,
+   "scorreDiLato": false,
+   "vt": true,
+   "cdp": {
+    "ricalcoliStile": 228,
+    "layout": 49,
+    "stileMs": 327,
+    "layoutMs": 94,
+    "lavoroThreadMs": 1352
+   },
+   "errori": []
+  },
+  "nuvola-maskpos@iphone@ridotto": {
+   "effettoMs": 109,
+   "fotogrammi": 2,
+   "fpsMedio": 40,
+   "frameMs": {
+    "mediana": 33.3,
+    "p95": 33.3,
+    "max": 33.3
+   },
+   "sopra25ms": 1,
+   "longTask": [],
+   "stato": "completo",
+   "tema": "notte-tropicale",
+   "residui": 0,
+   "cliccabile": true,
+   "scorreDiLato": false,
+   "vt": true,
+   "cdp": {
+    "ricalcoliStile": 15,
+    "layout": 8,
+    "stileMs": 23,
+    "layoutMs": 23,
+    "lavoroThreadMs": 138
+   },
+   "errori": []
+  },
+  "attuale@pc": {
+   "effettoMs": 2458,
+   "fotogrammi": 78,
+   "fpsMedio": 34.4,
+   "frameMs": {
+    "mediana": 33.3,
+    "p95": 33.4,
+    "max": 100
+   },
+   "sopra25ms": 51,
+   "longTask": [
+    146
+   ],
+   "stato": "completo",
+   "tema": "notte-tropicale",
+   "residui": 0,
+   "cliccabile": true,
+   "scorreDiLato": false,
+   "vt": true,
+   "cdp": {
+    "ricalcoliStile": 178,
+    "layout": 59,
+    "stileMs": 260,
+    "layoutMs": 81,
+    "lavoroThreadMs": 872
+   },
+   "errori": []
+  },
+  "nuvola@pc": {
+   "effettoMs": 2560,
+   "fotogrammi": 39,
+   "fpsMedio": 15.6,
+   "frameMs": {
+    "mediana": 66.6,
+    "p95": 83.4,
+    "max": 150.1
+   },
+   "sopra25ms": 37,
+   "longTask": [
+    56
+   ],
+   "stato": "completo",
+   "tema": "notte-tropicale",
+   "residui": 0,
+   "cliccabile": true,
+   "scorreDiLato": false,
+   "vt": true,
+   "cdp": {
+    "ricalcoliStile": 133,
+    "layout": 54,
+    "stileMs": 251,
+    "layoutMs": 105,
+    "lavoroThreadMs": 877
+   },
+   "errori": []
+  },
+  "vento@pc": {
+   "effettoMs": 2849,
+   "fotogrammi": 43,
+   "fpsMedio": 15.3,
+   "frameMs": {
+    "mediana": 66.6,
+    "p95": 83.3,
+    "max": 116.7
+   },
+   "sopra25ms": 42,
+   "longTask": [
+    52
+   ],
+   "stato": "completo",
+   "tema": "notte-tropicale",
+   "residui": 0,
+   "cliccabile": true,
+   "scorreDiLato": false,
+   "vt": true,
+   "cdp": {
+    "ricalcoliStile": 145,
+    "layout": 60,
+    "stileMs": 249,
+    "layoutMs": 83,
+    "lavoroThreadMs": 847
+   },
+   "errori": []
+  },
+  "fumo@pc": {
+   "effettoMs": 2734,
+   "fotogrammi": 38,
+   "fpsMedio": 14.1,
+   "frameMs": {
+    "mediana": 66.7,
+    "p95": 100,
+    "max": 100
+   },
+   "sopra25ms": 38,
+   "longTask": [],
+   "stato": "completo",
+   "tema": "notte-tropicale",
+   "residui": 0,
+   "cliccabile": true,
+   "scorreDiLato": false,
+   "vt": true,
+   "cdp": {
+    "ricalcoliStile": 141,
+    "layout": 60,
+    "stileMs": 271,
+    "layoutMs": 104,
+    "lavoroThreadMs": 873
+   },
+   "errori": []
+  },
+  "nuvola-maskpos@pc": {
+   "effettoMs": 2605,
+   "fotogrammi": 69,
+   "fpsMedio": 26.7,
+   "frameMs": {
+    "mediana": 33.3,
+    "p95": 50,
+    "max": 116.6
+   },
+   "sopra25ms": 69,
+   "longTask": [
+    62
+   ],
+   "stato": "completo",
+   "tema": "notte-tropicale",
+   "residui": 0,
+   "cliccabile": true,
+   "scorreDiLato": false,
+   "vt": true,
+   "cdp": {
+    "ricalcoliStile": 152,
+    "layout": 50,
+    "stileMs": 276,
+    "layoutMs": 99,
+    "lavoroThreadMs": 1045
+   },
+   "errori": []
+  }
+ }
+}

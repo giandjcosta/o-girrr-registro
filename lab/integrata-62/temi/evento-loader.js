@@ -63,7 +63,7 @@
     var h = document.documentElement;
     /* Due DEMO alternative: parametro esplicito, solo Home, mai attive per caso
        sulla pubblicazione normale. La scelta finale resta di Gianluca. */
-    var intro=q.get('evento-intro');
+    var intro=q.get('evento-intro'), studioB=null;
     if (!/\/girrr\/(?:index\.html)?$/.test(path) ||
         (intro!=='copertina' && intro!=='trasformazione')) intro=null;
     if(intro){
@@ -80,6 +80,15 @@
         coverPreload.rel='preload';coverPreload.as='image';
         coverPreload.href=new URL('notte-tropicale/gta6-lucia-jason-cover.webp',base).href;
         (document.head||h).appendChild(coverPreload);
+      }
+      /* Studio della transizione B (Claude, 18 novembre): ?b=nuvola|nuvola-morbida|vento|fumo|nuvola-maskpos. Solo anteprima;
+         senza ?b= resta la transizione attuale. */
+      if(intro==='trasformazione'&&/^(nuvola|nuvola-morbida|nuvola-maskpos|vento|fumo)$/.test(q.get('b')||'')){
+        studioB=q.get('b');
+        var bCss=document.createElement('link');bCss.rel='stylesheet';
+        bCss.href=new URL('notte-tropicale/entrata-b/entrata-b.css',base).href;(document.head||h).appendChild(bCss);
+        var bJs=document.createElement('script');bJs.src=new URL('notte-tropicale/entrata-b/entrata-b.js',base).href;
+        (document.head||h).appendChild(bJs);
       }
       var introCss=document.createElement('link');
       introCss.rel='stylesheet';
@@ -139,10 +148,11 @@
       h.setAttribute('data-intro-state','errore-css');
     };
     (document.head || h).appendChild(l);
-    function caricaScriptTema(){
-      if(!ev.js)return;
+    function caricaScriptTema(pronto){
+      if(!ev.js){if(pronto)pronto();return;}
       var script=document.createElement('script');
       script.src=new URL(ev.js,base).href;script.async=true;
+      if(pronto){script.onload=pronto;script.onerror=pronto;}
       script.setAttribute('data-evento',ev.id);(document.head||h).appendChild(script);
     }
     function quandoPaginaPronta(cb){
@@ -187,6 +197,13 @@
           h.setAttribute('data-intro-state','grafica-originale');
           setTimeout(function(){
             function accendi(){h.setAttribute('data-event-theme',ev.id);caricaScriptTema();}
+            if(studioB&&window.OGirrrEntrataB){
+              h.setAttribute('data-intro-state','transizione');
+              window.OGirrrEntrataB.avvia(studioB,function(pronto){h.setAttribute('data-event-theme',ev.id);caricaScriptTema(pronto);},function(){
+                h.classList.remove('nt-intro-trasformazione');h.setAttribute('data-intro-state','completo');
+              });
+              return;
+            }
             if(document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches){
               h.setAttribute('data-intro-state','transizione');
               var t=document.startViewTransition(accendi);
