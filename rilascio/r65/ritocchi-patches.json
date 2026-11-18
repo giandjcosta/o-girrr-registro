@@ -97,6 +97,10 @@
   [
    ".panel h3:not(:first-child){margin-top:22px}",
    ".panel h3:not(:first-child){margin-top:22px}.panel .swap h3{letter-spacing:.015em}"
+  ],
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
   ]
  ],
  "stadio/girrr/tabellone.html": [
@@ -127,6 +131,10 @@
   [
    ".panel h3:not(:first-child){margin-top:22px}",
    ".panel h3:not(:first-child){margin-top:22px}.panel .swap h3{letter-spacing:.015em}"
+  ],
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
   ]
  ],
  "girrr/v60/tifosi.js": [
@@ -235,24 +243,40 @@
   [
    "</head>",
    "<style>/* 6.5: durante il cambio di scheda l'altezza resta ferma, ma la fila delle schede non si allunga */#view{align-content:start}/* Moviola: il Verdetto sta in fondo, alla stessa altezza in tutte le schede */.card.mv{display:flex;flex-direction:column}.card.mv>.mvv{margin-top:auto}</style></head>"
+  ],
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
   ]
  ],
  "girrr/index.html": [
   [
    "destinazioni55.js?v=55r8",
    "destinazioni55.js?v=65"
+  ],
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
   ]
  ],
  "girrr/versioni.html": [
   [
    "destinazioni55.js?v=55r8",
    "destinazioni55.js?v=65"
+  ],
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
   ]
  ],
  "girrr/notifiche.html": [
   [
    "destinazioni55.js?v=55r8",
    "destinazioni55.js?v=65"
+  ],
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
   ]
  ],
  "stadio/girrr/campo.html": [
@@ -275,18 +299,114 @@
   [
    "destinazioni55.js?v=55r8",
    "destinazioni55.js?v=65"
+  ],
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
   ]
  ],
  "stadio/girrr/versioni.html": [
   [
    "destinazioni55.js?v=55r8",
    "destinazioni55.js?v=65"
+  ],
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
   ]
  ],
  "stadio/girrr/notifiche.html": [
   [
    "destinazioni55.js?v=55r8",
    "destinazioni55.js?v=65"
+  ],
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "girrr/albo.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "girrr/giornale.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "girrr/squadre.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "girrr/totogirrr.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "girrr/derby.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "girrr/rivalita.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "girrr/statistiche.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "stadio/girrr/albo.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "stadio/girrr/totogirrr.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "stadio/girrr/derby.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "stadio/girrr/rivalita.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "stadio/girrr/statistiche.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "stadio/girrr/giornale.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "stadio/girrr/squadre.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
   ]
  ]
 }
