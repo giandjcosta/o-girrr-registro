@@ -1,5 +1,11 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 16 novembre 2026)
 
+## 18 novembre 2026 · ChatGPT: Correzioni Numeri del Campionato (solo Lab)
+- Dopo gli screenshot di Gianluca: in `temi/notte-tropicale/numeri-campionato.html` il link in alto ora è «‹ Tabellone» e punta a `tabellone.html?evento=notte-tropicale`. Rimossi i tre link «Risultati e classifica / Numeri del Campionato / Campo» e il ritorno duplicato nel footer. Non sono presenti sponsor «Gentilmente offerto da» in questa pagina; restano soltanto nella Home.
+- `temi/notte-tropicale/numeri-campionato.css`: niente barre colorate slegate dal bordo; card e testata usano `::before` con fondo viola pieno, lati obliqui arrotondati e fili ciano/rosa aderenti, alternati sulle card. Incrementato `?v=2`. Copie del Lab sincronizzate con i sorgenti (`lab.py`).
+- Test Playwright `temi/notte-tropicale/prova_numeri_foto.py` ampliato per ritorno, sagome, niente link ridondanti e niente pubblicità. Validazione statica eseguita (CSS bilanciato e SHA sorgente=Lab). **Browser QA non ancora eseguito sul nuovo commit**: PR #128 in bozza con conflitti verso Claude, ambiente locale senza accesso GitHub al checkout. Nessun merge o pubblicazione, sito vero e Supabase intatti.
+
+
 ## 17 novembre 2026 — ChatGPT: Notte Tropicale su tutte le pagine (solo laboratorio)
 - **Numeri del Campionato e foto delle schede (ChatGPT, 17/11)**: `temi/notte-tropicale/stats-campionato.js` calcola dal `data.json` reale (gol del risultato, punti classifica, Fantapunti distinti); HTML/CSS della nuova pagina in `temi/notte-tropicale/numeri-campionato.{html,css}`, pubblicata solo nelle copie `lab/integrata-62/girrr/` dal generatore `temi/notte-tropicale/lab.py`. Nell'evento Home › Stagione e Tabellone › Campionato › Numeri del Campionato conducono alla pagina; in Champions Cup la voce è nascosta. Sezione CSS 4p con sei foto Unsplash verificate e crediti `temi/notte-tropicale/FOTO-SEI-SCHEDE.md`, senza cambiare i link delle sei schede. Controllo statico sulle copie: 5/5 identiche. Prova ES5 su `data.json` attuale: 7 giornate, 35 partite, 143 gol, media 4,09. `prova_numeri_foto.py` aggiunto alla QA ma esito browser **non confermato** (PR #128 in conflitto temporaneo con Claude, test sul push del ramo predisposto). Nessun merge/deploy/Supabase.
 
