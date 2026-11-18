@@ -1015,3 +1015,37 @@
    transition:none!important;
  }
 }
+
+
+/* 6.5 · Gianluca, 18/11: le QUATTRO voci del Tabellone su telefono si
+   scorrono orizzontalmente, non devono restringersi per stare tutte a schermo.
+   Questa regola riguarda solo la skin GTA/Notte Tropicale su telefoni. */
+@media (max-width:600px) {
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede.giornata-nav.giornata-nav {
+  display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;
+  grid-template-columns:none!important;gap:10px!important;
+  width:100%!important;max-width:100%!important;
+  overflow-x:auto!important;overflow-y:hidden!important;
+  -webkit-overflow-scrolling:touch;touch-action:pan-x pan-y;
+  overscroll-behavior-x:contain;scrollbar-width:none;
+  scroll-snap-type:x proximity;scroll-padding-inline:8px;
+  padding:8px 8px 10px!important;margin:18px 0 16px!important;
+  transform:none!important;border-radius:16px!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede::-webkit-scrollbar {
+  display:none!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede.giornata-nav.giornata-nav > :is(button,a) {
+  flex:0 0 auto!important;width:auto!important;min-width:132px!important;
+  max-width:none!important;white-space:nowrap!important;
+  scroll-snap-align:start;scroll-snap-stop:normal;
+  height:56px!important;min-height:56px!important;
+  font:italic 900 16px/1.1 'Barlow Condensed',Inter,system-ui,sans-serif!important;
+  letter-spacing:0!important;line-height:1.1!important;
+  padding:13px 16px!important;justify-content:center!important;
+  text-align:center!important;
+ }
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede.giornata-nav.giornata-nav > a::after {
+  margin-left:6px!important;font-size:1.15em!important;
+ }
+}
