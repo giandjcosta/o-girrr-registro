@@ -1054,9 +1054,9 @@
 /* 6.5 / 19-23 novembre: transizione di competizione senza sostituire la grafica.
    @property consente di interpolare i colori dentro i gradienti, non un cambio secco.
    Rosa per Campionato, ciano/azzurro per Champions Cup. */
-@property --nt-nav-a { syntax:'<color>'; inherits:false; initial-value:#3a194c; }
-@property --nt-nav-b { syntax:'<color>'; inherits:false; initial-value:#532656; }
-@property --nt-nav-c { syntax:'<color>'; inherits:false; initial-value:#3d174d; }
+@property --nt-nav-a { syntax:'<color>'; inherits:true; initial-value:#3a194c; }
+@property --nt-nav-b { syntax:'<color>'; inherits:true; initial-value:#532656; }
+@property --nt-nav-c { syntax:'<color>'; inherits:true; initial-value:#3d174d; }
 :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede > :is(button,a).nt-tab {
  --nt-nav-a:#3a194c;--nt-nav-b:#532656;--nt-nav-c:#3d174d;
  transition:--nt-nav-a .82s cubic-bezier(.22,.61,.36,1),
