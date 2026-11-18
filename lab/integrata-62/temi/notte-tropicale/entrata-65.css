@@ -40,29 +40,32 @@ html.nt-intro-copertina .nt-cover-overlay.nt-cover-uscita{
  html.nt-intro-copertina .nt-cover-poster{max-width:94vw!important;max-height:80dvh!important}
  html.nt-intro-copertina .nt-cover-caption{font-size:12px!important;letter-spacing:.055em!important}
 }
-/* Anteprima B: la Home originale sfuma ed evapora; quella nuova
-   entra con un movimento impercettibile. Principalmente opacity/transform:
-   il blur massimo è 3px per non sovraccaricare i dispositivi mobili. */
+/* B · transizione cinematografica sfumata, obiettivo 60 fps.
+   SOLO transform e opacity sugli snapshot View Transitions; nessun filter/blur
+   né ricalcolo del layout ad ogni fotogramma. Il movimento è appena percettibile.
+   Il frame rate effettivo dipende dal dispositivo: non viene garantito dal CSS. */
 @keyframes girrr-old-cloud {
- 0% {opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}
- 35% {opacity:.94;transform:translate3d(-.3%,0,0) scale(1.004);filter:blur(.3px)}
- 65% {opacity:.47;transform:translate3d(-1.15%,0,0) scale(1.008);filter:blur(1.6px)}
- 100%{opacity:0;transform:translate3d(-2.1%,0,0) scale(1.014);filter:blur(3px)}
+ 0%   {opacity:1; transform:translate3d(0,0,0) scale(1)}
+ 24%  {opacity:1; transform:translate3d(-1px,0,0) scale(1.001)}
+ 48%  {opacity:.74; transform:translate3d(-3px,0,0) scale(1.003)}
+ 72%  {opacity:.28; transform:translate3d(-6px,0,0) scale(1.007)}
+ 100% {opacity:0; transform:translate3d(-10px,0,0) scale(1.01)}
 }
 @keyframes girrr-new-cloud {
- 0% {opacity:0;transform:translate3d(1.5%,0,0) scale(.993);filter:blur(2.8px)}
- 28%{opacity:.08;transform:translate3d(1%,0,0) scale(.996);filter:blur(2px)}
- 68%{opacity:.72;transform:translate3d(.25%,0,0) scale(.999);filter:blur(.6px)}
- 100%{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}
+ 0%   {opacity:0; transform:translate3d(9px,0,0) scale(.992)}
+ 24%  {opacity:.08;transform:translate3d(7px,0,0) scale(.994)}
+ 48%  {opacity:.38;transform:translate3d(4px,0,0) scale(.997)}
+ 72%  {opacity:.82;transform:translate3d(2px,0,0) scale(.999)}
+ 100% {opacity:1; transform:translate3d(0,0,0) scale(1)}
 }
 html.nt-intro-trasformazione::view-transition-old(root) {
- animation:girrr-old-cloud 2050ms cubic-bezier(.22,.61,.36,1) both!important;
+ animation:girrr-old-cloud 2100ms cubic-bezier(.35,0,.2,1) both!important;
 }
 html.nt-intro-trasformazione::view-transition-new(root) {
- animation:girrr-new-cloud 2050ms cubic-bezier(.22,.61,.36,1) both!important;
+ animation:girrr-new-cloud 2100ms cubic-bezier(.35,0,.2,1) both!important;
 }
-html.nt-intro-trasformazione::view-transition-group(root) {
- animation-duration:2050ms!important;
+html.nt-intro-trasformazione::view-transition-group(root){
+ animation-duration:2100ms!important;
 }
 @media(prefers-reduced-motion:reduce){
  html.nt-intro-copertina .nt-cover-overlay {transition:none!important}
