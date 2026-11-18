@@ -772,6 +772,119 @@
   }
 }
 
+/* 4r. Grafica uniforme delle quattro sezioni del Tabellone (Gianluca, 18/11/2026).
+   Classifica, Risultati, Numeri del Campionato e Campo condividono il linguaggio
+   della pagina Numeri: fondo viola PIENO, lati inclinati morbidi, fili ciano/rosa.
+   La navigazione normale resta invariata quando il tema è spento. I colori del
+   selettore Campionato/Champions Cup della sezione 4k restano distinti. */
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"]
+  .giornata-nav.nt-quattro-menu {
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:9px!important;padding:9px!important;margin:17px 0 20px!important;
+  border:1px solid rgba(188,108,255,.46)!important;
+  border-radius:19px!important;background:#1b0b3d!important;
+  box-shadow:inset 0 1px 0 #ffffff16!important;
+  min-width:0;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"]
+  .giornata-nav.nt-quattro-menu > a[hidden] {display:none!important}
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"]
+  .giornata-nav.nt-quattro-menu > a:not([hidden]) {
+  display:flex!important;align-items:center;justify-content:center;
+  min-width:0!important;max-width:none!important;min-height:55px;
+  text-align:center;line-height:1.2;
+  padding:11px 13px!important;margin:0!important;
+  border:0!important;border-radius:15px!important;
+  position:relative;isolation:isolate;
+  font:900 clamp(12px,1.8vw,15px)/1.2 "DM Sans",Inter,system-ui,sans-serif!important;
+  color:#fff4ff!important;background:transparent!important;
+  text-decoration:none!important;overflow-wrap:anywhere;
+  box-shadow:none!important;-webkit-tap-highlight-color:transparent;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"]
+  .giornata-nav.nt-quattro-menu > a:not([hidden])::before {
+  content:"";position:absolute;inset:0 5px;z-index:-1;pointer-events:none;
+  transform:skewX(-4deg);border-radius:15px;
+  background:linear-gradient(135deg,#321755,#160b35)!important;
+  box-shadow:inset 0 3px 0 #00f0ff,inset 5px 0 0 #ff5ca8,
+             inset 0 0 0 1px #bc6cff66,0 10px 19px #03021155!important;
+}
+/* Inverti i fili sulla seconda e quarta voce, come sulle card Numeri. */
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"]
+  .giornata-nav.nt-quattro-menu > :is(.nt-risultati-link,#campo-link)::before {
+  box-shadow:inset 0 -3px 0 #ff5ca8,inset 5px 0 0 #00f0ff,
+             inset 0 0 0 1px #bc6cff66,0 10px 19px #03021155!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"]
+  .giornata-nav.nt-quattro-menu > a[aria-current]::before {
+  background:linear-gradient(145deg,#482071,#1b0a42)!important;
+  filter:brightness(1.12);
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"]
+  .giornata-nav.nt-quattro-menu > a:focus-visible {
+  outline:3px solid #00f0ff!important;outline-offset:3px!important;
+}
+@media(min-width:760px) {
+  :root[data-event-theme="notte-tropicale"] body[data-v53="board"]
+    .giornata-nav.nt-quattro-menu {
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  }
+}
+@media(max-width:359px) {
+  :root[data-event-theme="notte-tropicale"] body[data-v53="board"]
+    .giornata-nav.nt-quattro-menu > a:not([hidden]){
+    font-size:12px!important;padding:10px 8px!important;
+  }
+}
+/* Stessa materia delle card Numeri anche per Risultati e Classifica.
+   I risultati e le colonne originali non vengono spostati né riscritti. */
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"]
+  :is(.grid > .panel.nt-obl, #v53board.nt-obl)::before,
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"]
+  #board > .m.nt-obl:not(.tua)::before {
+  background:linear-gradient(135deg,#321755,#160b35)!important;
+  border-radius:17px!important;
+  box-shadow:inset 0 3px 0 #00f0ff,inset 5px 0 0 #ff5ca8,
+             inset 0 0 0 1px #bc6cff66,0 15px 28px #03021155!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"]
+  #board > .m.nt-obl:not(.tua):nth-of-type(even)::before {
+  box-shadow:inset 0 -3px 0 #ff5ca8,inset 5px 0 0 #00f0ff,
+             inset 0 0 0 1px #bc6cff66,0 15px 28px #03021155!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"]
+  :is(.grid .panel,.grid #v53board) :is(h2,h3),
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"]
+  #board > h3 {
+  font-family:"Barlow Condensed",Impact,Arial,sans-serif!important;
+  font-weight:900!important;font-style:italic!important;
+  letter-spacing:.02em;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"]
+  #board .m .sc b {
+  font-family:"Barlow Condensed",Impact,Arial,sans-serif!important;
+  font-style:italic!important;
+}
+/* Campo: la pagina che apre la quarta voce riceve le medesime sagome e fili.
+   Non si alterano la formazione, il prato, le statistiche o il cambio giornata. */
+:root[data-event-theme="notte-tropicale"] body[data-v53="campo"]
+  :is(.toolbar.nt-obl, #board > .card.nt-obl)::before {
+  background:linear-gradient(135deg,#321755,#160b35)!important;
+  border-radius:17px!important;
+  box-shadow:inset 0 3px 0 #00f0ff,inset 5px 0 0 #ff5ca8,
+             inset 0 0 0 1px #bc6cff66,0 15px 28px #03021155!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="campo"]
+  #board > .card.nt-obl:nth-child(even)::before {
+  box-shadow:inset 0 -3px 0 #ff5ca8,inset 5px 0 0 #00f0ff,
+             inset 0 0 0 1px #bc6cff66,0 15px 28px #03021155!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="campo"]
+  #board > .card :is(h2,.kicker) {
+  font-family:"Barlow Condensed",Impact,Arial,sans-serif!important;
+  font-style:italic!important;letter-spacing:.02em;
+}
+
 /* 4f. Grafica unica durante l'evento (Gianluca): niente interruttore Lega/Stadio nella Home né nel Campo */
 :root[data-event-theme="notte-tropicale"] :is(#gsw,.skin){display:none!important}
 
