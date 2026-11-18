@@ -61,7 +61,68 @@
     }
     if (ev.escludi && ev.escludi.test(location.pathname)) { window.OGirrrEvento = Object.freeze({ attivo: null, modo: modo || 'auto', ora: ora.toISOString(), escluso: ev.id }); return; }
     var h = document.documentElement;
-    h.setAttribute('data-event-theme', ev.id);
+    /* Due DEMO alternative: parametro esplicito, solo Home, mai attive per caso
+       sulla pubblicazione normale. La scelta finale resta di Gianluca. */
+    var intro=q.get('evento-intro');
+    if (!/\/girrr\/(?:index\.html)?$/.test(path) ||
+        (intro!=='copertina' && intro!=='trasformazione')) intro=null;
+    if(intro){
+      h.classList.add('nt-intro-'+intro);
+      h.setAttribute('data-intro-preview',intro);
+      if(intro==='copertina'){
+        /* Fallback istantaneo, già nel <head>, anche mentre si caricano i CSS:
+           il poster non dipende dal primo rendering della Home. */
+        var immediato=document.createElement('style');
+        var primaFoto=new URL('notte-tropicale/gta6-lucia-jason-cover.webp',base).href;
+        immediato.textContent='html.nt-intro-copertina[data-event-theme="notte-tropicale"]:not(.nt-cover-ready)::after{content:""!important;position:fixed!important;inset:0!important;width:100%!important;height:100%!important;z-index:2147483000!important;background-color:#1b0b35!important;background-image:url('+JSON.stringify(primaFoto)+')!important;background-position:center!important;background-size:auto 100%!important;background-repeat:no-repeat!important;opacity:1!important;display:block!important;transform:none!important;filter:none!important;animation:none!important;mask:none!important;-webkit-mask:none!important}';
+        (document.head||h).appendChild(immediato);
+        var coverPreload=document.createElement('link');
+        coverPreload.rel='preload';coverPreload.as='image';
+        coverPreload.href=new URL('notte-tropicale/gta6-lucia-jason-cover.webp',base).href;
+        (document.head||h).appendChild(coverPreload);
+      }
+      var introCss=document.createElement('link');
+      introCss.rel='stylesheet';
+      introCss.href=new URL('notte-tropicale/entrata-65.css',base).href;
+      (document.head||h).appendChild(introCss);
+    }
+    /* La copertina A deve comparire appena il DOM esiste, SENZA aspettare
+       che tema, immagini esterne, altri script o fogli di stile abbiano finito.
+       Una volta creata, rimane visibile per almeno 4,5 secondi dopo il load
+       dell'immagine prima di dissolversi per 1,8 secondi. */
+    var cover=null, portrait=null, copertinaIniziata=false;
+    function preparaCopertina(){
+      if(intro!=='copertina'||cover||!document.body)return;
+      h.setAttribute('data-intro-state','copertina');
+      cover=document.createElement('div');
+      cover.className='nt-cover-overlay';
+      cover.setAttribute('role','img');
+      cover.setAttribute('aria-label','GTA VI, Lucia e Jason davanti a un\u2019auto. Edizione speciale O Girrr dal 19 al 27 novembre.');
+      portrait=document.createElement('img');
+      portrait.className='nt-cover-poster';portrait.alt='';
+      portrait.decoding='async';portrait.fetchPriority='high';
+      portrait.src=new URL('notte-tropicale/gta6-lucia-jason-cover.webp',base).href;
+      var alternativa=new URL('notte-tropicale/miami-tramonto.jpg',base).href;
+      portrait.addEventListener('error',function(){
+        if(portrait.src!==alternativa)portrait.src=alternativa;
+      });
+      cover.appendChild(portrait);
+      var caption=document.createElement('span');
+      caption.className='nt-cover-caption';
+      caption.textContent='O FANT A GIRRR · EDIZIONE SPECIALE · 19–27 NOVEMBRE';
+      cover.appendChild(caption);
+      document.body.insertBefore(cover,document.body.firstChild);
+      if(introCss.sheet)h.classList.add('nt-cover-ready');
+      else introCss.addEventListener('load',function(){h.classList.add('nt-cover-ready');},{once:true});
+    }
+    if(intro==='copertina'){
+      if(document.readyState==='loading')
+        document.addEventListener('DOMContentLoaded',preparaCopertina,{once:true});
+      else preparaCopertina();
+    }
+    /* Morph: lascia prima visibile la Home ordinaria. La nuova skin è precaricata
+       ma non applicata fino al momento della transizione. */
+    if(intro!=='trasformazione')h.setAttribute('data-event-theme',ev.id);
     /* variante dello sfondo (Notte Tropicale): ?evento-sfondo=notte|tramonto|scena; senza, la foto predefinita del tema, ricordata per la sessione */
     var sf = q.get('evento-sfondo');
     if (sf) { try { sessionStorage.setItem(K + '-sfondo', sf); } catch (e) {} } else { try { sf = sessionStorage.getItem(K + '-sfondo'); } catch (e) {} }
@@ -72,12 +133,93 @@
     if (ex && ex !== 'no') h.setAttribute('data-event-extra', ex.split(',').filter(function (v) { return /^[a-z-]{1,20}$/.test(v); }).join(' '));
     var l = document.createElement('link');
     l.rel = 'stylesheet'; l.href = new URL(ev.css, base).href; l.setAttribute('data-evento', ev.id);
-    l.onerror = function () { h.removeAttribute('data-event-theme'); };   /* senza CSS niente tema a metà */
+    l.onerror = function () {
+      h.removeAttribute('data-event-theme');
+      h.classList.remove('nt-intro-copertina','nt-intro-trasformazione');
+      h.setAttribute('data-intro-state','errore-css');
+    };
     (document.head || h).appendChild(l);
-    /* script facoltativo del tema (per esempio la barra in basso di Notte Tropicale): parte dopo il CSS, se il CSS non arriva no */
-    if (ev.js) {
-      var s = document.createElement('script'); s.src = new URL(ev.js, base).href; s.async = true; s.setAttribute('data-evento', ev.id);
-      l.addEventListener('load', function () { (document.head || h).appendChild(s); });
+    function caricaScriptTema(){
+      if(!ev.js)return;
+      var script=document.createElement('script');
+      script.src=new URL(ev.js,base).href;script.async=true;
+      script.setAttribute('data-evento',ev.id);(document.head||h).appendChild(script);
     }
+    function quandoPaginaPronta(cb){
+      /* DOM pronto + CSS caricato: non attendere analytics o immagini esterne. */
+      if(document.readyState!=='loading')cb();
+      else document.addEventListener('DOMContentLoaded',cb,{once:true});
+    }
+    l.addEventListener('load',function(){
+      if(!intro){caricaScriptTema();return;}
+      quandoPaginaPronta(function(){
+        if(intro==='copertina'){
+          preparaCopertina();
+          if(copertinaIniziata)return;
+          copertinaIniziata=true;
+          caricaScriptTema();
+          /* Aspetta di avere un'immagine utilizzabile. La durata della copertina
+             parte ORA, non dall'inizio del caricamento della pagina. */
+          var immaginePronta=new Promise(function(ok){
+            if(!portrait){ok();return;}
+            if(portrait.complete&&portrait.naturalWidth>0){ok();return;}
+            var risolto=false;
+            function conclude(){if(risolto)return;risolto=true;ok();}
+            portrait.addEventListener('load',conclude,{once:true});
+            portrait.addEventListener('error',conclude,{once:true});
+            setTimeout(conclude,2200); /* la pagina non deve bloccarsi */
+          });
+          immaginePronta.then(function(){
+            h.setAttribute('data-intro-state','copertina');
+            setTimeout(function(){
+              if(!cover||!cover.isConnected)return;
+              h.setAttribute('data-intro-state','uscita');
+              h.classList.add('nt-intro-uscita');
+              cover.classList.add('nt-cover-uscita');
+              setTimeout(function(){
+                cover.remove();
+                h.classList.remove('nt-intro-copertina','nt-intro-uscita','nt-cover-ready');
+                h.setAttribute('data-intro-state','completo');
+              },1850);
+            },4500);
+          });
+        } else {
+          h.setAttribute('data-intro-state','grafica-originale');
+          setTimeout(function(){
+            function accendi(){h.setAttribute('data-event-theme',ev.id);caricaScriptTema();}
+            if(document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+              h.setAttribute('data-intro-state','transizione');
+              var t=document.startViewTransition(accendi);
+              t.finished.then(function(){
+                h.classList.remove('nt-intro-trasformazione');
+                h.setAttribute('data-intro-state','completo');
+              },function(){
+                h.classList.remove('nt-intro-trasformazione');
+                h.setAttribute('data-intro-state','completo');
+              });
+            }else{
+              /* Browser senza View Transitions: dissolvenza CSS leggera.
+                 Riduci movimento => nessun effetto, contenuto immediato. */
+              if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+                accendi();h.classList.remove('nt-intro-trasformazione');
+                h.setAttribute('data-intro-state','completo');
+              }else{
+                document.body.classList.add('nt-morph-fallback-out');
+                setTimeout(function(){
+                  accendi();
+                  document.body.classList.remove('nt-morph-fallback-out');
+                  document.body.classList.add('nt-morph-fallback-in');
+                  setTimeout(function(){
+                    document.body.classList.remove('nt-morph-fallback-in');
+                    h.classList.remove('nt-intro-trasformazione');
+                    h.setAttribute('data-intro-state','completo');
+                  },950);
+                },620);
+              }
+            }
+          },1150);
+        }
+      });
+    });
   } catch (err) { try { document.documentElement.removeAttribute('data-event-theme'); } catch (e2) {} }
 })();
