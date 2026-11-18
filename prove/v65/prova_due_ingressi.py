@@ -29,7 +29,10 @@ async def capture(pw,mode,width,height,device):
     url=BASE+"?evento=notte-tropicale&evento-intro="+mode
     await page.goto(url,wait_until="domcontentloaded",timeout=30000)
     frames=[];states=[];interval=260
-    for i in range(19):
+    # Copertina: 4,5 s di lettura + 1,8 s di dissolvenza; acquisisci anche
+    # il finale, senza cambiare il numero di fotogrammi della variante B.
+    frame_count=34 if mode=="copertina" else 19
+    for i in range(frame_count):
         picture=await page.screenshot(full_page=False,animations="allow")
         im=Image.open(io.BytesIO(picture)).convert("RGB")
         size=(390,844) if device=="mobile" else (960,600)
@@ -39,6 +42,7 @@ async def capture(pw,mode,width,height,device):
           const h=document.documentElement, image=document.querySelector('.nt-cover-poster');
           const cover=document.querySelector('.nt-cover-overlay');
           return {
+            timeMs:performance.now(),
             state:h.getAttribute('data-intro-state'),theme:h.getAttribute('data-event-theme'),
             mode:h.getAttribute('data-intro-preview'),vt:!!document.startViewTransition,
             posterLoaded:!!image&&image.naturalWidth>=800,
@@ -79,7 +83,7 @@ async def main():
             d.text((a.width+24,11),"B  TRASFORMAZIONE",fill="#8aeafa")
             composed.append(out)
         composed[0].save(OUT/"confronto-due-ingressi.gif",save_all=True,
-                        append_images=composed[1:],loop=0,duration=[260]*18+[900],
+                        append_images=composed[1:],loop=0,duration=[260]*(len(composed)-1)+[900],
                         optimize=True)
     (OUT/"rapporto.json").write_text(json.dumps(results,ensure_ascii=False,indent=2),encoding="utf-8")
     problems=[]
@@ -97,6 +101,15 @@ async def main():
                 problems.append(name+"-splash-mai-visibile")
             if not any(x["posterFile"].startswith("gta6-lucia-jason-cover") for x in r["states"]):
                 problems.append(name+"-copertina-sbagliata")
+            # Verifica che sia stata visibile a lungo dopo il caricamento dell'immagine,
+            # e che prima di sparire attraversi lo stato "uscita".
+            caricate=[x for x in r["states"] if x["posterLoaded"] and x["state"]=="copertina"]
+            in_uscita=[x for x in r["states"] if x["state"]=="uscita"]
+            if caricate and in_uscita:
+                if in_uscita[0]["timeMs"]-caricate[0]["timeMs"]<3800:
+                    problems.append(name+"-copertina-troppo-breve")
+            else:
+                problems.append(name+"-nessuna-dissolvenza")
         if r["variant"]=="trasformazione" and "transizione" not in states:
             problems.append(name+"-transizione")
     print("PROBLEMI:",problems)
