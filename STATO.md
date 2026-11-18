@@ -1,5 +1,10 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 16 novembre 2026)
 
+## 18 novembre 2026 — ChatGPT: correzione schede 6.5 e Curva autonoma (solo anteprima)
+- Ramo **`chatgpt/65-tab-uniche-curva-separata`** derivato da `chatgpt/65-tabellone-curva`. Tabellone: **una sola navigazione** con Classifica, Risultati, Numeri del Campionato (o Champions Cup) e Campo. Le quattro voci usano l'aspetto sfumato delle prime due; menu 2×2 su telefono e in unica fila larga su desktop. Il modulo Numeri mantiene `?sezione=numeri`, senza tornare erroneamente su Classifica.
+- Home: **Curva** rimane una card indipendente *sotto* «Tutto il Girrr»; Notifiche, Statistiche e sponsor restano in fondo con la posizione originale. Sorgenti tema e copia Lab sincronizzate; la modifica `v55/ui.js` è conservata come sostituzione esatta e rieseguibile in `rilascio/r65/ritocchi-patches.json`.
+- Verificati staticamente sorgenti, copie e corrispondenza della patch. **Non verificati** rendering in browser reale, tap su iPhone, browser Safari/WebKit e accessibilità GitHack. Nessun merge, GitHub Pages, sito ufficiale o Supabase.
+
 ## 18 novembre 2026 — Anteprima separata della 6.5
 - Creato `lab/prova-6-5.html` sul ramo `chatgpt/65-tabellone-curva`: pagina di ingresso per tutte le anteprime del Lab, visibile tramite GitHack puntando a un commit del ramo. Nessun deploy su GitHub Pages, nessun merge, nessuna modifica a Supabase.
 - Il Lab intercetta le richieste al database tramite `lab62.js`; Radio e Video della giornata 8 restano in PR #129, non pubblicati. Il proxy esterno non è stato verificato in Chromium o Safari; la compatibilità completa è ancora da certificare.
