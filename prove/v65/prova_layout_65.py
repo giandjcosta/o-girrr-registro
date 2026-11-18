@@ -41,6 +41,20 @@ async def main():
        overall=await page.evaluate("({html:document.documentElement.scrollWidth,body:document.body.scrollWidth,client:document.documentElement.clientWidth,mode:document.body.dataset.mode,theme:document.documentElement.getAttribute('data-event-theme')})")
        await page.screenshot(path=str(OUT/f"tabellone-{name}-{width}.png"),full_page=True,animations="disabled")
        entry={"screen":name,"width":width,"navCount":count,"nav":boxes,"sameRow":no_wrap,"metrics":overall,"pageErrors":errors[:5]}
+       # Gianluca, 18/11: su telefoni la fila deve davvero scorrere orizzontalmente.
+       # Non basta che le tab siano allineate; tutte e quattro devono essere raggiungibili.
+       if width<=600:
+           nav_scroll=await nav.evaluate("""el=>{
+               const s=getComputedStyle(el),max=el.scrollWidth-el.clientWidth;
+               el.scrollLeft=max;
+               return {scrollWidth:el.scrollWidth,clientWidth:el.clientWidth,
+                       maxScroll:max,actualScroll:el.scrollLeft,overflowX:s.overflowX,
+                       flexWrap:s.flexWrap};
+           }""")
+           entry["navScroll"]=nav_scroll
+           await page.screenshot(path=str(OUT/f"tabellone-{name}-{width}-scroll-finale.png"),
+                                 full_page=True,animations="disabled")
+           await nav.evaluate("(el)=>el.scrollLeft=0")
        # Tocchi funzionali: non serve un browser remoto o dati reali
        if name in ("iphone-se","iphone","ipad"):
            try:
@@ -73,7 +87,12 @@ async def main():
     (OUT/"rapporto.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
     problems=[r for r in report if r.get("sameRow") is False or r.get("navCount",4)!=4 or
       (r.get("metrics",{}).get("html",0)>r.get("metrics",{}).get("client",0)+1) or
-      r.get("pageErrors") or r.get("interactionError") or r.get("curvaInCards") is True or r.get("curvaSotto") is False]
+      r.get("pageErrors") or r.get("interactionError") or r.get("curvaInCards") is True or r.get("curvaSotto") is False or
+      (r.get("width",999)>0 and r.get("width",999)<=600 and
+       (r.get("navScroll",{}).get("maxScroll",0)<40 or
+        r.get("navScroll",{}).get("actualScroll",0)<30 or
+        r.get("navScroll",{}).get("overflowX") not in ("auto","scroll") or
+        r.get("navScroll",{}).get("flexWrap")!="nowrap"))]
     print("Problemi rilevati:",len(problems))
     for p in problems:print("ATTENZIONE",json.dumps(p,ensure_ascii=False)[:2000])
     if problems:raise SystemExit(1)
