@@ -1,5 +1,11 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 16 novembre 2026)
 
+## 18 novembre 2026 · ChatGPT: Home e Tabellone · Persistenza e pagina Numeri (solo Lab)
+- Ramo `chatgpt/notte-tropicale-pagine`, PR #128 bozza. «La tua lega oggi» è già `details#v55dashboard` e conserva l'ultima scelta in `localStorage['og:53:home-open']`; il valore predefinito passa da aperto a **chiuso** senza azzerare le preferenze salvate. Aggiornata la query di cache dell'asset `v55/ui.js`.
+- Curva ha margine orizzontale aggiuntivo da 16 a 28px nella fila «Tutto il Girrr» del tema, senza alterarne i contenuti. Sezione CSS 4q aggiunta senza riscrivere le precedenti.
+- Il Tabellone contiene un vero link alto `Numeri del Campionato ›` che punta **alla pagina separata** `numeri-campionato.html?evento=notte-tropicale`: invisibile senza tema, visibile durante l'evento, nascosto in Champions Cup. `notte-tropicale.js` riusa il link senza duplicarlo. Il pulsante «Stagione» della Home punta già alla stessa pagina separata.
+- Verifica statica: JS valido, CSS bilanciato, sorgenti e copie Lab tema identiche, menu simulato con link preesistente e assente (2/2), controlli statici complessivi 12/12. Test Playwright `temi/notte-tropicale/prova_home_tabellone_18nov.py` predisposto per 320/390/1440 e aggiunto al workflow; **browser non eseguito**: workflow non partito sul ramo mentre PR #128 è in conflitto con gli aggiornamenti di Claude. Nessun merge/deploy, sito vero e Supabase invariati.
+
 ## 18 novembre 2026 · ChatGPT: Correzioni Numeri del Campionato (solo Lab)
 - Dopo gli screenshot di Gianluca: in `temi/notte-tropicale/numeri-campionato.html` il link in alto ora è «‹ Tabellone» e punta a `tabellone.html?evento=notte-tropicale`. Rimossi i tre link «Risultati e classifica / Numeri del Campionato / Campo» e il ritorno duplicato nel footer. Non sono presenti sponsor «Gentilmente offerto da» in questa pagina; restano soltanto nella Home.
 - `temi/notte-tropicale/numeri-campionato.css`: niente barre colorate slegate dal bordo; card e testata usano `::before` con fondo viola pieno, lati obliqui arrotondati e fili ciano/rosa aderenti, alternati sulle card. Incrementato `?v=2`. Copie del Lab sincronizzate con i sorgenti (`lab.py`).
