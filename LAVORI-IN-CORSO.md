@@ -1,5 +1,11 @@
 # Lavori in corso · O Girrr
 
+## Anteprima navigabile 6.5 · 18 novembre 2026 · ChatGPT
+- Gianluca ha chiesto **solo un link di prova**, senza GitHub Pages o merge. Ingresso `lab/prova-6-5.html` sul ramo `chatgpt/65-tabellone-curva`, da aprire tramite GitHack dal commit del ramo. Collega Home Notte Tropicale, Tabellone, Numeri, Campo, Curva, Girrr Sport, Carriera, Totogirrr e grafiche classiche Lega/Stadio.
+- L'anteprima usa `lab/integrata-62/lab62.js`: Supabase viene intercettato e sostituito da dati di prova; lo Spogliatoio e le votazioni non devono toccare dati reali. Radio/Video speciali della giornata 8 non si generano qui: sono nel ramo e nella PR #129, in attesa di verifica e approvazione.
+- **Nessun deploy.** GitHack serve file già presenti nel ramo pubblico, non il ramo `gh-pages`; l'accessibilità del proxy esterno e la navigazione completa non sono stati verificati in un browser reale. Continuare con le prove prima di certificare l'intera versione.
+
+
 ## In corso · 18 novembre 2026 · ChatGPT
 - **6.5 · Tabellone e Curva** · ChatGPT · `In prova nel Lab` · ramo `chatgpt/65-tabellone-curva`, script unico `rilascio/r65/ritocchi.py` con sostituzioni esatte e secondo passaggio a 0 file. Tabellone: sfumature numeriche di Campionato e Champions Cup, classifica di Coppa in Condividi, ultimi posti rossi, approfondimenti richiudibili e contestuali. Curva: giurie che ricordano l'apertura, pallini interni, ritorno a Girrr Sport, pulsanti di voto uniformati, sondaggio incorniciato. Correzione della durata della skin dal 18 al 23 novembre, spegnimento il 24 alle 00 italiane. Prove predisposte in `prove/v65/prova_tabellone_curva_65.py` e workflow con artifact di screenshot. **Mancano** esito Playwright sullo SHA finale, prove fisiche iPhone/Android/Safari e revisione di Gianluca. Nessun merge, deploy o Supabase.
 - **6.5 · Numeri e Giro di boa** · ChatGPT · `Da fare` · da integrare nello stesso rilascio: statistiche complete del Tabellone, collegamento dalla Home Notte Tropicale, voci della Curva nei bilanci solo se realmente conservate (vedi `BILANCI-STAGIONE.md`). Non inventare commenti attribuiti alla Curva.
