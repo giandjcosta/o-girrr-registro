@@ -1,79 +1,74 @@
-/* Anteprima 6.5 · 19-27 novembre · due ingressi dimostrativi.
-   Attivi SOLTANTO con ?evento-intro=copertina o ?evento-intro=trasformazione.
-   Nessun effetto quando il parametro manca; decisione finale ancora da approvare. */
-html.nt-intro-copertina body::before,
-html.nt-intro-copertina body::after {
- position:fixed!important;pointer-events:none!important;z-index:2147483000!important;
- transition:opacity 1100ms cubic-bezier(.2,.65,.25,1),transform 1100ms cubic-bezier(.2,.65,.25,1),filter 1100ms ease!important;
+/* O Girrr 6.5 · due ingressi alternativi, SOLO anteprima esplicita.
+   La copertina usa l'immagine fornita da Gianluca (asset separato).
+   Il layer è indipendente dai pseudo-elementi usati dal tema GTA. */
+html.nt-intro-copertina .nt-cover-overlay {
+ position:fixed!important;inset:0!important;z-index:2147483001!important;
+ box-sizing:border-box!important;display:flex!important;
+ flex-direction:column!important;align-items:center!important;justify-content:center!important;
+ overflow:hidden!important;padding:max(16px,env(safe-area-inset-top)) 16px max(18px,env(safe-area-inset-bottom))!important;
+ background:
+  radial-gradient(ellipse at 50% 25%,rgba(255,93,161,.19),transparent 65%),
+  linear-gradient(155deg,#160929 0%,#352058 43%,#18082c 100%)!important;
+ opacity:1!important;visibility:visible!important;
+ will-change:opacity,transform!important;
+ transition:opacity 1200ms cubic-bezier(.22,.61,.36,1),
+            transform 1200ms cubic-bezier(.22,.61,.36,1),
+            visibility 0s linear 1200ms!important;
+ pointer-events:auto!important;
+}
+html.nt-intro-copertina .nt-cover-poster {
+ display:block!important;object-fit:contain!important;object-position:center!important;
+ width:auto!important;max-width:min(90vw,560px)!important;height:auto!important;
+ max-height:min(79dvh,850px)!important;min-height:0!important;
+ border-radius:6px!important;
+ box-shadow:0 18px 66px rgba(7,2,22,.45),0 0 0 1px rgba(255,145,205,.22)!important;
  opacity:1!important;
 }
-html.nt-intro-copertina body::before {
- content:""!important;inset:0!important;
- background:
-  linear-gradient(180deg,rgba(7,4,27,.28),rgba(8,4,28,.76) 62%,rgba(6,3,26,.97)),
-  url("miami-tramonto.jpg") center 45% / cover no-repeat,
-  #12092f!important;
- transform:scale(1.015)!important;
+html.nt-intro-copertina .nt-cover-caption{
+ display:block!important;max-width:90vw!important;flex:none!important;
+ margin-top:16px!important;
+ font:italic 800 clamp(13px,2.7vw,19px)/1.3 'Barlow Condensed',Inter,system-ui,sans-serif!important;
+ letter-spacing:.09em!important;text-transform:uppercase!important;
+ text-align:center!important;color:#fff!important;
+ text-shadow:0 1px 16px rgba(0,0,0,.9),0 0 14px rgba(255,92,168,.4)!important;
 }
-html.nt-intro-copertina body::after {
- content:"O FANT A GIRRR\A NOTTE TROPICALE\A 19 — 27 NOVEMBRE 2026\A EDIZIONE SPECIALE GTA 6"!important;
- white-space:pre-line!important;text-align:center!important;box-sizing:border-box!important;
- width:min(92vw,800px)!important;min-height:260px!important;
- top:50%!important;left:50%!important;
- transform:translate(-50%,-50%) scale(1)!important;
- padding:40px 16px!important;
- background:linear-gradient(180deg,rgba(18,5,45,.12),rgba(20,5,44,.64))!important;
- border-top:3px solid #00e5f6!important;border-bottom:3px solid #ff5ca8!important;
- border-radius:16px!important;
- box-shadow:0 25px 70px rgba(10,2,28,.5)!important;
- color:#fff!important;text-shadow:0 4px 20px rgba(0,0,0,.75),0 0 22px rgba(255,92,168,.38)!important;
- font:italic 900 clamp(22px,5vw,55px)/1.48 'Barlow Condensed',Impact,Inter,sans-serif!important;
- letter-spacing:.025em!important;
+html.nt-intro-copertina .nt-cover-overlay.nt-cover-uscita{
+ opacity:0!important;transform:translate3d(0,-2.4%,0) scale(1.025)!important;
+ visibility:hidden!important;pointer-events:none!important;
 }
-html.nt-intro-copertina.nt-intro-uscita body::before {
- opacity:0!important;transform:scale(1.10)!important;filter:blur(15px)!important;
+@media(max-width:600px){
+ html.nt-intro-copertina .nt-cover-overlay{padding-inline:10px!important}
+ html.nt-intro-copertina .nt-cover-poster{max-width:94vw!important;max-height:80dvh!important}
+ html.nt-intro-copertina .nt-cover-caption{font-size:12px!important;letter-spacing:.055em!important}
 }
-html.nt-intro-copertina.nt-intro-uscita body::after {
- opacity:0!important;transform:translate(-50%,-58%) scale(1.07)!important;filter:blur(10px)!important;
+/* Anteprima B: la Home originale sfuma ed evapora; quella nuova
+   entra con un movimento impercettibile. Principalmente opacity/transform:
+   il blur massimo è 3px per non sovraccaricare i dispositivi mobili. */
+@keyframes girrr-old-cloud {
+ 0% {opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}
+ 35% {opacity:.94;transform:translate3d(-.3%,0,0) scale(1.004);filter:blur(.3px)}
+ 65% {opacity:.47;transform:translate3d(-1.15%,0,0) scale(1.008);filter:blur(1.6px)}
+ 100%{opacity:0;transform:translate3d(-2.1%,0,0) scale(1.014);filter:blur(3px)}
 }
-/* View Transitions: il browser conserva un'istantanea autentica della Home
-   prima di applicare il tema e la dissolve sopra la nuova Home. */
-@keyframes girrr-old-to-neon {
- 0%{opacity:1;filter:blur(0);transform:scale(1)}
- 42%{opacity:.88;filter:blur(1px);transform:scale(1.012)}
- 100%{opacity:0;filter:blur(15px);transform:scale(1.055)}
+@keyframes girrr-new-cloud {
+ 0% {opacity:0;transform:translate3d(1.5%,0,0) scale(.993);filter:blur(2.8px)}
+ 28%{opacity:.08;transform:translate3d(1%,0,0) scale(.996);filter:blur(2px)}
+ 68%{opacity:.72;transform:translate3d(.25%,0,0) scale(.999);filter:blur(.6px)}
+ 100%{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}
 }
-@keyframes girrr-new-from-dark {
- 0%{opacity:0;filter:blur(15px);transform:scale(.985)}
- 35%{opacity:.28;filter:blur(6px);transform:scale(.99)}
- 100%{opacity:1;filter:blur(0);transform:scale(1)}
+html.nt-intro-trasformazione::view-transition-old(root) {
+ animation:girrr-old-cloud 2050ms cubic-bezier(.22,.61,.36,1) both!important;
 }
-html.nt-intro-trasformazione::view-transition-old(root){
- animation:girrr-old-to-neon 2250ms cubic-bezier(.22,.61,.36,1) both!important;
+html.nt-intro-trasformazione::view-transition-new(root) {
+ animation:girrr-new-cloud 2050ms cubic-bezier(.22,.61,.36,1) both!important;
 }
-html.nt-intro-trasformazione::view-transition-new(root){
- animation:girrr-new-from-dark 2250ms cubic-bezier(.22,.61,.36,1) both!important;
-}
-html.nt-intro-trasformazione::view-transition-group(root){
- animation-duration:2250ms!important;
+html.nt-intro-trasformazione::view-transition-group(root) {
+ animation-duration:2050ms!important;
 }
 @media(prefers-reduced-motion:reduce){
- html.nt-intro-copertina body::before,html.nt-intro-copertina body::after{
-  transition:none!important;
- }
+ html.nt-intro-copertina .nt-cover-overlay {transition:none!important}
  html.nt-intro-trasformazione::view-transition-old(root),
- html.nt-intro-trasformazione::view-transition-new(root){animation-duration:1ms!important}
-}
-
-/* Fix QA: il tema principale azzera background-image sui pseudo-elementi
-   del body. La copertina deve restare una vera scena opaca autonoma. */
-html.nt-intro-copertina[data-event-theme="notte-tropicale"] body::before {
- background-image:linear-gradient(180deg,rgba(7,4,27,.20),rgba(8,4,28,.36) 60%,rgba(6,3,26,.75)),url("miami-tramonto.jpg")!important;
- background-size:cover,cover!important;
- background-position:center,center 48%!important;
- background-repeat:no-repeat!important;
- background-color:#12092f!important;
-}
-html.nt-intro-copertina[data-event-theme="notte-tropicale"] body::after {
- background-image:linear-gradient(180deg,rgba(18,5,45,.22),rgba(20,5,44,.74))!important;
+ html.nt-intro-trasformazione::view-transition-new(root){
+   animation-duration:1ms!important;filter:none!important;transform:none!important;
+ }
 }
