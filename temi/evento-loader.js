@@ -69,6 +69,17 @@
     if(intro){
       h.classList.add('nt-intro-'+intro);
       h.setAttribute('data-intro-preview',intro);
+      if(intro==='copertina'){
+        /* Fallback istantaneo, già nel <head>, anche mentre si caricano i CSS:
+           il poster non dipende dal primo rendering della Home. */
+        var immediato=document.createElement('style');
+        immediato.textContent='html.nt-intro-copertina[data-event-theme="notte-tropicale"]:not(.nt-cover-ready)::after{content:""!important;position:fixed!important;inset:0!important;width:100%!important;height:100%!important;z-index:2147483000!important;background:#1b0b35!important;opacity:1!important;display:block!important;transform:none!important;filter:none!important;animation:none!important;mask:none!important;-webkit-mask:none!important}';
+        (document.head||h).appendChild(immediato);
+        var coverPreload=document.createElement('link');
+        coverPreload.rel='preload';coverPreload.as='image';
+        coverPreload.href=new URL('notte-tropicale/gta6-lucia-jason-cover.webp',base).href;
+        (document.head||h).appendChild(coverPreload);
+      }
       var introCss=document.createElement('link');
       introCss.rel='stylesheet';
       introCss.href=new URL('notte-tropicale/entrata-65.css',base).href;
@@ -108,15 +119,44 @@
       if(!intro){caricaScriptTema();return;}
       quandoPaginaPronta(function(){
         if(intro==='copertina'){
-          caricaScriptTema();h.setAttribute('data-intro-state','copertina');
-          /* La pagina GTA e lo sfondo sono già in caricamento dietro la copertina. */
-          setTimeout(function(){
-            h.classList.add('nt-intro-uscita');h.setAttribute('data-intro-state','uscita');
+          /* Copertina vera: DOM dedicato, non ::before/::after del body (il tema
+             li azzera). Mostra la foto per almeno 2,3 secondi dopo il decode. */
+          h.setAttribute('data-intro-state','copertina');
+          var cover=document.createElement('div');
+          cover.className='nt-cover-overlay';
+          cover.setAttribute('role','img');
+          cover.setAttribute('aria-label','GTA VI, Lucia e Jason davanti a un\u2019auto. Edizione speciale O Girrr dal 19 al 27 novembre.');
+          var portrait=document.createElement('img');
+          portrait.className='nt-cover-poster';
+          portrait.alt='';portrait.decoding='async';portrait.fetchPriority='high';
+          portrait.src=new URL('notte-tropicale/gta6-lucia-jason-cover.webp',base).href;
+          var fallback=new URL('notte-tropicale/miami-tramonto.jpg',base).href;
+          portrait.addEventListener('error',function(){if(portrait.src!==fallback)portrait.src=fallback;},{once:true});
+          cover.appendChild(portrait);
+          var caption=document.createElement('span');
+          caption.className='nt-cover-caption';
+          caption.textContent='O FANT A GIRRR · EDIZIONE SPECIALE · 19–27 NOVEMBRE';
+          cover.appendChild(caption);
+          document.body.insertBefore(cover,document.body.firstChild);
+          h.classList.add('nt-cover-ready');
+          caricaScriptTema();
+          var minVisibile=new Promise(function(ok){setTimeout(ok,2300);});
+          var prontoFoto=new Promise(function(ok){
+            if(portrait.complete){ok();return;}
+            portrait.addEventListener('load',ok,{once:true});
+            portrait.addEventListener('error',ok,{once:true});
+            setTimeout(ok,950);
+          });
+          Promise.all([minVisibile,prontoFoto]).then(function(){
+            h.classList.add('nt-intro-uscita');
+            h.setAttribute('data-intro-state','uscita');
+            cover.classList.add('nt-cover-uscita');
             setTimeout(function(){
-              h.classList.remove('nt-intro-copertina','nt-intro-uscita');
+              cover.remove();
+              h.classList.remove('nt-intro-copertina','nt-intro-uscita','nt-cover-ready');
               h.setAttribute('data-intro-state','completo');
-            },1150);
-          },1550);
+            },1250);
+          });
         } else {
           h.setAttribute('data-intro-state','grafica-originale');
           setTimeout(function(){
