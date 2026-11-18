@@ -27,6 +27,13 @@
       return (im.decode ? im.decode() : new Promise(function (ok) { im.onload = ok; })).catch(function () {});
     }));
   }
+  /* I caratteri della skin (Barlow Condensed, Mr Dafoe, Yellowtail, Kaushan Script) vanno scaricati PRIMA della foto della nuova
+     Home: altrimenti la transizione mostra i caratteri di riserva del browser (sull'iPhone il corsivo calligrafico di sistema). */
+  var CARATTERI = ['italic 900 40px "Barlow Condensed"', 'italic 800 20px "Barlow Condensed"', '400 30px "Mr Dafoe"', '400 30px Yellowtail', '400 30px "Kaushan Script"'];
+  function caratteri() {
+    if (!document.fonts || !document.fonts.load) return Promise.resolve();
+    return Promise.all(CARATTERI.map(function (f) { return document.fonts.load(f, 'O GIRRR Notte Tropicale').catch(function () {}); }));
+  }
   function entro(ms, p) { return Promise.race([p, new Promise(function (ok) { setTimeout(ok, ms); })]); }
   function strati(n) {
     var out = [];
@@ -72,7 +79,7 @@
       h.removeAttribute('data-b'); h.removeAttribute('data-b-leggero'); h.style.removeProperty('--gb-durata');
       misura('fine'); fine();
     }
-    entro(1500, precarica(v.texture)).then(function () {
+    entro(2500, Promise.all([precarica(v.texture), caratteri()])).then(function () {
       if (!vt) {
         /* Ripiego: fumo e velo coprono il centro dell'effetto, il cambio avviene lì sotto. */
         h.classList.add('girrr-b-ripiego'); fx = strati(v.fx); misura('inizio');
@@ -85,7 +92,9 @@
       var t = document.startViewTransition(function () {
         h.classList.remove('girrr-b-vecchia'); h.classList.add('girrr-b-nuova');
         fx = strati(v.fx);
-        return entro(1200, new Promise(function (ok) { accendi(ok); }).then(cruscottoPronto));
+        return entro(1200, new Promise(function (ok) { accendi(ok); }).then(function () {
+          return Promise.all([cruscottoPronto(), caratteri(), document.fonts ? document.fonts.ready : null]);
+        }));
       });
       t.ready.then(function () { misura('inizio'); }, function () {});
       t.finished.then(pulisci, pulisci);
