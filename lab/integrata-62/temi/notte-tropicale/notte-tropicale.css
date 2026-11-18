@@ -802,6 +802,36 @@
   outline:3px solid #00f0ff!important;outline-offset:3px!important;
 }
 
+/* 4q. ChatGPT, 18 novembre 2026 · Spazio di Curva e link Numeri.
+   La fila Tutto il Girrr conserva la posizione e lo scorrimento delle schede. */
+:root.nt-rail-integrata[data-event-theme="notte-tropicale"]
+  body[data-v53="home"] .cards > .nt-slide-curva {
+  margin-inline-start:clamp(16px,4vw,28px)!important;
+  scroll-margin-inline-start:12px;
+}
+/* La terza voce è un link VERO alla pagina separata, non una tab contenuto. */
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"]
+  .giornata-nav > a.nt-numeri-link:not([hidden]) {
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:43px;flex:0 1 auto;
+  max-width:100%;overflow-wrap:anywhere;
+  border:1px solid #bc6cff!important;border-radius:11px!important;
+  padding:11px 13px!important;
+  background:linear-gradient(120deg,#3f195b,#210c39)!important;
+  color:#fff4ff!important;
+  font-weight:900!important;text-decoration:none!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"][data-mode="coppa"]
+  .giornata-nav > a.nt-numeri-link {
+  display:none!important;
+}
+@media(max-width:390px) {
+  :root[data-event-theme="notte-tropicale"] body[data-v53="board"]
+    .giornata-nav > a.nt-numeri-link:not([hidden]) {
+    font-size:12px!important;line-height:1.3;
+  }
+}
+
 /* 4f. Grafica unica durante l'evento (Gianluca): niente interruttore Lega/Stadio nella Home né nel Campo */
 :root[data-event-theme="notte-tropicale"] :is(#gsw,.skin){display:none!important}
 
