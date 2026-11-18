@@ -89,9 +89,10 @@
       /* la fila di icone non si mostra più (Gianluca: «se sotto ci sono le schede con le foto, le piccole tab in alto sono un
          doppione»); il codice resta per un eventuale ripensamento */
       hero.parentNode.insertBefore(box, hero.nextSibling);
-      /* ChatGPT 17/11/2026: una sola fila «Tutto il Girrr». Riusiamo i nodi reali
-         (Curva, Notifiche, Statistiche, sponsor) senza clonarli o modificare contenuti,
-         eventi e collegamenti. Il titolo è un fratello della fila, non scorre con essa. */
+      /* ChatGPT 18/11/2026: nel carosello soltanto le sei sezioni principali
+         e la Curva. Notifiche, Statistiche, aggiornamenti, versione e sponsor
+         restano nelle loro posizioni ORIGINALI in fondo alla Home.
+         Il titolo è esterno alla fila e rimane fermo durante lo scorrimento. */
       var rail = document.querySelector('body[data-v53="home"] .wrap > .cards');
       if (rail && !document.getElementById('nt-tutto-titolo')) {
         var titolo = document.createElement('h2');
@@ -104,15 +105,6 @@
         if (curva) {
           curva.classList.add('nt-slide', 'nt-slide-curva');
           rail.appendChild(curva);
-        }
-        [].forEach.call(document.querySelectorAll('body[data-v53="home"] .wrap > .mini'), function (mini) {
-          mini.classList.add('nt-slide', 'nt-slide-mini');
-          rail.appendChild(mini);
-        });
-        var sponsor = document.querySelector('body[data-v53="home"] .wrap > .sp');
-        if (sponsor) {
-          sponsor.classList.add('nt-slide', 'nt-slide-sponsor');
-          rail.appendChild(sponsor);
         }
         document.documentElement.classList.add('nt-rail-integrata');
       }
