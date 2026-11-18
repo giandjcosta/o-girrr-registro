@@ -29,7 +29,7 @@ def main(argv):
     for p in sorted(base.rglob('*.html')):
         rel = p.relative_to(base)
         s = str(rel)
-        if rel.parts[0] in ('temi', 'prova') or s.startswith('v5') or '/v5' in s:
+        if rel.parts[0] in ('temi', 'prova', 'riepiloghi') or s.startswith('v5') or '/v5' in s:
             continue
         t = p.read_text(encoding='utf-8')
         if 'evento-loader.js' in t:

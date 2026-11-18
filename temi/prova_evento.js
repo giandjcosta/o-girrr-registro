@@ -11,18 +11,18 @@ const { chromium } = require('playwright');
     return p.evaluate(() => ({ tema: document.documentElement.dataset.eventTheme || null, css: !!document.querySelector('link[data-evento]'),
       caricato: [...document.styleSheets].some(s => (s.href || '').includes('notte-tropicale/notte-tropicale.css')) })); };
   const casi = [
-    ['?evento-data=2026-11-17T23:59', null], ['?evento-data=2026-11-18T00:00', 'notte-tropicale'], ['?evento-data=2026-11-19T12:00', 'notte-tropicale'],
-    ['?evento-data=2026-11-23T23:59', 'notte-tropicale'], ['?evento-data=2026-11-24T00:00', null], ['?evento-data=2026-12-25T10:00', null],
-    ['?evento-data=2026-11-23T23:30:00Z', null],                         // 00:30 del 24 in Italia: già spento
+    ['?evento-data=2026-11-18T23:59', null], ['?evento-data=2026-11-19T00:00', 'notte-tropicale'], ['?evento-data=2026-11-19T12:00', 'notte-tropicale'],
+    ['?evento-data=2026-11-27T23:59', 'notte-tropicale'], ['?evento-data=2026-11-28T00:00', null], ['?evento-data=2026-12-25T10:00', null],
+    ['?evento-data=2026-11-27T23:30:00Z', null],                         // 00:30 del 28 in Italia: già spento
     ['?evento=on&evento-data=2026-12-01T10:00', 'notte-tropicale'], ['?evento-data=2026-12-01T10:00', 'notte-tropicale'],   // «on» ricordato
     ['?evento=off&evento-data=2026-11-19T12:00', null], ['?evento-data=2026-11-19T12:00', null],               // «off» ricordato
-    ['?evento=auto&evento-data=2026-11-19T12:00', 'notte-tropicale'], ['?evento-data=2026-11-25T12:00', null],
+    ['?evento=auto&evento-data=2026-11-19T12:00', 'notte-tropicale'], ['?evento-data=2026-11-28T12:00', null],
   ];
   for (const [qs, atteso] of casi) {
     const s = await stato(qs); const ok = s.tema === atteso && (!atteso || (s.css && s.caricato)) && (atteso || !s.css);
     if (!ok) ko++; console.log((ok ? 'OK ' : 'KO ') + qs.padEnd(48) + ' → ' + (s.tema || 'spento') + (s.tema ? (s.caricato ? ' (CSS caricato)' : ' (CSS mancante)') : ''));
   }
-  const oggi = await stato('?evento=auto'); const d = new Date(), on = d >= new Date('2026-11-18T00:00:00+01:00') && d < new Date('2026-11-24T00:00:00+01:00');
+  const oggi = await stato('?evento=auto'); const d = new Date(), on = d >= new Date('2026-11-19T00:00:00+01:00') && d < new Date('2026-11-28T00:00:00+01:00');
   if ((oggi.tema === 'notte-tropicale') !== on) ko++; console.log(((oggi.tema === 'notte-tropicale') === on ? 'OK ' : 'KO ') + 'data vera del computer → ' + (oggi.tema || 'spento'));
   if (err.length) { ko++; console.log('KO errori: ' + err.join(' | ')); }
   await b.close(); console.log(ko ? ko + ' prove non superate' : 'Tutte le prove superate'); process.exit(ko ? 1 : 0);
