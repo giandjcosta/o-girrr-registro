@@ -2,6 +2,7 @@ name: "ChatGPT: Layout Tabellone 6.5 · iPhone, iPad, PC, TV"
 on:
   pull_request:
     branches:
+      - chatgpt/65-tabellone-curva
       - claude/totogirrr-ui-responsive-b2pgee
     paths:
       - "temi/notte-tropicale/**"
