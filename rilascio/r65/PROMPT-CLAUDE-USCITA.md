@@ -9,7 +9,7 @@ OBIETTIVO: la 6.5 deve essere online su gh-pages PRIMA DI MEZZANOTTE del 18 nove
 
 DECISIONE DA CHIEDERE A GIANLUCA NEI PRIMI 2 MINUTI (una sola domanda, poi vai avanti): date della skin. Proposta: accensione 19 novembre 00:00, spegnimento 24 novembre 00:00 (fine della giornata 8, come aveva chiesto). ChatGPT nel suo ramo ha messo 19 → 28 novembre. Se Gianluca non risponde in 5 minuti usa 19 novembre 00:00 → 24 novembre 00:00. Le date stanno in temi/evento-loader.js (EVENTI, campi inizio/fine) e nelle scritte di temi/notte-tropicale/notte-tropicale.css («18–23 novembre» → adegua), temi/catalogo.json, temi/prova_evento.js.
 
-BASE DA USARE: ramo claude/totogirrr-ui-responsive-b2pgee del registro, commit 596b4fa (PR #126, controlli verdi). Contiene:
+BASE DA USARE: ramo claude/totogirrr-ui-responsive-b2pgee del registro, commit e50d1267 (ultimo del ramo: foto di Miami e calcio nelle schede, Curva più su; PR #126). Contiene:
 - rilascio/r65/applica.py (sopra la 6.2.4 di gh-pages): Carriera e Girrr Sport fluidi (niente pagina che trema o sparisce), pillole di Carriera e Albo che scivolano, Fiducia del presidente senza numero fantasma, Conferenze stampa senza errore, Curva che non scrive «vince» per i pareggi, «La tua lega, oggi» chiuso la prima volta e poi come lasciato.
 - rilascio/r65/evento.py: copia temi/evento-loader.js e temi/notte-tropicale/ nel sito e aggiunge il caricatore alle pagine. Skin a grafica unica (le pagine Stadio portano alla Lega), Curva esclusa, titolo con sfumatura #2B60DA→#FF4CB9→#E6953E e «Notte Tropicale» in Mr Dafoe, Home con big match (porta al Campo), classifica, stagione, «Tutto il Girrr», Curva staccata, sponsor chiari.
 - rilascio/r65/ANNUNCIO-BOZZA.json e REGOLE-VERSIONI.md per il messaggio; rilascio/versioni/aggiungi.py per versioni.json.
@@ -20,7 +20,7 @@ RAMI DI CHATGPT (Gianluca dice che alcune cose non gli piacciono: valuta, non un
 - chatgpt/65-due-ingressi-preview e chatgpt/65-transizione-b-sfumata-60fps: ingressi animati (copertina A, trasformazione B). La copertina A usa la locandina ufficiale di GTA VI (Lucia, Jason, logo): è materiale protetto di Rockstar e non va pubblicato. NON entrano stasera.
 
 PIANO (in ordine, con tempi):
-1. (5 min) git pull dei due repository. Domanda sulle date. Crea il ramo di lavoro claude/65-uscita dal commit 596b4fa.
+1. (5 min) git pull dei due repository. Domanda sulle date. Crea il ramo di lavoro claude/65-uscita dall'ultimo commit del ramo claude/totogirrr-ui-responsive-b2pgee.
 2. (15 min) Da chatgpt/65-tabellone-curva prendi SOLO le correzioni di Tabellone, Curva e Numeri che passano queste prove, portandole dentro rilascio/r65/applica.py (o un rilascio/r65/tabellone.py separato) con sostituzioni esatte e rieseguibili. Se una correzione è dubbia o rompe qualcosa, lasciala fuori e annotala per la 6.5.1. Non prendere la sua skin, il suo caricatore o il suo applica.py intero.
 3. (5 min) Copia di lavoro di gh-pages aggiornato: cartella pulita. Applica: python3 rilascio/r65/applica.py COPIA, poi python3 rilascio/r65/evento.py COPIA, poi gli eventuali script presi da ChatGPT. Rilancia tutto: deve dire 0 file cambiati.
 4. (5 min) versioni.json: messaggio in ANNUNCIO-BOZZA.json aggiornato con le date giuste (regole in REGOLE-VERSIONI.md: «⚽ **O Girrr 6.5 è online!**», 3–6 frasi col tu, niente fantapunti né scommesse, nomi delle pagine come nell'app, chiusura «Buona giornata a tutti! ⚽»). Prima python3 rilascio/versioni/aggiungi.py --tipo medio --v 6.5 … --prova, poi davvero, e copia versioni.json nella radice della copia.
