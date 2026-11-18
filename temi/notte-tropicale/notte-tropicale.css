@@ -155,7 +155,7 @@
 :root[data-event-theme="notte-tropicale"] body .giornata-nav.giornata-nav.giornata-nav > :is(button[aria-selected=true],a[aria-current]){box-shadow:0 0 16px rgba(255,79,163,.55)!important}
 
 /* 4c. Riga con le date sotto il titolo della Home (idea di ChatGPT nella sua anteprima) */
-:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .hero .tag::before{content:'Edizione speciale · 18–20 novembre';display:block;
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .hero .tag::before{content:'Edizione speciale · 18–23 novembre';display:block;
   margin:6px 0 8px;padding-left:34px;background:linear-gradient(var(--nt-ciano),var(--nt-ciano)) 0 .7em/24px 2px no-repeat;
   font:800 11px/1.4 Inter,system-ui,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--nt-ciano);text-shadow:0 0 10px rgba(111,240,255,.6)}
 @media (max-width:520px){:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .hero .tag::before{letter-spacing:.12em;font-size:10px;padding-left:28px;background-size:18px 2px}}
@@ -773,7 +773,7 @@
 
 /* 5. Firma dell'evento in fondo alla Home */
 :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap::after{
-  content:'Notte Tropicale · 18–20 novembre';display:block;text-align:center;margin:26px 0 8px;
+  content:'Notte Tropicale · 18–23 novembre';display:block;text-align:center;margin:26px 0 8px;
   font:800 12px/1 Inter,system-ui,sans-serif;letter-spacing:.32em;text-transform:uppercase;color:var(--nt-ciano);
   text-shadow:0 0 12px rgba(111,240,255,.7);
 }
