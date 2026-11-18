@@ -802,7 +802,8 @@
  font:italic 800 clamp(10px,2.85vw,16px)/1.18 Inter,system-ui,sans-serif!important;
  -webkit-tap-highlight-color:transparent;
 }
-:root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede>a::after{content:none!important}
+/* 6.5 (Gianluca, 18 novembre): Numeri e Campo aprono un'altra pagina: una freccia a destra, come prima. */
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede>a::after{content:'›'!important;display:inline-block!important;margin-left:4px!important;font:inherit!important;line-height:1!important;opacity:.95!important;flex:none!important}
 :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede>a.nt-tab[aria-current="page"]{
  --nt-tab-bg:linear-gradient(100deg,#ffb86b,#ff5ca8 55%,#e8364f)!important;
  color:#22052e!important;
