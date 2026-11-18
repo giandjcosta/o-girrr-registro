@@ -72,3 +72,19 @@ html.nt-intro-trasformazione::view-transition-group(root) {
    animation-duration:1ms!important;filter:none!important;transform:none!important;
  }
 }
+
+
+/* Degradazione progressiva su browser meno recenti: opacity/translate, niente blur
+   o librerie aggiuntive. */
+html.nt-intro-trasformazione body{
+ transition:opacity 620ms cubic-bezier(.22,.61,.36,1),transform 620ms cubic-bezier(.22,.61,.36,1)!important;
+}
+html.nt-intro-trasformazione body.nt-morph-fallback-out{
+ opacity:.02!important;transform:translate3d(-8px,0,0)!important;
+}
+html.nt-intro-trasformazione body.nt-morph-fallback-in{
+ opacity:1!important;transform:translate3d(0,0,0)!important;
+}
+@media(prefers-reduced-motion:reduce){
+ html.nt-intro-trasformazione body{transition:none!important}
+}
