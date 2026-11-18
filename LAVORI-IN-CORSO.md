@@ -1,5 +1,9 @@
 # Lavori in corso · O Girrr
 
+## Correzione 6.5 · 18 novembre 2026 · ChatGPT
+- **Tabellone: tab uniche, Curva indipendente** · `In prova nel Lab` · ramo `chatgpt/65-tab-uniche-curva-separata`, derivato da `chatgpt/65-tabellone-curva`. Una sola fila di navigazione (quattro voci, sfumature delle prime due), su telefono griglia 2×2; «Numeri» resta una pagina funzionante anche tornando alle altre schede. Curva sotto «Tutto il Girrr», senza spostare Notifiche/Statistiche/sponsor. Aggiornati `rilascio/r65/ritocchi-patches.json`, `temi/notte-tropicale/` e copie `lab/integrata-62/`.
+- **Prova**: controlli statici superati, nessun deploy. Serve verifica visiva e funzionale su anteprima GitHack da parte di Gianluca; browser reale, Safari e Android non certificati.
+
 ## Anteprima navigabile 6.5 · 18 novembre 2026 · ChatGPT
 - Gianluca ha chiesto **solo un link di prova**, senza GitHub Pages o merge. Ingresso `lab/prova-6-5.html` sul ramo `chatgpt/65-tabellone-curva`, da aprire tramite GitHack dal commit del ramo. Collega Home Notte Tropicale, Tabellone, Numeri, Campo, Curva, Girrr Sport, Carriera, Totogirrr e grafiche classiche Lega/Stadio.
 - L'anteprima usa `lab/integrata-62/lab62.js`: Supabase viene intercettato e sostituito da dati di prova; lo Spogliatoio e le votazioni non devono toccare dati reali. Radio/Video speciali della giornata 8 non si generano qui: sono nel ramo e nella PR #129, in attesa di verifica e approvazione.
