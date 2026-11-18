@@ -183,17 +183,23 @@
      Il collegamento conserva i dati e non interviene sul selettore Campionato/Coppa. */
   function menuNumeriCampionato() {
     function metti() {
-      var nav=document.querySelector('body[data-v53="board"] .giornata-nav');
-      if (!nav || nav.querySelector('.nt-numeri-link')) return;
-      var a=document.createElement('a');
-      a.className='nt-numeri-link';
-      a.href='numeri-campionato.html?evento=notte-tropicale';
-      a.textContent='Numeri del Campionato';
-      var campo=nav.querySelector('#campo-link');
-      if(campo) nav.insertBefore(a,campo);
-      else nav.appendChild(a);
+      var nav = document.querySelector('body[data-v53="board"] .giornata-nav');
+      if (!nav) return;
+      /* ChatGPT 18/11/2026: il collegamento vive nel markup reale del Tabellone
+         ed è nascosto senza tema. Lo attiviamo senza creare duplicati. */
+      var a = nav.querySelector('.nt-numeri-link');
+      if (!a) {
+        a = document.createElement('a');
+        a.className = 'nt-numeri-link';
+        var campo = nav.querySelector('#campo-link');
+        if (campo) nav.insertBefore(a, campo);
+        else nav.appendChild(a);
+      }
+      a.href = 'numeri-campionato.html?evento=notte-tropicale';
+      a.textContent = 'Numeri del Campionato ›';
+      a.removeAttribute('hidden');
     }
-    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',metti);
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', metti);
     else metti();
   }
   /* Forme dell'evento su TUTTE le sezioni, non solo Home, Tabellone e Campo (ChatGPT, 17 novembre 2026).
