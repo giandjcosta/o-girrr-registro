@@ -187,7 +187,7 @@
       var numeri = nav.querySelector('.nt-numeri-link');
       var campo = nav.querySelector('#campo-link');
       function linkSeManca(classe,href,titolo,prima) {
-        var a = nav.querySelector('.' + classe);
+        var a = nav.querySelector('.' + classe.replace(/\s+/g,'.'));
         if (!a) {
           a = document.createElement('a');
           a.className = classe;
