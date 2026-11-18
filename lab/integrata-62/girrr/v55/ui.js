@@ -396,7 +396,7 @@ function schede(){
  if(campo){campo.textContent='Campo';campo.removeAttribute('aria-current');nav.appendChild(campo);}
  function aggiornaNumeri(){
   var coppa=document.body.getAttribute('data-mode')==='coppa';
-  numeri.textContent='Numeri';numeri.setAttribute('aria-label',coppa?'Numeri della Champions Cup':'Numeri del Campionato');numeri.title=numeri.getAttribute('aria-label');
+  var label=coppa?'Numeri della Champions Cup':'Numeri del Campionato';numeri.textContent=document.documentElement.getAttribute('data-event-theme')==='notte-tropicale'?label:'Numeri';numeri.setAttribute('aria-label',label);numeri.title=label;
   var hash=location.hash||'';if(!hash.startsWith(coppa?'#coppa':'#lega'))hash=coppa?'#coppa':'#lega';
   numeri.href='tabellone.html?sezione=numeri'+hash;
  }
