@@ -64,7 +64,7 @@
     /* Due DEMO alternative: parametro esplicito, solo Home, mai attive per caso
        sulla pubblicazione normale. La scelta finale resta di Gianluca. */
     var intro=q.get('evento-intro');
-    if (!/\\/girrr\\/(?:index\\.html)?$/.test(path) ||
+    if (!/\/girrr\/(?:index\.html)?$/.test(path) ||
         (intro!=='copertina' && intro!=='trasformazione')) intro=null;
     if(intro){
       h.classList.add('nt-intro-'+intro);
