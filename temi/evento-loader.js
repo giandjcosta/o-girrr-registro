@@ -176,8 +176,24 @@
                 h.setAttribute('data-intro-state','completo');
               });
             }else{
-              accendi();h.classList.remove('nt-intro-trasformazione');
-              h.setAttribute('data-intro-state','completo');
+              /* Browser senza View Transitions: dissolvenza CSS leggera.
+                 Riduci movimento => nessun effetto, contenuto immediato. */
+              if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+                accendi();h.classList.remove('nt-intro-trasformazione');
+                h.setAttribute('data-intro-state','completo');
+              }else{
+                document.body.classList.add('nt-morph-fallback-out');
+                setTimeout(function(){
+                  accendi();
+                  document.body.classList.remove('nt-morph-fallback-out');
+                  document.body.classList.add('nt-morph-fallback-in');
+                  setTimeout(function(){
+                    document.body.classList.remove('nt-morph-fallback-in');
+                    h.classList.remove('nt-intro-trasformazione');
+                    h.setAttribute('data-intro-state','completo');
+                  },950);
+                },620);
+              }
             }
           },1150);
         }
