@@ -61,7 +61,22 @@
     }
     if (ev.escludi && ev.escludi.test(location.pathname)) { window.OGirrrEvento = Object.freeze({ attivo: null, modo: modo || 'auto', ora: ora.toISOString(), escluso: ev.id }); return; }
     var h = document.documentElement;
-    h.setAttribute('data-event-theme', ev.id);
+    /* Due DEMO alternative: parametro esplicito, solo Home, mai attive per caso
+       sulla pubblicazione normale. La scelta finale resta di Gianluca. */
+    var intro=q.get('evento-intro');
+    if (!/\\/girrr\\/(?:index\\.html)?$/.test(path) ||
+        (intro!=='copertina' && intro!=='trasformazione')) intro=null;
+    if(intro){
+      h.classList.add('nt-intro-'+intro);
+      h.setAttribute('data-intro-preview',intro);
+      var introCss=document.createElement('link');
+      introCss.rel='stylesheet';
+      introCss.href=new URL('notte-tropicale/entrata-65.css',base).href;
+      (document.head||h).appendChild(introCss);
+    }
+    /* Morph: lascia prima visibile la Home ordinaria. La nuova skin è precaricata
+       ma non applicata fino al momento della transizione. */
+    if(intro!=='trasformazione')h.setAttribute('data-event-theme',ev.id);
     /* variante dello sfondo (Notte Tropicale): ?evento-sfondo=notte|tramonto|scena; senza, la foto predefinita del tema, ricordata per la sessione */
     var sf = q.get('evento-sfondo');
     if (sf) { try { sessionStorage.setItem(K + '-sfondo', sf); } catch (e) {} } else { try { sf = sessionStorage.getItem(K + '-sfondo'); } catch (e) {} }
@@ -72,12 +87,56 @@
     if (ex && ex !== 'no') h.setAttribute('data-event-extra', ex.split(',').filter(function (v) { return /^[a-z-]{1,20}$/.test(v); }).join(' '));
     var l = document.createElement('link');
     l.rel = 'stylesheet'; l.href = new URL(ev.css, base).href; l.setAttribute('data-evento', ev.id);
-    l.onerror = function () { h.removeAttribute('data-event-theme'); };   /* senza CSS niente tema a metà */
+    l.onerror = function () {
+      h.removeAttribute('data-event-theme');
+      h.classList.remove('nt-intro-copertina','nt-intro-trasformazione');
+      h.setAttribute('data-intro-state','errore-css');
+    };
     (document.head || h).appendChild(l);
-    /* script facoltativo del tema (per esempio la barra in basso di Notte Tropicale): parte dopo il CSS, se il CSS non arriva no */
-    if (ev.js) {
-      var s = document.createElement('script'); s.src = new URL(ev.js, base).href; s.async = true; s.setAttribute('data-evento', ev.id);
-      l.addEventListener('load', function () { (document.head || h).appendChild(s); });
+    function caricaScriptTema(){
+      if(!ev.js)return;
+      var script=document.createElement('script');
+      script.src=new URL(ev.js,base).href;script.async=true;
+      script.setAttribute('data-evento',ev.id);(document.head||h).appendChild(script);
     }
+    function quandoPaginaPronta(cb){
+      if(document.readyState==='complete')cb();
+      else addEventListener('load',cb,{once:true});
+    }
+    l.addEventListener('load',function(){
+      if(!intro){caricaScriptTema();return;}
+      quandoPaginaPronta(function(){
+        if(intro==='copertina'){
+          caricaScriptTema();h.setAttribute('data-intro-state','copertina');
+          /* La pagina GTA e lo sfondo sono già in caricamento dietro la copertina. */
+          setTimeout(function(){
+            h.classList.add('nt-intro-uscita');h.setAttribute('data-intro-state','uscita');
+            setTimeout(function(){
+              h.classList.remove('nt-intro-copertina','nt-intro-uscita');
+              h.setAttribute('data-intro-state','completo');
+            },1150);
+          },1550);
+        } else {
+          h.setAttribute('data-intro-state','grafica-originale');
+          setTimeout(function(){
+            function accendi(){h.setAttribute('data-event-theme',ev.id);caricaScriptTema();}
+            if(document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+              h.setAttribute('data-intro-state','transizione');
+              var t=document.startViewTransition(accendi);
+              t.finished.then(function(){
+                h.classList.remove('nt-intro-trasformazione');
+                h.setAttribute('data-intro-state','completo');
+              },function(){
+                h.classList.remove('nt-intro-trasformazione');
+                h.setAttribute('data-intro-state','completo');
+              });
+            }else{
+              accendi();h.classList.remove('nt-intro-trasformazione');
+              h.setAttribute('data-intro-state','completo');
+            }
+          },1150);
+        }
+      });
+    });
   } catch (err) { try { document.documentElement.removeAttribute('data-event-theme'); } catch (e2) {} }
 })();
