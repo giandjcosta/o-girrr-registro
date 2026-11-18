@@ -136,7 +136,7 @@ ul{padding-left:20px;margin:6px 0}
  [['nuvola','E · Nuvola e polvere'],['fumo','C · Fumo'],['vento','D · Polvere nel vento'],['attuale','Attuale']].forEach(function(x){['iphone','pc'].forEach(function(d){
   var f=document.createElement('figure');f.innerHTML='<video controls muted playsinline loop preload="metadata" src="transizioni-b/video-'+x[0]+'-'+d+'.mp4"></video><figcaption>'+x[1]+' · '+(d==='pc'?'PC 1440':'iPhone 390')+'</figcaption>';vid.appendChild(f)})});
  /* misure: rapporti JSON prodotti da prove/v65/prova_transizioni_b.js */
- var F=[['rapporto-misura-chromium.json','Chromium'],['rapporto-misura-chromium-cpu4.json','Chromium · CPU 4× più lenta'],['rapporto-misura-webkit.json','WebKit']];
+ var F=[['rapporto-misura-chromium.json','Chromium'],['rapporto-misura-chromium-cpu4.json','Chromium · CPU 4× più lenta']]; /* WebKit: si aggiunge qui quando il suo rapporto è nel ramo */
  Promise.all(F.map(function(f){return fetch('transizioni-b/'+f[0]).then(function(r){return r.ok?r.json():null}).catch(function(){return null})})).then(function(rr){
   var righe=[];rr.forEach(function(r,i){if(!r)return;Object.keys(r.risultati).forEach(function(k){var x=r.risultati[k];if(/ridotto/.test(k)||x.errore)return;var p=k.split('@');righe.push([F[i][1],p[0],p[1],x])})});
   var t=document.getElementById('misure');
