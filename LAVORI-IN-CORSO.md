@@ -1,5 +1,11 @@
 # Lavori in corso · O Girrr
 
+## In corso · 18 novembre 2026 · ChatGPT — rifiniture della 6.5 prima del rilascio
+- **Nessuna 6.5.1:** Gianluca ha chiesto di includere le richieste della bozza precedente nella **6.5 non ancora online**. Ramo `chatgpt/65-rifiniture-prima-del-rilascio` da `claude/65-uscita`. La PR #23 del sito è ancora aperta e `gh-pages` mostra 6.2.4. Non pubblicare e non modificare quella PR senza il «Vai». Si preparano patch aggiuntive da applicare alla release candidate 6.5, conservando regole, date 19–27/11 e l'avviso Versioni in cima.
+- **Compiti:** A copertina GTA VI (sola Home, visibile una volta al giorno), B bande di Condividi in Coppa, C letter-spacing del titolo Classifica, D Giro di boa in Curva per Coppa/Entrambe; E Radio/video G8 in ramo e PR separati, senza merge. Verificare caso per caso e documentare ciò che resta da collaudare.
+
+
+
 Quaderno comune di tutti gli assistenti (Claude, ChatGPT, Grok, Copilot, Perplexity…) e di Gianluca. Regole in `REGOLE-LAVORO.md`, punto 6.
 **Aggiornalo quando cominci e quando ti fermi.** Chi riprende il lavoro parte da qui, poi legge `STATO.md`.
 
