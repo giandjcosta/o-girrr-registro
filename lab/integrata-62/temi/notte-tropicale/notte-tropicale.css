@@ -783,3 +783,41 @@
   :root[data-event-theme="notte-tropicale"]::after{animation:none!important;transform:perspective(320px) rotateX(62deg)!important}
   :root[data-event-theme="notte-tropicale"] :is(.hero h1,.top h1,header h1){animation:none!important}
 }
+
+
+/* 6.5 (Gianluca, 18 novembre): UNICO gruppo Classifica, Risultati, Numeri, Campo.
+   Quattro schede con la stessa grafica sfumata (due per riga su iPhone); nessuna
+   seconda fila di link bordati ciano/rosa. Il testo non viene deformato. */
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede{
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ width:100%;max-width:740px!important;margin:18px 0 16px!important;
+ gap:9px!important;padding:9px!important;transform:none!important;
+ overflow:visible!important;border-radius:18px!important;
+ background:var(--nt-fila)!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede>:is(button,a){
+ display:flex!important;flex:initial!important;min-width:0!important;width:100%;
+ min-height:58px!important;height:auto!important;margin:0!important;padding:11px 9px!important;
+ white-space:normal!important;text-align:center!important;line-height:1.18!important;
+ font:italic 800 clamp(12px,3.3vw,16px)/1.18 Inter,system-ui,sans-serif!important;
+ -webkit-tap-highlight-color:transparent;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede>a::after{content:none!important}
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede>a.nt-tab[aria-current="page"]{
+ --nt-tab-bg:linear-gradient(100deg,#ffb86b,#ff5ca8 55%,#e8364f)!important;
+ color:#22052e!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="board"][data-mode="coppa"] .giornata-nav.v55-schede>a.nt-tab[aria-current="page"]{
+ --nt-tab-bg:linear-gradient(100deg,#00f0ff,#5aa8ff 55%,#bc6cff)!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="home"] .wrap>#cvw{
+ order:7!important;display:grid!important;width:100%;margin:22px 0 0!important;
+}
+@media(min-width:800px){
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;max-width:960px!important;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ :root[data-event-theme="notte-tropicale"] body[data-v53="board"] .giornata-nav.v55-schede>*{transition:none!important}
+}
