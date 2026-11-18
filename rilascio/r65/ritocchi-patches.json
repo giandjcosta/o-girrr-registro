@@ -63,10 +63,6 @@
    "<details class=\"v53 v53-extras v53-panel\" id=\"v53board\">\n <summary class=\"v53-sectionhead\"><span><span class=\"v53-kicker\">APPROFONDIMENTI</span><strong style=\"display:block;font-size:21px\">Dentro la partita</strong><span class=\"v53-sub\">Statistiche e confronto della competizione scelta.</span></span><span class=\"v65-arrow\" aria-hidden=\"true\">⌄</span></summary>\n <div class=\"v65-body\"><div id=\"v53boardtabs\" class=\"v53-pills\" role=\"tablist\" aria-label=\"Approfondimenti\"><button class=\"v53-pill\" data-view=\"compare\" aria-selected=\"true\">Confronta le giornate</button><button class=\"v53-pill\" data-view=\"center\" aria-selected=\"false\">Centro partita</button></div>\n <div id=\"v53boardcontent\" class=\"v53-board\"><div class=\"v53-empty\">Carico gli approfondimenti…</div></div></div>\n</details>"
   ],
   [
-   "v55/ui.js?v=65",
-   "v55/ui.js?v=65fix"
-  ],
-  [
    "v55/ui.css?v=55r10",
    "v55/ui.css?v=65fix"
   ],
@@ -91,10 +87,6 @@
   [
    "<section class=\"v53 v53-extras v53-panel\" id=\"v53board\">\n <div class=\"v53-sectionhead\"><div><div class=\"v53-kicker\">APPROFONDIMENTI</div><h2>Dentro la partita</h2><div class=\"v53-sub\">Il Tabellone sopra resta identico, con le sue giornate e statistiche.</div></div></div>\n <div id=\"v53boardtabs\" class=\"v53-pills\" role=\"tablist\" aria-label=\"Approfondimenti del Tabellone\"><button class=\"v53-pill\" data-view=\"compare\" aria-selected=\"true\">Confronta le giornate</button><button class=\"v53-pill\" data-view=\"center\" aria-selected=\"false\">Centro partita</button></div>\n <div id=\"v53boardcontent\" class=\"v53-board\"><div class=\"v53-empty\">Carico gli approfondimenti…</div></div>\n</section>",
    "<details class=\"v53 v53-extras v53-panel\" id=\"v53board\">\n <summary class=\"v53-sectionhead\"><span><span class=\"v53-kicker\">APPROFONDIMENTI</span><strong style=\"display:block;font-size:21px\">Dentro la partita</strong><span class=\"v53-sub\">Statistiche e confronto della competizione scelta.</span></span><span class=\"v65-arrow\" aria-hidden=\"true\">⌄</span></summary>\n <div class=\"v65-body\"><div id=\"v53boardtabs\" class=\"v53-pills\" role=\"tablist\" aria-label=\"Approfondimenti\"><button class=\"v53-pill\" data-view=\"compare\" aria-selected=\"true\">Confronta le giornate</button><button class=\"v53-pill\" data-view=\"center\" aria-selected=\"false\">Centro partita</button></div>\n <div id=\"v53boardcontent\" class=\"v53-board\"><div class=\"v53-empty\">Carico gli approfondimenti…</div></div></div>\n</details>"
-  ],
-  [
-   "v55/ui.js?v=65",
-   "v55/ui.js?v=65fix"
   ],
   [
    "v55/ui.css?v=55r10",
@@ -219,6 +211,10 @@
   [
    "destinazioni55.js?v=55r8",
    "destinazioni55.js?v=65"
+  ],
+  [
+   "</head>",
+   "<style>/* 6.5: durante il cambio di scheda l'altezza resta ferma, ma la fila delle schede non si allunga */#view{align-content:start}/* Moviola: il Verdetto sta in fondo, alla stessa altezza in tutte le schede */.card.mv{display:flex;flex-direction:column}.card.mv>.mvv{margin-top:auto}</style></head>"
   ]
  ],
  "girrr/index.html": [
@@ -249,6 +245,10 @@
   [
    "destinazioni55.js?v=55r8",
    "destinazioni55.js?v=65"
+  ],
+  [
+   "</head>",
+   "<style>/* 6.5: durante il cambio di scheda l'altezza resta ferma, ma la fila delle schede non si allunga */#view{align-content:start}/* Moviola: il Verdetto sta in fondo, alla stessa altezza in tutte le schede */.card.mv{display:flex;flex-direction:column}.card.mv>.mvv{margin-top:auto}</style></head>"
   ]
  ],
  "stadio/girrr/index.html": [
