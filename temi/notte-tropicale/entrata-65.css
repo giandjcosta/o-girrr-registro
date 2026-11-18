@@ -64,3 +64,16 @@ html.nt-intro-trasformazione::view-transition-group(root){
  html.nt-intro-trasformazione::view-transition-old(root),
  html.nt-intro-trasformazione::view-transition-new(root){animation-duration:1ms!important}
 }
+
+/* Fix QA: il tema principale azzera background-image sui pseudo-elementi
+   del body. La copertina deve restare una vera scena opaca autonoma. */
+html.nt-intro-copertina[data-event-theme="notte-tropicale"] body::before {
+ background-image:linear-gradient(180deg,rgba(7,4,27,.20),rgba(8,4,28,.36) 60%,rgba(6,3,26,.75)),url("miami-tramonto.jpg")!important;
+ background-size:cover,cover!important;
+ background-position:center,center 48%!important;
+ background-repeat:no-repeat!important;
+ background-color:#12092f!important;
+}
+html.nt-intro-copertina[data-event-theme="notte-tropicale"] body::after {
+ background-image:linear-gradient(180deg,rgba(18,5,45,.22),rgba(20,5,44,.74))!important;
+}
