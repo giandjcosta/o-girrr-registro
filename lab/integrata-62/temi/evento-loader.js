@@ -11,8 +11,8 @@
   var EVENTI = [
     /* id, inizio e fine (fine esclusa) in ora italiana, foglio di stile accanto a questo file */
     /* 18 novembre: tolta la voce «vice-city» (prova di ChatGPT, non scelta): era prima nell'elenco, avrebbe vinto per data e senza il suo
-       file la skin non si sarebbe accesa. Resta una sola skin per il 19–23 novembre. */
-    { id: 'notte-tropicale', inizio: '2026-11-19T00:00:00+01:00', fine: '2026-11-24T00:00:00+01:00', css: 'notte-tropicale/notte-tropicale.css', js: 'notte-tropicale/notte-tropicale.js',
+       file la skin non si sarebbe accesa. Resta una sola skin per il 19–27 novembre. */
+    { id: 'notte-tropicale', inizio: '2026-11-19T00:00:00+01:00', fine: '2026-11-28T00:00:00+01:00', css: 'notte-tropicale/notte-tropicale.css', js: 'notte-tropicale/notte-tropicale.js',
       /* la Curva ha la sua grafica chiara/scura da app (iPhone e Android): il tema non la tocca, lì il testo diventava illeggibile */
       escludi: /\/curva\.html$/,
       /* grafica unica (Gianluca, 17 novembre: «non ci sarà Lega o Stadio, sarà una grafica unica») */
