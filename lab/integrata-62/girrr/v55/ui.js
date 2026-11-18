@@ -108,7 +108,7 @@ function home(){
  var header=document.createElement('div');header.className='v55-notice-head';
  header.innerHTML='<h3><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg> Notifiche <span id="v55unread" aria-live="polite"></span></h3><a href="'+href('notifiche')+'">Tutte ›</a>';
  var panel=document.querySelector('.v53-home');live.prepend(header);header.append(el('v53read'));panel.prepend(live);
- var dashboard=document.createElement('details');dashboard.id='v55dashboard';dashboard.className='v55-dashboard';dashboard.open=get('home-open',true)!==false;
+ var dashboard=document.createElement('details');dashboard.id='v55dashboard';dashboard.className='v55-dashboard';dashboard.open=get('home-open',false)!==false; /* ChatGPT 18/11/2026: primo accesso chiuso, stato scelto già persistente */
  var summary=document.createElement('summary'),heading=document.querySelector('.v53-homehead');
  summary.append(heading.firstElementChild);
  var compact=document.createElement('span');compact.id='v55compact';compact.className='v55-compact';summary.firstElementChild.append(compact);
