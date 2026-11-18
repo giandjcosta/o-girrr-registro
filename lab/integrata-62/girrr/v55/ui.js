@@ -381,20 +381,49 @@ render();
 /* Initial DOM integration: no existing Tabellone/Albo/Curva components are replaced. */
 /* Tabellone: versione C scelta da Gianluca (1° novembre): schede Classifica · Risultati · Campo, approfondimenti in fondo */
 function sigla(t){var w=String(t).replace(/^the\s+/i,'').split(/\s+/);return (w[0]||'').slice(0,3).toUpperCase()}
-function schede(){var nav=document.querySelector('.giornata-nav'),panel=document.querySelector('.grid>aside.panel'),board=document.querySelector('.grid>section');if(!nav||!panel||!board)return;
- var campo=el('campo-link'),q=new URLSearchParams(location.search),sez=q.get('sezione')==='risultati'?'risultati':'classifica';
+/* 6.5 (Gianluca, 18 novembre): una SOLA navigazione; tutte le quattro schede
+   hanno lo stesso stile. Numeri e Campo non duplicano Classifica e Risultati. */
+function schede(){
+ var nav=document.querySelector('.giornata-nav'),panel=document.querySelector('.grid>aside.panel'),board=document.querySelector('.grid>section'),grid=document.querySelector('.grid');
+ if(!nav||!panel||!board)return;
+ var campo=el('campo-link'),q=new URLSearchParams(location.search),richiesta=q.get('sezione');
+ var sez=['classifica','risultati','numeri'].indexOf(richiesta)>=0?richiesta:'classifica';
  nav.innerHTML='';nav.className='giornata-nav v55-schede';nav.setAttribute('role','tablist');nav.setAttribute('aria-label','Sezioni del Tabellone');
- [['classifica','Classifica'],['risultati','Risultati']].forEach(function(x){var b=document.createElement('button');b.type='button';b.dataset.sez=x[0];b.textContent=x[1];b.setAttribute('role','tab');nav.appendChild(b)});
- if(campo){campo.textContent='Campo';campo.removeAttribute('aria-current');nav.appendChild(campo)}
+ [['classifica','Classifica'],['risultati','Risultati']].forEach(function(x){
+  var b=document.createElement('button');b.type='button';b.dataset.sez=x[0];b.textContent=x[1];b.setAttribute('role','tab');nav.appendChild(b);
+ });
+ var numeri=document.createElement('a');numeri.dataset.v65Numeri='';numeri.textContent='Numeri del Campionato';nav.appendChild(numeri);
+ if(campo){campo.textContent='Campo';campo.removeAttribute('aria-current');nav.appendChild(campo);}
+ function aggiornaNumeri(){
+  var coppa=document.body.getAttribute('data-mode')==='coppa';
+  numeri.textContent=coppa?'Numeri della Champions Cup':'Numeri del Campionato';
+  var hash=location.hash||'';if(!hash.startsWith(coppa?'#coppa':'#lega'))hash=coppa?'#coppa':'#lega';
+  numeri.href='tabellone.html?sezione=numeri'+hash;
+ }
+ aggiornaNumeri();
+ if(window.MutationObserver)new MutationObserver(aggiornaNumeri).observe(document.body,{attributes:true,attributeFilter:['data-mode']});
  var striscia=document.createElement('button');striscia.type='button';striscia.className='v55-striscia';striscia.setAttribute('aria-label','Risultati della giornata: apri i Risultati');panel.insertBefore(striscia,panel.firstChild);
- function riempi(){var ms=[].slice.call(document.querySelectorAll('#board>.m:not(.ko)'));striscia.hidden=!ms.length;striscia.innerHTML='<span class="v55-st-tit">'+esc(((document.querySelector('#board>.nota')||{}).textContent||'Risultati'))+'</span>'+ms.map(function(m){var t=m.querySelectorAll('.t span'),sc=m.querySelectorAll('.sc b');return '<span class="v55-st-m"><b>'+esc(sigla(t[0]?t[0].textContent:''))+'</b><i>'+esc(sc[0]?sc[0].textContent:'–')+'–'+esc(sc[1]?sc[1].textContent:'–')+'</i><b>'+esc(sigla(t[1]?t[1].textContent:''))+'</b></span>'}).join('')+'<span class="v55-st-vai">Risultati ›</span>'}
+ function riempi(){
+  var ms=[].slice.call(document.querySelectorAll('#board>.m:not(.ko)'));striscia.hidden=!ms.length;
+  striscia.innerHTML='<span class="v55-st-tit">'+esc(((document.querySelector('#board>.nota')||{}).textContent||'Risultati'))+'</span>'+ms.map(function(m){
+   var t=m.querySelectorAll('.t span'),sc=m.querySelectorAll('.sc b');return '<span class="v55-st-m"><b>'+esc(sigla(t[0]?t[0].textContent:''))+'</b><i>'+esc(sc[0]?sc[0].textContent:'–')+'–'+esc(sc[1]?sc[1].textContent:'–')+'</i><b>'+esc(sigla(t[1]?t[1].textContent:''))+'</b></span>';
+  }).join('')+'<span class="v55-st-vai">Risultati ›</span>';
+ }
  riempi();var bd=el('board');if(bd&&window.MutationObserver)new MutationObserver(riempi).observe(bd,{childList:true});
- function mostra(s,ani){sez=s;nav.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-selected',String(b.dataset.sez===s))});panel.hidden=s!=='classifica';board.hidden=s!=='risultati';
-  var v=s==='classifica'?panel:board;if(ani&&!CALMO&&v.animate)v.animate({opacity:[0,1],transform:['translateY(6px)','none']},{duration:320,easing:'cubic-bezier(.22,.61,.36,1)'});
-  try{var u=new URL(location.href);u.searchParams.set('sezione',s);history.replaceState(null,'',u)}catch(e){}}
- nav.addEventListener('click',function(e){var b=e.target.closest('button[data-sez]');if(b)mostra(b.dataset.sez,true)});
- striscia.addEventListener('click',function(){mostra('risultati',true);nav.scrollIntoView({behavior:CALMO?'auto':'smooth',block:'start'})});
- mostra(sez,false)}
+ function mostra(s,ani){
+  sez=s;nav.querySelectorAll('button[data-sez]').forEach(function(b){b.setAttribute('aria-selected',String(b.dataset.sez===s));});
+  if(s==='numeri')numeri.setAttribute('aria-current','page');else numeri.removeAttribute('aria-current');
+  panel.hidden=s!=='classifica';board.hidden=s!=='risultati';
+  var box=el('v65numeri');if(box)box.hidden=s!=='numeri';
+  if(grid){grid.hidden=s==='numeri';grid.style.display=s==='numeri'?'none':'';}
+  var v=s==='classifica'?panel:board;
+  if(ani&&s!=='numeri'&&!CALMO&&v.animate)v.animate({opacity:[0,1],transform:['translateY(6px)','none']},{duration:320,easing:'cubic-bezier(.22,.61,.36,1)'});
+  try{var u=new URL(location.href);u.searchParams.set('sezione',s);history.replaceState(null,'',u);}catch(e){}
+ }
+ nav.addEventListener('click',function(e){var btn=e.target.closest('button[data-sez]');if(btn)mostra(btn.dataset.sez,true);});
+ striscia.addEventListener('click',function(){mostra('risultati',true);nav.scrollIntoView({behavior:CALMO?'auto':'smooth',block:'start'});});
+ mostra(sez,false);
+}
 /* Claude, 1° novembre: fase finale della Champions Cup come un tabellone di tennis. Quarti → Semifinali → Finale da sinistra a destra:
    scegliendo una fase il tabellone scorre verso destra, le colonne già giocate si chiudono e le partite rimaste si allargano.
    Si cambia fase anche scorrendo col dito (o col trackpad) sul tabellone. Le squadre restano «Da definire» finché il calendario non le contiene. */
