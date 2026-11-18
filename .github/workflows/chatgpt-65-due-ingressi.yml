@@ -1,0 +1,43 @@
+name: "ChatGPT: Confronto animato ingressi 6.5"
+on:
+  pull_request:
+    branches:
+      - chatgpt/65-tab-uniche-curva-separata
+    paths:
+      - "temi/evento-loader.js"
+      - "temi/notte-tropicale/entrata-65.css"
+      - "lab/integrata-62/temi/evento-loader.js"
+      - "lab/integrata-62/temi/notte-tropicale/entrata-65.css"
+      - "prove/v65/prova_due_ingressi.py"
+      - ".github/workflows/chatgpt-65-due-ingressi.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  due-ingressi:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Browser e GIF senza pubblicazione
+        run: |
+          python3 -m pip install --disable-pip-version-check playwright==1.56.0 pillow==12.0.0
+          python3 -m playwright install --with-deps chromium
+      - name: Esegui le due animazioni sulla Home vera del Lab
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8767 --directory . --bind 127.0.0.1 >/tmp/girrr-entrata.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" || true' EXIT
+          sleep 2
+          python3 prove/v65/prova_due_ingressi.py
+      - name: GIF, schermate e rapporto
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chatgpt-65-ingressi-animati
+          path: qa_artifacts/65-ingressi/
+          if-no-files-found: warn
+          retention-days: 14
