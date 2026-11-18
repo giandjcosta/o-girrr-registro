@@ -16,11 +16,18 @@ body.nt-numeri-pagina{
 .nt-ritorno{display:inline-flex;align-items:center;gap:7px;margin-bottom:25px;color:#ffb86b;
   font-weight:800;font-size:13px;text-decoration:none;letter-spacing:.07em;min-height:36px}
 .nt-ritorno:hover{text-decoration:underline}
-.nt-numeri-header{position:relative;padding:24px clamp(20px,4vw,45px) 34px;
-  border:1px solid rgba(255,92,168,.42);
-  border-top:4px solid #00f0ff;border-radius:21px;
-  background:linear-gradient(130deg,rgba(55,22,86,.96),rgba(11,15,43,.95));
-  box-shadow:0 18px 50px #03021975;overflow:hidden;
+/* Come i riquadri di Claude: la forma di fondo e il filo sono una sola sagoma
+   obliqua arrotondata. Testo non inclinato, colore viola pieno. */
+.nt-numeri-header{position:relative;isolation:isolate;
+  padding:24px clamp(20px,4vw,45px) 34px;
+  border:0;border-radius:21px;background:transparent;
+}
+.nt-numeri-header::before{
+  content:"";position:absolute;inset:0 8px;z-index:-1;pointer-events:none;
+  transform:skewX(-4deg);border-radius:21px;
+  background:linear-gradient(130deg,#371656,#0b0f2b);
+  box-shadow:inset 0 3px 0 #00f0ff,inset 5px 0 0 #ff5ca8,
+             inset 0 0 0 1px #bc6cff80,0 18px 50px #03021975;
 }
 .nt-numeri-header:after{
   content:"";position:absolute;right:-30px;top:-70px;width:clamp(120px,27vw,320px);height:230px;
@@ -33,19 +40,6 @@ body.nt-numeri-pagina{
   background:linear-gradient(105deg,#fff,#ff5ca8 48%,#ffb86b);
   color:transparent;background-clip:text;-webkit-background-clip:text}
 .nt-numeri-header p:last-child{font-size:clamp(13px,2vw,17px);color:#e1c9eb;margin:20px 0 0}
-.nt-numeri-nav{
-  margin:14px 0 15px;padding:7px;display:flex;flex-wrap:wrap;gap:8px;
-  border:1px solid rgba(188,108,255,.45);border-radius:17px;
-  background:#1b0b3d;box-shadow:inset 0 1px 0 #ffffff17
-}
-.nt-numeri-nav a{display:inline-flex;flex:1 1 170px;align-items:center;justify-content:center;
-  min-height:49px;padding:11px 15px;border-radius:12px;border:1px solid rgba(188,108,255,.45);
-  background:linear-gradient(130deg,#342153,#211043);font-size:12px;font-weight:900;
-  text-align:center;text-decoration:none;color:#fff8ff}
-.nt-numeri-nav a[aria-current="page"]{color:#17102c;border-color:#ffd5e9;
-  background:linear-gradient(100deg,#ffb86b 0%,#ff5ca8 49%,#bc6cff 100%);
-  box-shadow:0 4px 19px rgba(255,92,168,.43)}
-.nt-numeri-nav a:hover{filter:brightness(1.13)}
 .nt-numeri-meta{display:flex;flex-wrap:wrap;gap:8px 20px;
   justify-content:space-between;color:#cfb9e0;font-size:12px;margin:18px 1px 18px}
 #nt-numeri-contenuto{min-height:160px}
@@ -54,23 +48,32 @@ body.nt-numeri-pagina{
   background:repeating-linear-gradient(115deg,#ff5ca8 0 .16em,transparent .16em .3em)
     0 center/22px .8em no-repeat;}
 .nt-stat-griglia{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+/* I fili devono seguire la STESSA sagoma inclinata dei riquadri:
+   non una barra orizzontale sopra una card rettangolare. */
 .nt-stat{
   position:relative;isolation:isolate;display:flex;flex-direction:column;
-  justify-content:center;min-width:0;min-height:177px;padding:19px 18px 18px;
-  border:1px solid rgba(188,108,255,.3);border-radius:17px;
-  background:linear-gradient(135deg,#321755,#160b35);
-  box-shadow:0 15px 28px rgba(3,2,17,.33);
+  justify-content:center;min-width:0;min-height:177px;padding:19px 23px 18px;
+  border:0;border-radius:17px;background:transparent;box-shadow:none;
   overflow-wrap:anywhere;
 }
-.nt-stat:before{content:"";position:absolute;left:0;top:0;width:100%;height:3px;
-  background:#00f0ff;box-shadow:0 0 15px rgba(0,240,255,.5)}
-.nt-stat:nth-child(even):before{background:#ff5ca8;box-shadow:0 0 14px rgba(255,92,168,.5)}
+.nt-stat::before{
+  content:"";position:absolute;inset:0 7px;z-index:-1;pointer-events:none;
+  transform:skewX(-4deg);border-radius:17px;
+  background:linear-gradient(135deg,#321755,#160b35);
+  box-shadow:inset 0 3px 0 #00f0ff,inset 5px 0 0 #ff5ca8,
+             inset 0 0 0 1px #bc6cff66,0 15px 28px #03021155;
+}
+.nt-stat:nth-child(even)::before{
+  box-shadow:inset 0 -3px 0 #ff5ca8,inset 5px 0 0 #00f0ff,
+             inset 0 0 0 1px #bc6cff66,0 15px 28px #03021155;
+}
 .nt-stat h3{font:800 12px/1.3 "DM Sans",sans-serif;color:#facce7;
   text-transform:uppercase;letter-spacing:.06em;margin:0 0 14px}
 .nt-stat strong{font:italic 900 clamp(27px,3vw,43px)/1 "Barlow Condensed",Impact,sans-serif;
   letter-spacing:.01em;color:#fff;overflow-wrap:anywhere;max-width:100%}
 .nt-stat p{font:600 12px/1.45 "DM Sans",sans-serif;color:#d1bfe2;margin:12px 0 0}
-.nt-stat-grande{background:linear-gradient(145deg,#482071,#1b0a42);min-height:180px;}
+.nt-stat-grande{min-height:180px}
+.nt-stat-grande::before{background:linear-gradient(145deg,#482071,#1b0a42)}
 .nt-stat-grande strong{font-size:clamp(45px,6vw,78px);color:#fff}
 .nt-numeri-nota{margin:24px 0;color:#d3c3e6;line-height:1.6;font-size:12px;
   padding:13px 16px;border-left:3px solid #ffb86b;background:#181034dd;border-radius:5px 12px 12px 5px}
@@ -78,16 +81,13 @@ body.nt-numeri-pagina{
   background:#24103e;border:1px solid #bc6cff;color:#fff;text-align:center}
 .nt-numeri-footer{display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;
   border-top:1px solid #ac76c066;padding:18px 0 0;color:#c2add0;font-size:12px}
-.nt-numeri-footer a{color:#ffb86b;font-weight:900;text-decoration:none}
 .nt-numeri-wrap a:focus-visible{outline:3px solid #00f0ff;outline-offset:3px}
 @media(max-width:950px){.nt-stat-griglia{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){
   .nt-numeri-wrap{padding:15px 14px 45px}
   .nt-numeri-header{padding:22px 18px 26px}
-  .nt-numeri-nav{gap:6px;padding:6px}
-  .nt-numeri-nav a{flex:1 1 100%;min-height:42px;font-size:12px;padding:10px 8px}
   .nt-stat-griglia{gap:10px}
-  .nt-stat{padding:15px 12px;min-height:152px}
+  .nt-stat{padding:15px 18px;min-height:152px}
   .nt-stat h3{font-size:10px}
   .nt-stat strong{font-size:clamp(24px,7vw,36px)}
   .nt-stat-grande strong{font-size:clamp(39px,12vw,61px)}
@@ -98,6 +98,6 @@ body.nt-numeri-pagina{
   .nt-stat-grande{min-height:135px}
 }
 @media(prefers-reduced-motion:no-preference){
-  .nt-numeri-nav a,.nt-ritorno,.nt-numeri-footer a{transition:filter .2s ease,transform .2s ease}
-  .nt-numeri-nav a:hover{transform:translateY(-1px)}
+  .nt-ritorno{transition:opacity .2s ease}
+  .nt-ritorno:hover{opacity:.78}
 }
