@@ -120,6 +120,37 @@ def main():
                     isdisplay=page.locator(".nt-numeri-link").evaluate("(e) => getComputedStyle(e).display !== 'none'")
                     checks["Tabellone Campionato mostra Numeri"]=isdisplay
                     checks["Menu Campionato porta alla pagina nuova"]=page.locator(".nt-numeri-link").get_attribute("href")=="numeri-campionato.html?evento=notte-tropicale"
+                    # Stessa grafica sulle quattro voci, senza creare nuove sezioni dati.
+                    menu=page.evaluate("""() => {
+                      const nav=document.querySelector('.giornata-nav');
+                      const el=[...nav.querySelectorAll(':scope > a:not([hidden])')];
+                      return {
+                        pronto:nav.classList.contains('nt-quattro-menu'),
+                        nomi:el.map(x=>x.textContent.trim()),
+                        link:el.map(x=>x.getAttribute('href')),
+                        oltre:document.documentElement.scrollWidth-document.documentElement.clientWidth,
+                        fili:el.map(x=>{
+                          const cs=getComputedStyle(x,'::before');
+                          return {transform:cs.transform,ombra:cs.boxShadow,
+                            fondo:cs.backgroundImage};
+                        }),
+                        footerOriginale:document.querySelectorAll('.sp').length
+                      };
+                    }""")
+                    checks["Quattro voci vere nella barra del Tabellone"]=menu["nomi"]==[
+                        "Classifica","Risultati","Numeri del Campionato","Campo"]
+                    checks["Le due voci interne conducono ai pannelli esistenti"]=(
+                        menu["link"][:3]==["#tab","#board",
+                            "numeri-campionato.html?evento=notte-tropicale"] and
+                        menu["link"][3].startswith("campo.html"))
+                    checks["Stesso stile obliquo e fili su quattro voci"]=(
+                        menu["pronto"] and all(x["transform"]!="none" and
+                        "inset" in x["ombra"] and
+                        "gradient" in x["fondo"] for x in menu["fili"]))
+                    checks["Quattro voci senza overflow"]=menu["oltre"]<=2
+                    if width in (390,1440):
+                        page.screenshot(path=str(OUT/f"tabellone-quattro-voci-{width}.jpg"),
+                            type="jpeg",quality=81,full_page=False)
                     page.evaluate("document.body.setAttribute('data-mode','coppa')")
                     hidden=page.locator(".nt-numeri-link").evaluate("(e) => getComputedStyle(e).display === 'none'")
                     checks["Champions Cup non mostra Numeri Campionato"]=hidden
