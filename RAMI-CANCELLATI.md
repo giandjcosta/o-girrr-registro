@@ -1,4 +1,6 @@
-# Rami cancellati il 19 novembre 2026
+# Rami da cancellare (19 novembre 2026)
+
+**Stato:** da questa sessione di Claude la cancellazione è bloccata (GitHub risponde 403 a ogni `git push --delete`). Per farla: lancia `bash strumenti/cancella-rami.sh` da un computer con git e accesso a GitHub, oppure cancella i rami dalla pagina *Branches* di ogni repository. Rami tenuti in più rispetto al «Vai»: `chatgpt/65-tab-uniche-curva-separata` (PR #131, da valutare per la Smart TV) e `claude/65-uscita` (ramo di lavoro di Claude).
 
 Pulizia chiesta da Gianluca («Vai» del 19 novembre). Restano: sito `main`, `gh-pages` (e la PR aperta `claude/65-entrata-pc`); registro `main` e `chatgpt/65-edizione-speciale` (PR #129, Radio e video della giornata 8).
 
