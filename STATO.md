@@ -1,5 +1,15 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 18 novembre 2026)
 
+## 19 novembre 2026 — 6.5 online con le correzioni della notte (Claude, con il Vai di Gianluca)
+- **Online la 6.5 «Notte Tropicale»** (resta 6.5, nessuna 6.5.1 per scelta di Gianluca: sono correzioni della grafica speciale). Prima pubblicazione: PR #23 del sito (ChatGPT ha poi aggiunto copertina, Nuvola e Numeri, `gh-pages` `0d6d1dd`).
+- **Correzioni unite il 19 novembre su `gh-pages`**, in quest'ordine:
+  - PR #25 `b7e1972`: niente doppio ingresso nei cambi di scheda (Tabellone Campionato↔Champions Cup: i risultati apparivano, sparivano e riapparivano; `transizioni.js` e `app.html` non aggiungono più `fx-in` a chi ha già un'animazione), Nuvola solo alla prima visita e titolo «Tutto il Girrr» fermo (ChatGPT), **chiave della prima visita rinnovata in `nt_entrata_vista_2`** su richiesta di Gianluca: copertina, «Continua» e Nuvola tornano una volta su ogni dispositivo.
+  - PR #24 `81bc293`: Versioni (riquadro del messaggio centrato, testo più piccolo, «Dal 19 al 27 novembre» nel messaggio), Campo (partita scelta ciano-lilla in Champions Cup, interruttore obliquo di ChatGPT), Totogirrr (nove schede in una fila che scorre invece della griglia 3×3), Albo d'oro (pillole della skin) e Derby (sottoschede, riquadro viola, interruttore Campionato/Champions Cup), Changelog e punteggi Squadre (ChatGPT).
+  - PR #26 `40fe21e`: Tabellone › Numeri si apre dall'inizio (prima `destinazioni55.js` scorreva alla classifica), mostra solo i numeri della stagione su due colonne, quattro schede su una riga, intestazione «NUMERI · Stagione 2026/27».
+- **Per tornare indietro:** «Revert» della singola PR su GitHub, oppure `git revert -m 1 40fe21e`, `81bc293`, `b7e1972` su `gh-pages`.
+- **Prove (Chromium):** 17 pagine × 5 schermi con la skin e senza, 51 link, 58 tocchi senza doppi ingressi, prima visita rinnovata su iPhone e PC. Safari vero e telefoni veri non provati.
+- `ufficiale/src/sito/` allineato a `gh-pages` (53 file, compresa `temi/`). Sorgenti della skin in `temi/notte-tropicale/` sul ramo `claude/65-uscita`.
+
 ## 18 novembre 2026 — ChatGPT: ingresso 6.5 pronto per Claude (solo ramo)
 - Ramo `chatgpt/65-entrata` da `claude/65-uscita`; la 6.5 è ancora candidata nella PR #23 del sito, online 6.2.4. **Non è una 6.5.1.** Nessun merge, deploy o modifica Supabase.
 - Copertina nuova `temi/notte-tropicale/entrata.js`, `entrata.css`, `gta6-lucia-jason-cover.webp` (locandina fornita da Gianluca, 156 KB). Un solo caricamento da `notte-tropicale.js` sulla Home con tema attivo; file aggiunti agli elenchi di `rilascio/r65/evento.py` e `temi/notte-tropicale/lab.py`, crediti aggiornati. Un ingresso al giorno in ora italiana (localStorage protetto), 0,3 s di comparsa + 1,6 s ferma + 0,5 s dissolvenza; chiusura al tocco o con tasto, riduci movimento per 1 s, watchdog 4 s. Sul solo Lab `?evento=notte-tropicale&entrata-prova=1` consente di ripeterla.
