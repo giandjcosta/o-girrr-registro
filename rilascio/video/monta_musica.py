@@ -170,6 +170,7 @@ if __name__ == '__main__':
     p.add_argument('--dopo', action='append', default=[], help='FILE:INIZIO:FINE@QUANDO[:DISSOLVENZA], ripetibile')
     p.add_argument('--dissolvenza', type=float, default=0.5, help='secondi in cui il primo brano lascia il posto al secondo')
     p.add_argument('--effetti', default='', help='scene.json di render.mjs: effetti grafici a tempo')
+    p.add_argument('--sfuma', type=float, default=0.0, help='secondi finali in cui la musica scende fino al silenzio (gli effetti restano)')
     p.add_argument('--folla', action='store_true', help='folla che cresce coi gradini del podio (prova)')
     p.add_argument('--suono', action='append', default=[], help='FILE:DA:A@QUANDO:VOLUME')
     A = p.parse_args()
@@ -202,6 +203,9 @@ if __name__ == '__main__':
     if len(y) < lungo * SR:
         y = np.concatenate([y, np.zeros((int(lungo * SR) - len(y), 2), np.float32)])
     y[:int(0.02 * SR)] *= np.linspace(0, 1, int(0.02 * SR))[:, None]
+    if A.sfuma:   # 6.5 (Claude, 19 novembre): la musica si spegne dolcemente dopo il fischio finale, non di colpo
+        n = int(A.sfuma * SR)
+        y[-n:] *= (np.linspace(1, 0, n) ** 1.6)[:, None]
     for s in A.suono:
         sorg, dove = s.rsplit('@', 1)
         f, da, a = sorg.rsplit(':', 2)

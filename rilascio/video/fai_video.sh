@@ -17,13 +17,14 @@ for k,n in S['scene']:d[k]=t;t+=n/S['fps']
 print('%.2f %.2f'%(d['introCoppa']+0.5,t-6.83))")
 # 6.5 · Edizione speciale Notte Tropicale (giornata 8, Gianluca 19 novembre 2026): «Welcome to Vice City» (brano libero).
 # Campionato: il brano da 0:08 (il tema entra a 0:10,5, sui risultati); sul logo della Coppa l'assolo di chitarra di 2:30
-# (il riff esplode a 2:30,5); in chiusura la fine dell'assolo (2:46-2:54,6, atterra a 2:53,5). VC_FINALE=INIZIO:FINE per provarne un altro.
+# (il riff esplode a 2:30,5); in chiusura il culmine dell'ultimo ritornello (4:24,5-4:33, scelto da Gianluca), che dal fischio
+# finale scende fino al silenzio (--sfuma). VC_FINALE=INIZIO:FINE per provarne un altro.
 SKIN=$(python3 -c "import json;print(json.load(open('scene.json')).get('skin') or '')")
 if [ "$SKIN" = "notte-tropicale" ] && [ -f "$QUI/musica/vice-city.mp3" ]; then
   python3 "$QUI/monta_musica.py" "$QUI/musica/vice-city.mp3" "$MUTO" "$USCITA" --inizio 8 \
     --dopo "$QUI/musica/vice-city.mp3:150.0:170.0@$COPPA:1.0" \
-    --dopo "$QUI/musica/vice-city.mp3:${VC_FINALE:-166.0:174.6}@$FINE:1.0" \
-    --coda 7 --effetti scene.json
+    --dopo "$QUI/musica/vice-city.mp3:${VC_FINALE:-264.5:273.2}@$FINE:1.0" \
+    --coda 7 --effetti scene.json --sfuma 2.6
   rm -f "$MUTO"; exit 0
 fi
 python3 "$QUI/monta_musica.py" "$QUI/musica/campionato.mp3" "$MUTO" "$USCITA" \
