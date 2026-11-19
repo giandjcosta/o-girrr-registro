@@ -1,5 +1,5 @@
 {
- "aggiornato": "2026-11-17T06:43:06Z",
+ "aggiornato": "2026-11-19T06:42:59Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
@@ -69,9 +69,9 @@
    "nome": "Controllo automatismi del mattino",
    "quando": "Ogni giorno alle 07:33",
    "stato": "attiva",
-   "prossimo": "2026-11-18T06:33:00Z",
+   "prossimo": "2026-11-20T06:33:00Z",
    "ultimo": {
-    "quando": "2026-11-17T06:33:40Z",
+    "quando": "2026-11-19T06:33:46Z",
     "esito": "riuscito"
    },
    "nota": "Avvisa solo se qualcosa è fermo da più di 2 giorni."
@@ -154,33 +154,6 @@
    "stato": "conclusa",
    "ultimo": {
     "quando": "2026-10-24T08:32:32Z",
-    "esito": "riuscito"
-   }
-  },
-  {
-   "nome": "Promemoria: commenti al Giornale",
-   "quando": "Una volta: 16 ottobre alle 09:00",
-   "stato": "conclusa",
-   "ultimo": {
-    "quando": "2026-10-16T07:08:25Z",
-    "esito": "riuscito"
-   }
-  },
-  {
-   "nome": "Promemoria: aggiungere host giandjcosta.github.io",
-   "quando": "Una volta: 15 ottobre alle 17:30",
-   "stato": "conclusa",
-   "ultimo": {
-    "quando": "2026-10-15T15:30:23Z",
-    "esito": "riuscito"
-   }
-  },
-  {
-   "nome": "Promemoria: riprovare radio con Gemini Pro",
-   "quando": "Una volta: 17 ottobre alle 02:18",
-   "stato": "conclusa",
-   "ultimo": {
-    "quando": "2026-10-17T00:18:33Z",
     "esito": "riuscito"
    }
   },
