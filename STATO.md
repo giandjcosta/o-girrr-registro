@@ -1,5 +1,12 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 18 novembre 2026)
 
+## 19 novembre 2026 (mattina) — copertina su PC, Radio e video della giornata 8, registro in ordine (Claude, con il Vai di Gianluca)
+- **Sito, PR #27** (`gh-pages` `318d5b1`): copertina della 6.5 su PC, iPad orizzontale e TV con la locandina a sinistra e titoli, date e «Continua» a destra; telefoni invariati. README di `gh-pages` con il link alla Home.
+- **Sito, PR #28** (`main` `cc07971`): il link «Apri il sito» del README porta a `/girrr/` (Home della lega) invece che allo Spogliatoio.
+- **Registro, PR #135** (`main` `7cb83e0`): la 6.5 entra nel `main` del registro (skin, `rilascio/r65/`, `ufficiale/src/sito/`, STATO). **PR #136**: `strumenti/cancella-rami.sh` e `RAMI-CANCELLATI.md`.
+- **Registro, PR #137** (`main` `d6af433`): Radio e video della giornata 8 in edizione Notte Tropicale, dalla PR #129 di ChatGPT senza i post della Curva (già online). Battuta della Radio approvata da Gianluca; caratteri Barlow Condensed e Mr Dafoe salvati in `rilascio/video/remotion/public/font/`. Il workflow del sito la userà dopo la giornata 8.
+- **Rami vecchi:** da questa sessione la cancellazione è bloccata (403). Da fare con `bash strumenti/cancella-rami.sh` da un computer con accesso a GitHub. Le PR di ChatGPT #128–#134 e quelle vecchie si chiudono quando si cancellano i loro rami.
+
 ## 19 novembre 2026 — 6.5 online con le correzioni della notte (Claude, con il Vai di Gianluca)
 - **Online la 6.5 «Notte Tropicale»** (resta 6.5, nessuna 6.5.1 per scelta di Gianluca: sono correzioni della grafica speciale). Prima pubblicazione: PR #23 del sito (ChatGPT ha poi aggiunto copertina, Nuvola e Numeri, `gh-pages` `0d6d1dd`).
 - **Correzioni unite il 19 novembre su `gh-pages`**, in quest'ordine:
