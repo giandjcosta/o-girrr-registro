@@ -1,0 +1,420 @@
+{
+ "condividi.js": [
+  [
+   "  function E(s) {",
+   "  /* 6.5 (Gianluca, 18 novembre): numeri delle immagini colorati per competizione, indipendenti dalla skin. */\n  function numeroSfumato(ctx,coppa) {\n    var grad=ctx.createLinearGradient(0,0,W,0);\n    if(coppa){grad.addColorStop(0,'#185486');grad.addColorStop(.55,'#3d93d6');grad.addColorStop(1,'#a5e7ff');}\n    else{grad.addColorStop(0,'#851329');grad.addColorStop(.55,'#d62839');grad.addColorStop(1,'#ff9a9e');}\n    return grad;\n  }\n  function E(s) {"
+  ],
+  [
+   "  function classifica(d, fino) {",
+   "  /* Classifica dei due gironi: le partite di Cup hanno [girone,casa,FP casa,FP ospite,ospite,risultato]. */\n  function classificaCup(d,fino) {\n    var teams={},nomi=Object.create(null);\n    function row(gr,name){var k=gr+'|'+name;if(!teams[k])teams[k]={gir:gr,n:name,pt:0,v:0,p:0,s:0,gf:0,gs:0,fp:0};return teams[k];}\n    (d.cal.cup||[]).forEach(function(g){\n      (g.m||[]).forEach(function(m){\n        var a=row(m[0],m[1]),b=row(m[0],m[4]);\n        if(g.n>fino||!giocata(g,true)||!pubblicato(d,g))return;\n        var r=/^(\\d+)\\s*-\\s*(\\d+)$/.exec(String(m[5]));if(!r)return;\n        var x=+r[1],y=+r[2];a.gf+=x;a.gs+=y;b.gf+=y;b.gs+=x;\n        a.fp+=+m[2]||0;b.fp+=+m[3]||0;\n        if(x>y){a.pt+=3;a.v++;b.s++;}else if(x<y){b.pt+=3;b.v++;a.s++;}else{a.pt++;b.pt++;a.p++;b.p++;}\n      });\n      (g.rest||[]).forEach(function(r){row(r[0],r[1]);});\n    });\n    return Object.values(teams).sort(function(a,b){return a.gir.localeCompare(b.gir)||b.pt-a.pt||b.fp-a.fp||(b.gf-b.gs)-(a.gf-a.gs)||b.gf-a.gf||a.n.localeCompare(b.n);});\n  }\n  function classifica(d, fino) {"
+  ],
+  [
+   "  function giornataVista(d) {\n    var t = (document.getElementById('tit') || {}).textContent || '';\n    var coppa = /champions/i.test(t), m = /(\\d+)\\s*ª/.exec(t);",
+   "  /* La competizione selezionata viene dal Tabellone, non dal titolo (che può essere precedente al ridisegno). */\n  function giornataVista(d) {\n    var t = (document.getElementById('tit') || {}).textContent || '';\n    var coppa = document.body.getAttribute('data-mode')==='coppa' || /champions/i.test(t), m = /(\\d+)\\s*ª/.exec(t);"
+  ],
+  [
+   "    ctx.fillStyle = ACC; ctx.font = '900 190px Inter, system-ui, sans-serif';",
+   "    ctx.fillStyle = numeroSfumato(ctx,v.coppa); ctx.font = '900 190px Inter, system-ui, sans-serif';"
+  ],
+  [
+   "      ctx.textAlign = 'center'; ctx.fillStyle = ev ? '#ffd166' : ACC; ctx.font = '900 60px Inter, system-ui, sans-serif';",
+   "      ctx.textAlign = 'center'; ctx.fillStyle = numeroSfumato(ctx,v.coppa); ctx.font = '900 60px Inter, system-ui, sans-serif';"
+  ],
+  [
+   "  function tabella(ctx, d, v, mio) {\n    var c = classifica(d, v.g.n);",
+   "  function tabella(ctx, d, v, mio) {\n    var c = v.coppa ? classificaCup(d,v.g.n) : classifica(d,v.g.n);\n    if(v.coppa){\n      ctx.textAlign='center';ctx.fillStyle='#bfe3ff';ctx.font='800 35px Inter,system-ui,sans-serif';\n      ctx.fillText('Classifica della Champions Cup dopo la '+v.g.n+'ª giornata',W/2,305);ctx.textAlign='left';\n      var gruppi=[...new Set(c.map(function(t){return t.gir;}))];\n      var y=334;gruppi.forEach(function(gr){\n        var rows=c.filter(function(t){return t.gir===gr;});\n        ctx.fillStyle='#a5e7ff';ctx.font='900 30px Inter,system-ui,sans-serif';ctx.fillText('GIRONE '+gr,86,y+27);y+=39;\n        rows.forEach(function(t,i){\n          var own=t.n===mio;riquadro(ctx,66,y,W-132,64,own);\n          ctx.fillStyle=i===rows.length-1?'#ff6578':i<3?'#ffd166':'#fbf6ec';\n          ctx.font='900 36px Inter,system-ui,sans-serif';ctx.fillText(String(i+1),99,y+44);\n          ctx.fillStyle='#fbf6ec';adatta(ctx,t.n,164,y+43,480,32,own?'900':'800','Inter,system-ui,sans-serif');\n          ctx.fillStyle=numeroSfumato(ctx,true);ctx.font='900 33px Inter,system-ui,sans-serif';\n          ctx.fillText(String(t.pt)+' punti',800,y+43);y+=72;\n        });y+=14;\n      });\n      return 'Classifica della Champions Cup dopo la '+v.g.n+'ª giornata';\n    }"
+  ],
+  [
+   "      ctx.fillStyle = i < 3 ? '#ffd166' : '#fbf6ec'; ctx.font = '900 40px Inter, system-ui, sans-serif';",
+   "      ctx.fillStyle = i === c.length-1 ? '#ff6578' : i < 3 ? '#ffd166' : '#fbf6ec'; ctx.font = '900 40px Inter, system-ui, sans-serif';"
+  ],
+  [
+   "      ctx.fillStyle = ev ? '#ffd166' : '#fbf6ec'; ctx.font = '900 40px Inter, system-ui, sans-serif';",
+   "      ctx.fillStyle = numeroSfumato(ctx,false); ctx.font = '900 40px Inter, system-ui, sans-serif';"
+  ],
+  [
+   "      var piede = 'O Fant A Girrr · ' + (v.coppa && tipo !== 'classifica' ? 'Champions Cup' : 'Campionato') + ' 2026/27';",
+   "      var piede = 'O Fant A Girrr · ' + (v.coppa ? 'Champions Cup' : 'Campionato') + ' 2026/27';"
+  ],
+  [
+   "      banda = v.coppa ? COPPA : ACC;",
+   "      banda = v.coppa ? COPPA : '#d62839';"
+  ],
+  [
+   "        '<button type=\"button\" data-t=\"classifica\"><b>Classifica</b><small>Campionato, con vittorie, pareggi, sconfitte e punti</small></button>' +",
+   "        '<button type=\"button\" data-t=\"classifica\"><b>Classifica</b><small>' + (v.coppa ? 'Gironi della Champions Cup, con dati reali e punti' : 'Campionato, con vittorie, pareggi, sconfitte e punti') + '</small></button>' +"
+  ],
+  [
+   "      banda = v.coppa ? COPPA : '#d62839';",
+   "      banda = v.coppa ? COPPA : '#d62839'; if (stadio) banda = ACC;"
+  ],
+  [
+   "      '.cd-sc{display:grid;gap:8px}.cd-sc button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;font:inherit;color:inherit;cursor:pointer;padding:12px 14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);' + (stadio ? 'border-left:6px solid ' + ACC + ';border-radius:12px' : 'border-left:8px solid ' + ACC + ';border-radius:4px 14px 14px 4px') + '}' +",
+   "      '.cd-sc{display:grid;gap:8px}.cd-sc button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;font:inherit;color:inherit;cursor:pointer;padding:12px 14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);' + (stadio ? 'border-left:6px solid var(--cd-banda,' + ACC + ');border-radius:12px' : 'border-left:8px solid var(--cd-banda,' + ACC + ');border-radius:4px 14px 14px 4px') + '}' +"
+  ],
+  [
+   "      var v = giornataVista(d); if (!v.g) throw new Error('Nessuna giornata da condividere');",
+   "      var v = giornataVista(d); if (!v.g) throw new Error('Nessuna giornata da condividere');\n      /* 6.5 · Le bande dei sei pulsanti seguono il torneo. Nello Stadio restano oro. */\n      f.box.style.setProperty('--cd-banda',stadio ? ACC : (v.coppa ? COPPA : '#d62839'));"
+  ]
+ ],
+ "girrr/v55/ui.js": [
+  [
+   "function board(){\nif(window.OGDest55)window.OGDest55.board({eventi:cronacheValide()});\nvar holder=el('v53boardcontent'),rounds=completeRounds(false),sets=ranks((latest()||{}).n||0);\nif(!holder)return;\nvar buttons=el('v53boardtabs');\nfunction switchTo(part){buttons.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-selected',b.dataset.view===part?'true':'false')});if(part==='compare')compare();else matchCenter()}\nbuttons.addEventListener('click',function(e){var b=e.target.closest('button[data-view]');if(b)switchTo(b.dataset.view)});\nfunction compare(){\n var opts=rounds.map(function(g){return '<option value=\"'+g.n+'\">'+g.n+'ª giornata</option>'}).join('');\n if(rounds.length<2){holder.innerHTML=note('Servono due giornate complete per confrontare i movimenti in classifica.');return}\n holder.innerHTML='<div class=\"v53-field\"><label for=\"v53from\">Dalla</label><select class=\"v53-select\" id=\"v53from\">'+opts+'</select><label for=\"v53to\">Alla</label><select class=\"v53-select\" id=\"v53to\">'+opts+'</select></div><div id=\"v53delta\" class=\"v53-row\"></div><p class=\"v53-muted\">Movimenti della classifica tra le due giornate selezionate.</p>';\n var a=el('v53from'),b=el('v53to');a.value=String(rounds[Math.max(0,rounds.length-3)].n);b.value=String(rounds[rounds.length-1].n);\n function update(){var x=ranks(n(a.value)),y=ranks(n(b.value));el('v53delta').innerHTML=y.map(function(t,i){var p=x.findIndex(function(v){return v.team===t.team})+1,d=p-(i+1);return '<div class=\"v53-box\"><small>'+(i+1)+'º posto · '+esc(t.team)+'</small><strong>'+(d>0?'↑ '+d+(d===1?' posizione':' posizioni'):d<0?'↓ '+(-d)+(d===-1?' posizione':' posizioni'):'= Stessa posizione')+'</strong><small>'+t.pt+' punti · '+dec(t.fp)+' Fantapunti · DR '+(t.gf-t.gs)+'</small></div>'}).join('')}\n a.onchange=update;b.onchange=update;update();\n}\nfunction matchCenter(){\nvar matches=allFinished();if(!matches.length){holder.innerHTML=note('Il centro partita si aprirà dopo il primo incontro concluso.');return}\n holder.innerHTML='<div class=\"v53-field\"><label for=\"v53match\">Scegli la partita</label><select class=\"v53-select\" id=\"v53match\" style=\"flex:1;min-width:160px\">'+matches.slice(0,70).map(function(x){return '<option value=\"'+esc(x.id)+'\">'+x.g.n+'ª · '+esc(x.m[0]+' '+x.m[4]+' '+x.m[3])+'</option>'}).join('')+'</select></div><div id=\"v53matchstats\"></div>';\n var select=el('v53match');function draw(){var x=matches.find(function(v){return v.id===select.value})||matches[0],m=x.m,gol=m[4].split('-').map(Number),assegnati=gol[0]===gol[1]?[1,1]:gol[0]>gol[1]?[3,0]:[0,3];el('v53matchstats').innerHTML='<div class=\"v53-row\"><div class=\"v53-box\"><span class=\"v53-mini-title\">RISULTATO UFFICIALE</span><div class=\"score\">'+esc(m[0]+' '+m[4]+' '+m[3])+'</div><small>Campionato · '+x.g.n+'ª giornata</small></div><div class=\"v53-box\"><span class=\"v53-mini-title\">DATI LEGHE FANTACALCIO</span><div class=\"score\">'+dec(m[1])+' <em>–</em> '+dec(m[2])+'</div><small>Fantapunti · Fonte Leghe Fantacalcio</small></div></div><p class=\"v53-muted\">Punti in classifica assegnati nel turno: '+esc(m[0])+' '+assegnati[0]+' · '+esc(m[3])+' '+assegnati[1]+'.</p>'}select.onchange=draw;draw()\n}\nswitchTo('compare');\n}\n",
+   "function board(){\n if(window.OGDest55)window.OGDest55.board({eventi:cronacheValide()});\n var holder=el('v53boardcontent'),buttons=el('v53boardtabs');\n if(!holder||!buttons)return;\n var active='compare';\n function cup(){return document.body.getAttribute('data-mode')==='coppa'}\n function rounds(){return completeRounds(cup())}\n function cupRanks(to){\n  var T={};\n  function row(g,n){var k=g+'|'+n;return T[k]||(T[k]={team:n,gir:g,pt:0,fp:0,gf:0,gs:0,g:0,v:0,nn:0,p:0})}\n  games(true).forEach(function(g){(g.m||[]).forEach(function(m){row(m[0],m[1]);row(m[0],m[4])});(g.rest||[]).forEach(function(r){row(r[0],r[1])})});\n  completeRounds(true).filter(function(g){return g.n<=to}).forEach(function(g){g.m.forEach(function(m){var score=String(m[5]).split('-').map(Number);if(score.length!==2||!Number.isFinite(score[0])||!Number.isFinite(score[1]))return;\n   var a=row(m[0],m[1]),b=row(m[0],m[4]);a.g++;b.g++;a.fp+=n(m[2]);b.fp+=n(m[3]);a.gf+=score[0];a.gs+=score[1];b.gf+=score[1];b.gs+=score[0];\n   if(score[0]>score[1]){a.v++;b.p++;a.pt+=3}else if(score[0]<score[1]){b.v++;a.p++;b.pt+=3}else{a.nn++;b.nn++;a.pt++;b.pt++}\n  })});\n  return Object.values(T).sort(function(a,b){return a.gir.localeCompare(b.gir)||b.pt-a.pt||b.fp-a.fp||(b.gf-b.gs)-(a.gf-a.gs)||b.gf-a.gf||a.team.localeCompare(b.team)});\n }\n function table(to){return cup()?cupRanks(to):ranks(to)}\n function compare(){\n  var rr=rounds();\n  if(rr.length<2){holder.innerHTML=note('Servono almeno due giornate concluse di '+(cup()?'Champions Cup':'Campionato')+' per confrontare la classifica.');return}\n  var ops=rr.map(function(g){return '<option value=\"'+g.n+'\">'+g.n+'ª giornata</option>'}).join('');\n  holder.innerHTML='<div class=\"v53-field\"><label for=\"v53from\">Dalla</label><select class=\"v53-select\" id=\"v53from\">'+ops+'</select><label for=\"v53to\">Alla</label><select class=\"v53-select\" id=\"v53to\">'+ops+'</select></div><div id=\"v53delta\" class=\"v53-row\"></div><p class=\"v53-muted\">'+(cup()?'Champions Cup · Classifiche separate dei gironi A e B. Le prime quattro per girone accedono ai quarti solo dopo la conclusione dei gironi.':'Campionato · Movimenti tra due giornate concluse.')+'</p>';\n  var a=el('v53from'),b=el('v53to');a.value=String(rr[Math.max(0,rr.length-3)].n);b.value=String(rr[rr.length-1].n);\n  function draw(){var before=table(n(a.value)),after=table(n(b.value));el('v53delta').innerHTML=after.map(function(t){\n    var x=before.filter(function(q){return !cup()||q.gir===t.gir}),y=after.filter(function(q){return !cup()||q.gir===t.gir});\n    var old=x.findIndex(function(q){return q.team===t.team})+1,pos=y.findIndex(function(q){return q.team===t.team})+1,d=old-pos;\n    var last=y.length>1&&pos===y.length;\n    return '<div class=\"v53-box\"><small>'+(cup()?'Girone '+esc(t.gir)+' · ':'')+'<span class=\"'+(last?'v65-last':'')+'\">'+pos+'º posto</span> · '+esc(t.team)+'</small><strong>'+(d>0?'↑ '+d+(d===1?' posizione':' posizioni'):d<0?'↓ '+(-d)+(d===-1?' posizione':' posizioni'):'= Stessa posizione')+'</strong><small>'+t.pt+' punti · '+dec(t.fp)+' Fantapunti · DR '+(t.gf-t.gs)+'</small></div>';\n   }).join('')}\n  a.onchange=draw;b.onchange=draw;draw();\n }\n function center(){\n  var cop=cup(),gamesPlayed=cop?completeRounds(true).flatMap(function(g){return g.m.map(function(m,i){return {id:'c'+g.n+'-'+i,day:g.n,gir:m[0],a:m[1],b:m[4],s:m[5],fp1:m[2],fp2:m[3]}})}):allFinished().map(function(x){return {id:x.id,day:x.g.n,a:x.m[0],b:x.m[3],s:x.m[4],fp1:x.m[1],fp2:x.m[2]}});\n  if(!gamesPlayed.length){holder.innerHTML=note('Nessuna partita conclusa di '+(cop?'Champions Cup':'Campionato')+'.');return}\n  gamesPlayed.reverse();\n  holder.innerHTML='<div class=\"v53-field\"><label for=\"v53match\">Scegli la partita</label><select class=\"v53-select\" id=\"v53match\" style=\"flex:1;min-width:0\">'+gamesPlayed.slice(0,70).map(function(x){return '<option value=\"'+esc(x.id)+'\">'+x.day+'ª · '+(cop?'Girone '+esc(x.gir)+' · ':'')+esc(x.a+' '+x.s+' '+x.b)+'</option>'}).join('')+'</select></div><div id=\"v53matchstats\"></div>';\n  var sel=el('v53match');function draw(){var x=gamesPlayed.find(function(m){return m.id===sel.value})||gamesPlayed[0],go=x.s.split('-').map(Number),pts=go[0]===go[1]?[1,1]:go[0]>go[1]?[3,0]:[0,3];\n   el('v53matchstats').innerHTML='<div class=\"v53-row\"><div class=\"v53-box\"><span class=\"v53-mini-title\">RISULTATO UFFICIALE</span><div class=\"score\">'+esc(x.a+' '+x.s+' '+x.b)+'</div><small>'+(cop?'Champions Cup · Girone '+esc(x.gir):'Campionato')+' · '+x.day+'ª giornata</small></div><div class=\"v53-box\"><span class=\"v53-mini-title\">DATI LEGHE FANTACALCIO</span><div class=\"score\">'+dec(x.fp1)+' <em>–</em> '+dec(x.fp2)+'</div><small>Fantapunti · Fonte Leghe Fantacalcio</small></div></div><p class=\"v53-muted\">'+(cop?'Punti assegnati nel girone: ':'Punti in classifica: ')+esc(x.a)+' '+pts[0]+' · '+esc(x.b)+' '+pts[1]+'.</p>';\n  }sel.onchange=draw;draw();\n }\n function switchTo(part){active=part;buttons.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-selected',String(b.dataset.view===part))});if(part==='compare')compare();else center()}\n buttons.addEventListener('click',function(e){var b=e.target.closest('button[data-view]');if(b)switchTo(b.dataset.view)});\n new MutationObserver(function(){switchTo(active)}).observe(document.body,{attributes:true,attributeFilter:['data-mode']});\n switchTo('compare');\n}\n"
+  ],
+  [
+   "var campo=el('campo-link'),q=new URLSearchParams(location.search),sez=q.get('sezione')==='risultati'?'risultati':'classifica';",
+   "var campo=el('campo-link'),q=new URLSearchParams(location.search),sez=q.get('sezione')==='risultati'?'risultati':'classifica';\n  if(q.get('sezione')==='numeri')return; /* 6.5: mantiene la barra originale con Numeri; v65/numeri.js gestisce il contenuto */\n  var numeri=nav.querySelector('a[data-v65-numeri]');"
+  ],
+  [
+   "if(campo){campo.textContent='Campo';campo.removeAttribute('aria-current');nav.appendChild(campo)}",
+   "if(campo){campo.textContent='Campo';campo.removeAttribute('aria-current');nav.appendChild(campo)}\n  if(numeri)nav.appendChild(numeri);"
+  ]
+ ],
+ "girrr/v55/ui.css": [
+  [
+   "ding-right:0}.v55-pollpost:has(+.v55-arch){border-bottom:0}#v53sondaggio:has(.v55-arch){border-bottom:0!important}\n",
+   "ding-right:0}.v55-pollpost:has(+.v55-arch){border-bottom:0}#v53sondaggio:has(.v55-arch){border-bottom:0!important}\n\n/* 6.5 · Correzione di sistema: gli approfondimenti cambiano competizione in Lega e Stadio. */\nbody[data-v53=board] #v53board{border-left:8px solid #d62839!important;overflow:clip}\nbody[data-v53=board][data-mode=coppa][data-v53-skin=lega] #v53board{border-left-color:#3d93d6!important}\nbody[data-v53=board][data-v53-skin=stadio] #v53board{border-left-color:#ffd166!important}\n#v53board>summary{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:65px;cursor:pointer;list-style:none}\n#v53board>summary::-webkit-details-marker{display:none}\n#v53board>summary .v65-arrow{font-size:24px;flex:none;transition:transform .35s ease}\n#v53board[open]>summary .v65-arrow{transform:rotate(180deg)}\n#v53board .v65-last{color:#ff5d76!important;font-weight:900}\nbody[data-v53=board] .panel tr.zona-last .numpos{color:#ff6578!important}\n@supports (interpolate-size:allow-keywords){#v53board{interpolate-size:allow-keywords}#v53board::details-content{block-size:0;opacity:0;overflow:hidden;transition:block-size .38s cubic-bezier(.2,.6,.35,1),opacity .3s;transition-behavior:allow-discrete}#v53board[open]::details-content{block-size:auto;opacity:1}}\n@media(prefers-reduced-motion:reduce){#v53board::details-content,#v53board>summary .v65-arrow{transition:none!important}}\n"
+  ]
+ ],
+ "girrr/tabellone.html": [
+  [
+   "<section class=\"v53 v53-extras v53-panel\" id=\"v53board\">\n <div class=\"v53-sectionhead\"><div><div class=\"v53-kicker\">APPROFONDIMENTI</div><h2>Dentro la partita</h2><div class=\"v53-sub\">Il Tabellone sopra resta identico, con le sue giornate e statistiche.</div></div></div>\n <div id=\"v53boardtabs\" class=\"v53-pills\" role=\"tablist\" aria-label=\"Approfondimenti del Tabellone\"><button class=\"v53-pill\" data-view=\"compare\" aria-selected=\"true\">Confronta le giornate</button><button class=\"v53-pill\" data-view=\"center\" aria-selected=\"false\">Centro partita</button></div>\n <div id=\"v53boardcontent\" class=\"v53-board\"><div class=\"v53-empty\">Carico gli approfondimenti…</div></div>\n</section>",
+   "<details class=\"v53 v53-extras v53-panel\" id=\"v53board\">\n <summary class=\"v53-sectionhead\"><span><span class=\"v53-kicker\">APPROFONDIMENTI</span><strong style=\"display:block;font-size:21px\">Dentro la partita</strong><span class=\"v53-sub\">Statistiche e confronto della competizione scelta.</span></span><span class=\"v65-arrow\" aria-hidden=\"true\">⌄</span></summary>\n <div class=\"v65-body\"><div id=\"v53boardtabs\" class=\"v53-pills\" role=\"tablist\" aria-label=\"Approfondimenti\"><button class=\"v53-pill\" data-view=\"compare\" aria-selected=\"true\">Confronta le giornate</button><button class=\"v53-pill\" data-view=\"center\" aria-selected=\"false\">Centro partita</button></div>\n <div id=\"v53boardcontent\" class=\"v53-board\"><div class=\"v53-empty\">Carico gli approfondimenti…</div></div></div>\n</details>"
+  ],
+  [
+   "v55/ui.css?v=55r10",
+   "v55/ui.css?v=65fix"
+  ],
+  [
+   "condividi.js?v=623",
+   "condividi.js?v=65fix"
+  ],
+  [
+   "<nav class=\"giornata-nav\" aria-label=\"Giornata\"><a aria-current=\"page\" href=\"tabellone.html\">Risultati e classifica</a><a id=\"campo-link\" href=\"campo.html\">Campo · Centro della giornata ›</a></nav>",
+   "<nav class=\"giornata-nav\" aria-label=\"Sezioni del Tabellone\"><a href=\"tabellone.html?sezione=risultati\">Risultati</a><a href=\"tabellone.html?sezione=classifica\">Classifica</a><a id=\"campo-link\" href=\"campo.html\">Campo</a><a href=\"tabellone.html?sezione=numeri\" data-v65-numeri>Numeri</a></nav>"
+  ],
+  [
+   "</body>",
+   "<script src=\"v65/numeri.js?v=65fix\" defer></script>\n</body>"
+  ],
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ],
+  [
+   ".panel h3:not(:first-child){margin-top:22px}",
+   ".panel h3:not(:first-child){margin-top:22px}.panel .swap h3{letter-spacing:.015em}"
+  ],
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "stadio/girrr/tabellone.html": [
+  [
+   "<section class=\"v53 v53-extras v53-panel\" id=\"v53board\">\n <div class=\"v53-sectionhead\"><div><div class=\"v53-kicker\">APPROFONDIMENTI</div><h2>Dentro la partita</h2><div class=\"v53-sub\">Il Tabellone sopra resta identico, con le sue giornate e statistiche.</div></div></div>\n <div id=\"v53boardtabs\" class=\"v53-pills\" role=\"tablist\" aria-label=\"Approfondimenti del Tabellone\"><button class=\"v53-pill\" data-view=\"compare\" aria-selected=\"true\">Confronta le giornate</button><button class=\"v53-pill\" data-view=\"center\" aria-selected=\"false\">Centro partita</button></div>\n <div id=\"v53boardcontent\" class=\"v53-board\"><div class=\"v53-empty\">Carico gli approfondimenti…</div></div>\n</section>",
+   "<details class=\"v53 v53-extras v53-panel\" id=\"v53board\">\n <summary class=\"v53-sectionhead\"><span><span class=\"v53-kicker\">APPROFONDIMENTI</span><strong style=\"display:block;font-size:21px\">Dentro la partita</strong><span class=\"v53-sub\">Statistiche e confronto della competizione scelta.</span></span><span class=\"v65-arrow\" aria-hidden=\"true\">⌄</span></summary>\n <div class=\"v65-body\"><div id=\"v53boardtabs\" class=\"v53-pills\" role=\"tablist\" aria-label=\"Approfondimenti\"><button class=\"v53-pill\" data-view=\"compare\" aria-selected=\"true\">Confronta le giornate</button><button class=\"v53-pill\" data-view=\"center\" aria-selected=\"false\">Centro partita</button></div>\n <div id=\"v53boardcontent\" class=\"v53-board\"><div class=\"v53-empty\">Carico gli approfondimenti…</div></div></div>\n</details>"
+  ],
+  [
+   "v55/ui.css?v=55r10",
+   "v55/ui.css?v=65fix"
+  ],
+  [
+   "condividi.js?v=623",
+   "condividi.js?v=65fix"
+  ],
+  [
+   "<nav class=\"giornata-nav\" aria-label=\"Giornata\"><a aria-current=\"page\" href=\"tabellone.html\">Risultati e classifica</a><a id=\"campo-link\" href=\"campo.html\">Campo · Centro della giornata ›</a></nav>",
+   "<nav class=\"giornata-nav\" aria-label=\"Sezioni del Tabellone\"><a href=\"tabellone.html?sezione=risultati\">Risultati</a><a href=\"tabellone.html?sezione=classifica\">Classifica</a><a id=\"campo-link\" href=\"campo.html\">Campo</a><a href=\"tabellone.html?sezione=numeri\" data-v65-numeri>Numeri</a></nav>"
+  ],
+  [
+   "</body>",
+   "<script src=\"../../girrr/v65/numeri.js?v=65fix\" defer></script>\n</body>"
+  ],
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ],
+  [
+   ".panel h3:not(:first-child){margin-top:22px}",
+   ".panel h3:not(:first-child){margin-top:22px}.panel .swap h3{letter-spacing:.015em}"
+  ],
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "girrr/v60/tifosi.js": [
+  [
+   "+link('curva.html','pt-mvp','Il voto nella Curva')+",
+   "+(page==='curva.html'?link('app.html','sport','Squadra della settimana in Girrr Sport'):link('curva.html','pt-mvp','Il voto nella Curva'))+"
+  ],
+  [
+   "function redrawPoll(){const p=document.getElementById('pt-mvp');if(p)p.outerHTML=poll();const a=document.getElementById('pt-archivio');",
+   "function redrawPoll(){const p=document.getElementById('pt-mvp');if(p){const giurie=p.querySelector('[data-pt-giurie]');if(giurie)window.ptGiurieAperte=giurie.open;p.outerHTML=poll()}const a=document.getElementById('pt-archivio');"
+  ],
+  [
+   " document.querySelectorAll('#pt-home-story,#pt-storia,#pt-mvp,#pt-derby,#pt-archivio').forEach(el=>el.remove());mount();",
+   " const giurie=document.querySelector('#pt-mvp [data-pt-giurie]');if(giurie)window.ptGiurieAperte=giurie.open;\n document.querySelectorAll('#pt-home-story,#pt-storia,#pt-mvp,#pt-derby,#pt-archivio').forEach(el=>el.remove());mount();"
+  ],
+  [
+   "if(d&&d.matches&&d.matches('[data-pt-giurie]'))window.ptGiurieAperte=d.open",
+   "if(d&&d.isConnected&&d.matches&&d.matches('[data-pt-giurie]'))window.ptGiurieAperte=d.open"
+  ]
+ ],
+ "girrr/v60/tifosi.css": [
+  [
+   "93d6}\n\n.pt-box .pt-status{color:var(--pt-sub)}.pt-box button[disabled]{cursor:wait;opacity:.6}\n",
+   "93d6}\n\n.pt-box .pt-status{color:var(--pt-sub)}.pt-box button[disabled]{cursor:wait;opacity:.6}\n\n/* 6.5 · Fix permanenti della Curva (Lega e Stadio, iPhone/Android, chiaro/scuro), non della skin evento. */\nbody[data-v53=curva] #v53sondaggio{margin:12px 14px!important;padding:10px 0!important;background:var(--bg2)!important;border:1px solid var(--ln)!important;border-radius:16px!important;min-width:0}\nbody[data-v53=curva] #v53sondaggio .v55-pollpost{padding:12px 14px}\nbody[data-v53=curva] #pt-mvp details[data-pt-giurie] ul{padding-inline-start:1.6em;margin-inline:0;list-style-position:outside}\nbody[data-v53=curva] #pt-mvp details[data-pt-giurie] li{overflow-wrap:anywhere;padding-inline-start:2px}\nbody[data-v53=curva] #pt-mvp details[data-pt-giurie][open]>:not(summary){animation:none!important}\nbody[data-v53=curva] #pt-mvp button.v62-cambia,\nbody[data-v53=curva] .v55-pollpost button.v62-cambia{display:inline-flex;align-items:center;justify-content:center;border:0!important;border-radius:999px!important;min-height:36px;padding:9px 16px!important;margin:8px 0 0!important;background:#d62839!important;color:#fff!important;font:800 13px/1.2 Inter,system-ui,sans-serif!important}\nhtml[data-colori-sq] body[data-v53=curva] #pt-mvp button.v62-cambia,\nhtml[data-colori-sq] body[data-v53=curva] .v55-pollpost button.v62-cambia{background:var(--sq1)!important}\n@media(max-width:359px){body[data-v53=curva] #v53sondaggio{margin-inline:8px!important}}\n@media(prefers-reduced-motion:reduce){body[data-v53=curva] #pt-mvp details[data-pt-giurie] *{animation:none!important;transition:none!important}}\n"
+  ]
+ ],
+ "sondaggi62.js": [
+  [
+   "'+(/\\/stadio\\//.test(location.pathname)?'background:#ffd166;color:#1d2a52':'background:#d62839;color:#fff')+'",
+   "'+'background:#d62839;color:#fff'+'"
+  ]
+ ],
+ "girrr/curva.html": [
+  [
+   "tifosi.css\" data-girrr-tifosi",
+   "tifosi.css?v=65fix\" data-girrr-tifosi"
+  ],
+  [
+   "tifosi.js?v=622",
+   "tifosi.js?v=65fix"
+  ],
+  [
+   "sondaggi62.js?v=621",
+   "sondaggi62.js?v=65fix"
+  ],
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ]
+ ],
+ "stadio/girrr/curva.html": [
+  [
+   "tifosi.css\" data-girrr-tifosi",
+   "tifosi.css?v=65fix\" data-girrr-tifosi"
+  ],
+  [
+   "tifosi.js?v=622",
+   "tifosi.js?v=65fix"
+  ],
+  [
+   "sondaggi62.js?v=621",
+   "sondaggi62.js?v=65fix"
+  ],
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ]
+ ],
+ "girrr/curva-banca.js": [
+  [
+   "window.CVB={",
+   "/* 6.5 · Edizione speciale nella Curva: 19–27 novembre 2026, ora italiana.\n   Sono post di PERSONAGGI, non degli account ufficiali. Si pubblicano una sola\n   volta all'ora stabilita e spariscono automaticamente alla scadenza dell'evento.\n   I normali post automatici mantengono invece la loro finestra di 14 giorni. */\nvar NOTTE_INIZIO=ts(2026,11,19,0,0),NOTTE_FINE=ts(2026,11,28,0,0);\nvar NOTTE_POST=[\n ['il_barista',19,10,30,\"Al bancone è arrivata Notte Tropicale: caffè freddo, luci rosa e la solita discussione sul 3-5-2.\"],\n ['la_suocera',19,19,20,\"Mio genero è chiuso in camera da stamattina. Dice che sta esplorando Miami, ma la formazione l'ha fatta?\"],\n ['telecronista_stanco',20,11,10,\"Ho passato la notte al nuovo GTA 6. E adesso dovrei pure commentare il calcio: mi serve un supplementare di sonno.\"],\n ['nonno_cesare',20,20,10,\"Ai miei tempi si correva dietro a un pallone vero, non a un'auto sullo schermo. Però quella Miami ha delle belle palme.\"],\n ['tifoso_arrabbiato',21,12,15,\"Tutti sul nuovo gioco e nessuno a preparare la formazione! Poi la domenica vi lamentate dei risultati!\"],\n ['pizzeria_fuorigioco',21,19,30,\"La pizza Notte Tropicale è in carta per questa settimana: sapori accesi e tanta voglia di calcio, anche dopo il gioco.\"],\n ['il_romantico_del_pallone',22,10,55,\"Neon, inseguimenti, clacson: a me GTA 6 sembra un po' caotico. Preferisco il silenzio prima di un calcio di rigore.\"],\n ['il_filosofo_del_pallone',22,21,5,\"Qualcuno chiama quel gioco buzzurro, qualcuno lo chiama libertà. Io chiamo libertà scegliere il modulo senza polemiche.\"],\n ['il_super_tifoso',23,10,25,\"GTA 6 avrà tutte le auto di Miami, ma il sorpasso più importante resta quello in classifica. Sempre che arrivi.\"],\n ['fidanzata_stufa',23,18,35,\"Ha detto: solo un'ultima missione. La stessa frase che usa quando manca un minuto alla chiusura delle formazioni.\"],\n ['il_tassista',24,9,50,\"Tutti vogliono correre per Miami in un videogioco. Io oggi ho fatto due chilometri nel traffico e non mi sono divertito.\"],\n ['mister_divano',24,19,10,\"Vi siete allenati a guidare tutta la settimana. Adesso vediamo chi sa mettere in campo undici giocatori.\"]\n];\nfunction postNotteTropicale(ms,SQ){\n /* Si possono pubblicare nuovi messaggi solo fra il 19 e il 27 novembre.\n    Dopo il 27 gli stessi messaggi rimangono nello storico della Curva. */\n var fuori=[],i,p,x,c,rs,j;\n for(i=0;i<NOTTE_POST.length;i++){\n  x=NOTTE_POST[i];p={k:'v:notte-tropicale:'+i,a:x[0],x:x[4],ts:ts(2026,11,x[1],x[2],x[3]),r:[],cat:'gen'};\n  if(p.ts<NOTTE_INIZIO||p.ts>=NOTTE_FINE||p.ts>ms)continue;\n  c=conta(p.k,1);p.ap=c.ap;p.ril=c.ril;p.v=c.v;\n  rs=[];for(j=0;j<7;j++)rs=rs.concat(reazioni(p.k+'#'+j,p.ts,ms,SQ,p.x).r);\n  p.r=rs.filter(function(q){return q.ts<=ms}).sort(function(a,b){return a.ts-b.ts});\n  fuori.push(p);\n }\n return fuori;\n}\nwindow.CVB={"
+  ],
+  [
+   " /* Lega e Giornale legati ai risultati */",
+   " postNotteTropicale(ms,SQ).forEach(function(p){all.push(p)});\n /* Lega e Giornale legati ai risultati */"
+  ]
+ ],
+ "stadio/girrr/curva-banca.js": [
+  [
+   "window.CVB={",
+   "/* 6.5 · Edizione speciale nella Curva: 19–27 novembre 2026, ora italiana.\n   Sono post di PERSONAGGI, non degli account ufficiali. Si pubblicano una sola\n   volta all'ora stabilita e spariscono automaticamente alla scadenza dell'evento.\n   I normali post automatici mantengono invece la loro finestra di 14 giorni. */\nvar NOTTE_INIZIO=ts(2026,11,19,0,0),NOTTE_FINE=ts(2026,11,28,0,0);\nvar NOTTE_POST=[\n ['il_barista',19,10,30,\"Al bancone è arrivata Notte Tropicale: caffè freddo, luci rosa e la solita discussione sul 3-5-2.\"],\n ['la_suocera',19,19,20,\"Mio genero è chiuso in camera da stamattina. Dice che sta esplorando Miami, ma la formazione l'ha fatta?\"],\n ['telecronista_stanco',20,11,10,\"Ho passato la notte al nuovo GTA 6. E adesso dovrei pure commentare il calcio: mi serve un supplementare di sonno.\"],\n ['nonno_cesare',20,20,10,\"Ai miei tempi si correva dietro a un pallone vero, non a un'auto sullo schermo. Però quella Miami ha delle belle palme.\"],\n ['tifoso_arrabbiato',21,12,15,\"Tutti sul nuovo gioco e nessuno a preparare la formazione! Poi la domenica vi lamentate dei risultati!\"],\n ['pizzeria_fuorigioco',21,19,30,\"La pizza Notte Tropicale è in carta per questa settimana: sapori accesi e tanta voglia di calcio, anche dopo il gioco.\"],\n ['il_romantico_del_pallone',22,10,55,\"Neon, inseguimenti, clacson: a me GTA 6 sembra un po' caotico. Preferisco il silenzio prima di un calcio di rigore.\"],\n ['il_filosofo_del_pallone',22,21,5,\"Qualcuno chiama quel gioco buzzurro, qualcuno lo chiama libertà. Io chiamo libertà scegliere il modulo senza polemiche.\"],\n ['il_super_tifoso',23,10,25,\"GTA 6 avrà tutte le auto di Miami, ma il sorpasso più importante resta quello in classifica. Sempre che arrivi.\"],\n ['fidanzata_stufa',23,18,35,\"Ha detto: solo un'ultima missione. La stessa frase che usa quando manca un minuto alla chiusura delle formazioni.\"],\n ['il_tassista',24,9,50,\"Tutti vogliono correre per Miami in un videogioco. Io oggi ho fatto due chilometri nel traffico e non mi sono divertito.\"],\n ['mister_divano',24,19,10,\"Vi siete allenati a guidare tutta la settimana. Adesso vediamo chi sa mettere in campo undici giocatori.\"]\n];\nfunction postNotteTropicale(ms,SQ){\n /* Si possono pubblicare nuovi messaggi solo fra il 19 e il 27 novembre.\n    Dopo il 27 gli stessi messaggi rimangono nello storico della Curva. */\n var fuori=[],i,p,x,c,rs,j;\n for(i=0;i<NOTTE_POST.length;i++){\n  x=NOTTE_POST[i];p={k:'v:notte-tropicale:'+i,a:x[0],x:x[4],ts:ts(2026,11,x[1],x[2],x[3]),r:[],cat:'gen'};\n  if(p.ts<NOTTE_INIZIO||p.ts>=NOTTE_FINE||p.ts>ms)continue;\n  c=conta(p.k,1);p.ap=c.ap;p.ril=c.ril;p.v=c.v;\n  rs=[];for(j=0;j<7;j++)rs=rs.concat(reazioni(p.k+'#'+j,p.ts,ms,SQ,p.x).r);\n  p.r=rs.filter(function(q){return q.ts<=ms}).sort(function(a,b){return a.ts-b.ts});\n  fuori.push(p);\n }\n return fuori;\n}\nwindow.CVB={"
+  ],
+  [
+   " /* Lega e Giornale legati ai risultati */",
+   " postNotteTropicale(ms,SQ).forEach(function(p){all.push(p)});\n /* Lega e Giornale legati ai risultati */"
+  ]
+ ],
+ "girrr/v55/destinazioni55.js": [
+  [
+   "var sito=/^\\/o-fant-a-girrr\\//.test(location.pathname),base=new URL('/o-fant-a-girrr/',location.href).href,",
+   "/* 6.5 (Claude): la base degli indirizzi si ricava anche dalla posizione di questo file (girrr/v55/), così i link funzionano anche in una copia di prova fuori da /o-fant-a-girrr/. Sul sito vero il risultato è identico a prima. */var cs65=document.currentScript,vero65=/^\\/o-fant-a-girrr\\//.test(location.pathname),sb65=cs65&&/\\/girrr\\/v55\\/destinazioni55\\.js/.test(cs65.src)?new URL('../../',cs65.src):null,sito=vero65||!!(sb65&&location.pathname.indexOf(sb65.pathname)===0&&/^(stadio\\/)?girrr\\/[^\\/]*$/.test(location.pathname.slice(sb65.pathname.length))),base=vero65||!sb65?new URL('/o-fant-a-girrr/',location.href).href:sb65.href,"
+  ]
+ ],
+ "girrr/campo.html": [
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ]
+ ],
+ "girrr/app.html": [
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ],
+  [
+   "</head>",
+   "<style>/* 6.5: durante il cambio di scheda l'altezza resta ferma, ma la fila delle schede non si allunga */#view{align-content:start}/* Moviola: il Verdetto sta in fondo, alla stessa altezza in tutte le schede */.card.mv{display:flex;flex-direction:column}.card.mv>.mvv{margin-top:auto}</style></head>"
+  ],
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "girrr/index.html": [
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ],
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "girrr/versioni.html": [
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ],
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "girrr/notifiche.html": [
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ],
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "stadio/girrr/campo.html": [
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ]
+ ],
+ "stadio/girrr/app.html": [
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ],
+  [
+   "</head>",
+   "<style>/* 6.5: durante il cambio di scheda l'altezza resta ferma, ma la fila delle schede non si allunga */#view{align-content:start}/* Moviola: il Verdetto sta in fondo, alla stessa altezza in tutte le schede */.card.mv{display:flex;flex-direction:column}.card.mv>.mvv{margin-top:auto}</style></head>"
+  ]
+ ],
+ "stadio/girrr/index.html": [
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ],
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "stadio/girrr/versioni.html": [
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ],
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "stadio/girrr/notifiche.html": [
+  [
+   "destinazioni55.js?v=55r8",
+   "destinazioni55.js?v=65"
+  ],
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "girrr/albo.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "girrr/giornale.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "girrr/squadre.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "girrr/totogirrr.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "girrr/derby.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "girrr/rivalita.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "girrr/statistiche.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "stadio/girrr/albo.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "stadio/girrr/totogirrr.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "stadio/girrr/derby.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "stadio/girrr/rivalita.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "stadio/girrr/statistiche.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "stadio/girrr/giornale.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ],
+ "stadio/girrr/squadre.html": [
+  [
+   "@keyframes strisce{to{transform:translate3d(79.45px,0,0)}}",
+   "@keyframes strisce{from{transform:translate3d(-79.45px,0,0)}to{transform:none}}"
+  ]
+ ]
+}

@@ -1,0 +1,45 @@
+{
+ "nota": "Negozio delle skin di O Girrr (Gianluca, 17 novembre 2026: «terremo uno store per le skin, così se le occasioni si ripetono le riusiamo»). Ogni skin vive in temi/<id>/ e ha una riga in EVENTI di temi/evento-loader.js. Una skin archiviata non si accende più da sola ma si prova sempre a mano con ?evento=<id>. Per rimetterla: nuove date in evento-loader.js (o ogniAnno) e rilascio con il «Vai» di Gianluca.",
+ "skin": [
+  {
+   "id": "notte-tropicale",
+   "nome": "Notte Tropicale",
+   "occasione": "Edizione speciale per l'uscita di un grande gioco ambientato a Miami",
+   "date": "19–27 novembre 2026 (dalle 00:00 del 19 alle 23:59 del 27, ora italiana)",
+   "stato": "In prova nel Lab",
+   "descrizione": "Grafica unica per tutti (niente Lega o Stadio): foto vere di Miami al tramonto e di notte, titoli in stampatello inclinato e corsivo al neon, riquadri obliqui con angoli morbidi, viola pieno, Campionato arancio-rosa-rosso e Champions Cup ciano-lilla. In Home big match, classifica e numeri della stagione.",
+   "cartella": "temi/notte-tropicale/",
+   "anteprime": ["temi/notte-tropicale/anteprima-telefono.jpg", "temi/notte-tropicale/anteprima-pc.jpg"],
+   "prova": [
+    ["Home", "lab/integrata-62/girrr/index.html?evento=notte-tropicale"],
+    ["Tabellone", "lab/integrata-62/girrr/tabellone.html?evento=notte-tropicale"],
+    ["Campo", "lab/integrata-62/girrr/campo.html?evento=notte-tropicale"],
+    ["Totogirrr", "lab/integrata-62/girrr/totogirrr.html?evento=notte-tropicale"]
+   ],
+   "varianti": "Sfondo: ?evento-sfondo=notte (Ocean Drive di notte), tramonto, scena (disegnata). Parti messe da parte: ?evento-extra=barra,menu.",
+   "crediti": "temi/notte-tropicale/CREDITI.md"
+  },
+  {
+   "id": "inverno",
+   "nome": "Inverno",
+   "occasione": "Da fare: idea di Gianluca per il periodo natalizio",
+   "date": "Da decidere",
+   "stato": "Idea",
+   "descrizione": "Skin invernale: ancora da disegnare.",
+   "cartella": "",
+   "anteprime": [],
+   "prova": []
+  },
+  {
+   "id": "anno-nuovo",
+   "nome": "Anno nuovo",
+   "occasione": "Da fare: idea di Gianluca per Capodanno",
+   "date": "Da decidere",
+   "stato": "Idea",
+   "descrizione": "Skin per l'anno nuovo: ancora da disegnare.",
+   "cartella": "",
+   "anteprime": [],
+   "prova": []
+  }
+ ]
+}
