@@ -177,6 +177,11 @@
   box-shadow:0 0 0 1px var(--nt-bordo) inset!important;padding:5px!important}
 :root[data-event-theme="notte-tropicale"] body .giornata-nav.giornata-nav.giornata-nav > :is(button,a){border-radius:3px!important;font-style:italic;padding:13px 16px!important}
 :root[data-event-theme="notte-tropicale"] body .giornata-nav.giornata-nav.giornata-nav > :is(button[aria-selected=true],a[aria-current]){box-shadow:0 0 16px rgba(255,79,163,.55)!important}
+/* Tabellone: le quattro schede (Classifica, Risultati, Campo, Numeri) su una riga; Numeri accesa quando ci sei (Gianluca, 19 novembre) */
+:root[data-event-theme="notte-tropicale"] body .giornata-nav.giornata-nav.giornata-nav:has(> :nth-child(4)){flex-wrap:nowrap!important;gap:6px!important;overflow:hidden!important}
+:root[data-event-theme="notte-tropicale"] body .giornata-nav.giornata-nav.giornata-nav:has(> :nth-child(4)) > :is(button,a){flex:1 1 0!important;min-width:0!important;padding:12px 4px!important;white-space:nowrap!important;justify-content:center!important;text-align:center!important}
+@media (max-width:480px){:root[data-event-theme="notte-tropicale"] body .giornata-nav.giornata-nav.giornata-nav:has(> :nth-child(4)) > :is(button,a){font-size:13px!important}}
+:root[data-event-theme="notte-tropicale"] body .giornata-nav.giornata-nav.giornata-nav > a[aria-current]{--nt-tab-bg:linear-gradient(100deg,#ffb86b,#ff5ca8 55%,#e8364f)!important;color:#22052e!important}
 
 /* 4c. Riga con le date sotto il titolo della Home (idea di ChatGPT nella sua anteprima) */
 :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .hero .tag::before{content:'Edizione speciale · 19–27 novembre';display:block;
@@ -422,6 +427,8 @@
 :root[data-event-theme="notte-tropicale"] .chips button.sel.nt-tab{--nt-tab-bg:linear-gradient(100deg,#ffb86b,#ff5ca8 55%,#e8364f)!important;color:#22052e!important}
 :root[data-event-theme="notte-tropicale"] body[data-mode="coppa"] .chips button.sel.nt-tab{--nt-tab-bg:linear-gradient(100deg,#00f0ff,#5aa8ff 55%,#bc6cff)!important}
 :root[data-event-theme="notte-tropicale"] .matches .gamebtn.nt-tab:is(.active,.on,[aria-pressed=true],[aria-selected=true]){--nt-tab-bg:linear-gradient(100deg,#ffb86b,#ff5ca8 55%,#e8364f)!important}
+/* Campo in Champions Cup: anche la partita scelta passa al ciano-lilla della Coppa (Gianluca, 19 novembre) */
+:root[data-event-theme="notte-tropicale"] :is(body[data-comp="coppa"],body[data-mode="coppa"]) .matches .gamebtn.nt-tab:is(.active,.on,[aria-pressed=true],[aria-selected=true]),:root[data-event-theme="notte-tropicale"] :is(body[data-comp="coppa"],body[data-mode="coppa"]) .chips button.sel.nt-tab{--nt-tab-bg:linear-gradient(100deg,#00f0ff,#5aa8ff 55%,#bc6cff)!important;color:#12062a!important;box-shadow:0 0 16px rgba(0,240,255,.45)!important}
 :root[data-event-theme="notte-tropicale"] body[data-v53="home"] :is(.vv-avviso,.v53-home,.lg-leghe,.mini .mn,#cvw,.sp).nt-obl{--nt-banda:var(--nt-rosa)!important}
 :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .vv-avviso i{color:var(--nt-arancio)!important}
 :root[data-event-theme="notte-tropicale"] body[data-v53="home"] .pt-box{border-left-color:var(--nt-rosa)!important}
@@ -580,6 +587,8 @@
 :root[data-event-theme="notte-tropicale"] .v53-notifications .v53-btn.nt-tab:not(.nt-on){
   color:#fff!important;
 }
+/* Spogliatoio: il logo resta dentro la scheda obliqua dell'intestazione (Gianluca, 19 novembre) */
+:root[data-event-theme="notte-tropicale"] body:has(> .wrap > #tabs) > .wrap > header.nt-obl.nt-obl{padding-left:30px!important}
 /* Spogliatoio: nessuna alterazione dei campi e dei movimenti dei giocatori. */
 :root[data-event-theme="notte-tropicale"] #app .seg,
 :root[data-event-theme="notte-tropicale"] #app .calnav,
@@ -815,6 +824,15 @@
   :root[data-event-theme="notte-tropicale"] :is(.hero h1,.top h1,header h1){animation:none!important}
 }
 
+/* Versioni: il titolo della versione sta al centro della scheda, con lo stesso spazio sopra e sotto; da chiusa niente fascia vuota (Gianluca, 19 novembre) */
+:root[data-event-theme="notte-tropicale"] .vv-v > .vv-h{margin:9px 10px 9px 0!important}
+:root[data-event-theme="notte-tropicale"] .vv-v:not(.aperta) > .vv-c.vv-c{padding-top:0!important;padding-bottom:0!important;margin-bottom:0!important}
+:root[data-event-theme="notte-tropicale"] .vv-v > .vv-c{transition:padding .32s ease,margin .32s ease}
+@media (prefers-reduced-motion:reduce){:root[data-event-theme="notte-tropicale"] .vv-v > .vv-c{transition:none}}
+/* Versioni · Messaggio: testo e margini proporzionati al riquadro del 6.5 (Gianluca, 19 novembre) */
+:root[data-event-theme="notte-tropicale"] .vv-v .vv-c,:root[data-event-theme="notte-tropicale"] .vv-v .vv-c :is(p,span,b,strong,div){font-size:14px!important}
+:root[data-event-theme="notte-tropicale"] .vv-v .vv-c{line-height:1.5!important;padding-top:12px!important;padding-bottom:0!important}
+:root[data-event-theme="notte-tropicale"] .vv-v .vv-c.vv-c{margin-left:5px!important;max-width:calc(100% - 27px)!important}   /* centrato: stesso spazio a sinistra (dopo la banda) e a destra */
 /* 6.5 · Girrr Sport e Carriera su PC (Gianluca, 18 novembre sera) */
 /* Giornale: la copertina resta dentro il riquadro obliquo, un po' più piccola e spostata a destra */
 :root[data-event-theme="notte-tropicale"] #view .cov.gcov.nt-obl{padding-left:30px!important}
@@ -841,13 +859,31 @@
 :root[data-event-theme="notte-tropicale"] .hero h1.nt-neon-guasto i.nt-l{animation:nt-guasto 2.4s linear 1 both}
 @media (prefers-reduced-motion: reduce){:root[data-event-theme="notte-tropicale"] .hero h1 i.nt-l{animation:none!important}}
 /* Versioni: il riquadro interno del messaggio resta dentro quello obliquo (Gianluca, 18 novembre) */
-:root[data-event-theme="notte-tropicale"] .vv-v .vv-c{margin-left:5px!important;margin-right:22px!important;margin-bottom:16px!important;box-sizing:border-box;max-width:calc(100% - 27px)!important}
+:root[data-event-theme="notte-tropicale"] .vv-v .vv-c{margin-left:22px!important;margin-right:22px!important;margin-bottom:16px!important;box-sizing:border-box;max-width:calc(100% - 44px)!important}
+
+/* 6.5.1 · Campo: le due competizioni seguono la forma squadrata/obliqua della 6.5,
+   senza cambiare la scelta Campionato/Champions Cup e i relativi colori. */
+:root[data-event-theme="notte-tropicale"] body[data-v53="campo"] .comp-sw.comp-sw {
+  border-radius:12px!important;padding:5px!important;
+  transform:skewX(-10deg);
+  background:var(--nt-fila)!important;
+  box-shadow:inset 0 0 0 1px var(--nt-bordo)!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="campo"] .comp-sw.comp-sw i {
+  top:5px;bottom:5px;left:5px;width:calc(50% - 5px);
+  border-radius:5px!important;
+}
+:root[data-event-theme="notte-tropicale"] body[data-v53="campo"] .comp-sw.comp-sw button {
+  border-radius:5px!important;transform:skewX(10deg);
+  font-style:italic!important;
+}
+
+/* Changelog di Versioni: riquadri viola più piccoli, il titolo dell'area non tocca il bordo (Gianluca, 19 novembre) */
 :root[data-event-theme="notte-tropicale"] .vv-v .vv-area.nt-obl.nt-obl{padding:12px 14px 10px 24px!important;margin:0 0 10px!important}
 :root[data-event-theme="notte-tropicale"] .vv-v .vv-area h4{margin:0 0 6px!important}
 :root[data-event-theme="notte-tropicale"] .vv-v .vv-area :is(li,p){font-size:13px!important;line-height:1.45!important;margin:0 0 4px!important}
 :root[data-event-theme="notte-tropicale"] .vv-v .vv-area ul{margin:0!important;padding-left:18px!important}
-:root[data-event-theme="notte-tropicale"] .vv-v .vv-c,:root[data-event-theme="notte-tropicale"] .vv-v .vv-c :is(p,span,b,strong,div){font-size:14px!important}
-:root[data-event-theme="notte-tropicale"] .vv-v .vv-c{line-height:1.5!important;padding-top:12px!important;padding-bottom:0!important}
 
-/* Campo in Champions Cup: anche la partita scelta passa al ciano-lilla della Coppa (Gianluca, 19 novembre) */
-:root[data-event-theme="notte-tropicale"] :is(body[data-comp="coppa"],body[data-mode="coppa"]) .matches .gamebtn.nt-tab:is(.active,.on,[aria-pressed=true],[aria-selected=true]),:root[data-event-theme="notte-tropicale"] :is(body[data-comp="coppa"],body[data-mode="coppa"]) .chips button.sel.nt-tab{--nt-tab-bg:linear-gradient(100deg,#00f0ff,#5aa8ff 55%,#bc6cff)!important;color:#12062a!important;box-shadow:0 0 16px rgba(0,240,255,.45)!important}
+/* 6.5 · Squadre: i punteggi rientrano di 18px sia nei risultati recenti sia nella classifica girone Champions Cup. */
+:root[data-event-theme="notte-tropicale"] #sch .card > .top5 > .g > b,
+:root[data-event-theme="notte-tropicale"] #sch .card > .ris > .s{margin-right:18px!important}
