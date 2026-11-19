@@ -824,3 +824,6 @@
 :root[data-event-theme="notte-tropicale"] .vv-v .vv-area ul{margin:0!important;padding-left:18px!important}
 :root[data-event-theme="notte-tropicale"] .vv-v .vv-c,:root[data-event-theme="notte-tropicale"] .vv-v .vv-c :is(p,span,b,strong,div){font-size:14px!important}
 :root[data-event-theme="notte-tropicale"] .vv-v .vv-c{line-height:1.5!important;padding-top:12px!important;padding-bottom:0!important}
+
+/* Campo in Champions Cup: anche la partita scelta passa al ciano-lilla della Coppa (Gianluca, 19 novembre) */
+:root[data-event-theme="notte-tropicale"] :is(body[data-comp="coppa"],body[data-mode="coppa"]) .matches .gamebtn.nt-tab:is(.active,.on,[aria-pressed=true],[aria-selected=true]),:root[data-event-theme="notte-tropicale"] :is(body[data-comp="coppa"],body[data-mode="coppa"]) .chips button.sel.nt-tab{--nt-tab-bg:linear-gradient(100deg,#00f0ff,#5aa8ff 55%,#bc6cff)!important;color:#12062a!important;box-shadow:0 0 16px rgba(0,240,255,.45)!important}
