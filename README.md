@@ -33,7 +33,7 @@ Il Changelog ha filtri compatti combinabili: ricerca, menu Area e calendario Dat
 | Collaudo automatico su telefono e PC, Chromium e WebKit (Safari) | https://github.com/giandjcosta/o-girrr-registro/actions/workflows/claude-collaudo-55.yml |
 | Prova del Registro con Chromium, WebKit e Firefox su 16 schermi | https://github.com/giandjcosta/o-girrr-registro/actions/workflows/registro-browser-qa.yml |
 
-Versione online sul sito vero: **6.2.4**. Anteprima corrente: copia in sola lettura della stessa versione; i prototipi restano nel Laboratorio. Allineamento automatico dopo le modifiche al Lab e sincronizzazione ogni 7 giorni, subito se esce una versione nuova (gli orari GitHub possono slittare).
+Versione online sul sito vero: **6.5**. Anteprima corrente: copia in sola lettura della stessa versione; i prototipi restano nel Laboratorio. Allineamento automatico dopo le modifiche al Lab e sincronizzazione ogni 7 giorni, subito se esce una versione nuova (gli orari GitHub possono slittare).
 
 Per riprendere il lavoro in una chat nuova (Claude, ChatGPT, Grok, Copilot, Perplexity…): "Leggi AGENTS.md, STATO.md e LAVORI-IN-CORSO.md nel repo o-girrr-registro e continuiamo da lì". In `STATO.md` c'è cosa è online e cosa è in prova; in `LAVORI-IN-CORSO.md` cosa si sta facendo adesso e chi lo sta facendo.
 
