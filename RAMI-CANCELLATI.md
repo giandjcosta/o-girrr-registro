@@ -1,6 +1,6 @@
 # Rami da cancellare (19 novembre 2026)
 
-**Stato:** da questa sessione di Claude la cancellazione è bloccata (GitHub risponde 403 a ogni `git push --delete`). Per farla: lancia `bash strumenti/cancella-rami.sh` da un computer con git e accesso a GitHub, oppure cancella i rami dalla pagina *Branches* di ogni repository. Rami tenuti in più rispetto al «Vai»: `chatgpt/65-tab-uniche-curva-separata` (PR #131, da valutare per la Smart TV) e `claude/65-uscita` (ramo di lavoro di Claude).
+**Stato:** da questa sessione di Claude la cancellazione è bloccata (GitHub risponde 403 a ogni `git push --delete`). Per farla: lancia `bash strumenti/cancella-rami.sh` da un computer con git e accesso a GitHub, oppure cancella i rami dalla pagina *Branches* di ogni repository. Aggiornato il 19 novembre (mattina): dopo le unioni (PR #27, #28, #135-#140) sono superflui anche `claude/65-entrata-pc`, `chatgpt/65-edizione-speciale` (presa la parte buona nella PR #137), `chatgpt/65-tab-uniche-curva-separata` (non serve: la TV si legge già bene), `claude/65-uscita`, `claude/readme-home`, `claude/65-radio-video` e `claude/sincronizza-65`. Restano solo `main` e `gh-pages`.
 
 Pulizia chiesta da Gianluca («Vai» del 19 novembre). Restano: sito `main`, `gh-pages` (e la PR aperta `claude/65-entrata-pc`); registro `main` e `chatgpt/65-edizione-speciale` (PR #129, Radio e video della giornata 8).
 
@@ -209,3 +209,15 @@ Per ricreare un ramo: `git push origin <commit>:refs/heads/<nome>` nel repositor
 | `chatgpt/65-entrata` | `6e3ebe2863801b2056a378073659a7b84e306b6f` | 2026-11-18 | ChatGPT: aggiorna la certificazione statica delle 61 patch della 6.5 |
 | `claude/girrr-transition-effects-zpfofz` | `ba5aa08c39fea5d7d20da9b97073d24d6e4ec80c` | 2026-11-18 | Claude: fondo a strisce della Lega senza fascia vuota a sinistra sull'iPhone; nota per l'integrazione della nuvola |
 
+
+## Aggiunti il 19 novembre (mattina)
+
+| Ramo | Ultimo commit | Data | Messaggio |
+|---|---|---|---|
+| o-fant-a-girrr · `claude/65-entrata-pc` | `63d3dbe23724ed5cde727c95a4234b13fd127982` | 2026-11-19 | Claude: README, il link apre la Home della lega invece dello Spogliatoio |
+| o-fant-a-girrr · `claude/readme-home` | `605a1a0f64ae94d2d98f133f2b10075941a9262f` | 2026-11-19 | Claude: README, il link apre la Home della lega invece dello Spogliatoio |
+| o-girrr-registro · `chatgpt/65-edizione-speciale` | `f5deec153715fef2998d5558aaadce4b540322dd` | 2026-11-17 | ChatGPT: allinea banca Curva del Lab alla versione collaudata e alla scadenza |
+| o-girrr-registro · `chatgpt/65-tab-uniche-curva-separata` | `ccddbb81aeebd8073f9c0d490f997af85714cecb` | 2026-11-18 | ChatGPT: aggiorna la bozza annuncio per finestra 19–27, fine 28 senza promettere skin già attiva |
+| o-girrr-registro · `claude/65-uscita` | `a0383dd0afe795bcd023e2785d0b69a5254485ac` | 2026-11-19 | Claude: STATO aggiornato dopo la copertina su PC e la Radio/video della giornata 8 |
+| o-girrr-registro · `claude/65-radio-video` | `4486f33cd98fc19c9e4c6d96cdc05a1dd7fb8481` | 2026-11-19 | Claude: Radio e video della giornata 8 in edizione Notte Tropicale, dalla PR 129 di ChatGPT senza i post della Curva già online, caratteri in locale |
+| o-girrr-registro · `claude/sincronizza-65` | `eb6ff5e1333e484b3bc47c5db7a512c331b7cb33` | 2026-11-19 | Claude: sincronizzazione del registro compatibile con destinazioni55.js della 6.5 |
