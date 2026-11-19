@@ -115,9 +115,12 @@ def sincronizza(site):
                 # indirizzo diverso da /o-fant-a-girrr/. Senza questa riga i collegamenti della Home andavano ai nomi
                 # dell'Anteprima 5.5 («v55/tabellone-lega.html», pagina inesistente).
                 vecchio = "var sito=/^\\/o-fant-a-girrr\\//.test(location.pathname),base=new URL('/o-fant-a-girrr/',location.href).href"
-                if text.count(vecchio) != 1:
+                # Claude, 19 novembre 2026 (6.5): dalla 6.5 il file ricava da solo la base dalla posizione dello script
+                # (variabile sb65) quando l'indirizzo non è /o-fant-a-girrr/: in quel caso non serve riscriverlo.
+                if text.count(vecchio) == 1:
+                    text = text.replace(vecchio, "var sito=true,base=new URL('../../',document.currentScript.src).href")
+                elif 'sb65=cs65&&' not in text:
                     raise ValueError('destinazioni55.js diverso da quello atteso: controllare gli indirizzi dell\'Anteprima')
-                text = text.replace(vecchio, "var sito=true,base=new URL('../../',document.currentScript.src).href")
             if src.suffix == '.html':
                 guard = os.path.relpath(ROOT / 'anteprima/sola-lettura.js', out.parent)
                 tag = '<script src="' + guard + '"></script>'
