@@ -77,5 +77,5 @@ if (process.env.SOLO_FOTOGRAMMI === '1') {
 }
 // tempi delle scene per la musica (rilascio/video/musica.py): stessa scaletta di src/index.jsx
 const SCENE = eval(/const SC = (\[.*?\]);/s.exec(fs.readFileSync('./src/index.jsx', 'utf8'))[1]).filter(([k]) => (k !== 'prossime' || props.big || props.bigC) && (['introCoppa', 'coppa', 'gironi'].indexOf(k) < 0 || props.mc.length));
-fs.writeFileSync('scene.json', JSON.stringify({ fps: 30, scene: SCENE, m: props.m.length, mc: props.mc.length, cl: props.cl.length, derby: !!((props.big && props.big.k === 'derby') || (props.bigC && props.bigC.k === 'derby')) }));   /* per gli effetti di monta_musica.py */
+fs.writeFileSync('scene.json', JSON.stringify({ fps: 30, skin: props.skin || null, scene: SCENE, m: props.m.length, mc: props.mc.length, cl: props.cl.length, derby: !!((props.big && props.big.k === 'derby') || (props.bigC && props.bigC.k === 'derby')) }));   /* per gli effetti di monta_musica.py */
 console.log('fatto', JSON.stringify({ big: props.big, bigC: props.bigC }));
