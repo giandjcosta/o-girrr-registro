@@ -2,7 +2,7 @@
 
 **Questa è la repository di prova di O Fant A Girrr.** Qui si costruiscono e si provano le idee nuove prima di metterle nell'app vera. Niente di quello che c'è qui tocca il sito vero finché non arriva il "vai" di Gianluca.
 
-- **Sito vero:** repository [o-fant-a-girrr](https://github.com/giandjcosta/o-fant-a-girrr), pubblicato su https://giandjcosta.github.io/o-fant-a-girrr/
+- **Sito vero:** repository [o-fant-a-girrr](https://github.com/giandjcosta/o-fant-a-girrr), pubblicato su https://giandjcosta.github.io/o-fant-a-girrr/girrr/ (Home della lega)
 - **Questa repository:** https://giandjcosta.github.io/o-girrr-registro/ (Registro, Laboratorio e Anteprima)
 
 ## Un solo ingresso
