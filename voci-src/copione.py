@@ -93,6 +93,9 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
     # Beppe si presenta e passa la parola: il nome a metà frase è quello del compagno, non il suo (Gianluca, puntata 6)
     add("B", f"Buongiorno, buonasera e buonanotte a tutti, siete su Radio Girrr, la radio ufficiale della Lega O Fant A Girrr! Io sono {b1}, e oggi con me c'è", "urlo")
     add("G", f"{g1}! Si parte!", "urlo")
+    # 6.5 (Gianluca, 18 novembre 2026): omaggio solo per la puntata della giornata 8, anche se pubblicata più tardi.
+    if n == 8:
+        add("G", "C'è chi ha passato la notte tra le palme e i neon di Miami... noi l'abbiamo passata a scegliere la formazione!")
     add("B", f"Giornata numero {n}! {g0}, hai già guardato i punteggi?")
     add("G", pick([("Guardati e riguardati. Una giornata da ricordare." if cronache_attive else "Guardati, riguardati e ho pure fatto una scommessa con me stesso. Ho perso."), "Sì, al barbecue con gli amici: più di un arrosto bruciato, ma i punteggi li ho letti tutti!", "Certo, qui in studio, appena usciti. Che serata!", "Sul divano, con una pizza in mano: giornata perfetta.", "Altro che guardati: li ho imparati a memoria!", "Sì, in terrazza con un bel caffè. Tutto liscio, sono pronto!", "Con la famiglia a pranzo: nessuno ha parlato d'altro."]))
     mv, fl, mz = a["mvp"], a["flop"], a["maz"]
