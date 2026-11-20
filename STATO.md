@@ -1,5 +1,10 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 18 novembre 2026)
 
+## 20 novembre 2026 — controllo delle azioni pianificate (Claude)
+- **Unico workflow rotto: «MVP dei tifosi - Votazioni e verdetti»** (`tifosi-giornata.yml` del sito, ogni 15 minuti), fallito a ogni giro dalla 6.2. Causa: `v62_prepara` e `v62_finestre_prepara` sono funzioni SQL `returns void`, Supabase risponde 204 senza corpo e `call()` in `calcoli/tifosi/sincronizza.py` faceva `json.load` sul vuoto (`JSONDecodeError`). Effetto: catalogo dei sondaggi, finestre 6.2 e `girrr/dati/mvp-editoriale.json` non aggiornati dal workflow. Di conseguenza falliva anche «Controllo fallimenti» (07:50), che lo segnala.
+- **Correzione:** `call()` restituisce `None` quando la risposta è vuota. Ramo `claude/ofant-girrr-scheduled-actions-14phso` del sito e del registro (qui `calcoli/tifosi/sincronizza.py` allineato alla copia più nuova del `main` del sito). Prove: server finto 204/200, `prove/prova_tifosi60.py`, `catalogo62.py` senza `--vai` sui dati veri. Va unita al `main` del sito con il «Vai» di Gianluca.
+- **Tutto il resto gira:** Aggiorna statistiche e voti, Calcoli dopo la giornata, Video, Radio, Premi sponsor, Curva quasi subito; nel registro Allineamento automatico e QA verdi dopo i rossi del 19 mattina (già risolti). Attività programmate di Claude (infortuni, elenco attività del Registro) riuscite; il 16/11 il controllo infortuni si è fermato per limite di utilizzo (429), non per 403.
+
 ## 19 novembre 2026 (mattina) — copertina su PC, Radio e video della giornata 8, registro in ordine (Claude, con il Vai di Gianluca)
 - **Sito, PR #27** (`gh-pages` `318d5b1`): copertina della 6.5 su PC, iPad orizzontale e TV con la locandina a sinistra e titoli, date e «Continua» a destra; telefoni invariati. README di `gh-pages` con il link alla Home.
 - **Sito, PR #28** (`main` `cc07971`): il link «Apri il sito» del README porta a `/girrr/` (Home della lega) invece che allo Spogliatoio.
