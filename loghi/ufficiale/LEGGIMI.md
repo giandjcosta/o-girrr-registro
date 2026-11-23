@@ -11,6 +11,6 @@
 - Non ancora sul sito: serve prima la prova nel Lab e il «Vai» di Gianluca.
 
 ## Proposta di regola (23 novembre 2026, decisione di Gianluca da confermare nel Lab)
-- **Per sempre → scudi:** `scudo-lega-per-sempre.png` (scudo della Lega con «Dal 2020/21» al posto di «2026 · 27») e `scudo-coppa-per-sempre.png` (scudo della Champions Cup senza anno: l'anno della prima edizione non è nei dati, da chiedere a Gianluca). Home, Albo d'oro, Derby, Record, Albo e record della Coppa, Carriera, Versioni.
+- **Per sempre → scudi:** `scudo-lega-per-sempre.png` (scudo della Lega con «SINCE» sopra «2020 · 21» al posto di «2026 · 27», scelta di Gianluca) e `scudo-coppa-per-sempre.png` (scudo della Champions Cup senza anno: l'anno della prima edizione non è nei dati, da chiedere a Gianluca). Home, Albo d'oro, Derby, Record, Albo e record della Coppa, Carriera, Versioni.
 - **Questa stagione → simboli:** simbolo ufficiale rosso-blu per il Campionato 2026/27, stesso simbolo in azzurro (`simbolo-coppa-*`) per la Champions Cup 2026/27. Tabellone, Campo, Squadre, Statistiche, Totogirrr, Giornale, Condividi.
 - Su sfondo scuro i simboli hanno un bordino crema che ne segue la forma (`*-bordo-chiaro.png`). Tavola: `regola-loghi-2.png`. La prima proposta, al contrario, è in `regola-loghi.png`.
