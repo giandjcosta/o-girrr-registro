@@ -1,5 +1,12 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 18 novembre 2026)
 
+
+## 24 novembre 2026 — Giornata 8 di Campionato chiusa (Claude, con la skill chiudi-giornata-girrr)
+- **Importata** la 8ª di Campionato (Serie A 12) da Leghe: Oranje VC batte Mariana Coneja 4-3; totali tornati in tutte le 5 partite. Prima importazione bloccata da due nomi diversi su Leghe: «The Blues brothers» (b minuscola) e «Ndicka» (nel sito «N'Dicka»). Aggiunti due alias in `scripts/leghe_importa.py` (`gh-pages` `41aca95`); la chiave interna resta «The Blue brothers», nel sito si legge «The Blues Brothers» (`nomi.js`). Ora di «calcolata» scritta 07:26Z (ora della lettura, non quella esatta di Leghe): Giornale in uscita 09:26 ora italiana.
+- **Calcoli** lanciati a mano (run 45348844166, verde); «Video della giornata» verde (`girrr/video/giornata-08.mp4`).
+- **Giornale n. 8** (PDF di 4 pagine, tabellone, archivio) su `gh-pages` `f6ffebf`; `controllo_giornata.py 8` senza ERRORE (4 AVVISO sulle iniziali tipo «F.P.», falsi allarmi). Champions Cup non importata: turno 5 sulla 13ª di Serie A, nessun punteggio nuovo su Leghe.
+- **Classifica dopo la 8ª:** Mariana Coneja 16, Grodah 15, AFA SELECCION 14, Oranje VC 14, stif dc 13, The Blues Brothers 11, Real Madrink 10, Apo team 7, Atletico ma non troppo 7, WOA 4.
+- **Da fare:** Radio (serve prima il post vero della Curva della settimana da Gianluca), MVP dei tifosi, controllo del sito vero nel browser (non fatto: strumenti del browser non disponibili in quel momento).
 ## 19 novembre 2026 (mattina) — copertina su PC, Radio e video della giornata 8, registro in ordine (Claude, con il Vai di Gianluca)
 - **Sito, PR #27** (`gh-pages` `318d5b1`): copertina della 6.5 su PC, iPad orizzontale e TV con la locandina a sinistra e titoli, date e «Continua» a destra; telefoni invariati. README di `gh-pages` con il link alla Home.
 - **Sito, PR #28** (`main` `cc07971`): il link «Apri il sito» del README porta a `/girrr/` (Home della lega) invece che allo Spogliatoio.
