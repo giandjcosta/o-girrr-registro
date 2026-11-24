@@ -268,6 +268,23 @@ def main():
                 padre = lista[voce[2]]
                 d.update(re=f"{e['tipo']}:{e['k']}:{voce[2]}", re_h=padre[0], re_body=padre[1])
             out.append(d)
+    # Mercato (Gianluca, 24 novembre 2026): scambi confermati, scritti a mano in mercato-manuale.json come la Moviola.
+    # Ogni scambio è un post della Lega e, se c'è, un commento sotto (per esempio di Ciro Trattativa). Escono una volta sola.
+    # 6.6: anche gli scambi confermati nell'app (mercato-app.json, scritto da scambi_app.py), con le stesse regole.
+    scambi_ = []
+    for nome in ("mercato-manuale.json", "mercato-app.json"):
+        mf = QUI / nome
+        scambi_ += json.loads(mf.read_text(encoding="utf-8")).get("scambi") or [] if mf.exists() else []
+    for sc in scambi_:
+        post_ = sc.get("post") or []
+        for i, (h, body) in enumerate(post_):
+            assert len(body) <= 280, (sc["k"], len(body))
+            d = dict(chiave=f"mercato:{sc['k']}:{i}", h=h, body=body)
+            if sc.get("quando"):
+                d["quando"] = sc["quando"]
+            if i:
+                d.update(re=f"mercato:{sc['k']}:0", re_h=post_[0][0], re_body=post_[0][1])
+            out.append(d)
     USCITA.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     print("post_curva.json scritto:", len(out), "post")
 

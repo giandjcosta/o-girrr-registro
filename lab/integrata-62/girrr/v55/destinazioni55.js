@@ -2,7 +2,7 @@
 (function(){
 'use strict';
 /* Claude, rilascio 5.5: indirizzi delle pagine. Nell'Anteprima «tabellone-lega.html»; sul sito vero (/o-fant-a-girrr/) «girrr/tabellone.html» e «stadio/girrr/tabellone.html». */
-window.OG55=window.OG55||(function(){var sito=/^\/o-fant-a-girrr\//.test(location.pathname),base=new URL('/o-fant-a-girrr/',location.href).href,
+window.OG55=window.OG55||(function(){/* 6.5 (Claude): la base degli indirizzi si ricava anche dalla posizione di questo file (girrr/v55/), così i link funzionano anche in una copia di prova fuori da /o-fant-a-girrr/. Sul sito vero il risultato è identico a prima. */var cs65=document.currentScript,vero65=/^\/o-fant-a-girrr\//.test(location.pathname),sb65=cs65&&/\/girrr\/v55\/destinazioni55\.js/.test(cs65.src)?new URL('../../',cs65.src):null,sito=vero65||!!(sb65&&location.pathname.indexOf(sb65.pathname)===0&&/^(stadio\/)?girrr\/[^\/]*$/.test(location.pathname.slice(sb65.pathname.length))),base=vero65||!sb65?new URL('/o-fant-a-girrr/',location.href).href:sb65.href,
  file={index:'index.html',tabellone:'tabellone.html',campo:'campo.html',curva:'curva.html',notifiche:'notifiche.html',albo:'app.html',app:'app.html',totogirrr:'totogirrr.html'};
  function dir(sk){return base+(sk==='lega'?'girrr/':'stadio/girrr/')}
  return {sito:sito,dir:dir,pagina:function(which,sk,root){if(sito)return dir(sk)+(file[which]||which+'.html');
@@ -20,6 +20,7 @@ function personalLink(e,base,s){
  else if(/^(prest-\d+-[\w]+|mov-\d+)$/.test(k)){
   u=new URL(OG55.pagina('totogirrr',s,base));if(!OG55.sito)u.searchParams.set('skin',s);u.searchParams.set('t',k.indexOf('prest-')===0?'prestiti':'movimenti');
  }else if(/^sfida-(r-)?\d+$/.test(k)){u=new URL(OG55.pagina('app',s,base));if(!OG55.sito)u.searchParams.set('skin',s);u.hash='sport'}
+ else if(/^sc-(ok-|no-)?\d+$/.test(k)){u=new URL('../index.html',OG55.dir('lega'));u.searchParams.set('scambio',k.replace(/\D+/g,''))}/* 6.6: richiesta di scambio nello Spogliatoio */
  else return null;
  u.searchParams.set('notifica',k);return u.href;
 }
@@ -41,6 +42,7 @@ function unavailable(host,what){
 function board(o){
  var part=q.get('sezione'),story=q.get('cronaca');
  if(!part&&!story)return;
+ if(part==='numeri'&&!story)return;   /* 6.5 (Claude): Numeri si apre dall'inizio, senza scorrere alla classifica */
  wait(function(){var e=document.getElementById(part==='risultati'?'board':'tab');return e&&e.querySelector(part==='risultati'?'.m, .nota':'table')?e:null},function(host){
   if(story){
    var ev=(o.eventi||[]).find(function(e){return e.chiave===story});
@@ -69,7 +71,7 @@ function privateRecord(){
  var id=(key.match(/\d+/)||[])[0],section=tipo==='Sfida Derby'?'Girrr Sport · Sfide':'Totogirrr · '+(tipo==='Prestito'?'Prestiti':'Movimenti');
  var back=page('notifiche'),backLabel='Notifiche';
  try{var ref=new URL(document.referrer);if(ref.origin===root.origin&&/^(index|notifiche)$/.test(OG55.nome(ref.pathname)||'')){back=ref;backLabel=OG55.nome(ref.pathname)==='index'?'Home':'Notifiche'}}catch(e){}
- host.innerHTML='<nav class="v55-record-nav"><a class="v55-home-logo" href="'+page('index').href+'" aria-label="Home O Girrr"><img src="https://giandjcosta.github.io/o-fant-a-girrr/assets/loghi/logo-lega-o-fant-a-girrr.png" alt="O Girrr"></a><a href="'+E(back.href)+'">‹ '+backLabel+'</a></nav><span class="v53-kicker">'+section+'</span><h1 class="v53-h1">'+tipo+' n. '+id+'</h1><div id="v55recordbody" role="status">Caricamento…</div>';
+ host.innerHTML='<nav class="v55-record-nav"><a class="v55-home-logo" href="'+page('index').href+'" aria-label="Home O Girrr"><img src="https://giandjcosta.github.io/o-girrr-registro/lab/integrata-62/assets/loghi/scudo-lega.png" alt="O Girrr"></a><a href="'+E(back.href)+'">‹ '+backLabel+'</a></nav><span class="v53-kicker">'+section+'</span><h1 class="v53-h1">'+tipo+' n. '+id+'</h1><div id="v55recordbody" role="status">Caricamento…</div>';
  document.addEventListener('click',function(ev){if(!ev.target.closest('[data-tab]'))return;document.body.classList.remove('v55-record-mode');host.remove();var u=new URL(location.href);u.searchParams.delete('notifica');history.replaceState(null,'',u)},true);
  var body=document.getElementById('v55recordbody'),me=who();if(!me){body.innerHTML='<p>Entra con la tua squadra per aprire questo contenuto.</p>';focus(host);return}
  // Usa la lettura stabile già presente. Le vecchie RPC Toto/Derby scrivono

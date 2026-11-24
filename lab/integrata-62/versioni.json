@@ -2,29 +2,173 @@
   "nota": "Fonte unica della pagina Versioni (girrr/versioni.html e stadio/girrr/versioni.html). A ogni rilascio si aggiunge la versione in cima con rilascio/versioni/aggiungi.py. Numeri: correzione minore = terza cifra (5.6.1), aggiornamento medio = seconda cifra (5.7.0), aggiornamento grande = prima cifra (6.0). Dove manca la storia: «Dato non conservato». Le versioni 1.0-4.5 e il Mercato Scambi vengono dai messaggi recuperati da Claude chat (9 novembre 2026), date controllate con i commit del sito. Il campo «nota» e «altre_varianti» non si mostrano nella pagina.",
   "versioni": [
     {
-      "v": "6.5",
-      "data": "2026-11-18",
+      "v": "6.6",
+      "data": "2026-11-24",
       "tipo": "medio",
-      "titolo": "Carriera e Girrr Sport più fluidi",
-      "messaggio": "⚽ **O Girrr 6.5 è online!** In Carriera, cambiando sezione, la pagina resta dov’è e il nuovo contenuto entra con un rimbalzo morbido, senza tremare. Le pillole della Carriera e dell’Albo d’oro ora scivolano da una all’altra come quelle di Girrr Sport. In Girrr Sport le pillole non si bloccano più dopo le Conferenze stampa. Buona giornata a tutti! ⚽",
+      "titolo": "Gli scambi nell'app",
+      "messaggio": "⚽ **O Girrr 6.6 è online!** Adesso gli scambi passano dall'app: nello Spogliatoio, in Mercato Scambi, valuti lo scambio e lo registri con «Effettua lo scambio». Tutta la lega riceve la notifica e lo scambio diventa ufficiale alla prima conferma: dell'altra squadra, della Lega o di un altro allenatore come testimone. Appena è ufficiale le rose si aggiornano, la Lega lo annuncia in Curva e Ciro Trattativa lo racconta alla Radio. Arrivano anche i nuovi loghi: gli scudi della Lega e della Champions Cup e i simboli della stagione 2026 · 27. E in Notifiche scegli l'icona dell'app, scudo o simbolo. Buona settimana a tutti! ⚽",
       "novita": [
         {
-          "area": "Carriera",
+          "area": "Spogliatoio",
           "voci": [
-            "Cambiando sezione la pagina resta ferma e il nuovo contenuto entra con un rimbalzo morbido, senza tornare su né sparire per un attimo.",
-            "Le pillole delle sezioni scivolano dalla scelta di prima alla nuova, come nelle altre file di pillole."
+            "In Mercato Scambi, dopo «Valuta uno scambio», il pulsante «Effettua lo scambio» registra uno scambio con gli stessi ruoli da tutte e due le parti, senza crediti.",
+            "Nuovo elenco «Richieste di scambio»: l'altra squadra conferma o rifiuta, la Lega o un altro allenatore può confermarlo come testimone, chi lo propone può annullarlo.",
+            "Vale la prima conferma, anche quella automatica quando le rose aggiornate da Leghe Fantacalcio risultano già scambiate."
           ]
         },
         {
-          "area": "Albo d’oro",
+          "area": "Notifiche",
           "voci": [
-            "Anche qui il colore della pillola scelta scivola dalla sezione di prima alla nuova."
+            "Le richieste di scambio e gli scambi ufficiali arrivano a tutta la lega, con il filtro «Scambi» e la nuova voce «Scambi» per il telefono.",
+            "Nuovo riquadro «Icona dell'app» per scegliere tra scudo e simbolo; vale quando si aggiunge l'app alla schermata Home."
+          ]
+        },
+        {
+          "area": "Curva",
+          "voci": [
+            "A ogni scambio ufficiale la Lega pubblica l'annuncio, con il commento di Ciro Trattativa."
+          ]
+        },
+        {
+          "area": "Radio",
+          "voci": [
+            "Ciro Trattativa racconta gli scambi ufficiali nella puntata della giornata dopo."
+          ]
+        },
+        {
+          "area": "Giornale",
+          "voci": [
+            "Riquadro «Mercato · Ufficiale» a pagina 3 con gli scambi arrivati dopo la giornata precedente."
+          ]
+        },
+        {
+          "area": "App",
+          "voci": [
+            "Nuovi loghi: scudi della Lega e della Champions Cup nelle pagine di sempre, simboli della stagione 2026 · 27 in Tabellone, Squadre, Statistiche, Giornale, Campo e Totogirrr."
+          ]
+        }
+      ]
+    },
+    {
+      "v": "6.5.1",
+      "data": "2026-11-24",
+      "tipo": "minore",
+      "titolo": "La classifica delle rose",
+      "messaggio": "🔧 **O Girrr 6.5.1 è online!** Nella scheda della tua squadra trovi la classifica delle rose, «3ª rosa su 10», che si aggiorna dopo ogni giornata o scambio, e sotto la forza della tua rosa al completo, quella di inizio stagione. La Squadra della settimana resta aperta fino al primo calcio d’inizio della giornata dopo: hai più tempo per votare. Radio Girrr pronuncia bene i nomi delle squadre, annuncia solo i Derby veri e non ripete le battute. Il Giornale dell’8ª giornata esce in edizione speciale Vice City. Buona settimana a tutti! ⚽",
+      "novita": [
+        {
+          "area": "Squadre",
+          "voci": [
+            "Forza della rosa con la posizione fra le dieci rose («7ª rosa su 10»), ricalcolata dopo ogni giornata di Campionato o scambio, e la forza al completo, ferma da inizio stagione.",
+            "La classifica delle rose unisce i voti della scorsa stagione, i fantavoti veri di quest’anno e i voti attesi per le giornate che mancano, corretti da quanto ha reso ogni giocatore."
           ]
         },
         {
           "area": "Girrr Sport",
           "voci": [
-            "Le pillole non si bloccano più dopo aver aperto Conferenze stampa e il contenuto entra senza sparire per un attimo."
+            "La votazione della Squadra della settimana resta aperta fino al primo calcio d’inizio della giornata successiva, dalla 9ª giornata."
+          ]
+        },
+        {
+          "area": "Radio",
+          "voci": [
+            "Oranje VC e MVP pronunciati in italiano, nome The Blues Brothers, nessuna battuta ripetuta nella stessa puntata e Derby annunciati solo se sono nel registro ufficiale.",
+            "Se la prima in classifica perde, la puntata lo dice anche quando resta in testa."
+          ]
+        },
+        {
+          "area": "Giornale",
+          "voci": [
+            "Edizione speciale Vice City per la 8ª giornata, solo per questo numero; il coro della settimana può essere firmato da un personaggio della Curva."
+          ]
+        },
+        {
+          "area": "App",
+          "voci": [
+            "Aperto come app dalla schermata Home del telefono, il pulsante Aggiorna resta solo nella Home (nelle altre pagine si ricarica trascinando in giù); su PC resta in ogni pagina."
+          ]
+        },
+        {
+          "area": "Totogirrr",
+          "voci": [
+            "Gli obiettivi del presidente, che danno solo reputazione, compaiono come «Obiettivo del presidente raggiunto» invece che come premio da riscuotere; questo riquadro e «Premio sponsor riscattato» spariscono dopo 3 giorni."
+          ]
+        }
+      ]
+    },
+    {
+      "v": "6.5",
+      "data": "2026-11-18",
+      "tipo": "medio",
+      "titolo": "Notte Tropicale",
+      "messaggio": "⚽ **O Girrr 6.5 è online!** Dal 19 al 27 novembre il Girrr si veste da Notte Tropicale: palme, neon e tramonti di Miami per festeggiare l'uscita del gioco più atteso dell'anno. Al primo ingresso ti accoglie la copertina speciale, poi la nuvola ti porta nella nuova Home con il big match della giornata, la classifica e tutto il Girrr. Nel Tabellone arriva la sezione Numeri, e passando dal Campionato alla Champions Cup i risultati non saltano più. Totogirrr, Albo d'oro, Derby e Spogliatoio hanno schede nuove che scorrono in linea. Dopo la giornata 8, in Girrr Sport arriva il video della giornata con la colonna sonora di Vice City. Buona giornata a tutti! ⚽",
+      "novita": [
+        {
+          "area": "Home",
+          "voci": [
+            "Edizione speciale Notte Tropicale dal 19 al 27 novembre, con grafica unica, big match, classifica, stagione e le schede di Tutto il Girrr.",
+            "Al primo ingresso copertina speciale con «Continua» e passaggio alla nuova grafica; su PC e TV la locandina sta a sinistra e i titoli a destra.",
+            "Tornando alla Home, a volte la scritta O Girrr si accende come un neon.",
+            "Il riepilogo La tua lega, oggi parte chiuso la prima volta e poi ricorda come l'hai lasciato."
+          ]
+        },
+        {
+          "area": "Tabellone",
+          "voci": [
+            "Nuova sezione Numeri con le statistiche della stagione di Campionato e Champions Cup, con le quattro schede su una riga.",
+            "Passando dal Campionato alla Champions Cup i risultati entrano una sola volta, senza sparire e ricomparire.",
+            "Immagini di Condividi con il rosso del Campionato e l'azzurro della Champions Cup, classifica dei gironi giusta in Coppa e ultimo posto in rosso.",
+            "Dentro la partita si apre e si chiude."
+          ]
+        },
+        {
+          "area": "Campo",
+          "voci": [
+            "In Champions Cup l'interruttore e la partita scelta passano al ciano-lilla dell'edizione speciale."
+          ]
+        },
+        {
+          "area": "Carriera",
+          "voci": [
+            "Cambiando sezione la pagina resta ferma e il contenuto entra con un rimbalzo morbido; le pillole scivolano.",
+            "Fiducia del presidente senza il numero sbiadito sopra i cartellini."
+          ]
+        },
+        {
+          "area": "Albo d'oro",
+          "voci": [
+            "Pillole e sottoschede del Derby nello stile dell'edizione speciale, in una fila che scorre."
+          ]
+        },
+        {
+          "area": "Totogirrr",
+          "voci": [
+            "Le schede stanno in una fila che scorre invece che in una griglia."
+          ]
+        },
+        {
+          "area": "Spogliatoio",
+          "voci": [
+            "La scheda che tocchi scorre al centro della fila e si vede intera, in tutte le grafiche."
+          ]
+        },
+        {
+          "area": "Girrr Sport",
+          "voci": [
+            "Il contenuto non sparisce più per un attimo e Conferenze stampa non va in errore.",
+            "Il video della giornata 8 avrà la grafica e la colonna sonora dell'edizione speciale."
+          ]
+        },
+        {
+          "area": "Curva",
+          "voci": [
+            "I pareggi non diventano più vittorie, Giurie e criteri resta aperto, i pulsanti del voto sono allineati e i personaggi parlano del nuovo gioco durante l'evento."
+          ]
+        },
+        {
+          "area": "Versioni",
+          "voci": [
+            "Riquadri delle versioni più compatti, con il titolo al centro della scheda."
           ]
         }
       ]

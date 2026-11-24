@@ -1,5 +1,5 @@
 /* Quando il sito e' aperto come app (aggiunto alla Home) non c'e' la barra del browser e su iPhone non si puo'
-   ricaricare con il gesto: qui mettiamo un pulsante Aggiorna e ricarichiamo da soli se si rientra dopo un po'. */
+   ricaricare con il gesto: mettiamo un pulsante Aggiorna (sui telefoni solo nella Home, 6.5.1) e ricarichiamo da soli se si rientra dopo un po'. */
 (function(){
   var sa=false;
   try{sa=window.navigator.standalone===true||(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)}catch(e){}
@@ -12,7 +12,11 @@
   var b=document.createElement('button');
   b.className='app-agg';b.type='button';b.setAttribute('aria-label','Aggiorna la pagina');b.innerHTML='<i>\u21BB</i>Aggiorna';
   b.onclick=function(){b.classList.add('gira');setTimeout(function(){location.reload()},150)};
-  bar.appendChild(b);
+  /* 6.5.1 (Gianluca, 24 novembre): sui telefoni e tablet il pulsante Aggiorna resta solo nella Home, perché nell'app si ricarica
+     già trascinando in giù; su PC (niente tocco) il pulsante resta in ogni pagina. */
+  var home=/\/girrr\/(index\.html)?$/.test(location.pathname),tocco=false;
+  try{tocco=window.matchMedia('(pointer: coarse)').matches}catch(e){}
+  if(home||!tocco)bar.appendChild(b);
   function monta(){if(document.body)document.body.insertBefore(bar,document.body.firstChild);else setTimeout(monta,50)}
   monta();
   /* Se si torna nell'app dopo piu' di 3 minuti si aggiorna da sola (tranne in Totogirrr, per non perdere una schedina a meta') */

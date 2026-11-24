@@ -150,6 +150,9 @@ def main(argv=None):
     except Exception as e:
         print("Registro dei Derby non disponibile:", type(e).__name__, file=sys.stderr)
     (dest / "derby_ufficiali.json").write_text(json.dumps({"coppie": coppie}, ensure_ascii=False, indent=1), encoding="utf-8")
+    # 6.6: le notizie degli scambi confermati nell'app (calcoli/mercato-app.json del sito, accanto a eventi.json) per Ciro
+    nz = [e["radio"] for e in (carica(args.eventi.parent / "mercato-app.json", {}) or {}).get("scambi") or [] if e.get("radio")]
+    (dest / "mercato_app.json").write_text(json.dumps({"notizie": nz}, ensure_ascii=False, indent=1), encoding="utf-8")
     cv = carica(QUI / "curva.json", {})
     if cv.get("giornata") != n:        # il post della Curva vale solo per la giornata per cui è stato messo
         (dest / "curva.json").write_text(json.dumps({"_come_si_usa": "Un post vero dalla Curva per la giornata indicata in \"giornata\". Se manca o è di un'altra giornata la radio non ne parla.", "giornata": n, "post": "", "caso": ""}, ensure_ascii=False), encoding="utf-8")

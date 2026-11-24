@@ -33,6 +33,8 @@ def derby(m): return any({x.lower(), y.lower()} == {m[0].lower(), m[1].lower()} 
 g = D["cal"][0]["m"]; der = next((m for m in g if derby(m)), g[0])
 import random, copione
 MERC = json.load(open(R / "mercato.json", encoding="utf-8")) if (R / "mercato.json").exists() else {}
+if (R / "mercato_app.json").exists():   # 6.6: scambi confermati nell'app (scritto da prepara_dati.py)
+    MERC = dict(MERC, notizie=(MERC.get("notizie") or []) + (json.load(open(R / "mercato_app.json", encoding="utf-8")).get("notizie") or []))
 def _json(n): return json.load(open(R / n, encoding="utf-8")) if (R / n).exists() else {}
 _REG = _json("regole.json"); _REG["derby_ufficiali"] = _json("derby_ufficiali.json").get("coppie") or []   # solo il registro ufficiale (24 novembre)
 L = copione.build(D, random.Random(D["aw"][-1]["n"] * 7919), MERC, NOMI, _json("conferenze.json"), _json("curva.json"), _REG)
