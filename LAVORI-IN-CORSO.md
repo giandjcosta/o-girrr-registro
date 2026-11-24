@@ -19,6 +19,7 @@ Ultimo aggiornamento: 16 novembre 2026, Claude.
 
 ## 24 novembre 2026 — Claude: loghi e skin (bozze, nulla online)
 - **Loghi della lega** · Claude · `Aspetta Gianluca` · bozza in `loghi/ufficiale/` sul ramo `claude/ofant-girrr-scheduled-actions-14phso`: scudi «per sempre» (Lega SINCE 2020 · 21, Champions Cup SINCE 2025 · 26) e loghi di stagione (CAMPIONATO 2026 · 27, CHAMPIONS CUP 2026 · 27). Da decidere: logo di stagione sul telefono (intero o solo simbolo) e icona dell'app. Poi Lab e «Vai».
+- **Forza della rosa (classifica delle rose sul server)** · Claude · `Aspetta Gianluca` · `calcoli/forza_rose.py`, `rilascio/forza-rose/` (applica.py, RILASCIO.md, foto). Regola di Gianluca del 24 novembre: «Xª rosa su 10» dopo ogni giornata o scambio, «Al completo» fermo. Provato su una copia di gh-pages in Lega e Stadio. Prossimo passo: «Vai» per il rilascio.
 - **Riquadri della skin Notte Tropicale da portare nella grafica normale** · Claude · `Da fare` · nella Home della skin ci sono Big match (partita della giornata da seguire, con «Vai al Campo»), Classifica breve (prime quattro), Stagione (giornate, gol, gol a partita, pareggi) e «Tutto il Girrr» a scorrimento. La skin si spegne il 28 novembre (`temi/evento-loader.js`). Prossimo passo: prototipo in Lega e Stadio nel Lab.
 
 ## Aspetta Gianluca
