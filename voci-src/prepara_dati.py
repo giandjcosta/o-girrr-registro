@@ -135,6 +135,21 @@ def main(argv=None):
            "partite": [[e["team"], e.get("avversario", "")] for e in conf if e.get("avversario")],
            "squadre": squadre, "sfide_derby": derby}
     (dest / "conferenze.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+    # Registro ufficiale dei Derby (RPC pubblica mvp_derby, la stessa della redazione): la Radio annuncia solo quelli.
+    # URL e chiave pubblica si leggono dalla pagina della Curva del sito; senza risposta il file è vuoto e nessun Derby viene annunciato.
+    coppie = []
+    try:
+        import urllib.request
+        pag = (SITO / "girrr" / "curva.html").read_text(encoding="utf-8")
+        url = re.search(r"https://[a-z0-9]+\.supabase\.co", pag).group(0)
+        chiave = re.search(r"sb_publishable_[A-Za-z0-9_-]+", pag).group(0)
+        req = urllib.request.Request(url + "/rest/v1/rpc/mvp_derby", json.dumps({"p_stagione": "2026/27"}).encode(),
+                                     {"apikey": chiave, "Authorization": "Bearer " + chiave, "Content-Type": "application/json"}, method="POST")
+        with urllib.request.urlopen(req, timeout=20) as r:
+            coppie = [{"a": c["a"], "b": c["b"], "nome": c.get("n")} for c in (json.load(r).get("coppie") or [])]
+    except Exception as e:
+        print("Registro dei Derby non disponibile:", type(e).__name__, file=sys.stderr)
+    (dest / "derby_ufficiali.json").write_text(json.dumps({"coppie": coppie}, ensure_ascii=False, indent=1), encoding="utf-8")
     cv = carica(QUI / "curva.json", {})
     if cv.get("giornata") != n:        # il post della Curva vale solo per la giornata per cui è stato messo
         (dest / "curva.json").write_text(json.dumps({"_come_si_usa": "Un post vero dalla Curva per la giornata indicata in \"giornata\". Se manca o è di un'altra giornata la radio non ne parla.", "giornata": n, "post": "", "caso": ""}, ensure_ascii=False), encoding="utf-8")

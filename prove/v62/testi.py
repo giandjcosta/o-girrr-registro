@@ -16,7 +16,7 @@ class Test(unittest.TestCase):
   self.assertEqual(frase(w,ora=now),'Per l’MVP della 7ª si vota ancora in Curva.');self.assertIsNone(frase(w,ora=now+timedelta(days=8)));w['chiusa']='2026-11-15T00:00:00Z';self.assertIsNone(frase(w,ora=now));self.assertIsNone(scegli({'votazione':w,'archivio':[]}))
  def test_finestre(self):
   a=datetime(2026,11,15,12,tzinfo=timezone.utc);i=a+timedelta(hours=36)
-  self.assertEqual(scadenza('mvp',apertura=a,inizio=i),i);self.assertEqual(scadenza('mvp',apertura=a,inizio=a+timedelta(days=5)),a+timedelta(hours=48));self.assertEqual(scadenza('post',apertura=a),a+timedelta(hours=24));self.assertEqual(scadenza('dopo',apertura=a+timedelta(hours=8),risultati=a),a+timedelta(hours=48));self.assertEqual(scadenza('vigilia',apertura=a,inizio=i),i);self.assertEqual(scadenza('mvp',apertura=a,inizio=i,esistente=a+timedelta(days=6)),a+timedelta(days=6))
+  self.assertEqual(scadenza('mvp',apertura=a,inizio=i),i);self.assertEqual(scadenza('mvp',apertura=a,inizio=a+timedelta(days=5)),a+timedelta(days=5));self.assertEqual(scadenza('post',apertura=a),a+timedelta(hours=24));self.assertEqual(scadenza('dopo',apertura=a+timedelta(hours=8),risultati=a),a+timedelta(hours=48));self.assertEqual(scadenza('vigilia',apertura=a,inizio=i),i);self.assertEqual(scadenza('mvp',apertura=a,inizio=i,esistente=a+timedelta(days=6)),a+timedelta(days=6))
  def test_giornale_contenuti(self):
   sys.path.insert(0,str(R/'rilascio/r62/editoriale'))
   from mvp_giornale62 import integra

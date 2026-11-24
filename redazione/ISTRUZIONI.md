@@ -9,14 +9,15 @@ giocata e scrivi le domande della giornata successiva), **vigilia** (36 ore prim
 risposte scritte a mano arrivate nel frattempo, anche del dopo partita; le domande non si toccano) oppure **niente**: in quel
 caso chiudi subito la sessione, senza fare altro. Al massimo due giri per giornata.
 
-## Il giro successivo (niente controlli tutti i giorni)
-La redazione non parte ogni giorno: ogni giro, alla fine, programma **un solo** giro successivo con un'attività programmata a un
-colpo (create_trigger con `run_once_at`, nuova sessione, stesso prompt), con gli orari del calendario vero (`data.json`, campo `sa`):
-- finito il giro **vigilia** della giornata N → giro **dopo** il giorno dopo l'ultima partita di Serie A della giornata N, alle 14:00 (ora di Roma);
-- finito il giro **dopo** → giro **vigilia** della giornata N+1, 25 ore prima della sua prima partita di Serie A.
-Se al giro **dopo** i risultati non sono ancora pubblicati (`serve.py` dice «niente»), riprogramma lo stesso giro tra 12 ore,
-al massimo due volte per giornata, poi chiudi. Se `serve.py` dice «niente» in un giro vigilia, programma il giro dopo e chiudi.
-Al massimo due giri per giornata, più quei due eventuali tentativi.
+## Il giro successivo (per ogni giornata, non solo una)
+La redazione non controlla tutti i giorni e **non programma più da sola il giro successivo**: lo programma ogni mattina il «regista del calendario»
+(attività «Fanta lega: Redazione di Girrr Sport (dopo e vigilia)», una a colpo, rimessa in orario con `update_trigger`), per **ogni** giornata (regola di Gianluca, 24 novembre 2026):
+- giro **dopo**: **nessun orario fisso**, parte quando esce il Giornale: chi chiude la giornata lancia l'attività con `fire_trigger` subito dopo averlo pubblicato (passo della skill `chiudi-giornata-girrr`); il regista la lancia solo come recupero, se il Giornale c'è e la settimana dei tifosi di quella giornata no. Pubblica la settimana dei tifosi della giornata appena giocata, così MVP e sondaggio si aprono e si può votare;
+- giro **vigilia**: 25 ore prima della prima partita di Serie A della giornata successiva.
+Se al giro **dopo** i risultati non sono ancora pubblicati (`serve.py` dice «niente»), la sessione riprogramma l'attività tra 1 ora, al massimo quattro volte di seguito, poi chiude.
+`serve.py` impedisce di rifare un giro già fatto (`stato.json`): un lancio in più chiude subito.
+La votazione dell'MVP della giornata precedente finisce alla prima partita della giornata N+1: Giornale e Radio della N+1 ne raccontano il verdetto
+e quello del sondaggio chiuso **solo se sono una notizia** (a giudizio della redazione, in base a quanto è successo nella settimana), altrimenti non ne parlano.
 
 ## Ogni volta
 1. `git pull` del registro (`giandjcosta/o-girrr-registro`), ramo indicato nel prompt della sessione.

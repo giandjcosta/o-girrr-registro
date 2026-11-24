@@ -1,5 +1,11 @@
 {
- "_come_si_usa": "Ciro va in onda solo se qui sotto c'è almeno una notizia. Ogni notizia ha un tipo (ufficiale o semiufficiale) e un testo da leggere. Se la lista è vuota, Ciro non c'è.",
+ "_come_si_usa": "Ciro va in onda solo se qui sotto c'è almeno una notizia. Ogni notizia ha un tipo (ufficiale o semiufficiale) e un testo da leggere. Se la lista è vuota, Ciro non c'è. Con «giornata» la notizia va in onda solo nella puntata di quella giornata.",
  "demo": false,
- "notizie": []
+ "notizie": [
+  {
+   "tipo": "ufficiale",
+   "giornata": 9,
+   "testo": "scambio tra The Blues Brothers e Real Madrink: Baldanzi e Kean passano ai Blues Brothers, Colpani e Adams vanno al Real Madrink"
+  }
+ ]
 }

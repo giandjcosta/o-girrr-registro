@@ -1,26 +1,25 @@
 {
- "aggiornato": "2026-11-20T06:42:47Z",
+ "aggiornato": "2026-11-24T06:43:11Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
    "quando": "Ogni 3 giorni alle 11:17 (giorni 1, 4, 7… del mese)",
    "stato": "attiva",
-   "prossimo": "2026-11-22T10:17:00Z",
+   "prossimo": "2026-11-25T10:17:00Z",
    "nota": "Fonte principale Sky Sport (45%), poi Fantacalcio.it e i giornali.",
    "ultimo": {
-    "quando": "2026-11-19T10:17:25Z",
+    "quando": "2026-11-22T10:17:50Z",
     "esito": "riuscito"
    }
   },
   {
    "nome": "Aggiornamento del venerdì (partite giocate e formazioni)",
    "quando": "Una volta: 20 novembre alle 17:12",
-   "stato": "attiva",
+   "stato": "conclusa",
    "ultimo": {
-    "quando": "2026-11-05T16:13:11Z",
+    "quando": "2026-11-20T16:12:29Z",
     "esito": "riuscito"
-   },
-   "prossimo": "2026-11-20T16:12:00Z"
+   }
   },
   {
    "nome": "Aggiornamento del martedì (partite giocate e formazioni)",
@@ -69,9 +68,9 @@
    "nome": "Controllo automatismi del mattino",
    "quando": "Ogni giorno alle 07:33",
    "stato": "attiva",
-   "prossimo": "2026-11-21T06:33:00Z",
+   "prossimo": "2026-11-25T06:33:00Z",
    "ultimo": {
-    "quando": "2026-11-20T06:33:39Z",
+    "quando": "2026-11-24T06:33:53Z",
     "esito": "riuscito"
    },
    "nota": "Avvisa solo se qualcosa è fermo da più di 2 giorni."
@@ -89,9 +88,12 @@
   {
    "nome": "Redazione di Girrr Sport",
    "quando": "Una volta: 20 novembre alle 14:00",
-   "stato": "attiva",
-   "prossimo": "2026-11-20T13:00:00Z",
-   "nota": "Versione 5.8: al massimo due giri per giornata, dopo la partita e alla vigilia. Si riprogramma da sola."
+   "stato": "conclusa",
+   "nota": "Versione 5.8: al massimo due giri per giornata, dopo la partita e alla vigilia. Si riprogramma da sola.",
+   "ultimo": {
+    "quando": "2026-11-20T13:00:58Z",
+    "esito": "riuscito"
+   }
   },
   {
    "nome": "Conferma mensile “tutto regolare”",
@@ -128,9 +130,9 @@
    "nome": "Serate Hip Hop R&B Throwback",
    "quando": "Ogni venerdì alle 08:52",
    "stato": "attiva",
-   "prossimo": "2026-11-20T07:52:00Z",
+   "prossimo": "2026-11-27T07:52:00Z",
    "ultimo": {
-    "quando": "2026-11-13T07:55:56Z"
+    "quando": "2026-11-20T07:52:56Z"
    }
   },
   {

@@ -23,7 +23,8 @@ def f(x):
     x = float(x)
     return str(int(x)) if x == int(x) else str(x).replace(".", ",")
 NUM = ["zero","uno","due","tre","quattro","cinque","sei","sette","otto","nove","dieci"]
-PRON = {"Girrr": "Gìrr",   # con l'accento: gridando, senza accento Gemini si mangia la i e dice «Grrr» (puntata 6)
+PRON = {"Oranje": "Orànie", "MVP": "Emme Vu Pi",   # Gianluca, 24 novembre: «Oragne» e «MVP» letto all'inglese
+        "Girrr": "Gìrr",   # con l'accento: gridando, senza accento Gemini si mangia la i e dice «Grrr» (puntata 6)
          "Champions Cup": "Cèmpions Càp", "AFA SELECCION": "Afa Selession", "WOA": "Uòa", "stif dc": "Stìf Dì Ci", "Stif dc": "Stìf Dì Ci", "Stif Dc": "Stìf Dì Ci", "Coneja": "Conèha"}
 ORD = {1:"prima",2:"seconda",3:"terza",4:"quarta",5:"quinta",6:"sesta",7:"settima",8:"ottava",9:"nona",10:"decima"}
 a = D["aw"][-1]; T = D["tab"]
@@ -33,7 +34,8 @@ g = D["cal"][0]["m"]; der = next((m for m in g if derby(m)), g[0])
 import random, copione
 MERC = json.load(open(R / "mercato.json", encoding="utf-8")) if (R / "mercato.json").exists() else {}
 def _json(n): return json.load(open(R / n, encoding="utf-8")) if (R / n).exists() else {}
-L = copione.build(D, random.Random(D["aw"][-1]["n"] * 7919), MERC, NOMI, _json("conferenze.json"), _json("curva.json"), _json("regole.json"))
+_REG = _json("regole.json"); _REG["derby_ufficiali"] = _json("derby_ufficiali.json").get("coppie") or []   # solo il registro ufficiale (24 novembre)
+L = copione.build(D, random.Random(D["aw"][-1]["n"] * 7919), MERC, NOMI, _json("conferenze.json"), _json("curva.json"), _REG)
 import re, os, wave, subprocess
 ACC = {"rovesciata": "rovesciàta", "guardati": "guardàti", "riguardati": "riguardàti", "imparati": "imparàti", "risultati": "risultàti", "ancora": "ancòra",
        "subito": "sùbito", "favorito": "favorìto", "campionato": "campionàto", "mercato": "mercàto", "rovinato": "rovinàto", "infortunato": "infortunàto",
