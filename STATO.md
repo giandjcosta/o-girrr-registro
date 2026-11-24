@@ -1,6 +1,13 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 18 novembre 2026)
 
 
+## 24 novembre 2026 — Online la 6.5.1 «La classifica delle rose» (Claude, con il «Vai» di Gianluca)
+- **Sito `gh-pages` `549450e`**: pagina Squadre (Lega e Stadio) con «Xª rosa su 10 · Dopo la Nª giornata» e «Al completo: N su 100» (`girrr/dati/forza-rose.json`), controllo esteso di fine giornata in `scripts/controllo_giornata.py`, `versioni.json` con la 6.5.1. Per tornare indietro: `git revert 549450e`.
+- **Sito `main` `771173f` e `f937d00`**: MVP aperto fino al primo calcio d'inizio della giornata dopo (`calcoli/finestre62.py`, vale dalla 9ª: la votazione della 8ª tiene la scadenza già salvata, 26/11 10:24 UTC), passo «Classifica delle rose» in `dopo-giornata.yml` (`calcoli/forza_rose.py`), «Controllo fallimenti» che segnala solo i workflow ancora rotti. Per tornare indietro: `git revert 771173f f937d00`.
+- **Radio della 8ª rifatta** (`gh-pages` `65be809`, registro `main` `26465d8`): «Oranje» ed «MVP» pronunciati in italiano, «The Blues Brothers», battute mai ripetute nella stessa puntata, Derby solo dal registro ufficiale (RPC pubblica `mvp_derby` letta in `prepara_dati.py`, file `derby_ufficiali.json`), sconfitta della prima raccontata, post della Curva di Gufo Professionista.
+- **Prove**: Squadre, Versioni e Home in Lega e Stadio a 320, 390, 1280 px e TV 1920×1080 a densità doppia (Chromium), anche sul sito vero; console pulita, niente scorrimento laterale; `prove/v62/testi.py` aggiornata alla nuova scadenza MVP; workflow «Calcoli dopo la giornata» e «Radio della giornata» verdi. **Non provati**: Safari/WebKit e Firefox, telefoni veri.
+- **Ancora da fare (piano 6.5.1 rimasto)**: sondaggi sulla giornata appena giocata (oggi «Quale sfida seguirai» è della giornata dopo) e racconto di MVP e sondaggi in Giornale e Radio solo se notizia, in base all'importanza. Bozza dei loghi in attesa.
+
 ## 24 novembre 2026 — Giornata 8 di Campionato chiusa (Claude, con la skill chiudi-giornata-girrr)
 - **Importata** la 8ª di Campionato (Serie A 12) da Leghe: Oranje VC batte Mariana Coneja 4-3; totali tornati in tutte le 5 partite. Prima importazione bloccata da due nomi diversi su Leghe: «The Blues brothers» (b minuscola) e «Ndicka» (nel sito «N'Dicka»). Aggiunti due alias in `scripts/leghe_importa.py` (`gh-pages` `41aca95`); la chiave interna resta «The Blue brothers», nel sito si legge «The Blues Brothers» (`nomi.js`). Ora di «calcolata» scritta 07:26Z (ora della lettura, non quella esatta di Leghe): Giornale in uscita 09:26 ora italiana.
 - **Calcoli** lanciati a mano (run 45348844166, verde); «Video della giornata» verde (`girrr/video/giornata-08.mp4`).
