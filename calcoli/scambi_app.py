@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Scambi nell'app (6.6, Claude, 24 novembre 2026, decisioni di Gianluca): dal database alle rose del sito, alla Curva e alla Radio.
 
-Gira nel workflow «Curva, post quasi subito» (ogni 5 minuti), prima di post_curva.py:
+Gira una volta al giorno nel workflow «Scambi dell'app» (scambi-giornata.yml, verso le 7:40 ora italiana;
+Gianluca, 24 novembre 2026: «una volta al giorno è ok»). I post li pubblica poi «Curva, post quasi subito» con post_curva.py:
 1. Conferma automatica: uno scambio «in attesa» le cui rose in data.json risultano già scambiate (importazione da Leghe)
    diventa ufficiale con scambio_srv_leghe. Vale la prima conferma, manuale o automatica.
 2. Ogni scambio confermato e non ancora applicato:
@@ -19,6 +20,7 @@ import argparse
 import datetime as dt
 import json
 import os
+import re
 import sys
 import urllib.error
 import urllib.request
@@ -102,29 +104,41 @@ def scambia(s, D):
     return None
 
 
+def cognome(n):
+    """«Adams C.» → «Adams»: nel racconto basta il cognome (le iniziali servono solo a distinguere i giocatori nelle liste)."""
+    return re.sub(r"(\s+(?:[A-ZÀ-Ý][a-zà-ý]{0,2}\.)+)+$", "", n).strip() or n
+
+
 def nomi_di(ids, s, D):
     return [((s.get("nomi") or {}).get(i) or {}).get("n") or D["P"].get(i, {}).get("n") or "Giocatore" for i in ids]
 
 
+QUANTI = {1: "Uno contro uno", 2: "Due contro due", 3: "Tre contro tre", 4: "Quattro contro quattro", 5: "Cinque contro cinque"}
 CIRO = [
     "L'avevo sussurrato io al bar, eh. {k}: adesso tocca al campo dire chi ci ha guadagnato. #CiroTrattativa",
-    "Telefoni bollenti fino all'ultimo, e alla fine la stretta di mano. {k}, e tutti e due giurano di aver vinto. #CiroTrattativa",
-    "Ve lo dico da giorni: qui si muoveva qualcosa. {k}, firme depositate. Ora parlano le giornate. #CiroTrattativa",
+    "Telefoni bollenti fino all'ultimo, poi la stretta di mano. {k}, e tutti e due giurano di aver fatto l'affare. #CiroTrattativa",
+    "Ve lo dicevo da giorni che qui si muoveva qualcosa. {k}, firme depositate: ora parlano le giornate. #CiroTrattativa",
 ]
+
+
+def racconto(da, a, nd, nr):
+    """La frase dello scambio, in italiano da giornale: chi arriva da chi e chi fa il percorso inverso.
+    da = chi ha registrato lo scambio, nd = i giocatori che cede, nr = quelli che riceve. Senza articoli davanti
+    ai nomi delle squadre («in casa Real Madrink»), così vale per tutte."""
+    nd, nr = [cognome(x) for x in nd], [cognome(x) for x in nr]
+    uno_r, uno_d = len(nr) == 1, len(nd) == 1
+    casa = re.sub(r"^The ", "", da)   # «in casa Blues Brothers», come si dice «in casa Juve»
+    return (f"affare fatto tra {da} e {a}: {elenco(nr)} {'approda' if uno_r else 'approdano'} in casa {casa}, "
+            f"mentre {elenco(nd)} {'fa' if uno_d else 'fanno'} il percorso inverso, destinazione {a}")
 
 
 def post_e_notizia(s, D, n):
     da, a = mostra(s["da"]), mostra(s["a"])
     nd, nr = nomi_di(s["dai"], s, D), nomi_di(s["ricevi"], s, D)
-    verbo_r = "veste" if len(nr) == 1 else "vestono"
-    verbo_d = "passa" if len(nd) == 1 else "passano"
-    lega = (f"MERCATO · Ufficiale\n{da} e {a} chiudono uno scambio: {elenco(nr)} {verbo_r} la maglia di {da}, "
-            f"{elenco(nd)} {verbo_d} a {a}. #Mercato")
-    k = len(nd)
-    quanti = "Uno per uno" if k == 1 else f"{k} per {k}"
-    ciro = CIRO[s["id"] % len(CIRO)].format(k=quanti)
-    radio = f"scambio tra {da} e {a}: {elenco(nr)} {'passa' if len(nr) == 1 else 'passano'} a {da}, {elenco(nd)} {'va' if len(nd) == 1 else 'vanno'} a {a}"
-    return [["lega_ofantagirrr", lega[:280]], ["ciro_trattativa", ciro[:280]]], {"tipo": "ufficiale", "giornata": n + 1, "testo": radio}
+    frase = racconto(da, a, nd, nr)
+    lega = f"MERCATO · Ufficiale\n{frase[0].upper() + frase[1:]}. #Mercato"
+    ciro = CIRO[s["id"] % len(CIRO)].format(k=QUANTI.get(len(nd), f"{len(nd)} contro {len(nd)}"))
+    return [["lega_ofantagirrr", lega[:280]], ["ciro_trattativa", ciro[:280]]], {"tipo": "ufficiale", "giornata": n + 1, "testo": frase}
 
 
 def carica_uscita(f):

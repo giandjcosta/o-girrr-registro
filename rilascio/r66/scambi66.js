@@ -51,7 +51,7 @@
     if (att && me === s.a) az += '<button class="btn" data-sc66-no="' + s.id + '">Rifiuta</button>';
     if (att && me === s.da) az += '<button class="btn" data-sc66-annulla="' + s.id + '">Annulla la richiesta</button>';
     var nota = att ? (me === s.da ? 'Lo deve confermare ' + nomeSq(s.a) + ', la Lega o un altro allenatore come testimone.' : me === s.a ? nomeSq(s.da) + ' ti propone questo scambio.' : 'Puoi confermarlo se lo scambio è stato fatto davvero.') :
-      s.stato === 'confermato' ? chiConferma(s) + (s.applicato ? ' · Rose aggiornate' : ' · Rose aggiornate a breve') : s.stato === 'non_valido' ? (s.esito || 'Le rose non lo permettono') : '';
+      s.stato === 'confermato' ? chiConferma(s) + (s.applicato ? ' · Rose aggiornate' : ' · Rose aggiornate domani mattina') : s.stato === 'non_valido' ? (s.esito || 'Le rose non lo permettono') : '';
     return '<article class="card mk sc66" id="sc66-' + s.id + '" data-stato="' + E(s.stato) + '"><div class="mkh"><span class="tagme">' + E(ETI[s.stato] || s.stato) + '</span><span class="meta">' + E(nomeSq(s.da)) + ' e ' + E(nomeSq(s.a)) + '</span></div>' +
       '<div class="mkc"><div class="mkcol"><span class="mkl">' + E(nomeSq(s.da)) + ' dà</span>' + s.dai.map(function (i) { return pill(s, i); }).join('') + '</div><div class="mkarr" aria-hidden="true">⇄</div>' +
       '<div class="mkcol"><span class="mkl">' + E(nomeSq(s.a)) + ' dà</span>' + s.ricevi.map(function (i) { return pill(s, i); }).join('') + '</div></div>' +
@@ -110,7 +110,7 @@
     var id = +(b.dataset.sc66Ok || b.dataset.sc66No || b.dataset.sc66Annulla);
     esegui(rpc('scambio_rispondi', { p_team: c.team, p_code: c.code, p_id: id, p_azione: az }), function (j) {
       if (j.gia) return j.stato === 'confermato' ? 'Era già stato confermato: lo scambio è ufficiale.' : 'Questa richiesta è già chiusa.';
-      return az === 'conferma' ? 'Scambio confermato: è ufficiale. Le rose si aggiornano a breve.' : az === 'rifiuta' ? 'Scambio rifiutato.' : 'Richiesta annullata.';
+      return az === 'conferma' ? 'Scambio confermato: è ufficiale. Le rose del sito si aggiornano domani mattina.' : az === 'rifiuta' ? 'Scambio rifiutato.' : 'Richiesta annullata.';
     });
   });
 

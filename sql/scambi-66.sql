@@ -164,23 +164,24 @@ create or replace function scambi_private.eventi(p_team text)
 returns table(chiave text, titolo text, testo text, url text, quando timestamptz)
 language sql stable security definer set search_path to 'public' as $$
   with s as (
-    select x.*, (select string_agg(coalesce(x.nomi->g->>'n', 'Giocatore'), ', ') from unnest(x.dai) g) nd,
-                (select string_agg(coalesce(x.nomi->g->>'n', 'Giocatore'), ', ') from unnest(x.ricevi) g) nr
+    -- «Baldanzi e Kean», «Colpani, Adams e Kean»: virgole e l'ultima con «e»
+    select x.*, regexp_replace((select string_agg(coalesce(x.nomi->g->>'n', 'Giocatore'), ', ') from unnest(x.dai) g), ', ([^,]*)$', ' e \1') nd,
+                regexp_replace((select string_agg(coalesce(x.nomi->g->>'n', 'Giocatore'), ', ') from unnest(x.ricevi) g), ', ([^,]*)$', ' e \1') nr
       from scambi x where x.creato > now() - interval '30 days'
   )
-  select 'sc-'||id, da||' ti propone uno scambio', nd||' per '||nr||' · Tocca a te confermare',
+  select 'sc-'||id, da||' ti propone uno scambio', 'Ti offre '||nd||' in cambio di '||nr||' · Tocca a te confermare',
          'index.html?scambio='||id, creato
     from s where a = p_team
   union all
-  select 'sc-'||id, 'Richiesta di scambio: '||da||' e '||a, nd||' per '||nr||' · Puoi confermarlo come testimone',
+  select 'sc-'||id, 'Richiesta di scambio: '||da||' e '||a, nd||' in cambio di '||nr||' · Puoi confermarlo come testimone',
          'index.html?scambio='||id, creato
     from s where p_team not in (da, a)
   union all
-  select 'sc-ok-'||id, 'Scambio ufficiale: '||da||' e '||a, nd||' per '||nr,
+  select 'sc-ok-'||id, 'Scambio ufficiale: '||da||' e '||a, nd||' in cambio di '||nr,
          'index.html?scambio='||id, chiuso
     from s where stato = 'confermato' and chiuso is not null and (p_team <> confermato_da or confermato_da is null)
   union all
-  select 'sc-no-'||id, a||' ha rifiutato lo scambio', nd||' per '||nr, 'index.html?scambio='||id, chiuso
+  select 'sc-no-'||id, a||' ha rifiutato lo scambio', nd||' in cambio di '||nr, 'index.html?scambio='||id, chiuso
     from s where stato = 'rifiutato' and da = p_team
 $$;
 revoke all on function scambi_private.eventi(text) from public, anon, authenticated;

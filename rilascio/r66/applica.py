@@ -65,14 +65,17 @@ GIORNALE = [
     f = ROOT / "girrr" / "dati" / "mercato.json"
     if not f.exists():
         return []
+    import re
+    cog = lambda x: re.sub(r"(\\s+(?:[A-ZÀ-Ý][a-zà-ý]{0,2}\\.)+)+$", "", x).strip() or x   # «Adams C.» → «Adams»
+    e = lambda l: l[0] if len(l) == 1 else ", ".join(l[:-1]) + " e " + l[-1]
     righe = []
     for s in json.loads(f.read_text(encoding="utf-8")).get("scambi") or []:
         if s.get("dopo_giornata") != n - 1:
             continue
         da, a = (x.replace("The Blue brothers", "The Blues Brothers") for x in (s["da"], s["a"]))
-        e = lambda l: l[0] if len(l) == 1 else ", ".join(l[:-1]) + " e " + l[-1]
-        righe.append(f"{da} e {a} si scambiano {e(s['da_cede'])} e {e(s['a_cede'])}: {e(s['a_cede'])} "
-                     f"{'va' if len(s['a_cede']) == 1 else 'vanno'} a {da}, {e(s['da_cede'])} a {a}.")
+        arr, par = [cog(x) for x in s["a_cede"]], [cog(x) for x in s["da_cede"]]
+        righe.append(f"Affare fatto tra {da} e {a}: {e(arr)} {'approda' if len(arr) == 1 else 'approdano'} in casa {re.sub(r'^The ', '', da)}, "
+                     f"mentre {e(par)} {'fa' if len(par) == 1 else 'fanno'} il percorso inverso, destinazione {a}.")
     return righe
 
 

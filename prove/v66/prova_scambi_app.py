@@ -35,11 +35,11 @@ with tempfile.TemporaryDirectory() as t:
     M = json.loads((t / 'mercato-app.json').read_text())
     e = M['scambi'][0]
     check('Un solo scambio scritto (gli altri non validi o in attesa)', [x['id'] for x in M['scambi']] == [5])
-    check('Post della Lega e commento di Ciro', e['post'][0][0] == 'lega_ofantagirrr' and e['post'][0][1].startswith('MERCATO · Ufficiale\nOranje VC e Real Madrink chiudono uno scambio') and e['post'][1][0] == 'ciro_trattativa' and '2 per 2' in e['post'][1][1])
+    check('Post della Lega e commento di Ciro', e['post'][0][0] == 'lega_ofantagirrr' and e['post'][0][1].startswith('MERCATO · Ufficiale\nAffare fatto tra Oranje VC e Real Madrink: ') and ' approdano in casa Oranje VC, mentre ' in e['post'][0][1] and 'il percorso inverso, destinazione Real Madrink. #Mercato' in e['post'][0][1] and e['post'][1][0] == 'ciro_trattativa' and 'Due contro due' in e['post'][1][1])
     check('Post entro 280 caratteri', all(len(b) <= 280 for _, b in e['post']))
     SM = json.loads((t / 'site/girrr/dati/mercato.json').read_text())
     check('Riquadro Mercato del Giornale: scambio nel sito con la giornata', [x['id'] for x in SM['scambi']] == [5] and SM['scambi'][0]['dopo_giornata'] == e['giornata'])
-    check('Notizia per la Radio della giornata dopo', e['radio']['giornata'] == e['giornata'] + 1 and e['radio']['testo'].startswith('scambio tra Oranje VC e Real Madrink'))
+    check('Notizia per la Radio della giornata dopo', e['radio']['giornata'] == e['giornata'] + 1 and e['radio']['testo'].startswith('affare fatto tra Oranje VC e Real Madrink: '))
     check('Scambio 7 non valido (giocatore non più in rosa) e 8 non valido (ruoli diversi)', 'Scambio 7 non valido' in p.stdout and 'Scambio 8 non valido: I ruoli' in p.stdout)
     p2 = run(); D3 = (t / 'site/data.json').read_text()
     check('Seconda volta: niente di nuovo', 'ufficiale' not in p2.stdout and D3 == (t / 'site/data.json').read_text() and len(json.loads((t / 'mercato-app.json').read_text())['scambi']) == 1)

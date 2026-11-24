@@ -1,18 +1,16 @@
-name: Curva, post quasi subito
-# Ogni 5 minuti legge dal database le sfide e le risposte nuove, ne fa i post della Curva e li pubblica
-# (o li mette in coda di approvazione, finché dura il periodo deciso in calcoli/curva_config.json).
-# Ogni evento esce una sola volta. Non fa i calcoli di fine giornata: quelli restano in "Calcoli dopo la giornata".
-# 6.6 (Claude, 24 novembre 2026): prima dei post passa dagli scambi nell'app (calcoli/scambi_app.py): conferma automatica
-# quando le rose da Leghe sono già scambiate, rose del sito e classifica delle rose aggiornate subito, post della Lega con Ciro.
+name: Scambi dell'app, una volta al giorno
+# 6.6 (Claude, 24 novembre 2026; Gianluca: «una volta al giorno è ok»). Ogni mattina verso le 7:40 ora italiana
+# (6:41 UTC; con l'ora legale le 8:41) passa dagli scambi registrati nell'app (calcoli/scambi_app.py):
+# - conferma automatica degli scambi in attesa quando le rose importate da Leghe sono già scambiate;
+# - per gli scambi confermati: rose di data.json, classifica delle rose e girrr/dati/mercato.json (Giornale) su gh-pages;
+# - post della Lega con Ciro e notizia per la Radio in calcoli/mercato-app.json su main: i post li pubblica
+#   «Curva, post quasi subito» al primo giro dopo (entro 5 minuti);
+# - alla fine segna nel database gli scambi applicati.
+# Prima dell'SQL della 6.6 (sql/scambi-66.sql del registro) non fa niente. Si può lanciare anche a mano.
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "41 6 * * *"
   workflow_dispatch:
-    inputs:
-      solo_segna:
-        description: "Solo registro: segna i post attuali come già usciti, senza inviarli"
-        type: boolean
-        default: false
 permissions:
   contents: write
 concurrency:
@@ -24,9 +22,9 @@ env:
   CURVA_TEAM: ${{ secrets.CURVA_TEAM }}
   CURVA_CODE: ${{ secrets.CURVA_CODE }}
 jobs:
-  post:
+  scambi:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
@@ -35,7 +33,7 @@ jobs:
         with:
           ref: gh-pages
           path: site
-      - name: Scambi nell'app (rose del sito, classifica delle rose, post e notizia per la Radio)
+      - name: Rose del sito, classifica delle rose e Giornale
         run: |
           git -C site config user.name "github-actions[bot]"
           git -C site config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -50,18 +48,12 @@ jobs:
             git -C site rebase --abort 2>/dev/null || true; git -C site fetch -q origin gh-pages; git -C site reset -q --hard origin/gh-pages
             [ "$i" = 3 ] && exit 1
           done
-      - name: Leggo sfide e risposte dal database
-        run: python3 calcoli/leggi_eventi.py calcoli/eventi.json
-      - name: Faccio i post e li pubblico (o li metto in coda)
-        run: |
-          python3 calcoli/post_curva.py calcoli/eventi.json calcoli/post_curva.json
-          python3 calcoli/pubblica_curva.py --vai ${{ inputs.solo_segna && '--segna-tutti' || '' }}
-      - name: Salvo la coda e i post già pubblicati
+      - name: Post della Lega e notizia per la Radio
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for f in calcoli/pubblicati.json calcoli/coda_curva.json calcoli/mercato-app.json; do [ -f "$f" ] && git add "$f"; done; true
-          git diff --cached --quiet || git commit -m "Curva: post nuovi"
+          [ -f calcoli/mercato-app.json ] && git add calcoli/mercato-app.json; true
+          git diff --cached --quiet || git commit -m "Scambi dell'app: post e notizia per la Radio"
           git pull --rebase --autostash origin main
           git push origin main
       - name: Scambi applicati segnati nel database

@@ -69,7 +69,7 @@ try:
     check('Azione sconosciuta: rifiutata', 'Azione non valida' in err(R_ % ('Real Madrink', 'rr', sid, 'boh')))
     # notifiche prima della conferma
     n_real = q("select public.notifiche_stato('Real Madrink','rr')")['eventi']
-    check('Notifica diretta all\'altra squadra', any(e['titolo'] == 'The Blue brothers ti propone uno scambio' and 'Baldanzi, Kean per Colpani, Adams' in e['testo'] for e in n_real))
+    check('Notifica diretta all\'altra squadra', any(e['titolo'] == 'The Blue brothers ti propone uno scambio' and e['testo'] == 'Ti offre Baldanzi e Kean in cambio di Colpani e Adams · Tocca a te confermare' for e in n_real))
     n_apo = q("select public.notifiche_stato('Apo team','aa')")['eventi']
     check('Notifica a tutti gli altri come testimoni', any(e['titolo'].startswith('Richiesta di scambio') and e['tipo'] == 'scambi' for e in n_apo))
     check('Chi propone non riceve la propria richiesta', not q("select public.notifiche_stato('The Blue brothers','bb')")['eventi'])
