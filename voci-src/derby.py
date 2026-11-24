@@ -56,6 +56,8 @@ def intensita(a, b, regole=None):
     return round(0.6 * voto_amici(a, b, regole) + 0.4 * rivalita_storia(a, b), 1)
 def e_derby(a, b, partite=None, regole=None):
     """Derby se l'intensità arriva a 50. Se gli amici non hanno ancora detto niente, decide solo la storia: Derby se la rivalità storica arriva a 80 su 100, come nelle pagine del sito e nel database."""
+    if regole is not None and "derby_ufficiali" in regole:   # registro ufficiale (mvp_derby): decide solo lui (24 novembre 2026)
+        return any({a, b} == {c.get("a"), c.get("b")} for c in regole["derby_ufficiali"])
     if (regole or {}).get("derby_amici"):
         return intensita(a, b, regole) >= 50
     return rivalita_storia(a, b) >= 80

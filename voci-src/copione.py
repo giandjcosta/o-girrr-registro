@@ -71,7 +71,7 @@ def risultati(partite, n, add, pick, rng):
         scarto = round(abs(pw - pl), 1)
         if scarto >= SCARTO_GRANDE:
             add(voce, f"{w} ha vinto {num(gw)} a {num(gl)} contro {l}, con {f(scarto)} Fantapunti di scarto! Una mazzata!", "urlo")
-            add("G" if voce == "B" else "B", pick(["Ahia!", "Questa ha fatto male anche a noi!", "Altro che mazzata: una cassa di birra in testa!"]), "urlo")
+            add("G" if voce == "B" else "B", pick(["Ahia!", "Questa ha fatto male anche a noi!", "Altro che mazzata: una cassa di birra in testa!", "Partita chiusa prima dell'intervallo, e chi ha visto ha visto!", "Qui non c'è stata partita, signori!"]), "urlo")
         elif gw - gl == 1 and scarto <= SCARTO_PICCOLO:
             add(voce, f"{w} ha vinto {num(gw)} a {num(gl)} contro {l}, e l'ha decisa per appena {f(scarto)} Fantapunt{'o' if scarto == 1 else 'i'}!", "stupore")
         else:
@@ -84,11 +84,17 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
     b1 = nomi.get('B', 'Beppe Rovesciata'); g1 = nomi.get('G', 'Luigi Fischietti'); g0 = g1.split()[0]; b0 = b1.split()[0]
     a = D["aw"][-1]; T = D["tab"]; P = D["prob"]; n = a["n"]
     row = {r["t"]: r for r in T}
-    def pick(x): return rng.choice(x)
+    def pick(x): return rng.choice([y for y in x if all(y != t for _, t, _ in L)] or x)   # la stessa battuta una volta sola a puntata
     def curva(t): return ""   # niente frasi inventate sulla Curva: si legge solo un post vero (curva.json)
     def pct(x): return f(round(x))
     L = []
-    def add(k, t, st=None): L.append((k, " ".join(t.split()), st))
+    def _sconfitta(t):
+        for x, px, py, y, r in D.get("partite") or []:
+            if not r or r == "-" or t not in (x, y): continue
+            gx, gy = (int(z) for z in r.split("-"))
+            if (t == x and gx < gy) or (t == y and gy < gx): return y if t == x else x
+        return None
+    def add(k, t, st=None): L.append((k, " ".join(t.replace("The Blue brothers", "The Blues Brothers").split()), st))
     # --- apertura alla Caressa e Bergomi: la frase passa da una voce all'altra
     # Beppe si presenta e passa la parola: il nome a metà frase è quello del compagno, non il suo (Gianluca, puntata 6)
     add("B", f"Buongiorno, buonasera e buonanotte a tutti, siete su Radio Girrr, la radio ufficiale della Lega O Fant A Girrr! Io sono {b1}, e oggi con me c'è", "urlo")
@@ -172,8 +178,13 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
         add("B", f"Il presidente di {basso} non è molto contento ultimamente!")
         add("G", "Se continua così si parla di esonero. Sottovoce, eh." if fid(basso) <= 15 else "Servono risultati, e anche in fretta.", "sospiro" if fid(basso) > 15 else "sus")
     elif fid(alto) >= 85 and rng.random() < 0.5:
-        add("B", f"Il presidente di {alto} è al settimo cielo!")
-        add("G", "Con questi punti ci credo. Contratto a vita!")
+        ko = _sconfitta(alto)
+        if ko:   # Gianluca, 24 novembre: prima, ma ha appena perso: va detto
+            add("B", f"Il presidente di {alto} resta contento della classifica, ma la sconfitta con {ko} brucia!")
+            add("G", "Il primo posto c'è ancora, il margine molto meno. Sottovoce, eh.")
+        else:
+            add("B", f"Il presidente di {alto} è al settimo cielo!")
+            add("G", "Con questi punti ci credo. Contratto a vita!")
     # --- storie degli allenatori, una o due a puntata
     teams_in = [mv[0], fl[0]]
     pool = [t for t in teams_in if t in STORIE and (t != t1["t"])]
@@ -182,7 +193,9 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
     # --- inviata
     add("B", "Ora ci colleghiamo con la nostra inviata sul campo! Giulia, a te!", "urlo")
     sup = max(((r["t"], EXP.get(r["t"], 5), r["pos"]) for r in T), key=lambda x: x[1] - x[2])
-    add("S", f"Grazie {b0}! Qui è un bel caos! Prima notizia: {sup[0]} sta superando le aspettative! Il presidente la voleva intorno al {ORDM.get(sup[1], str(sup[1]))} posto, e invece oggi è {ORD.get(sup[2], str(sup[2])+'ª')}!", "entusiasmo")
+    _ko = _sconfitta(sup[0])
+    add("S", f"Grazie {b0}! Qui è un bel caos! Prima notizia: {sup[0]} sta superando le aspettative! Il presidente la voleva intorno al {ORDM.get(sup[1], str(sup[1]))} posto, e invece oggi è {ORD.get(sup[2], str(sup[2])+'ª')}"
+        + (f", anche se questa volta ha perso con {_ko}!" if _ko else "!"), "entusiasmo")
     g = D["cal"][0]["m"]
     # --- conferenze stampa della settimana (solo se qualcuno le ha fatte): le mischiamo in un piccolo riepilogo e le confrontiamo col campo
     cf = (conf or {}).get("squadre") or {}
