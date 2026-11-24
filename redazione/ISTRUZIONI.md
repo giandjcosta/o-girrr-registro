@@ -12,7 +12,7 @@ caso chiudi subito la sessione, senza fare altro. Al massimo due giri per giorna
 ## Il giro successivo (per ogni giornata, non solo una)
 La redazione non controlla tutti i giorni e **non programma più da sola il giro successivo**: lo programma ogni mattina il «regista del calendario»
 (attività «Fanta lega: Redazione di Girrr Sport (dopo e vigilia)», una a colpo, rimessa in orario con `update_trigger`), per **ogni** giornata (regola di Gianluca, 24 novembre 2026):
-- giro **dopo**: parte subito a fine giornata, appena risultati e Giornale sono online (di norma il giorno dopo l'ultima partita, alle 20:07 ora di Roma; subito, se la giornata viene chiusa prima: chi la chiude lancia l'attività con `fire_trigger`). Pubblica la settimana dei tifosi della giornata appena giocata, così MVP e sondaggio si aprono e si può votare;
+- giro **dopo**: **nessun orario fisso**, parte quando esce il Giornale: chi chiude la giornata lancia l'attività con `fire_trigger` subito dopo averlo pubblicato (passo della skill `chiudi-giornata-girrr`); il regista la lancia solo come recupero, se il Giornale c'è e la settimana dei tifosi di quella giornata no. Pubblica la settimana dei tifosi della giornata appena giocata, così MVP e sondaggio si aprono e si può votare;
 - giro **vigilia**: 25 ore prima della prima partita di Serie A della giornata successiva.
 Se al giro **dopo** i risultati non sono ancora pubblicati (`serve.py` dice «niente»), la sessione riprogramma l'attività tra 1 ora, al massimo quattro volte di seguito, poi chiude.
 `serve.py` impedisce di rifare un giro già fatto (`stato.json`): un lancio in più chiude subito.
