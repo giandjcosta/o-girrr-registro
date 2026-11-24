@@ -292,7 +292,7 @@ def build(D, rng, mercato, nomi=None, conf=None, curva_=None, regole=None):
         add("B", f"Alla prossima giornata c'è il Derby! {sd.get('nome') or 'Derby'}: {m[0]} contro {m[1]}!", "urlo")
     elif der: add("B", f"Alla prossima giornata c'è il Derby: {der[0]} contro {der[1]}!" + (" Una rivalità storica!" if _d.rivalita(der[0], der[1], regole) >= 70 else ""), "urlo")
     # --- mercato: Ciro c'è solo se ci sono notizie
-    notizie = (mercato or {}).get("notizie") or []
+    notizie = [z for z in (mercato or {}).get("notizie") or [] if z.get("giornata") in (None, D["aw"][-1]["n"])]   # una notizia vale per la puntata della sua giornata
     if notizie:
         add("B", "E adesso il mercato! Abbiamo notizie, e per commentarle chiamiamo Ciro Trattativa!", "urlo")
         add("C", "Buongiorno a tutti, qui Ciro Trattativa. Notizie fresche dal mercato!")
