@@ -1,5 +1,5 @@
 {
- "aggiornato": "2026-11-24T18:42:41Z",
+ "aggiornato": "2026-11-25T06:43:06Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
@@ -66,9 +66,9 @@
    "nome": "Controllo automatismi del mattino",
    "quando": "Ogni giorno alle 07:33",
    "stato": "attiva",
-   "prossimo": "2026-11-25T06:33:00Z",
+   "prossimo": "2026-11-26T06:33:00Z",
    "ultimo": {
-    "quando": "2026-11-24T06:33:53Z",
+    "quando": "2026-11-25T06:33:51Z",
     "esito": "riuscito"
    },
    "nota": "Avvisa solo se qualcosa è fermo da più di 2 giorni."
@@ -147,24 +147,6 @@
    "quando": "Solo manuale, nessuna programmazione",
    "stato": "attiva",
    "nota": "Attività di prova: da cancellare."
-  },
-  {
-   "nome": "Promemoria: controllo lavoro di VS Code Copilot sul registro",
-   "quando": "Una volta: 25 ottobre alle 03:59",
-   "stato": "conclusa",
-   "ultimo": {
-    "quando": "2026-10-25T03:00:00Z",
-    "esito": "riuscito"
-   }
-  },
-  {
-   "nome": "Promemoria: SQL Curva su Supabase",
-   "quando": "Una volta: 24 ottobre alle 10:32",
-   "stato": "conclusa",
-   "ultimo": {
-    "quando": "2026-10-24T08:32:32Z",
-    "esito": "riuscito"
-   }
   },
   {
    "nome": "Promemoria GEMINI_API_KEY sito",
