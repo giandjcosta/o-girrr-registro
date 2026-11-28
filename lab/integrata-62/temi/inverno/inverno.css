@@ -1219,3 +1219,15 @@
 :root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c .ic{max-width:86%!important}
 @media (min-width:900px){:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c h2{font-size:15px!important}}
 :root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c.bet .ic span{font-size:clamp(18px,5.4vw,30px)!important}
+
+/* W12. Frecce delle giornate rotonde come i cerchi; schede dell'Albo in ghiaccio; riquadri «Ultima giornata» e «Champions Cup» della Home con la cornice */
+:root[data-event-theme="inverno"] .gs .ar.nt-tab.nt-tab{aspect-ratio:1;border-radius:50%!important;min-width:40px}
+:root[data-event-theme="inverno"] body .gs.gs.gs.gs .ar.ar.ar.nt-tab.nt-tab.nt-tab::before{inset:-3px!important;border:0!important;border-image:none!important;border-radius:50%!important;
+  background:url(foto/cerchio-ghiaccio.png) center/100% 100% no-repeat!important;box-shadow:0 4px 10px rgba(0,0,0,.45)!important}
+:root[data-event-theme="inverno"] :is(.at,.dtab)[role=tablist] > button[role=tab]:not([aria-selected=true]){background:linear-gradient(170deg,#22376a,#121d3d) padding-box!important;box-shadow:none!important;color:#edf5fc!important;
+  border:solid transparent!important;border-width:12px 10px 8px 10px!important;border-image:url(foto/scheda-ghiaccio.png) 95 62 60 62 / 12px 10px 8px 10px stretch!important;padding-top:4px!important;padding-bottom:2px!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] #strip>.st{position:relative;isolation:isolate;background:none!important;box-shadow:none!important;border:0!important;padding:20px 16px 14px 22px!important;overflow:visible!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] #strip>.st::before{content:'';position:absolute;inset:-5px -4px -3px;z-index:-1;pointer-events:none;
+  border:solid transparent;border-width:20px 14px 12px 14px;border-image:url(foto/casella-ghiaccio.png) 95 60 70 60 fill / 20px 14px 12px 14px stretch;filter:drop-shadow(0 8px 12px rgba(0,0,0,.45))}
+:root[data-event-theme="inverno"] body[data-v53="home"] #strip>.st::after{content:'';position:absolute;left:10px;top:18px;bottom:12px;width:4px;border-radius:4px;background:linear-gradient(180deg,#ff5a6e,#e9233b);pointer-events:none}
+:root[data-event-theme="inverno"] body[data-v53="home"] #strip>.st[href*="coppa"]::after{background:linear-gradient(180deg,#9ccbea,#2f7dff)}
