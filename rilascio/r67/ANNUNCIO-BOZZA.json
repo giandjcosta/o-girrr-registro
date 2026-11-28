@@ -1,0 +1,12 @@
+{
+ "stato": "Bozza: numero da confermare con Gianluca (proposta: medio → 6.7); in prova nel Lab; serve il «Vai»; regole in REGOLE-VERSIONI.md",
+ "tipo": "medio",
+ "titolo": "La partita da guardare",
+ "messaggio": "⚽ **O Girrr 6.7 è online!** Nella Home, sotto «Oggi al Girrr», trovi la partita da guardare del prossimo turno: un Derby, un sorpasso possibile o la sfida più equilibrata, con un tocco per aprirla nel Campo. Accanto c'è la classifica in breve: il podio e la tua squadra, sempre in evidenza. E poi i numeri della stagione: giornate, gol, media gol e pareggi. Buona giornata a tutti! ⚽",
+ "voci": [
+  "Home: Nuovo riquadro «La partita da guardare» sotto «Oggi al Girrr»: prima un Derby, poi un sorpasso possibile, altrimenti la sfida più equilibrata; il tocco apre il Campo su quella partita.",
+  "Home: Classifica breve sempre di quattro righe: dal podio alla quarta le prime quattro, dalla quinta in giù le prime tre e la tua squadra; la tua riga è evidenziata con «Tu».",
+  "Home: Numeri della stagione di Campionato: giornate, gol, gol a partita e pareggi, con il collegamento a Tabellone › Numeri."
+ ],
+ "v": "6.7"
+}
