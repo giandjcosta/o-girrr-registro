@@ -1,14 +1,14 @@
 {
- "aggiornato": "2026-11-28T06:45:00Z",
+ "aggiornato": "2026-11-28T18:42:06Z",
  "attivita": [
   {
    "nome": "Controllo infortuni di tutta la Serie A",
    "quando": "Ogni 3 giorni alle 11:17 (giorni 1, 4, 7… del mese)",
    "stato": "attiva",
-   "prossimo": "2026-11-28T10:17:00Z",
+   "prossimo": "2026-12-01T10:17:00Z",
    "nota": "Fonte principale Sky Sport (45%), poi Fantacalcio.it e i giornali.",
    "ultimo": {
-    "quando": "2026-11-25T10:17:41Z",
+    "quando": "2026-11-28T10:17:26Z",
     "esito": "riuscito"
    }
   },
