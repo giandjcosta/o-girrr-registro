@@ -49,6 +49,7 @@ Le due grafiche devono essere davvero diverse, e ognuna uguale su tutte le pagin
 
 ## Skin speciali (Gianluca, 17–18 novembre 2026)
 - Le skin vivono in `temi/<id>/`, con una riga in `EVENTI` di `temi/evento-loader.js` e una scheda in `temi/catalogo.json` (negozio `lab/skin.html`). Si accendono e si spengono da sole per data (ora italiana).
+- **Ogni skin anche nei media della lega (Gianluca, 28 novembre 2026):** una skin non è solo grafica. Per ogni skin, presente e futura, si preparano anche: (1) il **Giornale** a tema nei numeri che escono durante la skin (carta, testata e una riga editoriale dell'occasione, come il n. 8 «Speciale Vice City» con `--tema` di `scripts/pdf_giornale.py`); (2) qualcosa sull'occasione alla **Radio** (battute di apertura o chiusura, auguri), solo nella puntata che si fa comunque: mai rifarne una apposta, consuma la chiave a pagamento; (3) post e commenti dei **personaggi della Curva** sull'occasione. Livello editoriale: risultati e fatti veri, niente fantapunti (salvo le eccezioni dei tre livelli) e niente scommesse; quale numero, quale puntata e quali frasi li conferma Gianluca prima della pubblicazione.
 - **Regola fissa:** l'avviso della nuova versione («È uscita la …») sta **sempre in cima alla Home**, subito sotto il titolo e sopra ogni altro blocco, con qualsiasi skin presente e futura. La impone `evento-loader.js` (stile `data-evento-regola="avviso-versione-in-cima"`): non toglierla e non spostare l'avviso nelle skin.
 
 ## Regole sui contenuti — tre livelli di scrittura (decisione di Gianluca, 1° novembre 2026)
