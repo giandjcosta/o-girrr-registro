@@ -1181,3 +1181,41 @@
 :root[data-event-theme="inverno"] body:has(> .wrap > #tabs) #tabs button.nt-tab.nt-tab.nt-on{color:#111b38!important;text-shadow:0 1px 0 rgba(255,255,255,.45)!important}
 :root[data-event-theme="inverno"] :is(.at,.dtab)[role=tablist] > button[role=tab][aria-selected=true]{background:none!important;box-shadow:none!important;color:#111b38!important;
   border:solid transparent!important;border-width:14px 14px 9px 14px!important;border-image:url(foto/scheda-oro.png) 60 64 44 64 fill / 14px 14px 9px 14px stretch!important;padding-top:4px!important;padding-bottom:2px!important}
+
+/* ===================== W10. «Tutto il Girrr» d'inverno: calendario dell'Avvento (Gianluca, 28 novembre: «qualcosa di diverso ad ogni skin»)
+   Notte Tropicale aveva le schede fotografiche che scorrono di lato; Inverno le mette in una griglia di caselle di ghiaccio, come le
+   finestrelle di un calendario dell'Avvento: logo della sezione al centro, nome sotto in Cinzel, numero della casella in alto. */
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px 10px!important;overflow:visible!important;
+  padding:6px 2px 8px!important;counter-reset:w-casella;-webkit-mask-image:none!important;mask-image:none!important}
+@media (max-width:359px){:root[data-event-theme="inverno"] body[data-v53="home"] .cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media (min-width:900px){:root[data-event-theme="inverno"] body[data-v53="home"] .cards{grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:16px!important}}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards::before{display:none!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c,:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c:nth-child(n){counter-increment:w-casella;
+  flex:none!important;min-height:0!important;aspect-ratio:1/1.12;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:22px 8px 12px!important;
+  background:none!important;box-shadow:none!important;border:0!important;border-radius:0!important;position:relative;isolation:isolate;overflow:visible!important;transform:none!important;transition:transform .2s ease}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c::before{content:''!important;position:absolute;inset:-4px 0 -2px;z-index:-1;display:block!important;
+  border:solid transparent;border-width:20px 14px 12px 14px;border-image:url(foto/casella-ghiaccio.png) 95 60 70 60 fill / 20px 14px 12px 14px stretch;filter:drop-shadow(0 8px 12px rgba(0,0,0,.45))}
+/* numero della casella, come sul calendario dell'Avvento */
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c::after{content:counter(w-casella)!important;position:absolute!important;top:12px!important;left:12px!important;right:auto!important;bottom:auto!important;
+  width:auto!important;height:auto!important;background:none!important;border-radius:0!important;font:700 13px/1 Cinzel,Georgia,serif!important;color:var(--nt-arancio)!important;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c .ic{position:static!important;height:auto!important;max-width:100%!important;display:flex;align-items:center;justify-content:center;min-height:40px}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c .ic img{max-height:38px!important;max-width:100%!important;height:auto!important;width:auto!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c.bet .ic span{font-size:26px!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c h2{font:700 13px/1.15 Cinzel,Georgia,serif!important;text-transform:none!important;letter-spacing:.02em!important;text-align:center;padding:0!important;color:#edf5fc!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c h2 .nt-nv{display:none!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c:active{transform:scale(.96)!important}
+@media (min-width:900px){:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c h2{font-size:15px!important}:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c .ic img{max-height:48px!important}}
+
+/* W11. Font della Home: partita da guardare, classifica breve e numeri della stagione in Cinzel (al posto del Barlow di Notte Tropicale) */
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-match b{font:800 clamp(24px,6.6vw,40px)/1.05 Cinzel,Georgia,serif!important;letter-spacing:.01em!important;text-transform:none!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-match :is(small,strong){font-family:Cinzel,Georgia,serif!important;font-weight:700!important;text-transform:none!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-match em{font:700 14px/1 Cinzel,Georgia,serif!important;text-transform:none!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] :is(.nt-classifica,.nt-stagione) header b{font:700 20px/1 Cinzel,Georgia,serif!important;text-transform:none!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-classifica li{font:600 15px Cinzel,Georgia,serif!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-classifica li :is(em,b){font-family:Cinzel,Georgia,serif!important;font-weight:800!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-stagione p b{font:800 30px/1 Cinzel,Georgia,serif!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-stagione p small{font-family:Cinzel,Georgia,serif!important;font-weight:700!important;letter-spacing:.04em!important;text-transform:none!important;font-size:11px!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c h2{padding:0 4px!important;max-width:100%;overflow-wrap:anywhere;font-size:12px!important;line-height:1.2!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c .ic{max-width:86%!important}
+@media (min-width:900px){:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c h2{font-size:15px!important}}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c.bet .ic span{font-size:clamp(18px,5.4vw,30px)!important}
