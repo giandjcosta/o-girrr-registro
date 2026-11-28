@@ -1,6 +1,10 @@
 # Stato del progetto O Girrr (ultimi giorni — aggiornato 18 novembre 2026)
 
 
+## 28 novembre 2026 — In prova nel Lab: skin «Inverno» (Claude, immagini di Gemini scelte da Gianluca)
+- Ramo `claude/ogirrr-winter-edition-design-38mj6z` del registro (non ancora su `main`, sito invariato): `temi/inverno/`, voce in `temi/evento-loader.js` (1° dicembre–6 gennaio; Winter 1–24, Christmas 25–30, New Year dal 31), `temi/catalogo.json`, `temi/prova_evento.js`, Lab `lab/integrata-62/temi/` con `temi/inverno/lab.py`. Dettagli e cose da fare in `LAVORI-IN-CORSO.md`.
+- Prove: caricatore 23/23; Chromium 3 edizioni × 15 pagine × 5 schermi = 225 casi senza scorrimento laterale né errori. Non provati: WebKit, Firefox, telefoni veri.
+
 ## 28 novembre 2026 — ONLINE la 6.7 «La partita da guardare» (Claude, con il «Vai» di Gianluca)
 - **Sito `gh-pages`**: commit `ec31b89` e merge commit `06d2754` (rilascio con «merge commit» come da regole del 28/11; niente PR sul sito perché la sessione può spingere un solo ramo, che parte da `main`). Home di Lega e Stadio, sotto «Oggi al Girrr»: partita da guardare (Derby, sorpasso possibile o sfida più equilibrata; «In campo adesso» durante la giornata), classifica breve (sempre 4 righe; dalla 5ª in giù prime tre, «⋯» e la tua con «Tu»; ospite prime quattro), numeri della stagione. File `girrr/home-cruscotto.js`, preparato con `rilascio/r67/`. `versioni.json` con la 6.7 (media, proposta da Claude e confermata da Gianluca). Per tornare indietro: `git revert -m 1 06d2754`.
 - **Registro**: PR #147 (Lab e regola sul tipo di versione), unita con «Squash and merge» dopo 9 controlli verdi (Chromium, WebKit, Firefox). `ufficiale/src/sito/` allineato (le pagine e `girrr/home-cruscotto.js`); `versioni.json` del registro, Archivio e Changelog li aggiorna da solo il workflow «Allineamento del Registro» (`sincronizza-registro.yml`): a mano facevano fallire la prova dell'archivio.
