@@ -31,7 +31,7 @@ Qui ci sono il Lab, l'Anteprima, le sorgenti delle pagine del sito vero e lo sta
 - Transizioni sempre fluide (vedi «Mentre lavori»).
 
 ## Numeri di versione e pagina Versioni (decisione di Gianluca, 9 novembre 2026)
-- **Prima di rilasciare qualcosa sul sito vero chiedi a Gianluca che tipo di aggiornamento è:**
+- **Prima di rilasciare qualcosa sul sito vero proponi a Gianluca che tipo di aggiornamento è, con il motivo; lui conferma o cambia (Gianluca, 28 novembre 2026):**
   - correzione minore → cambia la terza cifra: 5.6.1, 5.6.2, …;
   - aggiornamento medio → cambia la seconda cifra: 5.7 (cioè 5.7.0), 5.8, …;
   - aggiornamento grande → cambia la prima cifra: 6.0, 7.0, ….
