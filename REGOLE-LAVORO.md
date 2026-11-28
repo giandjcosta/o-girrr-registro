@@ -33,7 +33,7 @@ Le regole di progetto restano in `AGENTS.md` (contenuti, grafiche Lega e Stadio,
 
 ## 3. Rilasciare (deploy)
 1. **Prima la prova nel Lab** (`https://giandjcosta.github.io/o-girrr-registro/lab/`), poi la certificazione e il **«Vai» esplicito di Gianluca**. Senza «Vai» non va online niente.
-2. **Chiedi a Gianluca che tipo di versione è**: correzione minore, aggiornamento medio o aggiornamento grande. Poi scrivi messaggio e changelog seguendo `REGOLE-VERSIONI.md` e aggiungili con `rilascio/versioni/aggiungi.py`.
+2. **Proponi tu il tipo di versione** (Gianluca, 28 novembre 2026: «da ora in poi qualsiasi agente propone se è una versione piccola, grande o media»): correzione minore, aggiornamento medio o aggiornamento grande, con il motivo in una riga. Gianluca conferma o cambia. Poi scrivi messaggio e changelog seguendo `REGOLE-VERSIONI.md` e aggiungili con `rilascio/versioni/aggiungi.py`.
 3. **Ordine fisso:** prima `gh-pages` del sito, poi la controlli sul sito vero (pagina aperta, console pulita), solo dopo `main` del sito e del registro. `git pull --rebase` prima di ogni push: i workflow scrivono ogni pochi minuti.
 4. **Annota gli hash** dei commit e come tornare indietro (`git revert <hash>` sul ramo giusto) in `STATO.md` e nella cartella del rilascio (`rilascio/rXYZ/RILASCIO.md`).
 5. **SQL:** solo con il «Vai». Gianluca lo applica dall'SQL Editor di Supabase (la conferma dello strumento di Claude spesso non gli arriva). Prepara sempre anche le funzioni di prima, per tornare indietro.
