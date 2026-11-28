@@ -1,0 +1,1183 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;1,800;1,900&family=Cinzel:wght@600;700;800&display=swap');
+/* O Girrr · Skin «Inverno» (Claude, 28 novembre 2026), dalla proposta di ChatGPT mostrata da Gianluca («Winter Premium Edition»).
+   Si appoggia alle pagine VERE come Notte Tropicale e ne riprende la struttura collaudata su tutte le pagine (Home, Tabellone,
+   Campo, Totogirrr, Carriera, Albo, Giornale, Spogliatoio, Versioni, Notifiche; Curva esclusa dal caricatore), con forme e
+   colori nuovi: niente più inclinazioni, riquadri dritti e arrotondati con il bordo di ghiaccio, schede a capsula.
+   Quattro atmosfere, scelte con ?evento-sfondo= (Gianluca, 28 novembre: «fammi in anteprima di tutte»):
+   premium (predefinita: navy, ghiaccio e oro) · natale (abete, berry e oro) · capodanno (viola, lavanda, champagne, 2027) ·
+   wonderland (ghiaccio e aurora, più chiara). Campionato resta rosso e Champions Cup azzurra in tutte e quattro.
+   Movimento solo con transform (neve che cade), tutto fermo con «riduci movimento». Niente backdrop-filter. */
+:root[data-event-theme="inverno"]{
+  --nt-rosa:#9ccbea; --nt-rosa-chiaro:#cfe6f6; --nt-ciano:#eaf3fc; --nt-arancio:#d6b66f; --nt-lilla:#c3cad5; --nt-giallo:#f3e3b5; --w-blu2:#304779;
+  --w-glow:156,203,234; --w-ice:234,243,252; --w-fondo:17,27,56; --w-fondo2:29,45,85; --w-bordo-rgb:156,203,234;
+  --nt-notte:#111b38; --nt-viola:#1d2d55;
+  --nt-scheda:linear-gradient(165deg,#22355f,#111b38 70%);
+  --nt-fila:#0f1830;
+  --nt-bordo:rgba(156,203,234,.34);
+  --nt-ombra:0 1px 0 rgba(234,243,252,.45) inset,0 12px 30px rgba(3,8,20,.45);
+  --w-titolo:linear-gradient(180deg,#ffffff 10%,#cfe6f6 48%,#d6b66f 96%);
+  --w-scena:url(inverno-premium.svg);
+  --w-velo:linear-gradient(180deg,rgba(7,13,31,.30) 0%,rgba(17,27,56,.28) 45%,rgba(7,13,31,.78) 100%);
+  --w-fiocco:#edf5fc; --w-fiocco2:rgba(237,245,252,.55);
+  --w-attiva:linear-gradient(180deg,#f0dca6,#d6b66f);   /* scheda scelta: oro champagne */
+  --w-attiva-testo:#111b38;
+  --w-firma-titolo:'Winter Edition';
+  --w-date:'Edizione speciale · Dal 1° dicembre al 6 gennaio';
+  --w-firma:'Winter Edition · Stagione 2026/27 · Dal 1° dicembre al 6 gennaio';
+  background-color:var(--nt-notte)!important;color-scheme:dark;
+}
+:root[data-event-theme="inverno"][data-event-sfondo="natale"]{
+  --nt-rosa:#d52c43; --nt-rosa-chiaro:#f19aa5; --nt-ciano:#f5f0e7; --nt-arancio:#d5b66e; --nt-lilla:#3f9a77; --nt-giallo:#f5e6bd; --w-blu2:#1f654d;
+  --w-glow:213,182,110; --w-ice:245,240,231; --w-fondo:13,30,38; --w-fondo2:22,58,52; --w-bordo-rgb:213,182,110;
+  --nt-notte:#0d1a26; --nt-viola:#143a32;
+  --nt-scheda:linear-gradient(165deg,#17423a,#0f1f2e 72%);
+  --nt-fila:#0c1a22; --nt-bordo:rgba(213,182,110,.38);
+  --w-titolo:linear-gradient(180deg,#fff8e6 8%,#d5b66e 55%,#b88f3a 96%);
+  --w-scena:url(inverno-natale.svg);
+  --w-velo:linear-gradient(180deg,rgba(6,16,26,.25) 0%,rgba(13,30,38,.30) 45%,rgba(6,16,26,.80) 100%);
+  --w-fiocco:#f5f0e7; --w-fiocco2:rgba(213,182,110,.55);
+  --w-attiva:linear-gradient(180deg,#e8475c,#b51f35); --w-attiva-testo:#fff;
+  --w-firma-titolo:'Christmas Edition';
+  --w-firma:'Christmas Edition · Buone feste dal Girrr';
+}
+:root[data-event-theme="inverno"][data-event-sfondo="capodanno"]{
+  --nt-rosa:#7968b7; --nt-rosa-chiaro:#b9addf; --nt-ciano:#f3e9d5; --nt-arancio:#d8b96e; --nt-lilla:#a493e6; --nt-giallo:#f3e9d5; --w-blu2:#302d59;
+  --w-glow:216,185,110; --w-ice:243,233,213; --w-fondo:16,22,41; --w-fondo2:48,45,89; --w-bordo-rgb:216,185,110;
+  --nt-notte:#101629; --nt-viola:#302d59;
+  --nt-scheda:linear-gradient(165deg,#332f60,#141a33 72%);
+  --nt-fila:#11152a; --nt-bordo:rgba(216,185,110,.36);
+  --w-titolo:linear-gradient(180deg,#fff6df 8%,#d8b96e 50%,#a493e6 98%);
+  --w-scena:url(inverno-capodanno.svg);
+  --w-velo:linear-gradient(180deg,rgba(7,10,23,.25) 0%,rgba(16,22,41,.30) 45%,rgba(7,10,23,.82) 100%);
+  --w-fiocco:#f3dca0; --w-fiocco2:rgba(185,173,223,.6);
+  --w-attiva:linear-gradient(180deg,#f0dca6,#d8b96e); --w-attiva-testo:#101629;
+  --w-firma-titolo:'New Year 2027';
+  --w-firma:'Capodanno al Girrr · Benvenuto 2027';
+}
+:root[data-event-theme="inverno"][data-event-sfondo="wonderland"]{
+  --nt-rosa:#7fc8f0; --nt-rosa-chiaro:#cdeaff; --nt-ciano:#ffffff; --nt-arancio:#bfe3ff; --nt-lilla:#d6ecff; --nt-giallo:#ffffff; --w-blu2:#3c6f9e;
+  --w-glow:191,227,255; --w-ice:255,255,255; --w-fondo:22,52,92; --w-fondo2:52,95,145; --w-bordo-rgb:205,234,255;
+  --nt-notte:#163457; --nt-viola:#2a5585;
+  --nt-scheda:linear-gradient(165deg,#3a6c9f,#1b3d66 72%);
+  --nt-fila:#183a62; --nt-bordo:rgba(205,234,255,.5);
+  --w-titolo:linear-gradient(180deg,#ffffff 15%,#dff2ff 55%,#7fc8f0 100%);
+  --w-scena:url(inverno-wonderland.svg);
+  --w-velo:linear-gradient(180deg,rgba(13,35,64,.20) 0%,rgba(22,52,92,.25) 45%,rgba(13,35,64,.72) 100%);
+  --w-fiocco:#ffffff; --w-fiocco2:rgba(255,255,255,.7);
+  --w-attiva:linear-gradient(180deg,#ffffff,#cdeaff); --w-attiva-testo:#163457;
+  --w-firma-titolo:'Winter Wonderland';
+  --w-firma:'Winter Wonderland · Il Girrr sotto la neve';
+}
+/* ---- Parte ripresa da «Notte Tropicale» (struttura collaudata su tutte le pagine), con i colori d'inverno al posto del viola
+   e del rosa e senza inclinazioni. Le classi .nt-* restano quelle dello script, condiviso. ---- */
+/* 1-2. Sfondo e neve: sezione W in fondo al file */
+/* le strisce animate di Lega e Totogirrr spariscono sotto la scena (resta la barra in alto dell'app) */
+:root[data-event-theme="inverno"] body{background:transparent!important}
+:root[data-event-theme="inverno"] body::before,:root[data-event-theme="inverno"] body::after{background-image:none!important;animation:none!important}
+
+/* 3. Titoli «al tramonto» e scritte al neon */
+:root[data-event-theme="inverno"] .hero h1,:root[data-event-theme="inverno"] .top h1,
+:root[data-event-theme="inverno"] .v53-h1,:root[data-event-theme="inverno"] .gs-title,
+:root[data-event-theme="inverno"] header h1{
+  text-shadow:0 0 10px rgba(var(--w-glow),.65),0 0 28px rgba(var(--w-glow),.35)!important;
+}
+:root[data-event-theme="inverno"] .hero h1 span,:root[data-event-theme="inverno"] .top h1 span{
+  background:linear-gradient(180deg,var(--nt-giallo) 8%,var(--nt-arancio) 46%,var(--nt-rosa) 92%);
+  -webkit-background-clip:text;background-clip:text;color:transparent!important;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 12px rgba(var(--w-glow),.55));text-shadow:none!important;
+}
+:root[data-event-theme="inverno"] .kick,:root[data-event-theme="inverno"] .v53-kicker,
+:root[data-event-theme="inverno"] .top .k,:root[data-event-theme="inverno"] .gh{
+  color:var(--nt-ciano)!important;text-shadow:0 0 10px rgba(var(--w-ice),.55)!important;
+}
+
+/* 3b. Titoli a pennello anni '80 (Kaushan Script): non proprio corsivo, inclinato, con l'alone neon; si accendono una volta */
+:root[data-event-theme="inverno"] :is(.hero h1,.top h1,.v53-h1,.v53-panel h2,h2.sec,.ph,.gs-title,header h1,.oggi h2,section > h2){
+  font-family:'Barlow Condensed',Inter,sans-serif!important;font-weight:400!important;letter-spacing:.01em!important;text-transform:none!important;
+}
+:root[data-event-theme="inverno"] :is(.hero h1,.top h1,header h1){animation:nt-accendi 1.4s ease-out 1 both}
+:root[data-event-theme="inverno"] :is(.v53-panel h2,h2.sec,.ph,section > h2){color:#ffffff!important;text-shadow:0 0 8px rgba(var(--w-glow),.55),0 0 22px rgba(var(--w-glow),.25)!important}
+:root[data-event-theme="inverno"] :is(.hero h1 span,.top h1 span){padding-right:.14em;margin-right:-.06em}
+/* 3c. Titolo della Home dal bozzetto che ChatGPT ha mostrato a Gianluca: «O GIRRR» in stampatello corsivo grosso (Barlow
+   Condensed, Google Fonts, OFL), «Girrr» sfumato rosa e arancio, e sopra in diagonale la scritta al neon «Notte Tropicale»
+   (Yellowtail, OFL) con la sottolineatura azzurra. Carattere e disegno nostri: richiama l'atmosfera, non copia nessun logo. */
+:root[data-event-theme="inverno"] .hero h1{font-family:'Barlow Condensed',Inter,sans-serif!important;font-style:normal!important;font-weight:900!important;text-transform:uppercase!important;
+  letter-spacing:-.01em!important;line-height:.86!important;font-size:clamp(50px,8.4vw,104px)!important;margin:.06em 0 .02em!important;color:#ffffff!important;
+  text-shadow:0 3px 0 #0f1930,0 0 18px rgba(var(--w-glow),.45)!important;white-space:nowrap;position:relative;padding-bottom:.62em}
+:root[data-event-theme="inverno"] .hero h1 span{font:inherit!important;background:linear-gradient(180deg,#2b60da 0%,#77acd4 50%,#ceaa56 100%)!important;   /* scelta di Gianluca (18 novembre): sfumatura 2 di Grok, blu-magenta-arancio */
+  -webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important;
+  filter:drop-shadow(0 3px 0 #0f1930) drop-shadow(0 0 14px rgba(var(--w-glow),.6))!important;text-shadow:none!important;padding:0 .08em 0 0!important;margin:0!important}
+:root[data-event-theme="inverno"] .hero h1::after{content:var(--w-firma-titolo);position:absolute;left:.5em;bottom:-.06em;transform:rotate(-7deg);transform-origin:0 100%;
+  font:400 .58em/1 Cinzel,Georgia,serif;   /* scelta di Gianluca: corsivo B, pennellata legata */text-transform:none;letter-spacing:0;color:#eaf2f8;-webkit-text-fill-color:#eaf2f8;white-space:nowrap;
+  text-shadow:0 0 2px #ffffff,0 0 8px var(--nt-rosa),0 0 18px var(--nt-rosa),0 0 36px rgba(var(--w-glow),.7);
+  padding-bottom:.08em;background:linear-gradient(90deg,transparent,var(--nt-ciano) 18%,var(--nt-ciano) 82%,transparent) 0 100%/100% 2px no-repeat}
+/* titoli delle pagine: corsivo da insegna bianco con l'alone rosa */
+:root[data-event-theme="inverno"] :is(.top h1,.v53-h1,.gs-title,header:not(.hero) h1){font-family:Cinzel,Georgia,serif!important}
+/* titoli delle sezioni come nel bozzetto: stampatello corsivo con le tre barre rosa «///» davanti */
+:root[data-event-theme="inverno"] :is(.v53-panel h2,h2.sec,.ph,.oggi h2,section > h2){font-family:'Barlow Condensed',Inter,sans-serif!important;font-style:normal!important;font-weight:800!important;
+  text-transform:uppercase!important;letter-spacing:.01em!important;padding-left:1.25em!important;
+  background:repeating-linear-gradient(115deg,var(--nt-rosa) 0 .16em,transparent .16em .3em) 0 52%/.95em .78em no-repeat!important}
+@keyframes nt-accendi{0%{opacity:.15;filter:brightness(.6)}12%{opacity:1}18%{opacity:.35}26%{opacity:1}34%{opacity:.7}46%,100%{opacity:1;filter:none}}
+
+/* 4. Schede scure con bordo luminoso: le bande laterali (rosse, azzurre, oro) restano dove sono */
+:root[data-event-theme="inverno"] :is(.c,.big,.lg-leghe,.v53-home,.v53-panel,.panel,.v53-metric,.strip .st,.card,.cd-box,.v55-card,.tw,.empty,.note,.sq,.row-card,.match,.feat > *,.slip){
+  background:var(--nt-scheda)!important;
+  box-shadow:var(--nt-ombra)!important;
+  border-top-color:var(--nt-bordo)!important;border-right-color:var(--nt-bordo)!important;border-bottom-color:var(--nt-bordo)!important;
+}
+:root[data-event-theme="inverno"] :is(.c,.big,.lg-leghe,.card,.v53-panel):hover{box-shadow:var(--nt-ombra),0 0 34px rgba(var(--w-glow),.28)!important}
+/* righe, collegamenti e file di pillole che prima erano trasparenti: fondo scuro, così sopra la scena si leggono */
+:root[data-event-theme="inverno"] :is(.vv-avviso,.cvw,a.mn,.sqb,.cd-btn,.turnoprossimo,.v53-box,.cov,.rac,.prize-corner,.v55-striscia){
+  background:var(--nt-scheda)!important;box-shadow:var(--nt-ombra)!important;
+}
+:root[data-event-theme="inverno"] :is(.giornata-nav,.sw,.seg,.oro-scroll,.v55-schede){background:var(--nt-fila)!important;border-color:var(--nt-bordo)!important}
+:root[data-event-theme="inverno"] .tick{background:rgba(10,17,32,.7)!important}
+/* pallini delle giornate (Tabellone): le giornate future erano trasparenti e lasciavano passare le righe del sole;
+   ora fondo scuro pieno e il «non ancora giocata» si legge dal colore del numero, non dalla trasparenza */
+:root[data-event-theme="inverno"] .chips button:not(.sel){background:rgba(12,19,37,.94)!important}
+:root[data-event-theme="inverno"] .chips button.pl:not(.sel){background:rgba(30,48,92,.94)!important}
+:root[data-event-theme="inverno"] .chips button:not(.sel):not(.pl):not(.nx){opacity:1!important;color:rgba(255,255,255,.42)!important}
+/* pulsanti e schede scelte: stesso colore di sempre, con un alone neon */
+:root[data-event-theme="inverno"] :is(nav button.on,nav button[aria-selected=true],.seg button[aria-pressed=true],.v53-pill.active,.v53-pill[aria-selected=true],#gsw .th,.go,.btn:not(.o):not(.ghost)){
+  box-shadow:0 0 14px rgba(var(--w-glow),.45),0 0 2px rgba(255,255,255,.6) inset!important;
+}
+/* testo secondario un filo più chiaro sopra il viola */
+:root[data-event-theme="inverno"] :is(.tag,.v53-desc,.sub,.meta,small){text-shadow:0 1px 2px rgba(0,0,0,.55)}
+
+/* 4b. Schede da sala giochi (Gianluca: «non solo la grafica ma anche le tab, l'esperienza interattiva: grandezza e posizione»).
+   Solo durante l'evento; dati, collegamenti e ordine delle schede restano quelli di sempre. */
+/* Totogirrr: le nove schede in una sola fila che scorre di lato, come nella grafica di sempre (Gianluca, 19 novembre: «meglio in linea»),
+   con i tasti a parallelogramma della skin. La scheda scelta si accende al neon. */
+:root[data-event-theme="inverno"] nav:has(> .nvi){padding:6px 0 10px!important;margin-bottom:16px!important}
+:root[data-event-theme="inverno"] nav > .nvi{gap:8px!important;padding:0 8px}
+:root[data-event-theme="inverno"] nav > .nvi button{min-height:44px;padding:10px 16px!important;white-space:nowrap!important;line-height:1.15;flex:0 0 auto;
+  font-size:12px!important;letter-spacing:.06em!important;font-style:normal;border-radius:4px!important;transform:none!important;
+  background:linear-gradient(180deg,rgba(var(--w-fondo2),.95),rgba(var(--w-fondo),.95))!important;box-shadow:0 0 0 1px var(--nt-bordo) inset,0 6px 14px rgba(5,8,15,.45)!important;
+  transition:background-color .18s ease,color .18s ease,box-shadow .25s ease!important}
+:root[data-event-theme="inverno"] nav > .nvi button.on{background:var(--hi)!important;color:var(--bg)!important;
+  box-shadow:0 0 0 2px #ffffff inset,0 0 18px rgba(var(--w-glow),.7),0 0 34px rgba(var(--w-glow),.3)!important}
+/* Albo d'oro: le pillole (La Storia, Le Ere, Titoli…) come le altre schede della skin, in una fila che scorre (Gianluca, 19 novembre) */
+:root[data-event-theme="inverno"] .at[role=tablist]{background:#101a33!important;border:1px solid var(--nt-bordo)!important;border-radius:13px!important;
+  padding:6px 8px!important;gap:8px!important;flex-wrap:nowrap!important;overflow-x:auto!important;scrollbar-width:none}
+:root[data-event-theme="inverno"] .at[role=tablist]::-webkit-scrollbar{display:none}
+:root[data-event-theme="inverno"] .at[role=tablist] > button[role=tab]{opacity:1!important;flex:0 0 auto;min-height:40px;padding:9px 16px!important;white-space:nowrap!important;
+  border:0!important;border-radius:4px!important;transform:none;font-style:normal;font-weight:800!important;color:#f2f7fb!important;
+  background:linear-gradient(180deg,rgba(var(--w-fondo2),.95),rgba(var(--w-fondo),.95))!important;box-shadow:0 0 0 1px var(--nt-bordo) inset!important;
+  transition:background-color .18s ease,color .18s ease,box-shadow .25s ease!important}
+:root[data-event-theme="inverno"] .at[role=tablist] > button[role=tab][aria-selected=true]{background:var(--w-attiva)!important;color:var(--w-attiva-testo)!important;
+  box-shadow:0 0 0 2px #ffffff inset,0 0 18px rgba(var(--w-glow),.6)!important}
+/* Albo d'oro › Derby: sottoschede, riquadro e Campionato/Champions Cup nello stile della skin (Gianluca, 19 novembre) */
+:root[data-event-theme="inverno"] .dtab[role=tablist]{display:flex!important;gap:8px!important;flex-wrap:nowrap!important;overflow-x:auto!important;scrollbar-width:none;
+  background:#101a33!important;border:1px solid var(--nt-bordo)!important;border-radius:13px!important;padding:6px 8px!important;margin:12px 0!important}
+:root[data-event-theme="inverno"] .dtab[role=tablist]::-webkit-scrollbar{display:none}
+:root[data-event-theme="inverno"] .dtab[role=tablist] > button[role=tab]{flex:0 0 auto;min-height:38px;padding:8px 14px!important;white-space:nowrap!important;border:0!important;border-radius:4px!important;
+  transform:none;font-style:normal;font-weight:800!important;color:#f2f7fb!important;opacity:1!important;
+  background:linear-gradient(180deg,rgba(var(--w-fondo2),.95),rgba(var(--w-fondo),.95))!important;box-shadow:0 0 0 1px var(--nt-bordo) inset!important}
+:root[data-event-theme="inverno"] .dtab[role=tablist] > button[role=tab][aria-selected=true]{background:var(--w-attiva)!important;color:var(--w-attiva-testo)!important;
+  box-shadow:0 0 0 2px #ffffff inset,0 0 18px rgba(var(--w-glow),.6)!important}
+:root[data-event-theme="inverno"] .swap .pt-box{background:linear-gradient(160deg,#17264a,#0d1528)!important;border:0!important;border-radius:6px 16px 16px 6px!important;
+  box-shadow:inset 0 3px 0 var(--nt-ciano),inset 5px 0 0 var(--nt-rosa),inset 0 0 0 1px rgba(var(--w-bordo-rgb),.35),0 10px 24px #060a1466!important}
+:root[data-event-theme="inverno"] .seg.pt-competition{background:#101a33!important;border:1px solid var(--nt-bordo)!important;border-radius:13px!important;padding:5px!important;gap:6px!important;display:flex!important}
+:root[data-event-theme="inverno"] .seg.pt-competition > button[data-pt-comp]{flex:1 1 0;min-width:0;border:0!important;border-radius:4px!important;transform:none;font-style:normal;font-weight:900!important;
+  color:#e4eff7!important;background:transparent!important;box-shadow:none!important;padding:10px 8px!important}
+:root[data-event-theme="inverno"] .seg.pt-competition > button[data-pt-comp][aria-pressed=true]{background:linear-gradient(180deg,#ff5a6e,#e9233b)!important;color:#fff!important;box-shadow:0 0 16px rgba(var(--w-glow),.5)!important}
+:root[data-event-theme="inverno"] .seg.pt-competition > button[data-pt-comp=cup][aria-pressed=true]{background:linear-gradient(100deg,var(--nt-ciano),var(--w-blu2) 55%,var(--nt-lilla))!important;color:#0b1325!important;box-shadow:0 0 16px rgba(var(--w-ice),.45)!important}
+:root[data-event-theme="inverno"] .dtab[role=tablist] > .dline{display:none!important}
+:root[data-event-theme="inverno"] .swap .pt-box summary::marker{color:var(--nt-rosa)!important}
+/* Tabellone: Campionato/Champions Cup e Classifica/Risultati/Campo diventano tasti più alti e inclinati, con gli angoli vivi.
+   Selettori rinforzati (.sw.sw) perché v55/ui.css arrotonda schede e interruttori con !important. */
+:root[data-event-theme="inverno"] body .sw.sw.sw{--g-tab:9px;--g-tabbox:12px;transform:none;border-radius:12px!important;padding:5px!important;max-width:520px!important;
+  background:var(--nt-fila)!important;box-shadow:0 0 0 1px var(--nt-bordo) inset,0 0 22px rgba(var(--w-glow),.18)!important}
+:root[data-event-theme="inverno"] body .sw.sw.sw i{border-radius:3px!important;top:5px!important;bottom:5px!important;box-shadow:0 0 16px rgba(var(--w-glow),.55)}
+:root[data-event-theme="inverno"] body .sw.sw.sw button{padding:15px 8px!important;font-style:normal;font-size:15px!important}
+:root[data-event-theme="inverno"] body .giornata-nav.giornata-nav.giornata-nav{--g-tab:9px;--g-tabbox:12px;gap:10px!important;max-width:620px;border-radius:6px!important;transform:none;background:var(--nt-fila)!important;
+  box-shadow:0 0 0 1px var(--nt-bordo) inset!important;padding:5px!important}
+:root[data-event-theme="inverno"] body .giornata-nav.giornata-nav.giornata-nav > :is(button,a){border-radius:3px!important;font-style:normal;padding:13px 16px!important}
+:root[data-event-theme="inverno"] body .giornata-nav.giornata-nav.giornata-nav > :is(button[aria-selected=true],a[aria-current]){box-shadow:0 0 16px rgba(var(--w-glow),.55)!important}
+/* Tabellone: le quattro schede (Classifica, Risultati, Campo, Numeri) su una riga; Numeri accesa quando ci sei (Gianluca, 19 novembre) */
+:root[data-event-theme="inverno"] body .giornata-nav.giornata-nav.giornata-nav:has(> :nth-child(4)){flex-wrap:nowrap!important;gap:6px!important;overflow:hidden!important}
+:root[data-event-theme="inverno"] body .giornata-nav.giornata-nav.giornata-nav:has(> :nth-child(4)) > :is(button,a){flex:1 1 0!important;min-width:0!important;padding:12px 4px!important;white-space:nowrap!important;justify-content:center!important;text-align:center!important}
+@media (max-width:480px){:root[data-event-theme="inverno"] body .giornata-nav.giornata-nav.giornata-nav:has(> :nth-child(4)) > :is(button,a){font-size:13px!important}}
+:root[data-event-theme="inverno"] body .giornata-nav.giornata-nav.giornata-nav > a[aria-current]{--nt-tab-bg:linear-gradient(180deg,#ff5a6e,#e9233b)!important;color:#fff!important}
+/* Tabellone › Numeri: riquadro e caselle nello stile della skin, come «Stagione» della Home (Gianluca, 19 novembre) */
+:root[data-event-theme="inverno"] #v65numeri{background:var(--nt-scheda)!important;box-shadow:var(--nt-ombra)!important;border:0!important;border-left:6px solid var(--nt-rosa)!important;border-radius:16px!important;padding:18px 16px!important}
+:root[data-event-theme="inverno"] body[data-mode=coppa] #v65numeri{border-left-color:var(--nt-ciano)!important}
+:root[data-event-theme="inverno"] #v65numeri h2{font:900 clamp(22px,4.4vw,30px)/1 'Barlow Condensed',Inter,sans-serif!important;text-transform:uppercase!important;color:#ffffff!important;margin:0 0 8px!important}
+:root[data-event-theme="inverno"] #v65numeri > p{color:#d9e4ed!important}
+:root[data-event-theme="inverno"] #v65numeri .v65-grid{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))!important;gap:8px!important;margin-top:12px}
+@media (max-width:600px){:root[data-event-theme="inverno"] #v65numeri .v65-grid{grid-template-columns:1fr 1fr!important;gap:6px!important}:root[data-event-theme="inverno"] #v65numeri .v65-metric{padding:9px 9px!important}}
+:root[data-event-theme="inverno"] #v65numeri .v65-metric{background:rgba(7,12,24,.6)!important;border:0!important;box-shadow:inset 0 0 0 1px rgba(var(--w-bordo-rgb),.35)!important;border-radius:10px!important;padding:10px 12px!important}
+:root[data-event-theme="inverno"] body[data-mode=coppa] #v65numeri .v65-metric{box-shadow:inset 0 0 0 1px rgba(var(--w-ice),.35)!important}
+:root[data-event-theme="inverno"] #v65numeri .v65-metric small{font:800 10px/1.3 Inter,sans-serif!important;letter-spacing:.08em;text-transform:uppercase;color:#cadfef!important}
+:root[data-event-theme="inverno"] body[data-mode=coppa] #v65numeri .v65-metric small{color:#9ff6ff!important}
+:root[data-event-theme="inverno"] #v65numeri .v65-metric b{font:900 clamp(17px,1.2vw + 12px,24px)/1.12 'Barlow Condensed',Inter,sans-serif!important;color:#ffffff!important;margin:4px 0 2px!important}
+:root[data-event-theme="inverno"] #v65numeri .v65-metric em{color:#cad8e2!important}
+@media (prefers-reduced-motion:reduce){:root[data-event-theme="inverno"] #v65numeri{transition:none!important}}
+
+/* 4c. Riga con le date sotto il titolo della Home (idea di ChatGPT nella sua anteprima) */
+:root[data-event-theme="inverno"] body[data-v53="home"] .hero .tag::before{content:var(--w-date);display:block;
+  margin:6px 0 8px;padding-left:34px;background:linear-gradient(var(--nt-ciano),var(--nt-ciano)) 0 .7em/24px 2px no-repeat;
+  font:800 11px/1.4 Inter,system-ui,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--nt-ciano);text-shadow:0 0 10px rgba(var(--w-ice),.6)}
+@media (max-width:520px){:root[data-event-theme="inverno"] body[data-v53="home"] .hero .tag::before{letter-spacing:.12em;font-size:10px;padding-left:28px;background-size:18px 2px}}
+
+/* 4d. Barra in basso (inverno.js, idea dal bozzetto di ChatGPT): MESSA DA PARTE (Gianluca, 17 novembre: «non credo di volere la banda in basso fissa»):
+   si accende solo a mano con ?evento-extra=barra. Solo sul telefono, col pallone al centro per il
+   Totogirrr. Sparisce quando c'è la schedina del Totogirrr e sopra i 760 px; entra con una dissolvenza dal basso. */
+.nt-barra{display:none}
+@media (max-width:760px){
+  :root[data-event-theme="inverno"][data-event-extra~="barra"] .nt-barra{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;align-items:end;position:fixed;z-index:25;left:10px;right:10px;
+    bottom:calc(10px + env(safe-area-inset-bottom,0px));padding:6px 6px 7px;border-radius:22px;
+    background:linear-gradient(180deg,rgba(24,39,76,.96),rgba(10,17,34,.97));box-shadow:0 0 0 1px var(--nt-bordo) inset,0 10px 30px rgba(5,8,15,.6),0 0 24px rgba(var(--w-glow),.22);
+    opacity:0;transform:translateY(18px);transition:opacity .35s ease,transform .45s cubic-bezier(.22,.61,.36,1)}
+  :root[data-event-theme="inverno"][data-event-extra~="barra"] .nt-barra.su{opacity:1;transform:none}
+  :root[data-event-theme="inverno"][data-event-extra~="barra"] .nt-barra a{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px 3px;color:rgba(255,255,255,.72);text-decoration:none;
+    font:700 10.5px/1.1 Inter,system-ui,sans-serif;-webkit-tap-highlight-color:transparent;position:relative;transition:color .2s ease}
+  :root[data-event-theme="inverno"][data-event-extra~="barra"] .nt-barra a svg{width:23px;height:23px}
+  :root[data-event-theme="inverno"][data-event-extra~="barra"] .nt-barra a[aria-current]{color:var(--nt-rosa-chiaro)}
+  :root[data-event-theme="inverno"][data-event-extra~="barra"] .nt-barra a[aria-current]::after{content:'';position:absolute;bottom:-4px;left:28%;right:28%;height:3px;border-radius:3px;background:var(--nt-rosa);box-shadow:0 0 10px var(--nt-rosa)}
+  :root[data-event-theme="inverno"][data-event-extra~="barra"] .nt-barra a.nt-palla svg{width:36px;height:36px;padding:9px;margin-top:-26px;box-sizing:content-box;border-radius:50%;color:#ffffff;
+    background:radial-gradient(circle at 35% 30%,var(--nt-rosa-chiaro),var(--nt-rosa) 45%,#2d4b92);box-shadow:0 0 0 3px rgba(10,17,34,.95),0 0 0 5px rgba(var(--w-bordo-rgb),.55),0 0 22px rgba(var(--w-glow),.75)}
+  :root[data-event-theme="inverno"][data-event-extra~="barra"] .nt-barra a:active{opacity:.75}
+  /* nel Lab il bollino «Versione di prova» sale sopra la barra (sul sito vero non c'è) */
+  :root[data-event-theme="inverno"][data-event-extra~="barra"].nt-con-barra small[aria-label^="Versione di prova"]{bottom:calc(98px + env(safe-area-inset-bottom,0px))!important}
+  :root[data-event-theme="inverno"][data-event-extra~="barra"].nt-con-barra body{padding-bottom:calc(92px + env(safe-area-inset-bottom,0px))!important}
+  :root[data-event-theme="inverno"][data-event-extra~="barra"] body:has(.slip) .nt-barra{opacity:0!important;pointer-events:none;transform:translateY(30px)}
+}
+@media (prefers-reduced-motion:reduce){:root[data-event-theme="inverno"][data-event-extra~="barra"] .nt-barra{transition:none!important}}
+
+/* 4e. MESSA DA PARTE (Gianluca, 17 novembre: «non sono sicuro mi piacciano i tasti con quella grafica»): si accende solo a
+   mano con ?evento-extra=menu (insieme alla barra: ?evento-extra=menu,barra). Home da «console» (Gianluca, 17 novembre: «tab con grandezze e forme diverse, più squadrate, posizioni diverse, una UI
+   differente»). Solo durante l'evento, solo nella Home, solo CSS: stessi collegamenti e stessi dati, cambiano ordine, forma e
+   posto. Telefono: subito sotto il titolo il menu a tasti quadrati (3 per riga), poi le quattro schede da sfogliare di lato,
+   poi notifiche, Giornale e Curva. PC: il menu sta in una colonna fissa a sinistra, il resto a destra. Angoli vivi con lo
+   spigolo tagliato, come i menu dei videogiochi. */
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .wrap{display:flex;flex-direction:column}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .wrap>*{order:20}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .wrap>header.hero{order:1}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .wrap::after{order:99}   /* la firma «Notte Tropicale» resta in fondo */
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .wrap>.cards{order:2}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .wrap>.vv-avviso{order:1}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .wrap>#strip{order:4}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .wrap>#agg{order:5}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .wrap>.v53-home{order:6}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .wrap>#big{order:7}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .wrap>#cvw{order:8}
+/* il menu: tasti quadrati numerati */
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .cards{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;counter-reset:nt-menu;margin:14px 0 18px!important}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .cards::before{content:'Scegli dove andare';grid-column:1/-1;display:block;margin:0 0 4px;padding-left:1.25em;
+  font:800 19px/1.1 'Barlow Condensed',Inter,sans-serif;text-transform:uppercase;color:#ffffff;letter-spacing:.01em;
+  background:repeating-linear-gradient(115deg,var(--nt-rosa) 0 .16em,transparent .16em .3em) 0 52%/.95em .78em no-repeat}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c{display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:2px;aspect-ratio:1/1;min-height:0!important;
+  padding:10px!important;margin:0!important;border-radius:2px!important;position:relative;overflow:hidden;counter-increment:nt-menu;
+  clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%);
+  background:linear-gradient(160deg,rgba(34,56,108,.96),rgba(12,20,39,.96))!important;
+  box-shadow:0 0 0 1px var(--nt-bordo) inset,inset 0 -3px 0 var(--nt-rosa)!important;transition:transform .18s ease,box-shadow .2s ease!important}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c:active{transform:scale(.97)}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c::after{content:counter(nt-menu,decimal-leading-zero);position:absolute;top:7px;right:20px;
+  font:900 13px/1 'Barlow Condensed',Inter,sans-serif;color:var(--nt-ciano);text-shadow:0 0 8px rgba(var(--w-ice),.6);letter-spacing:.04em}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c .ic{position:absolute;top:10px;left:10px;width:auto;max-width:calc(100% - 44px);overflow:hidden;height:40px;margin:0!important;display:flex;align-items:center;background:none!important;box-shadow:none!important}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c .ic img{max-height:40px;width:auto;max-width:100%;height:auto;object-fit:contain}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c.bet .ic{display:none!important}   /* il nome «Totogirrr» c'è già sotto: il logo scritto non ci stava */
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c.bet .ic span{font-size:24px!important}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c h2{margin:0!important;padding:0!important;background:none!important;font:900 clamp(15px,4.4vw,21px)/1 'Barlow Condensed',Inter,sans-serif!important;
+  text-transform:uppercase!important;color:#ffffff!important;letter-spacing:.01em!important;text-shadow:0 2px 8px rgba(0,0,0,.6)!important;overflow-wrap:normal;hyphens:none;white-space:nowrap;max-width:100%}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c :is(p,.go,.nv,.new,small){display:none!important}
+/* le quattro schede (In testa, Ultima giornata, Prossimo turno, Champions Cup): si sfogliano di lato, una alla volta */
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] #strip{display:flex!important;gap:10px!important;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:2px 2px 8px;margin:0 0 6px!important;overscroll-behavior-x:contain}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] #strip::-webkit-scrollbar{display:none}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] #strip>.st{flex:0 0 78%;scroll-snap-align:start;border-radius:2px!important;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%);min-height:0!important;height:auto!important}
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] #agg{margin-top:8px!important}
+@media (max-width:360px){:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c h2{font-size:14px!important;letter-spacing:0!important} :root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c.bet .ic span{font-size:19px!important}}
+/* tutto il resto della Home con gli angoli vivi */
+:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] :is(.vv-avviso,.v53-home,#big,#cvw,.mini .mn){border-radius:3px!important}
+/* PC: il menu in una colonna a sinistra che resta ferma mentre scorri, il resto a destra */
+@media (min-width:1000px){
+  :root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .wrap{display:grid;grid-template-columns:290px minmax(0,1fr);column-gap:26px;align-items:start}
+  :root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .wrap>*{grid-column:2}
+  :root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .wrap>header.hero{grid-column:1/-1;grid-row:1}
+  :root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .wrap::after{grid-column:1/-1}
+  :root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .wrap>.cards{grid-column:1;grid-row:2/span 40;position:sticky;top:16px;align-self:start;grid-template-columns:repeat(2,minmax(0,1fr))!important;margin-top:0!important}
+  :root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c h2{font-size:20px!important}
+  :root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] #strip{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible}
+  :root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] #strip>.st{min-height:140px}
+}
+@media (prefers-reduced-motion:reduce){:root[data-event-theme="inverno"][data-event-extra~="menu"] body[data-v53="home"] .cards>.c{transition:none!important}}
+
+/* 4g. Home dal bozzetto scelto da Gianluca (17 novembre), senza barra in basso. Forme inclinate (scelta «3 · Inclinate» di
+   Gianluca): le schede sono parallelogrammi col testo dritto, i riquadri grandi hanno i lati obliqui, niente pillole tonde della grafica di sempre. Ordine: titolo, schede principali, partita in evidenza,
+   classifica e stagione, i due riquadri rimasti (Ultima giornata, Champions Cup), le sezioni come schede fotografiche da
+   sfogliare, poi novità, notifiche, Giornale e Curva. */
+:root[data-event-theme="inverno"] body[data-v53="home"] .wrap{display:flex;flex-direction:column}
+:root[data-event-theme="inverno"] body[data-v53="home"] .wrap>*{order:20}
+:root[data-event-theme="inverno"] body[data-v53="home"] .wrap>header.hero{order:0}
+:root[data-event-theme="inverno"] body[data-v53="home"] .wrap>.lg-leghe{order:2}        /* Leghe Fantacalcio in alto (Gianluca, 17 novembre) */
+:root[data-event-theme="inverno"] body[data-v53="home"] .wrap>.nt-cruscotto{order:3}
+:root[data-event-theme="inverno"] body[data-v53="home"] .wrap>#strip{order:4}
+:root[data-event-theme="inverno"] body[data-v53="home"] .wrap>#agg{order:5}
+:root[data-event-theme="inverno"] body[data-v53="home"] .wrap>.cards{order:6}
+:root[data-event-theme="inverno"] body[data-v53="home"] .wrap>#cvw{order:7}             /* la Curva sotto le sei schede di «Tutto il Girrr» */
+:root[data-event-theme="inverno"] body[data-v53="home"] .wrap>.vv-avviso{order:1}             /* regola fissa: l'avviso della versione in cima, subito sotto il titolo */
+:root[data-event-theme="inverno"] body[data-v53="home"] .wrap>.v53-home{order:9}
+:root[data-event-theme="inverno"] body[data-v53="home"] .wrap>#big{order:10}
+:root[data-event-theme="inverno"] body[data-v53="home"] .wrap>.mini{order:11}           /* Notifiche e Statistiche sotto */
+:root[data-event-theme="inverno"] body[data-v53="home"] .wrap>.vv-riga{order:12}
+:root[data-event-theme="inverno"] body[data-v53="home"] .wrap>.sp{order:13}
+:root[data-event-theme="inverno"] body[data-v53="home"] .wrap>.foot{order:14}
+:root[data-event-theme="inverno"] body[data-v53="home"] .wrap::after{order:99}
+/* schede principali con l'icona: la scelta è sfumata arancio-rosa, le altre scure col bordo */
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-schede{display:flex;gap:10px;margin:14px 0 14px;padding:2px 10px 6px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;overscroll-behavior-x:contain;
+  -webkit-mask-image:linear-gradient(90deg,#000000 88%,transparent);mask-image:linear-gradient(90deg,#000000 88%,transparent)}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-schede::-webkit-scrollbar{display:none}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-schede a{flex:0 0 auto;min-width:84px;scroll-snap-align:start;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:64px;padding:9px 10px;color:#ffffff;text-decoration:none;
+  font:800 13.5px/1 'Barlow Condensed',Inter,sans-serif;text-transform:uppercase;letter-spacing:.02em;white-space:nowrap;
+  background:linear-gradient(180deg,rgba(var(--w-fondo2),.95),rgba(var(--w-fondo),.95));box-shadow:inset 0 0 0 1px var(--nt-bordo);transform:none;border-radius:10px;transition:filter .2s ease,transform .15s ease}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-schede a svg{width:21px;height:21px;flex:none}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-schede a[aria-current]{background:var(--w-attiva);color:var(--w-attiva-testo);box-shadow:none}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-schede a:active{transform: scale(.97)}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-schede a>*{transform:none}
+/* sul PC tutte in una o due righe, senza scorrere */
+@media (min-width:900px){:root[data-event-theme="inverno"] body[data-v53="home"] .nt-schede{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));overflow:visible;margin:16px 0;padding:0;-webkit-mask-image:none;mask-image:none}
+  :root[data-event-theme="inverno"] body[data-v53="home"] .nt-schede a{min-width:0;flex-direction:row;gap:7px;min-height:48px;font-size:14px}}
+/* partita in evidenza: foto di Ocean Drive dietro, squadre grandi */
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-match{display:grid;gap:2px;position:relative;margin:0 0 12px;padding:18px 18px 16px 22px;color:#ffffff;text-decoration:none;overflow:hidden;
+  
+  background:linear-gradient(90deg,rgba(var(--w-fondo),.95) 0%,rgba(var(--w-fondo2),.82) 55%,rgba(var(--w-fondo2),.45));
+  box-shadow:inset 4px 0 0 var(--nt-rosa)}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-match small{font:900 14px/1 'Barlow Condensed',Inter,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--nt-arancio);margin-bottom:6px}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-match b{font:900 clamp(26px,7.4vw,46px)/.98 'Barlow Condensed',Inter,sans-serif;text-transform:uppercase;letter-spacing:-.005em;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-match b i{font:800 12px Inter,sans-serif;color:var(--nt-ciano);margin-left:8px;vertical-align:middle;letter-spacing:.06em}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-match strong{font:900 17px/1.15 'Barlow Condensed',Inter,sans-serif;text-transform:uppercase;color:var(--nt-ciano);margin-top:10px;letter-spacing:.02em}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-match.derby strong{color:#ffd166}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-match span{font:700 11px/1.4 Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#d9e4ed;margin-top:4px}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-match em{justify-self:start;margin-top:10px;padding:9px 16px;font:900 15px/1 'Barlow Condensed',Inter,sans-serif;text-transform:uppercase;color:#0c1427;
+  background:var(--w-attiva);}
+/* classifica (prime quattro) e stagione, affiancate; sotto i 560 px una sopra l'altra */
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-pannelli{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:10px;margin:0 0 12px}
+@media (max-width:560px){:root[data-event-theme="inverno"] body[data-v53="home"] .nt-pannelli{grid-template-columns:1fr}}
+:root[data-event-theme="inverno"] body[data-v53="home"] :is(.nt-classifica,.nt-stagione){display:block;padding:14px;color:#ffffff;text-decoration:none;background:var(--nt-scheda);box-shadow:inset 0 0 0 1px var(--nt-bordo);}
+:root[data-event-theme="inverno"] body[data-v53="home"] :is(.nt-classifica,.nt-stagione) header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+:root[data-event-theme="inverno"] body[data-v53="home"] :is(.nt-classifica,.nt-stagione) header b{font:900 22px/1 'Barlow Condensed',Inter,sans-serif;text-transform:uppercase;padding-left:1.25em;
+  background:repeating-linear-gradient(115deg,var(--nt-rosa) 0 .16em,transparent .16em .3em) 0 52%/.95em .78em no-repeat}
+:root[data-event-theme="inverno"] body[data-v53="home"] :is(.nt-classifica,.nt-stagione) header small{font:800 11px Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#cadfef}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-classifica ol{list-style:none;margin:0;padding:0}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-classifica li{display:grid;grid-template-columns:22px 10px minmax(0,1fr) auto;align-items:center;gap:8px;padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.1);font:700 15px Inter,sans-serif}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-classifica li::before{content:'';grid-column:2;grid-row:1;width:8px;height:16px;transform:none;background:linear-gradient(#9bc2e0,#76abd4)}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-classifica li em{grid-column:1;grid-row:1;font:900 17px 'Barlow Condensed',Inter,sans-serif;font-style:italic}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-classifica li span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-classifica li b{font:900 19px 'Barlow Condensed',Inter,sans-serif}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-classifica li b small{font:700 10px Inter;margin-left:3px;color:#cadfef}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-classifica li.primo{background:linear-gradient(90deg,var(--nt-rosa),#3b60b7);border:0;}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-classifica li.primo::before{background:#ffffff}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-stagione>div{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-stagione p{margin:0;padding:10px 6px;text-align:center;background:rgba(7,12,24,.55);box-shadow:inset 0 0 0 1px rgba(var(--w-bordo-rgb),.35);}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-stagione p b{display:block;font:900 30px/1 'Barlow Condensed',Inter,sans-serif}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-stagione p small{display:block;margin-top:4px;font:800 10px Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#d9e4ed}
+/* i riquadri doppioni (In testa, Prossimo turno) spariscono quando classifica e partita in evidenza sono pronte */
+:root.nt-cruscotto-pronto[data-event-theme="inverno"] body[data-v53="home"] #strip>.st:is(:nth-child(1),:nth-child(3)){display:none!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] #strip{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] #strip>.st{}
+@media (max-width:360px){:root[data-event-theme="inverno"] body[data-v53="home"] #strip{grid-template-columns:1fr!important}}
+/* le sezioni come schede fotografiche da sfogliare di lato (sul PC in griglia) */
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards{display:flex!important;gap:10px!important;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:34px 2px 8px!important;margin:6px 0 12px!important;position:relative;overscroll-behavior-x:contain}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards::-webkit-scrollbar{display:none}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards::before{content:'Tutto il Girrr';position:absolute;top:0;left:2px;padding-left:1.25em;font:900 22px/1 'Barlow Condensed',Inter,sans-serif;text-transform:uppercase;color:#ffffff;
+  background:repeating-linear-gradient(115deg,var(--nt-rosa) 0 .16em,transparent .16em .3em) 0 52%/.95em .78em no-repeat}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c{flex:0 0 46%;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:flex-end;min-height:150px;padding:12px!important;margin:0!important;
+  position:relative;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(var(--w-bordo-rgb),.55)!important;
+  background:linear-gradient(0deg,rgba(var(--w-fondo),.95) 0%,rgba(var(--w-fondo),.35) 70%)!important}
+/* «Tutto il Girrr»: Miami e calcio mescolati (foto scelte da ChatGPT, Gianluca 18/11: «mescolare le immagini di Miami con quelle del calcio») */
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c:nth-child(1){background:linear-gradient(0deg,rgba(var(--w-fondo),.95) 0%,rgba(var(--w-fondo),.35) 70%)!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c:nth-child(2){background:linear-gradient(0deg,rgba(var(--w-fondo),.95) 0%,rgba(var(--w-fondo),.35) 70%)!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c:nth-child(3){background:linear-gradient(0deg,rgba(var(--w-fondo),.95) 0%,rgba(var(--w-fondo),.35) 70%)!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c:nth-child(4){background:linear-gradient(0deg,rgba(var(--w-fondo),.95) 0%,rgba(var(--w-fondo),.35) 70%)!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c:nth-child(5){background:linear-gradient(0deg,rgba(var(--w-fondo),.95) 0%,rgba(var(--w-fondo),.35) 70%)!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c:nth-child(6){background:linear-gradient(0deg,rgba(var(--w-fondo),.95) 0%,rgba(var(--w-fondo),.35) 70%)!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c .ic{position:absolute;top:10px;left:10px;margin:0!important;height:34px;max-width:calc(100% - 20px);overflow:hidden;background:none!important;box-shadow:none!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c .ic img{max-height:34px;width:auto;max-width:100%}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c.bet .ic span{font-size:22px!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c h2{margin:0!important;padding:0 34px 0 0!important;background:none!important;font:900 22px/1 'Barlow Condensed',Inter,sans-serif!important;text-transform:uppercase!important;color:#ffffff!important;text-shadow:0 2px 10px rgba(0,0,0,.6)!important;letter-spacing:.005em!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c :is(p,.go){display:none!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c::after{content:'›';position:absolute;right:10px;bottom:10px;width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:rgba(var(--w-glow),.75);font:900 18px/1 Inter,sans-serif;color:#ffffff}
+@media (min-width:900px){:root[data-event-theme="inverno"] body[data-v53="home"] .cards{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;overflow:visible} :root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c{min-height:170px}}
+
+/* 4h. Lati obliqui con angoli morbidi (Gianluca, 17 novembre). I riquadri si inclinano appena e hanno gli angoli arrotondati;
+   il contenuto viene raddrizzato, così testo, numeri e foto restano dritti. */
+:root[data-event-theme="inverno"] body[data-v53="home"] :is(.nt-match,.nt-classifica,.nt-stagione,#strip>.st,.cards>.c){transform:none;border-radius:16px!important;overflow:hidden}
+:root[data-event-theme="inverno"] body[data-v53="home"] :is(.nt-match,.nt-classifica,.nt-stagione,#strip>.st,.cards>.c)>*{transform:none}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c::after{transform:none}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-match em{transform:none;border-radius:8px}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-stagione p{transform:none;border-radius:10px}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-stagione p>*{transform:none}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-classifica li.primo{transform:none;border-radius:9px}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-classifica li.primo>*{transform:none}
+/* sul PC i riquadri sono più larghi: stessa inclinazione, niente da cambiare; con «riduci movimento» le forme restano, non c'è animazione */
+
+/* 4i. Stessa forma ovunque (Gianluca, 17 novembre: «tutto in linea», «la nuova forma delle tab va fatta», «via la trasparenza»).
+   inverno.js mette .nt-obl ai riquadri e .nt-tab ai pulsanti e alle schede di Home, Tabellone e Campo. Si inclina solo lo
+   sfondo (::before) con angoli morbidi; testo e numeri restano dritti. Il colore di fondo e la banda laterale li prende dalla
+   grafica di sempre (--nt-tab-bg, --nt-banda), così Campionato rosso e Champions Cup azzurra restano; il resto è viola pieno. */
+:root[data-event-theme="inverno"] .nt-obl.nt-obl.nt-obl{--g-band:0px!important;border-left-width:0!important;padding-left:calc(var(--nt-pl,0px) + 0px);position:relative;isolation:isolate;background:transparent!important;box-shadow:none!important;border-color:transparent!important;border-radius:16px!important}
+:root[data-event-theme="inverno"] .nt-obl.nt-obl.nt-obl::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:16px;background:var(--nt-scheda);
+  box-shadow:inset 0 0 0 1px var(--nt-bordo),inset 5px 0 0 var(--nt-banda,var(--nt-rosa)),0 12px 30px rgba(5,8,15,.4);transform:none}
+:root[data-event-theme="inverno"] .sp.nt-obl.nt-obl.nt-obl::before{box-shadow:inset 0 0 0 1px var(--nt-bordo),0 12px 30px rgba(5,8,15,.4)}
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-tab{position:relative;isolation:isolate;background:transparent!important;background-image:none!important;border-color:transparent!important;border-radius:9px!important;box-shadow:none!important}
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-tab::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:9px;transform:none;
+  background:var(--nt-tab-bg,linear-gradient(180deg,#1e3260,#0e182e));box-shadow:inset 0 0 0 1px var(--nt-bordo);transition:background .2s ease,box-shadow .2s ease}
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-on::before{box-shadow:inset 0 0 0 1px rgba(255,255,255,.55),0 0 14px rgba(var(--w-glow),.45)}
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-forte{color:#0c1427!important}
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-forte::before{background:var(--w-attiva)}
+:root[data-event-theme="inverno"] .v53-select{border-radius:10px!important;background-color:#111c37!important;border-color:var(--nt-bordo)!important;color:#ffffff!important}
+/* Tabellone: la striscia «Serie A · giornata» fa parte del riquadro della classifica, non è più una pillola a sé */
+:root[data-event-theme="inverno"] .panel .v55-striscia{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;border-bottom:1px solid var(--nt-bordo)!important;margin:0 0 6px!important}
+:root[data-event-theme="inverno"] .gs.nt-obl{padding:8px 10px!important}
+:root[data-event-theme="inverno"] .gs.nt-obl.nt-obl.nt-obl::before{transform:none}
+:root[data-event-theme="inverno"] .grid .panel.nt-obl{padding:12px 16px 14px 20px!important}
+:root[data-event-theme="inverno"] .card.nt-obl::after{border-left-color:transparent!important;box-shadow:none!important}
+/* Campo: barra laterale e righe viola piene */
+:root[data-event-theme="inverno"] .sidebar{background:#0c1528!important;border-right:1px solid var(--nt-bordo)!important}
+:root[data-event-theme="inverno"] .chips button.nt-tab{opacity:1!important}
+:root[data-event-theme="inverno"] .chips button.nt-tab:not(.pl):not(.sel){color:rgba(255,255,255,.5)!important}
+
+/* 4j. Fili di colore alternati (Gianluca, 17 novembre): un riquadro ciano sopra e rosa di lato, il successivo rosa sotto e
+   ciano di lato, e così via; lo stesso per le schede fotografiche */
+:root[data-event-theme="inverno"] .nt-obl.nt-obl.nt-obl::before{box-shadow:inset 0 3px 0 var(--nt-ciano),inset 0 0 0 1px var(--nt-bordo),inset 5px 0 0 var(--nt-banda,var(--nt-rosa)),0 12px 30px rgba(5,8,15,.4)}
+:root[data-event-theme="inverno"] .nt-obl.nt-obl.nt-obl:nth-child(even)::before{box-shadow:inset 0 -3px 0 var(--nt-rosa),inset 0 0 0 1px var(--nt-bordo),inset 5px 0 0 var(--nt-banda2,var(--nt-ciano)),0 12px 30px rgba(5,8,15,.4)}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c{box-shadow:inset 0 3px 0 var(--nt-ciano),inset 4px 0 0 var(--nt-rosa),inset 0 0 0 1px rgba(var(--w-bordo-rgb),.45)!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c:nth-child(even){box-shadow:inset 0 -3px 0 var(--nt-rosa),inset 4px 0 0 var(--nt-ciano),inset 0 0 0 1px rgba(var(--w-ice),.45)!important}
+
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-classifica{box-shadow:inset 0 3px 0 var(--nt-ciano),inset 5px 0 0 var(--nt-rosa),inset 0 0 0 1px var(--nt-bordo)!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-stagione{box-shadow:inset 0 -3px 0 var(--nt-rosa),inset 5px 0 0 var(--nt-ciano),inset 0 0 0 1px var(--nt-bordo)!important}
+
+/* 4k. Colori delle competizioni nella grafica unica (Gianluca, 17 novembre): Campionato sfumato arancio, rosa e rosso;
+   Champions Cup sfumata ciano e lilla, in modo uniforme. Il resto della Home non è più rosso: bande rosa, scritte pesca. */
+:root[data-event-theme="inverno"] :is(body[data-mode="lega"] .sw.sw.sw i,.comp-sw:not([data-on=coppa]) i){background:linear-gradient(180deg,#ff5a6e,#e9233b)!important;box-shadow:0 0 16px rgba(var(--w-glow),.55)!important}
+:root[data-event-theme="inverno"] :is(body[data-mode="coppa"] .sw.sw.sw i,.comp-sw[data-on=coppa] i){background:linear-gradient(100deg,var(--nt-ciano),var(--w-blu2) 55%,var(--nt-lilla))!important;box-shadow:0 0 16px rgba(var(--w-ice),.45)!important}
+:root[data-event-theme="inverno"] :is(.sw,.comp-sw) button{color:#ffffff!important}
+:root[data-event-theme="inverno"] :is(body[data-mode="lega"] .giornata-nav button.nt-on,.giornata-nav button[aria-selected=true]){--nt-tab-bg:linear-gradient(180deg,#ff5a6e,#e9233b)!important;color:#fff!important}
+:root[data-event-theme="inverno"] body[data-mode="coppa"] .giornata-nav button[aria-selected=true]{--nt-tab-bg:linear-gradient(100deg,var(--nt-ciano),var(--w-blu2) 55%,var(--nt-lilla))!important}
+:root[data-event-theme="inverno"] .chips button.sel.nt-tab{--nt-tab-bg:linear-gradient(180deg,#ff5a6e,#e9233b)!important;color:#fff!important}
+:root[data-event-theme="inverno"] body[data-mode="coppa"] .chips button.sel.nt-tab{--nt-tab-bg:linear-gradient(100deg,var(--nt-ciano),var(--w-blu2) 55%,var(--nt-lilla))!important}
+:root[data-event-theme="inverno"] .matches .gamebtn.nt-tab:is(.active,.on,[aria-pressed=true],[aria-selected=true]){--nt-tab-bg:linear-gradient(180deg,#ff5a6e,#e9233b)!important}
+/* Campo in Champions Cup: anche la partita scelta passa al ciano-lilla della Coppa (Gianluca, 19 novembre) */
+:root[data-event-theme="inverno"] :is(body[data-comp="coppa"],body[data-mode="coppa"]) .matches .gamebtn.nt-tab:is(.active,.on,[aria-pressed=true],[aria-selected=true]),:root[data-event-theme="inverno"] :is(body[data-comp="coppa"],body[data-mode="coppa"]) .chips button.sel.nt-tab{--nt-tab-bg:linear-gradient(100deg,var(--nt-ciano),var(--w-blu2) 55%,var(--nt-lilla))!important;color:#0b1325!important;box-shadow:0 0 16px rgba(var(--w-ice),.45)!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] :is(.vv-avviso,.v53-home,.lg-leghe,.mini .mn,#cvw,.sp).nt-obl{--nt-banda:var(--nt-rosa)!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .vv-avviso i{color:var(--nt-arancio)!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .pt-box{border-left-color:var(--nt-rosa)!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] #strip>.st{border-left:0!important;box-shadow:inset 5px 0 0 0 transparent!important;background-image:linear-gradient(180deg,var(--nt-arancio),var(--nt-rosa) 55%,#e8364f),var(--nt-scheda)!important;background-size:5px 100%,100% 100%!important;background-repeat:no-repeat!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] #strip>.st[href*="coppa"]{background-image:linear-gradient(180deg,var(--nt-ciano),var(--w-blu2) 55%,var(--nt-lilla)),var(--nt-scheda)!important}
+/* niente rosso fuori dalle competizioni: pannelli e pillole generiche in rosa e lilla */
+:root[data-event-theme="inverno"] :is(#v53board,.turnoprossimo,.grid .panel).nt-obl{--nt-banda:var(--nt-rosa)!important}
+/* Tabellone: le partite hanno la barra laterale della competizione, rossa in Campionato e blu in Champions Cup; i fili sopra
+   e sotto restano alternati ciano e rosa (Gianluca, 19 novembre) */
+:root[data-event-theme="inverno"] #board > .m.nt-obl{--nt-banda:#ff2a45!important;--nt-banda2:#ff2a45!important}
+:root[data-event-theme="inverno"] body[data-mode="coppa"] #board > .m.nt-obl{--nt-banda:#2f7dff!important;--nt-banda2:#2f7dff!important}
+:root[data-event-theme="inverno"] body .turnoprossimo.turnoprossimo{--g-band:4px!important;--g-acc:var(--nt-rosa)!important;border-left-color:var(--nt-rosa)!important}
+:root[data-event-theme="inverno"] .card.nt-obl{--nt-banda:var(--nt-rosa)!important}
+:root[data-event-theme="inverno"]:has(.comp-sw[data-on=coppa]) .card.nt-obl{--nt-banda:var(--nt-ciano)!important}
+:root[data-event-theme="inverno"] :is(.v53-pill,.v53-pills button).nt-tab.nt-on{--nt-tab-bg:var(--w-attiva)!important;color:var(--w-attiva-testo)!important}
+/* senza il bordo rosso il contenuto restava attaccato al lato: spazio a sinistra al posto della banda */
+:root[data-event-theme="inverno"] :is(#v53board,.v53-home,.v53-panel,.vv-avviso,.lg-leghe,.turnoprossimo).nt-obl.nt-obl{padding-left:22px!important}
+:root[data-event-theme="inverno"] #big.nt-obl.nt-obl{padding-left:clamp(24px,4vw,40px)!important}
+/* «Gentilmente offerto da» su tutte le pagine (Gianluca: «troppo scuro», «pubblicità fuori posto»): riquadro chiaro e dritto
+   (niente inclinazione: i marchi restano dentro), scritta viola leggibile */
+:root[data-event-theme="inverno"] .sp.nt-obl.nt-obl.nt-obl{--nt-sk:0deg;padding:16px 18px!important}
+:root[data-event-theme="inverno"] .sp.nt-obl.nt-obl.nt-obl::before{transform:none!important;background:linear-gradient(160deg,#f9fbfd,#ecf3f9)!important;box-shadow:inset 0 3px 0 var(--nt-ciano),inset 0 -3px 0 var(--nt-rosa),0 12px 30px rgba(5,8,15,.35)!important}
+:root[data-event-theme="inverno"] .sp.nt-obl span:first-child{color:#344e89!important;opacity:1!important;font-weight:800!important}
+:root[data-event-theme="inverno"] .sp.nt-obl .lg{max-width:100%;overflow:hidden}
+/* Curva: più su verso le schede di «Tutto il Girrr» e più staccata da quello che segue (Gianluca 18/11) */
+:root[data-event-theme="inverno"] body[data-v53="home"] .wrap>#cvw{margin-top:12px!important;margin-bottom:34px!important}
+/* Curva: il logo «C» non esce più dal riquadro */
+:root[data-event-theme="inverno"] body[data-v53="home"] #cvw.nt-obl.nt-obl{padding-left:22px!important;overflow:hidden}
+
+/* 4m. ChatGPT (17/11/2026) · Estensione ai menu veri non ancora vestiti da Claude.
+   Usa soltanto .nt-obl / .nt-tab già applicati da forme(), senza copiare le pagine
+   o interferire con dati, eventi, testate e scelta di competizione. La Curva è esclusa.
+   Tutti i nuovi pannelli sono VIOLA OPACO e lo stato attivo generico è rosa/lilla.
+   Campionato e Champions Cup mantengono i gradienti definiti nella sezione 4k. */
+:root[data-event-theme="inverno"] :is(
+  #app,#view,#al,#sch,#versioni,#ultimo,#lista,.v53-notifications
+) .nt-obl.nt-obl.nt-obl{
+  --nt-banda:var(--nt-rosa)!important;
+  --nt-banda2:var(--nt-ciano)!important;
+  background:transparent!important;border-left:0!important;
+  box-shadow:none!important;border-radius:15px!important;
+  isolation:isolate!important;
+}
+/* Superficie non trasparente, angoli morbidi, contenuti non inclinati. */
+:root[data-event-theme="inverno"] :is(
+  #app,#view,#al,#sch,#versioni,#ultimo,#lista,.v53-notifications
+) .nt-obl.nt-obl.nt-obl::before{
+  background:linear-gradient(155deg,#1a2b52 0%,#101a33 58%,#0b1324 100%)!important;
+  border-radius:15px!important;
+  box-shadow:inset 0 3px 0 var(--nt-ciano),
+             inset 5px 0 0 var(--nt-rosa),
+             inset 0 0 0 1px rgba(160,197,225,.48),
+             0 12px 30px rgba(5,8,15,.44)!important;
+  transform:none!important;
+}
+/* Fili invertiti sui riquadri pari: rosa sotto, ciano sul lato. */
+:root[data-event-theme="inverno"] :is(
+  #app,#view,#al,#sch,#versioni,#ultimo,#lista,.v53-notifications
+) .nt-obl.nt-obl.nt-obl:nth-child(even)::before{
+  box-shadow:inset 0 -3px 0 var(--nt-rosa),
+             inset 5px 0 0 var(--nt-ciano),
+             inset 0 0 0 1px rgba(var(--w-ice),.44),
+             0 12px 30px rgba(5,8,15,.44)!important;
+}
+/* Niente vecchie bande rosse generiche (Derby, annunci, contenitori). */
+:root[data-event-theme="inverno"] :is(
+  #app,#view,#al,#sch,#versioni,#ultimo,#lista,.v53-notifications
+) .nt-obl.nt-obl.nt-obl:not(.comp-sw){
+  border-color:transparent!important;
+}
+:root[data-event-theme="inverno"] :is(#app,#view,#al,#sch,#versioni,#ultimo,#lista,.v53-notifications)
+  .nt-tab.nt-tab:not(.nt-forte){
+  --nt-tab-bg:linear-gradient(150deg,#283c6a,#142242)!important;
+  color:#f7fafc!important;
+  border-color:transparent!important;
+}
+:root[data-event-theme="inverno"] :is(#app,#view,#al,#sch,#versioni,#ultimo,#lista,.v53-notifications)
+  .nt-tab.nt-tab.nt-on:not(.nt-forte){
+  --nt-tab-bg:var(--w-attiva)!important;
+  color:var(--w-attiva-testo)!important;
+}
+/* Totogirrr: la barra dinamica continua a scorrere grazie al suo JS originale. */
+:root[data-event-theme="inverno"] #app nav:has(.nvi){
+  background:#0f182f!important;border:1px solid var(--nt-bordo)!important;
+  border-radius:13px!important;padding:7px!important;
+  -webkit-tap-highlight-color:transparent;
+}
+:root[data-event-theme="inverno"] #app nav .nvi button.nt-tab{
+  min-height:42px;padding:10px 14px!important;white-space:nowrap;
+}
+:root[data-event-theme="inverno"] #app .q.nt-tab{
+  min-width:0;min-height:45px;padding:8px 5px!important;
+}
+:root[data-event-theme="inverno"] #app .q.nt-tab:disabled{
+  opacity:.5!important;cursor:not-allowed!important;
+}
+:root[data-event-theme="inverno"] #app .fc.nt-obl::before{
+  background:linear-gradient(155deg,#192a52,#0e172d)!important;
+}
+:root[data-event-theme="inverno"] #app .gate.nt-obl,
+:root[data-event-theme="inverno"] #app .prize-corner.nt-obl{
+  padding:17px!important;
+}
+:root[data-event-theme="inverno"] #app .slip{
+  background:#0d1528!important;border-top-color:var(--nt-rosa)!important;
+}
+/* Carriera, Girrr Sport, Albo dentro app.html: layout e eventi invariati. */
+:root[data-event-theme="inverno"] #view .seg,
+:root[data-event-theme="inverno"] #view .frs,
+:root[data-event-theme="inverno"] .tabs{
+  background:#101a33!important;
+  border-color:var(--nt-bordo)!important;border-radius:13px!important;
+}
+:root[data-event-theme="inverno"] #view .derby.nt-obl{
+  border-color:transparent!important;
+  --nt-banda:var(--nt-rosa)!important;
+}
+:root[data-event-theme="inverno"] #view .derby .hd{
+  color:#c8deee!important;
+}
+/* Albo d'oro, Squadre e Derby su pagine indipendenti */
+:root[data-event-theme="inverno"] .swap .card.nt-obl,
+:root[data-event-theme="inverno"] .swap .sto.nt-obl,
+:root[data-event-theme="inverno"] .swap .sheet.nt-obl{
+  padding:clamp(13px,2vw,18px)!important;
+}
+:root[data-event-theme="inverno"] .swap .card.nt-obl h3{
+  color:var(--nt-arancio)!important;
+}
+/* Giornale: anteprima del numero e vecchi numeri */
+:root[data-event-theme="inverno"] #ultimo .last.nt-obl,
+:root[data-event-theme="inverno"] #lista .it.nt-obl{
+  padding:clamp(13px,2vw,20px)!important;
+}
+:root[data-event-theme="inverno"] #ultimo .btn.nt-tab{
+  color:#ffffff!important;
+}
+/* Versioni: .vv-v e .vv-seg sono generate dal versioni.js originale. */
+:root[data-event-theme="inverno"] #versioni .vv-seg{
+  border:1px solid var(--nt-bordo)!important;
+  border-radius:12px!important;background:#101a33!important;padding:6px!important;
+}
+:root[data-event-theme="inverno"] #versioni .vv-v.nt-obl{
+  margin:0 0 14px!important;padding:0!important;
+}
+:root[data-event-theme="inverno"] #versioni .vv-v.nt-obl::before{
+  transform:none!important;
+}
+:root[data-event-theme="inverno"] #versioni .vv-h.nt-tab{
+  width:100%!important;min-height:45px!important;
+}
+/* Notifiche: schede di filtro, notifiche e pulsante di conferma. */
+:root[data-event-theme="inverno"] .v53-notifications .v53-pills{
+  border-radius:12px!important;background:#111c36!important;
+  padding:6px!important;
+}
+:root[data-event-theme="inverno"] .v53-notifications .v53-notifcard.nt-obl{
+  padding:9px!important;
+}
+:root[data-event-theme="inverno"] .v53-notifications .v53-btn.nt-tab:not(.nt-on){
+  color:#ffffff!important;
+}
+/* Spogliatoio: il logo resta dentro la scheda obliqua dell'intestazione (Gianluca, 19 novembre) */
+:root[data-event-theme="inverno"] body:has(> .wrap > #tabs) > .wrap > header.nt-obl.nt-obl{padding-left:30px!important}
+/* Spogliatoio: nessuna alterazione dei campi e dei movimenti dei giocatori. */
+:root[data-event-theme="inverno"] #app .seg,
+:root[data-event-theme="inverno"] #app .calnav,
+:root[data-event-theme="inverno"] #app .tools{
+  background:#101a33!important;border-color:var(--nt-bordo)!important;
+}
+/* A 320px il fondale obliquo rimane entro i margini senza causare overflow. */
+@media(max-width:390px){
+  :root[data-event-theme="inverno"] :is(
+    #app,#view,#al,#sch,#versioni,#ultimo,#lista,.v53-notifications
+  ) .nt-obl.nt-obl.nt-obl{
+    --nt-sk:1.5deg!important;
+    min-width:0!important;
+  }
+  :root[data-event-theme="inverno"] :is(#app,#view,#al,#sch,#versioni,#ultimo,#lista,.v53-notifications)
+    .nt-tab.nt-tab{max-width:100%}
+}
+
+/* 4m-bis. ChatGPT 17/11/2026 · Spogliatoio (index.html della radice Lab).
+   Il selettore Lega/Stadio resta nascosto: l'evento ha UNA grafica.
+   Le schede, la testata e il menu restano quelli reali, con nuovi fondi e fili neon. */
+:root[data-event-theme="inverno"] body:has(> .wrap > #tabs) .skin-menu{
+  display:none!important;
+}
+:root[data-event-theme="inverno"] body:has(> .wrap > #tabs) > .wrap > header.nt-obl{
+  --nt-banda:var(--nt-rosa)!important;
+}
+:root[data-event-theme="inverno"] body:has(> .wrap > #tabs) > .wrap > header.nt-obl::before{
+  background:linear-gradient(155deg,#192a52,#0d162c)!important;
+  box-shadow:inset 0 3px 0 var(--nt-ciano),inset 5px 0 0 var(--nt-rosa),
+    inset 0 0 0 1px rgba(var(--w-bordo-rgb),.4),0 10px 24px #060a1466!important;
+}
+:root[data-event-theme="inverno"] body:has(> .wrap > #tabs) #tabs{
+  background:#101a32!important;border:1px solid var(--nt-bordo)!important;
+  border-radius:13px!important;padding:6px!important;
+}
+:root[data-event-theme="inverno"] body:has(> .wrap > #tabs) #tabs button.nt-tab{
+  min-height:41px!important;
+  --nt-tab-bg:linear-gradient(150deg,#293b67,#131f3c)!important;
+  color:#f2f7fb!important;
+}
+:root[data-event-theme="inverno"] body:has(> .wrap > #tabs) #tabs button.nt-tab.nt-on{
+  --nt-tab-bg:var(--w-attiva)!important;
+  color:var(--w-attiva-testo)!important;
+}
+:root[data-event-theme="inverno"] body:has(> .wrap > #tabs) #app .btn.nt-tab.pri{
+  --nt-tab-bg:var(--w-attiva)!important;
+  color:var(--w-attiva-testo)!important;
+}
+:root[data-event-theme="inverno"] body:has(> .wrap > #tabs) #app :is(input,select){
+  border-color:var(--nt-bordo)!important;background:#162240!important;
+  color:#ffffff!important;
+}
+/* Squadre: gli sfondi obliqui sporgevano 2px su iPhone. Rientrano nei margini
+   lasciando invariata la vera fila orizzontale delle squadre. */
+@media(max-width:480px){
+  :root[data-event-theme="inverno"] body:has(#sch) > .wrap{
+    overflow-x:clip!important;
+  }
+  :root[data-event-theme="inverno"] body:has(#sch) .swap .nt-obl.nt-obl.nt-obl::before{
+    inset:0 4px!important;
+  }
+}
+
+/* 4n. Home, tutte le sezioni nella stessa fila (ChatGPT, 17 novembre 2026).
+   Il titolo è FUORI dal contenitore orizzontalmente scorrevole; Curva, Notifiche,
+   Statistiche e sponsor vengono riposizionati da homeEvento() senza duplicare dati. */
+/* La Home usa order:1..14 sul contenitore flex: rispettare l'ordine VISIVO. */
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .wrap > .nt-tutto-titolo{order:6!important}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .wrap > .cards{order:7!important}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .nt-tutto-titolo{
+  position:relative;display:block;margin:18px 0 10px;padding:0 0 0 1.25em;
+  font:900 clamp(21px,5.2vw,29px)/1.15 'Barlow Condensed',Inter,sans-serif;
+  text-transform:uppercase;color:#ffffff;letter-spacing:.01em;
+  background:repeating-linear-gradient(115deg,var(--nt-rosa) 0 .16em,transparent .16em .3em)
+    0 50%/.95em .78em no-repeat;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .cards{
+  padding-top:5px!important;margin-top:0!important;
+  scroll-padding-inline:4px;scrollbar-width:none;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .cards::before{
+  content:none!important;display:none!important;
+}
+/* Le nuove quattro schede usano dimensioni e scorrimento delle sei schede esistenti. */
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .cards>.nt-slide{
+  flex:0 0 46%;min-width:0;min-height:150px;max-height:178px;
+  scroll-snap-align:start;position:relative;box-sizing:border-box;
+  padding:12px!important;margin:0!important;
+  transform:none;border-radius:16px!important;
+  overflow:hidden;isolation:isolate;
+  color:#ffffff;text-decoration:none;
+  box-shadow:inset 0 3px 0 var(--nt-ciano),inset 4px 0 0 var(--nt-rosa),
+    inset 0 0 0 1px rgba(var(--w-bordo-rgb),.58)!important;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .cards>.nt-slide:nth-child(even){
+  box-shadow:inset 0 -3px 0 var(--nt-rosa),inset 4px 0 0 var(--nt-ciano),
+    inset 0 0 0 1px rgba(var(--w-ice),.54)!important;
+}
+/* Curva conserva link e anteprima, ma in formato card: un messaggio sintetico. */
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .cards>.nt-slide-curva{
+  display:flex!important;flex-direction:column;justify-content:flex-end;
+  grid-template-columns:none!important;gap:6px!important;
+  background:linear-gradient(0deg,rgba(var(--w-fondo),.97),rgba(12,21,40,.35))!important;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .cards>.nt-slide-curva>*{
+  transform:none;min-width:0;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .nt-slide-curva .cvh{
+  display:flex;align-items:center;gap:6px;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .nt-slide-curva .cvl{
+  flex:0 0 30px;width:30px!important;height:30px!important;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .nt-slide-curva .cvh b{
+  font:900 22px/1 'Barlow Condensed',Inter,sans-serif!important;
+  text-transform:uppercase;color:#ffffff!important;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .nt-slide-curva .cvh span:not(.cvl){
+  font-size:11px!important;line-height:1.2!important;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .nt-slide-curva .cvp{
+  display:block!important;grid-column:auto!important;
+  overflow:hidden;max-height:39px;min-height:0;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .nt-slide-curva .cvp>div{
+  border:0!important;background:#0a1122be!important;
+  padding:5px 7px!important;overflow:hidden!important;
+  font-size:10px!important;line-height:1.25!important;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .nt-slide-curva .cvp>div~div{display:none!important}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .nt-slide-curva .cvp :is(p,small){
+  font-size:10px!important;line-height:1.2!important;
+  margin:0!important;overflow:hidden!important;text-overflow:ellipsis;
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:1;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .nt-slide-curva .cvg{
+  align-self:flex-start;margin:0!important;padding:0!important;
+  font:900 14px/1 'Barlow Condensed',Inter,sans-serif!important;
+  color:var(--nt-arancio)!important;
+}
+/* Notifiche e Statistiche: i loro link autentici rimangono cliccabili. */
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .cards>.nt-slide-mini{
+  display:flex!important;align-items:stretch;justify-content:stretch;
+  background:linear-gradient(0deg,rgba(var(--w-fondo),.96),rgba(var(--w-fondo),.34))!important;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .cards>.nt-slide-mini:nth-child(even){
+  background:linear-gradient(0deg,rgba(var(--w-fondo),.96),rgba(var(--w-fondo),.34))!important;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .nt-slide-mini>.mn{
+  width:100%;height:100%;min-width:0;display:flex!important;
+  flex-direction:column!important;justify-content:flex-end!important;
+  align-items:flex-start!important;gap:6px!important;
+  padding:0!important;margin:0!important;
+  border:0!important;background:transparent!important;box-shadow:none!important;
+  transform:none;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .nt-slide-mini>.mn.nt-obl::before{
+  display:none!important;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .nt-slide-mini .mi{
+  display:grid;place-items:center;position:absolute;top:0;left:0;
+  width:36px!important;height:36px!important;
+  font-size:22px!important;border-radius:9px!important;
+  background:#203565c9!important;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .nt-slide-mini>.mn>div:last-child{
+  min-width:0;max-width:100%;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .nt-slide-mini .mn b{
+  display:block;font:900 23px/1 'Barlow Condensed',Inter,sans-serif!important;
+  text-transform:uppercase;color:#ffffff!important;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .nt-slide-mini .mn span{
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;
+  overflow:hidden;font-size:11px!important;line-height:1.25!important;
+  color:#dce7f0!important;
+}
+/* Gli sponsor sono un'unica scheda scorrevole, mantenendo i quattro loghi originali. */
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .cards>.nt-slide-sponsor{
+  display:flex!important;flex-direction:column!important;justify-content:center;
+  gap:6px;background:linear-gradient(150deg,#fafcfe,#e6f0f7)!important;
+  color:#293c69!important;border:0!important;text-align:center;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .nt-slide-sponsor>*{
+  transform:none;min-width:0;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .nt-slide-sponsor>span{
+  font:800 12px/1.3 Inter,system-ui,sans-serif!important;
+  color:#32487b!important;margin:0!important;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .nt-slide-sponsor .lg{
+  width:100%;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:5px!important;margin:2px 0 0!important;align-items:center;
+}
+:root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .nt-slide-sponsor .lg img{
+  display:block;max-height:44px!important;width:100%!important;
+  max-width:100%;object-fit:contain;background:#ffffff;
+  border-radius:5px!important;
+}
+@media(min-width:900px){
+  :root.nt-rail-integrata[data-event-theme="inverno"] body[data-v53="home"] .cards>.nt-slide{
+    min-height:170px;max-height:none;
+  }
+}
+/* Ultima giornata e Champions Cup: azioni ancorate allo stesso bordo inferiore. */
+:root[data-event-theme="inverno"] body[data-v53="home"] #strip>.st{
+  display:flex!important;flex-direction:column!important;
+  align-items:stretch;justify-content:flex-start;
+  min-width:0;
+}
+:root[data-event-theme="inverno"] body[data-v53="home"] #strip>.st .vai{
+  display:block;align-self:flex-start;
+  margin-top:auto!important;padding-top:14px!important;
+}
+
+/* 4f. Grafica unica durante l'evento (Gianluca): niente interruttore Lega/Stadio nella Home né nel Campo */
+:root[data-event-theme="inverno"] :is(#gsw,.skin){display:none!important}
+
+/* 5. Firma dell'evento in fondo alla Home */
+:root[data-event-theme="inverno"] body[data-v53="home"] .wrap::after{
+  content:var(--w-firma);display:block;text-align:center;margin:26px 0 8px;
+  font:800 12px/1 Inter,system-ui,sans-serif;letter-spacing:.32em;text-transform:uppercase;color:var(--nt-ciano);
+  text-shadow:0 0 12px rgba(var(--w-ice),.7);
+}
+
+
+/* Versioni: il titolo della versione sta al centro della scheda, con lo stesso spazio sopra e sotto; da chiusa niente fascia vuota (Gianluca, 19 novembre) */
+:root[data-event-theme="inverno"] .vv-v > .vv-h{margin:9px 10px 9px 0!important}
+:root[data-event-theme="inverno"] .vv-v:not(.aperta) > .vv-c.vv-c{padding-top:0!important;padding-bottom:0!important;margin-bottom:0!important}
+:root[data-event-theme="inverno"] .vv-v > .vv-c{transition:padding .32s ease,margin .32s ease}
+@media (prefers-reduced-motion:reduce){:root[data-event-theme="inverno"] .vv-v > .vv-c{transition:none}}
+/* Versioni · Messaggio: testo e margini proporzionati al riquadro del 6.5 (Gianluca, 19 novembre) */
+:root[data-event-theme="inverno"] .vv-v .vv-c,:root[data-event-theme="inverno"] .vv-v .vv-c :is(p,span,b,strong,div){font-size:14px!important}
+:root[data-event-theme="inverno"] .vv-v .vv-c{line-height:1.5!important;padding-top:12px!important;padding-bottom:0!important}
+:root[data-event-theme="inverno"] .vv-v .vv-c.vv-c{margin-left:5px!important;max-width:calc(100% - 27px)!important}   /* centrato: stesso spazio a sinistra (dopo la banda) e a destra */
+/* 6.5 · Girrr Sport e Carriera su PC (Gianluca, 18 novembre sera) */
+/* Giornale: la copertina resta dentro il riquadro obliquo, un po' più piccola e spostata a destra */
+:root[data-event-theme="inverno"] #view .cov.gcov.nt-obl{padding-left:30px!important}
+:root[data-event-theme="inverno"] #view .cov.gcov .gimg{max-width:200px!important;flex:0 0 auto!important}
+:root[data-event-theme="inverno"] #view .cov.gcov .gimg img{width:100%!important;height:auto!important}
+/* Radio, Video e Sfide: i riquadri non si allungano fino all'altezza della colonna accanto */
+:root[data-event-theme="inverno"] #view>.card{align-self:start}
+/* Squadra della settimana, La mia settimana, Stagione e Giro di boa: viola pieno come gli altri riquadri, niente banda rossa */
+:root[data-event-theme="inverno"] #view :is(.pt-box,.ms-c,.gb-riquadro).nt-obl{border-left:0!important;background-color:transparent!important}
+/* stesso margine interno degli altri riquadri obliqui: il testo non tocca il bordo */
+:root[data-event-theme="inverno"] #view :is(.pt-box,.ms-c,.gb-riquadro).nt-obl.nt-obl{padding-left:26px!important;padding-right:18px!important}
+
+/* 6.5 · Easter egg (Gianluca, 18 novembre): tornando alla Home da un'altra pagina, 4 volte su 10 «O GIRRR» fa il neon
+   mezzo rotto (le lettere sfarfallano) oppure si accende lettera per lettera come un LED, dalla O all'ultima R.
+   Durante l'effetto le lettere sono separate (i.nt-l) e ognuna ha la stessa sfumatura verticale, quindi l'aspetto non cambia. */
+:root[data-event-theme="inverno"] .hero h1 span.nt-neon-on{background:none!important}
+:root[data-event-theme="inverno"] .hero h1 i.nt-l{font-style:inherit;font-weight:inherit}
+:root[data-event-theme="inverno"] .hero h1 span i.nt-l{background:linear-gradient(180deg,#2b60da 0%,#77acd4 50%,#ceaa56 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+@keyframes nt-led{0%{filter:none}35%{filter:brightness(1.9) drop-shadow(0 0 12px rgba(232,241,248,.95))}100%{filter:none}}
+@keyframes nt-guasto{0%,100%{opacity:1;filter:drop-shadow(0 0 8px rgba(119,172,212,.85))}6%{opacity:.15;filter:none}9%{opacity:1}
+  18%{opacity:.3;filter:none}21%{opacity:1;filter:drop-shadow(0 0 16px rgba(119,172,212,.95))}40%{opacity:.08;filter:none}43%{opacity:.9}
+  46%{opacity:.2}50%{opacity:1;filter:drop-shadow(0 0 12px rgba(119,172,212,.9))}72%{opacity:.5}75%{opacity:1}}
+:root[data-event-theme="inverno"] .hero h1.nt-neon-scia i.nt-l{animation:nt-led .9s ease-in-out 1 both}
+:root[data-event-theme="inverno"] .hero h1.nt-neon-guasto i.nt-l{animation:nt-guasto 2.4s linear 1 both}
+@media (prefers-reduced-motion: reduce){:root[data-event-theme="inverno"] .hero h1 i.nt-l{animation:none!important}}
+/* Versioni: il riquadro interno del messaggio resta dentro quello obliquo (Gianluca, 18 novembre) */
+:root[data-event-theme="inverno"] .vv-v .vv-c{margin-left:22px!important;margin-right:22px!important;margin-bottom:16px!important;box-sizing:border-box;max-width:calc(100% - 44px)!important}
+
+/* 6.5.1 · Campo: le due competizioni seguono la forma squadrata/obliqua della 6.5,
+   senza cambiare la scelta Campionato/Champions Cup e i relativi colori. */
+:root[data-event-theme="inverno"] body[data-v53="campo"] .comp-sw.comp-sw {
+  border-radius:12px!important;padding:5px!important;
+  transform:none;
+  background:var(--nt-fila)!important;
+  box-shadow:inset 0 0 0 1px var(--nt-bordo)!important;
+}
+:root[data-event-theme="inverno"] body[data-v53="campo"] .comp-sw.comp-sw i {
+  top:5px;bottom:5px;left:5px;width:calc(50% - 5px);
+  border-radius:5px!important;
+}
+:root[data-event-theme="inverno"] body[data-v53="campo"] .comp-sw.comp-sw button {
+  border-radius:5px!important;transform:none;
+  font-style:normal!important;
+}
+
+/* Changelog di Versioni: riquadri viola più piccoli, il titolo dell'area non tocca il bordo (Gianluca, 19 novembre) */
+:root[data-event-theme="inverno"] .vv-v .vv-area.nt-obl.nt-obl{padding:12px 14px 10px 24px!important;margin:0 0 10px!important}
+:root[data-event-theme="inverno"] .vv-v .vv-area h4{margin:0 0 6px!important}
+:root[data-event-theme="inverno"] .vv-v .vv-area :is(li,p){font-size:13px!important;line-height:1.45!important;margin:0 0 4px!important}
+:root[data-event-theme="inverno"] .vv-v .vv-area ul{margin:0!important;padding-left:18px!important}
+
+/* 6.5 · Squadre: i punteggi rientrano di 18px sia nei risultati recenti sia nella classifica girone Champions Cup. */
+:root[data-event-theme="inverno"] #sch .card > .top5 > .g > b,
+:root[data-event-theme="inverno"] #sch .card > .ris > .s{margin-right:18px!important}
+
+/* ===================== W. Inverno: sfondo, neve, forme e schede (Claude, 28 novembre 2026) ===================== */
+/* W1. Sfondo: la scena dell'atmosfera (stadio innevato di notte, abeti, fari) con un velo, così le schede si leggono sempre */
+:root[data-event-theme="inverno"]::before{
+  content:''!important;position:fixed!important;inset:0!important;z-index:-2!important;pointer-events:none!important;display:block!important;opacity:1!important;transform:none!important;
+  background:var(--w-velo),var(--w-scena) 50% 100%/cover no-repeat,var(--nt-notte)!important;filter:none!important;
+}
+@media (max-aspect-ratio:3/4){:root[data-event-theme="inverno"]::before{background-position:0 0,50% 100%,0 0!important;background-size:auto,auto 100%,auto!important}}
+/* W2. Neve che cade: un solo livello che scende con transform (fluido sul telefono); a Capodanno scintille dorate */
+:root[data-event-theme="inverno"]::after{
+  content:''!important;position:fixed!important;left:0!important;right:0!important;top:-420px!important;bottom:0!important;height:auto!important;
+  z-index:-1!important;pointer-events:none!important;display:block!important;opacity:.85!important;
+  background:radial-gradient(2.6px 2.6px at 40px 60px,var(--w-fiocco) 50%,transparent 52%),
+             radial-gradient(1.8px 1.8px at 150px 210px,var(--w-fiocco) 50%,transparent 52%),
+             radial-gradient(3.2px 3.2px at 260px 120px,var(--w-fiocco2) 50%,transparent 52%),
+             radial-gradient(1.6px 1.6px at 330px 330px,var(--w-fiocco) 50%,transparent 52%),
+             radial-gradient(2.2px 2.2px at 90px 300px,var(--w-fiocco2) 50%,transparent 52%),
+             radial-gradient(2px 2px at 210px 30px,var(--w-fiocco) 50%,transparent 52%),
+             radial-gradient(1.4px 1.4px at 380px 180px,var(--w-fiocco) 50%,transparent 52%)!important;
+  background-size:420px 420px!important;-webkit-mask-image:none;mask-image:none;
+  transform:translate3d(0,0,0);animation:w-neve 14s linear infinite!important;will-change:transform;
+}
+@keyframes w-neve{to{transform:translate3d(-60px,420px,0)}}
+:root[data-event-theme="inverno"][data-event-sfondo="capodanno"]::after{animation-duration:22s!important;opacity:.7!important}
+
+/* W3. Titoli: stampatello Barlow Condensed dritto (non corsivo), «Girrr» di ghiaccio e oro, sotto la firma in Cinzel */
+:root[data-event-theme="inverno"] :is(.hero h1,.top h1,.v53-h1,.v53-panel h2,h2.sec,.ph,.gs-title,header h1,.oggi h2,section > h2){font-style:normal!important}
+:root[data-event-theme="inverno"] :is(.hero h1,.top h1,header h1){animation:w-entra .9s cubic-bezier(.2,.7,.2,1) 1 both}
+@keyframes w-entra{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+:root[data-event-theme="inverno"] .hero h1{font-style:normal!important;font-weight:800!important;letter-spacing:.01em!important;text-shadow:0 3px 0 rgba(3,8,20,.55),0 0 22px rgba(var(--w-glow),.45)!important}
+:root[data-event-theme="inverno"] .hero h1 span{background:var(--w-titolo)!important;-webkit-background-clip:text!important;background-clip:text!important;
+  filter:drop-shadow(0 3px 0 rgba(3,8,20,.55)) drop-shadow(0 0 16px rgba(var(--w-glow),.5))!important}
+:root[data-event-theme="inverno"] .hero h1::after{transform:none!important;left:.06em!important;bottom:-.02em!important;font:700 .3em/1 Cinzel,Georgia,serif!important;letter-spacing:.34em!important;text-transform:uppercase!important;
+  color:var(--nt-arancio)!important;-webkit-text-fill-color:var(--nt-arancio)!important;text-shadow:0 0 12px rgba(var(--w-glow),.55)!important;
+  background:linear-gradient(90deg,var(--nt-arancio),transparent) 0 100%/100% 1px no-repeat!important;padding-bottom:.35em!important}
+:root[data-event-theme="inverno"] :is(.top h1,.v53-h1,.gs-title,header:not(.hero) h1){font-family:'Barlow Condensed',Inter,sans-serif!important;font-weight:800!important;text-transform:uppercase!important;letter-spacing:.02em!important}
+/* titoli delle sezioni: al posto delle tre barre «///» un fiocco di neve */
+:root[data-event-theme="inverno"] :is(.v53-panel h2,h2.sec,.ph,.oggi h2,section > h2),
+:root[data-event-theme="inverno"] body[data-v53="home"] :is(.nt-classifica,.nt-stagione) header b,
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards::before,:root[data-event-theme="inverno"] .nt-tutto-titolo{
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239ccbea' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12 2v20M3.3 7l17.4 10M3.3 17 20.7 7M12 2l-2.5 2.5M12 2l2.5 2.5M12 22l-2.5-2.5M12 22l2.5-2.5'/%3E%3C/svg%3E") 0 50%/.9em .9em no-repeat!important;
+  padding-left:1.25em!important;font-style:normal!important}
+:root[data-event-theme="inverno"] .kick,:root[data-event-theme="inverno"] .v53-kicker,:root[data-event-theme="inverno"] .top .k,:root[data-event-theme="inverno"] .gh{color:var(--nt-arancio)!important;text-shadow:none!important;letter-spacing:.14em}
+
+/* W4. Riquadri: dritti, angoli morbidi (18 px), bordo di ghiaccio e un filo di brina in alto; la banda laterale resta quella
+   della competizione o della sezione (Campionato rosso, Champions Cup azzurra) */
+:root[data-event-theme="inverno"] .nt-obl.nt-obl.nt-obl,:root[data-event-theme="inverno"] .nt-obl.nt-obl.nt-obl::before{border-radius:18px!important}
+:root[data-event-theme="inverno"] .nt-obl.nt-obl.nt-obl::before,:root[data-event-theme="inverno"] .nt-obl.nt-obl.nt-obl:nth-child(even)::before{transform:none!important;
+  box-shadow:inset 0 1px 0 rgba(var(--w-ice),.65),inset 0 0 0 1px var(--nt-bordo),inset 4px 0 0 var(--nt-banda,var(--nt-rosa)),0 14px 34px rgba(3,8,20,.45)!important;
+  background:linear-gradient(180deg,rgba(var(--w-ice),.10),transparent 38px),var(--nt-scheda)!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] :is(.nt-match,.nt-classifica,.nt-stagione,#strip>.st,.cards>.c){border-radius:18px!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] :is(.nt-classifica,.nt-stagione),:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c,:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c:nth-child(even){
+  box-shadow:inset 0 1px 0 rgba(var(--w-ice),.6),inset 0 0 0 1px var(--nt-bordo)!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-classifica li::before{width:8px!important;height:8px!important;border-radius:50%;background:var(--nt-rosa)!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-classifica li.primo{background:var(--w-attiva)!important;color:var(--w-attiva-testo)!important;border-radius:12px}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-classifica li.primo :is(b,small,em){color:inherit!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-classifica li.primo::before{background:var(--w-attiva-testo)!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-stagione p{border-radius:12px!important;background:rgba(var(--w-fondo),.6)!important;box-shadow:inset 0 0 0 1px var(--nt-bordo)!important}
+/* neve sopra i riquadri principali della Home: un cumulo morbido sul bordo alto */
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-match{position:relative}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-match::before{content:'';position:absolute;left:10px;right:10px;top:-7px;height:14px;z-index:2;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 14' preserveAspectRatio='none'%3E%3Cpath d='M0 14C6 4 14 6 22 8S36 2 48 5 66 9 78 6 96 1 110 5 130 10 142 6 160 2 174 6 190 9 198 8 200 14Z' fill='%23f5fbff'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat;
+  filter:drop-shadow(0 2px 2px rgba(3,8,20,.35))}
+/* partita da guardare: lo stadio innevato al posto della foto */
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-match{overflow:visible!important;
+  background:linear-gradient(90deg,rgba(var(--w-fondo),.96) 0%,rgba(var(--w-fondo),.78) 55%,rgba(var(--w-fondo),.35)),var(--w-scena) 70% 78%/cover no-repeat!important;
+  box-shadow:inset 0 1px 0 rgba(var(--w-ice),.6),inset 4px 0 0 var(--nt-rosa),inset 0 0 0 1px var(--nt-bordo)!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] :is(.nt-match b,.nt-match strong,.nt-match small,.nt-match em,.nt-classifica,.nt-stagione,.cards>.c h2){font-style:normal!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-match em{border-radius:999px!important;background:var(--w-attiva)!important;color:var(--w-attiva-testo)!important}
+/* «Tutto il Girrr»: schede illustrate con la scena dell'atmosfera, ognuna inquadrata in un punto diverso */
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c{background:linear-gradient(0deg,rgba(var(--w-fondo),.96) 0%,rgba(var(--w-fondo),.25) 72%),var(--w-scena) 8% 90%/auto 190% no-repeat,var(--nt-notte)!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c:nth-child(2){background-position:0 0,50% 92%,0 0!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c:nth-child(3){background-position:0 0,96% 92%,0 0!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c:nth-child(4){background-position:0 0,30% 10%,0 0!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c:nth-child(5){background-position:0 0,78% 8%,0 0!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c:nth-child(6){background-position:0 0,60% 60%,0 0!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>.c::after{background:var(--w-attiva)!important;color:var(--w-attiva-testo)!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] .cards>:is(.nt-slide-curva,.nt-slide-mini){background:linear-gradient(0deg,rgba(var(--w-fondo),.96),rgba(var(--w-fondo),.34)),var(--w-scena) 50% 90%/auto 190% no-repeat!important}
+/* «Gentilmente offerto da»: riquadro chiaro come la neve */
+:root[data-event-theme="inverno"] .sp.nt-obl.nt-obl.nt-obl::before{background:linear-gradient(170deg,#ffffff,#e6f1fa)!important;box-shadow:inset 0 3px 0 var(--nt-rosa),0 12px 30px rgba(3,8,20,.35)!important}
+:root[data-event-theme="inverno"] .sp.nt-obl span:first-child{color:#1d2d55!important}
+
+/* W5. Schede e pulsanti a CAPSULA (Gianluca, 28 novembre: «cambiar forma e posizione delle tabs in base alla grafica»).
+   Forma: capsula tonda con il bordo di ghiaccio; la scelta è piena (oro in Premium e Capodanno, berry a Natale, neve in
+   Wonderland) con un puntino sotto. Posizione: le file di schede stanno dentro un binario arrotondato e centrato. */
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-tab,:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-tab::before{border-radius:999px!important}
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-tab::before{transform:none!important;background:var(--nt-tab-bg,linear-gradient(180deg,rgba(var(--w-fondo2),.95),rgba(var(--w-fondo),.95)))!important;
+  box-shadow:inset 0 1px 0 rgba(var(--w-ice),.35),inset 0 0 0 1px var(--nt-bordo)!important;transition:background .25s ease,box-shadow .25s ease,transform .2s ease!important}
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-on{color:var(--w-attiva-testo)!important}
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-on::before{background:var(--w-attiva)!important;box-shadow:0 0 0 1px rgba(var(--w-ice),.7),0 6px 18px rgba(var(--w-glow),.35)!important}
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-on:not(.chips button)::after{content:'';position:absolute;left:50%;bottom:-7px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--nt-arancio);box-shadow:0 0 8px rgba(var(--w-glow),.8);pointer-events:none}
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-forte{color:var(--w-attiva-testo)!important}
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-forte::before{background:var(--w-attiva)!important}
+:root[data-event-theme="inverno"] .nt-tab.nt-tab:active::before{transform:scale(.96)!important}
+/* il binario: le file di schede diventano una sola striscia arrotondata, centrata quando c'è spazio */
+:root[data-event-theme="inverno"] :is(.giornata-nav,.seg,.v53-pills,.v55-schede,#tabs,.vv-seg,.fidg-tab,.frs){border-radius:999px!important;background:rgba(var(--w-fondo),.82)!important;
+  box-shadow:inset 0 0 0 1px var(--nt-bordo),0 8px 22px rgba(3,8,20,.35)!important;padding:5px!important;gap:6px!important}
+@media (min-width:700px){:root[data-event-theme="inverno"] :is(.giornata-nav,.v53-pills,.v55-schede,#tabs,.vv-seg){justify-content:center!important;margin-left:auto!important;margin-right:auto!important}}
+:root[data-event-theme="inverno"] .chips button.nt-tab{border-radius:999px!important}
+:root[data-event-theme="inverno"] nav > .nvi{padding:5px 8px!important;border-radius:999px;background:rgba(var(--w-fondo),.82);box-shadow:inset 0 0 0 1px var(--nt-bordo)}
+:root[data-event-theme="inverno"] .v53-select{border-radius:999px!important;background-color:rgba(var(--w-fondo),.95)!important}
+
+/* W6. Competizioni: Campionato rosso (il rosso originale di O Girrr, #e9233b) e Champions Cup azzurra, in tutte le atmosfere */
+:root[data-event-theme="inverno"] :is(body[data-mode="lega"] .sw.sw.sw i,.comp-sw:not([data-on=coppa]) i){background:linear-gradient(180deg,#ff5a6e,#e9233b)!important;box-shadow:0 0 14px rgba(233,35,59,.5)!important;border-radius:999px!important}
+:root[data-event-theme="inverno"] :is(body[data-mode="coppa"] .sw.sw.sw i,.comp-sw[data-on=coppa] i){background:linear-gradient(180deg,#9ccbea,#2f7dff)!important;box-shadow:0 0 14px rgba(47,125,255,.5)!important;border-radius:999px!important}
+:root[data-event-theme="inverno"] :is(.sw,.comp-sw){border-radius:999px!important}
+:root[data-event-theme="inverno"] :is(body[data-mode="lega"] .giornata-nav button.nt-on,.giornata-nav button[aria-selected=true]),
+:root[data-event-theme="inverno"] .chips button.sel.nt-tab,:root[data-event-theme="inverno"] .matches .gamebtn.nt-tab:is(.active,.on,[aria-pressed=true],[aria-selected=true]){--nt-tab-bg:linear-gradient(180deg,#ff5a6e,#e9233b)!important;color:#fff!important}
+:root[data-event-theme="inverno"] :is(body[data-mode="lega"] .giornata-nav button.nt-on,.giornata-nav button[aria-selected=true],.chips button.sel.nt-tab)::before{background:linear-gradient(180deg,#ff5a6e,#e9233b)!important}
+:root[data-event-theme="inverno"] :is(body[data-comp="coppa"],body[data-mode="coppa"]) :is(.giornata-nav button[aria-selected=true],.chips button.sel.nt-tab,.matches .gamebtn.nt-tab:is(.active,.on,[aria-pressed=true],[aria-selected=true]))::before{background:linear-gradient(180deg,#9ccbea,#2f7dff)!important}
+:root[data-event-theme="inverno"] :is(body[data-comp="coppa"],body[data-mode="coppa"]) :is(.giornata-nav button[aria-selected=true],.chips button.sel.nt-tab,.matches .gamebtn.nt-tab:is(.active,.on,[aria-pressed=true],[aria-selected=true])){color:#0b1a33!important;box-shadow:none!important}
+:root[data-event-theme="inverno"] #board > .m.nt-obl{--nt-banda:#e9233b!important;--nt-banda2:#e9233b!important}
+:root[data-event-theme="inverno"] body[data-mode="coppa"] #board > .m.nt-obl{--nt-banda:#2f7dff!important;--nt-banda2:#2f7dff!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] #strip>.st{background-image:linear-gradient(180deg,#ff5a6e,#e9233b),var(--nt-scheda)!important}
+:root[data-event-theme="inverno"] body[data-v53="home"] #strip>.st[href*="coppa"]{background-image:linear-gradient(180deg,#9ccbea,#2f7dff),var(--nt-scheda)!important}
+:root[data-event-theme="inverno"] .card.nt-obl{--nt-banda:var(--nt-rosa)!important}
+:root[data-event-theme="inverno"]:has(.comp-sw[data-on=coppa]) .card.nt-obl{--nt-banda:#2f7dff!important}
+
+/* W7. Firma in fondo alla Home */
+:root[data-event-theme="inverno"] body[data-v53="home"] .wrap::after{color:var(--nt-arancio)!important;text-shadow:0 0 12px rgba(var(--w-glow),.6)!important;font-family:Cinzel,Georgia,serif!important;letter-spacing:.18em!important;line-height:1.5!important;padding:0 12px}
+
+/* W8. Riduci movimento: neve ferma, titoli fermi */
+@media (prefers-reduced-motion:reduce){
+  :root[data-event-theme="inverno"]::after{animation:none!important}
+  :root[data-event-theme="inverno"] :is(.hero h1,.top h1,header h1){animation:none!important}
+  :root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-tab::before{transition:none!important}
+}
+
+/* W5b. Albo d'oro e Derby: le pillole come capsule, la scelta piena e leggibile */
+:root[data-event-theme="inverno"] :is(.at,.dtab)[role=tablist]{border-radius:999px!important;background:rgba(var(--w-fondo),.85)!important;padding:5px!important}
+:root[data-event-theme="inverno"] :is(.at,.dtab)[role=tablist] > button[role=tab]{border-radius:999px!important}
+:root[data-event-theme="inverno"] :is(.at,.dtab)[role=tablist] > button[role=tab][aria-selected=true]{color:var(--w-attiva-testo)!important;box-shadow:0 0 0 1px rgba(var(--w-ice),.7),0 6px 18px rgba(var(--w-glow),.35)!important}
+/* iPhone SE: la firma sotto «O Girrr» più stretta, così non esce dallo schermo */
+@media (max-width:380px){:root[data-event-theme="inverno"] .hero h1::after{letter-spacing:.2em!important;font-size:.26em!important}}
+
+/* ===================== W9. BOZZA 28/11 (immagini Gemini scelte da Gianluca) ===================== */
+/* tre edizioni: premium = Winter Edition, natale = Christmas Edition, capodanno = New Year 2027 */
+:root[data-event-theme="inverno"]{--w-scena:url(foto/sfondo-premium-h.jpg);--w-scena-v:url(foto/sfondo-winter-v.jpg);--w-logo:url(foto/logo-winter.png)}
+:root[data-event-theme="inverno"][data-event-sfondo="natale"]{--w-scena:url(foto/sfondo-natale-h.jpg);--w-scena-v:url(foto/sfondo-natale-h.jpg);--w-logo:url(foto/logo-christmas.png)}
+:root[data-event-theme="inverno"][data-event-sfondo="capodanno"]{--w-scena:url(foto/sfondo-capodanno-h.jpg);--w-scena-v:url(foto/sfondo-capodanno-h.jpg);--w-logo:url(foto/logo-newyear.png)}
+:root[data-event-theme="inverno"]::before{background:linear-gradient(180deg,rgba(7,13,31,.15) 0%,rgba(7,13,31,.35) 40%,rgba(7,13,31,.82) 100%),var(--w-scena) 50% 60%/cover no-repeat,var(--nt-notte)!important}
+@media (max-aspect-ratio:3/4){:root[data-event-theme="inverno"]::before{background:linear-gradient(180deg,rgba(7,13,31,.10) 0%,rgba(7,13,31,.30) 35%,rgba(7,13,31,.80) 100%),var(--w-scena-v) 50% 100%/cover no-repeat,var(--nt-notte)!important}}
+/* logo di Gemini al posto della scritta «O Girrr» nella Home */
+:root[data-event-theme="inverno"] body[data-v53="home"] .hero h1{font-size:0!important;color:transparent!important;text-shadow:none!important;width:min(100%,330px);aspect-ratio:656/224;padding:0!important;margin:4px 0 6px!important;
+  background:var(--w-logo) 0 50%/contain no-repeat!important;filter:drop-shadow(0 4px 14px rgba(3,8,20,.6))}
+:root[data-event-theme="inverno"][data-event-sfondo="natale"] body[data-v53="home"] .hero h1{aspect-ratio:640/288}
+:root[data-event-theme="inverno"][data-event-sfondo="capodanno"] body[data-v53="home"] .hero h1{aspect-ratio:642/256}
+:root[data-event-theme="inverno"] body[data-v53="home"] .hero h1 span,:root[data-event-theme="inverno"] body[data-v53="home"] .hero h1::after{display:none!important}
+/* schede «Glacial Core» (direzione 01 di Gemini): ghiaccio scolpito, brina negli angoli; la scelta col bordo e la riga d'oro e la neve sopra.
+   Niente vetro sfocato: fondo pieno, fluido sui telefoni. */
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-tab,:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-tab::before{border-radius:12px!important}
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-tab::before{background:
+  radial-gradient(circle at 0 0,rgba(237,245,252,.42),transparent 42%),radial-gradient(circle at 100% 100%,rgba(156,203,234,.30),transparent 46%),
+  var(--nt-tab-bg,linear-gradient(165deg,rgba(156,203,234,.30) 0%,#1d2d55 45%,#111b38 100%))!important;
+  box-shadow:inset 0 2px 4px rgba(237,245,252,.5),inset 0 -3px 6px rgba(0,0,0,.55),inset 0 0 0 1px rgba(156,203,234,.38),0 6px 14px rgba(0,0,0,.45)!important}
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-on:not(.chips button)::before{background:
+  linear-gradient(90deg,transparent,#d6b66f,#edf5fc,#d6b66f,transparent) 0 0/100% 2px no-repeat,
+  var(--nt-tab-bg,linear-gradient(135deg,rgba(156,203,234,.42) 0%,#1d2d55 100%))!important;
+  box-shadow:inset 0 0 0 1.5px #d6b66f,inset 0 1px 3px rgba(255,255,255,.8),0 0 16px rgba(214,182,111,.45),0 8px 22px rgba(0,0,0,.55)!important}
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-on:not(.chips button){color:#e9cf8f!important;transform:translateY(-1px)}
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-on:not(.chips button)::after{content:''!important;left:12%!important;right:12%!important;width:auto!important;margin:0!important;top:-3px!important;bottom:auto!important;height:5px!important;border-radius:10px!important;
+  background:radial-gradient(ellipse at center,#f5fbff 0%,rgba(237,245,252,.85) 60%,transparent 100%)!important;box-shadow:0 1px 3px rgba(255,255,255,.7)!important}
+:root[data-event-theme="inverno"] :is(.v53-pills button,.v53-pill,#tabs button,.seg button,.vv-seg button,nav .nvi button,.giornata-nav>button,.giornata-nav>a,.at>button[role=tab],.dtab>button[role=tab]){font-family:Cinzel,Georgia,serif!important;font-weight:700!important;letter-spacing:.02em!important}
+/* le file non hanno più il binario-capsula: schede staccate su una striscia scura arrotondata */
+:root[data-event-theme="inverno"] :is(.giornata-nav,.seg,.v53-pills,.v55-schede,#tabs,.vv-seg,.fidg-tab,.frs,.at,.dtab){border-radius:16px!important;background:rgba(17,27,56,.78)!important}
+:root[data-event-theme="inverno"] :is(.at,.dtab)[role=tablist] > button[role=tab]{border-radius:12px!important}
+/* giornate: cerchi di ghiaccio, la scelta con l'anello d'oro (in Coppa resta il rosso/azzurro della competizione dentro) */
+:root[data-event-theme="inverno"] .chips button.sel.nt-tab::before{box-shadow:inset 0 0 0 2px #d6b66f,0 0 14px rgba(214,182,111,.5)!important}
+/* interruttore Campionato/Champions Cup: binario scuro, pillola piena rossa o azzurra (direzione 01) */
+:root[data-event-theme="inverno"] :is(.sw,.comp-sw){border-radius:16px!important;background:rgba(17,27,56,.9)!important;box-shadow:inset 0 0 0 1px rgba(156,203,234,.25)!important}
+:root[data-event-theme="inverno"] :is(.sw,.comp-sw) i{border-radius:12px!important}
+:root[data-event-theme="inverno"] :is(.sw,.comp-sw) button{font-family:'Barlow Condensed',Inter,sans-serif!important;font-weight:800!important;letter-spacing:.08em!important;text-transform:uppercase!important}
+
+/* entrata con l'immagine dell'edizione (bozza: si vede con ?evento-entrata=1) */
+.w-ingresso{position:fixed;inset:0;z-index:2147483000;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:14px;padding:16vh 24px 0;text-align:center;
+  background:linear-gradient(180deg,rgba(7,13,31,.10),rgba(7,13,31,.25) 55%,rgba(7,13,31,.65)),var(--w-scena-v,var(--w-scena)) 50% 100%/cover no-repeat,#0a1122;
+  transition:opacity .6s ease}
+@media (min-aspect-ratio:1/1){.w-ingresso{background:linear-gradient(180deg,rgba(7,13,31,.10),rgba(7,13,31,.6)),var(--w-scena) 50% 70%/cover no-repeat,#0a1122}}
+.w-ingresso .w-logo{width:min(84vw,520px);aspect-ratio:656/224;background:var(--w-logo) center/contain no-repeat;filter:drop-shadow(0 6px 22px rgba(3,8,20,.75));animation:w-logo 1.4s cubic-bezier(.2,.7,.2,1) both}
+.w-ingresso p{margin:0;font:700 12px/1.5 Cinzel,Georgia,serif;letter-spacing:.24em;text-transform:uppercase;color:#e9cf8f;text-shadow:0 2px 8px rgba(0,0,0,.8);animation:w-su 1s .5s both}
+.w-ingresso button{margin-top:auto;margin-bottom:12vh;padding:14px 34px;border:0;border-radius:14px;font:700 16px/1 Cinzel,Georgia,serif;letter-spacing:.08em;color:#111b38;cursor:pointer;
+  background:linear-gradient(180deg,#f3e3b5,#d6b66f);box-shadow:inset 0 1px 0 #fff8,0 0 22px rgba(214,182,111,.55),0 10px 24px rgba(0,0,0,.5);animation:w-su 1s .9s both}
+.w-ingresso.via{opacity:0;pointer-events:none}
+@keyframes w-logo{from{opacity:0;transform:scale(.92);filter:blur(6px)}to{opacity:1;transform:none}}
+@keyframes w-su{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.w-ingresso,.w-ingresso *{animation:none!important;transition:none!important}}
+/* bozza: pulsanti forti in oro pieno; scelta uguale in tutte le pagine (vetro e oro); nel Tabellone la scheda attiva resta rossa (Campionato) o azzurra (Coppa) con scritta bianca */
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-forte::before{background:linear-gradient(180deg,#f3e3b5,#d6b66f)!important;box-shadow:inset 0 1px 0 #fff9,0 0 16px rgba(214,182,111,.45),0 6px 14px rgba(0,0,0,.45)!important}
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-forte{color:#111b38!important}
+:root[data-event-theme="inverno"] :is(#app,#view,#al,#sch,#versioni,#ultimo,#lista,.v53-notifications) .nt-tab.nt-tab.nt-on:not(.nt-forte),
+:root[data-event-theme="inverno"] :is(.v53-pill,.v53-pills button).nt-tab.nt-on,
+:root[data-event-theme="inverno"] body:has(> .wrap > #tabs) #tabs button.nt-tab.nt-on{--nt-tab-bg:initial!important;color:#e9cf8f!important}
+:root[data-event-theme="inverno"] :is(body[data-mode="lega"] .giornata-nav button.nt-on,.giornata-nav button[aria-selected=true]){color:#fff!important;text-shadow:0 1px 2px rgba(0,0,0,.4)}
+:root[data-event-theme="inverno"] .chips button.sel.nt-tab{color:#fff!important}
+:root[data-event-theme="inverno"] .giornata-nav.giornata-nav > button.nt-tab.nt-tab.nt-on{color:#fff!important;text-shadow:0 1px 2px rgba(0,0,0,.45)!important}
+:root[data-event-theme="inverno"][data-event-sfondo="natale"]{--w-date:'Christmas Edition · Dal 25 al 30 dicembre'}
+:root[data-event-theme="inverno"][data-event-sfondo="capodanno"]{--w-date:'New Year 2027 · Dal 31 dicembre al 6 gennaio'}
+:root[data-event-theme="inverno"]:not([data-event-sfondo="natale"]):not([data-event-sfondo="capodanno"]){--w-date:'Winter Edition · Dal 1° al 24 dicembre'}
+/* bozza: cornice di ghiaccio Glacial Core di Gemini sui riquadri (9 fette: angoli con la brina fissi, lati che si allungano) */
+:root[data-event-theme="inverno"] .nt-obl.nt-obl.nt-obl:not(.sp):not(.gs):not(#board > .m)::before,
+:root[data-event-theme="inverno"] .nt-obl.nt-obl.nt-obl:not(.sp):not(.gs):not(#board > .m):nth-child(even)::before{
+  inset:-6px -4px -4px -4px;border-radius:0!important;background:none!important;box-shadow:0 14px 30px rgba(3,8,20,.45)!important;
+  border:solid transparent;border-width:40px 38px 30px 38px;
+  border-image:url(foto/cornice-ghiaccio.png) 150 160 120 160 fill / 40px 38px 30px 38px stretch}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-match::before{display:none!important}
+/* bozza: pulsante d'oro di Gemini (neve sopra, brina negli angoli) per i pulsanti forti, «Vai al campo» ed «Entra» */
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-forte::before,
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-match em::before,
+.w-ingresso button::before{content:''!important;position:absolute;inset:-7px -3px -3px;z-index:-1;pointer-events:none;background:none!important;box-shadow:0 0 18px rgba(214,182,111,.45)!important;border-radius:14px;
+  border:solid transparent;border-width:22px 24px 14px 24px;border-image:url(foto/pulsante-oro.png) 66 70 40 70 fill / 22px 24px 14px 24px stretch}
+:root[data-event-theme="inverno"] body[data-v53="home"] .nt-match em,.w-ingresso button{position:relative;isolation:isolate;background:none!important;box-shadow:none!important}
+.w-ingresso button::before{inset:-9px -4px -4px}
+/* bozza: scheda rossa di Gemini per il Campionato (scheda attiva del Tabellone, giornata scelta, interruttore) */
+:root[data-event-theme="inverno"] :is(body:not([data-mode="coppa"]) .giornata-nav.giornata-nav > button.nt-tab.nt-on,body:not([data-mode="coppa"]):not([data-comp="coppa"]) .chips button.sel.nt-tab)::before{
+  background:none!important;box-shadow:0 0 14px rgba(233,35,59,.5)!important;inset:-5px -2px -2px!important;
+  border:solid transparent;border-width:16px 16px 10px 16px;border-image:url(foto/scheda-rossa.png) 120 128 88 128 fill / 16px 16px 10px 16px stretch}
+:root[data-event-theme="inverno"] :is(body[data-mode="lega"] .sw.sw.sw i,.comp-sw:not([data-on=coppa]) i){background:none!important;box-shadow:0 0 14px rgba(233,35,59,.5)!important;
+  border:solid transparent;border-width:16px 18px 10px 18px;border-image:url(foto/scheda-rossa.png) 120 128 88 128 fill / 16px 18px 10px 18px stretch;margin-top:-4px}
+/* bozza: scheda azzurra di Gemini per la Champions Cup; partita scelta nel Campo con la scheda della competizione */
+:root[data-event-theme="inverno"] :is(body[data-mode="coppa"],body[data-comp="coppa"]) :is(.giornata-nav.giornata-nav > button.nt-tab.nt-on,.chips button.sel.nt-tab,.matches .gamebtn.nt-tab:is(.active,.on,[aria-pressed=true],[aria-selected=true]))::before{
+  background:none!important;box-shadow:0 0 14px rgba(88,166,223,.55)!important;inset:-5px -2px -2px!important;
+  border:solid transparent;border-width:16px 16px 10px 16px;border-image:url(foto/scheda-azzurra.png) 120 128 88 128 fill / 16px 16px 10px 16px stretch}
+:root[data-event-theme="inverno"] :is(body[data-mode="coppa"],body[data-comp="coppa"]) :is(.giornata-nav.giornata-nav > button.nt-tab.nt-on,.chips button.sel.nt-tab,.matches .gamebtn.nt-tab:is(.active,.on,[aria-pressed=true],[aria-selected=true])){color:#0b1a33!important;text-shadow:0 1px 0 rgba(255,255,255,.5)!important}
+:root[data-event-theme="inverno"] :is(body[data-mode="coppa"] .sw.sw.sw i,.comp-sw[data-on=coppa] i){background:none!important;box-shadow:0 0 14px rgba(88,166,223,.55)!important;
+  border:solid transparent;border-width:16px 18px 10px 18px;border-image:url(foto/scheda-azzurra.png) 120 128 88 128 fill / 16px 18px 10px 18px stretch;margin-top:-4px}
+:root[data-event-theme="inverno"] body:not([data-mode="coppa"]):not([data-comp="coppa"]) .matches .gamebtn.nt-tab:is(.active,.on,[aria-pressed=true],[aria-selected=true])::before{
+  background:none!important;box-shadow:0 0 14px rgba(233,35,59,.5)!important;inset:-5px -2px -2px!important;
+  border:solid transparent;border-width:16px 16px 10px 16px;border-image:url(foto/scheda-rossa.png) 120 128 88 128 fill / 16px 16px 10px 16px stretch}
+:root[data-event-theme="inverno"] body:not([data-mode="coppa"]):not([data-comp="coppa"]) .matches .gamebtn.nt-tab:is(.active,.on,[aria-pressed=true],[aria-selected=true]){color:#fff!important}
+/* bozza: cerchio di ghiaccio di Gemini per le giornate non scelte */
+:root[data-event-theme="inverno"] .chips button.nt-tab:not(.sel){aspect-ratio:1;border-radius:50%!important}
+:root[data-event-theme="inverno"] .chips button.nt-tab:not(.sel)::before{border-radius:50%!important;inset:-3px!important;background:url(foto/cerchio-ghiaccio.png) center/100% 100% no-repeat!important;box-shadow:0 4px 10px rgba(0,0,0,.45)!important}
+/* bozza: cerchio d'oro di Gemini per la giornata scelta; il numero è rosso in Campionato e azzurro scuro in Champions Cup */
+:root[data-event-theme="inverno"] .chips button.sel.nt-tab{aspect-ratio:1;border-radius:50%!important;color:#c8162d!important;font-weight:900!important;text-shadow:0 1px 0 rgba(255,255,255,.6)!important}
+:root[data-event-theme="inverno"] :is(body[data-mode="coppa"],body[data-comp="coppa"]) .chips button.sel.nt-tab{color:#1c5a94!important}
+:root[data-event-theme="inverno"] body .chips.chips.chips.chips button.sel.sel.sel.nt-tab.nt-tab.nt-tab::before{inset:-4px -3px -3px!important;border:0!important;border-image:none!important;border-radius:50%!important;
+  background:url(foto/cerchio-oro.png) center/100% 100% no-repeat!important;box-shadow:0 0 14px rgba(214,182,111,.55)!important}
+/* bozza: scheda di ghiaccio di Gemini per le schede non scelte (bordo di ghiaccio, neve sopra; dentro il navy pieno) */
+:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-tab:not(.nt-on):not(.nt-forte):not(.chips button)::before{
+  inset:-4px -2px -2px!important;border-radius:0!important;box-shadow:0 6px 14px rgba(0,0,0,.45)!important;
+  background:linear-gradient(170deg,#22376a,#121d3d) padding-box!important;border:solid transparent!important;border-width:12px 10px 8px 10px!important;
+  border-image:url(foto/scheda-ghiaccio.png) 95 62 60 62 / 12px 10px 8px 10px stretch!important}
+/* scritte scure sulla scheda azzurra */
+:root[data-event-theme="inverno"] :is(body[data-mode="coppa"] .sw,.comp-sw[data-on=coppa]) button:last-of-type{color:#0b1a33!important;text-shadow:0 1px 0 rgba(255,255,255,.5)!important}
+/* spazio interno: la cornice non copre più l'inizio del testo */
+:root[data-event-theme="inverno"] .nt-obl.nt-obl.nt-obl:not(.sp):not(.gs):not(#board > .m){padding-top:max(22px,var(--w-pt,0px))!important;padding-left:24px!important;padding-right:20px!important}
+/* bozza: barra d'oro larga di Gemini (angoli smussati, neve sopra) per «Entra» e i pulsanti lunghi */
+.w-ingresso button{min-width:min(78vw,340px);padding:18px 34px 14px!important}
+.w-ingresso button::before,:root[data-event-theme="inverno"] #big .tx a.nt-forte::before{inset:-10px -4px -4px!important;border-radius:0!important;
+  border-width:22px 26px 12px 26px!important;border-image:url(foto/barra-oro.png) 64 70 34 70 fill / 22px 26px 12px 26px stretch!important}
+.w-ingresso button::before,:root[data-event-theme="inverno"] #big .tx a.nt-forte::before,:root[data-event-theme="inverno"] .nt-tab.nt-tab.nt-forte::before,:root[data-event-theme="inverno"] body[data-v53="home"] .nt-match em::before{box-shadow:none!important;filter:drop-shadow(0 0 10px rgba(214,182,111,.45)) drop-shadow(0 6px 8px rgba(0,0,0,.4))}
+/* bozza: cornice piccola di Gemini per i riquadri piccoli (Totogirrr: In evidenza, schedine; Home: Notifiche e Statistiche) */
+:root[data-event-theme="inverno"] :is(#app .feat > .fc,#app .card,.wrap .mini .mn).nt-obl.nt-obl.nt-obl::before{
+  inset:-5px -6px -3px!important;border-width:20px 22px 14px 22px!important;
+  border-image:url(foto/cornice-piccola.png) 95 110 70 110 fill / 20px 22px 14px 22px stretch!important}
+:root[data-event-theme="inverno"] :is(#app .feat > .fc,#app .card,.wrap .mini .mn).nt-obl.nt-obl.nt-obl{padding:16px 16px 12px 18px!important}
+/* bozza: scheda d'oro di Gemini per la scelta fuori dalle competizioni (Totogirrr, Albo, Carriera, Versioni, Notifiche) */
+:root[data-event-theme="inverno"] :is(#app,#view,#al,#sch,#versioni,#ultimo,#lista,.v53-notifications) .nt-tab.nt-tab.nt-on:not(.nt-forte)::before,
+:root[data-event-theme="inverno"] :is(.v53-pill,.v53-pills button).nt-tab.nt-tab.nt-on::before,
+:root[data-event-theme="inverno"] body:has(> .wrap > #tabs) #tabs button.nt-tab.nt-tab.nt-on::before{
+  inset:-6px -3px -3px!important;border-radius:0!important;box-shadow:none!important;background:none!important;filter:drop-shadow(0 0 8px rgba(214,182,111,.5));
+  border:solid transparent!important;border-width:16px 16px 10px 16px!important;border-image:url(foto/scheda-oro.png) 60 64 44 64 fill / 16px 16px 10px 16px stretch!important}
+:root[data-event-theme="inverno"] :is(#app,#view,#al,#sch,#versioni,#ultimo,#lista,.v53-notifications) .nt-tab.nt-tab.nt-on:not(.nt-forte),
+:root[data-event-theme="inverno"] :is(.v53-pill,.v53-pills button).nt-tab.nt-tab.nt-on,
+:root[data-event-theme="inverno"] body:has(> .wrap > #tabs) #tabs button.nt-tab.nt-tab.nt-on{color:#111b38!important;text-shadow:0 1px 0 rgba(255,255,255,.45)!important}
+:root[data-event-theme="inverno"] :is(.at,.dtab)[role=tablist] > button[role=tab][aria-selected=true]{background:none!important;box-shadow:none!important;color:#111b38!important;
+  border:solid transparent!important;border-width:14px 14px 9px 14px!important;border-image:url(foto/scheda-oro.png) 60 64 44 64 fill / 14px 14px 9px 14px stretch!important;padding-top:4px!important;padding-bottom:2px!important}

@@ -22,13 +22,20 @@
   {
    "id": "inverno",
    "nome": "Inverno",
-   "occasione": "Da fare: idea di Gianluca per il periodo natalizio",
-   "date": "Da decidere",
-   "stato": "Idea",
-   "descrizione": "Skin invernale: ancora da disegnare.",
-   "cartella": "",
+   "occasione": "Periodo delle feste: Winter Edition, Christmas Edition e New Year 2027",
+   "date": "1° dicembre 2026 – 6 gennaio 2027 (ora italiana): Winter 1–24 dicembre, Christmas 25–30 dicembre, New Year dal 31 dicembre al 6 gennaio",
+   "stato": "In prova nel Lab",
+   "descrizione": "Grafica unica per tutti con il kit «Glacial Core» disegnato con Gemini: riquadri con la cornice di ghiaccio, schede di ghiaccio, scelta rossa (Campionato), azzurra (Champions Cup) o d'oro, giornate nei cerchi di ghiaccio, pulsanti d'oro con la neve. Sfondo dello stadio innevato, logo e colori diversi per ogni edizione (navy e ghiaccio, verde abete, viola), entrata con il logo una volta per edizione. Curva esclusa.",
+   "cartella": "temi/inverno/",
    "anteprime": [],
-   "prova": []
+   "prova": [
+    ["Home", "lab/integrata-62/girrr/index.html?evento=inverno"],
+    ["Tabellone", "lab/integrata-62/girrr/tabellone.html?evento=inverno"],
+    ["Campo", "lab/integrata-62/girrr/campo.html?evento=inverno"],
+    ["Totogirrr", "lab/integrata-62/girrr/totogirrr.html?evento=inverno"]
+   ],
+   "varianti": "Edizioni a mano: ?evento-sfondo=premium (Winter), natale (Christmas), capodanno (New Year). Entrata di nuovo: ?evento-entrata=1.",
+   "crediti": "temi/inverno/CREDITI.md"
   },
   {
    "id": "anno-nuovo",

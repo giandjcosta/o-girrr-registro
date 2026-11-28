@@ -18,7 +18,13 @@
       /* la Curva ha la sua grafica chiara/scura da app (iPhone e Android): il tema non la tocca, lì il testo diventava illeggibile */
       escludi: /\/curva\.html$/,
       /* grafica unica (Gianluca, 17 novembre: «non ci sarà Lega o Stadio, sarà una grafica unica») */
-      unica: true }
+      unica: true },
+    /* Skin «Inverno» (Gianluca, 28 novembre 2026): dal 1° dicembre a tutta l'Epifania (6 gennaio compreso), grafica unica per tutti.
+       Tre edizioni che cambiano da sole con la data (ora italiana): Winter Edition dal 1° al 24 dicembre (premium), Christmas Edition
+       dal 25 al 30 (natale), New Year 2027 dal 31 dicembre al 6 gennaio (capodanno). A mano: ?evento-sfondo=premium|natale|capodanno. */
+    { id: 'inverno', inizio: '2026-12-01T00:00:00+01:00', fine: '2027-01-07T00:00:00+01:00', css: 'inverno/inverno.css', js: 'inverno/inverno.js',
+      colore: '#111b38', escludi: /\/curva\.html$/, unica: true,
+      edizioni: [['2026-12-25T00:00:00+01:00', 'natale'], ['2026-12-31T00:00:00+01:00', 'capodanno']] }
   ];
   try {
     var me = document.currentScript, base = me && me.src ? me.src : location.href;
@@ -80,6 +86,8 @@
     /* variante dello sfondo (Notte Tropicale): ?evento-sfondo=notte|tramonto|scena; senza, la foto predefinita del tema, ricordata per la sessione */
     var sf = q.get('evento-sfondo');
     if (sf) { try { sessionStorage.setItem(K + '-sfondo', sf); } catch (e) {} } else { try { sf = sessionStorage.getItem(K + '-sfondo'); } catch (e) {} }
+    /* edizioni per data (Inverno): l'ultima già iniziata vince; senza, resta la predefinita del tema */
+    if (!sf && ev.edizioni) { for (var k = 0; k < ev.edizioni.length; k++) if (ora >= new Date(ev.edizioni[k][0])) sf = ev.edizioni[k][1]; }
     if (sf && /^[a-z-]{1,20}$/.test(sf)) h.setAttribute('data-event-sfondo', sf);
     /* parti messe da parte, solo a mano per provarle: ?evento-extra=barra,menu (ricordate per la sessione), ?evento-extra=no per toglierle */
     var ex = q.get('evento-extra');
