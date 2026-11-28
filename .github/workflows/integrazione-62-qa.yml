@@ -257,8 +257,9 @@ jobs:
           python3 rilascio/r621/backend.py qa-site-backend
           python3 prove/v62/check621.py qa-site qa-site-backend
           # 6.5 online (19 novembre 2026, Claude): gli script della 6.2.4 e prima si fermano sul sito nuovo, e quelli della 6.5
-          # sono superati dalle correzioni uscite dopo (PR #24-#27 del sito). Si controlla che online ci sia la 6.5 e che i file principali non abbiano errori.
-          python3 -c "import json,sys; v=json.load(open('qa-site/versioni.json'))['versioni'][0]['v']; sys.exit(0 if v=='6.5' else 'versione online '+v)"
+          # sono superati dalle correzioni uscite dopo (PR #24-#27 del sito). Si controlla che online ci sia la 6.5 o una versione successiva
+          # (28 novembre 2026, Claude: prima voleva esattamente la 6.5 e falliva con la 6.5.1, la 6.6 e la 6.7) e che i file principali non abbiano errori.
+          python3 -c "import json,sys; v=json.load(open('qa-site/versioni.json'))['versioni'][0]['v']; t=tuple(int(x) for x in v.split('.')); sys.exit(0 if t>=(6,5) else 'versione online '+v)"
           for f in qa-site/temi/evento-loader.js qa-site/temi/notte-tropicale/notte-tropicale.js qa-site/temi/notte-tropicale/entrata.js qa-site/girrr/v65/numeri.js qa-site/girrr/v55/destinazioni55.js qa-site/girrr/transizioni.js; do node --check "$f"; done
           grep -q 'nt_entrata_vista_2' qa-site/temi/evento-loader.js && grep -q 'avviso-versione-in-cima' qa-site/temi/evento-loader.js
           node --check qa-site/assets/spogliatoio-lazy.js
