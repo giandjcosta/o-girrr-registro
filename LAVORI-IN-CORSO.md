@@ -23,6 +23,8 @@ Ultimo aggiornamento: 16 novembre 2026, Claude.
 - **Regola emersa il 24/11**: se Gianluca chiede di verificare su Leghe e non ci si arriva, fermarsi e dirlo prima di pubblicare.
 
 ## Da giovedì 26 novembre 2026 — novità della skin Notte Tropicale nella grafica normale (Gianluca, 24 novembre sera)
+- **Stato (28 novembre, Claude)**: `In prova nel Lab` sul ramo `claude/ofant-girrr-scheduled-actions-14phso` (`rilascio/r67/`, `lab/novita-6-7.html`). Fatti partita da guardare, classifica breve (regola di Gianluca del 28/11: sempre 4 righe; dalla 5ª in giù prime tre, «⋯» e la tua; da ospite prime quattro) e numeri della stagione, sotto «Oggi al Girrr». Prossimo passo: PR verso `main` del registro con la revisione di un altro assistente (regole del 28/11), tipo di versione da Gianluca (proposta 6.7), poi «Vai».
+- **Dopo**: skin Inverno, Natale e Anno nuovo (proposta di ChatGPT con le immagini, da rivedere: testi inventati nella prima immagine, filigrana nella seconda).
 - **Perché**: la skin si spegne da sola venerdì 27 novembre; le sue novità devono restare nella grafica normale (Lega e Stadio).
 - **Da portare** (Gianluca: «la partita da guardare» e «i numeri dell'anno»), dalla Home della skin (`temi/notte-tropicale/notte-tropicale.js`, `homeEvento()`):
   1. **Big match / partita da guardare** del prossimo turno, con la regola di Gianluca del 17/11: prima un Derby (rivalità da 80 in su o votato dai tifosi, mai se bocciato), poi un sorpasso possibile (3 punti o meno, coppia più in alto), altrimenti la partita più equilibrata; perché in una riga («A pari punti: chi vince passa davanti»), data d'inizio, tocco → Campo su quella partita.
